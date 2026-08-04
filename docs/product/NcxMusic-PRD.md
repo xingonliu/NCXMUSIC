@@ -118,6 +118,8 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-076 | PageHeader 是一级与二级页面的唯一标准 Header；二级页面返回行为由路由元数据驱动。业务页面的按钮必须使用统一 Button/IconButton，并完整覆盖 Hover、Pressed、Focus、Disabled 和 Loading 状态。 |
 | C-077 | 前端使用 Reka UI 作为无样式、可访问交互 Primitive，但只能由 NcxMusic Design System 的内部适配层导入。业务页面和领域组件只使用项目自有组件 API，不直接依赖、透传或暴露 Reka UI 类型；全部外观、Token 和产品语义由 NcxMusic 控制。 |
 | C-078 | 跨进程通信由 Main 的 ConnectionBroker 建立版本化 MessagePort 通道；所有请求、响应、事件和取消消息使用 Zod 严格 Schema 校验。Renderer 重载或 Utility Process 重启后建立新连接并拉取快照；有副作用命令使用 `commandId` 去重，不能因重连重复执行。 |
+| C-079 | 应用持久数据写入 `app.getPath('userData')/ncx-data`，画像、长期记忆、聊天和账户数据按网易云用户 ID 隔离，以普通 SQLite/JSON 保存，不使用 SQLCipher、独立账户数据密钥或整库加密。Cookie、模型 API Key、MCP 凭据等可登录账号或产生费用的秘密仍必须使用持久 Session 或系统 `safeStorage` 保护。 |
+| C-080 | NcxMusic 不上传原始本地数据库或无关账户文件；但使用云模型时，当次对话以及被上下文选择器选中的必要画像/记忆片段会发送给用户配置的模型 Provider。产品必须在配置与画像初始化时明确披露该边界，不能宣称所有 Agent 数据永不离开本机。 |
 
 ## 3. 目标用户与使用场景
 
@@ -398,13 +400,14 @@ Vue Router 使用类型化 `route.meta.playerBar: 'show' | 'hide'` 作为唯一�
 
 `MUSIC_U` 等同于长期登录凭据，必须遵守：
 
-- 只允许 Electron Main 的 Credential Vault 和经过授权的 Utility Process API Adapter 在执行请求时读取；跨进程传递只走专用受控通道并尽量缩短内存驻留时间。
+- 网易云官方登录使用独立持久 Session Partition；其中的 Cookie Store 是 `MUSIC_U` 等网页登录 Cookie 的权威持久来源，不再把同一 Cookie 复制到普通 JSON 或另一份凭据文件。
+- 只允许 Electron Main 读取登录 Session Cookie。Main 通过专用控制通道向经过授权的 Utility Process API Adapter 发放当前账户的内存凭据租约，租约不得进入业务 IPC。
 - Renderer、Agent Prompt、模型请求、Tool Call 参数和 IPC 业务事件均不得包含原值。
-- 本地持久化前使用操作系统安全能力加密；不以明文 JSON、LocalStorage 或普通配置文件保存。
+- 模型 API Key、MCP Secret 等非 Cookie 凭据使用操作系统 `safeStorage` 加密后落盘；不以明文 JSON、LocalStorage 或普通配置文件保存。若系统加密不可用，只允许会话级使用并明确提示，不得静默降级成明文持久化。
 - 日志中只允许记录“是否存在、校验状态、过期状态”，禁止记录原值或可逆片段。
-- API Adapter 在请求发出前从 Credential Vault 读取，并在内部拼接 `MUSIC_U=<value>`。
+- API Adapter 在请求发出前从内存租约读取允许的 Cookie，并在内部构造 Cookie 参数。
 - 优先通过 POST body 的 `cookie` 字段传递，避免凭据出现在 URL、代理日志和历史记录中。
-- 退出登录时清除 Credential Vault、登录 Session 和 API 会话缓存，但画像是否保留由用户选择。
+- 退出登录时清除登录 Session、内存凭据租约和 API 会话缓存；默认保留该网易云用户 ID 的画像、记忆与聊天数据，只有用户执行“删除此账号的本地数据”时才移除账户空间。
 - 任何本地凭据、调试样本和登录 Session 文件都必须排除在 Git 之外。
 
 #### 登录窗口安全边界
@@ -599,7 +602,7 @@ Working Memory 采用原子替换写入；损坏或版本不兼容时从 SQLite 
 暂定目录：
 
 ```text
-app.getPath("userData")/skills/<skill_name>/
+app.getPath("userData")/ncx-data/skills/<skill_name>/
 ├── SKILL.md
 ├── index.js
 └── assets/
@@ -663,7 +666,9 @@ app.getPath("userData")/skills/<skill_name>/
 - 推荐解释所需的证据摘要。
 - 可供 Agent 使用的简洁画像 Prompt。
 
-基础信息与画像按网易云用户 ID 分目录或分库保存。业务数据的默认加密策略、数据格式、保留周期，以及模型接收完整歌单还是只接收本地聚合结果，均待确认。无论采用哪种模型输入方案，初始化提示都必须说明发送范围、第三方 Provider 和可能产生的 Token 费用。
+基础信息与画像按网易云用户 ID 分目录或分库保存。画像、对话、摘要和 Working Memory 使用普通 SQLite/JSON，不增加 SQLCipher、独立账户数据密钥或应用级整库加密；依靠本机操作系统用户目录权限隔离。退出登录默认保留，用户可在设置中查看、导出或删除该账号的本地数据。保留周期，以及模型接收完整歌单还是只接收本地聚合结果，仍待确认。
+
+NcxMusic 不主动同步或上传原始账户数据库。使用云端模型 Provider 时，当次对话和上下文选择器挑选出的必要画像/记忆片段仍会作为模型请求的一部分发送；初始化提示和模型设置页必须说明发送范围、Provider 归属及可能产生的 Token 费用。本地模型可避免这部分内容离开设备。
 
 #### 用户画像生命周期
 
@@ -1134,8 +1139,9 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 ### 9.4 隐私
 
 - 明确哪些音乐数据发送给模型服务。
+- 原始 SQLite、画像文件和账户目录不上传；云模型只接收完成当前任务所需的最小上下文片段。
 - 用户能够查看、导出和删除本地记忆。
-- 日志、画像、语音和对话的保留策略需要单独确认。
+- 日志、语音和对话的具体保留期限仍需单独确认。
 
 ## 10. 当前主要风险
 
@@ -1170,6 +1176,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 - D-009（已确认）：首版代码库使用单应用包的模块化单体；以进程入口、领域、共享契约和基础设施分层，不在首版提前引入多 workspace package。
 - D-010（已确认）：使用 pnpm + electron-vite + electron-builder；Utility Process 作为独立构建入口，不同时引入 Electron Forge。
 - D-011（已确认）：Main 负责跨进程连接代理；Renderer/Preload 与 Utility Process 使用版本化 MessagePort、Zod 严格消息 Schema、命令幂等和快照式重连。
+- D-012（已确认）：本地持久数据位于应用 `userData` 子目录并按账号隔离；普通业务数据不做应用级加密，Cookie 和 API Key 等凭据继续使用系统保护。
 
 ### P1：Agent 行为
 
@@ -1214,7 +1221,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 - D-302（部分确认）：默认更新权重由产品固定；是否在设置页允许高级调整待确认。
 - D-303（已确认）：首次完整画像由小 N 输入框上方提示触发，不静默执行；启动时用轻量计数检查变化，喜欢歌曲权重 1.5、自建歌单歌曲权重 1、收藏歌单不计，累计变化超过 30 后提示用户更新。
 - D-304（待确认）：用户能否查看、纠正、删除或暂停画像？
-- D-305（待确认）：画像、对话和基础信息的本地加密、保留与删除策略是什么？
+- D-305（部分确认）：画像、对话和基础信息使用普通 SQLite/JSON，不做整库加密；退出登录默认保留并允许显式删除。具体自动保留期限待确认。
 - D-306（待确认）：模型可以接收完整歌单，还是只发送本地聚合结果？
 
 ### P1：语音
@@ -1241,7 +1248,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 - D-602（已确认）：为每个 API 创建专用测试 JS，多次调用覆盖不同参数与边界，确定返回数据格式。
 - D-603（部分确认）：建立全局字段池并按启动请求顺序复用字段；权威 + 新鲜度 + 完整度合并算法待 API 样本验证。
 - D-604（待确认）：用户、歌单、首页推荐和搜索建议分别采用什么 TTL、刷新和离线策略？
-- D-605（部分确认）：Cookie/API Key 等凭据不得进入 Renderer 普通存储、Prompt 或日志；Credential Vault 的平台实现待技术验证。
+- D-605（已确认）：网页登录 Cookie 保存在独立持久 Session，模型/MCP API Key 使用系统 `safeStorage`；凭据只以内存租约进入 Utility Process，不进入 Renderer、Prompt、Tool 参数或日志。
 - D-606（部分确认）：`/song/url/v1` 文档列出 9 个音质 level，但在线文档与仓库 TypeScript 枚举存在 `higher`/`dolby` 差异；九档请求、实际降级、账户权益、特殊格式和字段映射待 API First 样本验证。
 
 ### P2：界面与体验
@@ -1307,6 +1314,8 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 | 2026-08-04 | D-710 | 建立统一 Design System，页面复用通用组件、布局模式和语义 Token，不在业务内派生第二套 UI 规则。 | 全部 Renderer 页面、组件开发、交互一致性、视觉验收 |
 | 2026-08-04 | D-711 | Reka UI 仅承担内部无样式 Primitive，NcxMusic 包装并拥有全部组件 API、视觉和语义。 | Renderer 依赖边界、无障碍、组件封装、升级与替换成本 |
 | 2026-08-04 | D-011 | 跨进程数据通道采用版本化严格消息、ConnectionBroker、快照重连和副作用命令幂等。 | Main、Preload、Renderer、Utility Process、工具与审批 |
+| 2026-08-04 | D-012 | 业务数据按账号以普通 SQLite/JSON 本地保存，不做应用级整库加密；登录和付费凭据继续使用系统安全存储。 | 本地目录、账号切换、记忆、画像、凭据、删除与隐私披露 |
+| 2026-08-04 | D-305 | 画像、聊天和基础信息不做应用级加密，退出登录默认保留，用户可显式删除本地账号空间。 | 用户画像、长期记忆、账户生命周期、设置页 |
 
 ## 13. 暂定里程碑
 
