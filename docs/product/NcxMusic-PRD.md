@@ -134,6 +134,7 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-092 | Agent 提示卡明确分为 ApprovalCard（审批卡）和 SelectionCard（选择卡）。选择卡由小 N 调用内置 `request_user_selection` Tool 触发，本质是把小 N 的选择题变成可点击答案以减少用户输入；结果只表示用户选了什么，不代表批准或执行后续操作。 |
 | C-093 | SelectionCard 固定等待 10 分钟并提供“取消”按钮；离开页面、收起侧栏、最小化窗口继续等待，Renderer 重载后恢复。用户发送新聊天消息时取消旧选择与旧 Turn 后处理新消息；应用退出、切换账号或 Runtime 故障时取消。 |
 | C-094 | `request_user_selection` 同时支持音乐实体选项和普通文字选项，并允许在同一 SelectionCard 中混排 2~5 项。它是无业务副作用的通用询问 Tool；选中结果只返回 `optionKey` 与可选实体引用，任何选项文案都不会因点击而直接执行。 |
+| C-095 | SelectionCard 支持 `single` 与 `multiple`：单选点击一项立即提交；多选允许选择 1~5 项，并在至少选择一项后通过“完成”提交。结果统一返回选项 key 数组及对应实体引用数组，仍不执行具体操作。 |
 
 ## 3. 目标用户与使用场景
 
@@ -648,6 +649,7 @@ Working Memory 采用原子替换写入；损坏或版本不兼容时从 SQLite 
 ```ts
 interface RequestUserSelectionInput {
   prompt: string
+  mode: 'single' | 'multiple'
   options: [SelectionOption, SelectionOption, ...SelectionOption[]] // 2~5 项
 }
 
@@ -666,8 +668,8 @@ type SelectionOption =
 
 interface RequestUserSelectionResult {
   status: 'selected' | 'cancelled' | 'expired'
-  selectedOptionKey?: string
-  selectedRef?: EntityRef
+  selectedOptionKeys?: [string, ...string[]]
+  selectedRefs?: EntityRef[]
   reason?: 'user' | 'superseded_by_user_message' | 'app_exit' | 'account_switch' | 'runtime_failure'
 }
 ```
@@ -675,6 +677,7 @@ interface RequestUserSelectionResult {
 - 实体选项必须来自本轮已完成工具结果或当前 Entity Pool，不能由模型伪造任意网易云 ID；Runtime 根据引用读取名称、歌手、专辑、封面和权益小标等展示字段。
 - 文字选项由小 N 提供纯文本 `label` 和可选 `description`，支持“创建新歌单 / 加入现有歌单”一类选择；Runtime 执行长度、重复 key 和控制字符校验，不接受 HTML、Markdown、组件 Props、图片 URL 或可执行回调。
 - 同一张卡允许实体与文字选项混排，但总数固定为 2~5。`optionKey` 只用于把选择映射回本次 Tool Call，不是命令名，也不能直接绑定业务 Handler。
+- `single` 模式点击任一选项后立即提交，结果数组长度固定为 1。`multiple` 模式允许选择 1~5 项，用户点击“完成”才提交；未选择任何项时“完成”保持禁用。
 - 使用场景不限于同名实体消歧，也包括询问用户想听的风格、选择目标歌单、选择整理方案等需要减少输入的对话；它不能代替 ApprovalCard 或危险操作确认。
 - 用户点击后的结果语义等同于回答了这道选择题。Tool 不携带待执行动作、回调、后续 Tool 名称或参数模板，也不会自动恢复此前尚未执行的业务动作。
 - 该 Tool 属于用户交互能力，不产生音乐/账户副作用，因此不受 M1~M4 审批；它仍计入单 Turn 的 Tool Call 上限，并且同一时刻只允许一个活动选择请求。
@@ -881,7 +884,7 @@ Tool Call
 
 - 小 N 当前需要用户选择什么，以及为什么无法唯一确定。
 - 2~5 个可点击选项，可混排音乐实体与普通文字选项；音乐实体展示封面、名称、歌手、专辑及 VIP/付费小标，文字选项展示标题和可选简短说明。
-- 明确的“取消”按钮；固定 10 分钟有效，不能使用 ApprovalCard 的 5 分钟计时。
+- 明确的“取消”按钮；多选模式额外提供“完成”按钮并在至少选择一项后启用。固定 10 分钟有效，不能使用 ApprovalCard 的 5 分钟计时。
 - 候选点击只完成 `request_user_selection` Tool，不直接播放、收藏、修改歌单或批准任何后续动作。
 - 已选择、取消或过期后卡片保留终态并禁止重复提交；Renderer 重载只恢复仍有效的活动选择。
 
@@ -1389,6 +1392,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 - D-715（已确认）：Agent 提示卡分为审批卡与选择卡；SelectionCard 由内置 `request_user_selection` Tool 触发，返回结构化选择结果但不批准或直接执行后续业务动作。
 - D-716（已确认）：SelectionCard 固定 10 分钟、可显式取消；导航/收起/最小化保留、Renderer 重载恢复，新消息替换旧选择与 Turn，退出/换号/Runtime 故障取消。
 - D-717（已确认）：SelectionCard 是小 N 用来询问用户、减少输入的无副作用交互 Tool，支持 2~5 个音乐实体和普通文字选项并可混排；选中只返回回答结果，不绑定可执行动作。
+- D-718（已确认）：SelectionCard 支持单选与多选；单选点击即提交，多选选择 1~5 项并通过“完成”提交，结果统一使用数组表达。
 
 ## 12. 决策记录
 
@@ -1457,6 +1461,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 | 2026-08-04 | D-104/D-715 | 同名实体不确定时由小 N 调用选择工具展示 SelectionCard；选择只确定引用，后续业务 Tool 仍独立执行权限判断。 | Entity Resolver、Agent Tool、SelectionCard、Policy Engine |
 | 2026-08-04 | D-716 | 冻结 SelectionCard 的 10 分钟生命周期、显式取消、Renderer 恢复、新消息替换和退出/换号/故障取消规则。 | SelectionCard、Agent Runtime、IPC Snapshot、Turn 调度 |
 | 2026-08-04 | D-717 | SelectionCard 定位为小 N 的通用快捷提问 Tool，同时支持富媒体实体和普通文字选项；点击只返回用户答案，无业务副作用。 | Selection Tool、SelectionCard、IPC Schema、后续对话/Tool 调用 |
+| 2026-08-04 | D-718 | SelectionCard 同时支持点击即提交的单选，以及选择 1~5 项后点击“完成”的多选；两者统一返回数组。 | Selection Tool Schema、SelectionCard 状态、IPC Resolve |
 
 ## 13. 暂定里程碑
 

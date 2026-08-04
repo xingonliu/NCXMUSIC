@@ -121,6 +121,7 @@ interface SelectionRequestedPayload {
   selectionId: string
   toolCallId: string
   prompt: string
+  mode: 'single' | 'multiple'
   options: Array<
     | {
         kind: 'entity'
@@ -143,15 +144,15 @@ interface SelectionRequestedPayload {
 
 interface SelectionResolvePayload {
   selectionId: string
-  optionKey?: string
+  optionKeys?: string[]
   action: 'select' | 'cancel'
   accountGeneration: number
 }
 ```
 
 - `options` 固定为 2~5 项且允许 `entity`/`text` 混排。实体展示字段由 Utility Process 根据 Entity Pool 构造；文字字段经过长度、控制字符和纯文本校验。Renderer 不能增删或改写选项。
-- Resolve 必须匹配当前活动 `selectionId`、`toolCallId` 的隐含关联、账户 generation 和本次 `optionKey` 集合；迟到、重复或伪造 key 均拒绝。
-- `action: select` 只完成 `request_user_selection` Tool 并返回“用户选择了什么”：`selectedOptionKey`，以及实体选项内部映射的可选 `selectedRef`。协议中不存在选项回调、待执行命令或后续 Tool 参数；它不发送 PlayerCommand，也不调用任何业务 Handler。
+- Resolve 必须匹配当前活动 `selectionId`、`toolCallId` 的隐含关联、账户 generation 和本次 `optionKey` 集合；迟到、重复、重复 key 或伪造 key 均拒绝。`single` 要求恰好 1 项，`multiple` 要求 1~5 项且不能超过卡片选项数。
+- `action: select` 只完成 `request_user_selection` Tool 并返回“用户选择了什么”：`selectedOptionKeys`，以及实体选项内部映射的 `selectedRefs`。协议中不存在选项回调、待执行命令或后续 Tool 参数；它不发送 PlayerCommand，也不调用任何业务 Handler。
 - 选择后若模型提出新的播放、收藏或歌单 Tool Call，该调用作为全新的 `commandId` 进入能力、Schema 和 Policy 流程。
 - SelectionCard 在创建 10 分钟后过期；路由、侧栏与最小化不取消，Renderer 重载从 Snapshot 恢复。新聊天消息取消旧选择与旧 Turn 后开启新 Turn；应用退出、换号或 Runtime 故障取消且不跨应用恢复。
 
