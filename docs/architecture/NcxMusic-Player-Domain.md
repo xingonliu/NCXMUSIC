@@ -188,9 +188,9 @@ interface ResolvedMediaSource {
 }
 ```
 
-- `MusicQualityPreference` 是持久化的全局设置，默认 `auto`。队列只保存歌曲引用，不固化当时的 URL 或音质结果。
+- `MusicQualityPreference` 是持久化的全局设置，默认 `auto`。`auto` 只沿 `jymaster → hires → lossless → exhigh → higher → standard` 常规高保真链选择；队列只保存歌曲引用，不固化当时的 URL 或音质结果。
 - `TrackResolver` 每次解析时结合全局偏好、当前账户和实际 API 结果；不通过 UI 的 VIP/付费小标推断可播音质。
-- 常规档位的回退序列为 `jymaster → hires → lossless → exhigh → higher → standard`，从用户首选位置开始。`jyeffect`/`sky`/`dolby` 不与码率档位强行混排，不可用时回退当前账户的最高常规档位。
+- 常规档位的回退序列为 `jymaster → hires → lossless → exhigh → higher → standard`，从用户首选位置开始。`jyeffect`/`sky`/`dolby` 不进入 `auto` 或码率排序，仅在用户显式选择时尝试；不可用时回退当前账户的最高常规档位。
 - 上游若已自动降级，以响应的实际 `level` 为准并停止进一步请求；URL 为空或实际档位无法解码时才继续向下尝试。具体字段以 API First 样本为准。
 - `unblock=true` 时上游模块明确不保证音质偏好生效，正常播放解析禁止使用该参数实现音质选择。
 - `actualQuality`、码率和格式属于本次媒体源状态，可供播放 UI 展示，但不写回歌曲永久字段。

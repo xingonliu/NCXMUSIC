@@ -109,7 +109,7 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-067 | 首版语音能力只做 ASR 语音识别与指令输入，不做 TTS 语音合成或语音播报。 |
 | C-068 | Agent 不调用 Vue 组件函数，也不通过内部 SSE 间接操作 Pinia。Agent Tool 经权限中间件后通过 IPC/MessagePort 发送版本化 `PlayerCommand`，由 Renderer 根层常驻处理器调用唯一 `PlaybackCoordinator`，并将真实执行结果和最新快照回传给 Tool。 |
 | C-069 | 播放设置提供全局音质偏好，包含“自动（最高可用）”和 NeteaseCloudMusicApiEnhanced 当前文档列出的 9 个 `level`：`standard`、`higher`、`exhigh`、`lossless`、`hires`、`jyeffect`、`sky`、`dolby`、`jymaster`。 |
-| C-070 | 默认使用“自动（最高可用）”，按当前账户权益、歌曲实际音源和设备支持选择最高可播档位。用户选择具体音质后，该选项作为所有歌曲的全局偏好上限；单曲或当前账户不支持时自动向下回退到可播音质，不因偏好档位不可用而跳过歌曲。 |
+| C-070 | 默认使用“自动（最高可用）”，只在常规高保真链中按当前账户权益和歌曲实际音源选择最高可播档位；高清环绕声、沉浸环绕声和杜比全景声必须由用户明确选择。具体音质作为所有歌曲的全局偏好上限；单曲、账户或设备不支持时自动回退到可播音质，不因偏好档位不可用而跳过歌曲。 |
 
 ## 3. 目标用户与使用场景
 
@@ -197,9 +197,9 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | `jymaster` | 超清母带 | 高规格音质 |
 
 - 音质选择是持久化的全局播放偏好，不在队列中为每首歌复制一份设置。
-- 默认“自动（最高可用）”；游客/普通用户、VIP、已购买单曲和不同歌曲均以当次请求的实际可播结果为准，不用前端 VIP 小标推断上限。
+- 默认“自动（最高可用）”；自动只在 `jymaster → hires → lossless → exhigh → higher → standard` 常规高保真链中选择。游客/普通用户、VIP、已购买单曲和不同歌曲均以当次请求的实际可播结果为准，不用前端 VIP 小标推断上限。
 - 用户选择具体档位时，该档位是首选上限。若当前歌曲或账户无权播放，`TrackResolver` 向下回退并保存最终 `actualLevel`；设置为极高、但单曲最高只有较高时，应直接播放较高。
-- 常规音质的产品降级顺序为 `jymaster → hires → lossless → exhigh → higher → standard`。`jyeffect`、`sky` 和 `dolby` 需要设备/编解码支持，不强行当作线性码率档位；选中而不可用时回退到当前账户可用的最高常规音质。
+- `jyeffect`、`sky` 和 `dolby` 不进入自动链，只在用户明确选择时请求。它们需要设备/编解码支持，选中而不可用时回退到当前账户可用的最高常规音质。
 - 音质降级本身不显示错误。播放 UI 使用 `actualLevel`，不把用户偏好误标为当前实际音质。
 
 官方文档与仓库类型目前存在差异：在线文档包含 `higher` 和 `dolby`，但 [`interface.d.ts`](https://github.com/NeteaseCloudMusicApiEnhanced/api-enhanced/blob/main/interface.d.ts) 的 `SoundQualityType` 暂未包含两者；[`song_url_v1.js`](https://github.com/NeteaseCloudMusicApiEnhanced/api-enhanced/blob/main/module/song_url_v1.js) 也明确说明 `unblock=true` 时音质设置不生效。实现时在 NcxMusic API Adapter 内维护已验证的本地枚举，不让上游类型漏项限制 UI；每个档位仍必须先通过 API First 实测。
@@ -1178,7 +1178,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 - D-810（已确认）：关闭窗口默认映射为最小化并继续后台播放；设置中可切换为退出应用，不提供第三种关闭策略。
 - D-811（已确认）：Agent 播放工具使用 IPC/MessagePort 命令网关和执行回执；根层常驻处理器调用唯一播放协调器。不使用内部 SSE、不依赖 AgentChat 生命周期、不让 Agent 直接调用 Vue/Pinia 方法。
 - D-812（已确认）：音质为全局持久化偏好，默认自动选当前账户、歌曲和设备可播的最高音质；选择具体档位后逐曲作为首选上限，不可用时自动向下回退。
-- D-813（待确认）：“自动（最高可用）”是默认优先超清母带/Hi-Res 等常规高保真档位，还是在设备支持时优先杜比/沉浸/高清环绕声？空间格式与码率音质不是统一线性层级。
+- D-813（已确认）：“自动（最高可用）”只按超清母带、Hi-Res、无损、极高、较高、标准的常规链选择；高清环绕声、沉浸环绕声和杜比全景声只在用户明确选择时启用，不可用时回退最高常规音质。
 
 ### P1：安全与审批
 
@@ -1277,6 +1277,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 | 2026-08-04 | D-811 | Agent 通过 IPC/MessagePort 向 Renderer 常驻播放命令处理器发送命令并等待真实回执；不使用 SSE 或 AgentChat 组件调用播放函数。 | Agent Tool、IPC、Vue/Pinia、播放引擎、状态一致性 |
 | 2026-08-04 | D-812 | 音质默认自动选择最高可用档位；具体设置作为全局首选上限，单曲不支持时向下回退。 | 播放设置、TrackResolver、账户权益、音质 UI、API First |
 | 2026-08-04 | D-606 | 记录官网 9 档音质与当前仓库类型差异，实现前要求按账户、歌曲和档位完成实测。 | API 测试、字段映射、上游兼容、回退算法 |
+| 2026-08-04 | D-813 | 自动音质只选常规高保真档位；三种空间格式必须显式选择，不可用时回退最高常规档位。 | 自动音质、设置 UI、设备兼容、TrackResolver |
 
 ## 13. 暂定里程碑
 
