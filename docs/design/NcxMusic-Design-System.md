@@ -177,7 +177,7 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 
 首版先冻结语义名称，具体色值在视觉方向确认后统一填入：
 
-- Surface：`canvas`、`surface`、`surface-raised`、`surface-overlay`。
+- Surface：`canvas`、`surface`、`surface-raised`、`surface-overlay`、`control-hover`、`control-pressed`、`control-selected`。
 - Text：`text-primary`、`text-secondary`、`text-tertiary`、`text-disabled`。
 - Border：`border-subtle`、`border-default`、`border-strong`。
 - Accent：`accent`、`accent-hover`、`accent-pressed`、`on-accent`。
@@ -281,6 +281,31 @@ interface PageRouteMeta {
 
 Button 只提供 `primary`、`secondary`、`ghost`、`danger` 四种视觉变体和 `compact`、`default`、`prominent` 三种尺寸。业务语义通过文案和图标表达，不增加“播放按钮色”“歌单按钮色”等页面级变体。
 
+按钮按内容形式分为三类，但只维护两个底层组件：
+
+| 形式 | 组件 | 示例 | 规则 |
+| --- | --- | --- | --- |
+| 纯文字 | Button | 确认、取消 | 文字必须是明确动词；同一区域最多一个 Primary |
+| 纯图标 | IconButton | 关闭侧边栏、收藏、播放、下一首 | 必须提供 `label`，鼠标停留后显示 Tooltip |
+| 图标+文字 | Button | 设置图标 +“设置” | 使用 `leadingIcon` 或 `trailingIcon`，不能手工拼接两个点击区 |
+
+### 7.1 IconButton 视觉
+
+- 默认背景透明、边框透明，保持正方形，不使用圆形底板；只有播放主按钮等经单独定义的领域组件可以使用圆形。
+- Hover 使用 `control-hover`：亮色主题为浅灰表面，暗色主题为深灰抬升表面；圆角固定 `radius-md`（8 px）。
+- Pressed 使用 `control-pressed`，强度高于 Hover，但不能缩放到引起图标位移。
+- `compact/default/prominent` 分别为 28/32/36 px，图标建议为 14/16/18 px，由组件 Size Token 决定。
+- Toggle 型图标按钮（收藏、静音、循环）使用 `aria-pressed` 与 `selected` 状态；选中态不能只靠颜色，必要时更换实心图标或增加可访问文案。
+- 连续工具栏中的 IconButton 间距默认 4 px，各按钮仍保持独立 Hover 面，不合并成一个不规则色块。
+
+### 7.2 IconButton Tooltip
+
+- 全局 Reka TooltipProvider 使用 `delayDuration = 1500`；为满足每个图标都需停留 1.5 秒的规则，`skipDelayDuration` 同样设为 1500。
+- 键盘 Tab Focus 时按无障碍行为立即显示，不强制等待 1.5 秒；Escape 关闭。
+- 内容由功能名和可选快捷键组成，例如 Windows/Linux 显示“搜索  Ctrl+K”，macOS 显示“搜索  ⌘K”。快捷键使用独立 Keycap 样式，不能和名称连成普通正文。
+- Tooltip 只负责解释，不承载按钮状态、错误或必须点击的操作；状态通过 `aria-label`、选中态和页面反馈表达。
+- Disabled 按钮如需说明原因，由外层 Tooltip Trigger 承载，并显示“暂不可用”的具体原因。
+
 - 每个 Button 必须覆盖 Default、Hover、Pressed、Focus Visible、Disabled 和 Loading。
 - Loading 保持原宽度，禁止因文字替换造成页面跳动。
 - IconButton 必须提供可访问名称；没有可见文字时提供 Tooltip。
@@ -288,7 +313,23 @@ Button 只提供 `primary`、`secondary`、`ghost`、`danger` 四种视觉变体
 - 同一操作区最多一个 Primary；批准与拒绝卡片按安全语义使用明确文案，不能只显示图标。
 - Design System 之外禁止直接编写带视觉样式的原生 `<button>`。
 
-## 8. 状态与可访问性
+## 8. ContextMenu 契约
+
+生产环境阻止 Chromium 默认右键菜单。NcxMusic 只在可操作的语义对象、可编辑文本或已有文字选区上展示自有 ContextMenu；空白页面、普通封面图片和无动作装饰区域不显示菜单。
+
+- 业务菜单由 `ContextMenuRegistry` 根据对象类型、页面上下文、账户能力和当前状态纯函数生成，不由页面手写菜单项。
+- Reka UI 只提供 ContextMenu、Submenu、键盘导航和焦点 Primitive；视觉、Item Model 与命令路由由 NcxMusic 控制。
+- 文本输入菜单通过 Main 的 Electron `context-menu` 参数获取拼写建议和可用编辑状态，再通过受限命令 ID 调用 Undo、Redo、Cut、Copy、Paste、Paste as Plain Text、Delete、Select All 和 Replace Misspelling；不向 Renderer 暴露通用 `webContents`。
+- 右键菜单操作复用按钮和快捷键使用的 Command/Use Case，不在菜单点击处理器中复制音乐业务逻辑。
+- 用户亲自点击菜单项不经过 Agent 的 M/S 权限审批；不可逆的人类操作仍按产品规则使用 AlertDialog。
+- 支持鼠标右键、键盘 Context Menu 键和 `Shift+F10`。打开后使用方向键导航、Enter 执行、Escape 关闭并恢复焦点。
+- 生产菜单不提供“检查元素”“刷新页面”“另存图片”等浏览器开发项；开发构建可通过显式开发开关提供调试菜单。
+
+视觉规格：默认宽度 220 px、最大宽度 280 px；Item 高度 30 px，图标 16 px；使用 `radius-lg`、`elevation-2` 和 `layer-popover`。快捷键靠右使用次级文本。危险动作位于末组并使用 Danger 语义，分隔线不能连续或出现在首尾。
+
+具体首版对象菜单建议以 `docs/design/NcxMusic-Context-Menu-Matrix.md` 为准。
+
+## 9. 状态与可访问性
 
 - 键盘 Focus 使用 2 px 高可见 Focus Ring，不能只靠阴影或颜色变化。
 - 所有菜单、Dialog、Drawer 和 Popover 统一处理焦点进入、循环、恢复与 Escape。
@@ -297,7 +338,7 @@ Button 只提供 `primary`、`secondary`、`ghost`、`danger` 四种视觉变体
 - 错误状态必须说明恢复动作；Section 请求失败不能阻断其他 Section。
 - 颜色不是状态的唯一表达方式；文字对比度和 Focus 对比度在视觉验收时统一测试。
 
-## 9. 工程约束与验收
+## 10. 工程约束与验收
 
 建议目录：
 
@@ -320,7 +361,7 @@ src/renderer/features/
 - 建立开发专用 UI Lab，展示每个组件的尺寸、主题、状态、长文本、中文/英文、空数据和错误边界；UI Lab 不进入生产导航。
 - 通用组件至少覆盖键盘交互、焦点恢复、ARIA 语义和视觉快照测试；复杂组件增加交互测试。
 
-## 10. 尚待视觉阶段确认
+## 11. 尚待视觉阶段确认
 
 1. 品牌主色、亮/暗主题的具体色值与默认主题。
 2. 图标库与音乐业务专用图标风格。
