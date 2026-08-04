@@ -1,0 +1,210 @@
+# NcxMusic 手写 Agent Runtime
+
+> 文档状态：Baseline 0.1
+> 建立日期：2026-08-04
+> 最后更新：2026-08-04
+> 关联决策：A-006、D-013、D-102
+
+## 1. 目标
+
+小 N 不使用 Agent 框架。Utility Process 内实现可审计、可取消、可恢复快照的 Agent Runtime，并让 Provider、Tool、权限和 UI 通过稳定事件协作。
+
+核心约束：
+
+1. 产品只有一个连续会话，同时最多一个 Active Turn。
+2. LLM 只提出 Tool Call，不决定权限、并发、超时、重试或是否真正执行。
+3. 所有 Tool Call 必须经过 Schema、Policy、Scheduler 和 Executor，不能直接调用底层 API。
+4. 只读工具可以受控并行，有副作用的操作必须按冲突域确定性串行。
+5. 限额、取消和失败必须产生明确终态，不能让 UI 永久停在“执行中”。
+
+## 2. 运行时组件
+
+```text
+TurnCoordinator
+├─ ContextBuilder
+├─ ProviderAdapter / StreamNormalizer
+├─ ToolRegistry / ToolSchemaValidator
+├─ PolicyGateway
+├─ ToolScheduler
+├─ ToolExecutor
+├─ ApprovalCoordinator
+├─ LimitController / CancellationController
+├─ MemoryWriter
+└─ RuntimeEventSink
+```
+
+- `TurnCoordinator`：单 Turn 状态机和循环入口。
+- `ContextBuilder`：组装系统提示词、当前块、Working Memory、画像片段、Skill Prompt 和可见 Tool Schema。
+- `ProviderAdapter`：适配 OpenAI Compatible、Anthropic Messages 和 Gemini，并归一化增量事件。
+- `ToolRegistry`：保存工具元数据、输入/输出 Schema、风险分类和冲突域生成器。
+- `PolicyGateway`：调用纯函数权限引擎，返回允许、需要审批或硬拒绝。
+- `ToolScheduler`：控制并行度、资源锁、排队顺序和取消。
+- `ToolExecutor`：执行内置工具、音乐 API、PlayerCommand、MCP、Skill 或 Shell Adapter。
+- `RuntimeEventSink`：写入 IPC 事件、ToolExecutionCard、Action Journal 和调试日志。
+
+## 3. Turn 状态机
+
+```text
+queued
+  → building_context
+  → requesting_model
+  → streaming_model
+  ├─ finalizing → completed
+  └─ validating_tool_batch
+       → scheduling_tools
+       ├─ awaiting_approval
+       ├─ executing_tools
+       └─ collecting_results
+            → requesting_model
+
+任意非终态
+  ├─ cancelling → cancelled
+  ├─ failing → failed
+  └─ limit_reached → finalizing → completed
+```
+
+同一会话只有一个 Active Turn。关闭小 N 侧边栏、路由跳转或语音悬浮组件消失不会取消 Turn；点击停止、退出应用、账号切换或 Runtime 故障才触发相应取消/失败规则。
+
+## 4. Tool Call 状态机
+
+```text
+received
+  → validating
+  ├─ invalid
+  └─ policy_check
+       ├─ denied
+       ├─ awaiting_approval
+       │    ├─ rejected
+       │    ├─ approval_cancelled
+       │    └─ queued
+       └─ queued
+            → executing
+            ├─ succeeded
+            ├─ failed
+            ├─ timed_out
+            └─ cancelled
+```
+
+每个 Tool Call 在进入下一轮模型请求前必须拥有一个终态结果。Provider 一次返回多个 Tool Call 时，Runtime 按原始顺序回填结果，即使内部并行完成顺序不同。
+
+## 5. Tool 元数据
+
+每个工具注册时至少声明：
+
+```ts
+interface ToolDefinition {
+  name: string
+  description: string
+  inputSchema: ZodType
+  outputSchema: ZodType
+  effect: 'read' | 'write' | 'external-process' | 'install'
+  riskAction: string
+  concurrency: 'parallel' | 'serial'
+  conflictKeys(input: unknown, context: ToolContext): string[]
+  cancellable: boolean
+  timeoutPolicy: string
+  retryPolicy: string
+  execute(input: unknown, context: ToolContext): Promise<ToolResult>
+}
+```
+
+模型只能看到完成裁剪后的名称、描述和输入 Schema。`effect`、风险、冲突域、超时和执行函数属于 Runtime 内部元数据，不进入 Prompt，也不能由 Dynamic Skill 覆盖。
+
+## 6. 调度规则
+
+### 只读工具
+
+- `effect: read`、无依赖且冲突键不互斥时最多并行 4 个。
+- 并行上限是整个 Turn 的总上限，不是每个工具各 4 个。
+- 同一上游 API Adapter 可以设置更低的独立并发和限流规则。
+- 画像分析等组合工具在 LLM 侧计为一次 Tool Call，但内部 API 扇出必须有独立预算和并发限制。
+
+### 有副作用工具
+
+- `write`、`external-process` 和 `install` 默认串行。
+- 同一模型批次内按 Tool Call 原始顺序取得资源锁，禁止依赖完成速度改变执行顺序。
+- 最低冲突域包括：
+  - `player:queue`
+  - `account:<id>:favorites`
+  - `account:<id>:playlist:<playlistId>`
+  - `account:<id>:comments`
+  - `shell:<workspace>`
+  - `mcp:install`
+  - `skill:install`
+- PlayerCommand 还必须携带 `expectedRevision`，由 Renderer 的 PlaybackCoordinator 最终判定是否过期。
+
+### 混合批次
+
+同一模型响应同时包含安全只读调用和需要审批的写调用时，独立的只读调用可以先执行；需要审批的调用保持挂起。由于模型协议要求完整回填本批次工具结果，下一轮模型请求必须等待该批次全部 Tool Call 进入终态，但播放器和其他应用功能不受阻塞。
+
+## 7. 硬限额
+
+```text
+maxToolRoundsPerTurn = 12
+maxToolCallsPerTurn  = 24
+maxParallelReadTools = 4
+maxActiveTurns       = 1
+```
+
+- Tool Round 指一次模型响应提出工具、Runtime 回填结果并准备再次请求模型的完整循环。
+- Tool Call 在模型提出时立即计数；参数无效、策略拒绝、用户拒绝和执行失败仍计入，防止模型通过失败重试绕过上限。
+- 组合工具内部 API 调用不占 LLM Tool Call 计数，但必须由该工具自己的 Budget 限制。
+- 达到任一限额后不再暴露/执行新工具，Runtime 允许一次不带 Tools 的最终模型请求，要求总结已完成内容、未完成原因和用户可采取的下一步。
+- 最终总结请求不计为新的 Tool Round，且不能通过文本触发隐式工具执行。
+- 限额是代码硬限制，System Prompt 只能告知，不能放宽。
+
+## 8. 审批挂起
+
+- Policy 返回 `require_approval` 后创建稳定 `approvalId`，Tool Call 进入 `awaiting_approval`。
+- 审批卡片关闭、拒绝、取消和超时必须映射成不同内部原因；面向模型返回裁剪后的结构化结果。
+- 用户批准只解除该 Tool Call 的挂起，不代表相同工具、参数或后续调用获得永久授权。
+- 审批过程中不能预执行底层副作用、预启动 Shell/MCP 进程或提前写配置。
+- 具体权限等级、超时、恢复和授权记忆由 A-007 定义。
+
+## 9. 取消语义
+
+用户点击“停止”时：
+
+1. Provider 流使用 AbortSignal 立即请求取消。
+2. 尚未开始的 Tool Call 标为 `cancelled` 并从队列移除。
+3. 未决审批关闭为 `approval_cancelled`，不是伪造“用户拒绝”。
+4. 正在执行且支持取消的工具接收 AbortSignal。
+5. 已越过不可逆提交点的工具继续获取真实结果，不能向用户谎报已撤销；结果只用于状态一致性和审计，不自动开启下一轮模型调用。
+6. Turn 在所有必要清理完成后进入 `cancelled`，UI 清除 Streaming/Running 状态。
+
+取消不是回滚。收藏、评论、歌单写入、Shell 命令和安装动作是否支持补偿，由具体工具定义，Runtime 不自动执行相反操作。
+
+## 10. 错误与重试
+
+- Tool Result 使用稳定错误码、可读摘要、`retryable` 和脱敏详情。
+- 写操作、Shell、安装和审批后操作不允许透明自动重试。
+- 只读工具的自动重试次数、退避和整体 Turn 超时尚未确认；在确认前默认不自动重试。
+- Provider 失败不能自动切换到另一个 Provider Profile，因为模型、价格和数据接收方可能不同。
+- Tool Schema 错误返回给模型后允许其在剩余预算内修正，但每次失败仍占 Tool Call 计数。
+
+## 11. 事件与持久化
+
+Runtime 至少发布：
+
+- Turn 状态与计数快照。
+- 文本/思考增量。
+- Tool Call 接收、排队、审批、执行和终态。
+- 限额、取消、Provider 用量和结束原因。
+
+Renderer 重连时按 A-004 拉取 Active Turn Snapshot，不依赖重放所有文本增量。完成后的用户消息、模型消息和工具摘要写入当前 10 分钟会话块；技术事件进入有界调试日志，不能将完整敏感 Tool 参数写入聊天历史。
+
+## 12. 尚待确认
+
+1. Active Turn 期间用户再次发送消息时，是中断、排队还是作为 Steering 输入。
+2. 只读工具的自动重试、退避、单工具超时和整体 Turn 超时。
+3. 应用退出后是否恢复未完成的纯只读任务；副作用与审批不会跨进程恢复执行。
+4. Provider 上下文超限时的裁剪和自动压缩阈值。
+
+## 13. 验收测试
+
+- 25 个 Tool Call、13 轮循环和无效参数连续修正均能被硬限额阻止。
+- 4 个只读工具并发，第 5 个排队；写工具按冲突域和原始顺序执行。
+- 同批次只读成功、写工具待审批时，模型不提前进入下一轮，播放器不被阻塞。
+- 停止流式响应、停止排队工具、取消审批和不可逆执行完成分别得到正确终态。
+- Renderer 重连后恢复同一 Turn Snapshot，不重复 Tool Call；Utility Process 重启后旧 Turn 明确中断。
+- 用户拒绝、策略拒绝、参数错误、超时和用户取消在模型结果与 UI 中可区分。

@@ -14,6 +14,7 @@
 | A-003 | 使用 pnpm 管理单包依赖；electron-vite 负责开发与进程构建，electron-builder 负责 Windows/macOS 分发产物、签名和公证；不引入 Electron Forge。 | 已确认 |
 | A-004 | Main 作为 ConnectionBroker 建立 Renderer/Preload 与 Utility Process 的版本化 MessagePort 数据通道；消息使用 Zod 严格 Schema、幂等命令和快照式重连。 | 已确认 |
 | A-005 | 持久数据写入应用 `userData` 子目录并按网易云用户 ID 隔离；画像、记忆和聊天使用普通 SQLite/JSON，不做应用级整库加密；登录 Cookie 与 API Key 继续使用系统凭据保护。 | 已确认 |
+| A-006 | Agent Runtime 完全手写并以 Turn/Tool 状态机运行；单会话同时只有一个 Active Turn，只读工具最多并行 4 个，有副作用工具串行；单 Turn 最多 12 轮工具循环和 24 个 Tool Call。 | 已确认 |
 
 ## 2. 运行时拓扑
 
@@ -41,6 +42,8 @@ Preload Bridge ↔ Electron Main ↔ Utility Process
 跨进程消息信封、握手、流式顺序、错误、取消和重连规则见 `docs/architecture/NcxMusic-IPC-Protocol.md`。
 
 本地目录、账户空间、数据所有权、凭据租约、保留与删除规则见 `docs/architecture/NcxMusic-Storage-Architecture.md`。
+
+Agent Turn、Tool 调度、限制、审批挂起、取消和事件快照规则见 `docs/architecture/NcxMusic-Agent-Runtime.md`。
 
 ## 3. 源码组织
 
@@ -131,8 +134,7 @@ pnpm release      # 仅供受保护 CI 发布，不作为本地常规命令
 
 ## 8. 待续架构决策
 
-1. A-006：手写 Agent Runtime 状态机、工具调度和任务限额。
-2. A-007：Policy Engine、审批挂起/恢复和安全动作分类。
-3. A-008：Dynamic Skill 隔离、MCP 生命周期与 Shell 执行边界。
-4. A-009：记忆、画像和模型输入的存储/隐私架构。
-5. A-010：ASR 技术路线、快捷键与语音任务生命周期。
+1. A-007：Policy Engine、审批挂起/恢复和安全动作分类。
+2. A-008：Dynamic Skill 隔离、MCP 生命周期与 Shell 执行边界。
+3. A-009：记忆、画像和模型输入的存储/隐私架构。
+4. A-010：ASR 技术路线、快捷键与语音任务生命周期。
