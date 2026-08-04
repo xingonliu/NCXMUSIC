@@ -90,3 +90,11 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 16. Phase 4 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: 全部样本被 -462 验证挑战阻断，无成功样本；需风控冷却后补测）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.song_url_v1_302.A.lossless.none.001 | AUTH_NONE | err | -462 | - | code -462 |
+| ncm.song_url_v1_302.A.standard.none.001 | AUTH_NONE | err | -462 | - | code -462 |

@@ -90,3 +90,68 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 16. Phase 4 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: 同上；多数 NONE/INVALID 样本被 -462 阻断）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.song_url.A.br128.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.song_url.A.br320.anon.001 | AUTH_ANON | - | 200 | 121 |  |
+| ncm.song_url.A.br999.none.001 | AUTH_NONE | err | -462 | - | code -462 |
+| ncm.song_url.A.id0.none.neg.001 | AUTH_NONE | err | -462 | - | code -462 |
+| ncm.song_url.B.br999.none.001 | AUTH_NONE | err | -462 | - | code -462 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `data[].accompany` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data[].auEff` | number | 1 | 0 | 0 | AUTH_ANON | `1001` |
+| `data[].beatType` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data[].br` | number | 1 | 0 | 0 | AUTH_ANON | `128012` |
+| `data[].canExtend` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data[].channelLayout` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data[].closedGain` | number | 1 | 0 | 0 | AUTH_ANON | `-6` |
+| `data[].closedPeak` | number | 1 | 0 | 0 | AUTH_ANON | `0.999` |
+| `data[].code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `data[].effectTypes` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data[].encodeType` | string | 1 | 0 | 0 | AUTH_ANON | `mp3` |
+| `data[].expi` | number | 1 | 0 | 0 | AUTH_ANON | `1200` |
+| `data[].fee` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `data[].flag` | number | 1 | 0 | 0 | AUTH_ANON | `1541124` |
+| `data[].freeTimeTrialPrivilege.remainTime` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data[].freeTimeTrialPrivilege.resConsumable` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data[].freeTimeTrialPrivilege.type` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data[].freeTimeTrialPrivilege.userConsumable` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data[].freeTrialInfo.algData.audioEffect` | number | 1 | 0 | 0 | AUTH_ANON | `-1` |
+| `data[].freeTrialInfo.algData.fragSource` | string | 1 | 0 | 0 | AUTH_ANON | `alg` |
+| `data[].freeTrialInfo.end` | number | 1 | 0 | 0 | AUTH_ANON | `30` |
+| `data[].freeTrialInfo.fragmentType` | number | 1 | 0 | 0 | AUTH_ANON | `6` |
+| `data[].freeTrialInfo.start` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data[].freeTrialPrivilege.cannotListenReason` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `data[].freeTrialPrivilege.freeLimitTagType` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data[].freeTrialPrivilege.listenType` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data[].freeTrialPrivilege.playReason` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data[].freeTrialPrivilege.resConsumable` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data[].freeTrialPrivilege.userConsumable` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data[].gain` | number | 1 | 0 | 0 | AUTH_ANON | `2` |
+| `data[].id` | number | 1 | 0 | 0 | AUTH_ANON | `449818741` |
+| `data[].immerseType` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data[].level` | string | 1 | 0 | 0 | AUTH_ANON | `standard` |
+| `data[].levelConfuse` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data[].md5` | string | 1 | 0 | 0 | AUTH_ANON | `6d022858528f8d8b3cb329a5321e3909` |
+| `data[].message` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data[].musicId` | string | 1 | 0 | 0 | AUTH_ANON | `11273635073` |
+| `data[].payed` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data[].peak` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data[].podcastCtrp` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data[].rightSource` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data[].size` | number | 1 | 0 | 0 | AUTH_ANON | `481115` |
+| `data[].sr` | number | 1 | 0 | 0 | AUTH_ANON | `44100` |
+| `data[].time` | number | 1 | 0 | 0 | AUTH_ANON | `30040` |
+| `data[].type` | string | 1 | 0 | 0 | AUTH_ANON | `MP3` |
+| `data[].uf` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data[].url` | string | 1 | 0 | 0 | AUTH_ANON | `http://m702.music.126.net/20260804193817` |
+| `data[].urlSource` | number | 1 | 0 | 0 | AUTH_ANON | `0` |

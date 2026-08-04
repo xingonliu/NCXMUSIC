@@ -10100,10 +10100,10 @@
         }
       ],
       "plannedCaseCount": 54,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.mv_url.md",
-      "blocker": ""
+      "blocker": "INVALID 层被 -462 阻断；VIP/已购层缺失"
     },
     {
       "apiAuditId": "ncm.nickname_check",
@@ -15661,10 +15661,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 6,
+      "executedCaseCount": 9,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.song_detail.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
+      "blocker": "AUTH_USER 登录层缺失（B-002）；Phase 4 增补 3 个媒体夹具标签样本"
     },
     {
       "apiAuditId": "ncm.song_downlist",
@@ -15770,10 +15770,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 54,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.song_download_url.md",
-      "blocker": ""
+      "blocker": "ANON 成功样本仅证明未购付费歌 → code -105；AUTH_VIP/PURCHASED 缺失"
     },
     {
       "apiAuditId": "ncm.song_download_url_v1",
@@ -15820,10 +15820,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 54,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.song_download_url_v1.md",
-      "blocker": ""
+      "blocker": "同上"
     },
     {
       "apiAuditId": "ncm.song_dynamic_cover",
@@ -16563,10 +16563,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 54,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 5,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.song_url.md",
-      "blocker": ""
+      "blocker": "同上；多数 NONE/INVALID 样本被 -462 阻断"
     },
     {
       "apiAuditId": "ncm.song_url_match",
@@ -16711,10 +16711,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 54,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 34,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.song_url_v1.md",
-      "blocker": ""
+      "blocker": "AUTH_VIP/PURCHASED 缺失（音质矩阵 VIP 行 blocked_by_prerequisite）；INVALID 层部分被 -462 阻断；enhanced 配置缺失（B-003）"
     },
     {
       "apiAuditId": "ncm.song_url_v1_302",
@@ -16761,10 +16761,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 54,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 2,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.song_url_v1_302.md",
-      "blocker": ""
+      "blocker": "全部样本被 -462 验证挑战阻断，无成功样本；需风控冷却后补测"
     },
     {
       "apiAuditId": "ncm.song_wiki_summary",
@@ -20754,9 +20754,9 @@
       ],
       "plannedCaseCount": 54,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.video_url.md",
-      "blocker": ""
+      "blocker": "无 videoId 夹具（Phase 2 视频搜索未产出；待视频域发现后补测）"
     },
     {
       "apiAuditId": "ncm.vip_growthpoint",

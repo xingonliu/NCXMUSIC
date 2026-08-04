@@ -90,3 +90,31 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 16. Phase 4 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: INVALID 层被 -462 阻断；VIP/已购层缺失）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.mv_url.anon.001 | AUTH_ANON | - | 200 | 78 |  |
+| ncm.mv_url.id0.none.neg.001 | AUTH_NONE | - | 200 | 59 |  |
+| ncm.mv_url.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.mv_url.none.001 | AUTH_NONE | - | 200 | 107 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `200` |
+| `data.code` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `200` |
+| `data.expi` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `3600` |
+| `data.fee` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data.id` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `5404646` |
+| `data.md5` | union<string|null> | 3 | 1 | 0 | AUTH_ANON,AUTH_NONE | `` |
+| `data.msg` | union<string|null> | 3 | 1 | 0 | AUTH_ANON,AUTH_NONE | `` |
+| `data.mvFee` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data.promotionVo` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `data.r` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `1080` |
+| `data.size` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `82829918` |
+| `data.st` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data.url` | union<string|null> | 3 | 1 | 0 | AUTH_ANON,AUTH_NONE | `http://vodkgeyttp8.vod.126.net/cloudmusi` |

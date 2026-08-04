@@ -31,7 +31,7 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 6,
+    "executed": 9,
     "cases": [
       {
         "caseId": "ncm.song_detail.empty.none.neg.001",
@@ -51,6 +51,36 @@
         },
         "sampleHash": "f3c36cb9121233d33974ac9f507dd92653229c6fd9cc8661833299a9386df76f",
         "rawFile": "ncm.song_detail.ncm.song_detail.empty.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_detail.media-fixture.songA.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 76,
+        "error": null,
+        "sampleHash": "2a5ef9a8a7760449a7dfe67f058c33d0f26a46c30c07c936b2e03f7ab1f8a7bd",
+        "rawFile": "ncm.song_detail.ncm.song_detail.media-fixture.songA.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_detail.media-fixture.songB.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 105,
+        "error": null,
+        "sampleHash": "7935339cfa0cfb6d9ca2825622062d1939de0b8c4b54129c3b4b32ccfff28742",
+        "rawFile": "ncm.song_detail.ncm.song_detail.media-fixture.songB.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_detail.media-fixture.songC.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 88,
+        "error": null,
+        "sampleHash": "471ca9d240f67a307b4bbbf22a4c486a59c5fd5df1c615dc18b3fc5dd6fd055f",
+        "rawFile": "ncm.song_detail.ncm.song_detail.media-fixture.songC.001.raw.json"
       },
       {
         "caseId": "ncm.song_detail.multi.none.001",
@@ -1829,12 +1859,27 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "blocker": "AUTH_USER 登录层缺失（B-002）；Phase 4 增补 3 个媒体夹具标签样本",
   "evidence": [
     {
       "caseId": "ncm.song_detail.empty.none.neg.001",
       "sampleHash": "f3c36cb9121233d33974ac9f507dd92653229c6fd9cc8661833299a9386df76f",
       "rawFile": "ncm.song_detail.ncm.song_detail.empty.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_detail.media-fixture.songA.001",
+      "sampleHash": "2a5ef9a8a7760449a7dfe67f058c33d0f26a46c30c07c936b2e03f7ab1f8a7bd",
+      "rawFile": "ncm.song_detail.ncm.song_detail.media-fixture.songA.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_detail.media-fixture.songB.001",
+      "sampleHash": "7935339cfa0cfb6d9ca2825622062d1939de0b8c4b54129c3b4b32ccfff28742",
+      "rawFile": "ncm.song_detail.ncm.song_detail.media-fixture.songB.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_detail.media-fixture.songC.001",
+      "sampleHash": "471ca9d240f67a307b4bbbf22a4c486a59c5fd5df1c615dc18b3fc5dd6fd055f",
+      "rawFile": "ncm.song_detail.ncm.song_detail.media-fixture.songC.001.raw.json"
     },
     {
       "caseId": "ncm.song_detail.multi.none.001",

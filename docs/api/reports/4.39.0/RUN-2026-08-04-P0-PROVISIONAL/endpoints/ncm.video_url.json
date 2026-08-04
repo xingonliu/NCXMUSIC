@@ -42,7 +42,7 @@
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "blocked_by_prerequisite",
+  "blocker": "无 videoId 夹具（Phase 2 视频搜索未产出；待视频域发现后补测）",
   "evidence": []
 }

@@ -43,15 +43,1307 @@
   },
   "matrix": {
     "planned": 54,
-    "executed": 0,
-    "cases": []
+    "executed": 34,
+    "cases": [
+      {
+        "caseId": "ncm.song_url_v1.A.dolby.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 121,
+        "error": null,
+        "sampleHash": "e369cc8ae978f2c852a49a56ee433512bd097d66212d6badc29d1c50a86aacb5",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.dolby.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.dolby.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 104,
+        "error": null,
+        "sampleHash": "04606c2aa3ac8238f1ddb940ade9c8b0370761cb62bfe0fa447f60dcd73a8bae",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.dolby.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.exhigh.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 122,
+        "error": null,
+        "sampleHash": "0c9f7cc484eb2c83f2352050425bb75ff239066b63ecdc6ee3305078d23a4d52",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.exhigh.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 4,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792709126388289564",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=454a3de2faa1",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "6bcb68d8779b28662450407a94073d7d2fd37c6599c9185ad42e4823bbc2b6f5",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.exhigh.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 96,
+        "error": null,
+        "sampleHash": "3460d92b702792debaca63d6ec08005652847bb11e9a22893bc3b62fe2fc2b0b",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.higher.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 154,
+        "error": null,
+        "sampleHash": "9991d679f946628ebfcbe9b54b34aa8f3424242ef526dbeb300911313aadd06f",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.higher.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.higher.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 107,
+        "error": null,
+        "sampleHash": "0e586cbbf4c6b6a9d46f5520466f68fc4591ee8a76e4f7808ad531240dd47371",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.higher.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.hires.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 122,
+        "error": null,
+        "sampleHash": "0e2d0f33797ce17ba8722250f35946bb66e6c5c8849c8c160a648c24786fe0a6",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.hires.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.hires.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 100,
+        "error": null,
+        "sampleHash": "541fd5e3b0adb5ce02de3a15b4580903ec47b5f4f2f479525273ba248487ef01",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.hires.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.jyeffect.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 115,
+        "error": null,
+        "sampleHash": "a8c056728949d149319a34b3dcf5dd86aa739cec15619c766ae1004acb12c8b5",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jyeffect.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.jyeffect.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 98,
+        "error": null,
+        "sampleHash": "ff80730be6e2167b77ca63e80ab987035da27f4006266f7c9338e7f018906829",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jyeffect.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.jymaster.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 110,
+        "error": null,
+        "sampleHash": "a7f7a282d5105e0657d98098856e39b2a9460a07b82300af9ef695c219bfd6f0",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jymaster.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.jymaster.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 106,
+        "error": null,
+        "sampleHash": "061008c1959035fc926415b53d401e85d846957da0ba2f24410dff4f1052845e",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jymaster.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.lossless.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 138,
+        "error": null,
+        "sampleHash": "8ff0756890c7c34e0980c40acc4757a6a1435b30ff7538ff90c0c7cad870726b",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.lossless.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 4,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792709255850123295",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=0db639963779",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "5462ba6954da657680ac02a7d5de4d749f11c8c6356716288eada3840ab573db",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.lossless.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 95,
+        "error": null,
+        "sampleHash": "35a1524f147008b47148cd2656a880e03ba7bf069c8b0a0c4bd7bfffe00553f9",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.sky.aac.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 108,
+        "error": null,
+        "sampleHash": "ae1981c76a11a6f75ced5fba93ae60a5be1bc46336ddca7e189029e1af123ed0",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.aac.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.sky.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 110,
+        "error": null,
+        "sampleHash": "3f9d8bc255614101e92e9ca0650b236bf3b7829421a0a076a880830338aeece8",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.sky.c51.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 112,
+        "error": null,
+        "sampleHash": "c1b3a51e1e99557119bc33d835a0ab2d7ce10db31a0030cedb06945857246154",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.c51.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.sky.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 84,
+        "error": null,
+        "sampleHash": "e66bbec6cbd1ea486d1f308582d7bfdce5a4b839351903961ae4845d75212bd7",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.sky.ste.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 113,
+        "error": null,
+        "sampleHash": "b7cfb8549b382fcfee5d79711d9468048c07d134d8de684a5f201d731932f999",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.ste.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.standard.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 160,
+        "error": null,
+        "sampleHash": "19ad326f4278fc6224978efd717e44d7fbbab82a286cff373815aaa0b97d2fb8",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.standard.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 89,
+        "error": null,
+        "sampleHash": "256f49ed333df5f72f93b7071f0e32ca47dec1db989a369963760c6a25d1faaf",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.standard.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 4,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792708996788613145",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=f5cd6bce6295",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "84f428d7506e1b7bcf4240b2ba2a8d1ad26a635022cebc81d0682816d8822b05",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.A.standard.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 166,
+        "error": null,
+        "sampleHash": "5023c8e5ebae2ef96c4631ee7dc5da9867f8db657ee40a7ea096fa78a9268f55",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.B.dolby.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 103,
+        "error": null,
+        "sampleHash": "b7e98dea31b2208fd0d5c51663699235139f6e54dd8a2e704c075f3faff8f549",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.dolby.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.B.exhigh.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 97,
+        "error": null,
+        "sampleHash": "33ab68e275c7afac02f38b7832ac75280a48b3dc4d11e92a2eedb8344000c7ad",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.exhigh.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.B.higher.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 98,
+        "error": null,
+        "sampleHash": "98710c9fbc56538945dc13651addb5bcf548ea22e9f050a8fa6db3bd23d9e2bf",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.higher.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.B.hires.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 106,
+        "error": null,
+        "sampleHash": "10430a97af92519001e44ae0e1c1e9a0d51a1615b504d2bbd5213d98ba71f9d3",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.hires.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.B.jyeffect.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 96,
+        "error": null,
+        "sampleHash": "19f5648c0404564fc5f1700c49f571b73f8b845588c30d8d3c1daf40d4657b27",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.jyeffect.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.B.jymaster.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 110,
+        "error": null,
+        "sampleHash": "6f25ba3312625805df868373690785b015f37801a9c99433f6635e318be78611",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.jymaster.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.B.lossless.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 106,
+        "error": null,
+        "sampleHash": "11134100e7ab99f0b12fec825415c48a7a7754ef46d66fde2f7939f041f3b04b",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.lossless.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.B.sky.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 107,
+        "error": null,
+        "sampleHash": "1baa7b825ab388b41071444a70df95df1a4a436cf91957c5e684dad69984d010",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.sky.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1.B.standard.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 104,
+        "error": null,
+        "sampleHash": "e82bf7c9d83b2d604afe515079a6e49fb6efb72dd093519534e0419f58a36ed8",
+        "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.standard.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data[].accompany",
+      "rawType": "null",
+      "presence": 31,
+      "nulls": 31,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].auEff",
+      "rawType": "union<number|null>",
+      "presence": 31,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data[].beatType",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].br",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "128012"
+    },
+    {
+      "jsonPath": "data[].canExtend",
+      "rawType": "boolean",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].channelLayout",
+      "rawType": "null",
+      "presence": 31,
+      "nulls": 31,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].closedGain",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "-6"
+    },
+    {
+      "jsonPath": "data[].closedPeak",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "0.999"
+    },
+    {
+      "jsonPath": "data[].code",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data[].effectTypes",
+      "rawType": "null",
+      "presence": 31,
+      "nulls": 31,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].encodeType",
+      "rawType": "union<string|null>",
+      "presence": 31,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "mp3"
+    },
+    {
+      "jsonPath": "data[].expi",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "1200"
+    },
+    {
+      "jsonPath": "data[].fee",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data[].flag",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "2065412"
+    },
+    {
+      "jsonPath": "data[].freeTimeTrialPrivilege.remainTime",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].freeTimeTrialPrivilege.resConsumable",
+      "rawType": "boolean",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].freeTimeTrialPrivilege.type",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].freeTimeTrialPrivilege.userConsumable",
+      "rawType": "boolean",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].freeTrialInfo",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.standard.id0.none.neg.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].freeTrialInfo.algData.audioEffect",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.A.standard.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data[].freeTrialInfo.algData.fragSource",
+      "rawType": "string",
+      "presence": 21,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.A.standard.none.001",
+      "example": "alg"
+    },
+    {
+      "jsonPath": "data[].freeTrialInfo.end",
+      "rawType": "number",
+      "presence": 21,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.A.standard.none.001",
+      "example": "30"
+    },
+    {
+      "jsonPath": "data[].freeTrialInfo.fragmentType",
+      "rawType": "number",
+      "presence": 21,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.A.standard.none.001",
+      "example": "6"
+    },
+    {
+      "jsonPath": "data[].freeTrialInfo.start",
+      "rawType": "number",
+      "presence": 21,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.A.standard.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].freeTrialPrivilege.cannotListenReason",
+      "rawType": "union<number|null>",
+      "presence": 31,
+      "nulls": 22,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data[].freeTrialPrivilege.freeLimitTagType",
+      "rawType": "null",
+      "presence": 31,
+      "nulls": 31,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].freeTrialPrivilege.listenType",
+      "rawType": "union<number|null>",
+      "presence": 31,
+      "nulls": 22,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].freeTrialPrivilege.playReason",
+      "rawType": "null",
+      "presence": 31,
+      "nulls": 31,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].freeTrialPrivilege.resConsumable",
+      "rawType": "boolean",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].freeTrialPrivilege.userConsumable",
+      "rawType": "boolean",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].gain",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "1.5"
+    },
+    {
+      "jsonPath": "data[].id",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "449818741"
+    },
+    {
+      "jsonPath": "data[].immerseType",
+      "rawType": "null",
+      "presence": 31,
+      "nulls": 31,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].level",
+      "rawType": "union<string|null>",
+      "presence": 31,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "standard"
+    },
+    {
+      "jsonPath": "data[].levelConfuse",
+      "rawType": "null",
+      "presence": 31,
+      "nulls": 31,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].md5",
+      "rawType": "union<string|null>",
+      "presence": 31,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "6d022858528f8d8b3cb329a5321e3909"
+    },
+    {
+      "jsonPath": "data[].message",
+      "rawType": "null",
+      "presence": 31,
+      "nulls": 31,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].musicId",
+      "rawType": "union<string|null>",
+      "presence": 31,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "11273635073"
+    },
+    {
+      "jsonPath": "data[].payed",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].peak",
+      "rawType": "union<number|null>",
+      "presence": 31,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].podcastCtrp",
+      "rawType": "null",
+      "presence": 31,
+      "nulls": 31,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].rightSource",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].size",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "481115"
+    },
+    {
+      "jsonPath": "data[].sr",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "44100"
+    },
+    {
+      "jsonPath": "data[].time",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "30040"
+    },
+    {
+      "jsonPath": "data[].type",
+      "rawType": "union<string|null>",
+      "presence": 31,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "MP3"
+    },
+    {
+      "jsonPath": "data[].uf",
+      "rawType": "null",
+      "presence": 31,
+      "nulls": 31,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].url",
+      "rawType": "union<string|null>",
+      "presence": 31,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "http://m802.music.126.net/20260804193539/ac3f3b9023621fad708"
+    },
+    {
+      "jsonPath": "data[].urlSource",
+      "rawType": "number",
+      "presence": 31,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_url_v1.A.dolby.anon.001",
+      "lastSeenCase": "ncm.song_url_v1.B.standard.none.001",
+      "example": "0"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_VIP/PURCHASED 缺失（音质矩阵 VIP 行 blocked_by_prerequisite）；INVALID 层部分被 -462 阻断；enhanced 配置缺失（B-003）",
+  "evidence": [
+    {
+      "caseId": "ncm.song_url_v1.A.dolby.anon.001",
+      "sampleHash": "e369cc8ae978f2c852a49a56ee433512bd097d66212d6badc29d1c50a86aacb5",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.dolby.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.dolby.none.001",
+      "sampleHash": "04606c2aa3ac8238f1ddb940ade9c8b0370761cb62bfe0fa447f60dcd73a8bae",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.dolby.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.exhigh.anon.001",
+      "sampleHash": "0c9f7cc484eb2c83f2352050425bb75ff239066b63ecdc6ee3305078d23a4d52",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.exhigh.inv.001",
+      "sampleHash": "6bcb68d8779b28662450407a94073d7d2fd37c6599c9185ad42e4823bbc2b6f5",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.exhigh.none.001",
+      "sampleHash": "3460d92b702792debaca63d6ec08005652847bb11e9a22893bc3b62fe2fc2b0b",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.higher.anon.001",
+      "sampleHash": "9991d679f946628ebfcbe9b54b34aa8f3424242ef526dbeb300911313aadd06f",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.higher.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.higher.none.001",
+      "sampleHash": "0e586cbbf4c6b6a9d46f5520466f68fc4591ee8a76e4f7808ad531240dd47371",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.higher.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.hires.anon.001",
+      "sampleHash": "0e2d0f33797ce17ba8722250f35946bb66e6c5c8849c8c160a648c24786fe0a6",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.hires.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.hires.none.001",
+      "sampleHash": "541fd5e3b0adb5ce02de3a15b4580903ec47b5f4f2f479525273ba248487ef01",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.hires.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.jyeffect.anon.001",
+      "sampleHash": "a8c056728949d149319a34b3dcf5dd86aa739cec15619c766ae1004acb12c8b5",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jyeffect.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.jyeffect.none.001",
+      "sampleHash": "ff80730be6e2167b77ca63e80ab987035da27f4006266f7c9338e7f018906829",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jyeffect.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.jymaster.anon.001",
+      "sampleHash": "a7f7a282d5105e0657d98098856e39b2a9460a07b82300af9ef695c219bfd6f0",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jymaster.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.jymaster.none.001",
+      "sampleHash": "061008c1959035fc926415b53d401e85d846957da0ba2f24410dff4f1052845e",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jymaster.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.lossless.anon.001",
+      "sampleHash": "8ff0756890c7c34e0980c40acc4757a6a1435b30ff7538ff90c0c7cad870726b",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.lossless.inv.001",
+      "sampleHash": "5462ba6954da657680ac02a7d5de4d749f11c8c6356716288eada3840ab573db",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.lossless.none.001",
+      "sampleHash": "35a1524f147008b47148cd2656a880e03ba7bf069c8b0a0c4bd7bfffe00553f9",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.sky.aac.none.001",
+      "sampleHash": "ae1981c76a11a6f75ced5fba93ae60a5be1bc46336ddca7e189029e1af123ed0",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.aac.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.sky.anon.001",
+      "sampleHash": "3f9d8bc255614101e92e9ca0650b236bf3b7829421a0a076a880830338aeece8",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.sky.c51.none.001",
+      "sampleHash": "c1b3a51e1e99557119bc33d835a0ab2d7ce10db31a0030cedb06945857246154",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.c51.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.sky.none.001",
+      "sampleHash": "e66bbec6cbd1ea486d1f308582d7bfdce5a4b839351903961ae4845d75212bd7",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.sky.ste.none.001",
+      "sampleHash": "b7cfb8549b382fcfee5d79711d9468048c07d134d8de684a5f201d731932f999",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.ste.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.standard.anon.001",
+      "sampleHash": "19ad326f4278fc6224978efd717e44d7fbbab82a286cff373815aaa0b97d2fb8",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.standard.id0.none.neg.001",
+      "sampleHash": "256f49ed333df5f72f93b7071f0e32ca47dec1db989a369963760c6a25d1faaf",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.standard.inv.001",
+      "sampleHash": "84f428d7506e1b7bcf4240b2ba2a8d1ad26a635022cebc81d0682816d8822b05",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.standard.none.001",
+      "sampleHash": "5023c8e5ebae2ef96c4631ee7dc5da9867f8db657ee40a7ea096fa78a9268f55",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.dolby.none.001",
+      "sampleHash": "b7e98dea31b2208fd0d5c51663699235139f6e54dd8a2e704c075f3faff8f549",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.dolby.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.exhigh.none.001",
+      "sampleHash": "33ab68e275c7afac02f38b7832ac75280a48b3dc4d11e92a2eedb8344000c7ad",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.exhigh.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.higher.none.001",
+      "sampleHash": "98710c9fbc56538945dc13651addb5bcf548ea22e9f050a8fa6db3bd23d9e2bf",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.higher.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.hires.none.001",
+      "sampleHash": "10430a97af92519001e44ae0e1c1e9a0d51a1615b504d2bbd5213d98ba71f9d3",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.hires.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.jyeffect.none.001",
+      "sampleHash": "19f5648c0404564fc5f1700c49f571b73f8b845588c30d8d3c1daf40d4657b27",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.jyeffect.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.jymaster.none.001",
+      "sampleHash": "6f25ba3312625805df868373690785b015f37801a9c99433f6635e318be78611",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.jymaster.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.lossless.none.001",
+      "sampleHash": "11134100e7ab99f0b12fec825415c48a7a7754ef46d66fde2f7939f041f3b04b",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.lossless.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.sky.none.001",
+      "sampleHash": "1baa7b825ab388b41071444a70df95df1a4a436cf91957c5e684dad69984d010",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.sky.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.standard.none.001",
+      "sampleHash": "e82bf7c9d83b2d604afe515079a6e49fb6efb72dd093519534e0419f58a36ed8",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.standard.none.001.raw.json"
+    }
+  ]
 }

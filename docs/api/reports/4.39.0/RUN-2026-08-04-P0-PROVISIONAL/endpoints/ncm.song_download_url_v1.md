@@ -90,3 +90,63 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 16. Phase 4 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: 同上）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.song_download_url_v1.A.anon.001 | AUTH_ANON | - | 200 | 123 |  |
+| ncm.song_download_url_v1.A.id0.none.neg.001 | AUTH_NONE | err | -462 | - | code -462 |
+| ncm.song_download_url_v1.A.none.001 | AUTH_NONE | err | -462 | - | code -462 |
+| ncm.song_download_url_v1.B.none.001 | AUTH_NONE | err | -462 | - | code -462 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `data.accompany` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.auEff` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.beatType` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.br` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.canExtend` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data.channelLayout` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.closedGain` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.closedPeak` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.code` | number | 1 | 0 | 0 | AUTH_ANON | `-105` |
+| `data.effectTypes` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.encodeType` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.expi` | number | 1 | 0 | 0 | AUTH_ANON | `1200` |
+| `data.fee` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `data.flag` | number | 1 | 0 | 0 | AUTH_ANON | `1541124` |
+| `data.freeTimeTrialPrivilege.remainTime` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.freeTimeTrialPrivilege.resConsumable` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data.freeTimeTrialPrivilege.type` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.freeTimeTrialPrivilege.userConsumable` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data.freeTrialInfo` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.freeTrialPrivilege.cannotListenReason` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `data.freeTrialPrivilege.freeLimitTagType` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.freeTrialPrivilege.listenType` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.freeTrialPrivilege.playReason` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.freeTrialPrivilege.resConsumable` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data.freeTrialPrivilege.userConsumable` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data.gain` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.id` | number | 1 | 0 | 0 | AUTH_ANON | `449818741` |
+| `data.immerseType` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.level` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.levelConfuse` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.md5` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.message` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.musicId` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.payed` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.peak` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.podcastCtrp` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.rightSource` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.size` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.sr` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.time` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.type` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.uf` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.url` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.urlSource` | number | 1 | 0 | 0 | AUTH_ANON | `0` |

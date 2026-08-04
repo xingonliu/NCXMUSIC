@@ -91,7 +91,7 @@
 
 ## 15. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
+- 终态：**partial**（blocker: AUTH_USER 登录层缺失（B-002）；Phase 4 增补 3 个媒体夹具标签样本）
 
 | caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
@@ -101,6 +101,14 @@
 | ncm.song_detail.single.anon.001 | AUTH_ANON | - | 200 | 82 |  |
 | ncm.song_detail.single.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 80 |  |
 | ncm.song_detail.single.none.001 | AUTH_NONE | - | 200 | 79 |  |
+
+## 16. Phase 4 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.song_detail.media-fixture.songA.001 | AUTH_NONE | - | 200 | 76 |  |
+| ncm.song_detail.media-fixture.songB.001 | AUTH_NONE | - | 200 | 105 |  |
+| ncm.song_detail.media-fixture.songC.001 | AUTH_NONE | - | 200 | 88 |  |
 
 ### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
 

@@ -34,15 +34,744 @@
   },
   "matrix": {
     "planned": 54,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.song_download_url_v1.A.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 4,
+        "code": 200,
+        "durationMs": 123,
+        "error": null,
+        "sampleHash": "cdb08297a15d6645c2a31c2ce40e696d203c8779860828e5c419411eac0dde89",
+        "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_download_url_v1.A.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792710821675388938",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=f689693011a7",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "87b7f86494673089bff949e26d32afc7128a9dc4cfc6d3d32fa04153d23e7a25",
+        "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_download_url_v1.A.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792710562245591048",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=69b01bf8bd87",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "f09273b7fae5798efa7a4c798add22404d74d90e0526a2c69ae0565c5400847d",
+        "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_download_url_v1.B.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792710690229989376",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=7ded14667d21",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "0bd045acf9bdba29a71a00eb026b9f26a7dbdecb9525eca97dd7a03201c6a529",
+        "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.B.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.accompany",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.auEff",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.beatType",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.br",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.canExtend",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.channelLayout",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.closedGain",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.closedPeak",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "-105"
+    },
+    {
+      "jsonPath": "data.effectTypes",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.encodeType",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.expi",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "1200"
+    },
+    {
+      "jsonPath": "data.fee",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.flag",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "1541124"
+    },
+    {
+      "jsonPath": "data.freeTimeTrialPrivilege.remainTime",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.freeTimeTrialPrivilege.resConsumable",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.freeTimeTrialPrivilege.type",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.freeTimeTrialPrivilege.userConsumable",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.freeTrialInfo",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.freeTrialPrivilege.cannotListenReason",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.freeTrialPrivilege.freeLimitTagType",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.freeTrialPrivilege.listenType",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.freeTrialPrivilege.playReason",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.freeTrialPrivilege.resConsumable",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.freeTrialPrivilege.userConsumable",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.gain",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.id",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "449818741"
+    },
+    {
+      "jsonPath": "data.immerseType",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.level",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.levelConfuse",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.md5",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.message",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.musicId",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.payed",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.peak",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.podcastCtrp",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.rightSource",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.size",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.sr",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.time",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.type",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.uf",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.url",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.urlSource",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "lastSeenCase": "ncm.song_download_url_v1.A.anon.001",
+      "example": "0"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "同上",
+  "evidence": [
+    {
+      "caseId": "ncm.song_download_url_v1.A.anon.001",
+      "sampleHash": "cdb08297a15d6645c2a31c2ce40e696d203c8779860828e5c419411eac0dde89",
+      "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_download_url_v1.A.id0.none.neg.001",
+      "sampleHash": "87b7f86494673089bff949e26d32afc7128a9dc4cfc6d3d32fa04153d23e7a25",
+      "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_download_url_v1.A.none.001",
+      "sampleHash": "f09273b7fae5798efa7a4c798add22404d74d90e0526a2c69ae0565c5400847d",
+      "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_download_url_v1.B.none.001",
+      "sampleHash": "0bd045acf9bdba29a71a00eb026b9f26a7dbdecb9525eca97dd7a03201c6a529",
+      "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.B.none.001.raw.json"
+    }
+  ]
 }

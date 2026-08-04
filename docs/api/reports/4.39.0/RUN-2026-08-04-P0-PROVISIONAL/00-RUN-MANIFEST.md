@@ -128,82 +128,6 @@ node scripts/api-audit/runners/self-check.js --reportDir ...（零遗漏与脱�
 ## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
 - 执行 Agent：opencode (DeepSeek 审计 Agent)
-- 线上请求数：23（并发 1，抖动 350–800ms）
-- guest-01 游客会话：**未建立（register_anonimous 被风控，见 B-005）**
-- xeapi 密钥引导：已建立（bootstrap-fallback-sk-static，见 C-001/XEAPI-001）
-- 关键契约事实：无效 Cookie 静默回退未登录（B-006）；user_detail 缺 uid 返回 code 400
-## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
-
-- 执行 Agent：opencode (DeepSeek 审计 Agent)
-- 线上请求数：23（并发 1，抖动 350–800ms）
-- guest-01 游客会话：**未建立（register_anonimous 被风控，见 B-005）**
-- xeapi 密钥引导：已建立（bootstrap-fallback-sk-static，见 C-001/XEAPI-001）
-- 关键契约事实：无效 Cookie 静默回退未登录（B-006）；user_detail 缺 uid 返回 code 400
-## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
-
-- 执行 Agent：opencode (DeepSeek 审计 Agent)
-- 线上请求数：0（并发 1，抖动 350–800ms）
-- guest-01 游客会话：**未建立（register_anonimous 被风控，见 B-005）**
-- xeapi 密钥引导：已建立（bootstrap-fallback-sk-static，见 C-001/XEAPI-001）
-- 关键契约事实：无效 Cookie 静默回退未登录（B-006）；user_detail 缺 uid 返回 code 400
-## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
-
-- 执行 Agent：opencode (DeepSeek 审计 Agent)
-- 线上请求数：15（并发 1，抖动 350–800ms）
-- guest-01 游客会话：**未建立（register_anonimous 被风控，见 B-005）**
-- xeapi 密钥引导：已建立（bootstrap-fallback-sk-static，见 C-001/XEAPI-001）
-- 关键契约事实：无效 Cookie 静默回退未登录（B-006）；user_detail 缺 uid 返回 code 400
-## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
-
-- 执行 Agent：opencode (DeepSeek 审计 Agent)
-- 线上请求数：17（并发 1，抖动 350–800ms）
-- guest-01 游客会话：**未建立（register_anonimous 被风控，见 B-005）**
-- xeapi 密钥引导：已建立（bootstrap-fallback-sk-static，见 C-001/XEAPI-001）
-- 关键契约事实：无效 Cookie 静默回退未登录（B-006）；user_detail 缺 uid 返回 code 400
-## 12. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
-
-- 执行 Agent：opencode (DeepSeek 审计 Agent)
-- 线上请求数：145（并发 1，抖动 350–800ms，无限流）
-- guest-01 游客会话：已建立（sha256 066dfe4c324b…），AUTH_ANON 层有效
-- 夹具池（8 桶）：songId=100, artistId=100, playlistId=100, mvId=52, albumId=100, djId=64, programId=12, toplistId=63
-- 契约事实：搜索空关键词 code 400；type/cat 非法枚举静默容忍（空 result 或回退默认）；top_list 仅接受榜单歌单 ID
-
-## 13. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
-
-- 线上请求数：106（含失败重跑取证，全部持久化错误响应体）
-- 风控状态变化：运行期出现 -462 验证挑战（verifyType 40），Phase 4 媒体请求须降低速率并观察
-- 日志修正：本次起错误响应（status/body/cookieCount）完整落盘
-
-## 13. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
-
-- 线上请求数：106（含失败重跑取证，全部持久化错误响应体）
-- 风控状态变化：运行期出现 -462 验证挑战（verifyType 40），Phase 4 媒体请求须降低速率并观察
-- 日志修正：本次起错误响应（status/body/cookieCount）完整落盘
-
-## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
-
-- 执行 Agent：opencode (DeepSeek 审计 Agent)
-- 线上请求数：0（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
-- guest-01 游客会话：已建立（AUTH_ANON 层有效）
-- 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
-
-## 12. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
-
-- 执行 Agent：opencode (DeepSeek 审计 Agent)
-- 线上请求数：0（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
-- guest-01 游客会话：已建立（AUTH_ANON 层有效）
-- 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
-
-## 13. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
-
-- 执行 Agent：opencode (DeepSeek 审计 Agent)
-- 线上请求数：0（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
-- guest-01 游客会话：已建立（AUTH_ANON 层有效）
-- 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
-
-## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
-
-- 执行 Agent：opencode (DeepSeek 审计 Agent)
 - 线上请求数：327（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
 - guest-01 游客会话：已建立（AUTH_ANON 层有效）
 - 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
@@ -221,3 +145,11 @@ node scripts/api-audit/runners/self-check.js --reportDir ...（零遗漏与脱�
 - 线上请求数：327（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
 - guest-01 游客会话：已建立（AUTH_ANON 层有效）
 - 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
+
+## 14. Phase 4 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：56（并发 1，抖动 350–800ms；-462 挑战退避 30s/次）
+- 媒体探测：39 个唯一 URL（含 33 个音频/视频 CDN URL），HEAD 全 200（探测在签发窗口后执行）
+- 风控：-462 验证挑战大面积覆盖媒体接口 NONE/INVALID 层（verifyId 1007602）；ANON 层多数成功
+- enhanced：未执行（B-003）；AUTH_VIP/PURCHASED：缺失（音质矩阵 VIP 行 blocked_by_prerequisite）

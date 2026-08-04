@@ -20,7 +20,7 @@ function idHash(id) {
 }
 
 function runPhaseReport(opts) {
-  const { phase, specPath, statusMap, findings, sectionNumbers, rawDir, poolPath, runId, reportDir, packageVersion, sessionDir, agentName } = opts
+  const { phase, specPath, statusMap, findings, sectionNumbers, rawDir, poolPath, runId, reportDir, packageVersion, sessionDir, agentName, coverageExtra, manifestExtra } = opts
   const spec = JSON.parse(fs.readFileSync(specPath, 'utf8'))
   const byApi = loadRawByApi(rawDir)
   const apiIds = spec.groups.map((g) => g.apiAuditId)
@@ -154,7 +154,12 @@ function runPhaseReport(opts) {
 
   const guestLabel = sessionDir ? (fs.existsSync(path.join(sessionDir, 'guest-01.cookie')) ? '已建立（AUTH_ANON 层有效）' : '未建立') : 'N/A'
 
-  upsertSection(path.join(reportDir, '00-RUN-MANIFEST.md'), sectionNumbers.manifest, [
+  const manMarker = '## ' + sectionNumbers.manifest + '. Phase ' + phase + ' 运行记录'
+  const covMarker = '## ' + sectionNumbers.coverage + '. Phase ' + phase + ' 运行记录'
+  const failMarker = '## ' + sectionNumbers.failures + '. Phase ' + phase + ' 运行发现'
+  const diffMarker = '## ' + sectionNumbers.diff + '. Phase ' + phase + ' 多变量差异'
+
+  upsertSection(path.join(reportDir, '00-RUN-MANIFEST.md'), manMarker, [
     '## ' + sectionNumbers.manifest + '. Phase ' + phase + ' 运行记录（' + runId + '）',
     '',
     '- 执行 Agent：' + agentName,
@@ -163,28 +168,33 @@ function runPhaseReport(opts) {
     '- 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s',
   ].join('\n'))
 
-  upsertSection(path.join(reportDir, '02-coverage-summary.md'), sectionNumbers.coverage, [
+  upsertSection(path.join(reportDir, '02-coverage-summary.md'), covMarker, [
     '## ' + sectionNumbers.coverage + '. Phase ' + phase + ' 运行记录（' + runId + '）',
     '',
     '- 执行接口数：' + apiIds.length + '；执行 case：' + caseIds.size,
     '- 终态：' + apiIds.filter((id) => statusMap[id]).length + ' 个已赋（' + [...new Set(apiIds.map((id) => statusMap[id] && statusMap[id].status))].filter(Boolean).join('/') + '）',
     '- 夹具池（脱敏血缘见 03-parameter-lineage.json）：' + Object.entries(poolRaw.pool || {}).map(([k, v]) => k + '=' + v.length).join(', '),
     '- 关键契约事实：见 07-multivariable-diff.md 与 06-failures-and-blockers.md',
+    ...(coverageExtra || []),
   ].join('\n'))
 
-  upsertSection(path.join(reportDir, '06-failures-and-blockers.md'), sectionNumbers.failures, [
+  upsertSection(path.join(reportDir, '06-failures-and-blockers.md'), failMarker, [
     '## ' + sectionNumbers.failures + '. Phase ' + phase + ' 运行发现（' + runId + '）',
     '',
     ...findings.map((f) => '- **' + f[0] + '**（' + f[1] + '）：' + f[2] + '（' + f[3] + '）'),
   ].join('\n'))
 
-  upsertSection(path.join(reportDir, '07-multivariable-diff.md'), sectionNumbers.diff, [
+  upsertSection(path.join(reportDir, '07-multivariable-diff.md'), diffMarker, [
     '## ' + sectionNumbers.diff + '. Phase ' + phase + ' 多变量差异（' + runId + '）',
     '',
     '| 接口 | 维度 | 结论 | 证据 |',
     '| --- | --- | --- | --- |',
     ...findings.map((f) => '| ' + f[0] + ' | ' + f[1] + ' | ' + f[2] + ' | ' + f[3] + ' |'),
   ].join('\n'))
+
+  if (manifestExtra) {
+    upsertSection(path.join(reportDir, '00-RUN-MANIFEST.md'), manMarker, manifestExtra)
+  }
 
   console.log('phase ' + phase + ' report updated; apis=' + apiIds.length + ' cases=' + caseIds.size)
 }

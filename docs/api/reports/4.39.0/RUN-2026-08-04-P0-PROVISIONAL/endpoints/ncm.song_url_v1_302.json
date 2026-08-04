@@ -34,15 +34,101 @@
   },
   "matrix": {
     "planned": 54,
-    "executed": 0,
-    "cases": []
+    "executed": 2,
+    "cases": [
+      {
+        "caseId": "ncm.song_url_v1_302.A.lossless.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792710044416454685",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=533ebf8dcd8b",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "fab64060353685499322d38a6e399f6f7bf41302f3066cf91cf7cf52ab52ffa8",
+        "rawFile": "ncm.song_url_v1_302.ncm.song_url_v1_302.A.lossless.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_v1_302.A.standard.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 4,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792709914813186062",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=b1cc2fe4f889",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "8e825b86817e63b9f95f792be62bb3577f9e376a3d6eaa99366d8cd7b6c69e14",
+        "rawFile": "ncm.song_url_v1_302.ncm.song_url_v1_302.A.standard.none.001.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "全部样本被 -462 验证挑战阻断，无成功样本；需风控冷却后补测",
+  "evidence": [
+    {
+      "caseId": "ncm.song_url_v1_302.A.lossless.none.001",
+      "sampleHash": "fab64060353685499322d38a6e399f6f7bf41302f3066cf91cf7cf52ab52ffa8",
+      "rawFile": "ncm.song_url_v1_302.ncm.song_url_v1_302.A.lossless.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1_302.A.standard.none.001",
+      "sampleHash": "8e825b86817e63b9f95f792be62bb3577f9e376a3d6eaa99366d8cd7b6c69e14",
+      "rawFile": "ncm.song_url_v1_302.ncm.song_url_v1_302.A.standard.none.001.raw.json"
+    }
+  ]
 }

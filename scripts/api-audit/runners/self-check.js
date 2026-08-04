@@ -103,6 +103,19 @@ for (const f of fs.readdirSync(endpointsDir).filter((x) => x.endsWith('.md'))) {
     seen.add(m[1])
   }
 }
+for (const f of ['00-RUN-MANIFEST.md', '02-coverage-summary.md', '06-failures-and-blockers.md', '07-multivariable-diff.md']) {
+  const p = path.join(args.reportDir, f)
+  if (!fs.existsSync(p)) continue
+  const text = fs.readFileSync(p, 'utf8')
+  const seen = new Set()
+  for (const m of text.matchAll(/^##\s*(\d+)\.\s*Phase\s*\d+\s*运行记录/gm)) {
+    if (seen.has(m[1])) {
+      dupSections++
+      assert(false, 'duplicate phase section ## ' + m[1] + ' in ' + f)
+    }
+    seen.add(m[1])
+  }
+}
 console.log('duplicate phase sections found: ' + dupSections)
 
 const manifestPath = path.join(args.reportDir, 'samples-manifest.json')

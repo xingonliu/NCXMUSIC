@@ -9,28 +9,29 @@ function upsertSection(filePath, markerLine, content) {
   const exists = fs.existsSync(filePath)
   const text = exists ? fs.readFileSync(filePath, 'utf8') : ''
   const lines = splitLines(text)
-  let start = -1
+  const starts = []
   for (let i = 0; i < lines.length; i++) {
-    if (lines[i].trim().startsWith(markerLine)) {
-      start = i
-      break
-    }
+    if (lines[i].trim().startsWith(markerLine)) starts.push(i)
   }
   let end = lines.length
-  if (start >= 0) {
-    for (let i = start + 1; i < lines.length; i++) {
+  if (starts.length) {
+    const first = starts[0]
+    const last = starts[starts.length - 1]
+    for (let i = last + 1; i < lines.length; i++) {
       if (/^##\s/.test(lines[i])) {
         end = i
         break
       }
     }
+    const prefix = lines.slice(0, first)
+    const suffix = lines.slice(end)
+    if (suffix.length && suffix[0] !== '') suffix.unshift('')
+    fs.writeFileSync(filePath, [...prefix, ...content.split(/\r?\n/), ...suffix].join('\n'))
+    return
   }
-  const body = content.split(/\r?\n/)
-  const prefix = start >= 0 ? lines.slice(0, start) : (lines.length ? lines : [])
-  if (start < 0 && prefix.length && prefix[prefix.length - 1] !== '') prefix.push('')
-  const suffix = start >= 0 ? lines.slice(end) : []
-  if (suffix.length && suffix[0] !== '') suffix.unshift('')
-  fs.writeFileSync(filePath, [...prefix, ...body, ...suffix].join('\n'))
+  const prefix = lines.length ? lines : []
+  if (prefix.length && prefix[prefix.length - 1] !== '') prefix.push('')
+  fs.writeFileSync(filePath, [...prefix, ...content.split(/\r?\n/)].join('\n'))
 }
 
 function stripPhaseSections(text, markers) {

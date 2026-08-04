@@ -94,3 +94,98 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 16. Phase 4 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_VIP/PURCHASED 缺失（音质矩阵 VIP 行 blocked_by_prerequisite）；INVALID 层部分被 -462 阻断；enhanced 配置缺失（B-003））
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.song_url_v1.A.dolby.anon.001 | AUTH_ANON | - | 200 | 121 |  |
+| ncm.song_url_v1.A.dolby.none.001 | AUTH_NONE | - | 200 | 104 |  |
+| ncm.song_url_v1.A.exhigh.anon.001 | AUTH_ANON | - | 200 | 122 |  |
+| ncm.song_url_v1.A.exhigh.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.song_url_v1.A.exhigh.none.001 | AUTH_NONE | - | 200 | 96 |  |
+| ncm.song_url_v1.A.higher.anon.001 | AUTH_ANON | - | 200 | 154 |  |
+| ncm.song_url_v1.A.higher.none.001 | AUTH_NONE | - | 200 | 107 |  |
+| ncm.song_url_v1.A.hires.anon.001 | AUTH_ANON | - | 200 | 122 |  |
+| ncm.song_url_v1.A.hires.none.001 | AUTH_NONE | - | 200 | 100 |  |
+| ncm.song_url_v1.A.jyeffect.anon.001 | AUTH_ANON | - | 200 | 115 |  |
+| ncm.song_url_v1.A.jyeffect.none.001 | AUTH_NONE | - | 200 | 98 |  |
+| ncm.song_url_v1.A.jymaster.anon.001 | AUTH_ANON | - | 200 | 110 |  |
+| ncm.song_url_v1.A.jymaster.none.001 | AUTH_NONE | - | 200 | 106 |  |
+| ncm.song_url_v1.A.lossless.anon.001 | AUTH_ANON | - | 200 | 138 |  |
+| ncm.song_url_v1.A.lossless.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.song_url_v1.A.lossless.none.001 | AUTH_NONE | - | 200 | 95 |  |
+| ncm.song_url_v1.A.sky.aac.none.001 | AUTH_NONE | - | 200 | 108 |  |
+| ncm.song_url_v1.A.sky.anon.001 | AUTH_ANON | - | 200 | 110 |  |
+| ncm.song_url_v1.A.sky.c51.none.001 | AUTH_NONE | - | 200 | 112 |  |
+| ncm.song_url_v1.A.sky.none.001 | AUTH_NONE | - | 200 | 84 |  |
+| ncm.song_url_v1.A.sky.ste.none.001 | AUTH_NONE | - | 200 | 113 |  |
+| ncm.song_url_v1.A.standard.anon.001 | AUTH_ANON | - | 200 | 160 |  |
+| ncm.song_url_v1.A.standard.id0.none.neg.001 | AUTH_NONE | - | 200 | 89 |  |
+| ncm.song_url_v1.A.standard.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.song_url_v1.A.standard.none.001 | AUTH_NONE | - | 200 | 166 |  |
+| ncm.song_url_v1.B.dolby.none.001 | AUTH_NONE | - | 200 | 103 |  |
+| ncm.song_url_v1.B.exhigh.none.001 | AUTH_NONE | - | 200 | 97 |  |
+| ncm.song_url_v1.B.higher.none.001 | AUTH_NONE | - | 200 | 98 |  |
+| ncm.song_url_v1.B.hires.none.001 | AUTH_NONE | - | 200 | 106 |  |
+| ncm.song_url_v1.B.jyeffect.none.001 | AUTH_NONE | - | 200 | 96 |  |
+| ncm.song_url_v1.B.jymaster.none.001 | AUTH_NONE | - | 200 | 110 |  |
+| ncm.song_url_v1.B.lossless.none.001 | AUTH_NONE | - | 200 | 106 |  |
+| ncm.song_url_v1.B.sky.none.001 | AUTH_NONE | - | 200 | 107 |  |
+| ncm.song_url_v1.B.standard.none.001 | AUTH_NONE | - | 200 | 104 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `200` |
+| `data[].accompany` | null | 31 | 31 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `data[].auEff` | union<number|null> | 31 | 10 | 0 | AUTH_ANON,AUTH_NONE | `1` |
+| `data[].beatType` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data[].br` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `128012` |
+| `data[].canExtend` | boolean | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `data[].channelLayout` | null | 31 | 31 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `data[].closedGain` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `-6` |
+| `data[].closedPeak` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0.999` |
+| `data[].code` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `200` |
+| `data[].effectTypes` | null | 31 | 31 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `data[].encodeType` | union<string|null> | 31 | 1 | 0 | AUTH_ANON,AUTH_NONE | `mp3` |
+| `data[].expi` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `1200` |
+| `data[].fee` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `1` |
+| `data[].flag` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `2065412` |
+| `data[].freeTimeTrialPrivilege.remainTime` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data[].freeTimeTrialPrivilege.resConsumable` | boolean | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `data[].freeTimeTrialPrivilege.type` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data[].freeTimeTrialPrivilege.userConsumable` | boolean | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `data[].freeTrialInfo` | null | 10 | 10 | 0 | AUTH_NONE |  |
+| `data[].freeTrialInfo.algData.audioEffect` | number | 9 | 0 | 0 | AUTH_ANON | `1` |
+| `data[].freeTrialInfo.algData.fragSource` | string | 21 | 0 | 0 | AUTH_ANON,AUTH_NONE | `alg` |
+| `data[].freeTrialInfo.end` | number | 21 | 0 | 0 | AUTH_ANON,AUTH_NONE | `30` |
+| `data[].freeTrialInfo.fragmentType` | number | 21 | 0 | 0 | AUTH_ANON,AUTH_NONE | `6` |
+| `data[].freeTrialInfo.start` | number | 21 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data[].freeTrialPrivilege.cannotListenReason` | union<number|null> | 31 | 22 | 0 | AUTH_ANON,AUTH_NONE | `1` |
+| `data[].freeTrialPrivilege.freeLimitTagType` | null | 31 | 31 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `data[].freeTrialPrivilege.listenType` | union<number|null> | 31 | 22 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data[].freeTrialPrivilege.playReason` | null | 31 | 31 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `data[].freeTrialPrivilege.resConsumable` | boolean | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `data[].freeTrialPrivilege.userConsumable` | boolean | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `data[].gain` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `1.5` |
+| `data[].id` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `449818741` |
+| `data[].immerseType` | null | 31 | 31 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `data[].level` | union<string|null> | 31 | 1 | 0 | AUTH_ANON,AUTH_NONE | `standard` |
+| `data[].levelConfuse` | null | 31 | 31 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `data[].md5` | union<string|null> | 31 | 1 | 0 | AUTH_ANON,AUTH_NONE | `6d022858528f8d8b3cb329a5321e3909` |
+| `data[].message` | null | 31 | 31 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `data[].musicId` | union<string|null> | 31 | 1 | 0 | AUTH_ANON,AUTH_NONE | `11273635073` |
+| `data[].payed` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data[].peak` | union<number|null> | 31 | 1 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data[].podcastCtrp` | null | 31 | 31 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `data[].rightSource` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data[].size` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `481115` |
+| `data[].sr` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `44100` |
+| `data[].time` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `30040` |
+| `data[].type` | union<string|null> | 31 | 1 | 0 | AUTH_ANON,AUTH_NONE | `MP3` |
+| `data[].uf` | null | 31 | 31 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `data[].url` | union<string|null> | 31 | 1 | 0 | AUTH_ANON,AUTH_NONE | `http://m802.music.126.net/20260804193539` |
+| `data[].urlSource` | number | 31 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
