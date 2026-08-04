@@ -132,6 +132,7 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-090 | 小 N 采用正向能力注册模型：模型只能看到并调用 Tool Registry 已注册的 Tool、Action 和 Music API Capability；未注册能力不进入 Tool Schema、不产生审批卡片，也没有可执行 Handler。M1~M4 只决定已注册音乐能力是否审批，Shell 能力独立按 S1~S4 审查。 |
 | C-091 | 音乐安全等级切换即时生效并持久化；从 M1~M3 切换到 M4 不弹 AlertDialog、不要求二次确认，也不在应用重启后重复提示。MusicSafetyControl 自身必须清楚显示当前等级。 |
 | C-092 | Agent 提示卡明确分为 ApprovalCard（审批卡）和 SelectionCard（选择卡）。选择卡由小 N 调用内置 `request_user_selection` Tool 触发，用于在多个候选中确定对象；其结果只返回稳定引用，不代表批准后续操作。 |
+| C-093 | SelectionCard 固定等待 10 分钟并提供“取消”按钮；离开页面、收起侧栏、最小化窗口继续等待，Renderer 重载后恢复。用户发送新聊天消息时取消旧选择与旧 Turn 后处理新消息；应用退出、切换账号或 Runtime 故障时取消。 |
 
 ## 3. 目标用户与使用场景
 
@@ -650,15 +651,18 @@ interface RequestUserSelectionInput {
 }
 
 interface RequestUserSelectionResult {
-  status: 'selected' | 'cancelled'
+  status: 'selected' | 'cancelled' | 'expired'
   selectedRef?: EntityRef
+  reason?: 'user' | 'superseded_by_user_message' | 'app_exit' | 'account_switch' | 'runtime_failure'
 }
 ```
 
 - 候选必须来自本轮已完成工具结果或当前 Entity Pool，不能由模型伪造任意网易云 ID。
 - Runtime 根据引用读取名称、歌手、专辑、封面和权益小标等展示字段；模型不能传 HTML、组件 Props 或任意图片 URL。
 - 该 Tool 属于用户交互能力，不产生音乐/账户副作用，因此不受 M1~M4 审批；它仍计入单 Turn 的 Tool Call 上限，并且同一时刻只允许一个活动选择请求。
-- SelectionCard 的取消、超时、Renderer 恢复和新消息打断规则继续单独确认，不能直接套用 ApprovalCard 的 5 分钟规则。
+- SelectionCard 固定等待 10 分钟；候选与“取消”按钮在有效期内可交互。离开小 N 页面、收起侧栏或最小化窗口继续等待，Renderer 重载后从 Snapshot 恢复卡片和剩余时间。
+- 用户点击“取消”时该 Tool 返回 `SELECTION_CANCELLED`，小 N 可以改用其他方式或结束当前步骤；10 分钟到期返回 `SELECTION_EXPIRED`。两者都不执行后续业务动作。
+- 用户在等待期间发送新的聊天消息时，以新意图优先：旧 Selection Tool 与旧 Turn 以 `superseded_by_user_message` 取消，再启动新 Turn。应用退出、切换账号或 Runtime 故障同样取消，不跨应用重启恢复。
 
 ### 5.6 Dynamic Skill
 
@@ -859,8 +863,9 @@ Tool Call
 
 - 小 N 当前需要用户选择什么，以及为什么无法唯一确定。
 - 2~5 个可点击候选；音乐候选展示高辨识度字段，如封面、名称、歌手、专辑及 VIP/付费小标。
+- 明确的“取消”按钮；固定 10 分钟有效，不能使用 ApprovalCard 的 5 分钟计时。
 - 候选点击只完成 `request_user_selection` Tool，不直接播放、收藏、修改歌单或批准任何后续动作。
-- 已选择后卡片保留所选结果并禁止重复提交；取消、超时和恢复规则待确认。
+- 已选择、取消或过期后卡片保留终态并禁止重复提交；Renderer 重载只恢复仍有效的活动选择。
 
 ApprovalCard 与 SelectionCard 都以内联 Agent 卡片呈现，但不得共用业务语义：前者决定是否授权一个已经确定目标的 Tool Call，后者只帮助小 N 确定目标。一次意图可能先后出现选择卡和审批卡。
 
@@ -1364,6 +1369,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 - D-713（已确认）：生产环境全局接管浏览器右键菜单，空白区不显示，文本编辑能力完整保留；首版冻结歌曲、队列、歌单、专辑、歌手和 Agent 菜单矩阵，并加入“交给小 N”子菜单。
 - D-714（已确认）：所有方形音乐封面统一经 `MediaArtwork` 和图片 URL Adapter 选择语义尺寸，页面不得手写 `param` 或直接请求无上限原图。
 - D-715（已确认）：Agent 提示卡分为审批卡与选择卡；SelectionCard 由内置 `request_user_selection` Tool 触发，返回候选引用但不批准或直接执行后续业务动作。
+- D-716（已确认）：SelectionCard 固定 10 分钟、可显式取消；导航/收起/最小化保留、Renderer 重载恢复，新消息替换旧选择与 Turn，退出/换号/Runtime 故障取消。
 
 ## 12. 决策记录
 
@@ -1430,6 +1436,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 | 2026-08-04 | D-206 | 安全模型改为正向能力注册：小 N 只能调用已注册能力；M 等级只管音乐审批，Shell 独立按 S1~S4 审查，不维护开放式禁止事项清单。 | Tool Registry、Gateway Catalog、Policy Engine、系统提示词 |
 | 2026-08-04 | D-202 | M4 在音乐安全控件中直接选择、即时生效并持久化，不弹额外确认或重启提示。 | MusicSafetyControl、设置持久化、Policy Engine |
 | 2026-08-04 | D-104/D-715 | 同名实体不确定时由小 N 调用选择工具展示 SelectionCard；选择只确定引用，后续业务 Tool 仍独立执行权限判断。 | Entity Resolver、Agent Tool、SelectionCard、Policy Engine |
+| 2026-08-04 | D-716 | 冻结 SelectionCard 的 10 分钟生命周期、显式取消、Renderer 恢复、新消息替换和退出/换号/故障取消规则。 | SelectionCard、Agent Runtime、IPC Snapshot、Turn 调度 |
 
 ## 13. 暂定里程碑
 

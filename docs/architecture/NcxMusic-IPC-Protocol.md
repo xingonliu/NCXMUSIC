@@ -143,7 +143,7 @@ interface SelectionResolvePayload {
 - Resolve 必须匹配当前活动 `selectionId`、`toolCallId` 的隐含关联、账户 generation 和候选集合；迟到、重复或伪造引用均拒绝。
 - `action: select` 只完成 `request_user_selection` Tool 并把 `candidateRef` 返回给模型，不发送 PlayerCommand，也不调用任何音乐写 Handler。
 - 选择后若模型提出新的播放、收藏或歌单 Tool Call，该调用作为全新的 `commandId` 进入能力、Schema 和 Policy 流程。
-- SelectionCard 的超时、Renderer 重载恢复与新消息打断规则仍待确认，协议实现前需补齐对应终态错误码与 Snapshot 字段。
+- SelectionCard 在创建 10 分钟后过期；路由、侧栏与最小化不取消，Renderer 重载从 Snapshot 恢复。新聊天消息取消旧选择与旧 Turn 后开启新 Turn；应用退出、换号或 Runtime 故障取消且不跨应用恢复。
 
 ## 7. 错误协议
 
@@ -169,6 +169,8 @@ interface ProtocolError {
 - `USER_REJECTED`
 - `APPROVAL_EXPIRED`
 - `APPROVAL_CANCELLED`
+- `SELECTION_CANCELLED`
+- `SELECTION_EXPIRED`
 
 `message` 是可安全显示或记录的摘要，不能包含堆栈、Cookie、API Key、完整模型请求、Shell 环境或原始上游响应。开发日志中的技术详情同样先脱敏。
 
@@ -178,8 +180,8 @@ interface ProtocolError {
 
 - 旧端口立即作废，所有页面级 Pending Request 返回 `CONNECTION_REPLACED`。
 - Preload 重新请求端口并完成 Hello。
-- Utility Process 保留仍在运行的 Agent Task 和待审批状态，在新连接通过后返回 Snapshot。
-- Snapshot 至少包含 Agent Task、未决审批、工具状态、账户会话摘要和可恢复的播放读模型版本。
+- Utility Process 保留仍在运行的 Agent Task、待审批状态和未过期 Selection Tool，在新连接通过后返回 Snapshot。
+- Snapshot 至少包含 Agent Task、未决审批、活动选择及其剩余时间、工具状态、账户会话摘要和可恢复的播放读模型版本。
 - Renderer 进程自身崩溃会销毁 AudioHost；新页面只能依据快照重建队列和播放位置，不承诺无缝音频续播。
 
 ### Utility Process 退出
