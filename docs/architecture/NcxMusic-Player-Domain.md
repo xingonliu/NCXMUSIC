@@ -4,7 +4,7 @@
 > 最后更新：2026-08-04
 > 文档用途：约束播放器音频状态、播放队列和恢复行为；技术验证通过并完成产品决策后才能作为实现基线
 > 范围：播放状态机、队列、全局唯一内容音频、音频焦点和持久化。Agent、权限和 IPC 是外部输入源，不在本领域内作决策。
-> 访谈状态：2026-08-04 重新开启播放架构讨论；目前确认 Vue SPA、根层唯一 AudioHost、按路由显示/隐藏 PlayerBar、队列入口语义、上一首直接切歌、暂停式启动恢复、三种播放模式、不可播放自动切歌和队列删除行为，其余技术结构和行为规则仍是讨论底稿。
+> 访谈状态：2026-08-04 重新开启播放架构讨论；目前确认 Vue SPA、根层唯一 AudioHost、按路由显示/隐藏 PlayerBar、队列入口语义、上一首直接切歌、暂停式启动恢复、三种播放模式、不可播放自动切歌、队列删除行为和首版无撤销，其余技术结构和行为规则仍是讨论底稿。
 
 ## 1. 技术讨论约束
 
@@ -195,7 +195,6 @@ interface QueueController {
   remove(queueItemId: string): QueueEffect
   reorder(queueItemId: string, toIndex: number): QueueEffect
   clear(): QueueEffect
-  undo(): QueueEffect | null
   next(reason: 'manual' | 'ended' | 'error-policy'): QueueEffect
   previous(): QueueEffect
   setMode(mode: PlayMode): QueueEffect
@@ -236,25 +235,11 @@ interface QueueController {
 - 增删歌曲时增量更新尚未播放集合，不重洗已经发生的历史。
 - `loop`、`loop-one` 与 `shuffle` 是首版全部播放模式，三者互斥；默认 `loop`。
 
-### 4.5 Undo
+### 4.5 首版无队列撤销
 
-若产品保留撤销，快照至少包含：
-
-```ts
-interface QueueUndoSnapshot {
-  queue: QueueSnapshot
-  playback: {
-    currentItemId: string | null
-    positionMs: number
-    intent: PlaybackIntent
-  }
-}
-```
-
-- `replaceAndPlay`、`clear` 和批量变更是否必须可撤销待确认。
-- 恢复旧歌曲时重新解析 URL，不保存旧 URL。
-- Undo 后 revision 继续递增，不能回退版本号。
-- 若只恢复队列、不恢复当前歌曲和位置，不得在 UI 中称为完整撤销。
+- `replaceAndPlay`、`insertAndPlay`、`remove`、`reorder` 和 `clear` 即时生效，不创建 Undo 快照。
+- 小 N 的大范围队列变更通过轻提示展示影响数量，不提供撤销按钮。
+- 队列操作只影响本地播放现场，不得复用歌单 CRUD Service；网易云歌单写入是独立领域行为并经过权限中间件。
 
 ## 5. 播放模式与错误策略
 
@@ -374,7 +359,7 @@ AppShell（应用生命周期）
 - previous 无论当前播放多久都切换歌曲；shuffle 返回真实历史；返回歌曲从头播放。
 - VIP/付费 Item 正确显示小标但仍可点击；不可播放时轻提示并切歌；整轮失败后停止且不无限循环。
 - shuffle 一个周期不重复、previous 沿真实历史、关闭 shuffle 恢复规范顺序。
-- undo 恢复队列、歌曲、位置和意图，revision 保持单调。
+- 队列命令不会生成 Undo 快照，播放队列操作也不会误写网易云歌单。
 - 启动恢复始终 `autoplay=false`；无有效快照时保持 idle。
 - 全局只创建一个 audio 元素；切歌后同一元素的旧请求被中止，旧 generation 事件被忽略。
 - 订阅 disposer、组件反复挂载、退出时监听器和请求均已释放。
