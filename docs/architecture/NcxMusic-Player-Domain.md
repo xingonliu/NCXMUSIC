@@ -4,7 +4,7 @@
 > 最后更新：2026-08-04
 > 文档用途：约束播放器音频状态、播放队列和恢复行为；技术验证通过并完成产品决策后才能作为实现基线
 > 范围：播放状态机、队列、全局唯一内容音频、音频焦点和持久化。Agent、权限和 IPC 是外部输入源，不在本领域内作决策。
-> 访谈状态：2026-08-04 重新开启播放架构讨论；目前确认 Vue SPA、根层唯一 AudioHost、按路由显示/隐藏 PlayerBar、队列入口语义、上一首直接切歌和暂停式启动恢复，其余技术结构和行为规则仍是讨论底稿。
+> 访谈状态：2026-08-04 重新开启播放架构讨论；目前确认 Vue SPA、根层唯一 AudioHost、按路由显示/隐藏 PlayerBar、队列入口语义、上一首直接切歌、暂停式启动恢复和三种播放模式，其余技术结构和行为规则仍是讨论底稿。
 
 ## 1. 技术讨论约束
 
@@ -170,7 +170,7 @@ interface QueueItem {
 interface QueueSnapshot {
   items: QueueItem[]            // 规范顺序，不因 shuffle 被原地打乱
   currentItemId: string | null
-  mode: 'order' | 'loop' | 'loop-one' | 'shuffle'
+  mode: 'loop' | 'loop-one' | 'shuffle'
   playOrder: string[]           // shuffle 时的稳定播放顺序
   history: string[]             // 实际播放历史，供 previous 使用
   revision: number
@@ -216,7 +216,7 @@ interface QueueController {
 - 单曲插播项是正式队列项，必须在队列 UI 中显示且不会自动清理。连续点播时，以最新当前项为基准继续插到其后并立即播放。
 - 删除当前项时由当前模式决定下一步；删除非当前项不得中断播放。
 - 手动排序只改变规范顺序；是否退出 shuffle 待产品确认，不能隐式销毁随机历史。
-- `previous` 每次都执行切歌，禁止根据当前播放时长改成“从头重播当前歌曲”。顺序类模式取活动播放顺序的上一项；shuffle 取实际 `history` 上一项。队列首项的边界行为随播放模式另行确认。
+- `previous` 每次都执行切歌，禁止根据当前播放时长改成“从头重播当前歌曲”。`loop`/`loop-one` 取规范队列上一项，位于首项时回到末项；shuffle 取实际 `history` 上一项。
 - 切离歌曲后不保存该歌曲的独立续播位置；再次回到该歌曲时从头播放。
 - `revision` 在队列、当前项或模式发生语义变化时单调递增；异步 Agent 命令携带 `expectedRevision`，过期后返回当前状态并要求重新规划或显式合并。
 
@@ -226,7 +226,7 @@ interface QueueController {
 - 一个 shuffle cycle 内不重复歌曲；走完后再生成下一轮。
 - `previous` 读取实际 `history`，不能重新随机。
 - 增删歌曲时增量更新尚未播放集合，不重洗已经发生的历史。
-- loop、loop-one 与 shuffle 的组合方式需在模式产品决策中明确，首版可限制为互斥模式。
+- `loop`、`loop-one` 与 `shuffle` 是首版全部播放模式，三者互斥；默认 `loop`。
 
 ### 4.5 Undo
 
@@ -250,12 +250,13 @@ interface QueueUndoSnapshot {
 
 ## 5. 播放模式与错误策略
 
-| 模式 | 自动 ended 候选行为 | 手动 next 候选行为 |
+| 模式 | 自动 ended 行为 | 手动 next 行为 |
 | --- | --- | --- |
-| `order` | 末项停止 | 末项停止 |
 | `loop` | 末项回到第一项 | 末项回到第一项 |
 | `loop-one` | 当前项重播 | 跳到队列下一项 |
 | `shuffle` | 沿稳定 `playOrder` 前进 | 沿稳定 `playOrder` 前进 |
+
+首版默认 `loop`。不提供 `order`/顺序播放；队列非空时不会仅因到达末项自动停止。`loop-one` 只影响自然 `ended`，手动上一首和下一首继续按队列切歌。
 
 错误策略不能直接写死为“永不跳过”或“始终跳过”。建议按错误类型注入策略：
 
