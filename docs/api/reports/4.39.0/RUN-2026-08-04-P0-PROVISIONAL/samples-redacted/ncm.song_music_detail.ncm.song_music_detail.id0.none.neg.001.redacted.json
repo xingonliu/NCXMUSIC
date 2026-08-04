@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.song_music_detail.id0.none.neg.001",
+    "apiAuditId": "ncm.song_music_detail",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-04T11:03:28.932Z",
+    "endedAt": "2026-08-04T11:03:29.008Z",
+    "durationMs": 76,
+    "attempts": 1
+  },
+  "body": {
+    "data": null,
+    "code": 400,
+    "message": "参数异常",
+    "success": false,
+    "error": true
+  },
+  "error": null
+}

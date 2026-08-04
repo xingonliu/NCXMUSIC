@@ -90,3 +90,15 @@
 - 是否建议进入 Capability Catalog：待定（Phase 15）
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
+
+
+## 15. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.simi_playlist.anon.001 | AUTH_ANON | - | 200 | 110 |  |
+| ncm.simi_playlist.id0.none.neg.001 | AUTH_NONE | - | 200 | 60 |  |
+| ncm.simi_playlist.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 62 |  |
+| ncm.simi_playlist.none.001 | AUTH_NONE | - | 200 | 107 |  |

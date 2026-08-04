@@ -147,3 +147,27 @@ runId：`RUN-2026-08-04-P0-PROVISIONAL`
 - **search / cloudsearch / search_suggest / search_multimatch**（缺失必填）：空关键词 → {"code":400}（明确错误）（*.empty.none.neg.001）
 - **top_song**（非法枚举）：type=999 静默容忍（areaId 999 返回正常列表）（top_song.type999）
 - **夹具池**（血缘）：7 类实体 8 桶：songId/artistId/albumId/playlistId/toplistId/mvId/djId/programId，全部来自上游响应（producerApi/producerCase/jsonPath 已记录）（03-fixture-pool.json）
+
+## 6. Phase 3 运行发现（RUN-2026-08-04-P0-PROVISIONAL）
+
+- **风控验证挑战**（运行期激活）：多个接口在本次运行中触发 code -462（verifyType 40，verifyUrl st.music.163.com/encrypt-pages，blockText 请完成验证操作）：artist_songs id=0、artist_album 无效 Cookie、simi_artist 未登录、simi_song 无效 Cookie、playlist_detail id=0/不存在 等；与 Phase 2 同批接口对比，证明上游风控状态随请求特征动态变化（raw 样本 *.-462 各 case）
+- **simi_artist**（登录要求）：AUTH_NONE → {"code":301,"message":"未登录"}；AUTH_ANON（游客 cookie）→ 200。静态假设 none 需修正为 anon_or_user（simi_artist.none.001 / anon.001）
+- **song_detail**（缺失必填）：空 ids → 502（上游 400 透传，无 message）；不存在的超大 id → 200（返回空 songs 数组而非错误）（song_detail.empty / nonexist）
+- **album_detail**（资源状态）：albumId:0（搜索产出）→ 404 "无专辑商品"（非全部专辑都有商品实体）；旧版 album（/api/album）同 ID → 200 带歌曲（album_detail.none.001 / album.none.001）
+- **song_music_detail**（运行失败）：songId:0 在全部登录层返回 code 400（无 message）——疑似接口需特定上下文或已变更，≥3 层一致，记为 failed 证据（song_music_detail.*）
+- **playlist_detail / playlist_track_all / playlist_detail_dynamic**（无效资源）：id=0 与不存在 id → 404 {"message":"歌单不存在"}（HTTP 404 + body code 404）（playlist_detail.id0 / playlist_track_all.id0）
+- **artist_songs / artist_album / artist_top_song / artist_desc / artists / album / album_privilege**（无效资源）：id=0 → 404（code 404，无 message 或 artist:null）（*.id0.none.neg.001）
+- **playlist_track_all**（边界）：limit=0 → 200（空 tracks 数组，offset 切片语义：trackIds.slice(offset, offset+limit)）（playlist_track_all.limit0）
+- **related_playlist**（实现形态）：非 API：直接抓取 music.163.com 网页 HTML 正则解析（GET https://music.163.com/playlist?id=），返回 code 200 与解析列表（related_playlist.none.001）
+
+## 6. Phase 3 运行发现（RUN-2026-08-04-P0-PROVISIONAL）
+
+- **风控验证挑战**（运行期激活）：多个接口在本次运行中触发 code -462（verifyType 40，verifyUrl st.music.163.com/encrypt-pages，blockText 请完成验证操作）：artist_songs id=0、artist_album 无效 Cookie、simi_artist 未登录、simi_song 无效 Cookie、playlist_detail id=0/不存在 等；与 Phase 2 同批接口对比，证明上游风控状态随请求特征动态变化（raw 样本 *.-462 各 case）
+- **simi_artist**（登录要求）：AUTH_NONE → {"code":301,"message":"未登录"}；AUTH_ANON（游客 cookie）→ 200。静态假设 none 需修正为 anon_or_user（simi_artist.none.001 / anon.001）
+- **song_detail**（缺失必填）：空 ids → 502（上游 400 透传，无 message）；不存在的超大 id → 200（返回空 songs 数组而非错误）（song_detail.empty / nonexist）
+- **album_detail**（资源状态）：albumId:0（搜索产出）→ 404 "无专辑商品"（非全部专辑都有商品实体）；旧版 album（/api/album）同 ID → 200 带歌曲（album_detail.none.001 / album.none.001）
+- **song_music_detail**（运行失败）：songId:0 在全部登录层返回 code 400（无 message）——疑似接口需特定上下文或已变更，≥3 层一致，记为 failed 证据（song_music_detail.*）
+- **playlist_detail / playlist_track_all / playlist_detail_dynamic**（无效资源）：id=0 与不存在 id → 404 {"message":"歌单不存在"}（HTTP 404 + body code 404）（playlist_detail.id0 / playlist_track_all.id0）
+- **artist_songs / artist_album / artist_top_song / artist_desc / artists / album / album_privilege**（无效资源）：id=0 → 404（code 404，无 message 或 artist:null）（*.id0.none.neg.001）
+- **playlist_track_all**（边界）：limit=0 → 200（空 tracks 数组，offset 切片语义：trackIds.slice(offset, offset+limit)）（playlist_track_all.limit0）
+- **related_playlist**（实现形态）：非 API：直接抓取 music.163.com 网页 HTML 正则解析（GET https://music.163.com/playlist?id=），返回 code 200 与解析列表（related_playlist.none.001）

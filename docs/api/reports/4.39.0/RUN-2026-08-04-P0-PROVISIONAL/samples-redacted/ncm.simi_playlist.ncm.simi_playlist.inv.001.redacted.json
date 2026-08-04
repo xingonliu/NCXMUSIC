@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "caseId": "ncm.simi_playlist.inv.001",
+    "apiAuditId": "ncm.simi_playlist",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-04T11:04:33.324Z",
+    "endedAt": "2026-08-04T11:04:33.386Z",
+    "durationMs": 62,
+    "attempts": 1
+  },
+  "body": {
+    "playlists": [],
+    "code": 200
+  },
+  "error": null
+}

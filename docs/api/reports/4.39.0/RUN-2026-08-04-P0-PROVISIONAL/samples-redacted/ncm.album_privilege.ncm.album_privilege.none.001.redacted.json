@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "caseId": "ncm.album_privilege.none.001",
+    "apiAuditId": "ncm.album_privilege",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "35093341"
+    },
+    "startedAt": "2026-08-04T11:03:38.057Z",
+    "endedAt": "2026-08-04T11:03:38.147Z",
+    "durationMs": 90,
+    "attempts": 1
+  },
+  "body": {
+    "data": [
+      {
+        "id": 449818741,
+        "fee": 1,
+        "payed": 0,
+        "st": 0,
+        "pl": 0,
+        "dl": 0,
+        "sp": 7,
+        "cp": 1,
+        "subp": 1,
+        "cs": false,
+        "maxbr": 999000,
+        "fl": 0,
+        "toast": false,
+        "flag": 1541124,
+        "preSell": false,
+        "playMaxbr": 999000,
+        "downloadMaxbr": 999000,
+        "maxBrLevel": "jymaster",
+        "playMaxBrLevel": "jymaster",
+        "downloadMaxBrLevel": "jymaster",
+        "plLevel": "none",
+        "dlLevel": "none",
+        "flLevel": "none",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": true,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

@@ -1,0 +1,271 @@
+{
+  "meta": {
+    "caseId": "ncm.album.none.001",
+    "apiAuditId": "ncm.album",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "35093341"
+    },
+    "startedAt": "2026-08-04T11:04:00.129Z",
+    "endedAt": "2026-08-04T11:04:00.229Z",
+    "durationMs": 100,
+    "attempts": 1
+  },
+  "body": {
+    "resourceState": true,
+    "songs": [
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "alia": [
+              "G.E.M.",
+              "Gloria Tang"
+            ]
+          }
+        ],
+        "al": {
+          "id": 35093341,
+          "name": "光年之外",
+          "picUrl": "https://p4.music.126.net/fkqFqMaEt0CzxYS-0NpCog==/18587244069235039.jpg#hash=730c05279360",
+          "pic_str": "18587244069235039",
+          "pic": 18587244069235040,
+          "alia": [
+            "电影《太空旅客》中文主题曲"
+          ]
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": null,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 0,
+        "fee": 1,
+        "mv": 5404646,
+        "cd": "1",
+        "t": 0,
+        "v": 105,
+        "dt": 235505,
+        "mst": 9,
+        "cp": 1415926,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 9422933,
+          "vd": -44887,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 887395,
+          "fid": 0,
+          "size": 26123277,
+          "vd": -45090,
+          "sr": 44100
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 3769199,
+          "vd": -40588,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [
+          "电影《太空旅客》中文主题曲"
+        ],
+        "pop": 100,
+        "rt": null,
+        "mark": 17179877376,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 5653777,
+          "vd": -42341,
+          "sr": 44100
+        },
+        "name": "光年之外",
+        "id": 449818741,
+        "privilege": {
+          "id": 449818741,
+          "fee": 1,
+          "payed": 0,
+          "st": 0,
+          "pl": 0,
+          "dl": 0,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 0,
+          "toast": false,
+          "flag": 1541124,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "jymaster",
+          "playMaxBrLevel": "jymaster",
+          "downloadMaxBrLevel": "jymaster",
+          "plLevel": "none",
+          "dlLevel": "none",
+          "flLevel": "none",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": true,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      }
+    ],
+    "code": 200,
+    "album": {
+      "songs": [],
+      "paid": false,
+      "onSale": false,
+      "mark": 0,
+      "awardTags": null,
+      "displayTags": null,
+      "picId": 18587244069235040,
+      "artist": {
+        "img1v1Id": 109951167771736530,
+        "topicPerson": 0,
+        "picId": 109951167773880640,
+        "followed": false,
+        "musicSize": 420,
+        "albumSize": 57,
+        "briefDesc": "",
+        "picUrl": "https://p4.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=620db1e771ea",
+        "img1v1Url": "https://p4.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=6d073e3265fb",
+        "trans": "",
+        "alias": [
+          "G.E.M.",
+          "Gloria Tang"
+        ],
+        "name": "G.E.M.邓紫棋",
+        "id": 7763,
+        "picId_str": "109951167773880633",
+        "img1v1Id_str": "109951167771736533"
+      },
+      "artists": [
+        {
+          "img1v1Id": 18686200114669624,
+          "topicPerson": 0,
+          "picId": 0,
+          "followed": false,
+          "musicSize": 0,
+          "albumSize": 0,
+          "briefDesc": "",
+          "picUrl": "",
+          "img1v1Url": "https://p3.music.126.net/VnZiScyynLG7atLIZ2YPkw==/18686200114669622.jpg#hash=99caea27b5d9",
+          "trans": "",
+          "alias": [],
+          "name": "G.E.M.邓紫棋",
+          "id": 7763,
+          "img1v1Id_str": "18686200114669622"
+        }
+      ],
+      "copyrightId": 0,
+      "briefDesc": null,
+      "publishTime": 1483027200007,
+      "company": "蜂鸟音乐",
+      "picUrl": "https://p4.music.126.net/fkqFqMaEt0CzxYS-0NpCog==/18587244069235039.jpg#hash=730c05279360",
+      "commentThreadId": "R_AL_3_35093341",
+      "blurPicUrl": "https://p4.music.126.net/fkqFqMaEt0CzxYS-0NpCog==/18587244069235039.jpg#hash=730c05279360",
+      "companyId": 0,
+      "pic": 18587244069235040,
+      "subType": "录音室版",
+      "status": 0,
+      "description": "《光年以外》是年度科幻巨制电影《太空旅客》的中文主题曲，G.E.M.邓紫棋为其填词作曲，倾情唱出这场由奥斯卡影后詹妮弗·劳伦斯和“星爵”克里斯·帕拉特主演的太空爱恋。\n“缘分让我们相遇乱世以外，命运却要我们危难中相爱。也许未来遥远在光年之外，我愿守候未知里为你等待。”",
+      "tags": "",
+      "alias": [
+        "电影《太空旅客》中文主题曲"
+      ],
+      "name": "光年之外",
+      "id": 35093341,
+      "type": "Single",
+      "size": 1,
+      "picId_str": "18587244069235039",
+      "info": {
+        "commentThread": {
+          "id": "R_AL_3_35093341",
+          "resourceInfo": {
+            "id": 35093341,
+            "userId": -1,
+            "name": "光年之外",
+            "imgUrl": "http://p4.music.126.net/fkqFqMaEt0CzxYS-0NpCog==/18587244069235039.jpg#hash=d7f3976eaebf",
+            "creator": null,
+            "encodedId": null,
+            "subTitle": null,
+            "webUrl": null
+          },
+          "resourceType": 3,
+          "commentCount": 811,
+          "likedCount": 0,
+          "shareCount": 2020,
+          "hotCount": 33,
+          "latestLikedUsers": [],
+          "resourceOwnerId": -1,
+          "resourceTitle": "光年之外",
+          "resourceId": 35093341
+        },
+        "latestLikedUsers": null,
+        "liked": false,
+        "comments": null,
+        "resourceType": 3,
+        "resourceId": 35093341,
+        "commentCount": 811,
+        "likedCount": 0,
+        "shareCount": 2020,
+        "threadId": "R_AL_3_35093341"
+      }
+    }
+  },
+  "error": null
+}

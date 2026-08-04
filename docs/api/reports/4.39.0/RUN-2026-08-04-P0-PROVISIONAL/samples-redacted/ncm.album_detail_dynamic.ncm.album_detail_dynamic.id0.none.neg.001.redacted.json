@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "caseId": "ncm.album_detail_dynamic.id0.none.neg.001",
+    "apiAuditId": "ncm.album_detail_dynamic",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-04T11:04:06.892Z",
+    "endedAt": "2026-08-04T11:04:06.996Z",
+    "durationMs": 104,
+    "attempts": 1
+  },
+  "body": {
+    "onSale": false,
+    "commentCount": 0,
+    "likedCount": 0,
+    "shareCount": 0,
+    "isSub": false,
+    "subTime": 0,
+    "subCount": 0,
+    "code": 200
+  },
+  "error": null
+}

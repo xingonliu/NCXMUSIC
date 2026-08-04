@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "caseId": "ncm.simi_song.anon.001",
+    "apiAuditId": "ncm.simi_song",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-04T11:04:35.417Z",
+    "endedAt": "2026-08-04T11:04:35.488Z",
+    "durationMs": 71,
+    "attempts": 1
+  },
+  "body": {
+    "songs": [],
+    "code": 200
+  },
+  "error": null
+}

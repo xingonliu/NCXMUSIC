@@ -2,6 +2,382 @@
   "runId": "RUN-2026-08-04-P0-PROVISIONAL",
   "samples": [
     {
+      "caseId": "ncm.album_detail_dynamic.anon.001",
+      "apiAuditId": "ncm.album_detail_dynamic",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.anon.001.raw.json",
+      "rawSha256": "0bfc924c25893e73fe18d257e8178ed9051cc34a1fa67d4b8c2978d307f8e862",
+      "redactedFile": "samples-redacted\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_detail_dynamic.id0.none.neg.001",
+      "apiAuditId": "ncm.album_detail_dynamic",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.id0.none.neg.001.raw.json",
+      "rawSha256": "6846343fdde975ca2984f0712e654db85ca544832cb8e4ecc613b04e82a1ea18",
+      "redactedFile": "samples-redacted\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_detail_dynamic.inv.001",
+      "apiAuditId": "ncm.album_detail_dynamic",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.inv.001.raw.json",
+      "rawSha256": "1f838875b3bf44266a3473bde05ebc97c4bb1ca8e995586bf63ff1f9897ed53f",
+      "redactedFile": "samples-redacted\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_detail_dynamic.none.001",
+      "apiAuditId": "ncm.album_detail_dynamic",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.none.001.raw.json",
+      "rawSha256": "7d60a54b5d86cb11bac2211cc3625e5a4fc8af901efe625c06f9d117365c1472",
+      "redactedFile": "samples-redacted\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_detail.anon.001",
+      "apiAuditId": "ncm.album_detail",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.album_detail.ncm.album_detail.anon.001.raw.json",
+      "rawSha256": "8c993c039cbbc56eda98c679a3da296e85063d49416de8fb6f756b9e07f606e8",
+      "redactedFile": "samples-redacted\\ncm.album_detail.ncm.album_detail.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_detail.id0.none.neg.001",
+      "apiAuditId": "ncm.album_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.album_detail.ncm.album_detail.id0.none.neg.001.raw.json",
+      "rawSha256": "49949bacdbbbdd9254bae5bcc816b59d8492e24fb64a15f5c817957f7bd1acee",
+      "redactedFile": "samples-redacted\\ncm.album_detail.ncm.album_detail.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_detail.inv.001",
+      "apiAuditId": "ncm.album_detail",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.album_detail.ncm.album_detail.inv.001.raw.json",
+      "rawSha256": "a961a1c503495c3618b64f82d33536a19d98532454d356f133ce9659ae913069",
+      "redactedFile": "samples-redacted\\ncm.album_detail.ncm.album_detail.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_detail.none.001",
+      "apiAuditId": "ncm.album_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.album_detail.ncm.album_detail.none.001.raw.json",
+      "rawSha256": "472be1920279046db63ea824c26349128bd5e374de1e2dbac24738f6c6821529",
+      "redactedFile": "samples-redacted\\ncm.album_detail.ncm.album_detail.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_privilege.anon.001",
+      "apiAuditId": "ncm.album_privilege",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.album_privilege.ncm.album_privilege.anon.001.raw.json",
+      "rawSha256": "85cc6caee87f0f4002768e5b4da7ff3c192c35f7214ad35f0d8cc58fe07038bf",
+      "redactedFile": "samples-redacted\\ncm.album_privilege.ncm.album_privilege.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_privilege.id0.none.neg.001",
+      "apiAuditId": "ncm.album_privilege",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.album_privilege.ncm.album_privilege.id0.none.neg.001.raw.json",
+      "rawSha256": "8b012b58faa34592914777b815308cab10346056e9cee32372208039ef89bc32",
+      "redactedFile": "samples-redacted\\ncm.album_privilege.ncm.album_privilege.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_privilege.inv.001",
+      "apiAuditId": "ncm.album_privilege",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.album_privilege.ncm.album_privilege.inv.001.raw.json",
+      "rawSha256": "d428dee649343bbad69d72e8d8b750d4937682cfb95ec69cce63793c19a40828",
+      "redactedFile": "samples-redacted\\ncm.album_privilege.ncm.album_privilege.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_privilege.none.001",
+      "apiAuditId": "ncm.album_privilege",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.album_privilege.ncm.album_privilege.none.001.raw.json",
+      "rawSha256": "555504c49e40f9b47adb9a5d5924c66c6c50e91755e4df76dd61257f24ae55f3",
+      "redactedFile": "samples-redacted\\ncm.album_privilege.ncm.album_privilege.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album.anon.001",
+      "apiAuditId": "ncm.album",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.album.ncm.album.anon.001.raw.json",
+      "rawSha256": "53b16e0ed419cff0e7e9393faba2cd8d8b9a53730b68777e378030256452ff57",
+      "redactedFile": "samples-redacted\\ncm.album.ncm.album.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album.id0.none.neg.001",
+      "apiAuditId": "ncm.album",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.album.ncm.album.id0.none.neg.001.raw.json",
+      "rawSha256": "9be0bfed996ccafa741cd2803f10ec02c37da9f01757e9846519b17c37bf99df",
+      "redactedFile": "samples-redacted\\ncm.album.ncm.album.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album.inv.001",
+      "apiAuditId": "ncm.album",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.album.ncm.album.inv.001.raw.json",
+      "rawSha256": "d92bbe115514be25b101a15d093e00d0d885ca23f05b27b86755dfb231a8a2d6",
+      "redactedFile": "samples-redacted\\ncm.album.ncm.album.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album.none.001",
+      "apiAuditId": "ncm.album",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.album.ncm.album.none.001.raw.json",
+      "rawSha256": "2e7d742d3aab1b824d828b423c3351fbeeb2082603f8a43dc994f96c834653f9",
+      "redactedFile": "samples-redacted\\ncm.album.ncm.album.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_album.anon.001",
+      "apiAuditId": "ncm.artist_album",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.artist_album.ncm.artist_album.anon.001.raw.json",
+      "rawSha256": "4f820dea3e65e8470ab11a8e8e89982b87c46851f28617f96d18e2223f4a3f28",
+      "redactedFile": "samples-redacted\\ncm.artist_album.ncm.artist_album.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_album.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_album",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_album.ncm.artist_album.id0.none.neg.001.raw.json",
+      "rawSha256": "d82cb96ba21e2031c2db75925a6126f468e0f30561568b0f429f89928b67ca59",
+      "redactedFile": "samples-redacted\\ncm.artist_album.ncm.artist_album.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_album.inv.001",
+      "apiAuditId": "ncm.artist_album",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.artist_album.ncm.artist_album.inv.001.raw.json",
+      "rawSha256": "22895444ad30a7a1b09e042bc547e6d32dace7e153f16ce10204feb40532a1ea",
+      "redactedFile": "samples-redacted\\ncm.artist_album.ncm.artist_album.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_album.none.001",
+      "apiAuditId": "ncm.artist_album",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_album.ncm.artist_album.none.001.raw.json",
+      "rawSha256": "6fa8d1f99c4fc2d411a36056aee9b2fca1bf6ca730eefb654249aa92e13434ee",
+      "redactedFile": "samples-redacted\\ncm.artist_album.ncm.artist_album.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_album.page.none.001",
+      "apiAuditId": "ncm.artist_album",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_album.ncm.artist_album.page.none.001.raw.json",
+      "rawSha256": "1911f101a6b346e5d9d4ea72b57de3fe55177e1f78d29ddf77325916e75e498b",
+      "redactedFile": "samples-redacted\\ncm.artist_album.ncm.artist_album.page.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_desc.anon.001",
+      "apiAuditId": "ncm.artist_desc",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.artist_desc.ncm.artist_desc.anon.001.raw.json",
+      "rawSha256": "bc7910a6e34c6018f391b9bc2cae411529d32e132baa94d5929bae46a9da62a4",
+      "redactedFile": "samples-redacted\\ncm.artist_desc.ncm.artist_desc.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_desc.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_desc",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_desc.ncm.artist_desc.id0.none.neg.001.raw.json",
+      "rawSha256": "69b3f29de670fbb1151dadc3c1281636d27be297a84ca3467194f1f4a1658455",
+      "redactedFile": "samples-redacted\\ncm.artist_desc.ncm.artist_desc.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_desc.inv.001",
+      "apiAuditId": "ncm.artist_desc",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.artist_desc.ncm.artist_desc.inv.001.raw.json",
+      "rawSha256": "fd508588b7851b5664248c1d595ba7967dd8e6a566d5fb1ac4d55df9cf331fb0",
+      "redactedFile": "samples-redacted\\ncm.artist_desc.ncm.artist_desc.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_desc.none.001",
+      "apiAuditId": "ncm.artist_desc",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_desc.ncm.artist_desc.none.001.raw.json",
+      "rawSha256": "d544a1d9418afb50cb8ce657bf41750d165d9bf7725a7f12c0e131899c5fb291",
+      "redactedFile": "samples-redacted\\ncm.artist_desc.ncm.artist_desc.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_detail_dynamic.anon.001",
+      "apiAuditId": "ncm.artist_detail_dynamic",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.anon.001.raw.json",
+      "rawSha256": "c7fe8336038e5b370c9dacf4023ffda959a53fdbb8ec59e117d31097e10694ae",
+      "redactedFile": "samples-redacted\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_detail_dynamic.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_detail_dynamic",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.id0.none.neg.001.raw.json",
+      "rawSha256": "7779bb223929b1fe6dc5ec758e2cb48594a903f1f4316fcea20bee838438f8fb",
+      "redactedFile": "samples-redacted\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_detail_dynamic.inv.001",
+      "apiAuditId": "ncm.artist_detail_dynamic",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.inv.001.raw.json",
+      "rawSha256": "b97c12d731b4f187a453d67b0293f45d2c711ae4af12d82b18f4f8ad61aba1e9",
+      "redactedFile": "samples-redacted\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_detail_dynamic.none.001",
+      "apiAuditId": "ncm.artist_detail_dynamic",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.none.001.raw.json",
+      "rawSha256": "3a13283c4475cdfe7d225d7e67fae251eb907e18dbc3ccea9d461bbd5c9a6e5d",
+      "redactedFile": "samples-redacted\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_detail.anon.001",
+      "apiAuditId": "ncm.artist_detail",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.artist_detail.ncm.artist_detail.anon.001.raw.json",
+      "rawSha256": "d5a63dd11091b58bacd738858266e4dcc449dcfa2b48cc43882ad3f2b569ff25",
+      "redactedFile": "samples-redacted\\ncm.artist_detail.ncm.artist_detail.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_detail.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_detail.ncm.artist_detail.id0.none.neg.001.raw.json",
+      "rawSha256": "c4202a6506b44b74aa71b8f6bb2f99ccecb2d022587ff65f253d07afb108865c",
+      "redactedFile": "samples-redacted\\ncm.artist_detail.ncm.artist_detail.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_detail.inv.001",
+      "apiAuditId": "ncm.artist_detail",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.artist_detail.ncm.artist_detail.inv.001.raw.json",
+      "rawSha256": "bd75c984ea42fc3390bf88d2f05fe77163dd861b5d7bfafd8d07ee950e437d34",
+      "redactedFile": "samples-redacted\\ncm.artist_detail.ncm.artist_detail.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_detail.none.001",
+      "apiAuditId": "ncm.artist_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_detail.ncm.artist_detail.none.001.raw.json",
+      "rawSha256": "6d8bf4d10245c3b09dab69c75344deaad3d1990cd013498c0ea6fe866e8b49a6",
+      "redactedFile": "samples-redacted\\ncm.artist_detail.ncm.artist_detail.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_songs.anon.001",
+      "apiAuditId": "ncm.artist_songs",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.anon.001.raw.json",
+      "rawSha256": "49dae657bd12c25a5558ceb361c3a95496a2ba03ccc0fe0d169d3b31943218a1",
+      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_songs.hot.none.001",
+      "apiAuditId": "ncm.artist_songs",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.hot.none.001.raw.json",
+      "rawSha256": "436ea0a970ed66cf3a04037295bcdcafd89a9cdd166f247b0fbf7d8687e50ed4",
+      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.hot.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_songs.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_songs",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.id0.none.neg.001.raw.json",
+      "rawSha256": "8bb9831a3c52e48e3dea9130dbc5fc894b138a47e7ffc1c627eca4c7c10a00d6",
+      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_songs.inv.001",
+      "apiAuditId": "ncm.artist_songs",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.inv.001.raw.json",
+      "rawSha256": "fde1770ebd45dadd0ca6fa250fbb42209a5b9d02312f4d698e6f43442e57ee56",
+      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_songs.page.none.001",
+      "apiAuditId": "ncm.artist_songs",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.page.none.001.raw.json",
+      "rawSha256": "660debbc2ed7d7b08bdee804595f90a7d7d00df1abaf23524573252169c1e352",
+      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.page.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_songs.time.none.001",
+      "apiAuditId": "ncm.artist_songs",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.time.none.001.raw.json",
+      "rawSha256": "aeb354eddfe98b298f4a61dd7aa079ccb112bc79d6e09eb573df2cc41c28d6fa",
+      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.time.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_top_song.anon.001",
+      "apiAuditId": "ncm.artist_top_song",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.artist_top_song.ncm.artist_top_song.anon.001.raw.json",
+      "rawSha256": "98b30b47d31705424a002ebd1672d0538c719d82f6c61afbb6b880e483fbba44",
+      "redactedFile": "samples-redacted\\ncm.artist_top_song.ncm.artist_top_song.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_top_song.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_top_song",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_top_song.ncm.artist_top_song.id0.none.neg.001.raw.json",
+      "rawSha256": "c2baa5ad1699fe8da7bfa5bc9929d21c7cb7bdec5f206894bdd21abe48ed4e5d",
+      "redactedFile": "samples-redacted\\ncm.artist_top_song.ncm.artist_top_song.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_top_song.inv.001",
+      "apiAuditId": "ncm.artist_top_song",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.artist_top_song.ncm.artist_top_song.inv.001.raw.json",
+      "rawSha256": "5c3a7265a9c4ee10249cae442d544660e5c2f187b6d18ecd0069f269dd275503",
+      "redactedFile": "samples-redacted\\ncm.artist_top_song.ncm.artist_top_song.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_top_song.none.001",
+      "apiAuditId": "ncm.artist_top_song",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artist_top_song.ncm.artist_top_song.none.001.raw.json",
+      "rawSha256": "c1737352debc57a544738899f10dd74138c94fdfb9e2a781a8234b2f510d5c8b",
+      "redactedFile": "samples-redacted\\ncm.artist_top_song.ncm.artist_top_song.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artists.anon.001",
+      "apiAuditId": "ncm.artists",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.artists.ncm.artists.anon.001.raw.json",
+      "rawSha256": "673f0c0328d8181381df8baa587a7395232834d75cece6286f9e865b831405ff",
+      "redactedFile": "samples-redacted\\ncm.artists.ncm.artists.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artists.id0.none.neg.001",
+      "apiAuditId": "ncm.artists",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artists.ncm.artists.id0.none.neg.001.raw.json",
+      "rawSha256": "610722ccf515f6f0b47d4bbb0aed38a3cd814c79ae764003c785aade71e44b37",
+      "redactedFile": "samples-redacted\\ncm.artists.ncm.artists.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artists.inv.001",
+      "apiAuditId": "ncm.artists",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.artists.ncm.artists.inv.001.raw.json",
+      "rawSha256": "9d5e69125ab87ac3fba3866345d7aabc46075aa58670fec9a49c6fd8e744a987",
+      "redactedFile": "samples-redacted\\ncm.artists.ncm.artists.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artists.none.001",
+      "apiAuditId": "ncm.artists",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.artists.ncm.artists.none.001.raw.json",
+      "rawSha256": "101d21fb74378ef1fce343bcbb68b542dfa84782f78959a88acaa615dcbc5b8a",
+      "redactedFile": "samples-redacted\\ncm.artists.ncm.artists.none.001.redacted.json"
+    },
+    {
       "caseId": "ncm.banner.type0.anon.001",
       "apiAuditId": "ncm.banner",
       "auth": "AUTH_ANON",
@@ -48,6 +424,46 @@
       "rawFile": "raw\\ncm.banner.ncm.banner.type999.none.neg.001.raw.json",
       "rawSha256": "5eb89542289f99deb0b4e5f11ffc0111fad548dafcf760cbc6809898cd99c8d6",
       "redactedFile": "samples-redacted\\ncm.banner.ncm.banner.type999.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.check_music.anon.001",
+      "apiAuditId": "ncm.check_music",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.check_music.ncm.check_music.anon.001.raw.json",
+      "rawSha256": "8832fd611a06475889426c270c13347415c6a710c305203658e9650ddf4d306d",
+      "redactedFile": "samples-redacted\\ncm.check_music.ncm.check_music.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.check_music.br320.none.001",
+      "apiAuditId": "ncm.check_music",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.check_music.ncm.check_music.br320.none.001.raw.json",
+      "rawSha256": "163f5835d27c11274802d78ea88644780bf3fae2ab79be56149f5493e35013f0",
+      "redactedFile": "samples-redacted\\ncm.check_music.ncm.check_music.br320.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.check_music.br999.none.001",
+      "apiAuditId": "ncm.check_music",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.check_music.ncm.check_music.br999.none.001.raw.json",
+      "rawSha256": "5fc7f63171957e3b8c0b7d815fe1dc6b40f55906afcbb56780e952674a6fd8ce",
+      "redactedFile": "samples-redacted\\ncm.check_music.ncm.check_music.br999.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.check_music.id0.none.neg.001",
+      "apiAuditId": "ncm.check_music",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.check_music.ncm.check_music.id0.none.neg.001.raw.json",
+      "rawSha256": "d20b9eab3550033a9c27c3c95e00aa54d5098a1154577f7d656b054e7299cdf7",
+      "redactedFile": "samples-redacted\\ncm.check_music.ncm.check_music.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.check_music.inv.001",
+      "apiAuditId": "ncm.check_music",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.check_music.ncm.check_music.inv.001.raw.json",
+      "rawSha256": "cc6b671564c600c1e8a32cf79057a8e6b45d29c71ebdcef5639efcb856975aae",
+      "redactedFile": "samples-redacted\\ncm.check_music.ncm.check_music.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.cloudsearch.empty.none.neg.001",
@@ -362,6 +778,70 @@
       "redactedFile": "samples-redacted\\ncm.logout.ncm.logout.none.neg.001.redacted.json"
     },
     {
+      "caseId": "ncm.lyric_new.anon.001",
+      "apiAuditId": "ncm.lyric_new",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.lyric_new.ncm.lyric_new.anon.001.raw.json",
+      "rawSha256": "70672fb1522957de7c5a550d1355667a4468dfd579e364a8f57cd147c95dc099",
+      "redactedFile": "samples-redacted\\ncm.lyric_new.ncm.lyric_new.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.lyric_new.id0.none.neg.001",
+      "apiAuditId": "ncm.lyric_new",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.lyric_new.ncm.lyric_new.id0.none.neg.001.raw.json",
+      "rawSha256": "cb112c5aa6bf310b76b12827c3bfa094576fdd27440153af1d4d1a497408d469",
+      "redactedFile": "samples-redacted\\ncm.lyric_new.ncm.lyric_new.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.lyric_new.inv.001",
+      "apiAuditId": "ncm.lyric_new",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.lyric_new.ncm.lyric_new.inv.001.raw.json",
+      "rawSha256": "91ddc1e910c9a33b68cb19178e6c1fd142e9b68d18facdbbb9025ffa5d73b242",
+      "redactedFile": "samples-redacted\\ncm.lyric_new.ncm.lyric_new.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.lyric_new.none.001",
+      "apiAuditId": "ncm.lyric_new",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.lyric_new.ncm.lyric_new.none.001.raw.json",
+      "rawSha256": "b39177b97492083f8b2e74bc2350e9b9b32a75fa916c9d01ccba8ca9103d8e87",
+      "redactedFile": "samples-redacted\\ncm.lyric_new.ncm.lyric_new.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.lyric.anon.001",
+      "apiAuditId": "ncm.lyric",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.lyric.ncm.lyric.anon.001.raw.json",
+      "rawSha256": "88b16ddcbc8cd33af7d387cf7d408b6a92def6805ae0d287a4cf5011f55a521b",
+      "redactedFile": "samples-redacted\\ncm.lyric.ncm.lyric.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.lyric.id0.none.neg.001",
+      "apiAuditId": "ncm.lyric",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.lyric.ncm.lyric.id0.none.neg.001.raw.json",
+      "rawSha256": "9342922e7b41f7414598cac910349986f713d6e2c06d18849d1f9235fdd7e4bb",
+      "redactedFile": "samples-redacted\\ncm.lyric.ncm.lyric.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.lyric.inv.001",
+      "apiAuditId": "ncm.lyric",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.lyric.ncm.lyric.inv.001.raw.json",
+      "rawSha256": "b3dadd3c5414ad4f358aa65c381c88a3e5226fe999b9abbcdd1de5a234ec7a5b",
+      "redactedFile": "samples-redacted\\ncm.lyric.ncm.lyric.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.lyric.none.001",
+      "apiAuditId": "ncm.lyric",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.lyric.ncm.lyric.none.001.raw.json",
+      "rawSha256": "b62155412214d5c06702fbe09c890df80845d209e0370fdb5510041113fa974a",
+      "redactedFile": "samples-redacted\\ncm.lyric.ncm.lyric.none.001.redacted.json"
+    },
+    {
       "caseId": "ncm.personalized_djprogram.anon.001",
       "apiAuditId": "ncm.personalized_djprogram",
       "auth": "AUTH_ANON",
@@ -634,6 +1114,86 @@
       "redactedFile": "samples-redacted\\ncm.playlist_catlist.ncm.playlist_catlist.none.002.redacted.json"
     },
     {
+      "caseId": "ncm.playlist_detail_dynamic.anon.001",
+      "apiAuditId": "ncm.playlist_detail_dynamic",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.anon.001.raw.json",
+      "rawSha256": "e6586d6525febd20539e9ecda5bfde358492decda75ecfd90aee92f6c4ca86a6",
+      "redactedFile": "samples-redacted\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail_dynamic.id0.none.neg.001",
+      "apiAuditId": "ncm.playlist_detail_dynamic",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.id0.none.neg.001.raw.json",
+      "rawSha256": "4f2605ceecac7dd64a50afcd43af3ef2d5fca05d1d07a4a2a9441e7d7221be88",
+      "redactedFile": "samples-redacted\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail_dynamic.inv.001",
+      "apiAuditId": "ncm.playlist_detail_dynamic",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.inv.001.raw.json",
+      "rawSha256": "7d844c12586732b1087a513f54b0f273402d5d3be60c8afa6607bf13a717928f",
+      "redactedFile": "samples-redacted\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail_dynamic.none.001",
+      "apiAuditId": "ncm.playlist_detail_dynamic",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.none.001.raw.json",
+      "rawSha256": "ed0a114d156f21e1c9b78fb54043f27008254e7f7096454287c1f79a4e5f0612",
+      "redactedFile": "samples-redacted\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail.id0.none.neg.001",
+      "apiAuditId": "ncm.playlist_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.id0.none.neg.001.raw.json",
+      "rawSha256": "f3f0552ee726e7fbb382c58c1b26c813eb59f926fa34b19487240537e43fa73f",
+      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail.nonexist.none.neg.001",
+      "apiAuditId": "ncm.playlist_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.nonexist.none.neg.001.raw.json",
+      "rawSha256": "a4d1cb828e2b6231a82a9736a3e0353df90435ccdb5934c1d565ecbc0fce17d6",
+      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.nonexist.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail.pl.anon.001",
+      "apiAuditId": "ncm.playlist_detail",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.pl.anon.001.raw.json",
+      "rawSha256": "ff54a3704e39589feea31777ee124de9de34d4070937535357f09b3eecf0416f",
+      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.pl.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail.pl.inv.001",
+      "apiAuditId": "ncm.playlist_detail",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.pl.inv.001.raw.json",
+      "rawSha256": "c4006b6948e8d3d83761a1684095a142494b13b1ee53acedbd6ba5b2d0494e8c",
+      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.pl.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail.pl.none.001",
+      "apiAuditId": "ncm.playlist_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.pl.none.001.raw.json",
+      "rawSha256": "0216ef6e069962c2a350d00854758fea1eb6353b874a437df765ae0fc1ee9a67",
+      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.pl.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail.toplist.none.001",
+      "apiAuditId": "ncm.playlist_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.toplist.none.001.raw.json",
+      "rawSha256": "565fd482c5ef77ff8dc9ef7b1e1d1ccb93633ee3bade2c243827a52ff9581fde",
+      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.toplist.none.001.redacted.json"
+    },
+    {
       "caseId": "ncm.playlist_highquality_tags.anon.001",
       "apiAuditId": "ncm.playlist_highquality_tags",
       "auth": "AUTH_ANON",
@@ -698,6 +1258,102 @@
       "redactedFile": "samples-redacted\\ncm.playlist_hot.ncm.playlist_hot.none.002.redacted.json"
     },
     {
+      "caseId": "ncm.playlist_subscribers.anon.001",
+      "apiAuditId": "ncm.playlist_subscribers",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.playlist_subscribers.ncm.playlist_subscribers.anon.001.raw.json",
+      "rawSha256": "4349910906047cb05764580b1c63872ac716d09f9380523eca85afc850178095",
+      "redactedFile": "samples-redacted\\ncm.playlist_subscribers.ncm.playlist_subscribers.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_subscribers.id0.none.neg.001",
+      "apiAuditId": "ncm.playlist_subscribers",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_subscribers.ncm.playlist_subscribers.id0.none.neg.001.raw.json",
+      "rawSha256": "bff9c664c6b02e6d63d154cf75e630ab43dcfb5e08c9d456e9b14a134f1bb049",
+      "redactedFile": "samples-redacted\\ncm.playlist_subscribers.ncm.playlist_subscribers.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_subscribers.inv.001",
+      "apiAuditId": "ncm.playlist_subscribers",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.playlist_subscribers.ncm.playlist_subscribers.inv.001.raw.json",
+      "rawSha256": "2fbe0a319e9cef399dafb9d8e82758e38b96e27d75c2260ba223e7489469b717",
+      "redactedFile": "samples-redacted\\ncm.playlist_subscribers.ncm.playlist_subscribers.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_subscribers.none.001",
+      "apiAuditId": "ncm.playlist_subscribers",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_subscribers.ncm.playlist_subscribers.none.001.raw.json",
+      "rawSha256": "399f6fe476b7054de391b006f259185ef9a42a741e66fcd00d9a722e5f4c25c2",
+      "redactedFile": "samples-redacted\\ncm.playlist_subscribers.ncm.playlist_subscribers.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_subscribers.page.none.001",
+      "apiAuditId": "ncm.playlist_subscribers",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_subscribers.ncm.playlist_subscribers.page.none.001.raw.json",
+      "rawSha256": "ccc057574901912afc2b0c2c1ad743020e0feafcb9d959e4a14116bcd04efe65",
+      "redactedFile": "samples-redacted\\ncm.playlist_subscribers.ncm.playlist_subscribers.page.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_track_all.anon.001",
+      "apiAuditId": "ncm.playlist_track_all",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.anon.001.raw.json",
+      "rawSha256": "b9866d83979ce5c7c67dcb2e568734687b4b7d472955c67cbfa9fcf6bbb8ccef",
+      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_track_all.first.none.001",
+      "apiAuditId": "ncm.playlist_track_all",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.first.none.001.raw.json",
+      "rawSha256": "65c0de82ec2ffa7d83f44208be56bd2d276b6485e39a353b842efab988f082c0",
+      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.first.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_track_all.id0.none.neg.001",
+      "apiAuditId": "ncm.playlist_track_all",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.id0.none.neg.001.raw.json",
+      "rawSha256": "2af253a006e5a4675448672bb8e28c0b6068a0b8963aa90a207a4e867f7ca7ef",
+      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_track_all.inv.001",
+      "apiAuditId": "ncm.playlist_track_all",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.inv.001.raw.json",
+      "rawSha256": "3bcaffaa505e3bd696685c391be39fad01ce0a65f701ea35c173e90ce634cfd2",
+      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_track_all.limit0.none.bnd.001",
+      "apiAuditId": "ncm.playlist_track_all",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.limit0.none.bnd.001.raw.json",
+      "rawSha256": "07d96a14c04b1b8385a0adf69bd63c0e53e6c391fac1ca91064ce33926df04b7",
+      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.limit0.none.bnd.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_track_all.mid.none.001",
+      "apiAuditId": "ncm.playlist_track_all",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.mid.none.001.raw.json",
+      "rawSha256": "f010ddf54b8b7fdb8f580252723f1f13e5661ff013cfba8640b17380d131a599",
+      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.mid.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_track_all.toplist.none.001",
+      "apiAuditId": "ncm.playlist_track_all",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.toplist.none.001.raw.json",
+      "rawSha256": "2f310bd7b36143d531244ac9366edbda379693d552ebe46ff1fe75df63581f1a",
+      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.toplist.none.001.redacted.json"
+    },
+    {
       "caseId": "ncm.register_anonimous.none.min.001",
       "apiAuditId": "ncm.register_anonimous",
       "auth": "AUTH_NONE",
@@ -736,6 +1392,22 @@
       "rawFile": "raw\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.raw.json",
       "rawSha256": "760c37fbfeb49fd4aa91cac4e13e1b1e494fa950a6b0bf74cdb164c8556d85c3",
       "redactedFile": "samples-redacted\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.redacted.json"
+    },
+    {
+      "caseId": "ncm.related_playlist.id0.none.neg.001",
+      "apiAuditId": "ncm.related_playlist",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.related_playlist.ncm.related_playlist.id0.none.neg.001.raw.json",
+      "rawSha256": "c4bd01a62f4c442db054a3b9a3176c8c18efa958ea0c08ee011214bcad728d3b",
+      "redactedFile": "samples-redacted\\ncm.related_playlist.ncm.related_playlist.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.related_playlist.none.001",
+      "apiAuditId": "ncm.related_playlist",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.related_playlist.ncm.related_playlist.none.001.raw.json",
+      "rawSha256": "aaab74a7eafcd8ce73b6bb2f5c3d1b1ccb871db26ece1ae991d437cda84f470d",
+      "redactedFile": "samples-redacted\\ncm.related_playlist.ncm.related_playlist.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search_default.anon.001",
@@ -1008,6 +1680,182 @@
       "rawFile": "raw\\ncm.search.ncm.search.type999.none.neg.001.raw.json",
       "rawSha256": "4e8e5feb3c3bdb4d878395b051a875959c6490b7cafcf560dc6fdc91fe45f1f7",
       "redactedFile": "samples-redacted\\ncm.search.ncm.search.type999.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_artist.anon.001",
+      "apiAuditId": "ncm.simi_artist",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.simi_artist.ncm.simi_artist.anon.001.raw.json",
+      "rawSha256": "7ea853cea9dcc5ae39521f7e097a6fe2fafe84ae2d12994f706d58c02931dabc",
+      "redactedFile": "samples-redacted\\ncm.simi_artist.ncm.simi_artist.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_artist.id0.none.neg.001",
+      "apiAuditId": "ncm.simi_artist",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.simi_artist.ncm.simi_artist.id0.none.neg.001.raw.json",
+      "rawSha256": "bf4e7b2ac79467c02b74254107c37ce6c1ad666b8808058fc7fd0cc5a8c25874",
+      "redactedFile": "samples-redacted\\ncm.simi_artist.ncm.simi_artist.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_artist.inv.001",
+      "apiAuditId": "ncm.simi_artist",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.simi_artist.ncm.simi_artist.inv.001.raw.json",
+      "rawSha256": "2b7419b208fe412d33295f8764c07568d8c860113cc8e9cac26370e11e9dd405",
+      "redactedFile": "samples-redacted\\ncm.simi_artist.ncm.simi_artist.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_artist.none.001",
+      "apiAuditId": "ncm.simi_artist",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.simi_artist.ncm.simi_artist.none.001.raw.json",
+      "rawSha256": "3b0410e79b5a925aa04bd43e2d83c0841ecabf588462905e44c4ab7c4d074f31",
+      "redactedFile": "samples-redacted\\ncm.simi_artist.ncm.simi_artist.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_playlist.anon.001",
+      "apiAuditId": "ncm.simi_playlist",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.simi_playlist.ncm.simi_playlist.anon.001.raw.json",
+      "rawSha256": "2c366f042a0baa1b5ac22fce1e8460bbe55b691b341e2104cc08701c37b2054f",
+      "redactedFile": "samples-redacted\\ncm.simi_playlist.ncm.simi_playlist.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_playlist.id0.none.neg.001",
+      "apiAuditId": "ncm.simi_playlist",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.simi_playlist.ncm.simi_playlist.id0.none.neg.001.raw.json",
+      "rawSha256": "b56ded0d895d08c0b6e34901b17ac121c04fe6c18a36a086e96f2063907c7dee",
+      "redactedFile": "samples-redacted\\ncm.simi_playlist.ncm.simi_playlist.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_playlist.inv.001",
+      "apiAuditId": "ncm.simi_playlist",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.simi_playlist.ncm.simi_playlist.inv.001.raw.json",
+      "rawSha256": "c2ec565dc096c9ebad96e83cd989fc94f68e98fefd2344f5cc35af18d469c8eb",
+      "redactedFile": "samples-redacted\\ncm.simi_playlist.ncm.simi_playlist.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_playlist.none.001",
+      "apiAuditId": "ncm.simi_playlist",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.simi_playlist.ncm.simi_playlist.none.001.raw.json",
+      "rawSha256": "bc7767e283c908fe46fb2b2669d469a9e4f6cf42dc0822c2a73cc50bb06dd15d",
+      "redactedFile": "samples-redacted\\ncm.simi_playlist.ncm.simi_playlist.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_song.anon.001",
+      "apiAuditId": "ncm.simi_song",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.simi_song.ncm.simi_song.anon.001.raw.json",
+      "rawSha256": "e8f2f14b12a5f87940500d922fe9569aedd9a138f69d65cb8a8721431a968fcd",
+      "redactedFile": "samples-redacted\\ncm.simi_song.ncm.simi_song.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_song.id0.none.neg.001",
+      "apiAuditId": "ncm.simi_song",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.simi_song.ncm.simi_song.id0.none.neg.001.raw.json",
+      "rawSha256": "7f4ca0fd7c0473e692ddfddc2a1331c24486e5d0774222cc1302a0154a3e542f",
+      "redactedFile": "samples-redacted\\ncm.simi_song.ncm.simi_song.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_song.inv.001",
+      "apiAuditId": "ncm.simi_song",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.simi_song.ncm.simi_song.inv.001.raw.json",
+      "rawSha256": "28b5303c934193bdcc37810fd81d1c54d1b443e7bc0fa07985071bca064c8051",
+      "redactedFile": "samples-redacted\\ncm.simi_song.ncm.simi_song.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_song.none.001",
+      "apiAuditId": "ncm.simi_song",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.simi_song.ncm.simi_song.none.001.raw.json",
+      "rawSha256": "c9401aa601776d50c93a05e28b246a3587fe639e982cea2a2b0e5875d0e9c063",
+      "redactedFile": "samples-redacted\\ncm.simi_song.ncm.simi_song.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_detail.empty.none.neg.001",
+      "apiAuditId": "ncm.song_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.empty.none.neg.001.raw.json",
+      "rawSha256": "f3c36cb9121233d33974ac9f507dd92653229c6fd9cc8661833299a9386df76f",
+      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.empty.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_detail.multi.none.001",
+      "apiAuditId": "ncm.song_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.multi.none.001.raw.json",
+      "rawSha256": "37cb3309049d86a36939e23f0a4bac2cc3465c48ef1053b2ae6b470e0459c81b",
+      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.multi.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_detail.nonexist.none.neg.001",
+      "apiAuditId": "ncm.song_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.nonexist.none.neg.001.raw.json",
+      "rawSha256": "374ee5a8561f85f522853a38958d90d9af1df1c84cd86871cee61e0706ba31e2",
+      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.nonexist.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_detail.single.anon.001",
+      "apiAuditId": "ncm.song_detail",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.single.anon.001.raw.json",
+      "rawSha256": "18f74faa66de5ba168c158ce6205c9bac5f3a693df604ba93d05464b11f69746",
+      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.single.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_detail.single.inv.001",
+      "apiAuditId": "ncm.song_detail",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.single.inv.001.raw.json",
+      "rawSha256": "73dc6177f252bf4236af442df4e9f2a623db9444a9e72f756e4682633e2bae2f",
+      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.single.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_detail.single.none.001",
+      "apiAuditId": "ncm.song_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.single.none.001.raw.json",
+      "rawSha256": "f97c56ab6a7a6b13d9e65b41566a57d8fc6a184ba59d80816bcdd96865ab8728",
+      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.single.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_music_detail.anon.001",
+      "apiAuditId": "ncm.song_music_detail",
+      "auth": "AUTH_ANON",
+      "rawFile": "raw\\ncm.song_music_detail.ncm.song_music_detail.anon.001.raw.json",
+      "rawSha256": "da03fe8786c96e5e703c9ea7dc2e4e3962018342ae2e25122847a5421c455aeb",
+      "redactedFile": "samples-redacted\\ncm.song_music_detail.ncm.song_music_detail.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_music_detail.id0.none.neg.001",
+      "apiAuditId": "ncm.song_music_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.song_music_detail.ncm.song_music_detail.id0.none.neg.001.raw.json",
+      "rawSha256": "70b94dfd837f4e2eab65c92c465b264e16d958de4eb9ca833454420a79dfe747",
+      "redactedFile": "samples-redacted\\ncm.song_music_detail.ncm.song_music_detail.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_music_detail.inv.001",
+      "apiAuditId": "ncm.song_music_detail",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.song_music_detail.ncm.song_music_detail.inv.001.raw.json",
+      "rawSha256": "f7d556af1540c6eb82082b52cbc00c6583447ae242cbe26ae652c8323bf7e5ea",
+      "redactedFile": "samples-redacted\\ncm.song_music_detail.ncm.song_music_detail.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_music_detail.none.001",
+      "apiAuditId": "ncm.song_music_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.song_music_detail.ncm.song_music_detail.none.001.raw.json",
+      "rawSha256": "3da3a3e2a8126cf8744a4878c0ea0249e7526988f12e47b1b91d193ffec8e41a",
+      "redactedFile": "samples-redacted\\ncm.song_music_detail.ncm.song_music_detail.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_album.anon.001",

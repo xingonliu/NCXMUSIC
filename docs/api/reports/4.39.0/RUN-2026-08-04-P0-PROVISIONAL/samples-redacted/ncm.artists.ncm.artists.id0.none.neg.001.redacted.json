@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.artists.id0.none.neg.001",
+    "apiAuditId": "ncm.artists",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-04T11:05:28.706Z",
+    "endedAt": "2026-08-04T11:05:28.769Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 404,
+    "body": {
+      "code": 404
+    },
+    "cookieCount": 0
+  }
+}

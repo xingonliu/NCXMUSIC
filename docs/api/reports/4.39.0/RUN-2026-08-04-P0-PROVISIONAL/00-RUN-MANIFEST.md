@@ -167,3 +167,15 @@ node scripts/api-audit/runners/self-check.js --reportDir ...（零遗漏与脱�
 - guest-01 游客会话：已建立（sha256 066dfe4c324b…），AUTH_ANON 层有效
 - 夹具池（8 桶）：songId=100, artistId=100, playlistId=100, mvId=52, albumId=100, djId=64, programId=12, toplistId=63
 - 契约事实：搜索空关键词 code 400；type/cat 非法枚举静默容忍（空 result 或回退默认）；top_list 仅接受榜单歌单 ID
+
+## 13. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 线上请求数：106（含失败重跑取证，全部持久化错误响应体）
+- 风控状态变化：运行期出现 -462 验证挑战（verifyType 40），Phase 4 媒体请求须降低速率并观察
+- 日志修正：本次起错误响应（status/body/cookieCount）完整落盘
+
+## 13. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 线上请求数：106（含失败重跑取证，全部持久化错误响应体）
+- 风控状态变化：运行期出现 -462 验证挑战（verifyType 40），Phase 4 媒体请求须降低速率并观察
+- 日志修正：本次起错误响应（status/body/cookieCount）完整落盘

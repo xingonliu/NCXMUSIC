@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "caseId": "ncm.album_detail_dynamic.none.001",
+    "apiAuditId": "ncm.album_detail_dynamic",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "35093341"
+    },
+    "startedAt": "2026-08-04T11:04:04.934Z",
+    "endedAt": "2026-08-04T11:04:04.998Z",
+    "durationMs": 64,
+    "attempts": 1
+  },
+  "body": {
+    "onSale": false,
+    "albumNearbyProduct": {
+      "url": "https://music.163.com/store/product/column#hash=b09fd445e035",
+      "title": "邓紫棋实体专辑",
+      "subTitle": "立即购买"
+    },
+    "commentCount": 811,
+    "likedCount": 0,
+    "shareCount": 2020,
+    "isSub": false,
+    "subTime": 0,
+    "subCount": 20818,
+    "code": 200
+  },
+  "error": null
+}

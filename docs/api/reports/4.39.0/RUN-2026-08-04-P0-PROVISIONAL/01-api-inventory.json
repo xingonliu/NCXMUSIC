@@ -297,10 +297,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.album.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.album_detail",
@@ -347,10 +347,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.album_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.album_detail_dynamic",
@@ -397,10 +397,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.album_detail_dynamic.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.album_list",
@@ -689,10 +689,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.album_privilege.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.album_songsaleboard",
@@ -965,10 +965,10 @@
         }
       ],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 5,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.artist_album.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.artist_desc",
@@ -1015,10 +1015,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.artist_desc.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.artist_detail",
@@ -1065,10 +1065,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.artist_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.artist_detail_dynamic",
@@ -1115,10 +1115,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.artist_detail_dynamic.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.artist_fans",
@@ -1635,10 +1635,10 @@
         }
       ],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 6,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.artist_songs.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.artist_sub",
@@ -1796,10 +1796,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.artist_top_song.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.artist_video",
@@ -1911,10 +1911,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.artists.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.audio_match",
@@ -2788,10 +2788,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 5,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.check_music.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.cloud",
@@ -8620,10 +8620,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.lyric.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.lyric_new",
@@ -8665,10 +8665,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.lyric_new.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.middle_play_do_lottery",
@@ -10977,10 +10977,10 @@
         }
       ],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 6,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.playlist_detail_dynamic",
@@ -11033,10 +11033,10 @@
         }
       ],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_detail_dynamic.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.playlist_detail_rcmd_get",
@@ -11602,10 +11602,10 @@
         }
       ],
       "plannedCaseCount": 4,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 5,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_subscribers.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.playlist_tags_update",
@@ -11768,10 +11768,10 @@
         }
       ],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 7,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_track_all.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.playlist_track_delete",
@@ -13168,10 +13168,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 2,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.related_playlist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.relay_play_state_submit",
@@ -15176,10 +15176,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.simi_artist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.simi_mv",
@@ -15289,10 +15289,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.simi_playlist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.simi_song",
@@ -15352,10 +15352,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.simi_song.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.simi_user",
@@ -15661,10 +15661,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 6,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.song_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.song_downlist",
@@ -16295,10 +16295,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.song_music_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.song_order_update",

@@ -1,7 +1,7 @@
 'use strict'
 const crypto = require('crypto')
 
-const SENSITIVE_KEY = /cookie|csrf|token|music_u|deviceid|device_id|sessionid|signature|secret|unikey|qrcode/i
+const SENSITIVE_KEY = /cookie|csrf|token|music_u|deviceid|device_id|sessionid|signature|secret|unikey|qrcode|verify|params|nonce|sign/i
 const URL_LIKE = /^https?:\/\//
 
 function redactValue(key, value) {
@@ -15,7 +15,7 @@ function redactValue(key, value) {
         const q = u.searchParams
         let touched = false
         for (const k of [...q.keys()]) {
-          if (SENSITIVE_KEY.test(k)) {
+          if (SENSITIVE_KEY.test(k) || k === 'params') {
             q.delete(k)
             q.set(k, '<REDACTED>')
             touched = true

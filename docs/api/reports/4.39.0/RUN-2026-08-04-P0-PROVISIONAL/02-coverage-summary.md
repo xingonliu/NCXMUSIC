@@ -216,3 +216,18 @@ fieldEvidenceCoverage = evidencedFieldCount / discoveredFieldCount   // 0 / 0（
 - 风控/失败：0（无限流、无失败）
 - 夹具池：songId=100, artistId=100, playlistId=100, mvId=52, albumId=100, djId=64, programId=12, toplistId=63
 - 关键契约事实：见 07-multivariable-diff.md §3 与 06-failures-and-blockers.md §5
+## 12. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行接口数：24；总执行 case：106（全部线上，并发 1 + 抖动）
+- 终态：24 个 partial（blocker：AUTH_USER 缺失）
+- 风控：code -462 验证挑战在部分接口/参数组合触发（详见 06 §6）；无 429 限流
+- 夹具池：8 桶保持；playlist_detail/artists/artist_top_song 等补充 songId 候选（仍受每实体 100 上限约束）
+- 关键契约事实：见 07 §4
+
+## 12. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行接口数：24；总执行 case：106（全部线上，并发 1 + 抖动）
+- 终态：24 个 partial（blocker：AUTH_USER 缺失）
+- 风控：code -462 验证挑战在部分接口/参数组合触发（详见 06 §6）；无 429 限流
+- 夹具池：8 桶保持；playlist_detail/artists/artist_top_song 等补充 songId 候选（仍受每实体 100 上限约束）
+- 关键契约事实：见 07 §4

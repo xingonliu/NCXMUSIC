@@ -70,7 +70,7 @@
               "tagSign": {
                 "br": 240,
                 "type": "TS",
-                "tagSign": "TS_240P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 240,
                 "mvtype": "TS"
               },
@@ -88,7 +88,7 @@
               "tagSign": {
                 "br": 240,
                 "type": "MP4",
-                "tagSign": "MP4_240P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 240,
                 "mvtype": "MP4"
               },
@@ -106,7 +106,7 @@
               "tagSign": {
                 "br": 480,
                 "type": "TS",
-                "tagSign": "TS_480P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 480,
                 "mvtype": "TS"
               },
@@ -124,7 +124,7 @@
               "tagSign": {
                 "br": 480,
                 "type": "MP4",
-                "tagSign": "MP4_480P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 480,
                 "mvtype": "MP4"
               },
@@ -142,7 +142,7 @@
               "tagSign": {
                 "br": 720,
                 "type": "TS",
-                "tagSign": "TS_720P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 720,
                 "mvtype": "TS"
               },
@@ -160,7 +160,7 @@
               "tagSign": {
                 "br": 720,
                 "type": "MP4",
-                "tagSign": "MP4_720P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 720,
                 "mvtype": "MP4"
               },
@@ -178,7 +178,7 @@
               "tagSign": {
                 "br": 1080,
                 "type": "TS",
-                "tagSign": "TS_1080P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 1080,
                 "mvtype": "TS"
               },
@@ -196,7 +196,7 @@
               "tagSign": {
                 "br": 1080,
                 "type": "MP4",
-                "tagSign": "MP4_1080P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 1080,
                 "mvtype": "MP4"
               },
@@ -282,7 +282,7 @@
               "tagSign": {
                 "br": 240,
                 "type": "TS",
-                "tagSign": "TS_240P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 240,
                 "mvtype": "TS"
               },
@@ -300,7 +300,7 @@
               "tagSign": {
                 "br": 240,
                 "type": "MP4",
-                "tagSign": "MP4_240P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 240,
                 "mvtype": "MP4"
               },
@@ -318,7 +318,7 @@
               "tagSign": {
                 "br": 480,
                 "type": "TS",
-                "tagSign": "TS_480P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 480,
                 "mvtype": "TS"
               },
@@ -336,7 +336,7 @@
               "tagSign": {
                 "br": 480,
                 "type": "MP4",
-                "tagSign": "MP4_480P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 480,
                 "mvtype": "MP4"
               },
@@ -354,7 +354,7 @@
               "tagSign": {
                 "br": 720,
                 "type": "TS",
-                "tagSign": "TS_720P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 720,
                 "mvtype": "TS"
               },
@@ -372,7 +372,7 @@
               "tagSign": {
                 "br": 720,
                 "type": "MP4",
-                "tagSign": "MP4_720P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 720,
                 "mvtype": "MP4"
               },
@@ -390,7 +390,7 @@
               "tagSign": {
                 "br": 1080,
                 "type": "TS",
-                "tagSign": "TS_1080P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 1080,
                 "mvtype": "TS"
               },
@@ -408,7 +408,7 @@
               "tagSign": {
                 "br": 1080,
                 "type": "MP4",
-                "tagSign": "MP4_1080P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 1080,
                 "mvtype": "MP4"
               },
@@ -494,7 +494,7 @@
               "tagSign": {
                 "br": 240,
                 "type": "TS",
-                "tagSign": "TS_240P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 240,
                 "mvtype": "TS"
               },
@@ -512,7 +512,7 @@
               "tagSign": {
                 "br": 240,
                 "type": "MP4",
-                "tagSign": "MP4_240P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 240,
                 "mvtype": "MP4"
               },
@@ -530,7 +530,7 @@
               "tagSign": {
                 "br": 480,
                 "type": "TS",
-                "tagSign": "TS_480P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 480,
                 "mvtype": "TS"
               },
@@ -548,7 +548,7 @@
               "tagSign": {
                 "br": 480,
                 "type": "MP4",
-                "tagSign": "MP4_480P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 480,
                 "mvtype": "MP4"
               },
@@ -566,7 +566,7 @@
               "tagSign": {
                 "br": 720,
                 "type": "TS",
-                "tagSign": "TS_720P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 720,
                 "mvtype": "TS"
               },
@@ -584,7 +584,7 @@
               "tagSign": {
                 "br": 720,
                 "type": "MP4",
-                "tagSign": "MP4_720P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 720,
                 "mvtype": "MP4"
               },
@@ -602,7 +602,7 @@
               "tagSign": {
                 "br": 1080,
                 "type": "TS",
-                "tagSign": "TS_1080P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 1080,
                 "mvtype": "TS"
               },
@@ -620,7 +620,7 @@
               "tagSign": {
                 "br": 1080,
                 "type": "MP4",
-                "tagSign": "MP4_1080P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 1080,
                 "mvtype": "MP4"
               },
@@ -702,7 +702,7 @@
               "tagSign": {
                 "br": 240,
                 "type": "TS",
-                "tagSign": "TS_240P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 240,
                 "mvtype": "TS"
               },
@@ -720,7 +720,7 @@
               "tagSign": {
                 "br": 240,
                 "type": "MP4",
-                "tagSign": "MP4_240P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 240,
                 "mvtype": "MP4"
               },
@@ -738,7 +738,7 @@
               "tagSign": {
                 "br": 480,
                 "type": "TS",
-                "tagSign": "TS_480P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 480,
                 "mvtype": "TS"
               },
@@ -756,7 +756,7 @@
               "tagSign": {
                 "br": 480,
                 "type": "MP4",
-                "tagSign": "MP4_480P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 480,
                 "mvtype": "MP4"
               },
@@ -774,7 +774,7 @@
               "tagSign": {
                 "br": 720,
                 "type": "TS",
-                "tagSign": "TS_720P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 720,
                 "mvtype": "TS"
               },
@@ -792,7 +792,7 @@
               "tagSign": {
                 "br": 720,
                 "type": "MP4",
-                "tagSign": "MP4_720P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 720,
                 "mvtype": "MP4"
               },
@@ -810,7 +810,7 @@
               "tagSign": {
                 "br": 1080,
                 "type": "TS",
-                "tagSign": "TS_1080P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 1080,
                 "mvtype": "TS"
               },
@@ -828,7 +828,7 @@
               "tagSign": {
                 "br": 1080,
                 "type": "MP4",
-                "tagSign": "MP4_1080P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 1080,
                 "mvtype": "MP4"
               },
@@ -910,7 +910,7 @@
               "tagSign": {
                 "br": 240,
                 "type": "TS",
-                "tagSign": "TS_240P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 240,
                 "mvtype": "TS"
               },
@@ -928,7 +928,7 @@
               "tagSign": {
                 "br": 240,
                 "type": "MP4",
-                "tagSign": "MP4_240P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 240,
                 "mvtype": "MP4"
               },
@@ -946,7 +946,7 @@
               "tagSign": {
                 "br": 480,
                 "type": "TS",
-                "tagSign": "TS_480P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 480,
                 "mvtype": "TS"
               },
@@ -964,7 +964,7 @@
               "tagSign": {
                 "br": 480,
                 "type": "MP4",
-                "tagSign": "MP4_480P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 480,
                 "mvtype": "MP4"
               },
@@ -982,7 +982,7 @@
               "tagSign": {
                 "br": 720,
                 "type": "TS",
-                "tagSign": "TS_720P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 720,
                 "mvtype": "TS"
               },
@@ -1000,7 +1000,7 @@
               "tagSign": {
                 "br": 720,
                 "type": "MP4",
-                "tagSign": "MP4_720P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 720,
                 "mvtype": "MP4"
               },
@@ -1018,7 +1018,7 @@
               "tagSign": {
                 "br": 1080,
                 "type": "TS",
-                "tagSign": "TS_1080P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 1080,
                 "mvtype": "TS"
               },
@@ -1036,7 +1036,7 @@
               "tagSign": {
                 "br": 1080,
                 "type": "MP4",
-                "tagSign": "MP4_1080P",
+                "tagSign": "<REDACTED:tagSign>",
                 "resolution": 1080,
                 "mvtype": "MP4"
               },

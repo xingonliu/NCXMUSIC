@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.check_music.br999.none.001",
+    "apiAuditId": "ncm.check_music",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "35093341",
+      "br": 999000
+    },
+    "startedAt": "2026-08-04T11:03:35.331Z",
+    "endedAt": "2026-08-04T11:03:35.424Z",
+    "durationMs": 93,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "success": false,
+    "message": "亲爱的,暂无版权"
+  },
+  "error": null
+}

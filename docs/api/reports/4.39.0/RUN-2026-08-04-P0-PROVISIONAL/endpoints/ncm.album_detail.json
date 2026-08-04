@@ -32,15 +32,76 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.album_detail.anon.001",
+        "auth": "AUTH_ANON",
+        "status": "error",
+        "code": 404,
+        "error": {
+          "class": "other",
+          "status": 404,
+          "body": {
+            "code": 404,
+            "message": "无专辑商品"
+          },
+          "message": "[object Object]"
+        }
+      },
+      {
+        "caseId": "ncm.album_detail.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "status": "error",
+        "code": 404,
+        "error": {
+          "class": "other",
+          "status": 404,
+          "body": {
+            "code": 404,
+            "message": "无专辑商品"
+          },
+          "message": "[object Object]"
+        }
+      },
+      {
+        "caseId": "ncm.album_detail.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "status": "error",
+        "code": 404,
+        "error": {
+          "class": "other",
+          "status": 404,
+          "body": {
+            "code": 404,
+            "message": "无专辑商品"
+          },
+          "message": "[object Object]"
+        }
+      },
+      {
+        "caseId": "ncm.album_detail.none.001",
+        "auth": "AUTH_NONE",
+        "status": "error",
+        "code": 404,
+        "error": {
+          "class": "other",
+          "status": 404,
+          "body": {
+            "code": 404,
+            "message": "无专辑商品"
+          },
+          "message": "[object Object]"
+        }
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
   "evidence": []
 }

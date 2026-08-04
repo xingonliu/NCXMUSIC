@@ -1,0 +1,2905 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_songs.inv.001",
+    "apiAuditId": "ncm.artist_songs",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "id": "7763",
+      "order": "hot",
+      "limit": 20,
+      "offset": 0
+    },
+    "startedAt": "2026-08-04T11:04:19.125Z",
+    "endedAt": "2026-08-04T11:04:19.470Z",
+    "durationMs": 345,
+    "attempts": 1
+  },
+  "body": {
+    "songs": [
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p3.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=8195778336f6",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 545,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 12,
+        "dt": 34036,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1363636,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 430437,
+          "fid": 0,
+          "size": 1831314,
+          "vd": 3,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 545480,
+          "vd": 3,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 818199,
+          "vd": 4,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 145)",
+        "id": 1345292185,
+        "privilege": {
+          "id": 1345292185,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 541,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 13,
+        "dt": 31748,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1272729,
+          "vd": 2,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 492944,
+          "fid": 0,
+          "size": 1956264,
+          "vd": 2,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 509118,
+          "vd": 2,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 763655,
+          "vd": 2,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 141)",
+        "id": 1345292184,
+        "privilege": {
+          "id": 1345292184,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 540,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 10,
+        "dt": 31166,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1249742,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 478363,
+          "fid": 0,
+          "size": 1863596,
+          "vd": 3,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 499923,
+          "vd": 2,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 749862,
+          "vd": 3,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 140)",
+        "id": 1345292183,
+        "privilege": {
+          "id": 1345292183,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 539,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 10,
+        "dt": 31508,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1263325,
+          "vd": 2,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 469872,
+          "fid": 0,
+          "size": 1850619,
+          "vd": 2,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 505356,
+          "vd": 2,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 758013,
+          "vd": 2,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 139)",
+        "id": 1345292182,
+        "privilege": {
+          "id": 1345292182,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p3.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=8195778336f6",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 537,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 8,
+        "dt": 32210,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1291538,
+          "vd": 2,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 467295,
+          "fid": 0,
+          "size": 1881457,
+          "vd": 2,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 516641,
+          "vd": 2,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 774940,
+          "vd": 2,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 137)",
+        "id": 1345292181,
+        "privilege": {
+          "id": 1345292181,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 536,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 12,
+        "dt": 32456,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1300942,
+          "vd": 1,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 457361,
+          "fid": 0,
+          "size": 1855521,
+          "vd": 1,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 520403,
+          "vd": 1,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 780582,
+          "vd": 1,
+          "sr": 44100
+        },
+        "mark": 262144,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 136)",
+        "id": 1345292180,
+        "privilege": {
+          "id": 1345292180,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081600,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p3.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=8195778336f6",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 533,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 8,
+        "dt": 32446,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1300942,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 471391,
+          "fid": 0,
+          "size": 1911886,
+          "vd": 3,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 520403,
+          "vd": 4,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 780582,
+          "vd": 4,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 133)",
+        "id": 1345292179,
+        "privilege": {
+          "id": 1345292179,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p3.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=8195778336f6",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 532,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 8,
+        "dt": 33489,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1342738,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 467184,
+          "fid": 0,
+          "size": 1955750,
+          "vd": 3,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 537121,
+          "vd": 3,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 805660,
+          "vd": 3,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 132)",
+        "id": 1345292178,
+        "privilege": {
+          "id": 1345292178,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 530,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 11,
+        "dt": 31130,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1247652,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 471488,
+          "fid": 0,
+          "size": 1834681,
+          "vd": 3,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 499087,
+          "vd": 3,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 748609,
+          "vd": 3,
+          "sr": 44100
+        },
+        "mark": 262144,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 130)",
+        "id": 1345292177,
+        "privilege": {
+          "id": 1345292177,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081600,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p3.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=8195778336f6",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 529,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 11,
+        "dt": 33408,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1338558,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 479837,
+          "fid": 0,
+          "size": 2003842,
+          "vd": 3,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 535449,
+          "vd": 4,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 803152,
+          "vd": 4,
+          "sr": 44100
+        },
+        "mark": 262144,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 129)",
+        "id": 1345292176,
+        "privilege": {
+          "id": 1345292176,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081600,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 528,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 10,
+        "dt": 33752,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1353187,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 473232,
+          "fid": 0,
+          "size": 1996578,
+          "vd": 3,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 541301,
+          "vd": 3,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 811929,
+          "vd": 3,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 128)",
+        "id": 1345292175,
+        "privilege": {
+          "id": 1345292175,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 527,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 13,
+        "dt": 31130,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1247652,
+          "vd": 4,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 477533,
+          "fid": 0,
+          "size": 1858203,
+          "vd": 4,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 499087,
+          "vd": 4,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 748609,
+          "vd": 4,
+          "sr": 44100
+        },
+        "mark": 262144,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 127)",
+        "id": 1345292174,
+        "privilege": {
+          "id": 1345292174,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081600,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p3.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=8195778336f6",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 526,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 11,
+        "dt": 31636,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1268550,
+          "vd": 1,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 480719,
+          "fid": 0,
+          "size": 1901037,
+          "vd": 1,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 507446,
+          "vd": 1,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 761147,
+          "vd": 1,
+          "sr": 44100
+        },
+        "mark": 262144,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 126)",
+        "id": 1345292173,
+        "privilege": {
+          "id": 1345292173,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081600,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 525,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 9,
+        "dt": 31130,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1247652,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 472595,
+          "fid": 0,
+          "size": 1838989,
+          "vd": 3,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 499087,
+          "vd": 4,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 748609,
+          "vd": 4,
+          "sr": 44100
+        },
+        "mark": 262144,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 125)",
+        "id": 1345292172,
+        "privilege": {
+          "id": 1345292172,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081600,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p3.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=8195778336f6",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 524,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 12,
+        "dt": 31303,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1254966,
+          "vd": 2,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 486664,
+          "fid": 0,
+          "size": 1904262,
+          "vd": 2,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 502013,
+          "vd": 1,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 752997,
+          "vd": 2,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 124)",
+        "id": 1345292171,
+        "privilege": {
+          "id": 1345292171,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 523,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 8,
+        "dt": 33113,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1327064,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 485604,
+          "fid": 0,
+          "size": 2010018,
+          "vd": 3,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 530852,
+          "vd": 4,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 796256,
+          "vd": 4,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 123)",
+        "id": 1345292170,
+        "privilege": {
+          "id": 1345292170,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 522,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 12,
+        "dt": 31130,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1247652,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 479807,
+          "fid": 0,
+          "size": 1867050,
+          "vd": 3,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 499087,
+          "vd": 4,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 748609,
+          "vd": 3,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 122)",
+        "id": 1345292169,
+        "privilege": {
+          "id": 1345292169,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p3.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=8195778336f6",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 521,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 9,
+        "dt": 31130,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1247652,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 459587,
+          "fid": 0,
+          "size": 1788369,
+          "vd": 2,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 499087,
+          "vd": 3,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 748609,
+          "vd": 3,
+          "sr": 44100
+        },
+        "mark": 262144,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 121)",
+        "id": 1345292168,
+        "privilege": {
+          "id": 1345292168,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081600,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 520,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 9,
+        "dt": 31130,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1247652,
+          "vd": 4,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 491276,
+          "fid": 0,
+          "size": 1911679,
+          "vd": 4,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 499087,
+          "vd": 3,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 748609,
+          "vd": 4,
+          "sr": 44100
+        },
+        "mark": 262144,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 120)",
+        "id": 1345292167,
+        "privilege": {
+          "id": 1345292167,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081600,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      },
+      {
+        "rtUrls": [],
+        "ar": [
+          {
+            "id": 29134481,
+            "name": "Peter Bocek"
+          },
+          {
+            "id": 31461385,
+            "name": "Felix Lill"
+          }
+        ],
+        "al": {
+          "id": 75510761,
+          "name": "Einsame Klasse",
+          "picUrl": "https://p4.music.126.net/Qh9ot5TumMOHPsWr_8bw4A==/109951163853528157.jpg#hash=c3fef0dac0bb",
+          "pic_str": "109951163853528157",
+          "pic": 109951163853528160
+        },
+        "st": 1,
+        "noCopyrightRcmd": null,
+        "artistClassics": false,
+        "songJumpInfo": null,
+        "djId": 0,
+        "no": 519,
+        "fee": 0,
+        "mv": 0,
+        "cd": "01",
+        "t": 0,
+        "v": 9,
+        "dt": 31130,
+        "rtype": 0,
+        "rurl": null,
+        "pst": 0,
+        "alia": [],
+        "pop": 5,
+        "rt": "",
+        "mst": 9,
+        "cp": 679014,
+        "crbt": null,
+        "cf": "",
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 1247652,
+          "vd": 3,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 480188,
+          "fid": 0,
+          "size": 1868533,
+          "vd": 3,
+          "sr": 48000
+        },
+        "hr": null,
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 499087,
+          "vd": 3,
+          "sr": 44100
+        },
+        "rtUrl": null,
+        "ftype": 0,
+        "a": null,
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 748609,
+          "vd": 3,
+          "sr": 44100
+        },
+        "mark": 262272,
+        "name": "Kapitel 8: Zu schön, um wahr zu sein (Teil 119)",
+        "id": 1345292166,
+        "privilege": {
+          "id": 1345292166,
+          "fee": 0,
+          "payed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 999000,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "toast": false,
+          "flag": 1081601,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "lossless",
+          "playMaxBrLevel": "lossless",
+          "downloadMaxBrLevel": "lossless",
+          "plLevel": "exhigh",
+          "dlLevel": "lossless",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        }
+      }
+    ],
+    "more": true,
+    "total": 545,
+    "code": 200
+  },
+  "error": null
+}

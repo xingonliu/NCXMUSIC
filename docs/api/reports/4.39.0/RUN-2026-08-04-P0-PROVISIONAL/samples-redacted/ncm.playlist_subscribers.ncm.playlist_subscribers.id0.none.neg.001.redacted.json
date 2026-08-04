@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.playlist_subscribers.id0.none.neg.001",
+    "apiAuditId": "ncm.playlist_subscribers",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0",
+      "limit": 10,
+      "offset": 0
+    },
+    "startedAt": "2026-08-04T11:03:59.556Z",
+    "endedAt": "2026-08-04T11:03:59.642Z",
+    "durationMs": 86,
+    "attempts": 1
+  },
+  "body": {
+    "total": 0,
+    "code": 200,
+    "more": false,
+    "subscribers": []
+  },
+  "error": null
+}

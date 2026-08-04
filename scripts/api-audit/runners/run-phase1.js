@@ -11,6 +11,7 @@ const args = require('../lib/args.js')({
   spec: { type: 'string', required: true },
   maxNetworkCases: { type: 'int', default: 40 },
   filter: { type: 'string' },
+  onlyErrored: { type: 'bool', default: false },
 })
 
 const { SessionStore, cookieForLayer } = require('../lib/session.js')
@@ -174,7 +175,13 @@ async function executeCase(apiAuditId, c, moduleFn) {
         attempts,
         status: null,
         code: null,
-        error: { class: isNetwork ? 'network' : is5xx ? 'http5xx' : 'other', message: msg.slice(0, 500) },
+        error: {
+          class: isNetwork ? 'network' : is5xx ? 'http5xx' : 'other',
+          message: msg.slice(0, 500),
+          status: e && e.status !== undefined ? e.status : null,
+          body: e && e.body !== undefined ? e.body : null,
+          cookieCount: e && Array.isArray(e.cookie) ? e.cookie.length : null,
+        },
       }
       return { record, retryableNetwork: false }
     }
@@ -202,6 +209,15 @@ async function main() {
         console.log('BUDGET STOP at', args.maxNetworkCases, 'network cases')
         skipped++
         continue
+      }
+      const existingRaw = path.join(rawDir, group.apiAuditId + '.' + c.caseId + '.raw.json')
+      if (args.onlyErrored && fs.existsSync(existingRaw)) {
+        const prev = JSON.parse(fs.readFileSync(existingRaw, 'utf8'))
+        if (!prev.error) {
+          skipped++
+          console.log('case:', c.caseId, '| SKIP (not errored previously)')
+          continue
+        }
       }
       if (c.auth === 'AUTH_ANON' && !store.load('guest-01')) {
         skippedLog.push({ caseId: c.caseId, apiAuditId: group.apiAuditId, auth: c.auth, reason: 'guest-01 session unavailable' })

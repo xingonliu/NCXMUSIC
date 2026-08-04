@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.check_music.anon.001",
+    "apiAuditId": "ncm.check_music",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "0",
+      "br": 320000
+    },
+    "startedAt": "2026-08-04T11:03:36.234Z",
+    "endedAt": "2026-08-04T11:03:36.309Z",
+    "durationMs": 75,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "success": false,
+    "message": "亲爱的,暂无版权"
+  },
+  "error": null
+}

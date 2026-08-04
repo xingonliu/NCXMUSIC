@@ -30,6 +30,8 @@ function checkFile(file) {
       const re2 = new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g')
       let m
       while ((m = re2.exec(line))) {
+        const matchText = m[0]
+        if (/<REDACTED|%3CREDACTED/i.test(matchText)) continue
         const start = Math.max(0, m.index - 20)
         const snippet = line.slice(start, m.index + 60)
         findings.push({ file, line: li + 1, pattern: re.source.slice(0, 60), offset: m.index, snippet })

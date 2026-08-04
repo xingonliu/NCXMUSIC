@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "caseId": "ncm.simi_playlist.anon.001",
+    "apiAuditId": "ncm.simi_playlist",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-04T11:04:32.454Z",
+    "endedAt": "2026-08-04T11:04:32.564Z",
+    "durationMs": 110,
+    "attempts": 1
+  },
+  "body": {
+    "playlists": [],
+    "code": 200
+  },
+  "error": null
+}

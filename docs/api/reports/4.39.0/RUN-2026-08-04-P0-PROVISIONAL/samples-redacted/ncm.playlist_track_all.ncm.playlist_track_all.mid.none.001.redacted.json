@@ -1,0 +1,1514 @@
+{
+  "meta": {
+    "caseId": "ncm.playlist_track_all.mid.none.001",
+    "apiAuditId": "ncm.playlist_track_all",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "2488306802",
+      "limit": 20,
+      "offset": 40
+    },
+    "startedAt": "2026-08-04T11:03:46.802Z",
+    "endedAt": "2026-08-04T11:03:47.278Z",
+    "durationMs": 476,
+    "attempts": 1
+  },
+  "body": {
+    "songs": [
+      {
+        "name": "死了都要 • 爱",
+        "mainTitle": null,
+        "additionalTitle": null,
+        "id": 444524243,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [],
+        "pop": 95,
+        "st": 0,
+        "rt": null,
+        "fee": 8,
+        "v": 59,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 35022577,
+          "name": "死了都要 • 爱",
+          "picUrl": "https://p3.music.126.net/99IxCWvRFSETlw_b2woNyg==/3300733913838962.jpg#hash=6f649b7db8e6",
+          "tns": [],
+          "pic": 3300733913838962
+        },
+        "dt": 206963,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 8280860,
+          "vd": -61169,
+          "sr": 44100
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 4968533,
+          "vd": -58646,
+          "sr": 44100
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 3312370,
+          "vd": -57112,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 1033721,
+          "fid": 0,
+          "size": 26742902,
+          "vd": -61200,
+          "sr": 44100
+        },
+        "hr": null,
+        "a": null,
+        "cd": "1",
+        "no": 1,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 2,
+        "s_id": 0,
+        "mark": 17179877376,
+        "originCoverType": 0,
+        "originSongSimpleData": null,
+        "tagPicList": null,
+        "resourceState": true,
+        "version": 25,
+        "songJumpInfo": null,
+        "entertainmentTags": null,
+        "awardTags": null,
+        "displayTags": null,
+        "artistClassics": false,
+        "markTags": [],
+        "songFeature": null,
+        "single": 0,
+        "noCopyrightRcmd": null,
+        "mv": 0,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 1415926,
+        "publishTime": 1480780800007
+      },
+      {
+        "name": "有心人",
+        "mainTitle": null,
+        "additionalTitle": null,
+        "id": 410518476,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [],
+        "pop": 100,
+        "st": 0,
+        "rt": null,
+        "fee": 8,
+        "v": 57,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 34667125,
+          "name": "有心人",
+          "picUrl": "https://p3.music.126.net/xKGpj-VeccKJHxbUFUcsdA==/1401877332359781.jpg#hash=a0b831f86da4",
+          "tns": [],
+          "pic": 1401877332359781
+        },
+        "dt": 239961,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 9601611,
+          "vd": -42014,
+          "sr": 44100
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 5760984,
+          "vd": -39471,
+          "sr": 44100
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 3840671,
+          "vd": -37996,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 884733,
+          "fid": 0,
+          "size": 26537797,
+          "vd": -42157,
+          "sr": 44100
+        },
+        "hr": null,
+        "a": null,
+        "cd": "1",
+        "no": 0,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 0,
+        "s_id": 0,
+        "mark": 17179877376,
+        "originCoverType": 2,
+        "originSongSimpleData": null,
+        "tagPicList": null,
+        "resourceState": true,
+        "version": 23,
+        "songJumpInfo": null,
+        "entertainmentTags": null,
+        "awardTags": null,
+        "displayTags": null,
+        "artistClassics": false,
+        "markTags": [],
+        "songFeature": null,
+        "single": 0,
+        "noCopyrightRcmd": null,
+        "mv": 0,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 1415926,
+        "publishTime": 1461083683451
+      },
+      {
+        "name": "单行的轨道",
+        "mainTitle": null,
+        "additionalTitle": null,
+        "id": 31234186,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [],
+        "pop": 95,
+        "st": 0,
+        "rt": null,
+        "fee": 8,
+        "v": 85,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 3189002,
+          "name": "新的心跳",
+          "picUrl": "https://p3.music.126.net/kVwk6b8Qdya8oDyGDcyAVA==/1364493930777368.jpg#hash=e4b2afd16ab5",
+          "tns": [],
+          "pic": 1364493930777368
+        },
+        "dt": 248779,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 9953742,
+          "vd": -40343,
+          "sr": 44100
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 5972262,
+          "vd": -37748,
+          "sr": 44100
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 3981523,
+          "vd": -36074,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 891103,
+          "fid": 0,
+          "size": 27711036,
+          "vd": -40918,
+          "sr": 44100
+        },
+        "hr": null,
+        "a": null,
+        "cd": "1",
+        "no": 6,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 2,
+        "s_id": 0,
+        "mark": 17179877376,
+        "originCoverType": 1,
+        "originSongSimpleData": null,
+        "tagPicList": null,
+        "resourceState": true,
+        "version": 51,
+        "songJumpInfo": null,
+        "entertainmentTags": null,
+        "awardTags": null,
+        "displayTags": null,
+        "artistClassics": false,
+        "markTags": [],
+        "songFeature": null,
+        "single": 0,
+        "noCopyrightRcmd": null,
+        "mv": 397133,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 1415926,
+        "publishTime": 1446739200007
+      },
+      {
+        "name": "爱如意",
+        "mainTitle": null,
+        "additionalTitle": null,
+        "id": 574919590,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [
+          "电影《阿修罗》主题曲"
+        ],
+        "pop": 95,
+        "st": 0,
+        "rt": null,
+        "fee": 8,
+        "v": 66,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 39723525,
+          "name": "爱如意",
+          "picUrl": "https://p4.music.126.net/egPNbidvf9TaI-asdoHpSg==/109951163380057849.jpg#hash=66f1217c0e1e",
+          "tns": [],
+          "pic_str": "109951163380057849",
+          "pic": 109951163380057860
+        },
+        "dt": 237352,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 9496449,
+          "vd": -4100,
+          "sr": 48000
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 5697921,
+          "vd": -1468,
+          "sr": 48000
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 3798657,
+          "vd": 259,
+          "sr": 48000
+        },
+        "sq": {
+          "br": 761158,
+          "fid": 0,
+          "size": 22582898,
+          "vd": -4068,
+          "sr": 48000
+        },
+        "hr": {
+          "br": 1521060,
+          "fid": 0,
+          "size": 45128535,
+          "vd": -4048,
+          "sr": 48000
+        },
+        "a": null,
+        "cd": "1",
+        "no": 1,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 0,
+        "s_id": 0,
+        "mark": 17716813824,
+        "originCoverType": 1,
+        "originSongSimpleData": null,
+        "tagPicList": null,
+        "resourceState": true,
+        "version": 32,
+        "songJumpInfo": null,
+        "entertainmentTags": null,
+        "awardTags": null,
+        "displayTags": null,
+        "artistClassics": false,
+        "markTags": [],
+        "songFeature": null,
+        "single": 0,
+        "noCopyrightRcmd": null,
+        "mv": 5955266,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 1415926,
+        "publishTime": 1529856000000
+      },
+      {
+        "name": "情人",
+        "mainTitle": null,
+        "additionalTitle": null,
+        "id": 233946,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [],
+        "pop": 100,
+        "st": 0,
+        "rt": "",
+        "fee": 0,
+        "v": 62,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 23498,
+          "name": "Get Everybody Moving Concert 2011",
+          "picUrl": "https://p3.music.126.net/btmsQGuCwT6YNbbaOwGqxw==/109951165628217052.jpg#hash=9762f9c4bbc1",
+          "tns": [],
+          "pic_str": "109951165628217052",
+          "pic": 109951165628217060
+        },
+        "dt": 351477,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 14060191,
+          "vd": -18267,
+          "sr": 44100
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 8436132,
+          "vd": -18267,
+          "sr": 44100
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 5624102,
+          "vd": -18267,
+          "sr": 44100
+        },
+        "sq": null,
+        "hr": null,
+        "a": null,
+        "cd": "1",
+        "no": 9,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 2,
+        "s_id": 0,
+        "mark": 0,
+        "originCoverType": 2,
+        "originSongSimpleData": {
+          "songId": 347241,
+          "name": "情人",
+          "artists": [
+            {
+              "id": 11127,
+              "name": "Beyond"
+            }
+          ],
+          "albumMeta": {
+            "id": 34209,
+            "name": "海阔天空"
+          }
+        },
+        "tagPicList": null,
+        "resourceState": true,
+        "version": 28,
+        "songJumpInfo": null,
+        "entertainmentTags": null,
+        "awardTags": null,
+        "displayTags": null,
+        "artistClassics": false,
+        "markTags": [],
+        "songFeature": null,
+        "single": 0,
+        "noCopyrightRcmd": {
+          "type": 2,
+          "typeDesc": "其它版本可播",
+          "songId": null,
+          "thirdPartySong": null,
+          "expInfo": null
+        },
+        "mv": 0,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 0,
+        "publishTime": 1322409600000
+      },
+      {
+        "name": "If I Were A Boy",
+        "mainTitle": null,
+        "additionalTitle": null,
+        "id": 28427745,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [],
+        "pop": 95,
+        "st": 0,
+        "rt": "",
+        "fee": 1,
+        "v": 1386,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 2786864,
+          "name": "我是歌手第二季 第5期",
+          "picUrl": "https://p4.music.126.net/oFps9u9qkvlvmUtVb3bERw==/5888984278563663.jpg#hash=2d99356ff3f9",
+          "tns": [],
+          "pic": 5888984278563663
+        },
+        "dt": 298794,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 11953965,
+          "vd": -9721,
+          "sr": 48000
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 7172397,
+          "vd": -7100,
+          "sr": 48000
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 4781613,
+          "vd": -5429,
+          "sr": 48000
+        },
+        "sq": {
+          "br": 889297,
+          "fid": 0,
+          "size": 33214668,
+          "vd": -10691,
+          "sr": 48000
+        },
+        "hr": null,
+        "a": null,
+        "cd": "1",
+        "no": 1,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 0,
+        "s_id": 0,
+        "mark": 17180139520,
+        "originCoverType": 2,
+        "originSongSimpleData": {
+          "songId": 2188283,
+          "name": "If I Were a Boy",
+          "artists": [
+            {
+              "id": 48436,
+              "name": "Beyoncé"
+            }
+          ],
+          "albumMeta": {
+            "id": 220719,
+            "name": "I Am... Sasha Fierce (Deluxe Version)"
+          }
+        },
+        "tagPicList": null,
+        "resourceState": true,
+        "version": 1352,
+        "songJumpInfo": null,
+        "entertainmentTags": null,
+        "awardTags": null,
+        "displayTags": null,
+        "artistClassics": false,
+        "markTags": [],
+        "songFeature": null,
+        "single": 0,
+        "noCopyrightRcmd": null,
+        "mv": 0,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 404023,
+        "publishTime": 1391097600007
+      },
+      {
+        "name": "瞬间",
+        "mainTitle": null,
+        "additionalTitle": null,
+        "id": 34723529,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [],
+        "pop": 100,
+        "st": 0,
+        "rt": null,
+        "fee": 8,
+        "v": 80,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 3189002,
+          "name": "新的心跳",
+          "picUrl": "https://p3.music.126.net/kVwk6b8Qdya8oDyGDcyAVA==/1364493930777368.jpg#hash=e4b2afd16ab5",
+          "tns": [],
+          "pic": 1364493930777368
+        },
+        "dt": 246080,
+        "h": {
+          "br": 320001,
+          "fid": 0,
+          "size": 9846117,
+          "vd": -15665,
+          "sr": 44100
+        },
+        "m": {
+          "br": 192001,
+          "fid": 0,
+          "size": 5907688,
+          "vd": -13038,
+          "sr": 44100
+        },
+        "l": {
+          "br": 128001,
+          "fid": 0,
+          "size": 3938473,
+          "vd": -11303,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 803804,
+          "fid": 0,
+          "size": 24725020,
+          "vd": -15751,
+          "sr": 44100
+        },
+        "hr": null,
+        "a": null,
+        "cd": "1",
+        "no": 9,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 2,
+        "s_id": 0,
+        "mark": 17179877376,
+        "originCoverType": 1,
+        "originSongSimpleData": null,
+        "tagPicList": null,
+        "resourceState": true,
+        "version": 46,
+        "songJumpInfo": null,
+        "entertainmentTags": null,
+        "awardTags": null,
+        "displayTags": null,
+        "artistClassics": false,
+        "markTags": [],
+        "songFeature": null,
+        "single": 0,
+        "noCopyrightRcmd": null,
+        "mv": 477057,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 1415926,
+        "publishTime": 1446739200007
+      },
+      {
+        "name": "存在 (Live)",
+        "mainTitle": "存在 ",
+        "additionalTitle": "(Live)",
+        "id": 28427721,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [],
+        "pop": 100,
+        "st": 0,
+        "rt": "",
+        "fee": 1,
+        "v": 1391,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 2786861,
+          "name": "我是歌手第二季 第2期",
+          "picUrl": "https://p3.music.126.net/Z4voMXpr0OA-AiCc_Od33g==/6028622255349214.jpg#hash=dc4e7fb61e3e",
+          "tns": [],
+          "pic": 6028622255349214
+        },
+        "dt": 247967,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 9921350,
+          "vd": -22814,
+          "sr": 44100
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 5952827,
+          "vd": -20232,
+          "sr": 44100
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 3968566,
+          "vd": -18561,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 848430,
+          "fid": 0,
+          "size": 26297932,
+          "vd": -20107,
+          "sr": 44100
+        },
+        "hr": null,
+        "a": null,
+        "cd": "1",
+        "no": 1,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 0,
+        "s_id": 0,
+        "mark": 17179877376,
+        "originCoverType": 2,
+        "originSongSimpleData": {
+          "songId": 25638240,
+          "name": "存在",
+          "artists": [
+            {
+              "id": 5347,
+              "name": "汪峰"
+            }
+          ],
+          "albumMeta": {
+            "id": 2261053,
+            "name": "生无所求"
+          }
+        },
+        "tagPicList": null,
+        "resourceState": true,
+        "version": 1357,
+        "songJumpInfo": null,
+        "entertainmentTags": null,
+        "awardTags": null,
+        "displayTags": null,
+        "artistClassics": false,
+        "markTags": [],
+        "songFeature": null,
+        "single": 0,
+        "noCopyrightRcmd": null,
+        "mv": 248028,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 404023,
+        "publishTime": 1389283200007
+      },
+      {
+        "name": "北京北京",
+        "mainTitle": null,
+        "additionalTitle": null,
+        "id": 399353351,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [],
+        "pop": 90,
+        "st": 0,
+        "rt": null,
+        "fee": 8,
+        "v": 49,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 34408143,
+          "name": "北京北京",
+          "picUrl": "https://p4.music.126.net/tCCG-qQWlpskI2DwyYAIRg==/1364493961825021.jpg#hash=c173b43721ac",
+          "tns": [],
+          "pic": 1364493961825021
+        },
+        "dt": 281529,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 11264043,
+          "vd": -32614,
+          "sr": 44100
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 6758443,
+          "vd": -30046,
+          "sr": 44100
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 4505643,
+          "vd": -28496,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 862583,
+          "fid": 0,
+          "size": 30355354,
+          "vd": -32606,
+          "sr": 44100
+        },
+        "hr": null,
+        "a": null,
+        "cd": "1",
+        "no": 0,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 0,
+        "s_id": 0,
+        "mark": 17179877376,
+        "originCoverType": 2,
+        "originSongSimpleData": {
+          "songId": 155908,
+          "name": "北京北京",
+          "artists": [
+            {
+              "id": 5347,
+              "name": "汪峰"
+            }
+          ],
+          "albumMeta": {
+            "id": 15700,
+            "name": "勇敢的心"
+          }
+        },
+        "tagPicList": null,
+        "resourceState": true,
+        "version": 15,
+        "songJumpInfo": null,
+        "entertainmentTags": null,
+        "awardTags": null,
+        "displayTags": null,
+        "artistClassics": false,
+        "markTags": [],
+        "songFeature": null,
+        "single": 0,
+        "noCopyrightRcmd": null,
+        "mv": 0,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 1415926,
+        "publishTime": 1451577586867
+      }
+    ],
+    "privileges": [
+      {
+        "id": 444524243,
+        "fee": 8,
+        "payed": 0,
+        "st": 0,
+        "pl": 320000,
+        "dl": 0,
+        "sp": 7,
+        "cp": 1,
+        "subp": 1,
+        "cs": false,
+        "maxbr": 999000,
+        "fl": 320000,
+        "toast": false,
+        "flag": 1540100,
+        "preSell": false,
+        "playMaxbr": 999000,
+        "downloadMaxbr": 999000,
+        "maxBrLevel": "jymaster",
+        "playMaxBrLevel": "jymaster",
+        "downloadMaxBrLevel": "jymaster",
+        "plLevel": "exhigh",
+        "dlLevel": "none",
+        "flLevel": "exhigh",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": false,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      },
+      {
+        "id": 410518476,
+        "fee": 8,
+        "payed": 0,
+        "st": 0,
+        "pl": 320000,
+        "dl": 0,
+        "sp": 7,
+        "cp": 1,
+        "subp": 1,
+        "cs": false,
+        "maxbr": 999000,
+        "fl": 320000,
+        "toast": false,
+        "flag": 1540100,
+        "preSell": false,
+        "playMaxbr": 999000,
+        "downloadMaxbr": 999000,
+        "maxBrLevel": "jymaster",
+        "playMaxBrLevel": "jymaster",
+        "downloadMaxBrLevel": "jymaster",
+        "plLevel": "exhigh",
+        "dlLevel": "none",
+        "flLevel": "exhigh",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": false,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      },
+      {
+        "id": 31234186,
+        "fee": 8,
+        "payed": 0,
+        "st": 0,
+        "pl": 320000,
+        "dl": 0,
+        "sp": 7,
+        "cp": 1,
+        "subp": 1,
+        "cs": false,
+        "maxbr": 999000,
+        "fl": 320000,
+        "toast": false,
+        "flag": 1540100,
+        "preSell": false,
+        "playMaxbr": 999000,
+        "downloadMaxbr": 999000,
+        "maxBrLevel": "jymaster",
+        "playMaxBrLevel": "jymaster",
+        "downloadMaxBrLevel": "jymaster",
+        "plLevel": "exhigh",
+        "dlLevel": "none",
+        "flLevel": "exhigh",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": false,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      },
+      {
+        "id": 574919590,
+        "fee": 8,
+        "payed": 0,
+        "st": 0,
+        "pl": 320000,
+        "dl": 0,
+        "sp": 7,
+        "cp": 1,
+        "subp": 1,
+        "cs": false,
+        "maxbr": 999000,
+        "fl": 320000,
+        "toast": false,
+        "flag": 1544196,
+        "preSell": false,
+        "playMaxbr": 999000,
+        "downloadMaxbr": 999000,
+        "maxBrLevel": "jymaster",
+        "playMaxBrLevel": "jymaster",
+        "downloadMaxBrLevel": "jymaster",
+        "plLevel": "exhigh",
+        "dlLevel": "none",
+        "flLevel": "exhigh",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": false,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 1999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      },
+      {
+        "id": 233946,
+        "fee": 0,
+        "payed": 0,
+        "st": -200,
+        "pl": 0,
+        "dl": 0,
+        "sp": 0,
+        "cp": 0,
+        "subp": 0,
+        "cs": false,
+        "maxbr": 320000,
+        "fl": 0,
+        "toast": false,
+        "flag": 1081600,
+        "preSell": false,
+        "playMaxbr": 320000,
+        "downloadMaxbr": 320000,
+        "maxBrLevel": "exhigh",
+        "playMaxBrLevel": "exhigh",
+        "downloadMaxBrLevel": "exhigh",
+        "plLevel": "none",
+        "dlLevel": "none",
+        "flLevel": "none",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": false,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": 1,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      },
+      {
+        "id": 28427745,
+        "fee": 1,
+        "payed": 0,
+        "st": 0,
+        "pl": 0,
+        "dl": 0,
+        "sp": 7,
+        "cp": 1,
+        "subp": 1,
+        "cs": false,
+        "maxbr": 999000,
+        "fl": 0,
+        "toast": false,
+        "flag": 1541124,
+        "preSell": false,
+        "playMaxbr": 999000,
+        "downloadMaxbr": 999000,
+        "maxBrLevel": "jymaster",
+        "playMaxBrLevel": "jymaster",
+        "downloadMaxBrLevel": "jymaster",
+        "plLevel": "none",
+        "dlLevel": "none",
+        "flLevel": "none",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": true,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      },
+      {
+        "id": 34723529,
+        "fee": 8,
+        "payed": 0,
+        "st": 0,
+        "pl": 320000,
+        "dl": 0,
+        "sp": 7,
+        "cp": 1,
+        "subp": 1,
+        "cs": false,
+        "maxbr": 999000,
+        "fl": 320000,
+        "toast": false,
+        "flag": 1540100,
+        "preSell": false,
+        "playMaxbr": 999000,
+        "downloadMaxbr": 999000,
+        "maxBrLevel": "jymaster",
+        "playMaxBrLevel": "jymaster",
+        "downloadMaxBrLevel": "jymaster",
+        "plLevel": "exhigh",
+        "dlLevel": "none",
+        "flLevel": "exhigh",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": false,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      },
+      {
+        "id": 28427721,
+        "fee": 1,
+        "payed": 0,
+        "st": 0,
+        "pl": 0,
+        "dl": 0,
+        "sp": 7,
+        "cp": 1,
+        "subp": 1,
+        "cs": false,
+        "maxbr": 999000,
+        "fl": 0,
+        "toast": false,
+        "flag": 1541124,
+        "preSell": false,
+        "playMaxbr": 999000,
+        "downloadMaxbr": 999000,
+        "maxBrLevel": "jymaster",
+        "playMaxBrLevel": "jymaster",
+        "downloadMaxBrLevel": "jymaster",
+        "plLevel": "none",
+        "dlLevel": "none",
+        "flLevel": "none",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": true,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      },
+      {
+        "id": 399353351,
+        "fee": 8,
+        "payed": 0,
+        "st": 0,
+        "pl": 320000,
+        "dl": 0,
+        "sp": 7,
+        "cp": 1,
+        "subp": 1,
+        "cs": false,
+        "maxbr": 999000,
+        "fl": 320000,
+        "toast": false,
+        "flag": 1540100,
+        "preSell": false,
+        "playMaxbr": 999000,
+        "downloadMaxbr": 999000,
+        "maxBrLevel": "jymaster",
+        "playMaxBrLevel": "jymaster",
+        "downloadMaxBrLevel": "jymaster",
+        "plLevel": "exhigh",
+        "dlLevel": "none",
+        "flLevel": "exhigh",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": false,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 0
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.song_detail.empty.none.neg.001",
+    "apiAuditId": "ncm.song_detail",
+    "auth": "AUTH_NONE",
+    "params": {
+      "ids": ""
+    },
+    "startedAt": "2026-08-04T11:05:21.338Z",
+    "endedAt": "2026-08-04T11:05:21.414Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 502,
+    "body": {
+      "code": 502,
+      "msg": "Request failed with status code 400"
+    },
+    "cookieCount": 0
+  }
+}

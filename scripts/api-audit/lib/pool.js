@@ -72,16 +72,23 @@ class FixturePool {
   }
 
   resolve(template) {
-    const m = String(template).match(/^\{\{pool:([a-zA-Z]+):(\d+)\}\}$/)
-    if (!m) return { value: template, lineage: null }
-    const arr = this.byEntity.get(m[1]) || []
-    const idx = parseInt(m[2], 10)
-    if (idx >= arr.length) return { value: null, lineage: { missing: m[1] + ':' + m[2] } }
-    const e = arr[idx]
-    return {
-      value: e.id,
-      lineage: { entityType: e.entityType, producerApi: e.producerApi, producerCase: e.producerCase, jsonPath: e.jsonPath },
-    }
+    const s = String(template)
+    if (!s.includes('{{pool:')) return { value: template, lineage: null }
+    const lineages = []
+    let missing = null
+    const value = s.replace(/\{\{pool:([a-zA-Z]+):(\d+)\}\}/g, (_, entity, idx) => {
+      const arr = this.byEntity.get(entity) || []
+      const i = parseInt(idx, 10)
+      if (i >= arr.length) {
+        missing = entity + ':' + idx
+        return ''
+      }
+      const e = arr[i]
+      lineages.push({ entityType: e.entityType, producerApi: e.producerApi, producerCase: e.producerCase, jsonPath: e.jsonPath })
+      return e.id
+    })
+    if (missing) return { value: null, lineage: { missing } }
+    return { value, lineage: lineages }
   }
 
   dump() {

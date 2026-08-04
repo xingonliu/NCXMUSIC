@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "caseId": "ncm.lyric_new.none.001",
+    "apiAuditId": "ncm.lyric_new",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-04T11:03:32.369Z",
+    "endedAt": "2026-08-04T11:03:32.438Z",
+    "durationMs": 69,
+    "attempts": 1
+  },
+  "body": {
+    "uncollected": true,
+    "sgc": false,
+    "sfy": false,
+    "qfy": false,
+    "needDesc": true,
+    "lrc": {
+      "version": 1,
+      "lyric": "[00:00.00]暂无歌词"
+    },
+    "code": 200,
+    "briefDesc": ""
+  },
+  "error": null
+}

@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.album.id0.none.neg.001",
+    "apiAuditId": "ncm.album",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-04T11:05:25.396Z",
+    "endedAt": "2026-08-04T11:05:25.459Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 404,
+    "body": {
+      "resourceState": false,
+      "code": 404
+    },
+    "cookieCount": 0
+  }
+}

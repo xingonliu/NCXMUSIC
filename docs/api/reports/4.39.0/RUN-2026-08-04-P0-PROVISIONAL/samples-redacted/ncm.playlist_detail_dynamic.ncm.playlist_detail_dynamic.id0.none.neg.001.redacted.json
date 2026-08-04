@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.playlist_detail_dynamic.id0.none.neg.001",
+    "apiAuditId": "ncm.playlist_detail_dynamic",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-04T11:05:24.756Z",
+    "endedAt": "2026-08-04T11:05:24.837Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 404,
+    "body": {
+      "code": 404
+    },
+    "cookieCount": 1
+  }
+}

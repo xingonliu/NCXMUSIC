@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_detail.inv.001",
+    "apiAuditId": "ncm.artist_detail",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "id": "7763"
+    },
+    "startedAt": "2026-08-04T11:04:12.254Z",
+    "endedAt": "2026-08-04T11:04:12.381Z",
+    "durationMs": 127,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "message": "ok",
+    "data": {
+      "videoCount": 116,
+      "vipRights": {
+        "rightsInfoDetailDtoList": [
+          {
+            "vipCode": 220,
+            "expireTime": 1778428799000,
+            "iconUrl": null,
+            "dynamicIconUrl": null,
+            "vipLevel": 0,
+            "signIap": false,
+            "signDeduct": false,
+            "signIapDeduct": false,
+            "sign": false
+          },
+          {
+            "vipCode": 100,
+            "expireTime": 1778428799000,
+            "iconUrl": null,
+            "dynamicIconUrl": null,
+            "vipLevel": 0,
+            "signIap": false,
+            "signDeduct": false,
+            "signIapDeduct": false,
+            "sign": false
+          },
+          {
+            "vipCode": 300,
+            "expireTime": 1772121599000,
+            "iconUrl": null,
+            "dynamicIconUrl": null,
+            "vipLevel": 0,
+            "signIap": false,
+            "signDeduct": false,
+            "signIapDeduct": false,
+            "sign": false
+          }
+        ],
+        "oldProtocol": false,
+        "redVipAnnualCount": -1,
+        "redVipLevel": 6,
+        "now": 1785841452339
+      },
+      "identify": {
+        "imageUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8",
+        "imageDesc": "香港歌手",
+        "actionUrl": "orpheus://rnpage?component=music-reactnative-artistwiki&split=index&artistId=7763"
+      },
+      "artist": {
+        "id": 7763,
+        "cover": "http://p4.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=7f33127f0f2b",
+        "avatar": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+        "name": "G.E.M.邓紫棋",
+        "transNames": [],
+        "alias": [
+          "G.E.M.",
+          "Gloria Tang"
+        ],
+        "identities": [
+          "作词",
+          "作曲"
+        ],
+        "identifyTag": [
+          "入驻艺人"
+        ],
+        "briefDesc": "邓紫棋（G.E.M.），本名邓诗颖，1991年8月16日出生于上海市，中国香港流行乐女歌手、词曲作者、音乐制作人。\n2008年，发行个人首张音乐EP《G.E.M.》，凭该EP获得香港叱咤乐坛流行榜“叱咤乐坛生力军女歌手（金奖）”。2009年，发行个人首张音乐专辑《18...》。2011年，成为首位登上香港体育馆开唱的90后华语女歌手。2012年，凭借音乐专辑《Xposed》入围第24届台湾金曲奖“最佳国语女歌手奖”，并获得IFPI香港唱片销量大奖“全年最高销量女歌手奖”和“最高销量国语唱片奖”。2013年，举行邓紫棋“X.X.X.”世界巡回演唱会。2014年，获得湖南卫视歌唱真人秀节目《我是歌手第二季》总决赛亚军；同年，获得第27届美国儿童选择奖“最受欢迎亚洲艺人奖”。\n2015年，登上2015年中央电视台春节联欢晚会，弹唱歌曲《多远都要在一起》；同年，位列《2015年福布斯中国名人榜》第11名。2016年，入选福布斯《全球30岁以下最具潜力音乐人榜单》；同年，获得MTV欧洲音乐奖“中国内地及香港地区最佳艺人奖”。2018年，成为美国国家航空航天局“科学突破奖”首位亚洲颁奖女艺人；同年，入选英国广播公司BBC发布的《全球最具影响力百大女性榜单》。2019年，《光年之外》MV在视频平台YouTube突破2亿次点击量。2020年，凭借音乐专辑《摩天动物园》获得第31届台湾金曲奖“评审团奖”；同年，获得Mnet亚洲音乐大奖“最佳亚洲艺人奖”。2021年，《光年之外》MV被吉尼斯世界纪录认证为“YouTube上观看次数最多的中文音乐视频”。2022年，发行录音室专辑《启示录》。2023年12月，启动个人主题巡演邓紫棋“I AM GLORIA”世界巡回演唱会。",
+        "rank": {
+          "rank": 5,
+          "type": 1
+        },
+        "albumSize": 61,
+        "musicSize": 420,
+        "mvSize": 116
+      },
+      "simpleUserIdentify": {
+        "imageUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8",
+        "imageDesc": "香港歌手",
+        "actionUrl": "orpheus://rnpage?component=music-reactnative-artistwiki&split=index&artistId=7763"
+      },
+      "blacklist": false,
+      "preferShow": 10,
+      "showPriMsg": true,
+      "secondaryExpertIdentiy": [
+        {
+          "expertIdentiyId": 10,
+          "expertIdentiyName": "演唱",
+          "expertIdentiyCount": 420
+        },
+        {
+          "expertIdentiyId": 11,
+          "expertIdentiyName": "作词",
+          "expertIdentiyCount": 480
+        },
+        {
+          "expertIdentiyId": 12,
+          "expertIdentiyName": "作曲",
+          "expertIdentiyCount": 501
+        },
+        {
+          "expertIdentiyId": 8,
+          "expertIdentiyName": "编曲",
+          "expertIdentiyCount": 58
+        },
+        {
+          "expertIdentiyId": 9,
+          "expertIdentiyName": "制作",
+          "expertIdentiyCount": 80
+        },
+        {
+          "expertIdentiyId": 1002568,
+          "expertIdentiyName": "演奏",
+          "expertIdentiyCount": 1
+        }
+      ],
+      "eventCount": 17,
+      "user": {
+        "backgroundUrl": "http://p1.music.126.net/nlH22cnwKf5SBO9Wpg_ziQ==/109951167773868994.jpg#hash=426c04076590",
+        "birthday": -2209017600000,
+        "detailDescription": "香港歌手",
+        "authenticated": true,
+        "gender": 2,
+        "city": 810100,
+        "signature": "<REDACTED:signature>",
+        "description": "香港歌手",
+        "remarkName": null,
+        "shortUserName": "GEM鄧紫棋",
+        "accountStatus": 0,
+        "locationStatus": 30,
+        "avatarImgId": 109951167771736530,
+        "defaultAvatar": false,
+        "province": 810000,
+        "nickname": "GEM鄧紫棋",
+        "expertTags": null,
+        "djStatus": 10,
+        "avatarUrl": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+        "accountType": 1,
+        "authStatus": 1,
+        "vipType": 0,
+        "userName": "GEM鄧紫棋",
+        "followed": false,
+        "userId": 281382,
+        "lastLoginIP": "",
+        "lastLoginTime": 1777268086157,
+        "authenticationTypes": 2,
+        "mutual": false,
+        "createTime": 1365520082017,
+        "anchor": false,
+        "authority": 3,
+        "backgroundImgId": 109951167773869000,
+        "userType": 2,
+        "experts": null,
+        "avatarDetail": {
+          "userType": 2,
+          "identityLevel": 1,
+          "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+        }
+      }
+    }
+  },
+  "error": null
+}

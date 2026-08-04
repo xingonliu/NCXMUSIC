@@ -32,15 +32,86 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.simi_artist.anon.001",
+        "auth": "AUTH_ANON",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.simi_artist.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "body": {
+            "code": 301,
+            "message": "未登录"
+          },
+          "message": "[object Object]"
+        }
+      },
+      {
+        "caseId": "ncm.simi_artist.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792707711079628812",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=bda392584b5e",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        }
+      },
+      {
+        "caseId": "ncm.simi_artist.none.001",
+        "auth": "AUTH_NONE",
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "body": {
+            "code": 301,
+            "message": "未登录"
+          },
+          "message": "[object Object]"
+        }
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
   "evidence": []
 }

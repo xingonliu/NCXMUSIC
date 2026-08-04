@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_detail_dynamic.anon.001",
+    "apiAuditId": "ncm.artist_detail_dynamic",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "7763"
+    },
+    "startedAt": "2026-08-04T11:04:14.236Z",
+    "endedAt": "2026-08-04T11:04:14.441Z",
+    "durationMs": 205,
+    "attempts": 1
+  },
+  "body": {
+    "followed": false,
+    "concert": {
+      "simpleConcert": null,
+      "onlineCount": 0,
+      "view": true
+    },
+    "code": 200,
+    "videoNum": [
+      {
+        "cat": 0,
+        "num": 116
+      },
+      {
+        "cat": 1,
+        "num": 116
+      }
+    ],
+    "rcmdResource": null
+  },
+  "error": null
+}

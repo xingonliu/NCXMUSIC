@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "caseId": "ncm.playlist_detail_dynamic.none.001",
+    "apiAuditId": "ncm.playlist_detail_dynamic",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "2488306802"
+    },
+    "startedAt": "2026-08-04T11:03:53.800Z",
+    "endedAt": "2026-08-04T11:03:53.908Z",
+    "durationMs": 108,
+    "attempts": 1
+  },
+  "body": {
+    "commentCount": 126,
+    "shareCount": 294,
+    "playCount": 9528353,
+    "bookedCount": 88394,
+    "subscribed": false,
+    "remarkName": null,
+    "followed": false,
+    "gradeStatus": "NONE",
+    "remixVideo": null,
+    "code": 200
+  },
+  "error": null
+}

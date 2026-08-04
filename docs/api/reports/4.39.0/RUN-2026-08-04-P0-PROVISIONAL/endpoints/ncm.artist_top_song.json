@@ -32,15 +32,51 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.artist_top_song.anon.001",
+        "auth": "AUTH_ANON",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.artist_top_song.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "status": "error",
+        "code": 404,
+        "error": {
+          "class": "other",
+          "status": 404,
+          "body": {
+            "code": 404
+          },
+          "message": "[object Object]"
+        }
+      },
+      {
+        "caseId": "ncm.artist_top_song.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.artist_top_song.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
   "evidence": []
 }

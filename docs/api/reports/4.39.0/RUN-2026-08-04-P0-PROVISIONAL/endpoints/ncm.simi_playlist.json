@@ -40,15 +40,44 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.simi_playlist.anon.001",
+        "auth": "AUTH_ANON",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.simi_playlist.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.simi_playlist.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.simi_playlist.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
   "evidence": []
 }

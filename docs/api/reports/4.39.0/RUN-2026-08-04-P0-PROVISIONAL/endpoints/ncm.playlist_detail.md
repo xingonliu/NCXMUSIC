@@ -89,3 +89,17 @@
 - 是否建议进入 Capability Catalog：待定（Phase 15）
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
+
+
+## 15. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.playlist_detail.id0.none.neg.001 | AUTH_NONE | err(400) | -462 |  | {"code":-462,"data":{"actionCode":null,"verifyType":40,"verifyId":1007602,"verifyUrl":"https://st.music.163.com/encrypt- |
+| ncm.playlist_detail.nonexist.none.neg.001 | AUTH_NONE | err(400) | -462 |  | {"code":-462,"data":{"actionCode":null,"verifyType":40,"verifyId":1007602,"verifyUrl":"https://st.music.163.com/encrypt- |
+| ncm.playlist_detail.pl.anon.001 | AUTH_ANON | - | 200 | 469 |  |
+| ncm.playlist_detail.pl.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 310 |  |
+| ncm.playlist_detail.pl.none.001 | AUTH_NONE | - | 200 | 290 |  |
+| ncm.playlist_detail.toplist.none.001 | AUTH_NONE | - | 200 | 287 |  |
