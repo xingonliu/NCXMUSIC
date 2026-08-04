@@ -35,6 +35,27 @@ Design Tokens
 
 领域组件可以组合通用组件，但不能复制通用组件的内部样式或绕过 Token。
 
+### 2.1 Headless Primitive 基础
+
+首版采用 Reka UI 承担无样式交互 Primitive。它负责焦点管理、键盘导航、Portal、受控状态和 WAI-ARIA 行为；NcxMusic 负责组件命名、Props、Emits、文案、视觉、动画、Token 和产品使用边界。
+
+依赖方向固定为：
+
+```text
+reka-ui
+  └─ design-system/primitives/reka（内部适配）
+      └─ design-system/components（NcxMusic 公开组件）
+          └─ patterns / domain components / feature pages
+```
+
+- 只有 `design-system/primitives/reka/**` 可以导入 `reka-ui`。
+- NcxMusic 公开组件不能直接导出 Reka UI 的 Props、Emits、实例类型或内部部件。
+- Dialog、AlertDialog、Drawer、Popover、DropdownMenu、ContextMenu、Tooltip、Select、Combobox、Tabs、表单选择控件、ScrollArea 和 Toast 等优先复用对应 Primitive。
+- Button、Card、PageHeader、TrackRow、PlayerBar、ToolExecutionCard 和 ApprovalCard 等产品组件由 NcxMusic 自己实现，不为追求统一而强行套入无关 Primitive。
+- Reka UI 的 `data-*` 状态只能在 Design System 内映射到语义 Token；业务样式不能直接选择第三方内部结构。
+- 版本由根锁文件冻结。升级时先运行 UI Lab、键盘交互、焦点恢复和视觉回归测试，不在业务页面逐个修补。
+- 如果未来替换 Primitive 库，只改内部适配层和公共组件实现，页面调用契约保持不变。
+
 ## 3. Design Tokens
 
 Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Token、组件 Token。例如 `--ncx-space-4` → `--ncx-page-padding-inline` → `--ncx-page-header-gap`。业务代码只能使用语义或组件 Token。
@@ -290,7 +311,6 @@ src/renderer/features/
 
 1. 品牌主色、亮/暗主题的具体色值与默认主题。
 2. 图标库与音乐业务专用图标风格。
-3. 是否使用 Headless UI Primitive 作为无障碍交互基础，还是全部自行实现。
-4. 最小窗口尺寸与紧凑密度触发点。
+3. 最小窗口尺寸与紧凑密度触发点。
 
 以上项目确认后只修改 Token 或 Primitive 实现，不改变本文件已经冻结的组件语义和页面复用规则。

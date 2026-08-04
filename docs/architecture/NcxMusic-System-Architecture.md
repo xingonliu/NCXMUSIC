@@ -74,6 +74,7 @@ tools/
 1. `domains/**` 不导入 Electron、Vue、Pinia、DOM、SQLite Driver、HTTP Client 或 NeteaseCloudMusicApiEnhanced；领域层只描述实体、用例、Port 和纯规则。
 2. `shared/**` 不导入任何进程入口或基础设施；跨进程数据必须可结构化克隆，不传函数、DOM 对象、数据库句柄或原始敏感凭据。
 3. `renderer/**` 不导入 `main/**`、`utility/**`、`infrastructure/netease`、`infrastructure/credentials`、`infrastructure/persistence` 或 `infrastructure/shell`。
+   `reka-ui` 只能由 `renderer/design-system/primitives/reka/**` 导入；页面、Feature 和领域组件只能使用 NcxMusic Design System 的公开组件入口，第三方 Props、Emits 和类型不得泄漏到业务层。
 4. `preload/**` 只导入 `shared/contracts`、`shared/schemas` 和最小 Electron API，不编写业务流程。
 5. `main/**` 不执行 Agent 主循环、音乐 API 用例或数据分析；它只组装平台级 Adapter 和进程通道。
 6. `utility/**` 不导入 Vue、Pinia、DOM 或 Renderer 实现；播放控制只能通过共享 `PlayerCommand` 契约进入 Renderer。

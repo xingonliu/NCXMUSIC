@@ -116,6 +116,7 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-074 | 前端建立单一 Design System：所有页面只通过 Design Tokens、通用组件、布局模式和领域组件构建，不允许业务页面复制按钮、Header、浮层、消息反馈或直接定义另一套视觉常量。 |
 | C-075 | 首版统一提供 Button/IconButton、表单控件、Toast、Dialog、AlertDialog、Drawer、Popover、菜单、Tooltip、加载/空/错状态等通用组件；浮层按任务语义选择，审批不能降级成 Toast 或普通确认弹窗。 |
 | C-076 | PageHeader 是一级与二级页面的唯一标准 Header；二级页面返回行为由路由元数据驱动。业务页面的按钮必须使用统一 Button/IconButton，并完整覆盖 Hover、Pressed、Focus、Disabled 和 Loading 状态。 |
+| C-077 | 前端使用 Reka UI 作为无样式、可访问交互 Primitive，但只能由 NcxMusic Design System 的内部适配层导入。业务页面和领域组件只使用项目自有组件 API，不直接依赖、透传或暴露 Reka UI 类型；全部外观、Token 和产品语义由 NcxMusic 控制。 |
 
 ## 3. 目标用户与使用场景
 
@@ -1253,6 +1254,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 - D-708（已确认）：Renderer 使用 Vue SPA；`AudioHost` 与播放引擎常驻 AppShell 根层、独立于 RouterView。PlayerBar 通过类型化路由元数据控制显示，设置和个人信息页隐藏，主/次导航及歌单、歌手、专辑列表与详情页展示。
 - D-709（已确认）：应用内页面切换全部使用 Vue Router；二级页面由统一 PageHeader 展示返回按钮，有应用内历史时返回上一页，否则回退到该路由声明的稳定父级页面。
 - D-710（已确认）：建立单一 Design System，冻结首版通用组件范围以及浮层、PageHeader、Button 和交互状态的统一契约；具体品牌配色在视觉方向确认后写入语义 Token。
+- D-711（已确认）：Reka UI 只作为 Design System 内部的无样式交互 Primitive；业务层只依赖 NcxMusic 自有组件，不暴露第三方组件 API。
 
 ## 12. 决策记录
 
@@ -1301,6 +1303,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 | 2026-08-04 | D-709 | Renderer 采用纯 SPA 路由导航；二级页面统一提供带稳定父级回退的返回按钮。 | Vue Router、PageHeader、深链与状态恢复、页面导航 |
 | 2026-08-04 | D-010 | 使用 pnpm、electron-vite 与 electron-builder 组成单包开发、构建和分发工具链，不引入 Electron Forge。 | 开发脚本、进程构建、安装包、签名、公证、CI |
 | 2026-08-04 | D-710 | 建立统一 Design System，页面复用通用组件、布局模式和语义 Token，不在业务内派生第二套 UI 规则。 | 全部 Renderer 页面、组件开发、交互一致性、视觉验收 |
+| 2026-08-04 | D-711 | Reka UI 仅承担内部无样式 Primitive，NcxMusic 包装并拥有全部组件 API、视觉和语义。 | Renderer 依赖边界、无障碍、组件封装、升级与替换成本 |
 
 ## 13. 暂定里程碑
 
