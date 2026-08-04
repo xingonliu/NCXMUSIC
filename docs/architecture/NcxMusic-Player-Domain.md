@@ -192,7 +192,7 @@ interface QueueController {
   clear(): QueueEffect
   undo(): QueueEffect | null
   next(reason: 'manual' | 'ended' | 'error-policy'): QueueEffect
-  previous(currentPositionMs: number): QueueEffect
+  previous(): QueueEffect
   setMode(mode: PlayMode): QueueEffect
   getSnapshot(): QueueSnapshot
 }
@@ -216,7 +216,8 @@ interface QueueController {
 - 单曲插播项是正式队列项，必须在队列 UI 中显示且不会自动清理。连续点播时，以最新当前项为基准继续插到其后并立即播放。
 - 删除当前项时由当前模式决定下一步；删除非当前项不得中断播放。
 - 手动排序只改变规范顺序；是否退出 shuffle 待产品确认，不能隐式销毁随机历史。
-- `previous` 的候选默认语义为：播放超过可配置阈值时重播当前歌曲，否则返回实际播放历史的上一项。阈值和队列首项行为待确认。
+- `previous` 每次都执行切歌，禁止根据当前播放时长改成“从头重播当前歌曲”。顺序类模式取活动播放顺序的上一项；shuffle 取实际 `history` 上一项。队列首项的边界行为随播放模式另行确认。
+- 切离歌曲后不保存该歌曲的独立续播位置；再次回到该歌曲时从头播放。
 - `revision` 在队列、当前项或模式发生语义变化时单调递增；异步 Agent 命令携带 `expectedRevision`，过期后返回当前状态并要求重新规划或显式合并。
 
 ### 4.4 Shuffle
@@ -353,6 +354,7 @@ AppShell（应用生命周期）
 - queue 增删改、删除当前项、空队列、重复 songId、revision 过期。
 - 单曲点播插入 `currentIndex + 1` 后立即成为当前项并保留；连续点播保持插入顺序；空队列时插为第一项。
 - 集合详情点击歌曲行时完整列表替换队列，点击项成为当前项；搜索和推荐单曲不会误替换队列。
+- previous 无论当前播放多久都切换歌曲；shuffle 返回真实历史；返回歌曲从头播放。
 - shuffle 一个周期不重复、previous 沿真实历史、关闭 shuffle 恢复规范顺序。
 - undo 恢复队列、歌曲、位置和意图，revision 保持单调。
 - 启动恢复始终 `autoplay=false`；无有效快照时保持 idle。
