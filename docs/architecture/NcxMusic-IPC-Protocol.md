@@ -121,27 +121,37 @@ interface SelectionRequestedPayload {
   selectionId: string
   toolCallId: string
   prompt: string
-  candidates: Array<{
-    candidateRef: string
-    entityType: 'song' | 'artist' | 'album' | 'playlist'
-    title: string
-    subtitle?: string
-    artworkUrl?: string
-    badges?: Array<'vip' | 'paid'>
-  }>
+  options: Array<
+    | {
+        kind: 'entity'
+        optionKey: string
+        candidateRef: string
+        entityType: 'song' | 'artist' | 'album' | 'playlist'
+        title: string
+        subtitle?: string
+        artworkUrl?: string
+        badges?: Array<'vip' | 'paid'>
+      }
+    | {
+        kind: 'text'
+        optionKey: string
+        label: string
+        description?: string
+      }
+  >
 }
 
 interface SelectionResolvePayload {
   selectionId: string
-  candidateRef?: string
+  optionKey?: string
   action: 'select' | 'cancel'
   accountGeneration: number
 }
 ```
 
-- `candidates` 固定为 2~5 项，并由 Utility Process 根据 Entity Pool 构造；Renderer 不能增删候选或改写引用。
-- Resolve 必须匹配当前活动 `selectionId`、`toolCallId` 的隐含关联、账户 generation 和候选集合；迟到、重复或伪造引用均拒绝。
-- `action: select` 只完成 `request_user_selection` Tool 并把 `candidateRef` 返回给模型，不发送 PlayerCommand，也不调用任何音乐写 Handler。
+- `options` 固定为 2~5 项且允许 `entity`/`text` 混排。实体展示字段由 Utility Process 根据 Entity Pool 构造；文字字段经过长度、控制字符和纯文本校验。Renderer 不能增删或改写选项。
+- Resolve 必须匹配当前活动 `selectionId`、`toolCallId` 的隐含关联、账户 generation 和本次 `optionKey` 集合；迟到、重复或伪造 key 均拒绝。
+- `action: select` 只完成 `request_user_selection` Tool 并返回“用户选择了什么”：`selectedOptionKey`，以及实体选项内部映射的可选 `selectedRef`。协议中不存在选项回调、待执行命令或后续 Tool 参数；它不发送 PlayerCommand，也不调用任何业务 Handler。
 - 选择后若模型提出新的播放、收藏或歌单 Tool Call，该调用作为全新的 `commandId` 进入能力、Schema 和 Policy 流程。
 - SelectionCard 在创建 10 分钟后过期；路由、侧栏与最小化不取消，Renderer 重载从 Snapshot 恢复。新聊天消息取消旧选择与旧 Turn 后开启新 Turn；应用退出、换号或 Runtime 故障取消且不跨应用恢复。
 

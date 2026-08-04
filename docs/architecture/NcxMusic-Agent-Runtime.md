@@ -120,9 +120,9 @@ Tool Registry 是正向能力边界：只有注册成功且在当前账户、功
 
 ### 用户选择工具
 
-`request_user_selection` 是 Runtime 内置的 `effect: interaction` Tool。它只接受本轮工具结果或 Entity Pool 中已经存在的 2~5 个候选引用，由 Runtime 解析安全展示字段并发送 SelectionCard 事件；模型不能直接构造原始 ID、HTML、组件 Props 或图片 URL。
+`request_user_selection` 是 Runtime 内置的 `effect: interaction` Tool，本质是让模型把一个选择题呈现成可点击答案以减少用户输入，不是业务操作。它接受 2~5 个可混排选项：`entity` 选项只引用本轮工具结果或 Entity Pool 中已有实体，由 Runtime 解析安全展示字段；`text` 选项只包含稳定 `optionKey`、纯文本标题和可选简短说明。模型不能直接构造原始网易云 ID、HTML、Markdown、组件 Props、图片 URL 或可执行回调。
 
-该 Tool 进入 `awaiting_user_selection` 后暂停自己的结果返回，但不产生业务副作用，也不走 M/S 审批。用户选择后以 `selectedRef` 成功结束，点击“取消”返回 `SELECTION_CANCELLED`，固定等待 10 分钟后返回 `SELECTION_EXPIRED`；随后是否调用播放、收藏或歌单工具由模型下一轮决定，新的业务 Tool Call 必须重新经过能力校验和 Policy。选择操作不能携带或继承授权。
+该 Tool 进入 `awaiting_user_selection` 后暂停自己的结果返回，但不产生业务副作用，也不走 M/S 审批。用户选择后返回 `selectedOptionKey`，实体选项额外返回 `selectedRef`；这个结果仅等价于用户回答了问题。点击“取消”返回 `SELECTION_CANCELLED`，固定等待 10 分钟后返回 `SELECTION_EXPIRED`。随后是否调用播放、收藏或歌单工具由模型下一轮重新决定，新的业务 Tool Call 必须重新经过能力校验和 Policy。Selection Tool 不保存待执行回调、业务 Tool 名称或参数模板，`optionKey` 也不能被 Executor 当作命令分派键。
 
 同一 Active Turn 最多存在一个 `awaiting_user_selection` Tool Call；同批次其他交互调用保持排队，避免同时出现多个选择卡。选择工具计入 24 次 Tool Call 上限。离开页面、收起侧栏和最小化窗口不改变状态；Renderer 重载从 Snapshot 恢复剩余时间。用户发送新消息时取消旧选择和旧 Turn，再创建新 Turn。应用退出、账号切换或 Runtime 故障取消选择，不跨应用恢复。
 
