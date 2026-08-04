@@ -4,9 +4,9 @@
 > 最后更新：2026-08-04
 > 文档用途：约束播放器音频状态、播放队列和恢复行为；技术验证通过并完成产品决策后才能作为实现基线
 > 范围：播放状态机、队列、全局唯一内容音频、音频焦点和持久化。Agent、权限和 IPC 是外部输入源，不在本领域内作决策。
-> 访谈状态：2026-08-04 重新开启播放架构讨论；本文所有技术结构和行为规则均为讨论底稿，尚未得到产品确认。
+> 访谈状态：2026-08-04 重新开启播放架构讨论；目前只确认 Vue SPA、根层唯一 AudioHost，以及按路由显示/隐藏 PlayerBar，其余技术结构和行为规则仍是讨论底稿。
 
-## 1. 已确定原则
+## 1. 技术讨论约束
 
 1. **单一事实源**：`PlaybackEngine` 持有当前媒体状态，`QueueController` 持有队列状态；UI 只消费快照，`HTMLAudioElement` 只是带副作用的执行器。
 2. **职责分离**：队列决定“播什么”，引擎负责“把指定媒体播好”，异步 URL 解析由独立 `TrackResolver` 完成。
@@ -35,7 +35,7 @@ UI / 快捷键 / 小 N / 系统媒体键
 - `QueueController` 不获取播放 URL，也不直接操作 `<audio>`。
 - `PlaybackEngine` 不决定下一首，也不修改歌单或队列。
 - `PlaybackCoordinator` 编排“选择队列项 → 解析可播放源 → 装载 → 按意图播放”，并持有取消句柄。
-- UI 框架未选定；领域层为纯 TypeScript，可由 Vue composable、React hook 或其他适配层订阅。
+- Renderer 已确定使用 Vue SPA。唯一 `AudioHost` 常驻 AppShell 根层并位于 `RouterView` 之外；领域层仍保持纯 TypeScript，通过 Vue 适配层订阅。
 
 ## 3. PlaybackEngine
 
@@ -300,15 +300,24 @@ interface QueueUndoSnapshot {
 
 最终选择 A、B 或让用户配置，需在播放器体验访谈中确认。
 
-## 10. UI 框架适配
+## 10. Vue SPA 集成
 
-领域层不依赖 Vue、React 或具体状态库。适配层只做三件事：
+```text
+AppShell（应用生命周期）
+  ├─ AudioHost
+  │    ├─ 唯一 HTMLAudioElement
+  │    └─ PlaybackCoordinator / Engine / Queue
+  ├─ RouterView（页面生命周期）
+  └─ PlayerBar（路由控制的 UI 生命周期）
+```
 
-1. 订阅 snapshot 并转换为框架响应式状态。
-2. 在组件卸载时调用 disposer。
-3. 将 UI 意图转换为统一 `PlaybackCommand`。
-
-框架技术选型完成后再补充对应 composable/hook 示例，不能用示例反向冻结技术栈。
+- `AudioHost` 不放进 `RouterView`、页面 Layout、`KeepAlive` 或条件渲染分支；正常路由切换不得卸载。
+- `PlayerBar` 只订阅 snapshot 并发送 `PlaybackCommand`，不创建或拥有播放引擎。
+- 隐藏 PlayerBar 不改变播放 intent、队列、音量或当前歌曲，也不能顺带销毁订阅之外的资源。
+- Vue Router 使用类型化 `RouteMeta.playerBar: 'show' | 'hide'`。`route.meta` 会合并匹配到的父子路由元数据，父布局可定义默认值，叶子路由显式覆盖。
+- 设置页和个人信息页使用 `hide`；主导航、歌单次导航以及歌单/歌手/专辑列表与详情页使用 `show`；其他页面等待产品确认后逐项填写，不能依赖 URL 字符串猜测。
+- PlayerBar 隐藏时页面移除底部安全区，显示时由 AppShell 统一提供 `PlayerSafeArea`，避免歌曲列表末项被遮挡。
+- Vue 适配层负责把 snapshot 转为响应式只读状态，并在自身销毁时解除订阅；领域对象生命周期不跟随适配组件。
 
 ## 11. 自定义音频协议验证
 

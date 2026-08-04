@@ -91,6 +91,8 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-050 | MCP 安装审批不提供“本会话允许”或“总是允许”，音乐与 Shell 的其他审批豁免规则不能覆盖它。 |
 | C-051 | Electron Main 负责窗口、登录 Session、Credential Vault、进程监督和安全 IPC；Agent Runtime、NeteaseCloudMusicApiEnhanced、MCP、Dynamic Skill、权限中间件与 Shell Executor 运行在独立 Utility Process。 |
 | C-052 | Renderer 与本地后端不建立 SSE/localhost 服务；模型增量、工具状态和审批事件通过 Electron IPC/MessagePort 传递。Provider 上游可使用其原生流式协议，但必须在 Utility Process 内归一化。 |
+| C-053 | Renderer 使用 Vue 单页应用；唯一 `<audio>` 与播放引擎挂载在 AppShell 根层并位于路由页面之外，路由切换不得销毁音频或中断播放。 |
+| C-054 | 音乐控制 Bar 的可见性由 Vue Router 页面元数据统一控制：设置页和个人信息页隐藏；主导航、歌单次导航，以及歌单/歌手/专辑列表与详情页展示。隐藏 Bar 不等于暂停播放。 |
 
 ## 3. 目标用户与使用场景
 
@@ -170,6 +172,30 @@ PageShell
   ├─ Section C
   └─ PlayerSafeArea
 ```
+
+Renderer 采用 Vue SPA。`AudioHost`、唯一 `<audio>` 和播放领域实例挂载在 AppShell 根层，`RouterView` 只替换页面内容：
+
+```text
+Vue AppShell
+  ├─ AudioHost（始终挂载，不参与路由切换）
+  ├─ SidebarLayout
+  │    └─ RouterView / PageShell / Sections
+  ├─ PlayerBar（按 route.meta.playerBar 显示或隐藏）
+  └─ 全局 Overlay / Toast / Dialog
+```
+
+PlayerBar 是播放引擎的控制视图，不拥有播放状态。隐藏或卸载 PlayerBar 只能移除控制界面和 `PlayerSafeArea`，不能调用 `pause()`、清空队列或销毁 `AudioHost`。
+
+| 页面类型 | PlayerBar |
+| --- | --- |
+| 发现、搜索、小 N 等主导航页面 | 展示 |
+| 我喜欢、自建歌单、收藏歌单等次导航页面 | 展示 |
+| 歌单、歌手、专辑列表与详情页 | 展示 |
+| 设置页 | 隐藏 |
+| 个人信息页 | 隐藏 |
+| 首次引导、登录、播放详情/沉浸歌词等其他页面 | 待确认 |
+
+Vue Router 使用类型化 `route.meta.playerBar: 'show' | 'hide'` 作为唯一判断来源；嵌套路由可由父布局给出默认值、叶子路由覆盖。禁止在各页面复制路径判断或直接操纵全局 PlayerBar。
 
 每个 Section 必须独立声明：
 
@@ -1091,6 +1117,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 - D-705（部分确认）：全屏隐藏窗口控件并在导航 Hover 时显示；全屏、最大化与沉浸模式是否拆分待确认。
 - D-706（待确认）：首版无障碍、多语言和默认主题范围。
 - D-707（已确认）：页面使用 Section 化结构，并建设统一的 Design Tokens、基础组件、浮层反馈和音乐业务组件。
+- D-708（已确认）：Renderer 使用 Vue SPA；`AudioHost` 与播放引擎常驻 AppShell 根层、独立于 RouterView。PlayerBar 通过类型化路由元数据控制显示，设置和个人信息页隐藏，主/次导航及歌单、歌手、专辑列表与详情页展示。
 
 ## 12. 决策记录
 
@@ -1116,6 +1143,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 | 2026-08-04 | D-303 | 画像启动继续采用输入框上方的主动提示；更新采用阈值 30、喜欢歌曲 1.5、自建歌单歌曲 1、收藏歌单 0 的变化评分。 | 用户画像、Agent Composer、推荐 |
 | 2026-08-04 | D-504 | 允许小 N 发起 MCP 安装，但每次都必须展示批准/拒绝卡片并取得当次明确同意，不允许记忆授权。 | MCP、权限中间件、审批组件 |
 | 2026-08-04 | D-007 | 确认 Main + Utility Process 拓扑；内部流式增量和审批事件使用 IPC/MessagePort，不建设 SSE/localhost 服务。 | Electron 进程、Agent Runtime、音乐 API、通信与安全边界 |
+| 2026-08-04 | D-708 | 确认 Vue SPA 与根层 AudioHost；页面只通过路由元数据控制 PlayerBar 可见性，隐藏控制栏不影响播放。 | Vue AppShell、路由、播放器生命周期、页面布局 |
 
 ## 13. 暂定里程碑
 
