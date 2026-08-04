@@ -4,7 +4,7 @@
 > 最后更新：2026-08-04
 > 文档用途：约束播放器音频状态、播放队列和恢复行为；技术验证通过并完成产品决策后才能作为实现基线
 > 范围：播放状态机、队列、全局唯一内容音频、音频焦点和持久化。Agent、权限和 IPC 是外部输入源，不在本领域内作决策。
-> 访谈状态：2026-08-04 重新开启播放架构讨论；目前确认 Vue SPA、根层唯一 AudioHost、按路由显示/隐藏 PlayerBar，以及单曲临时插播与集合上下文替换队列规则，其余技术结构和行为规则仍是讨论底稿。
+> 访谈状态：2026-08-04 重新开启播放架构讨论；目前确认 Vue SPA、根层唯一 AudioHost、按路由显示/隐藏 PlayerBar，以及单曲插入并立即播放与集合上下文替换队列规则，其余技术结构和行为规则仍是讨论底稿。
 
 ## 1. 技术讨论约束
 
@@ -170,17 +170,10 @@ interface QueueItem {
 interface QueueSnapshot {
   items: QueueItem[]            // 规范顺序，不因 shuffle 被原地打乱
   currentItemId: string | null
-  interrupt: TemporaryInterrupt | null
   mode: 'order' | 'loop' | 'loop-one' | 'shuffle'
   playOrder: string[]           // shuffle 时的稳定播放顺序
   history: string[]             // 实际播放历史，供 previous 使用
   revision: number
-}
-
-interface TemporaryInterrupt {
-  item: QueueItem
-  resumeItemId: string | null   // 临时歌曲离开后恢复到原队列的哪一项
-  originRevision: number
 }
 ```
 
@@ -191,7 +184,7 @@ interface TemporaryInterrupt {
 ```ts
 interface QueueController {
   replaceAndPlay(context: PlayContext): QueueEffect
-  interruptWithTrack(item: QueueItem): QueueEffect
+  insertAndPlay(item: QueueItem): QueueEffect
   playNext(items: QueueItem[]): QueueEffect
   enqueue(items: QueueItem[]): QueueEffect
   remove(queueItemId: string): QueueEffect
@@ -207,20 +200,20 @@ interface QueueController {
 
 已确认的小 N 语义：
 
-- 播放目标是单曲：`interruptWithTrack`，立即播放临时项，不改写规范 `items`；记录原队列的 `resumeItemId`，临时歌曲结束或手动下一首后继续原队列。队列为空时退化为单曲队列。
+- 播放目标是单曲：`insertAndPlay`。队列非空时把歌曲插入当前项之后，立即将 `currentItemId` 切换到新项并播放；队列为空时插为第一项。新歌曲进入正式 `items`，不使用队列外临时状态，播放后也不自动删除。
 - 播放目标是歌单：`replaceAndPlay`，用歌单建立新队列；未指定歌曲时从第一首开始。
 
 已确认的页面入口语义：
 
 - 歌单、专辑、“我喜欢”和歌手热门歌曲等集合详情中的歌曲行：`replaceAndPlay`，用当前完整列表替换队列，`startIndex` 指向点击项。
-- 小 N 精确点播、全局搜索单曲和推荐单曲卡片：`interruptWithTrack`，作为脱离集合上下文的单曲临时插播。
+- 小 N 精确点播、全局搜索单曲和推荐单曲卡片：`insertAndPlay`，插入当前项之后并立即切换播放。
 
-页面或 Agent 的其他动作必须明确选择 `replaceAndPlay`、`interruptWithTrack`、`playNext` 或 `enqueue`。搜索和推荐 Section 的“播放全部”、电台/MV 等后续来源仍待确认。
+页面或 Agent 的其他动作必须明确选择 `replaceAndPlay`、`insertAndPlay`、`playNext` 或 `enqueue`。搜索和推荐 Section 的“播放全部”、电台/MV 等后续来源仍待确认。
 
 ### 4.3 索引、删除与上一首
 
 - 当前项使用稳定 `queueItemId` 标识，数组移动后不靠脆弱的旧 index 找回。
-- 临时插播项与规范队列分开保存，避免插播结束后污染用户队列；是否在队列 UI 中显示及连续插播规则待确认。
+- 单曲插播项是正式队列项，必须在队列 UI 中显示且不会自动清理。连续点播时，以最新当前项为基准继续插到其后并立即播放。
 - 删除当前项时由当前模式决定下一步；删除非当前项不得中断播放。
 - 手动排序只改变规范顺序；是否退出 shuffle 待产品确认，不能隐式销毁随机历史。
 - `previous` 的候选默认语义为：播放超过可配置阈值时重播当前歌曲，否则返回实际播放历史的上一项。阈值和队列首项行为待确认。
@@ -358,7 +351,7 @@ AppShell（应用生命周期）
 - 快速连续切歌、URL 迟到、旧媒体 error/ended 迟到时不会污染新 generation。
 - waiting/buffering/playing、seek、duration 变化和网络恢复。
 - queue 增删改、删除当前项、空队列、重复 songId、revision 过期。
-- 单曲临时插播不改写规范队列；结束/下一首按 `resumeItemId` 续播；空队列时正确退化为单曲队列。
+- 单曲点播插入 `currentIndex + 1` 后立即成为当前项并保留；连续点播保持插入顺序；空队列时插为第一项。
 - 集合详情点击歌曲行时完整列表替换队列，点击项成为当前项；搜索和推荐单曲不会误替换队列。
 - shuffle 一个周期不重复、previous 沿真实历史、关闭 shuffle 恢复规范顺序。
 - undo 恢复队列、歌曲、位置和意图，revision 保持单调。
