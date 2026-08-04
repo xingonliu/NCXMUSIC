@@ -131,6 +131,7 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-089 | 网易云方形封面统一由 `MediaArtwork` 和图片 URL Adapter 按语义场景生成尺寸变体；密集列表请求小图，普通网格请求中图，推荐卡片与详情/播放歌词页请求高精度图。业务页面不得自行拼接 `param` 或直接请求无上限原图。 |
 | C-090 | 小 N 采用正向能力注册模型：模型只能看到并调用 Tool Registry 已注册的 Tool、Action 和 Music API Capability；未注册能力不进入 Tool Schema、不产生审批卡片，也没有可执行 Handler。M1~M4 只决定已注册音乐能力是否审批，Shell 能力独立按 S1~S4 审查。 |
 | C-091 | 音乐安全等级切换即时生效并持久化；从 M1~M3 切换到 M4 不弹 AlertDialog、不要求二次确认，也不在应用重启后重复提示。MusicSafetyControl 自身必须清楚显示当前等级。 |
+| C-092 | Agent 提示卡明确分为 ApprovalCard（审批卡）和 SelectionCard（选择卡）。选择卡由小 N 调用内置 `request_user_selection` Tool 触发，用于在多个候选中确定对象；其结果只返回稳定引用，不代表批准后续操作。 |
 
 ## 3. 目标用户与使用场景
 
@@ -630,7 +631,34 @@ Working Memory 采用原子替换写入；损坏或版本不兼容时从 SQLite 
 }
 ```
 
-执行前由 Entity Resolver 解析为稳定 ID。暂定消歧方案为：对候选集打分（流行度、播放历史、画像偏好），高置信度直接执行，低置信度弹出候选卡片让用户选择，禁止静默猜测；置信度阈值和自动执行边界待确认。
+执行前由 Entity Resolver 解析为稳定 ID，并按名称、歌手/专辑限定、当前上下文、流行度、播放历史和画像偏好对候选打分：
+
+- 用户明确提供歌手、专辑或当前上下文能够唯一定位时，直接返回稳定引用。
+- 第一候选明显领先时，直接返回稳定引用。
+- 多个候选接近且无法可靠判断时，搜索或解析工具返回 `needs_selection`、原因和 2~5 个候选引用，不静默猜测，也不直接弹 UI。
+- 小 N 收到 `needs_selection` 后调用 `request_user_selection` Tool；该工具生成 SelectionCard 并等待用户选择，再把选中的稳定引用作为工具结果返回给小 N。
+- 小 N 使用所选引用重新调用播放、歌单或其他业务 Tool；该业务调用仍独立经过 M/S 权限判断，选择候选不等于批准执行。
+
+#### `request_user_selection` 交互工具
+
+首版将选择卡注册为内置 Agent Tool：
+
+```ts
+interface RequestUserSelectionInput {
+  prompt: string
+  candidateRefs: [EntityRef, EntityRef, ...EntityRef[]] // 2~5 项
+}
+
+interface RequestUserSelectionResult {
+  status: 'selected' | 'cancelled'
+  selectedRef?: EntityRef
+}
+```
+
+- 候选必须来自本轮已完成工具结果或当前 Entity Pool，不能由模型伪造任意网易云 ID。
+- Runtime 根据引用读取名称、歌手、专辑、封面和权益小标等展示字段；模型不能传 HTML、组件 Props 或任意图片 URL。
+- 该 Tool 属于用户交互能力，不产生音乐/账户副作用，因此不受 M1~M4 审批；它仍计入单 Turn 的 Tool Call 上限，并且同一时刻只允许一个活动选择请求。
+- SelectionCard 的取消、超时、Renderer 恢复和新消息打断规则继续单独确认，不能直接套用 ApprovalCard 的 5 分钟规则。
 
 ### 5.6 Dynamic Skill
 
@@ -808,7 +836,7 @@ Tool Call
 - 能力是否存在先由 Tool Registry、Gateway Capability Catalog、工作区授权和进程最小环境确定；权限等级不能创造未注册能力。Credential Vault、权限策略写入口等没有 Tool Handler 的内部能力不会进入模型可见 Schema。
 - MCP 安装同样使用上述生命周期，并继续保持任何安全等级都不能免除审批。
 
-### 5.10 工具执行与审批组件
+### 5.10 工具执行与交互卡片
 
 工具展示卡片至少包含：
 
@@ -826,6 +854,15 @@ Tool Call
 - 两个且仅两个操作按钮，文案固定为“批准”“拒绝”；不显示“批准本次”“允许会话”“总是允许”等变体。
 - 不提供关闭图标；展示轻量剩余有效时间，并防止重复提交。过期、取消和拒绝后按钮不可再次点击。
 - MCP 安装卡片只提供当次批准/拒绝，不显示任何记忆授权入口。
+
+选择卡至少包含：
+
+- 小 N 当前需要用户选择什么，以及为什么无法唯一确定。
+- 2~5 个可点击候选；音乐候选展示高辨识度字段，如封面、名称、歌手、专辑及 VIP/付费小标。
+- 候选点击只完成 `request_user_selection` Tool，不直接播放、收藏、修改歌单或批准任何后续动作。
+- 已选择后卡片保留所选结果并禁止重复提交；取消、超时和恢复规则待确认。
+
+ApprovalCard 与 SelectionCard 都以内联 Agent 卡片呈现，但不得共用业务语义：前者决定是否授权一个已经确定目标的 Tool Call，后者只帮助小 N 确定目标。一次意图可能先后出现选择卡和审批卡。
 
 #### 播放操作提示与事件日志
 
@@ -1239,7 +1276,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 - D-101（部分确认）：首页通过“小 N 为你推荐”Section 主动展示推荐；是否允许自动续播或主动执行仍待确认。
 - D-102（部分确认）：单 Turn 最多 12 轮模型/工具循环和 24 个 Tool Call；单工具与整 Turn 的时间上限仍待确认。
 - D-103（部分确认）：账号写入、播放器副作用、Shell、安装和审批后操作禁止透明自动重试；只读工具是否重试、次数和退避仍待确认。
-- D-104（待确认）：遇到多首同名歌曲时的置信度阈值和默认消歧策略是什么？
+- D-104（已确认）：歌手、专辑或上下文唯一以及第一候选明显领先时直接解析；多个候选接近时返回 2~5 个候选，由小 N 调用 `request_user_selection` 展示 SelectionCard，不静默猜测。
 - D-105（部分确认）：只支持一个连续会话；消息按 10 分钟无用户输入分块写入 SQLite 并生成摘要，Working Memory 决定进入 Prompt 的内容；检索实现不在此项冻结。
 - D-106（待确认）：Agent 的人格、正式称呼、语言和回答长度是否可配置？
 - D-107（已确认）：用户播放操作即时生效；小 N 操作使用轻量提示并记录结构化 Action Journal，不弹操作冲突框。
@@ -1326,6 +1363,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 - D-712（已确认）：按钮统一为文字、图标、图标+文字三种用法；IconButton 为透明正方形，Hover 使用主题灰色背景，鼠标停留 1.5 秒显示名称与快捷键。
 - D-713（已确认）：生产环境全局接管浏览器右键菜单，空白区不显示，文本编辑能力完整保留；首版冻结歌曲、队列、歌单、专辑、歌手和 Agent 菜单矩阵，并加入“交给小 N”子菜单。
 - D-714（已确认）：所有方形音乐封面统一经 `MediaArtwork` 和图片 URL Adapter 选择语义尺寸，页面不得手写 `param` 或直接请求无上限原图。
+- D-715（已确认）：Agent 提示卡分为审批卡与选择卡；SelectionCard 由内置 `request_user_selection` Tool 触发，返回候选引用但不批准或直接执行后续业务动作。
 
 ## 12. 决策记录
 
@@ -1391,6 +1429,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 | 2026-08-04 | D-607/D-714 | 封面按五档语义尺寸加载；推荐、详情与歌词用高精度图，密集列表用小图，统一由图片 Adapter 与 MediaArtwork 管理。 | API First、图片缓存、MediaArtwork、列表与推荐性能 |
 | 2026-08-04 | D-206 | 安全模型改为正向能力注册：小 N 只能调用已注册能力；M 等级只管音乐审批，Shell 独立按 S1~S4 审查，不维护开放式禁止事项清单。 | Tool Registry、Gateway Catalog、Policy Engine、系统提示词 |
 | 2026-08-04 | D-202 | M4 在音乐安全控件中直接选择、即时生效并持久化，不弹额外确认或重启提示。 | MusicSafetyControl、设置持久化、Policy Engine |
+| 2026-08-04 | D-104/D-715 | 同名实体不确定时由小 N 调用选择工具展示 SelectionCard；选择只确定引用，后续业务 Tool 仍独立执行权限判断。 | Entity Resolver、Agent Tool、SelectionCard、Policy Engine |
 
 ## 13. 暂定里程碑
 

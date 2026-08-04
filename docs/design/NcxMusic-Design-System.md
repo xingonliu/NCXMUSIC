@@ -240,10 +240,14 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 
 - AgentSidebar、AgentComposer、ChatMessage、StreamingMessage。
 - MusicSafetyControl、CommandSafetyControl。
-- ToolExecutionCard、ApprovalCard、ProfileAnalysisPrompt、MemoryStatus。
+- ToolExecutionCard、ApprovalCard、SelectionCard、ProfileAnalysisPrompt、MemoryStatus。
 - VoiceOverlay、VoiceWaveform、VoiceStateLabel。
 
 `ToolExecutionCard` 展示工具名称、状态、耗时、摘要结果和可展开技术详情。`ApprovalCard` 是独立业务组件，必须同时展示操作对象、影响、风险原因、轻量剩余有效时间，以及文案固定为“批准”“拒绝”的两个按钮；没有关闭图标，不能增加会话级/永久授权，不能用通用 Dialog、Toast 或 ToolExecutionCard 的普通状态代替。
+
+`SelectionCard` 是 `request_user_selection` Tool 的内联交互组件，用于让用户在 2~5 个已解析候选中选择一个对象。音乐候选使用 `MediaArtwork thumbnail`，并展示名称、歌手、专辑和权益小标；整行候选是单一可点击目标，支持键盘焦点、方向键移动和 Enter 选择。卡片不得使用“批准/拒绝”文案，也不能在选中时直接执行后续音乐动作。
+
+ApprovalCard 与 SelectionCard 外层可以复用 Card、状态区域和动效 Token，但不能合并成一个按参数切换语义的万能组件；前者回答“是否允许执行”，后者回答“具体选择哪个对象”。
 
 `MusicSafetyControl` 与 `CommandSafetyControl` 是输入框下方两个独立按钮，各自显示当前 M/S 等级并打开对应等级选择面板。音乐等级选择后即时生效并持久化；选择 M4 不触发 AlertDialog、二次确认或重启提示。权限说明放在选择面板内，不能依赖额外弹窗传达当前状态。
 
@@ -268,6 +272,7 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 | ContextMenu | 鼠标右键的对象快捷操作 | 唯一操作入口 |
 | Tooltip | 解释无文字图标或缩写 | 承载操作、错误或关键信息 |
 | ApprovalCard | 小 N 工具执行前的批准/拒绝 | 用户主动操作的普通二次确认 |
+| SelectionCard | 小 N 需要用户在明确候选中选择一个对象 | 审批、风险确认、选择后直接执行副作用 |
 
 同一事件不能同时弹 Toast、Dialog 和 Notification。用户拒绝审批后由 ApprovalCard 更新结果，是否补充 Toast 由全局反馈策略统一决定，业务工具不得自行重复提示。
 

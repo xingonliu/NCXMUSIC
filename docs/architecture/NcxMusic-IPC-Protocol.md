@@ -7,7 +7,7 @@
 
 ## 1. 目标与边界
 
-本协议连接 Electron Main、Preload、Renderer 和 Utility Process，覆盖音乐 API、Agent 流式输出、工具状态、审批、播放器命令和运行时快照。
+本协议连接 Electron Main、Preload、Renderer 和 Utility Process，覆盖音乐 API、Agent 流式输出、工具状态、审批、用户选择、播放器命令和运行时快照。
 
 协议目标：
 
@@ -32,7 +32,7 @@ Renderer Gateway ↔ Preload MessagePort Adapter
 Main 创建 `MessageChannelMain`，一端通过 `webContents.postMessage` 交给对应窗口的 Preload，另一端通过 `utilityProcess.postMessage` 交给 Utility Process。
 
 - Preload 持有 Renderer 侧端口，并只向 Vue 暴露按用例命名的类型化函数和订阅；不向页面暴露原始 MessagePort。
-- Utility Process 持有另一端，注册 Music、Agent、Approval、Memory 和 PlayerCommand Handler。
+- Utility Process 持有另一端，注册 Music、Agent、Approval、Selection、Memory 和 PlayerCommand Handler。
 - Main 不转发正常业务消息；只负责身份校验、端口配对、进程生命周期、凭据代理和连接状态。
 - Main 与 Utility Process 的监督/凭据控制使用单独的窄控制通道，不能与 Renderer 业务数据通道混用。
 
@@ -101,7 +101,7 @@ interface CancelEnvelope extends MessageBase {
 - 调用端统一维护 Pending Request Map，并在超时、端口关闭或取消时清理。
 - 取消是尽力而为：收到取消后停止尚未开始的任务；已提交给不可取消上游的任务可以继续清理，但结果不得再改变已取消的前端状态。
 - 只读请求可按 Registry 策略重试；写操作、Shell、MCP 安装和审批后操作禁止透明重试。
-- Renderer 路由切换只取消页面作用域请求，不取消根层播放器、Agent 会话和待审批任务。
+- Renderer 路由切换只取消页面作用域请求，不取消根层播放器、Agent 会话、待审批任务和活动 Selection Tool；选择工具的最终打断规则由其生命周期决策确定。
 
 ## 6. 流式事件
 
@@ -109,8 +109,41 @@ Agent 文本增量、思考增量、工具状态和进度使用 `streamId + sequ
 
 - 同一 Stream 的 `sequence` 从 0 递增，终态事件只能出现一次。
 - Preload 发现序号缺口、重复终态或未知 Stream 时停止应用增量，并请求对应任务快照。
-- 文本增量允许合并批次，审批、工具结果和播放命令结果不得被合并或丢弃。
+- 文本增量允许合并批次，审批、选择请求、工具结果和播放命令结果不得被合并或丢弃。
 - 连接断开后不从旧序号继续复用；新连接先获取 Snapshot，再订阅后续事件。
+
+### 6.1 SelectionCard 交互契约
+
+Utility Process 在 `request_user_selection` Tool 进入等待态后发送 `agent.selection.requested` 事件；Renderer 通过 Preload 的专用方法提交 `agent.selection.resolve` 请求，不获得通用 Agent 事件写入口。
+
+```ts
+interface SelectionRequestedPayload {
+  selectionId: string
+  toolCallId: string
+  prompt: string
+  candidates: Array<{
+    candidateRef: string
+    entityType: 'song' | 'artist' | 'album' | 'playlist'
+    title: string
+    subtitle?: string
+    artworkUrl?: string
+    badges?: Array<'vip' | 'paid'>
+  }>
+}
+
+interface SelectionResolvePayload {
+  selectionId: string
+  candidateRef?: string
+  action: 'select' | 'cancel'
+  accountGeneration: number
+}
+```
+
+- `candidates` 固定为 2~5 项，并由 Utility Process 根据 Entity Pool 构造；Renderer 不能增删候选或改写引用。
+- Resolve 必须匹配当前活动 `selectionId`、`toolCallId` 的隐含关联、账户 generation 和候选集合；迟到、重复或伪造引用均拒绝。
+- `action: select` 只完成 `request_user_selection` Tool 并把 `candidateRef` 返回给模型，不发送 PlayerCommand，也不调用任何音乐写 Handler。
+- 选择后若模型提出新的播放、收藏或歌单 Tool Call，该调用作为全新的 `commandId` 进入能力、Schema 和 Policy 流程。
+- SelectionCard 的超时、Renderer 重载恢复与新消息打断规则仍待确认，协议实现前需补齐对应终态错误码与 Snapshot 字段。
 
 ## 7. 错误协议
 

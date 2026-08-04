@@ -80,11 +80,15 @@ received
             │    ├─ approval_cancelled
             │    └─ queued
             └─ queued
-                 → executing
-                 ├─ succeeded
-                 ├─ failed
-                 ├─ timed_out
-                 └─ cancelled
+                 ├─ awaiting_user_selection
+                 │    ├─ selected → succeeded
+                 │    ├─ selection_cancelled
+                 │    └─ selection_timed_out
+                 └─ executing
+                      ├─ succeeded
+                      ├─ failed
+                      ├─ timed_out
+                      └─ cancelled
 ```
 
 每个 Tool Call 在进入下一轮模型请求前必须拥有一个终态结果。Provider 一次返回多个 Tool Call 时，Runtime 按原始顺序回填结果，即使内部并行完成顺序不同。
@@ -99,7 +103,7 @@ interface ToolDefinition {
   description: string
   inputSchema: ZodType
   outputSchema: ZodType
-  effect: 'read' | 'write' | 'external-process' | 'install'
+  effect: 'read' | 'interaction' | 'write' | 'external-process' | 'install'
   riskAction: string
   concurrency: 'parallel' | 'serial'
   conflictKeys(input: unknown, context: ToolContext): string[]
@@ -113,6 +117,14 @@ interface ToolDefinition {
 模型只能看到完成裁剪后的名称、描述和输入 Schema。`effect`、风险、冲突域、超时和执行函数属于 Runtime 内部元数据，不进入 Prompt，也不能由 Dynamic Skill 覆盖。
 
 Tool Registry 是正向能力边界：只有注册成功且在当前账户、功能开关与扩展状态下可见的 Tool 才会进入模型请求。Runtime 仍必须防御模型伪造名称；未知 Tool、未声明 Action 或 Music Gateway 未注册的 `capabilityId` 在 `resolving_capability` 阶段结束为 `unavailable`，返回 `CAPABILITY_UNAVAILABLE`，不进入审批和 Executor。
+
+### 用户选择工具
+
+`request_user_selection` 是 Runtime 内置的 `effect: interaction` Tool。它只接受本轮工具结果或 Entity Pool 中已经存在的 2~5 个候选引用，由 Runtime 解析安全展示字段并发送 SelectionCard 事件；模型不能直接构造原始 ID、HTML、组件 Props 或图片 URL。
+
+该 Tool 进入 `awaiting_user_selection` 后暂停自己的结果返回，但不产生业务副作用，也不走 M/S 审批。用户选择后以 `selectedRef` 成功结束，取消时返回结构化取消结果；随后是否调用播放、收藏或歌单工具由模型下一轮决定，新的业务 Tool Call 必须重新经过能力校验和 Policy。选择操作不能携带或继承授权。
+
+同一 Active Turn 最多存在一个 `awaiting_user_selection` Tool Call；同批次其他交互调用保持排队，避免同时出现多个选择卡。选择工具计入 24 次 Tool Call 上限，其具体超时、恢复和打断规则由后续决策冻结。
 
 ## 6. 调度规则
 
