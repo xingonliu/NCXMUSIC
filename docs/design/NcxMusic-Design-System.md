@@ -56,6 +56,19 @@ reka-ui
 - 版本由根锁文件冻结。升级时先运行 UI Lab、键盘交互、焦点恢复和视觉回归测试，不在业务页面逐个修补。
 - 如果未来替换 Primitive 库，只改内部适配层和公共组件实现，页面调用契约保持不变。
 
+### 2.2 为什么没有选择 Element Plus
+
+Element Plus 是可行方案，并不是因为“不能改样式”而被排除。其当前能力包括 CSS Variables、SCSS 变量覆盖、暗色主题、ConfigProvider 命名空间和 Vite 按需引入；如果目标是快速交付常见后台或工具界面，它通常比 Headless Primitive 更省开发时间。
+
+NcxMusic 首版仍选择 Reka UI，原因是产品的视觉目标不止替换品牌色：
+
+- NcxMusic 需要统一重做控件密度、圆角层级、浮层材质、过渡动画、音乐列表和 macOS 式细节。Element Plus 的主题变量适合改色和部分尺寸，但更深的结构、状态和动画调整仍可能依赖组件类名或内部 DOM。
+- Element Plus 已自带完整视觉和 Theme Chalk 样式。先引入再覆盖，意味着同时维护 Element Plus 默认规则、项目 Token 和覆盖层；升级时需要检查覆盖是否仍命中。
+- Reka UI 本身无样式，更接近 NcxMusic 所需的“交互与无障碍内核”。项目从第一天只维护一套视觉规则，不需要先消除第三方外观。
+- 业务层无论选择哪一个都必须依赖 NcxMusic 自有组件。采用 Reka UI 后，适配层的职责更单一，也更容易在未来替换。
+
+Element Plus 的优势同样保留在决策记录中：组件覆盖更完整、表单与数据组件成熟、默认视觉可直接使用、开发速度更快。若项目目标从“独特播放器视觉”转向“最短时间完成大量通用表单”，可以重新评估，但不同时引入两套通用 UI 组件体系。
+
 ## 3. Design Tokens
 
 Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Token、组件 Token。例如 `--ncx-space-4` → `--ncx-page-padding-inline` → `--ncx-page-header-gap`。业务代码只能使用语义或组件 Token。

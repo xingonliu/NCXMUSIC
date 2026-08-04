@@ -117,6 +117,7 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-075 | 首版统一提供 Button/IconButton、表单控件、Toast、Dialog、AlertDialog、Drawer、Popover、菜单、Tooltip、加载/空/错状态等通用组件；浮层按任务语义选择，审批不能降级成 Toast 或普通确认弹窗。 |
 | C-076 | PageHeader 是一级与二级页面的唯一标准 Header；二级页面返回行为由路由元数据驱动。业务页面的按钮必须使用统一 Button/IconButton，并完整覆盖 Hover、Pressed、Focus、Disabled 和 Loading 状态。 |
 | C-077 | 前端使用 Reka UI 作为无样式、可访问交互 Primitive，但只能由 NcxMusic Design System 的内部适配层导入。业务页面和领域组件只使用项目自有组件 API，不直接依赖、透传或暴露 Reka UI 类型；全部外观、Token 和产品语义由 NcxMusic 控制。 |
+| C-078 | 跨进程通信由 Main 的 ConnectionBroker 建立版本化 MessagePort 通道；所有请求、响应、事件和取消消息使用 Zod 严格 Schema 校验。Renderer 重载或 Utility Process 重启后建立新连接并拉取快照；有副作用命令使用 `commandId` 去重，不能因重连重复执行。 |
 
 ## 3. 目标用户与使用场景
 
@@ -1168,6 +1169,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 - D-008（部分确认）：网易云登录位于模型配置前且允许跳过；跳过后调用游客登录。游客后的二次登录入口位置待确认。
 - D-009（已确认）：首版代码库使用单应用包的模块化单体；以进程入口、领域、共享契约和基础设施分层，不在首版提前引入多 workspace package。
 - D-010（已确认）：使用 pnpm + electron-vite + electron-builder；Utility Process 作为独立构建入口，不同时引入 Electron Forge。
+- D-011（已确认）：Main 负责跨进程连接代理；Renderer/Preload 与 Utility Process 使用版本化 MessagePort、Zod 严格消息 Schema、命令幂等和快照式重连。
 
 ### P1：Agent 行为
 
@@ -1304,6 +1306,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 | 2026-08-04 | D-010 | 使用 pnpm、electron-vite 与 electron-builder 组成单包开发、构建和分发工具链，不引入 Electron Forge。 | 开发脚本、进程构建、安装包、签名、公证、CI |
 | 2026-08-04 | D-710 | 建立统一 Design System，页面复用通用组件、布局模式和语义 Token，不在业务内派生第二套 UI 规则。 | 全部 Renderer 页面、组件开发、交互一致性、视觉验收 |
 | 2026-08-04 | D-711 | Reka UI 仅承担内部无样式 Primitive，NcxMusic 包装并拥有全部组件 API、视觉和语义。 | Renderer 依赖边界、无障碍、组件封装、升级与替换成本 |
+| 2026-08-04 | D-011 | 跨进程数据通道采用版本化严格消息、ConnectionBroker、快照重连和副作用命令幂等。 | Main、Preload、Renderer、Utility Process、工具与审批 |
 
 ## 13. 暂定里程碑
 
