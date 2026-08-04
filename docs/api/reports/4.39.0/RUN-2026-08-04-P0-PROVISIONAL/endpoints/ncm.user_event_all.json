@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.user_event_all",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "7a6c95b870d9ddc0f533ac33e4bcdfea6cb040d7e97ffb3428e5d0dddb3b88c1",
+  "classification": {
+    "category": "user",
+    "frequency": "rare",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "docs:/user/event/all",
+    "tests"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "userId",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

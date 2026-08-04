@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.hot_topic",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "4661fabe7faf76c32ba3534889c1964123035cecf4c299146459058a4e04ea32",
+  "classification": {
+    "category": "social",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/hot/topic"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    },
+    {
+      "name": "offset"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

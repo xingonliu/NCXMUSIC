@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.user_playlist_create",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "a974e41e2ced2d6b293c5bca3f933d5ca48636146fb3c08b1ed1bfa02d4f76f4",
+  "classification": {
+    "category": "user",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/user/playlist/create"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    },
+    {
+      "name": "offset"
+    },
+    {
+      "name": "uid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId",
+      "pageToken"
+    ],
+    "produces": [
+      "userId",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

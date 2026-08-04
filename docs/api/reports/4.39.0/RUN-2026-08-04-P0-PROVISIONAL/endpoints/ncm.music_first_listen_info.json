@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.music_first_listen_info",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "d2e05b532cee7b618488206b4f20357babd09ba8e3dc1463ed2e0923fc12bbbc",
+  "classification": {
+    "category": "song",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/music/first/listen/info"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "songId"
+    ]
+  },
+  "matrix": {
+    "planned": 5,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

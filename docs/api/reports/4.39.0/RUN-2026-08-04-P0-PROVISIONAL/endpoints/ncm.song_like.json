@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.song_like",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "cb281f840d3d95e402c0844cc8fe54a5ecade2267452165ec87921c47c3de55f",
+  "classification": {
+    "category": "song",
+    "frequency": "high",
+    "sideEffect": "reversible_write",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/song/like"
+  ],
+  "parameters": [
+    {
+      "name": "like"
+    },
+    {
+      "name": "id"
+    },
+    {
+      "name": "uid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "songId",
+      "userId"
+    ],
+    "produces": [
+      "songId"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

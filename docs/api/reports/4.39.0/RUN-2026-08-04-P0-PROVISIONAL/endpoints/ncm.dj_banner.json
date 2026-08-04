@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.dj_banner",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "7deb26c97c48ca69a8d966db7366bd8637aa2a90936a987bec0a9ea09b0f469e",
+  "classification": {
+    "category": "dj",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/dj/banner"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "djId",
+      "programId",
+      "radioId"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

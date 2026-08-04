@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.dj_difm_all_style_channel",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "19a2c55b10e0d6ec743833787de21b846bb14010bc100a6706c3219e93bbd447",
+  "classification": {
+    "category": "dj",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/dj/difm/all/style/channel"
+  ],
+  "parameters": [
+    {
+      "name": "sources"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "djId",
+      "programId",
+      "radioId"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

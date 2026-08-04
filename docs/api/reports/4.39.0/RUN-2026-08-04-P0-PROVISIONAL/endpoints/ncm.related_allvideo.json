@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.related_allvideo",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "d475e84f6e452fcde2f814786081758346d1bf45330c346e91272603f14a81d2",
+  "classification": {
+    "category": "related",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/related/allvideo"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "playlistId",
+      "videoId"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

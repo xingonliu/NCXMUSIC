@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.get_userids",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "e7751b89c7a01faae90183be76482fbdd4a86bbf1a2d3cf658cb8688079ccd4e",
+  "classification": {
+    "category": "social",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/get/userids"
+  ],
+  "parameters": [
+    {
+      "name": "nicknames"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

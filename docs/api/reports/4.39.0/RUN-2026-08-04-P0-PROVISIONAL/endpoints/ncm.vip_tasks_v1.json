@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.vip_tasks_v1",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "fe73d42466af679e60811db64f9cd41a226b1c50c37d36f1504f9ee6cf83ef43",
+  "classification": {
+    "category": "vip",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

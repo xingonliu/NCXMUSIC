@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.personalized_djprogram",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "9830c3cde5bd943ea2a6b01739c69c4943b2387b7d25261f3afa8e1fab330d4b",
+  "classification": {
+    "category": "recommend",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/personalized/djprogram"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "djId",
+      "programId",
+      "radioId"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

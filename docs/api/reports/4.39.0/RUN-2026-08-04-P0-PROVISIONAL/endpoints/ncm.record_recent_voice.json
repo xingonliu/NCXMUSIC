@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.record_recent_voice",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "bd9584ca4427177615c01815adb4010dee99d06c083e23f062f07722c9bba8a7",
+  "classification": {
+    "category": "listen-history",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/record/recent/voice"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "songId",
+      "playlistId",
+      "albumId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

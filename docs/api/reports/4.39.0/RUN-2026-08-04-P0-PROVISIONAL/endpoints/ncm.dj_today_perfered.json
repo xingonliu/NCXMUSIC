@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.dj_today_perfered",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "10c9a00db132c0765a5798b5adab129639151071a0d47a5a888b2954c7fc1143",
+  "classification": {
+    "category": "dj",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/dj/today/perfered"
+  ],
+  "parameters": [
+    {
+      "name": "page"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "djId",
+      "programId",
+      "radioId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

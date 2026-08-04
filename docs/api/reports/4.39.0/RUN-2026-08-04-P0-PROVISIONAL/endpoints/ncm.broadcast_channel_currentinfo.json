@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.broadcast_channel_currentinfo",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "d27165b614e9e5246b51a1cdbc6df4a768b812500c2a418c75b9262f0fdce80a",
+  "classification": {
+    "category": "broadcast",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/broadcast/channel/currentinfo"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 5,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

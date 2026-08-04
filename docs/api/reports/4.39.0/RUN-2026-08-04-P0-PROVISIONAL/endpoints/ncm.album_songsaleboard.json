@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.album_songsaleboard",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "48e4675ab42a2af1fd670d6e0a776fc6101f9ab8690b2869c32d5a620ddc6422",
+  "classification": {
+    "category": "album",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/album_songsaleboard"
+  ],
+  "parameters": [
+    {
+      "name": "albumType"
+    },
+    {
+      "name": "type"
+    },
+    {
+      "name": "year"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "albumId",
+      "songId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

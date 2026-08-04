@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.cloudsearch",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "2c831a3a86413c2747b92970041387fcdb934aba5aabf9a6c2f91816ade80657",
+  "classification": {
+    "category": "search",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "keywords"
+    },
+    {
+      "name": "type"
+    },
+    {
+      "name": "limit"
+    },
+    {
+      "name": "offset"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "songId",
+      "artistId",
+      "albumId",
+      "playlistId",
+      "mvId",
+      "videoId",
+      "djId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

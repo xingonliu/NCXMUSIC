@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.user_comment_history",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "1f568786ee7943e42de9a10a963e60685b93b5dea617bfa7be1c52478958bb52",
+  "classification": {
+    "category": "user",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P5"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/user/comment/history"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    },
+    {
+      "name": "uid"
+    },
+    {
+      "name": "time"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId",
+      "pageToken"
+    ],
+    "produces": [
+      "userId",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.msg_comments",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "d00cc0bcb1f34e9e72525e2e3b1f5496106325fe18c6c5277047ae2e8410a010",
+  "classification": {
+    "category": "message",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/msg/comments"
+  ],
+  "parameters": [
+    {
+      "name": "before"
+    },
+    {
+      "name": "limit"
+    },
+    {
+      "name": "uid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId",
+      "pageToken"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

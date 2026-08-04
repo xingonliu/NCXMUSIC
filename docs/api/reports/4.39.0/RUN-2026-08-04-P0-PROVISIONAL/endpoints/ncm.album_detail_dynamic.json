@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.album_detail_dynamic",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "64a4c7ff56b4de0fc950ece4d26b5f12d54d6885cd16d1ce4e4dbee50f10e63c",
+  "classification": {
+    "category": "album",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/album/detail/dynamic"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "albumId"
+    ],
+    "produces": [
+      "albumId",
+      "songId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

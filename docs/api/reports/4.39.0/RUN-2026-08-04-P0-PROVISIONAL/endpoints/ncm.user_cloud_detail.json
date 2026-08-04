@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.user_cloud_detail",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "c3badd83ad8ce450ae7d0823eb8ca38c8b9a69d7bdfd49efe7ed31221113e3f5",
+  "classification": {
+    "category": "user",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/user/cloud/detail"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId"
+    ],
+    "produces": [
+      "userId",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

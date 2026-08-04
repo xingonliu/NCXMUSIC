@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.vip_timemachine",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "6b5031d4cb1591c31fc8cf572323119503f258c8fe299d4f253d21da427007d0",
+  "classification": {
+    "category": "vip",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/vip/timemachine"
+  ],
+  "parameters": [
+    {
+      "name": "startTime"
+    },
+    {
+      "name": "endTime"
+    },
+    {
+      "name": "limit"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

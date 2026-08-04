@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.yunbei_tasks",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "1faab6ceb427478bdc34e61d08fcf70c8da9496aefbd9f8a4e015767393f8e23",
+  "classification": {
+    "category": "yunbei",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/yunbei/tasks"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

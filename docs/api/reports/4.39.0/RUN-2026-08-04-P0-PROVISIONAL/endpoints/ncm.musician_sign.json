@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.musician_sign",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "510c8948ae97d8d82e222652d90b3c6cf71fee5f56a19c1a392a4b07e9cbf982",
+  "classification": {
+    "category": "musician",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/musician/sign"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

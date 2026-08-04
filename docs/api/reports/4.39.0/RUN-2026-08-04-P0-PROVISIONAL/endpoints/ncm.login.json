@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.login",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "8067f802442f32444715cf2892ddfbbf3cbb9edce0d26b8c24def42697db2851",
+  "classification": {
+    "category": "other",
+    "frequency": "high",
+    "sideEffect": "credential",
+    "testPhase": "P5"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "email"
+    },
+    {
+      "name": "md5_password"
+    },
+    {
+      "name": "password"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "cookie",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

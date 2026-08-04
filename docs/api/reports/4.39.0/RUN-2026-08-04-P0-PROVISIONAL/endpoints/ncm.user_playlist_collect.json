@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.user_playlist_collect",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "7044f969cdb8d4301441b05865c0ce1d7a94bd1f2099e07aabf2b5744c9a8691",
+  "classification": {
+    "category": "user",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/user/playlist/collect"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    },
+    {
+      "name": "offset"
+    },
+    {
+      "name": "uid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId",
+      "pageToken"
+    ],
+    "produces": [
+      "userId",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

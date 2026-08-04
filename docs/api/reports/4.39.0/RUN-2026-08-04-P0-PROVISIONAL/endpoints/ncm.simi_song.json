@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.simi_song",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "fb69376cdc70a47389af70c7b57d81cebfeb608453382f1e7a51d6dfb749ed95",
+  "classification": {
+    "category": "simi",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/simi/song"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "limit"
+    },
+    {
+      "name": "offset"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "songId",
+      "artistId",
+      "playlistId",
+      "userId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

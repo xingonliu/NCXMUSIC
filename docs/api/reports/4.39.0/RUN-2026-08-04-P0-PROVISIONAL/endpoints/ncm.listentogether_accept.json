@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.listentogether_accept",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "42c65502c7e64e2e296127601bee768d0ea66aef158b0f6799b6e130727967da",
+  "classification": {
+    "category": "other",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "roomId"
+    },
+    {
+      "name": "inviterId"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

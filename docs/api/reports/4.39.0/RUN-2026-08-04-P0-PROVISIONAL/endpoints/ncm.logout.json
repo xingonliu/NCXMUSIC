@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.logout",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "1a7ed147663b99427afdb6f93ea6e2f2a9fd66aba01f4fad071e05ad911fda70",
+  "classification": {
+    "category": "auth",
+    "frequency": "high",
+    "sideEffect": "credential",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs-missing"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "cookie",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

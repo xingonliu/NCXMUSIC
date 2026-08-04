@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.listentogether_sync_list_command",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "ce587ebd8434fb866ea6cd615ec36218b1be7182808c4b1fdb4fe072e0c28cea",
+  "classification": {
+    "category": "other",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "roomId"
+    },
+    {
+      "name": "commandType"
+    },
+    {
+      "name": "userId"
+    },
+    {
+      "name": "version"
+    },
+    {
+      "name": "randomList"
+    },
+    {
+      "name": "displayList"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

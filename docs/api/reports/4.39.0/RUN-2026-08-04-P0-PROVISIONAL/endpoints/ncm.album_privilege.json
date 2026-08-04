@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.album_privilege",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "232c326cf9f91926b87a0d37a3dcd01ab61b6e7e7384ad02dcf199c80710991b",
+  "classification": {
+    "category": "album",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/album/privilege"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "albumId"
+    ],
+    "produces": [
+      "albumId",
+      "songId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

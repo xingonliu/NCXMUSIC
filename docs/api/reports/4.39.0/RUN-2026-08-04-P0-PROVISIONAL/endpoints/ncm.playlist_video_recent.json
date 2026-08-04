@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.playlist_video_recent",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "85292982204afd973a22292dbaeb9146f40369e22b6f2784231a60d990223984",
+  "classification": {
+    "category": "playlist",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/playlist/video/recent"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "playlistId",
+      "trackId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

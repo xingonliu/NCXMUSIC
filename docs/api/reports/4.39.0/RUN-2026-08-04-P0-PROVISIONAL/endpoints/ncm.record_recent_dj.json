@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.record_recent_dj",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "8f259e4958d95f069e16f982f8f335422f1ffee6deb838abffb2e0bab75c15ab",
+  "classification": {
+    "category": "listen-history",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/record/recent/dj"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "songId",
+      "playlistId",
+      "albumId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

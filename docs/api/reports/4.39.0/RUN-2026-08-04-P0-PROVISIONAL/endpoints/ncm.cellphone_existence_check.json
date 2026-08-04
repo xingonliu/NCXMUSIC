@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.cellphone_existence_check",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "f96b7b5158f0d3f19bd6eca248ceae44c75138ab1222f363de56d05717317071",
+  "classification": {
+    "category": "auth",
+    "frequency": "medium",
+    "sideEffect": "credential",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/cellphone/existence/check"
+  ],
+  "parameters": [
+    {
+      "name": "phone"
+    },
+    {
+      "name": "countrycode"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

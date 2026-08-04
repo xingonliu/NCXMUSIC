@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.share_resource",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "c142d01842ae0a96d73783f35155a1d59b457c43240cb785824d06c8c06e9241",
+  "classification": {
+    "category": "social",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/share/resource"
+  ],
+  "parameters": [
+    {
+      "name": "type"
+    },
+    {
+      "name": "msg"
+    },
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

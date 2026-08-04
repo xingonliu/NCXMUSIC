@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.ugc_detail",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "ae11103c569845120c11012ef0e5fed63065ed339312cf5b29168c67e6100ff4",
+  "classification": {
+    "category": "ugc",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/ugc/detail"
+  ],
+  "parameters": [
+    {
+      "name": "auditStatus"
+    },
+    {
+      "name": "limit"
+    },
+    {
+      "name": "offset"
+    },
+    {
+      "name": "order"
+    },
+    {
+      "name": "sortBy"
+    },
+    {
+      "name": "type"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

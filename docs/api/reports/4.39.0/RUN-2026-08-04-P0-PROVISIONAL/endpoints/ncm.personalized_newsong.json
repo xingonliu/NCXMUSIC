@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.personalized_newsong",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "45ff8ae4cdd407852a88726fc82bc85a2b76a6efd8956eb0526c2aeb9b7e839f",
+  "classification": {
+    "category": "recommend",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/personalized/newsong"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    },
+    {
+      "name": "areaId"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "songId",
+      "playlistId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

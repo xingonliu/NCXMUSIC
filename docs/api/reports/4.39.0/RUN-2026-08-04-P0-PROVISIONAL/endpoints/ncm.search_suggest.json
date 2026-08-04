@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.search_suggest",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "d400e46560aaed24d85b02d3d2d192d9a1f10b2b00dcb7a230dd008d39da371b",
+  "classification": {
+    "category": "search",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/search/suggest"
+  ],
+  "parameters": [
+    {
+      "name": "keywords"
+    },
+    {
+      "name": "type"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "songId",
+      "artistId",
+      "albumId",
+      "playlistId",
+      "mvId",
+      "videoId",
+      "djId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

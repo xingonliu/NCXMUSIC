@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.top_playlist_highquality",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "d14e8c89639fec111c3f155a3051ac421128cc6714a4cdd2ccbbb1d11390777a",
+  "classification": {
+    "category": "toplist",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/top/playlist/highquality"
+  ],
+  "parameters": [
+    {
+      "name": "cat"
+    },
+    {
+      "name": "limit"
+    },
+    {
+      "name": "before"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "songId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.recent_listen_list",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "53a17ed25e291427c0ffa7aaa3c1a47e9ae9c3dc54a2df8f9ad933a1749dffe8",
+  "classification": {
+    "category": "listen-history",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/recent/listen/list"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

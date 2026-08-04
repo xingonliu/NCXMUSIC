@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.toplist_artist",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "40ab02d46810d269306253d96f379cb7012c720345ca33046bd77a304c20c2b4",
+  "classification": {
+    "category": "toplist",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/toplist/artist"
+  ],
+  "parameters": [
+    {
+      "name": "type"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "songId"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

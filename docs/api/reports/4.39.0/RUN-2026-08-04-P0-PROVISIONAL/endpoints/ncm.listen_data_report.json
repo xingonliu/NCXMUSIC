@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.listen_data_report",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "7b18ea7a4d33dce4ea97226891f6c298862adc6727b69494c39fbb45452a5619",
+  "classification": {
+    "category": "listen-history",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/listen/data/report"
+  ],
+  "parameters": [
+    {
+      "name": "type"
+    },
+    {
+      "name": "endTime"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

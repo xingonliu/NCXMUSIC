@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.aidj_content_rcmd",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "aa940e83c49af5b1d57d2cd6962ecde64fbca9b58774977b388cec721ac9f428",
+  "classification": {
+    "category": "other",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/aidj/content/rcmd"
+  ],
+  "parameters": [
+    {
+      "name": "latitude"
+    },
+    {
+      "name": "longitude"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 5,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

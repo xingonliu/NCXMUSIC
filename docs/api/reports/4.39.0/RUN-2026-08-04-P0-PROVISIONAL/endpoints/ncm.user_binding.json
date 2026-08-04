@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.user_binding",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "558df82b12c70a2e1285f40313aff4bff6fced7eba13dfdee0aa917f9f945cf7",
+  "classification": {
+    "category": "auth",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P5"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/user/binding"
+  ],
+  "parameters": [
+    {
+      "name": "uid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId"
+    ],
+    "produces": [
+      "userId",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

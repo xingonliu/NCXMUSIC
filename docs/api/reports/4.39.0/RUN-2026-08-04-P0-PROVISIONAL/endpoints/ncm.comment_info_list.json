@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.comment_info_list",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "c0b6dd8ff3c09ef9541344c01d3525bb2e83fdd1b504f2fee71d5d99abf85730",
+  "classification": {
+    "category": "comment",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/comment/info/list"
+  ],
+  "parameters": [
+    {
+      "name": "ids"
+    },
+    {
+      "name": "id"
+    },
+    {
+      "name": "type"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "targetResourceId"
+    ],
+    "produces": [
+      "commentId",
+      "threadId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

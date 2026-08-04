@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.login_qr_create",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "a3c3758e782617e9f3d8538f95c95d4bb1146ddc7636217d2a255b885eb5d5b4",
+  "classification": {
+    "category": "auth",
+    "frequency": "high",
+    "sideEffect": "credential",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "platform"
+    },
+    {
+      "name": "cookie"
+    },
+    {
+      "name": "key"
+    },
+    {
+      "name": "qrimg"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "cookie",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

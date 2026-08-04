@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.artist_new_mv",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "1a4cc078a24bdd9605cf68cb3b0b39e794b912649211bc0b2e80aa032dcd8ed3",
+  "classification": {
+    "category": "artist",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/artist/new/mv"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    },
+    {
+      "name": "before"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "artistId",
+      "mvId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

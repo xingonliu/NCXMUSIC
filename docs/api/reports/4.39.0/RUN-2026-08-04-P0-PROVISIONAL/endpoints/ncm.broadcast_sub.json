@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.broadcast_sub",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "33e501271b78b54c93f55502ed7a38c0ff0742b9f13a86258fd7234692ef7f36",
+  "classification": {
+    "category": "broadcast",
+    "frequency": "rare",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/broadcast/sub"
+  ],
+  "parameters": [
+    {
+      "name": "t"
+    },
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

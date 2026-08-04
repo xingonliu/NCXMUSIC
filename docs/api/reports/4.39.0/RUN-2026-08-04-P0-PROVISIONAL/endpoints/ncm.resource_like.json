@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.resource_like",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "01d139a5fb7b241aa1e1f08efdf1a60f0415289d393a6ecadd7e6f62b062f823",
+  "classification": {
+    "category": "social",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/resource/like"
+  ],
+  "parameters": [
+    {
+      "name": "t"
+    },
+    {
+      "name": "type"
+    },
+    {
+      "name": "id"
+    },
+    {
+      "name": "threadId"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "threadId"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

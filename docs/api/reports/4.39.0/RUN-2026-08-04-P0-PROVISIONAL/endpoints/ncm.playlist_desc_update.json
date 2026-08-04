@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.playlist_desc_update",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "a2e3a2b56991a7ef33bf26d6da5d39716e05cadf32fe7e46a6c80c8521c15791",
+  "classification": {
+    "category": "playlist",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/playlist/desc/update"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "desc"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "playlistId"
+    ],
+    "produces": [
+      "playlistId",
+      "trackId"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

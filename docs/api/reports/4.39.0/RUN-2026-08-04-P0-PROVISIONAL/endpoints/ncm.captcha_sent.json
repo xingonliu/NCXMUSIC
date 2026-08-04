@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.captcha_sent",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "fca60af2264bff3419131081e9e15ad7544b8f2b15fed182b4e484e71868bb6f",
+  "classification": {
+    "category": "auth",
+    "frequency": "high",
+    "sideEffect": "credential",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/captcha/sent"
+  ],
+  "parameters": [
+    {
+      "name": "ctcode"
+    },
+    {
+      "name": "phone"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

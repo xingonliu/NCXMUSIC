@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.fanscenter_trend_list",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "9a71d1f9ee5a6c80bd60cb590318ba87bed8ca5bf7bf0360292775c00c6a1ba0",
+  "classification": {
+    "category": "fans-center",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "startTime"
+    },
+    {
+      "name": "endTime"
+    },
+    {
+      "name": "type"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 5,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.playlist_track_delete",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "65228a4d3b1382d48157972c868a5aef99da04731789081aa36bf2627dd6bed1",
+  "classification": {
+    "category": "playlist",
+    "frequency": "high",
+    "sideEffect": "reversible_write",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/playlist/track/delete"
+  ],
+  "parameters": [
+    {
+      "name": "ids"
+    },
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "playlistId"
+    ],
+    "produces": [
+      "playlistId",
+      "trackId"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

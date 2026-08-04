@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.dj_sub",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "81b970db7679002909b4c8c61fd0493b15314c2fd4b7e9da79582c18481f9ead",
+  "classification": {
+    "category": "dj",
+    "frequency": "high",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/dj/sub"
+  ],
+  "parameters": [
+    {
+      "name": "t"
+    },
+    {
+      "name": "rid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "djId",
+      "programId",
+      "radioId"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

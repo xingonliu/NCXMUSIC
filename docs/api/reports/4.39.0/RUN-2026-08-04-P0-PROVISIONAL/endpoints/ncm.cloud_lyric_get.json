@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.cloud_lyric_get",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "589733567c1353036b7d99365258379f9fb510edba20a0704690955ad50b71b4",
+  "classification": {
+    "category": "cloud",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/cloud/lyric/get"
+  ],
+  "parameters": [
+    {
+      "name": "uid"
+    },
+    {
+      "name": "sid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

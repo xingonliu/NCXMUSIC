@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.video_sub",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "46e731ade5d20f57ae68d985733fd06fae54de992bd8607e2a50ec7453409fc1",
+  "classification": {
+    "category": "video",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/video/sub"
+  ],
+  "parameters": [
+    {
+      "name": "t"
+    },
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "videoId"
+    ],
+    "produces": [
+      "videoId"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

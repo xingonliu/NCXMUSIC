@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.record_recent_playlist",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "f800cccfdafa6f170fb0c5554d526174e74790bff8f3e14791119111da66a9e7",
+  "classification": {
+    "category": "listen-history",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/record/recent/playlist"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "songId",
+      "playlistId",
+      "albumId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.rep_ugc_user_collect-vip",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "8f960d2ee3a74bf97fed7a830034de0ea8cb2a39178987a3cc1c322137707aad",
+  "classification": {
+    "category": "ugc",
+    "frequency": "rare",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types-missing",
+    "docs:/rep/ugc/user/collect-vip"
+  ],
+  "parameters": [
+    {
+      "name": "activityId"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

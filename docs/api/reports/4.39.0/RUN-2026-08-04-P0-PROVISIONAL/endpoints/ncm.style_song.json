@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.style_song",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "a22d7fc801929b08dd0f2f08926e6fc1529806b6ea52811b6dd55f99056ab9fe",
+  "classification": {
+    "category": "style",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/style/song"
+  ],
+  "parameters": [
+    {
+      "name": "cursor"
+    },
+    {
+      "name": "size"
+    },
+    {
+      "name": "tagId"
+    },
+    {
+      "name": "sort"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "songId",
+      "playlistId",
+      "albumId",
+      "artistId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.artist_video",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "546939d306d17f55177920b4aa870c5b0696353f6a6e4358a42ca41c637608fb",
+  "classification": {
+    "category": "artist",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/artist/video"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "size"
+    },
+    {
+      "name": "cursor"
+    },
+    {
+      "name": "order"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "artistId",
+      "pageToken"
+    ],
+    "produces": [
+      "artistId",
+      "mvId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.event",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "7a0b383fbcc246b1c9454ee17e922086a0d9b2b13ae1e0c615e41b95c1ee3e02",
+  "classification": {
+    "category": "social",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/event"
+  ],
+  "parameters": [
+    {
+      "name": "pagesize"
+    },
+    {
+      "name": "lasttime"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "eventId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

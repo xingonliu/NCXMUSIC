@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.send_song",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "51f94841576599da996f6ce3cc8459a9511fe43d6f87da06505cdb2c8477d207",
+  "classification": {
+    "category": "social",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/send/song"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "msg"
+    },
+    {
+      "name": "user_ids"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

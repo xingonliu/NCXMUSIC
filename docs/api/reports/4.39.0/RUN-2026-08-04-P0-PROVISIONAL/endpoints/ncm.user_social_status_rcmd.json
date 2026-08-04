@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.user_social_status_rcmd",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "c11ecc6a53fca792f1cc2ce4e9c3b0273d4b5871a9ea629b0d741c387cedf145",
+  "classification": {
+    "category": "user",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P3"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/user/social/status/rcmd"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "userId",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 5,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

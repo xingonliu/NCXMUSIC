@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.yunbei_task_finish",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "116a69535c57cce4c32fbbf1b664eaa34ff5766ede83f7798bda884b7b6a66a8",
+  "classification": {
+    "category": "yunbei",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/yunbei/task/finish"
+  ],
+  "parameters": [
+    {
+      "name": "userTaskId"
+    },
+    {
+      "name": "depositCode"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

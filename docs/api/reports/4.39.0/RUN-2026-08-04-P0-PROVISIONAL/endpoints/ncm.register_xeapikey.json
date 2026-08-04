@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.register_xeapikey",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "507a169b3f1574d058f51d018ff2a6657f54341d827b938b6828f814ad1226a6",
+  "classification": {
+    "category": "auth",
+    "frequency": "medium",
+    "sideEffect": "credential",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types-missing",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "deviceId"
+    },
+    {
+      "name": "currentKeyVersion"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "cookie",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

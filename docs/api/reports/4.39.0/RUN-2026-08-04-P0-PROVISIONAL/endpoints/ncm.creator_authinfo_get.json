@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.creator_authinfo_get",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "a42d2b8d2732fabc84b809d221477f2214ecd1790ce2157914d82a53918a445b",
+  "classification": {
+    "category": "other",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P5"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs-missing"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 5,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

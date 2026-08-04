@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.event_forward",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "5f6744ad00b7ff114a4861c776efe83803781f31a15b9d7910923066526c960f",
+  "classification": {
+    "category": "social",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/event/forward"
+  ],
+  "parameters": [
+    {
+      "name": "forwards"
+    },
+    {
+      "name": "evId"
+    },
+    {
+      "name": "uid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId"
+    ],
+    "produces": [
+      "eventId"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

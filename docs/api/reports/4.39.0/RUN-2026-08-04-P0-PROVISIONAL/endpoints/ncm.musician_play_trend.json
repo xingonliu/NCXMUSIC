@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.musician_play_trend",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "b426e5ef1be79a32fd168eafb75cd017f25088bd4a67c21e1535596386930f8f",
+  "classification": {
+    "category": "musician",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/musician/play/trend"
+  ],
+  "parameters": [
+    {
+      "name": "startTime"
+    },
+    {
+      "name": "endTime"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

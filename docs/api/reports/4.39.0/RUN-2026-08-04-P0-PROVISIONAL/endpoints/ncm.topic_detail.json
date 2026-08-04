@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.topic_detail",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "7333bf60bf374bf15bc3f93368e6fde68d23ab63710b45af127c1591e4c202cb",
+  "classification": {
+    "category": "social",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/topic/detail"
+  ],
+  "parameters": [
+    {
+      "name": "actid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "topicId"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

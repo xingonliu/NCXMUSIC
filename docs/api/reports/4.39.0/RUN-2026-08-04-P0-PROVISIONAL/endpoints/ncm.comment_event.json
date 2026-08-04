@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.comment_event",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "a23a51f29c800883f1b95cc8ef3b57e5654642fca7e9be4d2a909efe5c08907a",
+  "classification": {
+    "category": "comment",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/comment/event"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    },
+    {
+      "name": "offset"
+    },
+    {
+      "name": "before"
+    },
+    {
+      "name": "threadId"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "threadId",
+      "pageToken"
+    ],
+    "produces": [
+      "commentId",
+      "threadId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

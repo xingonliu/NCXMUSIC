@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.lbs_city_code",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "58d80bbb4531d45f6999179f09d3e763a89a3f5a9b0fd39eef4000d4b97d88d3",
+  "classification": {
+    "category": "system",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P5"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/lbs/city/code"
+  ],
+  "parameters": [
+    {
+      "name": "bizCode"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.playmode_intelligence_list",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "c1726b7ca52e45570b774b29faef52aa2f1fd44c8677522f3a4e26087a9e5b1b",
+  "classification": {
+    "category": "playmode",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/playmode/intelligence/list"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "pid"
+    },
+    {
+      "name": "sid"
+    },
+    {
+      "name": "count"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "playlistId"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

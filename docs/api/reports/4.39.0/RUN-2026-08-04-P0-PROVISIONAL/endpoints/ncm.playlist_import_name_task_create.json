@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.playlist_import_name_task_create",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "37a3c2f919561e2de0a09026f229d9b5b27c4d4b5e1b363b2ef9d547aa55698f",
+  "classification": {
+    "category": "playlist",
+    "frequency": "rare",
+    "sideEffect": "reversible_write",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/playlist/import/name/task/create"
+  ],
+  "parameters": [
+    {
+      "name": "importStarPlaylist"
+    },
+    {
+      "name": "local"
+    },
+    {
+      "name": "playlistName"
+    },
+    {
+      "name": "text"
+    },
+    {
+      "name": "link"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "playlistId",
+      "trackId"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

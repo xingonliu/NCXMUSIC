@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.cloud_match",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "fcc3202bab998fb1ab6d9b5286b8c29a78a968f7e79823c4afae99b11d0ce653",
+  "classification": {
+    "category": "cloud",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/cloud/match"
+  ],
+  "parameters": [
+    {
+      "name": "uid"
+    },
+    {
+      "name": "sid"
+    },
+    {
+      "name": "asid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

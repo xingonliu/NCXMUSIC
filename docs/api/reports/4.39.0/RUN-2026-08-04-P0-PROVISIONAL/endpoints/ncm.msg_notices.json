@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.msg_notices",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "c016fe1512c2b9981dd2ea5a0ceebae29b87bd8d5f10dc5b3d23edc5d68adab6",
+  "classification": {
+    "category": "message",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/msg/notices"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    },
+    {
+      "name": "lasttime"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

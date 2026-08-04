@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.cloud_import",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "208a1295b6127ad80248fc5be49b3467e222f39cac5636cf843b52234c722b8a",
+  "classification": {
+    "category": "cloud",
+    "frequency": "medium",
+    "sideEffect": "upload",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/cloud/import"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "artist"
+    },
+    {
+      "name": "album"
+    },
+    {
+      "name": "md5"
+    },
+    {
+      "name": "bitrate"
+    },
+    {
+      "name": "fileSize"
+    },
+    {
+      "name": "song"
+    },
+    {
+      "name": "fileType"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 7,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

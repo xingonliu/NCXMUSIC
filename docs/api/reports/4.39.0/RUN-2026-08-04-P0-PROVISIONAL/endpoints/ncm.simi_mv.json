@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.simi_mv",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "5237f2b7e8725ea0123c9fad0558a7a36e82f131e793f1e78a8a3ef7555a63c3",
+  "classification": {
+    "category": "simi",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/simi/mv"
+  ],
+  "parameters": [
+    {
+      "name": "mvid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "songId",
+      "artistId",
+      "playlistId",
+      "userId"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.register_checktoken_v3",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "7565f3c309ccfaceb49ba12c9cbef899c99ef38093b30e22aa554e82b7b9c482",
+  "classification": {
+    "category": "auth",
+    "frequency": "medium",
+    "sideEffect": "credential",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types-missing",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "refresh"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "cookie",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

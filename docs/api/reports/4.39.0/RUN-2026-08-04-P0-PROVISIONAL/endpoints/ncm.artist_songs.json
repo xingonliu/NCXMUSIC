@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.artist_songs",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "d8a99a25e18e7d11b66828920b2bf716ab2fce0a1d30f8ebd418f2d42ad8580e",
+  "classification": {
+    "category": "artist",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/artist/songs"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "order"
+    },
+    {
+      "name": "offset"
+    },
+    {
+      "name": "limit"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "artistId",
+      "pageToken"
+    ],
+    "produces": [
+      "artistId",
+      "mvId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

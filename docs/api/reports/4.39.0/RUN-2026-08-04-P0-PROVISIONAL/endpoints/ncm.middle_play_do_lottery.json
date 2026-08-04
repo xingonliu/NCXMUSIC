@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.middle_play_do_lottery",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "c13f450e9c5a1eeaa708a5e178e1d46278cb9ef47ca5f656d2f5508d7413f08f",
+  "classification": {
+    "category": "lottery",
+    "frequency": "rare",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types-missing",
+    "docs:/middle/play/do/lottery"
+  ],
+  "parameters": [
+    {
+      "name": "activityId"
+    },
+    {
+      "name": "drawCount"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.signin_progress",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "b5d89e5598c705121b30507c3952fd9b6122f4c99116ffdeefb2b30072d54fc1",
+  "classification": {
+    "category": "sign",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P3"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/signin/progress"
+  ],
+  "parameters": [
+    {
+      "name": "moduleId"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

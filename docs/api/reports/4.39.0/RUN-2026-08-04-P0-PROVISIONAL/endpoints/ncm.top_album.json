@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.top_album",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "19d39b7fd0f561513e6e181b1dd66a2e7ba3684456d9854cb165d3b51d90b7ff",
+  "classification": {
+    "category": "toplist",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/top/album"
+  ],
+  "parameters": [
+    {
+      "name": "area"
+    },
+    {
+      "name": "limit"
+    },
+    {
+      "name": "offset"
+    },
+    {
+      "name": "type"
+    },
+    {
+      "name": "year"
+    },
+    {
+      "name": "month"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "songId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

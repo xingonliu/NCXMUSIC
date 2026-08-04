@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.register_cellphone",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "464cd21bd75a7164cda565d9c9c3b1c4aff36c58f6034e209520c25748843e6a",
+  "classification": {
+    "category": "auth",
+    "frequency": "medium",
+    "sideEffect": "credential",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/register/cellphone"
+  ],
+  "parameters": [
+    {
+      "name": "captcha"
+    },
+    {
+      "name": "phone"
+    },
+    {
+      "name": "password"
+    },
+    {
+      "name": "nickname"
+    },
+    {
+      "name": "countrycode"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "cookie",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

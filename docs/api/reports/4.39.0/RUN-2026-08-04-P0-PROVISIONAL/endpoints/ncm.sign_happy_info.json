@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.sign_happy_info",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "c602e961e712774979a0c1c496b39dc7a7dca9aecddf19a26b8661a0360d5ee0",
+  "classification": {
+    "category": "sign",
+    "frequency": "rare",
+    "sideEffect": "reversible_write",
+    "testPhase": "P3"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/sign/happy/info"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

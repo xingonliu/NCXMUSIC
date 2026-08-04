@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.avatar_upload",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "39ce32dcd8de48cc16b97e7de8c3720e0782aa021e9c569b275ce0794c0dfc99",
+  "classification": {
+    "category": "profile-media",
+    "frequency": "medium",
+    "sideEffect": "upload",
+    "testPhase": "P4"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/avatar/upload"
+  ],
+  "parameters": [],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 7,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

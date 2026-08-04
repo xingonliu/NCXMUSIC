@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.hug_comment",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "9b57787aa707d13b5aaad725f229ec1edb72106fffeca0b5ad193aeaebb88c56",
+  "classification": {
+    "category": "social",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/hug/comment"
+  ],
+  "parameters": [
+    {
+      "name": "type"
+    },
+    {
+      "name": "sid"
+    },
+    {
+      "name": "uid"
+    },
+    {
+      "name": "cid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

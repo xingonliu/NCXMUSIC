@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.recommend_songs",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "2a09b5ca8f0609c4d0efcac5c10ef49e6d457361ce3134b04f75b0e09edd35b2",
+  "classification": {
+    "category": "recommend",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/recommend/songs"
+  ],
+  "parameters": [
+    {
+      "name": "afresh"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "songId",
+      "playlistId"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

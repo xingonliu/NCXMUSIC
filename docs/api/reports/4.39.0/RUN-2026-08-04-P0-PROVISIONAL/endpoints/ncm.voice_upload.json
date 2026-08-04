@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.voice_upload",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "dcec5457bfba29439b6adcc0b89f02e2c6da9127f41d3247dd078e6cdf7e17d9",
+  "classification": {
+    "category": "voice",
+    "frequency": "medium",
+    "sideEffect": "upload",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/voice/upload",
+    "tests"
+  ],
+  "parameters": [
+    {
+      "name": "songFile"
+    },
+    {
+      "name": "songName"
+    },
+    {
+      "name": "autoPublish"
+    },
+    {
+      "name": "autoPublishText"
+    },
+    {
+      "name": "description"
+    },
+    {
+      "name": "voiceListId"
+    },
+    {
+      "name": "coverImgId"
+    },
+    {
+      "name": "categoryId"
+    },
+    {
+      "name": "secondCategoryId"
+    },
+    {
+      "name": "composedSongs"
+    },
+    {
+      "name": "privacy"
+    },
+    {
+      "name": "publishTime"
+    },
+    {
+      "name": "orderNo"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "voiceId",
+      "voicelistId"
+    ]
+  },
+  "matrix": {
+    "planned": 7,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

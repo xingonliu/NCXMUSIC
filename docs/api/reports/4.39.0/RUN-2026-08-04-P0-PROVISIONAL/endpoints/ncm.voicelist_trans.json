@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.voicelist_trans",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "ab4ba3b0b8b9ae1ba9fdc81a5db77cafee1753612059faa61d79e809dcfbbd43",
+  "classification": {
+    "category": "voice",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/voicelist/trans"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    },
+    {
+      "name": "offset"
+    },
+    {
+      "name": "radioId"
+    },
+    {
+      "name": "programId"
+    },
+    {
+      "name": "position"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "djId",
+      "programId",
+      "pageToken"
+    ],
+    "produces": [
+      "voiceId",
+      "voicelistId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

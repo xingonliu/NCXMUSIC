@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.voicelist_list_search",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "ab446bc550e5cadec1b07e981986bb8f91302c188612bf9f40d65be819254af7",
+  "classification": {
+    "category": "voice",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/voicelist/list/search"
+  ],
+  "parameters": [
+    {
+      "name": "limit"
+    },
+    {
+      "name": "offset"
+    },
+    {
+      "name": "name"
+    },
+    {
+      "name": "displayStatus"
+    },
+    {
+      "name": "type"
+    },
+    {
+      "name": "voiceFeeType"
+    },
+    {
+      "name": "voiceListId"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "voiceId",
+      "voicelistId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

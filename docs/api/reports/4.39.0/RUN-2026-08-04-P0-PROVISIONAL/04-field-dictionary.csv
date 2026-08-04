@@ -1,0 +1,1 @@
+apiAuditId,jsonPath,rawType,elementType,requiredObserved,presenceCount,sampleCount,nullCount,emptyCount,exampleRedacted,valueRangeOrEnum,authConditions,resourceConditions,firstSeenCase,lastSeenCase,semanticName,semanticConfidence,sourceEvidence,normalizedEntity,normalizedField,conflictId

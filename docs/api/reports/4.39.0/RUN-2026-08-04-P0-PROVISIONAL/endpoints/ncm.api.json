@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.api",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "ffa8c64f06c4de94e325cebee7622bb1a1f616ff1c7819a9886679e8566eabfe",
+  "classification": {
+    "category": "system",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P5"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types-missing",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "uri"
+    },
+    {
+      "name": "data"
+    },
+    {
+      "name": "cookie"
+    },
+    {
+      "name": "crypto"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

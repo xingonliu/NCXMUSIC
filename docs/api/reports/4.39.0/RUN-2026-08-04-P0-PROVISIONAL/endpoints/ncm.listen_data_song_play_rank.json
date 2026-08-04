@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.listen_data_song_play_rank",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "0e657ac46676f813ba447844206a0cb925e3af26dd5c015ba22765d436f7e4b6",
+  "classification": {
+    "category": "listen-history",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/listen/data/song/play/rank"
+  ],
+  "parameters": [
+    {
+      "name": "type"
+    },
+    {
+      "name": "endTime"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

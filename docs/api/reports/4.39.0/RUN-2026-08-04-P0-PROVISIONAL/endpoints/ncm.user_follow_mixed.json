@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.user_follow_mixed",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "3d451601254b90ebab453fd8e4a1161a9e8d31001f3b791c6bb83656ccb54d67",
+  "classification": {
+    "category": "user",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/user/follow/mixed"
+  ],
+  "parameters": [
+    {
+      "name": "size"
+    },
+    {
+      "name": "cursor"
+    },
+    {
+      "name": "scene"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "userId",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

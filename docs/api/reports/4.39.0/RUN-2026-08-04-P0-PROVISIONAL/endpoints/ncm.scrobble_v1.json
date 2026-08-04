@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.scrobble_v1",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "6f680aa4fe637a51868fde0fa80e92819f895aa7022e1b479c34ed149b818509",
+  "classification": {
+    "category": "telemetry",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types-missing",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "time"
+    },
+    {
+      "name": "total"
+    },
+    {
+      "name": "sourceid"
+    },
+    {
+      "name": "sourceId"
+    },
+    {
+      "name": "source"
+    },
+    {
+      "name": "cookie"
+    },
+    {
+      "name": "name"
+    },
+    {
+      "name": "artist"
+    },
+    {
+      "name": "bitrate"
+    },
+    {
+      "name": "level"
+    },
+    {
+      "name": "vip"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

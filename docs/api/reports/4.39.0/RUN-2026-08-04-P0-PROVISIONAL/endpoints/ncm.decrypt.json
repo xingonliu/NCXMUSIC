@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.decrypt",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "1911cfd130ff5567cf8877a2bcd48b23b2b73a6ded79a57279c34de2aa7f3121",
+  "classification": {
+    "category": "other",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P5"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types-missing",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "crypto"
+    },
+    {
+      "name": "data"
+    },
+    {
+      "name": "hexString"
+    },
+    {
+      "name": "isReq"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

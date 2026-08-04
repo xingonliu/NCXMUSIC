@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.mlog_url",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "b71476588326219dbedf0504a14348181bcb5546016d654af9629103b5322745",
+  "classification": {
+    "category": "mlog",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/mlog/url"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "res"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "mlogId"
+    ],
+    "produces": [
+      "mlogId"
+    ]
+  },
+  "matrix": {
+    "planned": 5,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.msg_private_history",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "c41dc3f06e9791cf4fc34e2d0d09149c266c888d51d5a6f83a9935c9d9cab5aa",
+  "classification": {
+    "category": "message",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/msg/private/history"
+  ],
+  "parameters": [
+    {
+      "name": "uid"
+    },
+    {
+      "name": "limit"
+    },
+    {
+      "name": "before"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId",
+      "pageToken"
+    ],
+    "produces": [
+      "userId"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

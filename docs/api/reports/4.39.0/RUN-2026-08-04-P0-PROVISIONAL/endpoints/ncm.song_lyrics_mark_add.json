@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.song_lyrics_mark_add",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "e51c60baf7f314aa298fe954740420f3ea019f129f956fa284e5cfad74720f68",
+  "classification": {
+    "category": "song",
+    "frequency": "rare",
+    "sideEffect": "reversible_write",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/song/lyrics/mark/add"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "markId"
+    },
+    {
+      "name": "data"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "songId"
+    ],
+    "produces": [
+      "songId"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

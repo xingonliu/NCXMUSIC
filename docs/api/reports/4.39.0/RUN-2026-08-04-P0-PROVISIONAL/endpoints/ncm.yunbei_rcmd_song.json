@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.yunbei_rcmd_song",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "5fa516de2c431d70d1b8657fff2cbf92dc2101625a5a2b3f6abb77f091c5d11e",
+  "classification": {
+    "category": "yunbei",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/yunbei/rcmd/song"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "reason"
+    },
+    {
+      "name": "yunbeiNum"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

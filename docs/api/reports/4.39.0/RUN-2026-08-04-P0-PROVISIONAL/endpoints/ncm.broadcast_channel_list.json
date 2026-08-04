@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.broadcast_channel_list",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "c72eed6fc180851a21178567685b9498747569e8d09e74f81c084b26787b943e",
+  "classification": {
+    "category": "broadcast",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/broadcast/channel/list"
+  ],
+  "parameters": [
+    {
+      "name": "categoryId"
+    },
+    {
+      "name": "regionId"
+    },
+    {
+      "name": "limit"
+    },
+    {
+      "name": "lastId"
+    },
+    {
+      "name": "score"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.activate_init_profile",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "647673c5cf5a636a1129a33bf6717cd5dce7081455566e5305dbbfb1855c47f4",
+  "classification": {
+    "category": "auth",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/activate/init/profile",
+    "tests"
+  ],
+  "parameters": [
+    {
+      "name": "nickname"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

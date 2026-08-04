@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.device_kickoff",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "6cc52fdd36ec40354f36259735ccb12437b0fafbaa55c6774b2687d467216214",
+  "classification": {
+    "category": "device",
+    "frequency": "rare",
+    "sideEffect": "reversible_write",
+    "testPhase": "P4"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types-missing",
+    "docs:/device/kickoff"
+  ],
+  "parameters": [
+    {
+      "name": "deviceKey"
+    },
+    {
+      "name": "captcha"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

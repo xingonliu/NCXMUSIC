@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.scrobble",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "55335d1aad3eac75aedf71d0556c1c26cd04a5ad81c792ef4df73709d14d575e",
+  "classification": {
+    "category": "telemetry",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/scrobble"
+  ],
+  "parameters": [
+    {
+      "name": "cookie"
+    },
+    {
+      "name": "id"
+    },
+    {
+      "name": "sourceid"
+    },
+    {
+      "name": "time"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

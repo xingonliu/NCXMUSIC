@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.chart_detail",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "ff8ea996852aedbb2aed5056e5352d074edef6d18f7d215921dd3d1a3dd6aa60",
+  "classification": {
+    "category": "toplist",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/chart/detail"
+  ],
+  "parameters": [
+    {
+      "name": "chartCode"
+    },
+    {
+      "name": "targetId"
+    },
+    {
+      "name": "targetType"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

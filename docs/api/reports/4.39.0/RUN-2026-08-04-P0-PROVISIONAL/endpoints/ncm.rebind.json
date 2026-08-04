@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.rebind",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "d098850aa294024d2f8a4f0f9accc2621a87e50d767e3bb2738ed98375fad030",
+  "classification": {
+    "category": "auth",
+    "frequency": "medium",
+    "sideEffect": "credential",
+    "testPhase": "P5"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/rebind"
+  ],
+  "parameters": [
+    {
+      "name": "captcha"
+    },
+    {
+      "name": "phone"
+    },
+    {
+      "name": "oldcaptcha"
+    },
+    {
+      "name": "ctcode"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

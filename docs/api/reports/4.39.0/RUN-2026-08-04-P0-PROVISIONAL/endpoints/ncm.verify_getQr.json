@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.verify_getQr",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "6489b4304c0d94586dfbec42621eaa67fcc09c22d5b81c6b489c1c524c1686d1",
+  "classification": {
+    "category": "auth",
+    "frequency": "rare",
+    "sideEffect": "credential",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/verify/getQr"
+  ],
+  "parameters": [
+    {
+      "name": "vid"
+    },
+    {
+      "name": "type"
+    },
+    {
+      "name": "token"
+    },
+    {
+      "name": "evid"
+    },
+    {
+      "name": "sign"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "cookie",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

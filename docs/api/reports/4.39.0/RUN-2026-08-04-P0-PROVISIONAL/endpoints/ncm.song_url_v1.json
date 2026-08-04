@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.song_url_v1",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "5034e5c32c6710805c1dfadd9c00481fbb83d148f69955759c9621cfd1397b60",
+  "classification": {
+    "category": "song",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/song/url/v1"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "level"
+    },
+    {
+      "name": "unblock"
+    },
+    {
+      "name": "source"
+    },
+    {
+      "name": "immerseType"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "songId"
+    ],
+    "produces": [
+      "songId"
+    ]
+  },
+  "matrix": {
+    "planned": 54,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

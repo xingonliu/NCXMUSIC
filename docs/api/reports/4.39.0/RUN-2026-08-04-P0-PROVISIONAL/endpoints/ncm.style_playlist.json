@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.style_playlist",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "83188e28b2067598783929042b60ec815d57916c9963689ffc262d89907dc8b0",
+  "classification": {
+    "category": "style",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/style/playlist"
+  ],
+  "parameters": [
+    {
+      "name": "cursor"
+    },
+    {
+      "name": "size"
+    },
+    {
+      "name": "tagId"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "songId",
+      "playlistId",
+      "albumId",
+      "artistId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

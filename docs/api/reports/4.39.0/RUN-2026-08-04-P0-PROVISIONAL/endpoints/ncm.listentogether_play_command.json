@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.listentogether_play_command",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "cf5dbb2478ae0934153aa9ad69a73c53948167dc7fb36d9499e1491240cd4adc",
+  "classification": {
+    "category": "other",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs-missing"
+  ],
+  "parameters": [
+    {
+      "name": "roomId"
+    },
+    {
+      "name": "commandType"
+    },
+    {
+      "name": "progress"
+    },
+    {
+      "name": "playStatus"
+    },
+    {
+      "name": "formerSongId"
+    },
+    {
+      "name": "targetSongId"
+    },
+    {
+      "name": "clientSeq"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

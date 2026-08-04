@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.chart_song_detail",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "93a7750ec0e72d6a1fef9541569f9393d85385a68667f5618c04f94807ff4dac",
+  "classification": {
+    "category": "toplist",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/chart/song/detail"
+  ],
+  "parameters": [
+    {
+      "name": "chartCode"
+    },
+    {
+      "name": "targetId"
+    },
+    {
+      "name": "targetType"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

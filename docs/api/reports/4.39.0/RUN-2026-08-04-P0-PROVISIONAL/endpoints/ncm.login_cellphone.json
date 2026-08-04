@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.login_cellphone",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "af02f632dfcd984c178cd458ee80550693cf916390b340f04dea3d73de486989",
+  "classification": {
+    "category": "auth",
+    "frequency": "high",
+    "sideEffect": "credential",
+    "testPhase": "P0"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/login/cellphone"
+  ],
+  "parameters": [
+    {
+      "name": "phone"
+    },
+    {
+      "name": "countrycode"
+    },
+    {
+      "name": "captcha"
+    },
+    {
+      "name": "md5_password"
+    },
+    {
+      "name": "password"
+    },
+    {
+      "name": "sca"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "cookie",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

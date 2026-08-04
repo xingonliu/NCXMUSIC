@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.song_order_update",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "f93f7892289b65507d86b369a6cd63fb0a00db84060a95902798664862ea778b",
+  "classification": {
+    "category": "song",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/song/order/update"
+  ],
+  "parameters": [
+    {
+      "name": "pid"
+    },
+    {
+      "name": "ids"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "songId",
+      "playlistId"
+    ],
+    "produces": [
+      "songId"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.mv_detail_info",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "a0ae7f5c1f36589e00ddf9010239e279133ce2d8c43990f0f69fe122c281ff55",
+  "classification": {
+    "category": "mv",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/mv/detail/info"
+  ],
+  "parameters": [
+    {
+      "name": "mvid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "mvId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

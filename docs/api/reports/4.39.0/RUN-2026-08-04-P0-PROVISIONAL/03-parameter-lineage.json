@@ -1,0 +1,1843 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "note": "Phase 0 静态假设；实际血缘以运行期 producers 采集为准，Phase 1 起覆盖。",
+  "fixtures": {
+    "albumId": {
+      "entityType": "albumId",
+      "producers": [
+        "ncm.style_song"
+      ],
+      "tags": []
+    },
+    "songId": {
+      "entityType": "songId",
+      "producers": [
+        "ncm.toplist_detail_v2"
+      ],
+      "tags": []
+    },
+    "artistId": {
+      "entityType": "artistId",
+      "producers": [
+        "ncm.style_song"
+      ],
+      "tags": []
+    },
+    "mvId": {
+      "entityType": "mvId",
+      "producers": [
+        "ncm.search_suggest_pc"
+      ],
+      "tags": []
+    },
+    "playlistId": {
+      "entityType": "playlistId",
+      "producers": [
+        "ncm.style_song"
+      ],
+      "tags": []
+    },
+    "cookie": {
+      "entityType": "cookie",
+      "producers": [
+        "ncm.verify_qrcodestatus"
+      ],
+      "tags": []
+    },
+    "uid": {
+      "entityType": "uid",
+      "producers": [
+        "ncm.user_safe"
+      ],
+      "tags": []
+    },
+    "videoId": {
+      "entityType": "videoId",
+      "producers": [
+        "ncm.video_url"
+      ],
+      "tags": []
+    },
+    "djId": {
+      "entityType": "djId",
+      "producers": [
+        "ncm.search_suggest_pc"
+      ],
+      "tags": []
+    },
+    "commentId": {
+      "entityType": "commentId",
+      "producers": [
+        "ncm.comment_hotwall_list"
+      ],
+      "tags": []
+    },
+    "threadId": {
+      "entityType": "threadId",
+      "producers": [
+        "ncm.comment_hotwall_list"
+      ],
+      "tags": []
+    },
+    "programId": {
+      "entityType": "programId",
+      "producers": [
+        "ncm.radio_sport_get"
+      ],
+      "tags": []
+    },
+    "radioId": {
+      "entityType": "radioId",
+      "producers": [
+        "ncm.radio_sport_get"
+      ],
+      "tags": []
+    },
+    "eventId": {
+      "entityType": "eventId",
+      "producers": [
+        "ncm.event_privacy"
+      ],
+      "tags": []
+    },
+    "mlogId": {
+      "entityType": "mlogId",
+      "producers": [
+        "ncm.mlog_url"
+      ],
+      "tags": []
+    },
+    "userId": {
+      "entityType": "userId",
+      "producers": [
+        "ncm.user_safe"
+      ],
+      "tags": []
+    },
+    "trackId": {
+      "entityType": "trackId",
+      "producers": [
+        "ncm.sheet_preview"
+      ],
+      "tags": []
+    },
+    "topicId": {
+      "entityType": "topicId",
+      "producers": [
+        "ncm.topic_sublist"
+      ],
+      "tags": []
+    },
+    "voiceId": {
+      "entityType": "voiceId",
+      "producers": [
+        "ncm.voicelist_trans"
+      ],
+      "tags": []
+    },
+    "voicelistId": {
+      "entityType": "voicelistId",
+      "producers": [
+        "ncm.voicelist_trans"
+      ],
+      "tags": []
+    }
+  },
+  "edges": [
+    {
+      "consumer": "ncm.album",
+      "consumes": "albumId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.album_detail",
+      "consumes": "albumId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.album_detail_dynamic",
+      "consumes": "albumId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.album_list",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.album_list_style",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.album_new",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.album_privilege",
+      "consumes": "albumId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.album_sub",
+      "consumes": "albumId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.album_sublist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_album",
+      "consumes": "artistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_album",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_desc",
+      "consumes": "artistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_detail",
+      "consumes": "artistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_detail_dynamic",
+      "consumes": "artistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_fans",
+      "consumes": "artistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_fans",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_follow_count",
+      "consumes": "artistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_list",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_mv",
+      "consumes": "artistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_mv",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_new_mv",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_new_song",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_new_song_mv_list_v2",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_songs",
+      "consumes": "artistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_songs",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_sub",
+      "consumes": "artistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_sublist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_top_song",
+      "consumes": "artistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_video",
+      "consumes": "artistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.artist_video",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.broadcast_channel_collect_list",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.broadcast_channel_list",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.cloud_lyric_get",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.cloud_match",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.cloudsearch",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment",
+      "consumes": "commentId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment",
+      "consumes": "threadId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_add",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_album",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_album",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_delete",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_dj",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_dj",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_event",
+      "consumes": "threadId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_event",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_floor",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_floor",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_hot",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_hot",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_hug_list",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_hug_list",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_info_list",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_like",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_like",
+      "consumes": "threadId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_music",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_music",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_mv",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_mv",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_new",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_new",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_playlist",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_playlist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_reply",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_report",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_video",
+      "consumes": "targetResourceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.comment_video",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.digitalAlbum_purchased",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_difm_channel_subscribe",
+      "consumes": "djId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_difm_channel_unsubscribe",
+      "consumes": "djId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_difm_playing_tracks_list",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_hot",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_paygift",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_personalize_recommend",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_program",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_program_detail",
+      "consumes": "djId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_program_toplist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_program_toplist_hours",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_radio_hot",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_sublist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_subscriber",
+      "consumes": "djId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_subscriber",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_toplist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_toplist_hours",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_toplist_newcomer",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_toplist_pay",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.dj_toplist_popular",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.event_forward",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.homepage_block_page",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.hot_topic",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.hug_comment",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.likelist",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.listentogether_sync_list_command",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.mlog_music_rcmd",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.mlog_to_video",
+      "consumes": "mlogId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.mlog_url",
+      "consumes": "mlogId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.msg_comments",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.msg_comments",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.msg_forwards",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.msg_notices",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.msg_private",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.msg_private_history",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.msg_private_history",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.mv_all",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.mv_exclusive_rcmd",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.mv_first",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.mv_sublist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.mv_url",
+      "consumes": "mvId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.personal_fm_mode",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.personalized",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.personalized_newsong",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.personalized_privatecontent_list",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_category_list",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_cover_update",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_delete",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_desc_update",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_detail",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_detail_dynamic",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_detail_rcmd_get",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_import_task_status",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_mylike",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_name_update",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_order_update",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_privacy",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_subscribe",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_subscribers",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_subscribers",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_tags_update",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_track_add",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_track_all",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_track_all",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_track_delete",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_tracks",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_update",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playlist_update_playcount",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.playmode_intelligence_list",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.program_recommend",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.record_recent_album",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.record_recent_dj",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.record_recent_playlist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.record_recent_song",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.record_recent_video",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.record_recent_voice",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.resource_like",
+      "consumes": "threadId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.search",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.simi_playlist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.simi_song",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.simi_user",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_chorus",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_cloud_download",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_copyright_rcmd",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_creators",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_detail",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_downlist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_download_url",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_download_url_v1",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_dynamic_cover",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_like",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_like",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_like_check",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_lyrics_mark",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_lyrics_mark_add",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_lyrics_mark_del",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_lyrics_mark_user_page",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_monthdownlist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_music_detail",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_order_update",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_order_update",
+      "consumes": "playlistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_purchased",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_red_count",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_singledownlist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_url",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_url_match",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_url_v1",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_url_v1_302",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.song_wiki_summary",
+      "consumes": "songId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.style_album",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.style_artist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.style_playlist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.style_song",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.top_album",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.top_artists",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.top_mv",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.top_playlist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.top_playlist_highquality",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.top_song",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.topic_sublist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.ugc_artist_search",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.ugc_detail",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_audio",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_binding",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_cloud",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_cloud_del",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_cloud_detail",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_comment_history",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_comment_history",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_detail",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_detail_new",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_dj",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_dj",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_event",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_event",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_follow_mixed",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_followeds",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_followeds",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_follows",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_follows",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_medal",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_mutualfollow_get",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_playlist",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_playlist",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_playlist_collect",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_playlist_collect",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_playlist_create",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_playlist_create",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_record",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.user_social_status",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.video_category_list",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.video_detail",
+      "consumes": "videoId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.video_group",
+      "consumes": "videoId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.video_group",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.video_sub",
+      "consumes": "videoId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.video_timeline_all",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.video_timeline_recommend",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.video_url",
+      "consumes": "videoId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.vip_growthpoint_details",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.vip_info",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.vip_info_v2",
+      "consumes": "userId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.vip_timemachine",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.voice_delete",
+      "consumes": "voiceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.voice_detail",
+      "consumes": "voiceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.voice_lyric",
+      "consumes": "voiceId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.voicelist_detail",
+      "consumes": "voicelistId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.voicelist_list",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.voicelist_list_search",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.voicelist_my_created",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.voicelist_search",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.voicelist_trans",
+      "consumes": "djId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.voicelist_trans",
+      "consumes": "programId",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.voicelist_trans",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.yunbei_expense",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.yunbei_rcmd_song_history",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    },
+    {
+      "consumer": "ncm.yunbei_receipt",
+      "consumes": "pageToken",
+      "producerApi": null,
+      "producerPath": null,
+      "status": "hypothesis"
+    }
+  ]
+}

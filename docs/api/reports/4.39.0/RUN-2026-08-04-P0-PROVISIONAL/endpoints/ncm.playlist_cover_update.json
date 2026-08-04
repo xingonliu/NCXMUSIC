@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.playlist_cover_update",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "8fdbcb9b0afb784207a71ac2bd28dbeff71eef3511b61f5c92a1b4ce3f96e0c2",
+  "classification": {
+    "category": "playlist",
+    "frequency": "medium",
+    "sideEffect": "upload",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/playlist/cover/update"
+  ],
+  "parameters": [
+    {
+      "name": "imgFile"
+    },
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "playlistId"
+    ],
+    "produces": [
+      "playlistId",
+      "trackId"
+    ]
+  },
+  "matrix": {
+    "planned": 7,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

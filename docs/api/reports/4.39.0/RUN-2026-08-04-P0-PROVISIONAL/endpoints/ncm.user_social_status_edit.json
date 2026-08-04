@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.user_social_status_edit",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "966a79a6f1c573ea090685111e512eb936c1444e45122a521c9eb261ad25e780",
+  "classification": {
+    "category": "user",
+    "frequency": "rare",
+    "sideEffect": "reversible_write",
+    "testPhase": "P3"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/user/social/status/edit"
+  ],
+  "parameters": [
+    {
+      "name": "type"
+    },
+    {
+      "name": "iconUrl"
+    },
+    {
+      "name": "content"
+    },
+    {
+      "name": "actionUrl"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "userId",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

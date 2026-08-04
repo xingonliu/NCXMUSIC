@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.ad_listening_rights_gain",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "d57d3bfcf755d5537b826789f905cc4c09d8badbf755203b4e96d8147afe12c6",
+  "classification": {
+    "category": "other",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types-missing",
+    "docs:/ad/listening/rights/gain"
+  ],
+  "parameters": [
+    {
+      "name": "reqUid"
+    },
+    {
+      "name": "type_ids"
+    },
+    {
+      "name": "creativeType"
+    },
+    {
+      "name": "exposureTime"
+    },
+    {
+      "name": "clickTime"
+    },
+    {
+      "name": "rightsGainMethod"
+    },
+    {
+      "name": "rightsGainDuration"
+    },
+    {
+      "name": "extraRightsGainMethod"
+    },
+    {
+      "name": "extraRightsGainDuration"
+    },
+    {
+      "name": "nextRightsGainDuration"
+    },
+    {
+      "name": "source"
+    },
+    {
+      "name": "rightsExtJson"
+    },
+    {
+      "name": "appInfo"
+    },
+    {
+      "name": "installed"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 5,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

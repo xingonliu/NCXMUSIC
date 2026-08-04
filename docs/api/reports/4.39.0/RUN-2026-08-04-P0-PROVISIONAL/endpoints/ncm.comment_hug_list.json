@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.comment_hug_list",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "5d54a3d1ec0aab5bb765cfe4fe46322dc203aa664b18cc3d3f025a2da3677524",
+  "classification": {
+    "category": "comment",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/comment/hug/list"
+  ],
+  "parameters": [
+    {
+      "name": "type"
+    },
+    {
+      "name": "sid"
+    },
+    {
+      "name": "uid"
+    },
+    {
+      "name": "cid"
+    },
+    {
+      "name": "cursor"
+    },
+    {
+      "name": "page"
+    },
+    {
+      "name": "idCursor"
+    },
+    {
+      "name": "pageSize"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "userId",
+      "pageToken"
+    ],
+    "produces": [
+      "commentId",
+      "threadId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

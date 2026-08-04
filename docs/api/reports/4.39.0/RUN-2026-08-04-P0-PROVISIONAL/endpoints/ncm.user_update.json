@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.user_update",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "8c5a29397d789b96514b7d7c2d6cbbffa1ffa85c87266f28137560ac80993a69",
+  "classification": {
+    "category": "user",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P5"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/user/update"
+  ],
+  "parameters": [
+    {
+      "name": "birthday"
+    },
+    {
+      "name": "city"
+    },
+    {
+      "name": "gender"
+    },
+    {
+      "name": "nickname"
+    },
+    {
+      "name": "province"
+    },
+    {
+      "name": "signature"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "userId",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

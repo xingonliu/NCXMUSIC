@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.follow",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "0b4a55fb6ee44718df68c030f1d695a9aac34d872c34598da2e6390ee61dceca",
+  "classification": {
+    "category": "social",
+    "frequency": "high",
+    "sideEffect": "reversible_write",
+    "testPhase": "P3"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/follow"
+  ],
+  "parameters": [
+    {
+      "name": "t"
+    },
+    {
+      "name": "id"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

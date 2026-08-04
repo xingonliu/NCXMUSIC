@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.style_album",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "3c2aa47989f035dd89b7adb848b9408e32b59677c02b06459d70813763b42f3b",
+  "classification": {
+    "category": "style",
+    "frequency": "high",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/style/album"
+  ],
+  "parameters": [
+    {
+      "name": "cursor"
+    },
+    {
+      "name": "size"
+    },
+    {
+      "name": "tagId"
+    },
+    {
+      "name": "sort"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "songId",
+      "playlistId",
+      "albumId",
+      "artistId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

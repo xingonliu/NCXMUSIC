@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.video_detail_info",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "180d3e1873499f69b0f9d3086dc2d3c9175ea19ad15ada2b0c95cde50a4216d0",
+  "classification": {
+    "category": "video",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P1"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/video/detail/info"
+  ],
+  "parameters": [
+    {
+      "name": "vid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "videoId"
+    ]
+  },
+  "matrix": {
+    "planned": 8,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

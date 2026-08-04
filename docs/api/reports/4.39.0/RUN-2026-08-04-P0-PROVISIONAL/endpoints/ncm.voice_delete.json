@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.voice_delete",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "63371bbf0459e29b8fa8f8c79e4195e1a14c34af7f4ce09fe5b8b375a76892b9",
+  "classification": {
+    "category": "voice",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/voice/delete"
+  ],
+  "parameters": [
+    {
+      "name": "ids"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "voiceId"
+    ],
+    "produces": [
+      "voiceId",
+      "voicelistId"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.fm_trash",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "38e183c952311259410ebe08ee5c07529f1e5bf7f3a2d7a1785bf71ccc2bb299",
+  "classification": {
+    "category": "recommend",
+    "frequency": "high",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/fm_trash"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "time"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

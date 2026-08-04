@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.mlog_music_rcmd",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "5ea392fb2af00eed0ea29fc1876af33646e2e631268f816b195f59736925b5b5",
+  "classification": {
+    "category": "mlog",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/mlog/music/rcmd"
+  ],
+  "parameters": [
+    {
+      "name": "mvid"
+    },
+    {
+      "name": "limit"
+    },
+    {
+      "name": "songid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [
+      "pageToken"
+    ],
+    "produces": [
+      "mlogId"
+    ]
+  },
+  "matrix": {
+    "planned": 10,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

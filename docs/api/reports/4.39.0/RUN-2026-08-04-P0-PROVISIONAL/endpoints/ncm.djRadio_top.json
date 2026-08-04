@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.djRadio_top",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "b66272f58a9105baa0490c609da52f327cc3898da81e8aab49bc69a35ba71f57",
+  "classification": {
+    "category": "dj",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P5"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/djRadio/top"
+  ],
+  "parameters": [
+    {
+      "name": "djRadioId"
+    },
+    {
+      "name": "sortIndex"
+    },
+    {
+      "name": "dataGapDays"
+    },
+    {
+      "name": "dataType"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "djId",
+      "programId",
+      "radioId"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.user_replacephone",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "5831c8f210e80b522fdb6cb6527dcf6e333337d588c5e070b74f558c53f4650d",
+  "classification": {
+    "category": "auth",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P5"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/user/replacephone"
+  ],
+  "parameters": [
+    {
+      "name": "phone"
+    },
+    {
+      "name": "captcha"
+    },
+    {
+      "name": "oldcaptcha"
+    },
+    {
+      "name": "countrycode"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "userId",
+      "uid"
+    ]
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

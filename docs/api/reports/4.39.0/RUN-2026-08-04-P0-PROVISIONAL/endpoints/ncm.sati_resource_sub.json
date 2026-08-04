@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.sati_resource_sub",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "7911c864a1d1a8fa266ec9d265696ea6e5a145c92ea9ef4b4bd7e3fbe245d722",
+  "classification": {
+    "category": "ugc",
+    "frequency": "medium",
+    "sideEffect": "reversible_write",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/sati/resource/sub"
+  ],
+  "parameters": [
+    {
+      "name": "id"
+    },
+    {
+      "name": "cancel"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": []
+  },
+  "matrix": {
+    "planned": 4,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

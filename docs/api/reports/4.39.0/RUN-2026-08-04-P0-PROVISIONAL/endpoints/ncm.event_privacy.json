@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.event_privacy",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "550059f3473b84967d6d40093f38fd12027bafd94b9ec4e0e67e7f2f9f26cd4e",
+  "classification": {
+    "category": "social",
+    "frequency": "rare",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "docs:/event/privacy",
+    "tests"
+  ],
+  "parameters": [
+    {
+      "name": "evId"
+    },
+    {
+      "name": "privacy"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "eventId"
+    ]
+  },
+  "matrix": {
+    "planned": 5,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}

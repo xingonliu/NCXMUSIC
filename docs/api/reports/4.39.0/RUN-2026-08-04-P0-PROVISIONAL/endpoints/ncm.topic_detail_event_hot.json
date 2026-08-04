@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "apiAuditId": "ncm.topic_detail_event_hot",
+  "packageVersion": "4.39.0",
+  "moduleChecksum": "506f8de930b030c9b3857dc02a8793c68bca0f626ca1405a70af6bf2ff5561a8",
+  "classification": {
+    "category": "social",
+    "frequency": "medium",
+    "sideEffect": "read",
+    "testPhase": "P2"
+  },
+  "sources": [
+    "repo-module",
+    "pkg-module",
+    "types",
+    "docs:/topic/detail/event/hot"
+  ],
+  "parameters": [
+    {
+      "name": "actid"
+    }
+  ],
+  "dependencies": {
+    "consumes": [],
+    "produces": [
+      "topicId"
+    ]
+  },
+  "matrix": {
+    "planned": 6,
+    "executed": 0,
+    "cases": []
+  },
+  "fields": [],
+  "errors": [],
+  "sideEffectVerification": null,
+  "unknownFieldIds": [],
+  "conflictIds": [],
+  "terminalStatus": null,
+  "blocker": null,
+  "evidence": []
+}
