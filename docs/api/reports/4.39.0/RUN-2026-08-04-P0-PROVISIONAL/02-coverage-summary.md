@@ -193,3 +193,10 @@ fieldEvidenceCoverage = evidencedFieldCount / discoveredFieldCount   // 0 / 0（
 
 - 歌A（光年之外，fee=1）：全部 9 档请求均返回 128k mp3 试听 URL（level 请求被忽略/降级），freeTrial 30s；ANON 层 freeTrialInfo.fragmentType=6、NONE 层=-1（游客 cookie 改变试听元数据形态）
 - 歌B（免费，fee=0）：lossless/hires 等高档返回 320k mp3（非 flac 容器），higher→192k，standard→128k
+
+## 14. Phase 5 状态（RUN-2026-08-04-P0-PROVISIONAL）
+
+- **未执行**：操作者指示暂缓（Phase 5 用户私有读取不测）。
+- 前置条件：AUTH_USER 测试账号（B-002，account-basic-01 待申请）；uid 由 user_account 登录态生产。
+- 涉及范围（§7 Phase 5）：user_playlist、likelist、user_record、user_cloud、user_subcount、user_follows/followeds、user_dj、user_event、record_recent_*、recent_listen_list、user_audio、user_comment_history 等。
+- 恢复条件：账号到位后创建子运行或同一 runId 续跑，按 spec 补齐；届时这些接口终态从空转 partial/blocked_by_prerequisite。

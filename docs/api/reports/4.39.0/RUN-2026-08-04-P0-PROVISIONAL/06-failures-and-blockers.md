@@ -82,3 +82,9 @@ runId：`RUN-2026-08-04-P0-PROVISIONAL`
 - **MV**（可播放性）：mv_url 返回 1080p mp4（r=1080，约 79MB，audio/video 200 HEAD，Range 支持），fee=0（mv_url.none/anon.001 + probes）
 - **video_url**（夹具缺口）：无 videoId 夹具（视频域发现未完成），blocked_by_prerequisite（03-fixture-pool.json）
 - **enhanced 配置**（网络分层）：unblock=true 未执行（B-003 enhanced 缺失）；canonical 样本单独统计（00-RUN-MANIFEST §10）
+
+## 8. Phase 5 决策记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- **B-007 Phase 5 暂缓（操作者指示，2026-08-04）**：用户私有读取域本轮不执行测试，raw 层无新增样本；清单中该域接口保持未测状态（executedCaseCount=0、terminalStatus 空）。
+- 原因：AUTH_USER 账号缺失（B-002），未登录负向层价值有限且不构成三态对比。
+- 补测方案：账号到位后按 §7 Phase 5 顺序执行 user_playlist/likelist/user_record/user_cloud 等，复用现有夹具池与运行器（--filter 单组重跑）。
