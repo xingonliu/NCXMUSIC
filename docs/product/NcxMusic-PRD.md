@@ -57,7 +57,7 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-015 | 支持通过 `Alt+Space` 唤起语音 Agent 小组件。 |
 | C-016 | Windows 与 macOS 使用一致的类 macOS 视觉语言。 |
 | C-017 | 全屏模式隐藏关闭/缩小等窗口按钮，悬停导航区域后通过渐变模糊遮罩显示。 |
-| C-018 | 除产品明确排除的能力外，网易云音乐 API 原则上都应能被封装或适配为 Agent Tool。 |
+| C-018 | 除产品明确排除的能力外，网易云音乐 API 原则上都应登记为 Agent Capability，并通过核心业务 Tool 或冷门 API Gateway 供小 N 使用；不要求每个 endpoint 对应一个模型 Tool。 |
 | C-019 | 冷门接口可通过通用 API Gateway Tool 兜底，但常用业务使用专用组合工具。 |
 | C-020 | NcxMusic 作为开源项目开发和发布。 |
 | C-021 | 产品定位为高颜值、具备完整 AI Agent 能力的独立音乐播放器。首版不以复刻网易云全部页面为目标。 |
@@ -135,6 +135,8 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-093 | SelectionCard 固定等待 10 分钟并提供“取消”按钮；离开页面、收起侧栏、最小化窗口继续等待，Renderer 重载后恢复。用户发送新聊天消息时取消旧选择与旧 Turn 后处理新消息；应用退出、切换账号或 Runtime 故障时取消。 |
 | C-094 | `request_user_selection` 同时支持音乐实体选项和普通文字选项，并允许在同一 SelectionCard 中混排 2~5 项。它是无业务副作用的通用询问 Tool；选中结果只返回 `optionKey` 与可选实体引用，任何选项文案都不会因点击而直接执行。 |
 | C-095 | SelectionCard 支持 `single` 与 `multiple`：单选点击一项立即提交；多选允许选择 1~5 项，并在至少选择一项后通过“完成”提交。结果统一返回选项 key 数组及对应实体引用数组，仍不执行具体操作。 |
+| C-096 | 首版内置 Agent 能力采用“10 个核心业务 Tool + 2 个冷门 API 兜底 Tool”，不把每个 NeteaseCloudMusicApiEnhanced endpoint 注册成独立模型 Tool。底层 API 仍逐项适配、测试并登记到 Capability Catalog。 |
+| C-097 | 冷门 API 先通过只读 `find_music_api_capabilities` 检索 `capabilityId`、用途和参数契约，再由 `call_music_api` 调用；Gateway 不接受原始 path，实体 ID 由 Entity Resolver 从稳定引用解析。 |
 
 ## 3. 目标用户与使用场景
 
@@ -581,13 +583,22 @@ Working Memory 采用原子替换写入；损坏或版本不兼容时从 SQLite 
 
 #### 高级业务工具
 
-- `smart_search_and_play`
-- `playlist_manager`
-- `get_music_comments`
-- `artist_explorer`
-- `user_profile_memory`
-- 播放器状态和队列管理工具
-- 签到与账户状态工具
+首版模型可见的内置核心业务 Tool 冻结为 10 个：
+
+| Tool | 主要职责 |
+| --- | --- |
+| `smart_search_and_play` | 搜索、实体解析、获取播放资源并发起播放；歧义时返回 `needs_selection`，不静默猜测 |
+| `control_player` | 获取播放状态，以及播放/暂停、上下首、进度、音量和播放模式 |
+| `queue_manager` | 查看、插入、下一首播放、移除、排序、替换和清空当前队列 |
+| `playlist_manager` | 查看、创建、重命名、删除歌单，以及增删/排序歌单歌曲 |
+| `library_manager` | 喜欢/取消喜欢，以及收藏/取消收藏歌曲、专辑、歌手或歌单 |
+| `music_explorer` | 搜索与查看歌曲、歌手、专辑、歌单、歌词、相似内容和推荐内容 |
+| `comments_and_social` | 查看/发布/删除评论、评论点赞，以及关注/取消关注 |
+| `account_manager` | 登录态与账户资料、签到、允许范围内的资料修改和退出登录；不包含支付购买 |
+| `user_profile_memory` | 读取/生成/更新音乐画像，以及查询允许进入上下文的长期记忆 |
+| `request_user_selection` | 向用户展示无副作用的单选/多选快捷问题并返回答案 |
+
+每个 Tool 使用判别式 `action` Schema；Tool 名相同不代表动作的读写性质、冲突域或 M 等级相同。Runtime 必须在参数归一化后按具体 action 分类。
 
 #### 原子音乐工具
 
@@ -600,7 +611,12 @@ Working Memory 采用原子替换写入；损坏或版本不兼容时从 SQLite 
 
 #### 通用 API Gateway
 
-仅在没有专用工具时使用。必须具备：
+仅在没有专用工具时使用。兜底能力由两个 Tool 组成：
+
+- `find_music_api_capabilities`：只读检索 Capability Catalog，按用户意图返回少量匹配的 `capabilityId`、用途、所需实体引用和参数契约；不调用网易云业务接口。
+- `call_music_api`：接收已经发现的 `capabilityId` 和参数，通过对应 Schema、实体解析与 Policy 后调用内部 Adapter。
+
+Gateway 必须具备：
 
 - 正向 Music API Capability 清单；每项由稳定 `capabilityId` 映射内部 API 路径和参数 Schema，不向模型开放任意 `path: string`。
 - 参数 Schema 校验。
@@ -611,6 +627,8 @@ Working Memory 采用原子替换写入；损坏或版本不兼容时从 SQLite 
 
 禁止模型通过 Gateway 绕过专用工具的安全策略。
 支付、购买、订阅、下单及代购类能力不注册进清单，因此不存在可供模型调用或审批后执行的 Gateway Handler。
+
+Capability Catalog 不整份注入 System Prompt，也不展开成数百个 Tool Schema。小 N 需要冷门能力时先检索目录；目录结果只返回本次最相关的少量能力。`call_music_api` 再按选中条目的实际参数 Schema 二次验证，不能把 `params: Record<string, any>` 当作已校验输入。
 
 ### 5.5 实体解析与上下文池
 
@@ -1145,7 +1163,7 @@ OpenAI 标准接口通常通过 `GET /v1/models` 返回当前凭据可用的模�
 5. 定义请求与响应 Schema。
 6. 转换为内部统一实体。
 7. 加入缓存、字段池和请求编排。
-8. 封装业务 Service 和 Agent Tool。
+8. 封装业务 Service、登记 Capability，并映射到核心 Tool 或冷门 API Gateway。
 9. 编写契约测试。
 10. 最后接入 UI。
 
@@ -1307,6 +1325,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 - D-106（待确认）：Agent 的人格、正式称呼、语言和回答长度是否可配置？
 - D-107（已确认）：用户播放操作即时生效；小 N 操作使用轻量提示并记录结构化 Action Journal，不弹操作冲突框。
 - D-108（待确认）：长期记忆采用全文、向量或混合检索，待真实中文会话召回测试后决定。
+- D-109（已确认）：首版不逐 API 暴露模型 Tool；使用 10 个核心业务 Tool，并以 `find_music_api_capabilities` + `call_music_api` 两步式目录检索和调用兜底冷门 API。
 
 ### P1：播放行为
 
@@ -1462,6 +1481,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 | 2026-08-04 | D-716 | 冻结 SelectionCard 的 10 分钟生命周期、显式取消、Renderer 恢复、新消息替换和退出/换号/故障取消规则。 | SelectionCard、Agent Runtime、IPC Snapshot、Turn 调度 |
 | 2026-08-04 | D-717 | SelectionCard 定位为小 N 的通用快捷提问 Tool，同时支持富媒体实体和普通文字选项；点击只返回用户答案，无业务副作用。 | Selection Tool、SelectionCard、IPC Schema、后续对话/Tool 调用 |
 | 2026-08-04 | D-718 | SelectionCard 同时支持点击即提交的单选，以及选择 1~5 项后点击“完成”的多选；两者统一返回数组。 | Selection Tool Schema、SelectionCard 状态、IPC Resolve |
+| 2026-08-04 | D-109 | 模型只看到 10 个核心业务 Tool；冷门 API 通过 Capability 目录检索后再调用 Gateway，不逐 endpoint 注入 Tool Schema。 | Agent 上下文、Tool Registry、API Adapter、Entity Resolver |
 
 ## 13. 暂定里程碑
 

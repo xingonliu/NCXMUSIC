@@ -3,7 +3,7 @@
 > 文档状态：Baseline 0.1
 > 建立日期：2026-08-04
 > 最后更新：2026-08-04
-> 关联决策：A-006、D-013、D-102
+> 关联决策：A-006、D-013、D-102、D-109
 
 ## 1. 目标
 
@@ -103,20 +103,33 @@ interface ToolDefinition {
   description: string
   inputSchema: ZodType
   outputSchema: ZodType
+  classify(input: unknown, context: ToolContext): ToolOperation
+  execute(input: unknown, context: ToolContext): Promise<ToolResult>
+}
+
+interface ToolOperation {
+  action: string
   effect: 'read' | 'interaction' | 'write' | 'external-process' | 'install'
   riskAction: string
   concurrency: 'parallel' | 'serial'
-  conflictKeys(input: unknown, context: ToolContext): string[]
+  conflictKeys: string[]
   cancellable: boolean
   timeoutPolicy: string
   retryPolicy: string
-  execute(input: unknown, context: ToolContext): Promise<ToolResult>
 }
 ```
 
-模型只能看到完成裁剪后的名称、描述和输入 Schema。`effect`、风险、冲突域、超时和执行函数属于 Runtime 内部元数据，不进入 Prompt，也不能由 Dynamic Skill 覆盖。
+模型只能看到完成裁剪后的名称、描述和输入 Schema。高层 Tool 使用判别式 `action` 输入；`classify()` 在 Schema、能力和实体解析完成后，根据规范化 action/参数生成本次调用的 effect、风险、冲突域、超时与重试规则。一个 Tool 内的只读 `list` 和写入 `delete` 不能共享静态风险标签。分类器和执行函数属于 Runtime 内部元数据，不进入 Prompt，也不能由 Dynamic Skill 覆盖。
 
 Tool Registry 是正向能力边界：只有注册成功且在当前账户、功能开关与扩展状态下可见的 Tool 才会进入模型请求。Runtime 仍必须防御模型伪造名称；未知 Tool、未声明 Action 或 Music Gateway 未注册的 `capabilityId` 在 `resolving_capability` 阶段结束为 `unavailable`，返回 `CAPABILITY_UNAVAILABLE`，不进入审批和 Executor。
+
+### 内置 Tool 暴露策略
+
+首版模型可见的音乐/账户核心 Tool 固定为：`smart_search_and_play`、`control_player`、`queue_manager`、`playlist_manager`、`library_manager`、`music_explorer`、`comments_and_social`、`account_manager`、`user_profile_memory`、`request_user_selection`。底层 NeteaseCloudMusicApiEnhanced endpoint 只作为 Adapter/Capability 登记，不自动成为模型 Tool。
+
+冷门能力使用 `find_music_api_capabilities` 与 `call_music_api` 两步兜底。前者是只读目录检索，只返回本次最相关的少量 capability 说明、参数契约和实体引用要求；后者只接受目录中已注册的 `capabilityId`，根据该条目的 Zod Schema 验证参数并复用 Entity Resolver。完整目录不注入 System Prompt，`call_music_api` 也不接受原始 API path。
+
+Shell Tool、`mcp_manager`、已连接 MCP Tool 和 Dynamic Skill Tool 根据功能开关与安装状态动态加入可见集合，不计入上述 10 个内置核心业务 Tool。动态工具仍必须经过 Tool Registry、Schema、Policy 和 Scheduler，不能覆盖内置工具元数据。
 
 ### 用户选择工具
 
