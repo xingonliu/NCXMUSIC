@@ -4,7 +4,7 @@
 > 最后更新：2026-08-04
 > 文档用途：约束播放器音频状态、播放队列和恢复行为；技术验证通过并完成产品决策后才能作为实现基线
 > 范围：播放状态机、队列、全局唯一内容音频、音频焦点和持久化。Agent、权限和 IPC 是外部输入源，不在本领域内作决策。
-> 访谈状态：2026-08-04 重新开启播放架构讨论；目前确认 Vue SPA、根层唯一 AudioHost、按路由显示/隐藏 PlayerBar，以及“小 N 单曲临时插播、歌单替换队列”，其余技术结构和行为规则仍是讨论底稿。
+> 访谈状态：2026-08-04 重新开启播放架构讨论；目前确认 Vue SPA、根层唯一 AudioHost、按路由显示/隐藏 PlayerBar，以及单曲临时插播与集合上下文替换队列规则，其余技术结构和行为规则仍是讨论底稿。
 
 ## 1. 技术讨论约束
 
@@ -210,7 +210,12 @@ interface QueueController {
 - 播放目标是单曲：`interruptWithTrack`，立即播放临时项，不改写规范 `items`；记录原队列的 `resumeItemId`，临时歌曲结束或手动下一首后继续原队列。队列为空时退化为单曲队列。
 - 播放目标是歌单：`replaceAndPlay`，用歌单建立新队列；未指定歌曲时从第一首开始。
 
-页面或 Agent 的其他动作必须明确选择 `replaceAndPlay`、`interruptWithTrack`、`playNext` 或 `enqueue`。专辑、歌手热门、“我喜欢”、搜索结果和推荐 Section 的默认语义仍待确认。
+已确认的页面入口语义：
+
+- 歌单、专辑、“我喜欢”和歌手热门歌曲等集合详情中的歌曲行：`replaceAndPlay`，用当前完整列表替换队列，`startIndex` 指向点击项。
+- 小 N 精确点播、全局搜索单曲和推荐单曲卡片：`interruptWithTrack`，作为脱离集合上下文的单曲临时插播。
+
+页面或 Agent 的其他动作必须明确选择 `replaceAndPlay`、`interruptWithTrack`、`playNext` 或 `enqueue`。搜索和推荐 Section 的“播放全部”、电台/MV 等后续来源仍待确认。
 
 ### 4.3 索引、删除与上一首
 
@@ -354,6 +359,7 @@ AppShell（应用生命周期）
 - waiting/buffering/playing、seek、duration 变化和网络恢复。
 - queue 增删改、删除当前项、空队列、重复 songId、revision 过期。
 - 单曲临时插播不改写规范队列；结束/下一首按 `resumeItemId` 续播；空队列时正确退化为单曲队列。
+- 集合详情点击歌曲行时完整列表替换队列，点击项成为当前项；搜索和推荐单曲不会误替换队列。
 - shuffle 一个周期不重复、previous 沿真实历史、关闭 shuffle 恢复规范顺序。
 - undo 恢复队列、歌曲、位置和意图，revision 保持单调。
 - 启动恢复始终 `autoplay=false`；无有效快照时保持 idle。
