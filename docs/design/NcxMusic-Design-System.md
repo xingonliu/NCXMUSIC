@@ -245,6 +245,8 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 
 `ToolExecutionCard` 展示工具名称、状态、耗时、摘要结果和可展开技术详情。`ApprovalCard` 是独立业务组件，必须同时展示操作对象、影响、风险原因、轻量剩余有效时间，以及文案固定为“批准”“拒绝”的两个按钮；没有关闭图标，不能增加会话级/永久授权，不能用通用 Dialog、Toast 或 ToolExecutionCard 的普通状态代替。
 
+`MusicSafetyControl` 与 `CommandSafetyControl` 是输入框下方两个独立按钮，各自显示当前 M/S 等级并打开对应等级选择面板。音乐等级选择后即时生效并持久化；选择 M4 不触发 AlertDialog、二次确认或重启提示。权限说明放在选择面板内，不能依赖额外弹窗传达当前状态。
+
 ### 4.5 后续组件（P1）
 
 - CommandPalette、NotificationCenter、Breadcrumb、DataTable、DatePicker。
