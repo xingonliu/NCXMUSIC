@@ -137,6 +137,7 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-095 | SelectionCard 支持 `single` 与 `multiple`：单选点击一项立即提交；多选允许选择 1~5 项，并在至少选择一项后通过“完成”提交。结果统一返回选项 key 数组及对应实体引用数组，仍不执行具体操作。 |
 | C-096 | 首版内置 Agent 能力采用“10 个核心业务 Tool + 2 个冷门 API 兜底 Tool”，不把每个 NeteaseCloudMusicApiEnhanced endpoint 注册成独立模型 Tool。底层 API 仍逐项适配、测试并登记到 Capability Catalog。 |
 | C-097 | 冷门 API 先通过只读 `find_music_api_capabilities` 检索 `capabilityId`、用途和参数契约，再由 `call_music_api` 调用；Gateway 不接受原始 path，实体 ID 由 Entity Resolver 从稳定引用解析。 |
+| C-098 | API First 以 NcxMusic 锁定依赖版本中可发现的全部 NeteaseCloudMusicApiEnhanced API 为范围，首版是否使用不影响审计覆盖；高频和参数生产者先测，冷门、低频、废弃及高风险接口后测。每个可调用接口强制进行未登录、游客、登录的多变量比较，并按权益、资源归属、分页和参数边界扩展。 |
 
 ## 3. 目标用户与使用场景
 
@@ -1154,12 +1155,14 @@ OpenAI 标准接口通常通过 `GET /v1/models` 返回当前凭据可用的模�
 
 ## 6. API First 开发规则
 
-每个接口必须按以下顺序进入开发（每个 API 先建立专用测试脚本，多次调用覆盖不同参数与边界分支，确定返回数据格式）：
+全量清单、执行顺序、最低调用次数、多变量矩阵、参数血缘、字段类型、未知字段、安全边界与报告模板，以 [NcxMusic-API-First-Full-Audit-Playbook.md](../api/NcxMusic-API-First-Full-Audit-Playbook.md) 为唯一执行规范。
+
+API First 的范围是锁定依赖版本中由 exports、module、类型声明、官方文档和官方测试共同发现的全部 API，不按首版页面裁剪。每个接口必须按以下顺序进入开发（每个 API 先建立专用测试脚本，多次调用覆盖不同参数与边界分支，确定返回数据格式）：
 
 1. 在隔离测试环境发起真实请求。
 2. 保存脱敏响应样本。
 3. 分析必填、可空、条件出现、分页和错误字段。
-4. 覆盖未登录、无权限、空数据、限流和异常响应。
+4. 强制比较未登录、游客、普通登录，并按适用性覆盖 VIP、已购、资源归属、空数据、分页、限流和异常响应。
 5. 定义请求与响应 Schema。
 6. 转换为内部统一实体。
 7. 加入缓存、字段池和请求编排。
@@ -1384,13 +1387,15 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 
 ### P2：API、数据与缓存
 
-- D-601（已确认）：按首版页面反推：登录/用户、搜索、歌单 CRUD、歌曲详情/URL/歌词、专辑、歌手、推荐、评论、签到、播放排行。
-- D-602（已确认）：为每个 API 创建专用测试 JS，多次调用覆盖不同参数与边界，确定返回数据格式。
+- D-601（已确认）：API 审计覆盖锁定版本可发现的全部 NeteaseCloudMusicApiEnhanced API，不按首版页面裁剪；高频和能够生产 ID、游标等参数的接口优先，冷门、低频、废弃、别名、支付与高风险接口最后处理。
+- D-602（已确认）：为每个 API 创建专用测试 JS，按接口类别满足最低调用次数和“三个有差异稳定样本”停止规则；响应、字段类型、错误、参数血缘和副作用验证均写入统一报告。
 - D-603（部分确认）：建立全局字段池并按启动请求顺序复用字段；权威 + 新鲜度 + 完整度合并算法待 API 样本验证。
 - D-604（待确认）：用户、歌单、首页推荐和搜索建议分别采用什么 TTL、刷新和离线策略？
 - D-605（已确认）：网页登录 Cookie 保存在独立持久 Session，模型/MCP API Key 使用系统 `safeStorage`；凭据只以内存租约进入 Utility Process，不进入 Renderer、Prompt、Tool 参数或日志。
 - D-606（部分确认）：`/song/url/v1` 文档列出 9 个音质 level，但在线文档与仓库 TypeScript 枚举存在 `higher`/`dolby` 差异；九档请求、实际降级、账户权益、特殊格式和字段映射待 API First 样本验证。
 - D-607（已确认）：网易云封面按 `thumbnail`、`compact`、`card`、`feature`、`hero` 五档语义尺寸加载，推荐与详情使用高精度变体，密集列表使用小图；参数与缓存行为仍须按 API First 矩阵实测。
+- D-608（已确认）：登录态是全局强制测试维度：所有可调用接口至少比较未登录、游客和普通登录；媒体、权限、账户和写操作再按 VIP、已购、资源归属及状态跑关键完整矩阵，普通附加变量可采用 pairwise。
+- D-609（已确认）：接口参数优先复用上游测试结果并记录生产接口、case 与 JSONPath；未知字段不得猜测或丢弃，支付和不可逆接口仍进入清单，但默认只做静态分析与安全负向探测，不改变首版不注册支付能力的范围。
 
 ### P2：界面与体验
 
@@ -1482,6 +1487,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 | 2026-08-04 | D-717 | SelectionCard 定位为小 N 的通用快捷提问 Tool，同时支持富媒体实体和普通文字选项；点击只返回用户答案，无业务副作用。 | Selection Tool、SelectionCard、IPC Schema、后续对话/Tool 调用 |
 | 2026-08-04 | D-718 | SelectionCard 同时支持点击即提交的单选，以及选择 1~5 项后点击“完成”的多选；两者统一返回数组。 | Selection Tool Schema、SelectionCard 状态、IPC Resolve |
 | 2026-08-04 | D-109 | 模型只看到 10 个核心业务 Tool；冷门 API 通过 Capability 目录检索后再调用 Gateway，不逐 endpoint 注入 Tool Schema。 | Agent 上下文、Tool Registry、API Adapter、Entity Resolver |
+| 2026-08-04 | D-601/D-602/D-608/D-609 | API First 改为锁定版本全量审计；强制未登录、游客、登录多变量测试，按依赖复用参数并记录字段类型、未知字段、差异和回滚。冷门与高风险接口只后移，不从清单删除。 | API 测试、字段池、登录态、权益 UI、Capability Catalog、安全边界 |
 
 ## 13. 暂定里程碑
 
