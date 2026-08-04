@@ -195,6 +195,13 @@ interface ResolvedMediaSource {
 - `unblock=true` 时上游模块明确不保证音质偏好生效，正常播放解析禁止使用该参数实现音质选择。
 - `actualQuality`、码率和格式属于本次媒体源状态，可供播放 UI 展示，但不写回歌曲永久字段。
 
+播放中变更 `MusicQualityPreference` 时：
+
+1. 立即持久化新偏好，为本次换源创建独立 `qualityResolveRevision` 和 AbortController；新源就绪前保持旧媒体源工作。
+2. 后台解析当前 `queueItemId` 的新源。用户再次修改音质、切歌、停止、登出或退出时取消该解析；迟到结果必须丢弃。
+3. 新源就绪且仍指向同一队列项时，在交换瞬间读取最新 `positionMs` 和 `intent`，然后才为媒体换代递增 generation、load 新源、在 metadata 就绪后 seek，并且仅在 `intent='play'` 时恢复播放。
+4. 若最终媒体档位、格式和 URL 未变，不重载。若新源因网络或上游错误解析失败，保留旧源和当前播放，显示轻提示；持久化的新偏好在后续解析时继续使用。
+
 ## 4. QueueController
 
 ### 4.1 数据结构
@@ -416,6 +423,7 @@ AppShell（应用生命周期）
 - previous 无论当前播放多久都切换到可见队列上一项，返回歌曲从头播放。
 - VIP/付费 Item 正确显示小标但仍可点击；不可播放时轻提示并切歌；整轮失败后停止且不无限循环。
 - 音质默认自动选取账户/歌曲/设备最高可用档位；指定偏好不可用时向下回退，快照报告 `actualQuality` 且不误标首选档位。
+- 播放中变更音质会在新源就绪后立即交换，保持最新进度和 intent；连续改设置、切歌和旧 URL 迟到时不得越代，新源失败时旧源不中断。
 - 9 档 `/song/url/v1` 覆盖游客/非 VIP/VIP/已购买和不同音源上限；验证上游自动降级、空 URL、`unblock=false` 与 Dolby `os=pc` 行为。
 - 进入 shuffle 会直接洗牌可见队列并从首项播放；拖动后按新可见顺序继续；切回 loop 不恢复洗牌前顺序。
 - 队列命令不会生成 Undo 快照，播放队列操作也不会误写网易云歌单。
