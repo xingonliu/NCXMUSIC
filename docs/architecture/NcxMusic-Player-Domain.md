@@ -158,6 +158,43 @@ select item
 - 媒体事件处理器捕获当前 generation；旧 source 的迟到事件不得更新新歌曲。
 - `resetMedia()` 执行 `pause → removeAttribute('src') → load()`，用于停止旧下载；复用的是同一个 audio 元素，不存在“旧 audio 元素”。
 
+### 3.5 音质偏好与解析结果
+
+```ts
+type MusicQualityLevel =
+  | 'standard'
+  | 'higher'
+  | 'exhigh'
+  | 'lossless'
+  | 'hires'
+  | 'jyeffect'
+  | 'sky'
+  | 'dolby'
+  | 'jymaster'
+
+type MusicQualityPreference = 'auto' | MusicQualityLevel
+
+interface ResolvedMediaSource {
+  url: string
+  requestedQuality: MusicQualityPreference
+  actualQuality: MusicQualityLevel
+  attemptedQualities: MusicQualityLevel[]
+  downgraded: boolean
+  downgradeReason?: 'track-unavailable' | 'account-unavailable' | 'device-unsupported' | 'upstream-fallback'
+  bitrate?: number
+  format?: string
+  size?: number
+  freeTrialInfo?: unknown
+}
+```
+
+- `MusicQualityPreference` 是持久化的全局设置，默认 `auto`。队列只保存歌曲引用，不固化当时的 URL 或音质结果。
+- `TrackResolver` 每次解析时结合全局偏好、当前账户和实际 API 结果；不通过 UI 的 VIP/付费小标推断可播音质。
+- 常规档位的回退序列为 `jymaster → hires → lossless → exhigh → higher → standard`，从用户首选位置开始。`jyeffect`/`sky`/`dolby` 不与码率档位强行混排，不可用时回退当前账户的最高常规档位。
+- 上游若已自动降级，以响应的实际 `level` 为准并停止进一步请求；URL 为空或实际档位无法解码时才继续向下尝试。具体字段以 API First 样本为准。
+- `unblock=true` 时上游模块明确不保证音质偏好生效，正常播放解析禁止使用该参数实现音质选择。
+- `actualQuality`、码率和格式属于本次媒体源状态，可供播放 UI 展示，但不写回歌曲永久字段。
+
 ## 4. QueueController
 
 ### 4.1 数据结构
@@ -378,6 +415,8 @@ AppShell（应用生命周期）
 - 集合详情点击歌曲行时完整列表替换队列，点击项成为当前项；搜索和推荐单曲不会误替换队列。
 - previous 无论当前播放多久都切换到可见队列上一项，返回歌曲从头播放。
 - VIP/付费 Item 正确显示小标但仍可点击；不可播放时轻提示并切歌；整轮失败后停止且不无限循环。
+- 音质默认自动选取账户/歌曲/设备最高可用档位；指定偏好不可用时向下回退，快照报告 `actualQuality` 且不误标首选档位。
+- 9 档 `/song/url/v1` 覆盖游客/非 VIP/VIP/已购买和不同音源上限；验证上游自动降级、空 URL、`unblock=false` 与 Dolby `os=pc` 行为。
 - 进入 shuffle 会直接洗牌可见队列并从首项播放；拖动后按新可见顺序继续；切回 loop 不恢复洗牌前顺序。
 - 队列命令不会生成 Undo 快照，播放队列操作也不会误写网易云歌单。
 - 启动恢复始终 `autoplay=false`；无有效快照时保持 idle。
