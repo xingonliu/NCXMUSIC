@@ -107,6 +107,7 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-065 | 按住 `Alt+Space` 进入语音聆听时，当前音乐不暂停，而是临时降低到原输出约 20%；松手后恢复。期间如果用户或小 N 执行了暂停、切歌等新播放意图，则不恢复旧播放状态。 |
 | C-066 | “关闭窗口时”设置仅提供“最小化窗口”和“退出应用”两个选项，默认为最小化窗口。默认状态下点击关闭按钮仍继续后台播放；选择退出应用时则终止进程和播放。 |
 | C-067 | 首版语音能力只做 ASR 语音识别与指令输入，不做 TTS 语音合成或语音播报。 |
+| C-068 | Agent 不调用 Vue 组件函数，也不通过内部 SSE 间接操作 Pinia。Agent Tool 经权限中间件后通过 IPC/MessagePort 发送版本化 `PlayerCommand`，由 Renderer 根层常驻处理器调用唯一 `PlaybackCoordinator`，并将真实执行结果和最新快照回传给 Tool。 |
 
 ## 3. 目标用户与使用场景
 
@@ -1047,6 +1048,10 @@ Agent Utility Process
 
 Main 使用 `utilityProcess.fork()` 管理 Agent Utility Process。跨进程消息采用可版本化的统一事件信封，至少包含 `protocolVersion`、`taskId`、`eventId`、`sequence`、`type` 和经过裁剪的 `payload`。模型供应商的 SSE、chunked stream 或其他上游流式格式只在 Provider Adapter 内解析，Renderer 只接收归一化增量事件。
 
+播放控制采用请求/结果式命令通道：Agent Tool 先经确定性权限中间件，再由 Utility Process 的 `PlayerCommandGateway` 将带 `commandId`、`issuedBy`、`expectedRevision` 和类型化 `payload` 的命令发往 Renderer。Renderer 根层常驻 `PlayerCommandBridge` 交给唯一 `PlaybackCoordinator` 执行，再回传成功、拒绝、过期、失败或不可用结果及最新播放快照。Tool 必须等待结果或超时，不得把“已发送”当作“已执行”。
+
+`PlayerCommandBridge` 不放在 `AgentChat.vue` 或任何路由页内；小 N 侧边栏关闭时仍能执行语音和后台播放命令。Pinia 可作为 Vue 响应式读模型和命令适配层，但不直接通过 DOM ID 操作 `<audio>`，也不在 `audio.play()` 完成前猜测成功状态。页面音乐数据请求则通过 Preload 暴露的类型化 Music Gateway 进入 Utility Process 的同一 Music Service；Agent Tool 在 Utility Process 内直接复用该 Service，Renderer 不直接访问 NeteaseCloudMusicApiEnhanced。
+
 Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒绝未决审批、清理 MessagePort 并按待确认的重启策略恢复；应用退出时显式终止 Utility Process 及其 MCP/Shell 子进程。Renderer 重载后重新握手并获取任务快照，不能复用失效端口。Utility Process 只接收显式构造的最小环境变量，不继承不必要的 Main 进程环境。
 
 安全边界原则：Renderer 不直接获得 Node.js、Shell、文件系统、网易云凭据或任意网络访问能力；所有特权操作通过最小化桥接接口进入主进程或独立本地服务。
@@ -1136,6 +1141,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 - D-808（已确认）：首版播放队列不做撤销；所有队列变更即时生效，小 N 只提示结果，网易云歌单写操作继续使用独立工具和权限流程。
 - D-809（已确认）：随机播放直接洗牌唯一的可见队列并从首项开始；随机状态允许排序，后续播放始终按可见列表执行，不建立隐藏播放序列。
 - D-810（已确认）：关闭窗口默认映射为最小化并继续后台播放；设置中可切换为退出应用，不提供第三种关闭策略。
+- D-811（已确认）：Agent 播放工具使用 IPC/MessagePort 命令网关和执行回执；根层常驻处理器调用唯一播放协调器。不使用内部 SSE、不依赖 AgentChat 生命周期、不让 Agent 直接调用 Vue/Pinia 方法。
 
 ### P1：安全与审批
 
@@ -1230,6 +1236,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 | 2026-08-04 | D-406 | 语音聆听期间使用约 20% 瞬时降音，松手后在无新播放意图时恢复。 | 语音浮窗、Audio Focus、音量状态、并发播放控制 |
 | 2026-08-04 | D-810 | 关闭窗口默认最小化并继续播放；设置可改为退出应用。 | 窗口生命周期、后台播放、设置页、进程退出 |
 | 2026-08-04 | D-403 | 首版语音能力只保留 ASR，不实现 TTS 播报。 | 语音范围、安装体积、音频焦点、Agent 反馈 |
+| 2026-08-04 | D-811 | Agent 通过 IPC/MessagePort 向 Renderer 常驻播放命令处理器发送命令并等待真实回执；不使用 SSE 或 AgentChat 组件调用播放函数。 | Agent Tool、IPC、Vue/Pinia、播放引擎、状态一致性 |
 
 ## 13. 暂定里程碑
 

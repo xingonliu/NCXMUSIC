@@ -37,6 +37,24 @@ UI / 快捷键 / 小 N / 系统媒体键
 - `PlaybackCoordinator` 编排“选择队列项 → 解析可播放源 → 装载 → 按意图播放”，并持有取消句柄。
 - Renderer 已确定使用 Vue SPA。唯一 `AudioHost` 常驻 AppShell 根层并位于 `RouterView` 之外；领域层仍保持纯 TypeScript，通过 Vue 适配层订阅。
 
+### 2.1 跨进程播放命令
+
+```text
+Agent Tool → Policy Middleware → PlayerCommandGateway（Utility）
+                                      │ IPC / MessagePort
+                                      ▼
+PlayerCommandBridge（Renderer 根层常驻）→ PlaybackCoordinator
+                                      │
+                                      └→ PlayerCommandResult + Snapshot → Agent Tool
+```
+
+- Agent 不能调用 Vue 组件或 Pinia 内存函数。它只在权限中间件放行后发送领域命令。
+- 命令信封至少包含 `protocolVersion`、`commandId`、`issuedBy`、`expectedRevision`、`type` 和经 Schema 验证的 `payload`。
+- 命令结果以 `commandId` 关联，区分 `succeeded`、`rejected`、`stale`、`failed`、`unavailable` 和 `timeout`，并携带最新 snapshot 或裁剪后错误。
+- Tool 必须等到命令回执或超时才返回模型，不得将“已发送”当作播放成功。Renderer 重载、MessagePort 中断或 AudioHost 不可用时，所有未决命令显式失败并在重新握手后才接收新命令。
+- `PlayerCommandBridge` 不放在 `AgentChat.vue`、路由页面或侧边栏中。Pinia 只订阅快照和分发命令，不通过 DOM ID 持有 `<audio>`、不手工猜测播放成功状态。
+- Vue 页面调用类型化 Music Gateway，通过 Preload 进入 Utility Process 中的 Music Service；Agent Tool 在 Utility Process 内复用同一 Service。Renderer 不直连 NeteaseCloudMusicApiEnhanced。
+
 ## 3. PlaybackEngine
 
 ### 3.1 状态模型
