@@ -23,15 +23,98 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.inner_version.none.min.001",
+        "auth": "AUTH_NONE",
+        "code": 200,
+        "durationMs": 0,
+        "error": null
+      },
+      {
+        "caseId": "ncm.inner_version.none.min.002",
+        "auth": "AUTH_NONE",
+        "code": 200,
+        "durationMs": 0,
+        "error": null
+      },
+      {
+        "caseId": "ncm.inner_version.none.min.003",
+        "auth": "AUTH_NONE",
+        "code": 200,
+        "durationMs": 0,
+        "error": null
+      },
+      {
+        "caseId": "ncm.inner_version.none.neg.004",
+        "auth": "AUTH_NONE",
+        "code": 200,
+        "durationMs": 0,
+        "error": null
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presenceCount": 4,
+      "sampleCount": 4,
+      "nullCount": 0,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": "200",
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    },
+    {
+      "jsonPath": "data.version",
+      "rawType": "string",
+      "presenceCount": 4,
+      "sampleCount": 4,
+      "nullCount": 0,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": "4.39.0",
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
+  "terminalStatus": "passed",
   "blocker": null,
-  "evidence": []
+  "evidence": [
+    {
+      "caseId": "ncm.inner_version.none.min.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.inner_version.ncm.inner_version.none.min.001.raw.json"
+    },
+    {
+      "caseId": "ncm.inner_version.none.min.002",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.inner_version.ncm.inner_version.none.min.002.raw.json"
+    },
+    {
+      "caseId": "ncm.inner_version.none.min.003",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.inner_version.ncm.inner_version.none.min.003.raw.json"
+    },
+    {
+      "caseId": "ncm.inner_version.none.neg.004",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.inner_version.ncm.inner_version.none.neg.004.raw.json"
+    }
+  ]
 }

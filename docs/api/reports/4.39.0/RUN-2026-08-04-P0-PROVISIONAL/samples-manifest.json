@@ -1,0 +1,197 @@
+{
+  "runId": "RUN-2026-08-04-P0-PROVISIONAL",
+  "samples": [
+    {
+      "caseId": "ncm.inner_version.none.min.001",
+      "apiAuditId": "ncm.inner_version",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.inner_version.ncm.inner_version.none.min.001.raw.json",
+      "rawSha256": "7f8da05d3060d6d9e49961474dd3b8e6456346d95209c5f413c3aacc05c28ebb",
+      "redactedFile": "samples-redacted\\ncm.inner_version.ncm.inner_version.none.min.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.inner_version.none.min.002",
+      "apiAuditId": "ncm.inner_version",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.inner_version.ncm.inner_version.none.min.002.raw.json",
+      "rawSha256": "638a15ff0c4b960fe54b023a7d32a0a377ef0eadcf0c12f5912d4575846b0ca7",
+      "redactedFile": "samples-redacted\\ncm.inner_version.ncm.inner_version.none.min.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.inner_version.none.min.003",
+      "apiAuditId": "ncm.inner_version",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.inner_version.ncm.inner_version.none.min.003.raw.json",
+      "rawSha256": "9479dc66afe093de3f00715a72f36924eaf97dadcb2330a43b832bfe33a29d17",
+      "redactedFile": "samples-redacted\\ncm.inner_version.ncm.inner_version.none.min.003.redacted.json"
+    },
+    {
+      "caseId": "ncm.inner_version.none.neg.004",
+      "apiAuditId": "ncm.inner_version",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.inner_version.ncm.inner_version.none.neg.004.raw.json",
+      "rawSha256": "e0195dc85477c5e020cef04a7c5b5b6d904ba2e5e82da6bb660574c3532a5be8",
+      "redactedFile": "samples-redacted\\ncm.inner_version.ncm.inner_version.none.neg.004.redacted.json"
+    },
+    {
+      "caseId": "ncm.login_qr_key.none.min.001",
+      "apiAuditId": "ncm.login_qr_key",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.login_qr_key.ncm.login_qr_key.none.min.001.raw.json",
+      "rawSha256": "2b57fe87101c975dcbd3fc999bb59eb56e6639046d5d66f42c77389a64feb47d",
+      "redactedFile": "samples-redacted\\ncm.login_qr_key.ncm.login_qr_key.none.min.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.login_qr_key.none.min.002",
+      "apiAuditId": "ncm.login_qr_key",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.login_qr_key.ncm.login_qr_key.none.min.002.raw.json",
+      "rawSha256": "4803e530b91a66936d5937fb670ed8c23376685534a984fb61e17c0470bcb805",
+      "redactedFile": "samples-redacted\\ncm.login_qr_key.ncm.login_qr_key.none.min.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.login_status.inv.expired.001",
+      "apiAuditId": "ncm.login_status",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.login_status.ncm.login_status.inv.expired.001.raw.json",
+      "rawSha256": "83e8afc0aa1bf1c8822a4bc95902fb491f4704d1d5f94f1ee23af31ab134680b",
+      "redactedFile": "samples-redacted\\ncm.login_status.ncm.login_status.inv.expired.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.login_status.inv.truncated.001",
+      "apiAuditId": "ncm.login_status",
+      "auth": "AUTH_INVALID_TRUNCATED",
+      "rawFile": "raw\\ncm.login_status.ncm.login_status.inv.truncated.001.raw.json",
+      "rawSha256": "b8ece7cb125ada412badd4c59d8fc3b86a30344e06f3ea4b6ed2e077318f3384",
+      "redactedFile": "samples-redacted\\ncm.login_status.ncm.login_status.inv.truncated.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.login_status.none.min.001",
+      "apiAuditId": "ncm.login_status",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.login_status.ncm.login_status.none.min.001.raw.json",
+      "rawSha256": "a70ad99b0c9b26f2fd3220b78c58f8bd9186320a40cede47c0207b7af417855d",
+      "redactedFile": "samples-redacted\\ncm.login_status.ncm.login_status.none.min.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.login_status.none.min.002",
+      "apiAuditId": "ncm.login_status",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.login_status.ncm.login_status.none.min.002.raw.json",
+      "rawSha256": "0ad33719af27e1fe03c31aba3efba24f36f139b072753ae3333d66b3a1e3507f",
+      "redactedFile": "samples-redacted\\ncm.login_status.ncm.login_status.none.min.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.login_status.none.min.003",
+      "apiAuditId": "ncm.login_status",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.login_status.ncm.login_status.none.min.003.raw.json",
+      "rawSha256": "e9681ae299018f309d0651a41fddd9f9004abde85dfa4b47a332cd7a2401a219",
+      "redactedFile": "samples-redacted\\ncm.login_status.ncm.login_status.none.min.003.redacted.json"
+    },
+    {
+      "caseId": "ncm.logout.inv.truncated.001",
+      "apiAuditId": "ncm.logout",
+      "auth": "AUTH_INVALID_TRUNCATED",
+      "rawFile": "raw\\ncm.logout.ncm.logout.inv.truncated.001.raw.json",
+      "rawSha256": "c30a1797329c4d6dc9f08774cf3ade2b4e7294e5b179f7cc77746113d742a6e2",
+      "redactedFile": "samples-redacted\\ncm.logout.ncm.logout.inv.truncated.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.logout.none.neg.001",
+      "apiAuditId": "ncm.logout",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.logout.ncm.logout.none.neg.001.raw.json",
+      "rawSha256": "c19bcbd6c82e90263d5338aa2d3b854130006ac79d99e2909f8e9c6bcb58d4a6",
+      "redactedFile": "samples-redacted\\ncm.logout.ncm.logout.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.register_anonimous.none.min.001",
+      "apiAuditId": "ncm.register_anonimous",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.register_anonimous.ncm.register_anonimous.none.min.001.raw.json",
+      "rawSha256": "80f7234835e13a2939d2b8b1a7e95087a0accb01d5ac89addf38887f0f220d86",
+      "redactedFile": "samples-redacted\\ncm.register_anonimous.ncm.register_anonimous.none.min.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.register_anonimous.none.repeat.002",
+      "apiAuditId": "ncm.register_anonimous",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.register_anonimous.ncm.register_anonimous.none.repeat.002.raw.json",
+      "rawSha256": "3e0b0863a841b4b2b24bf25835658fe29c2138308ad8bd58b7db7c7cf026ca1b",
+      "redactedFile": "samples-redacted\\ncm.register_anonimous.ncm.register_anonimous.none.repeat.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.register_xeapikey.none.min.001",
+      "apiAuditId": "ncm.register_xeapikey",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.001.raw.json",
+      "rawSha256": "330a5379029dc70a2d2eaddeb69e4105d2c334cf83afccafdaf22db7c6e4d9f0",
+      "redactedFile": "samples-redacted\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.register_xeapikey.none.min.002",
+      "apiAuditId": "ncm.register_xeapikey",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.002.raw.json",
+      "rawSha256": "adccea91abe0ab09ef76384dcfcacc916f55df9f28f5e82ff2f4aaf751fee9ff",
+      "redactedFile": "samples-redacted\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.register_xeapikey.none.min.003",
+      "apiAuditId": "ncm.register_xeapikey",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.raw.json",
+      "rawSha256": "760c37fbfeb49fd4aa91cac4e13e1b1e494fa950a6b0bf74cdb164c8556d85c3",
+      "redactedFile": "samples-redacted\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_account.inv.expired.001",
+      "apiAuditId": "ncm.user_account",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "raw\\ncm.user_account.ncm.user_account.inv.expired.001.raw.json",
+      "rawSha256": "e651633f0563f88217f2594c4d99d83d612b4fc078ed43273f7ad4290ad5a1ab",
+      "redactedFile": "samples-redacted\\ncm.user_account.ncm.user_account.inv.expired.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_account.inv.truncated.001",
+      "apiAuditId": "ncm.user_account",
+      "auth": "AUTH_INVALID_TRUNCATED",
+      "rawFile": "raw\\ncm.user_account.ncm.user_account.inv.truncated.001.raw.json",
+      "rawSha256": "45b0148abf8ac35e69c938bf3493338307e59ea6462b0d35d5d6454b86d71215",
+      "redactedFile": "samples-redacted\\ncm.user_account.ncm.user_account.inv.truncated.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_account.none.min.001",
+      "apiAuditId": "ncm.user_account",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.user_account.ncm.user_account.none.min.001.raw.json",
+      "rawSha256": "43609da6734433168d19515f0026e774f63bba2f2a66a0298979bade5a5d2a20",
+      "redactedFile": "samples-redacted\\ncm.user_account.ncm.user_account.none.min.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_account.none.min.002",
+      "apiAuditId": "ncm.user_account",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.user_account.ncm.user_account.none.min.002.raw.json",
+      "rawSha256": "21b1e1f9556fbbe359810b5cd6b5ee48469733832dd33a832ef5f0245f9a02d1",
+      "redactedFile": "samples-redacted\\ncm.user_account.ncm.user_account.none.min.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_account.none.min.003",
+      "apiAuditId": "ncm.user_account",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.user_account.ncm.user_account.none.min.003.raw.json",
+      "rawSha256": "d8e1813291f7e3f80976db3c487cee323b41ac670e5105aa987eb182989ef6f3",
+      "redactedFile": "samples-redacted\\ncm.user_account.ncm.user_account.none.min.003.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_detail.none.neg.missing-uid.001",
+      "apiAuditId": "ncm.user_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "raw\\ncm.user_detail.ncm.user_detail.none.neg.missing-uid.001.raw.json",
+      "rawSha256": "d5f4ed3fbe5bd853dbdb69cfb64dd67c6e5226f88e717820378bd8c3bd3046e9",
+      "redactedFile": "samples-redacted\\ncm.user_detail.ncm.user_detail.none.neg.missing-uid.001.redacted.json"
+    }
+  ]
+}

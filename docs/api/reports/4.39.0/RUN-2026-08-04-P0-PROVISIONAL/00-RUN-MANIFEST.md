@@ -125,3 +125,38 @@ node scripts/api-audit/runners/self-check.js --reportDir ...（零遗漏与脱�
 | --- | --- | --- |
 | canonical | 计划默认 | 关闭 unblock/代理，观察原始上游合同 |
 | enhanced | 登记缺口 | 无解锁凭据与账号，Phase 4 音质矩阵时再评估 |
+## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：23（并发 1，抖动 350–800ms）
+- guest-01 游客会话：**未建立（register_anonimous 被风控，见 B-005）**
+- xeapi 密钥引导：已建立（bootstrap-fallback-sk-static，见 C-001/XEAPI-001）
+- 关键契约事实：无效 Cookie 静默回退未登录（B-006）；user_detail 缺 uid 返回 code 400
+## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：23（并发 1，抖动 350–800ms）
+- guest-01 游客会话：**未建立（register_anonimous 被风控，见 B-005）**
+- xeapi 密钥引导：已建立（bootstrap-fallback-sk-static，见 C-001/XEAPI-001）
+- 关键契约事实：无效 Cookie 静默回退未登录（B-006）；user_detail 缺 uid 返回 code 400
+## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：0（并发 1，抖动 350–800ms）
+- guest-01 游客会话：**未建立（register_anonimous 被风控，见 B-005）**
+- xeapi 密钥引导：已建立（bootstrap-fallback-sk-static，见 C-001/XEAPI-001）
+- 关键契约事实：无效 Cookie 静默回退未登录（B-006）；user_detail 缺 uid 返回 code 400
+## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：15（并发 1，抖动 350–800ms）
+- guest-01 游客会话：**未建立（register_anonimous 被风控，见 B-005）**
+- xeapi 密钥引导：已建立（bootstrap-fallback-sk-static，见 C-001/XEAPI-001）
+- 关键契约事实：无效 Cookie 静默回退未登录（B-006）；user_detail 缺 uid 返回 code 400
+## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：17（并发 1，抖动 350–800ms）
+- guest-01 游客会话：**未建立（register_anonimous 被风控，见 B-005）**
+- xeapi 密钥引导：已建立（bootstrap-fallback-sk-static，见 C-001/XEAPI-001）
+- 关键契约事实：无效 Cookie 静默回退未登录（B-006）；user_detail 缺 uid 返回 code 400

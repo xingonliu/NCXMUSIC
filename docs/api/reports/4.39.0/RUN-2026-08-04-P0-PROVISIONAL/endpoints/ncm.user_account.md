@@ -88,3 +88,25 @@
 - 是否建议进入 Capability Catalog：待定（Phase 15）
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
+
+
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_ANON/AUTH_USER/VIP 缺失；无 uid 生产路径（需登录账号））
+- 说明：NONE×3 结构稳定；INVALID×2 与 NONE 结构完全一致
+
+| caseId | auth | status | code | durationMs | note |
+| --- | --- | --- | --- | --- | --- |
+| ncm.user_account.inv.expired.001 | AUTH_INVALID_EXPIRED | err | 200 | 63 |  |
+| ncm.user_account.inv.truncated.001 | AUTH_INVALID_TRUNCATED | err | 200 | 62 |  |
+| ncm.user_account.none.min.001 | AUTH_NONE | err | 200 | 61 |  |
+| ncm.user_account.none.min.002 | AUTH_NONE | err | 200 | 60 |  |
+| ncm.user_account.none.min.003 | AUTH_NONE | err | 200 | 59 |  |
+
+### 13.1 运行字段表（Phase 1）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `account` | null | 5 | 5 | 0 | AUTH_INVALID_EXPIRED,AUTH_INVALID_TRUNCATED,AUTH_NONE |  |
+| `code` | number | 5 | 0 | 0 | AUTH_INVALID_EXPIRED,AUTH_INVALID_TRUNCATED,AUTH_NONE | `200` |
+| `profile` | null | 5 | 5 | 0 | AUTH_INVALID_EXPIRED,AUTH_INVALID_TRUNCATED,AUTH_NONE |  |

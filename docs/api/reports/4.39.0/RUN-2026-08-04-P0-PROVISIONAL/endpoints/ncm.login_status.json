@@ -26,15 +26,132 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 5,
+    "cases": [
+      {
+        "caseId": "ncm.login_status.inv.expired.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "code": null,
+        "durationMs": 60,
+        "error": null
+      },
+      {
+        "caseId": "ncm.login_status.inv.truncated.001",
+        "auth": "AUTH_INVALID_TRUNCATED",
+        "code": null,
+        "durationMs": 66,
+        "error": null
+      },
+      {
+        "caseId": "ncm.login_status.none.min.001",
+        "auth": "AUTH_NONE",
+        "code": null,
+        "durationMs": 69,
+        "error": null
+      },
+      {
+        "caseId": "ncm.login_status.none.min.002",
+        "auth": "AUTH_NONE",
+        "code": null,
+        "durationMs": 64,
+        "error": null
+      },
+      {
+        "caseId": "ncm.login_status.none.min.003",
+        "auth": "AUTH_NONE",
+        "code": null,
+        "durationMs": 58,
+        "error": null
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "data.account",
+      "rawType": "null",
+      "presenceCount": 5,
+      "sampleCount": 5,
+      "nullCount": 5,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_INVALID_TRUNCATED",
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": null,
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    },
+    {
+      "jsonPath": "data.code",
+      "rawType": "number",
+      "presenceCount": 5,
+      "sampleCount": 5,
+      "nullCount": 0,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_INVALID_TRUNCATED",
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": "200",
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    },
+    {
+      "jsonPath": "data.profile",
+      "rawType": "null",
+      "presenceCount": 5,
+      "sampleCount": 5,
+      "nullCount": 5,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_INVALID_TRUNCATED",
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": null,
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_ANON/AUTH_USER/VIP 缺失；分层稳定性未满足（无参数接口无法产生每层 3 个有差异样本）",
+  "evidence": [
+    {
+      "caseId": "ncm.login_status.inv.expired.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.login_status.ncm.login_status.inv.expired.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_status.inv.truncated.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.login_status.ncm.login_status.inv.truncated.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_status.none.min.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.login_status.ncm.login_status.none.min.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_status.none.min.002",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.login_status.ncm.login_status.none.min.002.raw.json"
+    },
+    {
+      "caseId": "ncm.login_status.none.min.003",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.login_status.ncm.login_status.none.min.003.raw.json"
+    }
+  ]
 }

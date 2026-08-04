@@ -26,15 +26,132 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 5,
+    "cases": [
+      {
+        "caseId": "ncm.user_account.inv.expired.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "code": 200,
+        "durationMs": 63,
+        "error": null
+      },
+      {
+        "caseId": "ncm.user_account.inv.truncated.001",
+        "auth": "AUTH_INVALID_TRUNCATED",
+        "code": 200,
+        "durationMs": 62,
+        "error": null
+      },
+      {
+        "caseId": "ncm.user_account.none.min.001",
+        "auth": "AUTH_NONE",
+        "code": 200,
+        "durationMs": 61,
+        "error": null
+      },
+      {
+        "caseId": "ncm.user_account.none.min.002",
+        "auth": "AUTH_NONE",
+        "code": 200,
+        "durationMs": 60,
+        "error": null
+      },
+      {
+        "caseId": "ncm.user_account.none.min.003",
+        "auth": "AUTH_NONE",
+        "code": 200,
+        "durationMs": 59,
+        "error": null
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "account",
+      "rawType": "null",
+      "presenceCount": 5,
+      "sampleCount": 5,
+      "nullCount": 5,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_INVALID_TRUNCATED",
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": null,
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presenceCount": 5,
+      "sampleCount": 5,
+      "nullCount": 0,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_INVALID_TRUNCATED",
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": "200",
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    },
+    {
+      "jsonPath": "profile",
+      "rawType": "null",
+      "presenceCount": 5,
+      "sampleCount": 5,
+      "nullCount": 5,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_INVALID_TRUNCATED",
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": null,
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_ANON/AUTH_USER/VIP 缺失；无 uid 生产路径（需登录账号）",
+  "evidence": [
+    {
+      "caseId": "ncm.user_account.inv.expired.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.user_account.ncm.user_account.inv.expired.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_account.inv.truncated.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.user_account.ncm.user_account.inv.truncated.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_account.none.min.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.user_account.ncm.user_account.none.min.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_account.none.min.002",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.user_account.ncm.user_account.none.min.002.raw.json"
+    },
+    {
+      "caseId": "ncm.user_account.none.min.003",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.user_account.ncm.user_account.none.min.003.raw.json"
+    }
+  ]
 }

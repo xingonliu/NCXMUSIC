@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.login_status.inv.expired.001",
+    "apiAuditId": "ncm.login_status",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-04T10:43:50.542Z",
+    "endedAt": "2026-08-04T10:43:50.602Z",
+    "durationMs": 60,
+    "attempts": 1
+  },
+  "body": {
+    "data": {
+      "code": 200,
+      "account": null,
+      "profile": null
+    }
+  },
+  "error": null
+}

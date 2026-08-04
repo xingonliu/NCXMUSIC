@@ -41,3 +41,99 @@ runId：`RUN-2026-08-04-P0-PROVISIONAL`
 | share_resource | `6e2f55982fba470e87fe7c456634ff6be8bb3ff4649c8c3995362e4319539aec` | `c142d01842ae0a96d73783f35155a1d59b457c43240cb785824d06c8c06e9241` | 见该模块 endpoint 报告 §2 |
 | user_event | `5e93c7ed1e3cc58d9baa335712851a155c29bf2309f35b241b1308d386043824` | `3a7f4070afb17d804dd4463a0787c88544f1eb4512c2a5675f47045d2ca7fc8b` | 见该模块 endpoint 报告 §2 |
 | voice_upload | `b279f9d7de8d1da87c2f60b4e4bab0691d23300370b7805928a498739f9af5b3` | `dcec5457bfba29439b6adcc0b89f02e2c6da9127f41d3247dd078e6cdf7e17d9` | 见该模块 endpoint 报告 §2 |
+
+## 4. Phase 1 运行发现（RUN-2026-08-04-P0-PROVISIONAL）
+
+### C-001 / XEAPI-001 register_xeapikey 模块契约与服务器冲突（failed_stable）
+
+- 源码/类型预期：解密负载必须含 `sk`（register_xeapikey.js: `if (!publicKey.sk) throw`），xeapiEncryptS 同时使用 `publicKey` 与 `sk`。
+- 运行事实：服务器解密负载为 `{publicKey, version, nextUpdateTime}`，**无 sk 字段**。模块 100% 抛错（≥3 次可复现）。
+- 引导回退（已实测可用）：`sk` 使用 util/crypto.js 静态常量 `xeapiSignKey` 写入 `<tmp>/xeapi_public_key` 后，register_anonimous 成功返回 code 200。
+- 语义置信度：inferred（xeapiSignKey 是唯一匹配的静态密钥；未由上游文档证明）。
+- 处理：运行器内置 ensureXeapiKey 回退；依赖升级后强制重跑本冲突全部 case。
+
+### B-005 register_anonimous 被风控（rate_limited）
+
+- 成功路径已验证 1 次（code 200，返回 userId/createTime/cookie），随后同 IP 多次注册触发风控：连续 code 400（`{"code":400}` 无消息），退避 45s 后仍失败。
+- 影响：AUTH_ANON 层（guest-01）本轮未取得，login_status/user_account 的 ANON 用例未执行（已从样本中删除，不留伪证）。
+- 恢复：冷却后（建议 ≥1 小时）重试 register_anonimous；成功即写入 guest-01 会话，补跑 ANON 用例。
+
+### B-006 无效 Cookie 行为确认（契约事实）
+
+- login_status / user_account：AUTH_INVALID（截断/过期 MUSIC_U）与 AUTH_NONE 响应完全一致，**无明确失效错误**；Adapter 不能依赖 code 区分，需自行校验 account/profile 是否为 null。
+## 4. Phase 1 运行发现（RUN-2026-08-04-P0-PROVISIONAL）
+
+### C-001 / XEAPI-001 register_xeapikey 模块契约与服务器冲突（failed_stable）
+
+- 源码/类型预期：解密负载必须含 `sk`（register_xeapikey.js: `if (!publicKey.sk) throw`），xeapiEncryptS 同时使用 `publicKey` 与 `sk`。
+- 运行事实：服务器解密负载为 `{publicKey, version, nextUpdateTime}`，**无 sk 字段**。模块 100% 抛错（≥3 次可复现）。
+- 引导回退（已实测可用）：`sk` 使用 util/crypto.js 静态常量 `xeapiSignKey` 写入 `<tmp>/xeapi_public_key` 后，register_anonimous 成功返回 code 200。
+- 语义置信度：inferred（xeapiSignKey 是唯一匹配的静态密钥；未由上游文档证明）。
+- 处理：运行器内置 ensureXeapiKey 回退；依赖升级后强制重跑本冲突全部 case。
+
+### B-005 register_anonimous 被风控（rate_limited）
+
+- 成功路径已验证 1 次（code 200，返回 userId/createTime/cookie），随后同 IP 多次注册触发风控：连续 code 400（`{"code":400}` 无消息），退避 45s 后仍失败。
+- 影响：AUTH_ANON 层（guest-01）本轮未取得，login_status/user_account 的 ANON 用例未执行（已从样本中删除，不留伪证）。
+- 恢复：冷却后（建议 ≥1 小时）重试 register_anonimous；成功即写入 guest-01 会话，补跑 ANON 用例。
+
+### B-006 无效 Cookie 行为确认（契约事实）
+
+- login_status / user_account：AUTH_INVALID（截断/过期 MUSIC_U）与 AUTH_NONE 响应完全一致，**无明确失效错误**；Adapter 不能依赖 code 区分，需自行校验 account/profile 是否为 null。
+## 4. Phase 1 运行发现（RUN-2026-08-04-P0-PROVISIONAL）
+
+### C-001 / XEAPI-001 register_xeapikey 模块契约与服务器冲突（failed_stable）
+
+- 源码/类型预期：解密负载必须含 `sk`（register_xeapikey.js: `if (!publicKey.sk) throw`），xeapiEncryptS 同时使用 `publicKey` 与 `sk`。
+- 运行事实：服务器解密负载为 `{publicKey, version, nextUpdateTime}`，**无 sk 字段**。模块 100% 抛错（≥3 次可复现）。
+- 引导回退（已实测可用）：`sk` 使用 util/crypto.js 静态常量 `xeapiSignKey` 写入 `<tmp>/xeapi_public_key` 后，register_anonimous 成功返回 code 200。
+- 语义置信度：inferred（xeapiSignKey 是唯一匹配的静态密钥；未由上游文档证明）。
+- 处理：运行器内置 ensureXeapiKey 回退；依赖升级后强制重跑本冲突全部 case。
+
+### B-005 register_anonimous 被风控（rate_limited）
+
+- 成功路径已验证 1 次（code 200，返回 userId/createTime/cookie），随后同 IP 多次注册触发风控：连续 code 400（`{"code":400}` 无消息），退避 45s 后仍失败。
+- 影响：AUTH_ANON 层（guest-01）本轮未取得，login_status/user_account 的 ANON 用例未执行（已从样本中删除，不留伪证）。
+- 恢复：冷却后（建议 ≥1 小时）重试 register_anonimous；成功即写入 guest-01 会话，补跑 ANON 用例。
+
+### B-006 无效 Cookie 行为确认（契约事实）
+
+- login_status / user_account：AUTH_INVALID（截断/过期 MUSIC_U）与 AUTH_NONE 响应完全一致，**无明确失效错误**；Adapter 不能依赖 code 区分，需自行校验 account/profile 是否为 null。
+## 4. Phase 1 运行发现（RUN-2026-08-04-P0-PROVISIONAL）
+
+### C-001 / XEAPI-001 register_xeapikey 模块契约与服务器冲突（failed_stable）
+
+- 源码/类型预期：解密负载必须含 `sk`（register_xeapikey.js: `if (!publicKey.sk) throw`），xeapiEncryptS 同时使用 `publicKey` 与 `sk`。
+- 运行事实：服务器解密负载为 `{publicKey, version, nextUpdateTime}`，**无 sk 字段**。模块 100% 抛错（≥3 次可复现）。
+- 引导回退（已实测可用）：`sk` 使用 util/crypto.js 静态常量 `xeapiSignKey` 写入 `<tmp>/xeapi_public_key` 后，register_anonimous 成功返回 code 200。
+- 语义置信度：inferred（xeapiSignKey 是唯一匹配的静态密钥；未由上游文档证明）。
+- 处理：运行器内置 ensureXeapiKey 回退；依赖升级后强制重跑本冲突全部 case。
+
+### B-005 register_anonimous 被风控（rate_limited）
+
+- 成功路径已验证 1 次（code 200，返回 userId/createTime/cookie），随后同 IP 多次注册触发风控：连续 code 400（`{"code":400}` 无消息），退避 45s 后仍失败。
+- 影响：AUTH_ANON 层（guest-01）本轮未取得，login_status/user_account 的 ANON 用例未执行（已从样本中删除，不留伪证）。
+- 恢复：冷却后（建议 ≥1 小时）重试 register_anonimous；成功即写入 guest-01 会话，补跑 ANON 用例。
+
+### B-006 无效 Cookie 行为确认（契约事实）
+
+- login_status / user_account：AUTH_INVALID（截断/过期 MUSIC_U）与 AUTH_NONE 响应完全一致，**无明确失效错误**；Adapter 不能依赖 code 区分，需自行校验 account/profile 是否为 null。
+## 4. Phase 1 运行发现（RUN-2026-08-04-P0-PROVISIONAL）
+
+### C-001 / XEAPI-001 register_xeapikey 模块契约与服务器冲突（failed_stable）
+
+- 源码/类型预期：解密负载必须含 `sk`（register_xeapikey.js: `if (!publicKey.sk) throw`），xeapiEncryptS 同时使用 `publicKey` 与 `sk`。
+- 运行事实：服务器解密负载为 `{publicKey, version, nextUpdateTime}`，**无 sk 字段**。模块 100% 抛错（≥3 次可复现）。
+- 引导回退（已实测可用）：`sk` 使用 util/crypto.js 静态常量 `xeapiSignKey` 写入 `<tmp>/xeapi_public_key` 后，register_anonimous 成功返回 code 200。
+- 语义置信度：inferred（xeapiSignKey 是唯一匹配的静态密钥；未由上游文档证明）。
+- 处理：运行器内置 ensureXeapiKey 回退；依赖升级后强制重跑本冲突全部 case。
+
+### B-005 register_anonimous 被风控（rate_limited）
+
+- 成功路径已验证 1 次（code 200，返回 userId/createTime/cookie），随后同 IP 多次注册触发风控：连续 code 400（`{"code":400}` 无消息），退避 45s 后仍失败。
+- 影响：AUTH_ANON 层（guest-01）本轮未取得，login_status/user_account 的 ANON 用例未执行（已从样本中删除，不留伪证）。
+- 恢复：冷却后（建议 ≥1 小时）重试 register_anonimous；成功即写入 guest-01 会话，补跑 ANON 用例。
+
+### B-006 无效 Cookie 行为确认（契约事实）
+
+- login_status / user_account：AUTH_INVALID（截断/过期 MUSIC_U）与 AUTH_NONE 响应完全一致，**无明确失效错误**；Adapter 不能依赖 code 区分，需自行校验 account/profile 是否为 null。

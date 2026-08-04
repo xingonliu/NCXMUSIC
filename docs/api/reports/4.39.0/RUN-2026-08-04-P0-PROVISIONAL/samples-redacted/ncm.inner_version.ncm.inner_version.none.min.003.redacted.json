@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "caseId": "ncm.inner_version.none.min.003",
+    "apiAuditId": "ncm.inner_version",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-04T10:43:43.466Z",
+    "endedAt": "2026-08-04T10:43:43.466Z",
+    "durationMs": 0,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "version": "4.39.0"
+    }
+  },
+  "error": null
+}

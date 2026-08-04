@@ -88,3 +88,20 @@
 - 是否建议进入 Capability Catalog：待定（Phase 15）
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
+
+
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 缺失；仅未登录/无效 Cookie 负向）
+- 说明：未登录与无效 Cookie 均返回 code 200（无会话也成功）
+
+| caseId | auth | status | code | durationMs | note |
+| --- | --- | --- | --- | --- | --- |
+| ncm.logout.inv.truncated.001 | AUTH_INVALID_TRUNCATED | err | 200 | 81 |  |
+| ncm.logout.none.neg.001 | AUTH_NONE | err | 200 | 81 |  |
+
+### 13.1 运行字段表（Phase 1）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 2 | 0 | 0 | AUTH_INVALID_TRUNCATED,AUTH_NONE | `200` |

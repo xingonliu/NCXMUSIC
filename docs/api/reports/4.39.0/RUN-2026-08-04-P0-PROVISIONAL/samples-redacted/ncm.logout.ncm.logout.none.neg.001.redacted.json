@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "caseId": "ncm.logout.none.neg.001",
+    "apiAuditId": "ncm.logout",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-04T10:43:56.890Z",
+    "endedAt": "2026-08-04T10:43:56.971Z",
+    "durationMs": 81,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200
+  },
+  "error": null
+}

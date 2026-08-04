@@ -33,15 +33,64 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 3,
+    "cases": [
+      {
+        "caseId": "ncm.register_xeapikey.none.min.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": null,
+        "error": {
+          "class": "other",
+          "message": "xeapi public key response missing sk"
+        }
+      },
+      {
+        "caseId": "ncm.register_xeapikey.none.min.002",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": null,
+        "error": {
+          "class": "other",
+          "message": "xeapi public key response missing sk"
+        }
+      },
+      {
+        "caseId": "ncm.register_xeapikey.none.min.003",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": null,
+        "error": {
+          "class": "other",
+          "message": "xeapi public key response missing sk"
+        }
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
-  "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "conflictIds": [
+    "XEAPI-001"
+  ],
+  "terminalStatus": "failed_stable",
+  "blocker": "上游模块契约与服务器响应冲突：模块要求解密负载含 sk，服务器返回 publicKey/version/nextUpdateTime；静态常量 xeapiSignKey 作为 sk 的引导回退已实测可用（conflictId XEAPI-001）",
+  "evidence": [
+    {
+      "caseId": "ncm.register_xeapikey.none.min.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.register_xeapikey.ncm.register_xeapikey.none.min.001.raw.json"
+    },
+    {
+      "caseId": "ncm.register_xeapikey.none.min.002",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.register_xeapikey.ncm.register_xeapikey.none.min.002.raw.json"
+    },
+    {
+      "caseId": "ncm.register_xeapikey.none.min.003",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.raw.json"
+    }
+  ]
 }

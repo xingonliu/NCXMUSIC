@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.login_status.inv.truncated.001",
+    "apiAuditId": "ncm.login_status",
+    "auth": "AUTH_INVALID_TRUNCATED",
+    "params": {},
+    "startedAt": "2026-08-04T10:43:49.831Z",
+    "endedAt": "2026-08-04T10:43:49.897Z",
+    "durationMs": 66,
+    "attempts": 1
+  },
+  "body": {
+    "data": {
+      "code": 200,
+      "account": null,
+      "profile": null
+    }
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "caseId": "ncm.user_detail.none.neg.missing-uid.001",
+    "apiAuditId": "ncm.user_detail",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-04T10:43:56.346Z",
+    "endedAt": "2026-08-04T10:43:56.408Z",
+    "durationMs": 62,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "参数错误"
+  },
+  "error": null
+}

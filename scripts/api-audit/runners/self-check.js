@@ -45,12 +45,18 @@ for (const id of repIds) {
 
 const phase0 = args.phase === '0'
 let withStatus = 0
+let tested = 0
 for (const r of inventory) {
-  if (r.terminalStatus) withStatus++
+  if (r.executedCaseCount > 0) {
+    tested++
+    if (r.terminalStatus) withStatus++
+    else assert(false, 'runtime-tested API missing terminalStatus: ' + r.apiAuditId)
+  }
   if (r.plannedCaseCount < 1) assert(false, 'plannedCaseCount < 1: ' + r.apiAuditId)
 }
 if (!phase0) {
-  assert(withStatus === inventory.length, 'terminal statuses missing for ' + (inventory.length - withStatus) + ' APIs')
+  assert(tested === withStatus, 'terminal statuses missing for tested APIs: ' + (tested - withStatus))
+  console.log('phase ' + args.phase + ': runtime-tested=' + tested + ' all-tested-have-status=' + (tested === withStatus) + ' (unassigned=' + (inventory.length - withStatus) + ' pending runtime phases)')
 } else {
   console.log('phase 0: terminalStatus assignment deferred to runtime phases (' + withStatus + '/' + inventory.length + ' assigned)')
 }

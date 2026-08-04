@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "caseId": "ncm.register_anonimous.none.repeat.002",
+    "apiAuditId": "ncm.register_anonimous",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-04T10:48:09.338Z",
+    "endedAt": "2026-08-04T10:48:09.424Z",
+    "durationMs": 86,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400
+  },
+  "error": null
+}

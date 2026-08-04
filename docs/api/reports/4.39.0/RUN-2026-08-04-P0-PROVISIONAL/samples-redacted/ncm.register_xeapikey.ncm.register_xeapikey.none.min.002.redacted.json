@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "caseId": "ncm.register_xeapikey.none.min.002",
+    "apiAuditId": "ncm.register_xeapikey",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-04T10:47:16.551Z",
+    "endedAt": "2026-08-04T10:47:16.582Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "xeapi public key response missing sk"
+  }
+}

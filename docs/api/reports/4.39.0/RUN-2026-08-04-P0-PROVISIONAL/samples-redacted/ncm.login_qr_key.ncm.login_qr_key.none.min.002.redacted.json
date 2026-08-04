@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.login_qr_key.none.min.002",
+    "apiAuditId": "ncm.login_qr_key",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-04T10:43:58.934Z",
+    "endedAt": "2026-08-04T10:43:59.100Z",
+    "durationMs": 166,
+    "attempts": 1
+  },
+  "body": {
+    "data": {
+      "code": 200,
+      "unikey": "<REDACTED:unikey>"
+    },
+    "code": 200
+  },
+  "error": null
+}

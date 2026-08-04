@@ -7333,10 +7333,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "passed",
       "reportPath": "endpoints/ncm.inner_version.md",
-      "blocker": ""
+      "blocker": null
     },
     {
       "apiAuditId": "ncm.lbs_city_code",
@@ -8437,10 +8437,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 2,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.login_qr_key.md",
-      "blocker": ""
+      "blocker": "未完成 AUTH_ANON/AUTH_USER 层与扫码流程；unikey 为一次性凭据仅本地保留"
     },
     {
       "apiAuditId": "ncm.login_refresh",
@@ -8529,10 +8529,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 5,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.login_status.md",
-      "blocker": ""
+      "blocker": "AUTH_ANON/AUTH_USER/VIP 缺失；分层稳定性未满足（无参数接口无法产生每层 3 个有差异样本）"
     },
     {
       "apiAuditId": "ncm.logout",
@@ -8575,10 +8575,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 2,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.logout.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 缺失；仅未登录/无效 Cookie 负向"
     },
     {
       "apiAuditId": "ncm.lyric",
@@ -12870,10 +12870,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 2,
+      "terminalStatus": "rate_limited",
       "reportPath": "endpoints/ncm.register_anonimous.md",
-      "blocker": ""
+      "blocker": "匿名注册风控：1 次成功（证据未持久化，见运行日志）+ 退避 45s 后仍 3 次 code 400；需冷却后重试"
     },
     {
       "apiAuditId": "ncm.register_cellphone",
@@ -13072,10 +13072,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 3,
+      "terminalStatus": "failed_stable",
       "reportPath": "endpoints/ncm.register_xeapikey.md",
-      "blocker": ""
+      "blocker": "上游模块契约与服务器响应冲突：模块要求解密负载含 sk，服务器返回 publicKey/version/nextUpdateTime；静态常量 xeapiSignKey 作为 sk 的引导回退已实测可用（conflictId XEAPI-001）"
     },
     {
       "apiAuditId": "ncm.related_allvideo",
@@ -18629,10 +18629,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 5,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.user_account.md",
-      "blocker": ""
+      "blocker": "AUTH_ANON/AUTH_USER/VIP 缺失；无 uid 生产路径（需登录账号）"
     },
     {
       "apiAuditId": "ncm.user_audio",
@@ -19057,10 +19057,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 1,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.user_detail.md",
-      "blocker": ""
+      "blocker": "缺 uid（uid 生产需 AUTH_USER）；仅完成缺失必填负向"
     },
     {
       "apiAuditId": "ncm.user_detail_new",

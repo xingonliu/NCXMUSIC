@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.user_account.none.min.001",
+    "apiAuditId": "ncm.user_account",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-04T10:43:51.268Z",
+    "endedAt": "2026-08-04T10:43:51.329Z",
+    "durationMs": 61,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "account": null,
+    "profile": null
+  },
+  "error": null
+}

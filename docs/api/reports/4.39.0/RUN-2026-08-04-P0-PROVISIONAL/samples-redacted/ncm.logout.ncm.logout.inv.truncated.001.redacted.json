@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "caseId": "ncm.logout.inv.truncated.001",
+    "apiAuditId": "ncm.logout",
+    "auth": "AUTH_INVALID_TRUNCATED",
+    "params": {},
+    "startedAt": "2026-08-04T10:43:57.586Z",
+    "endedAt": "2026-08-04T10:43:57.667Z",
+    "durationMs": 81,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200
+  },
+  "error": null
+}

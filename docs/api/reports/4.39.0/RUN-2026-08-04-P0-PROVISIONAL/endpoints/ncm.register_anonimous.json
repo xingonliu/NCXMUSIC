@@ -26,15 +26,58 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 2,
+    "cases": [
+      {
+        "caseId": "ncm.register_anonimous.none.min.001",
+        "auth": "AUTH_NONE",
+        "code": 400,
+        "durationMs": 91,
+        "error": null
+      },
+      {
+        "caseId": "ncm.register_anonimous.none.repeat.002",
+        "auth": "AUTH_NONE",
+        "code": 400,
+        "durationMs": 86,
+        "error": null
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presenceCount": 2,
+      "sampleCount": 2,
+      "nullCount": 0,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": "400",
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "rate_limited",
+  "blocker": "匿名注册风控：1 次成功（证据未持久化，见运行日志）+ 退避 45s 后仍 3 次 code 400；需冷却后重试",
+  "evidence": [
+    {
+      "caseId": "ncm.register_anonimous.none.min.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.register_anonimous.ncm.register_anonimous.none.min.001.raw.json"
+    },
+    {
+      "caseId": "ncm.register_anonimous.none.repeat.002",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.register_anonimous.ncm.register_anonimous.none.repeat.002.raw.json"
+    }
+  ]
 }

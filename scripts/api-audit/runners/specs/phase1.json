@@ -1,0 +1,84 @@
+{
+  "groups": [
+    {
+      "apiAuditId": "ncm.register_xeapikey",
+      "moduleName": "register_xeapikey",
+      "cases": [
+        { "caseId": "ncm.register_xeapikey.none.min.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "xeapi-key" },
+        { "caseId": "ncm.register_xeapikey.none.min.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "xeapi-key" },
+        { "caseId": "ncm.register_xeapikey.none.min.003", "auth": "AUTH_NONE", "params": {}, "expectedClass": "xeapi-key" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.inner_version",
+      "moduleName": "inner_version",
+      "localOnly": true,
+      "cases": [
+        { "caseId": "ncm.inner_version.none.min.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "local-version" },
+        { "caseId": "ncm.inner_version.none.min.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "local-version" },
+        { "caseId": "ncm.inner_version.none.min.003", "auth": "AUTH_NONE", "params": {}, "expectedClass": "local-version" },
+        { "caseId": "ncm.inner_version.none.neg.004", "auth": "AUTH_NONE", "params": { "unexpectedParam": "x" }, "expectedClass": "local-version-ignores-params" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.register_anonimous",
+      "moduleName": "register_anonimous",
+      "guestProducer": true,
+      "cases": [
+        { "caseId": "ncm.register_anonimous.none.min.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "guest-cookie" },
+        { "caseId": "ncm.register_anonimous.none.repeat.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "guest-cookie-rotation" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.login_status",
+      "moduleName": "login_status",
+      "cases": [
+        { "caseId": "ncm.login_status.none.min.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "unauthenticated" },
+        { "caseId": "ncm.login_status.none.min.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "unauthenticated" },
+        { "caseId": "ncm.login_status.none.min.003", "auth": "AUTH_NONE", "params": {}, "expectedClass": "unauthenticated" },
+        { "caseId": "ncm.login_status.anon.min.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "anonymous-session" },
+        { "caseId": "ncm.login_status.anon.min.002", "auth": "AUTH_ANON", "params": {}, "expectedClass": "anonymous-session" },
+        { "caseId": "ncm.login_status.anon.min.003", "auth": "AUTH_ANON", "params": {}, "expectedClass": "anonymous-session" },
+        { "caseId": "ncm.login_status.inv.truncated.001", "auth": "AUTH_INVALID_TRUNCATED", "params": {}, "expectedClass": "invalid-cookie" },
+        { "caseId": "ncm.login_status.inv.expired.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "invalid-cookie" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.user_account",
+      "moduleName": "user_account",
+      "cases": [
+        { "caseId": "ncm.user_account.none.min.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "unauthenticated" },
+        { "caseId": "ncm.user_account.none.min.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "unauthenticated" },
+        { "caseId": "ncm.user_account.none.min.003", "auth": "AUTH_NONE", "params": {}, "expectedClass": "unauthenticated" },
+        { "caseId": "ncm.user_account.anon.min.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "anonymous-session" },
+        { "caseId": "ncm.user_account.anon.min.002", "auth": "AUTH_ANON", "params": {}, "expectedClass": "anonymous-session" },
+        { "caseId": "ncm.user_account.anon.min.003", "auth": "AUTH_ANON", "params": {}, "expectedClass": "anonymous-session" },
+        { "caseId": "ncm.user_account.inv.truncated.001", "auth": "AUTH_INVALID_TRUNCATED", "params": {}, "expectedClass": "invalid-cookie" },
+        { "caseId": "ncm.user_account.inv.expired.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "invalid-cookie" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.user_detail",
+      "moduleName": "user_detail",
+      "cases": [
+        { "caseId": "ncm.user_detail.none.neg.missing-uid.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "negative-missing-required" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.logout",
+      "moduleName": "logout",
+      "cases": [
+        { "caseId": "ncm.logout.none.neg.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "negative-no-session" },
+        { "caseId": "ncm.logout.inv.truncated.001", "auth": "AUTH_INVALID_TRUNCATED", "params": {}, "expectedClass": "invalid-cookie" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.login_qr_key",
+      "moduleName": "login_qr_key",
+      "cases": [
+        { "caseId": "ncm.login_qr_key.none.min.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "qr-key" },
+        { "caseId": "ncm.login_qr_key.none.min.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "qr-key-rotation" }
+      ]
+    }
+  ]
+}

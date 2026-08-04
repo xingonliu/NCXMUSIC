@@ -26,15 +26,59 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 2,
+    "cases": [
+      {
+        "caseId": "ncm.logout.inv.truncated.001",
+        "auth": "AUTH_INVALID_TRUNCATED",
+        "code": 200,
+        "durationMs": 81,
+        "error": null
+      },
+      {
+        "caseId": "ncm.logout.none.neg.001",
+        "auth": "AUTH_NONE",
+        "code": 200,
+        "durationMs": 81,
+        "error": null
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presenceCount": 2,
+      "sampleCount": 2,
+      "nullCount": 0,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_INVALID_TRUNCATED",
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": "200",
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失；仅未登录/无效 Cookie 负向",
+  "evidence": [
+    {
+      "caseId": "ncm.logout.inv.truncated.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.logout.ncm.logout.inv.truncated.001.raw.json"
+    },
+    {
+      "caseId": "ncm.logout.none.neg.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.logout.ncm.logout.none.neg.001.raw.json"
+    }
+  ]
 }

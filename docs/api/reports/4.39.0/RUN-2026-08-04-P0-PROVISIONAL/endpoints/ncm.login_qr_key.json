@@ -26,15 +26,90 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 2,
+    "cases": [
+      {
+        "caseId": "ncm.login_qr_key.none.min.001",
+        "auth": "AUTH_NONE",
+        "code": 200,
+        "durationMs": 72,
+        "error": null
+      },
+      {
+        "caseId": "ncm.login_qr_key.none.min.002",
+        "auth": "AUTH_NONE",
+        "code": 200,
+        "durationMs": 166,
+        "error": null
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presenceCount": 2,
+      "sampleCount": 2,
+      "nullCount": 0,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": "200",
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    },
+    {
+      "jsonPath": "data.code",
+      "rawType": "number",
+      "presenceCount": 2,
+      "sampleCount": 2,
+      "nullCount": 0,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": "200",
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    },
+    {
+      "jsonPath": "data.unikey",
+      "rawType": "string",
+      "presenceCount": 2,
+      "sampleCount": 2,
+      "nullCount": 0,
+      "emptyCount": 0,
+      "authConditions": [
+        "AUTH_NONE"
+      ],
+      "exampleRedacted": "6d9aad50-72ca-4641-9e94-787cca2d5c0f",
+      "sourceEvidence": "runtime-phase1",
+      "semanticName": "",
+      "semanticConfidence": "unknown",
+      "conflictId": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "未完成 AUTH_ANON/AUTH_USER 层与扫码流程；unikey 为一次性凭据仅本地保留",
+  "evidence": [
+    {
+      "caseId": "ncm.login_qr_key.none.min.001",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.login_qr_key.ncm.login_qr_key.none.min.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_qr_key.none.min.002",
+      "sampleHash": null,
+      "rawFile": "raw/ncm.login_qr_key.ncm.login_qr_key.none.min.002.raw.json"
+    }
+  ]
 }
