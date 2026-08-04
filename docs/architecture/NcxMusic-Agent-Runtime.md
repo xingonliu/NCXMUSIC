@@ -37,7 +37,7 @@ TurnCoordinator
 - `ContextBuilder`：组装系统提示词、当前块、Working Memory、画像片段、Skill Prompt 和可见 Tool Schema。
 - `ProviderAdapter`：适配 OpenAI Compatible、Anthropic Messages 和 Gemini，并归一化增量事件。
 - `ToolRegistry`：保存工具元数据、输入/输出 Schema、风险分类和冲突域生成器。
-- `PolicyGateway`：调用纯函数权限引擎，返回允许、需要审批或硬拒绝。
+- `PolicyGateway`：在能力注册校验通过后调用纯函数权限引擎，返回允许或需要审批；作用域或策略校验失败时返回确定性拒绝。
 - `ToolScheduler`：控制并行度、资源锁、排队顺序和取消。
 - `ToolExecutor`：执行内置工具、音乐 API、PlayerCommand、MCP、Skill 或 Shell Adapter。
 - `RuntimeEventSink`：写入 IPC 事件、ToolExecutionCard、Action Journal 和调试日志。
@@ -71,18 +71,20 @@ queued
 received
   → validating
   ├─ invalid
-  └─ policy_check
-       ├─ denied
-       ├─ awaiting_approval
-       │    ├─ rejected
-       │    ├─ approval_cancelled
-       │    └─ queued
-       └─ queued
-            → executing
-            ├─ succeeded
-            ├─ failed
-            ├─ timed_out
-            └─ cancelled
+  └─ resolving_capability
+       ├─ unavailable
+       └─ policy_check
+            ├─ denied
+            ├─ awaiting_approval
+            │    ├─ rejected
+            │    ├─ approval_cancelled
+            │    └─ queued
+            └─ queued
+                 → executing
+                 ├─ succeeded
+                 ├─ failed
+                 ├─ timed_out
+                 └─ cancelled
 ```
 
 每个 Tool Call 在进入下一轮模型请求前必须拥有一个终态结果。Provider 一次返回多个 Tool Call 时，Runtime 按原始顺序回填结果，即使内部并行完成顺序不同。
@@ -109,6 +111,8 @@ interface ToolDefinition {
 ```
 
 模型只能看到完成裁剪后的名称、描述和输入 Schema。`effect`、风险、冲突域、超时和执行函数属于 Runtime 内部元数据，不进入 Prompt，也不能由 Dynamic Skill 覆盖。
+
+Tool Registry 是正向能力边界：只有注册成功且在当前账户、功能开关与扩展状态下可见的 Tool 才会进入模型请求。Runtime 仍必须防御模型伪造名称；未知 Tool、未声明 Action 或 Music Gateway 未注册的 `capabilityId` 在 `resolving_capability` 阶段结束为 `unavailable`，返回 `CAPABILITY_UNAVAILABLE`，不进入审批和 Executor。
 
 ## 6. 调度规则
 
@@ -169,7 +173,7 @@ Policy Engine 先把音乐 Tool Call 归一化为稳定动作类别，再用用�
 - M1 对全部受支持音乐动作返回 `require_approval`；达到动作规定的最低等级后返回 `allow`，否则仍返回 `require_approval`。
 - 用户直接操作 UI 不经过 Agent Policy Engine；对应的人类主动危险确认由 AlertDialog 等 UI 规则处理。
 - MCP 安装不属于音乐动作，任何 M 等级都只能返回 `require_approval`。
-- 支付、购买、订阅、下单和代购不注册为 Tool，也不进入通用 API Gateway 白名单；收到此类路径或未映射动作时返回硬拒绝，不能降级为请求用户审批后执行。
+- 支付、购买、订阅、下单和代购不注册为 Tool，也不进入 Music API Capability Catalog；请求未注册 Tool、Action 或 `capabilityId` 时返回 `CAPABILITY_UNAVAILABLE`，不进入 Policy、审批或 Executor。
 
 - Policy 返回 `require_approval` 后创建稳定 `approvalId`，Tool Call 进入 `awaiting_approval`。
 - ApprovalCard 只显示“批准”“拒绝”两个按钮；不提供“批准本次”“本会话允许”“总是允许”或其他授权范围。
@@ -177,7 +181,7 @@ Policy Engine 先把音乐 Tool Call 归一化为稳定动作类别，再用用�
 - 用户拒绝映射为 `USER_REJECTED`，过期映射为 `APPROVAL_EXPIRED`，应用退出、账号切换、Utility Process 故障或 Turn 取消映射为 `APPROVAL_CANCELLED`；面向模型返回裁剪后的结构化结果。
 - 用户批准只解除当前规范化 Tool Call 的挂起，不代表相同工具、参数或后续调用获得会话级或永久授权。工具、参数、目标账号、账户 generation 或 `commandId` 改变后必须重新判断。
 - 审批过程中不能预执行底层副作用、预启动 Shell/MCP 进程或提前写配置。
-- 具体权限等级、硬禁清单和授权边界由 A-007 定义。
+- 具体音乐能力目录、M1~M4 动作映射、Shell S1~S4 分类和作用域校验由 A-007 定义；权限等级不能动态注册新能力。
 
 ## 9. 取消语义
 
