@@ -218,6 +218,24 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 - PlayerBar、PlaybackControls、VolumeControl、ProgressControl、PlayModeControl。
 - QueueDrawer、QueueItem、LyricView、LyricLine、NowPlayingView。
 
+#### 4.3.1 MediaArtwork 契约
+
+`MediaArtwork` 是歌曲、专辑、歌单和歌手方形图片的唯一展示入口。组件接收原始 `sourceUrl`、语义 `variant`、替代文本和加载优先级，不允许页面传任意请求尺寸或自行拼接网易云图片参数。
+
+| Variant | 资源尺寸 | UI 场景 |
+| --- | ---: | --- |
+| `thumbnail` | 96 × 96 | TrackRow、搜索建议、QueueItem 等高密度列表 |
+| `compact` | 160 × 160 | PlayerBar、小型实体行与轻量操作消息 |
+| `card` | 320 × 320 | 普通 AlbumCard、ArtistCard、PlaylistCard |
+| `feature` | 640 × 640 | 推荐卡片和重点推荐 Section |
+| `hero` | 1024 × 1024 | EntityHero、NowPlayingView、播放歌词页 |
+
+- 所有 Variant 保持固定纵横比与布局占位，加载中使用统一 Skeleton，失败时使用统一实体占位图，不能触发布局位移。
+- 列表和普通卡片默认懒加载；当前播放项、首屏重点推荐和当前详情 Hero 可提升优先级。高精度资源不得因路由外预渲染而整批提前下载。
+- 封面使用组件规定的圆角与 `object-fit: cover`；页面不能通过 CSS 背景图绕过尺寸、替代文本、加载和错误状态。
+- 模糊背景可以复用已经加载的高精度资源，但不能为了背景效果再请求一份无尺寸原图。
+- UI Lab 必须同时展示五档资源、亮暗主题、加载/失败、低网速、长列表和高 DPI 状态，并通过网络面板确认请求尺寸与 Variant 一致。
+
 ### 4.4 Agent 领域组件（P0）
 
 - AgentSidebar、AgentComposer、ChatMessage、StreamingMessage。

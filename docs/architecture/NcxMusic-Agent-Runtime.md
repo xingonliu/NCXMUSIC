@@ -155,6 +155,22 @@ maxActiveTurns       = 1
 
 ## 8. 审批挂起
 
+### 音乐权限动作分类
+
+Policy Engine 先把音乐 Tool Call 归一化为稳定动作类别，再用用户当前的 M 等级判断。动作名称、对象 ID、目标账户和关键参数都进入规范化输入；不能按自然语言描述或工具展示文案判断权限。
+
+| 动作类别 | 最低免审等级 | 典型动作 |
+| --- | ---: | --- |
+| `music.playback_queue` | M2 | 播放/暂停、切歌、进度、音量、播放模式、队列插入/移除/排序/替换/清空 |
+| `music.library_playlist` | M3 | 喜欢/取消喜欢、收藏/取消收藏、签到、创建/重命名歌单、增删/排序歌单歌曲 |
+| `music.public_social` | M3 | 发表评论/删除评论、评论点赞、关注/取消关注 |
+| `music.account_high_impact` | M4 | 删除整个自建歌单、修改头像/昵称/资料、手机等账号绑定、退出登录 |
+
+- M1 对全部受支持音乐动作返回 `require_approval`；达到动作规定的最低等级后返回 `allow`，否则仍返回 `require_approval`。
+- 用户直接操作 UI 不经过 Agent Policy Engine；对应的人类主动危险确认由 AlertDialog 等 UI 规则处理。
+- MCP 安装不属于音乐动作，任何 M 等级都只能返回 `require_approval`。
+- 支付、购买、订阅、下单和代购不注册为 Tool，也不进入通用 API Gateway 白名单；收到此类路径或未映射动作时返回硬拒绝，不能降级为请求用户审批后执行。
+
 - Policy 返回 `require_approval` 后创建稳定 `approvalId`，Tool Call 进入 `awaiting_approval`。
 - ApprovalCard 只显示“批准”“拒绝”两个按钮；不提供“批准本次”“本会话允许”“总是允许”或其他授权范围。
 - ApprovalCard 不提供关闭按钮，并在创建 5 分钟后固定过期。离开小 N 页面、收起侧边栏或最小化窗口不会处理审批；Renderer 重载从 Snapshot 恢复卡片和剩余时间。
