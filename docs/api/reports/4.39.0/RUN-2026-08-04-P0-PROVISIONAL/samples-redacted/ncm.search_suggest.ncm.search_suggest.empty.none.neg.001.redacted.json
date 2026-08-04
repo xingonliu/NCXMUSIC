@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.search_suggest.empty.none.neg.001",
+    "apiAuditId": "ncm.search_suggest",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": ""
+    },
+    "startedAt": "2026-08-04T10:52:23.787Z",
+    "endedAt": "2026-08-04T10:52:23.843Z",
+    "durationMs": 56,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400
+  },
+  "error": null
+}

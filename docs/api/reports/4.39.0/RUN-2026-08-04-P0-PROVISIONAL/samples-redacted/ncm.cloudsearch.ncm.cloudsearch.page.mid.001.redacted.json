@@ -1,0 +1,1323 @@
+{
+  "meta": {
+    "caseId": "ncm.cloudsearch.page.mid.001",
+    "apiAuditId": "ncm.cloudsearch",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "光年之外",
+      "type": "1",
+      "limit": 10,
+      "offset": 40
+    },
+    "startedAt": "2026-08-04T10:52:18.733Z",
+    "endedAt": "2026-08-04T10:52:18.976Z",
+    "durationMs": 243,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "songs": [
+        {
+          "no": 1,
+          "rt": "",
+          "copyright": 0,
+          "fee": 8,
+          "privilege": {
+            "flag": 1540356,
+            "code": 0,
+            "dlLevel": "none",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 8,
+            "dl": 0,
+            "plLevel": "exhigh",
+            "maxBrLevel": "jymaster",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 1404486679,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "jymaster",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "jymaster",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 5,
+          "dt": 250624,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 1404486679,
+          "sq": {
+            "br": 1175000,
+            "fid": 0,
+            "size": 27929398,
+            "vd": -29408,
+            "sr": 44100
+          },
+          "st": 0,
+          "cd": "01",
+          "publishTime": 0,
+          "cf": "",
+          "originCoverType": 1,
+          "h": {
+            "br": 320000,
+            "fid": 0,
+            "size": 10027929,
+            "vd": -29390,
+            "sr": 44100
+          },
+          "mv": 0,
+          "al": {
+            "picUrl": "http://p4.music.126.net/fsSaAgOFs2hJDL9evvRXCQ==/109951164496282273.jpg#hash=c1946b2667b2",
+            "name": "光年之外",
+            "tns": [],
+            "pic_str": "109951164496282273",
+            "id": 83483314,
+            "pic": 109951164496282270
+          },
+          "l": {
+            "br": 128000,
+            "fid": 0,
+            "size": 4011198,
+            "vd": -25343,
+            "sr": 44100
+          },
+          "m": {
+            "br": 192000,
+            "fid": 0,
+            "size": 6016775,
+            "vd": -26879,
+            "sr": 44100
+          },
+          "version": 10,
+          "cp": 1416318,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "李炳辰",
+              "tns": [],
+              "alias": [],
+              "id": 3840
+            },
+            {
+              "name": "花僮",
+              "tns": [],
+              "alias": [],
+              "id": 1026069
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 44,
+          "name": "光年之外",
+          "mark": 73728
+        },
+        {
+          "no": 1,
+          "rt": "",
+          "copyright": 0,
+          "fee": 8,
+          "privilege": {
+            "flag": 1540100,
+            "code": 0,
+            "dlLevel": "none",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 8,
+            "dl": 0,
+            "plLevel": "exhigh",
+            "maxBrLevel": "jymaster",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 2609071329,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "jymaster",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "jymaster",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 10,
+          "dt": 234400,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 2609071329,
+          "sq": {
+            "br": 610340,
+            "fid": 0,
+            "size": 17882978,
+            "vd": 18912,
+            "sr": 44100
+          },
+          "st": 0,
+          "cd": "01",
+          "publishTime": 1721232000000,
+          "cf": "",
+          "originCoverType": 0,
+          "h": {
+            "br": 320000,
+            "fid": 0,
+            "size": 9379048,
+            "vd": 18696,
+            "sr": 44100
+          },
+          "mv": 0,
+          "al": {
+            "picUrl": "http://p4.music.126.net/k6F-5Lv121w5Y-SI714-oQ==/109951169792924688.jpg#hash=7af60ba8a66d",
+            "name": "光年之外",
+            "tns": [],
+            "pic_str": "109951169792924688",
+            "id": 242482614,
+            "pic": 109951169792924690
+          },
+          "l": {
+            "br": 128000,
+            "fid": 0,
+            "size": 3751645,
+            "vd": 23110,
+            "sr": 44100
+          },
+          "m": {
+            "br": 192000,
+            "fid": 0,
+            "size": 5627446,
+            "vd": 21331,
+            "sr": 44100
+          },
+          "version": 2,
+          "cp": 0,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "等来雪白头",
+              "tns": [],
+              "alias": [],
+              "id": 0
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 36,
+          "name": "光年之外",
+          "mark": 8192
+        },
+        {
+          "no": 1,
+          "rt": "",
+          "copyright": 0,
+          "fee": 8,
+          "privilege": {
+            "flag": 1540097,
+            "code": 0,
+            "dlLevel": "none",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 8,
+            "dl": 0,
+            "plLevel": "exhigh",
+            "maxBrLevel": "jymaster",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 3368496002,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "jymaster",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "jymaster",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 90,
+          "dt": 105232,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 3368496002,
+          "sq": {
+            "br": 963660,
+            "fid": 0,
+            "size": 12678084,
+            "vd": -75612,
+            "sr": 44100
+          },
+          "st": 0,
+          "cd": "01",
+          "publishTime": 0,
+          "cf": "",
+          "originCoverType": 0,
+          "h": {
+            "br": 320000,
+            "fid": 0,
+            "size": 4212027,
+            "vd": -75615,
+            "sr": 44100
+          },
+          "mv": 0,
+          "al": {
+            "picUrl": "http://p3.music.126.net/7a0JUDfRS3_Wfzy__M5ciw==/109951173023390631.jpg#hash=f2671ae4184c",
+            "name": "光年之外× Fracturesmashup",
+            "tns": [],
+            "pic_str": "109951173023390631",
+            "id": 370216301,
+            "pic": 109951173023390620
+          },
+          "l": {
+            "br": 128000,
+            "fid": 0,
+            "size": 1684837,
+            "vd": -71372,
+            "sr": 44100
+          },
+          "m": {
+            "br": 192000,
+            "fid": 0,
+            "size": 2527234,
+            "vd": -73020,
+            "sr": 44100
+          },
+          "version": 8,
+          "cp": 0,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "是鹿先森呢",
+              "tns": [],
+              "alias": [],
+              "id": 122979371
+            },
+            {
+              "name": "Favor",
+              "tns": [],
+              "alias": [
+                "Prefer"
+              ],
+              "id": 52896542,
+              "alia": [
+                "Prefer"
+              ]
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 42,
+          "name": "光年之外× Fracturesmashup",
+          "mark": 128
+        },
+        {
+          "no": 9,
+          "rt": "",
+          "copyright": 0,
+          "fee": 8,
+          "privilege": {
+            "flag": 1081345,
+            "code": 0,
+            "dlLevel": "none",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 8,
+            "dl": 0,
+            "plLevel": "exhigh",
+            "maxBrLevel": "exhigh",
+            "rightSource": 0,
+            "maxbr": 320000,
+            "id": 3392368172,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 320000,
+            "downloadMaxBrLevel": "exhigh",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "exhigh",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 320000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 5,
+          "dt": 226872,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 3392368172,
+          "st": 0,
+          "cd": "01",
+          "publishTime": 0,
+          "cf": "",
+          "originCoverType": 0,
+          "h": {
+            "br": 320000,
+            "fid": 0,
+            "size": 9076845,
+            "vd": -47902,
+            "sr": 48000
+          },
+          "mv": 0,
+          "al": {
+            "picUrl": "http://p4.music.126.net/sP5L--4FT_EHpsW6hwSZxg==/109951172496999853.jpg#hash=bbc56c236410",
+            "name": "光年之外",
+            "tns": [],
+            "pic_str": "109951172496999853",
+            "id": 381049338,
+            "pic": 109951172496999860
+          },
+          "l": {
+            "br": 128000,
+            "fid": 0,
+            "size": 3630765,
+            "vd": -44272,
+            "sr": 48000
+          },
+          "m": {
+            "br": 192000,
+            "fid": 0,
+            "size": 5446125,
+            "vd": -45424,
+            "sr": 48000
+          },
+          "version": 4,
+          "cp": 0,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "g.e.m. 邓紫棋-",
+              "tns": [],
+              "alias": [],
+              "id": 0
+            },
+            {
+              "name": "Sazablue",
+              "tns": [],
+              "alias": [],
+              "id": 121951073
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 38,
+          "name": "光年之外",
+          "mark": 131200
+        },
+        {
+          "no": 1,
+          "rt": "",
+          "copyright": 0,
+          "fee": 0,
+          "privilege": {
+            "flag": 1278209,
+            "code": 0,
+            "dlLevel": "lossless",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 0,
+            "dl": 999000,
+            "plLevel": "exhigh",
+            "maxBrLevel": "jymaster",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 2072622100,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "jymaster",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "jymaster",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 5,
+          "dt": 233778,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 2072622100,
+          "sq": {
+            "br": 888693,
+            "fid": 0,
+            "size": 25969671,
+            "vd": -47560,
+            "sr": 48000
+          },
+          "st": 0,
+          "cd": "01",
+          "publishTime": 0,
+          "cf": "",
+          "originCoverType": 2,
+          "h": {
+            "br": 320000,
+            "fid": 0,
+            "size": 9353325,
+            "vd": -46758,
+            "sr": 48000
+          },
+          "mv": 0,
+          "al": {
+            "picUrl": "http://p3.music.126.net/vsI6h-2qaVv6LSbkFmZhLQ==/109951170078490296.jpg#hash=05e6f93bfb5d",
+            "name": "永不静止（翻调合集）",
+            "tns": [],
+            "pic_str": "109951170078490296",
+            "id": 151806383,
+            "pic": 109951170078490300
+          },
+          "l": {
+            "br": 128000,
+            "fid": 0,
+            "size": 3741357,
+            "vd": -42421,
+            "sr": 48000
+          },
+          "m": {
+            "br": 192000,
+            "fid": 0,
+            "size": 5612013,
+            "vd": -44156,
+            "sr": 48000
+          },
+          "version": 7,
+          "cp": 0,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "洛天依",
+              "tns": [],
+              "alias": [],
+              "id": 59655434
+            },
+            {
+              "name": "肆葉草",
+              "tns": [],
+              "alias": [
+                "四叶草P"
+              ],
+              "id": 47974679,
+              "alia": [
+                "四叶草P"
+              ]
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 41,
+          "name": "光年之外",
+          "mark": 128
+        },
+        {
+          "no": 1,
+          "copyright": 0,
+          "fee": 0,
+          "privilege": {
+            "flag": 1343744,
+            "code": 0,
+            "dlLevel": "exhigh",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 0,
+            "dl": 320000,
+            "plLevel": "exhigh",
+            "maxBrLevel": "sky",
+            "rightSource": 0,
+            "maxbr": 320000,
+            "id": 500748243,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 320000,
+            "downloadMaxBrLevel": "sky",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "sky",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 320000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 10,
+          "dt": 264941,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 500748243,
+          "st": 0,
+          "cd": "01",
+          "publishTime": 1503407080433,
+          "cf": "",
+          "originCoverType": 2,
+          "h": {
+            "br": 320000,
+            "fid": 0,
+            "size": 10608893,
+            "vd": -41472,
+            "sr": 44100
+          },
+          "mv": 0,
+          "al": {
+            "picUrl": "http://p4.music.126.net/-DiTUuFRQNlJEkckBpufzQ==/109951163008670411.jpg#hash=47d54f673e8c",
+            "name": "光年之外",
+            "tns": [],
+            "pic_str": "109951163008670411",
+            "id": 35996857,
+            "pic": 109951163008670420
+          },
+          "l": {
+            "br": 128000,
+            "fid": 0,
+            "size": 4243583,
+            "vd": -37166,
+            "sr": 44100
+          },
+          "m": {
+            "br": 192000,
+            "fid": 0,
+            "size": 6365353,
+            "vd": -38864,
+            "sr": 44100
+          },
+          "version": 12,
+          "cp": 0,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "公子无央",
+              "tns": [],
+              "alias": [],
+              "id": 12079169
+            },
+            {
+              "name": "钦棠",
+              "tns": [],
+              "alias": [],
+              "id": 0
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 46,
+          "name": "光年之外（Cover 藤田麻衣子）",
+          "mark": 0
+        },
+        {
+          "no": 1,
+          "rt": "",
+          "copyright": 0,
+          "fee": 0,
+          "privilege": {
+            "flag": 1081345,
+            "code": 0,
+            "dlLevel": "exhigh",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 0,
+            "dl": 320000,
+            "plLevel": "exhigh",
+            "maxBrLevel": "lossless",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 3408852702,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "lossless",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "lossless",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 10,
+          "dt": 212400,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 3408852702,
+          "sq": {
+            "br": 950719,
+            "fid": 0,
+            "size": 25245522,
+            "vd": -3489,
+            "sr": 48000
+          },
+          "st": 0,
+          "cd": "01",
+          "publishTime": 0,
+          "cf": "",
+          "originCoverType": 0,
+          "h": {
+            "br": 320000,
+            "fid": 0,
+            "size": 8497965,
+            "vd": -3501,
+            "sr": 48000
+          },
+          "mv": 0,
+          "al": {
+            "picUrl": "http://p3.music.126.net/kng-6GnbvK62Ay_vwJ1fIQ==/109951173597165375.jpg#hash=971e3f6033c5",
+            "name": "光年之外",
+            "tns": [],
+            "pic_str": "109951173597165375",
+            "id": 387964479,
+            "pic": 109951173597165380
+          },
+          "l": {
+            "br": 128000,
+            "fid": 0,
+            "size": 3399213,
+            "vd": 549,
+            "sr": 48000
+          },
+          "m": {
+            "br": 192000,
+            "fid": 0,
+            "size": 5098797,
+            "vd": -965,
+            "sr": 48000
+          },
+          "version": 2,
+          "cp": 0,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "快歌唱片",
+              "tns": [],
+              "alias": [],
+              "id": 98962656
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 36,
+          "name": "光年之外",
+          "mark": 128
+        },
+        {
+          "no": 1,
+          "rt": "",
+          "copyright": 0,
+          "fee": 8,
+          "hr": {
+            "br": 1694333,
+            "fid": 0,
+            "size": 66533791,
+            "vd": -232,
+            "sr": 48000
+          },
+          "privilege": {
+            "flag": 1282053,
+            "code": 0,
+            "dlLevel": "none",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 8,
+            "dl": 0,
+            "plLevel": "exhigh",
+            "maxBrLevel": "jymaster",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 3411014129,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              },
+              {
+                "rate": 1999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "jymaster",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "jymaster",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 5,
+          "dt": 314120,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 3411014129,
+          "sq": {
+            "br": 928713,
+            "fid": 0,
+            "size": 36471712,
+            "vd": -232,
+            "sr": 48000
+          },
+          "st": 0,
+          "cd": "01",
+          "publishTime": 0,
+          "cf": "",
+          "originCoverType": 0,
+          "h": {
+            "br": 320001,
+            "fid": 0,
+            "size": 12567405,
+            "vd": -225,
+            "sr": 48000
+          },
+          "mv": 0,
+          "al": {
+            "picUrl": "http://p4.music.126.net/Aq4CJiZUooBaxRv19ArttQ==/109951172952443435.jpg#hash=40ba88a3af74",
+            "name": "光年之外",
+            "tns": [],
+            "pic_str": "109951172952443435",
+            "id": 388793832,
+            "pic": 109951172952443440
+          },
+          "l": {
+            "br": 128001,
+            "fid": 0,
+            "size": 5026989,
+            "vd": 4492,
+            "sr": 48000
+          },
+          "m": {
+            "br": 192001,
+            "fid": 0,
+            "size": 7540461,
+            "vd": 2349,
+            "sr": 48000
+          },
+          "version": 4,
+          "cp": 0,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "明战",
+              "tns": [],
+              "alias": [],
+              "id": 97505955
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 38,
+          "name": "光年之外",
+          "mark": 536879232
+        },
+        {
+          "no": 1,
+          "rt": "",
+          "copyright": 0,
+          "fee": 8,
+          "privilege": {
+            "flag": 1343494,
+            "code": 0,
+            "dlLevel": "none",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 8,
+            "dl": 0,
+            "plLevel": "exhigh",
+            "maxBrLevel": "sky",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 1441242620,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "sky",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "sky",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 10,
+          "dt": 302718,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 1441242620,
+          "sq": {
+            "br": 1553684,
+            "fid": 0,
+            "size": 58791185,
+            "vd": -31461,
+            "sr": 44100
+          },
+          "st": 0,
+          "cd": "01",
+          "publishTime": 0,
+          "cf": "",
+          "originCoverType": 0,
+          "h": {
+            "br": 320000,
+            "fid": 0,
+            "size": 12111456,
+            "vd": -31331,
+            "sr": 44100
+          },
+          "mv": 0,
+          "al": {
+            "picUrl": "http://p3.music.126.net/KkEAyvUhfyBwxEWlKxXGlA==/109951169515220173.jpg#hash=ee13d67c0db7",
+            "name": "光年之外",
+            "tns": [],
+            "pic_str": "109951169515220173",
+            "id": 88104924,
+            "pic": 109951169515220180
+          },
+          "l": {
+            "br": 128000,
+            "fid": 0,
+            "size": 4844608,
+            "vd": -26949,
+            "sr": 44100
+          },
+          "m": {
+            "br": 192000,
+            "fid": 0,
+            "size": 7266891,
+            "vd": -28705,
+            "sr": 44100
+          },
+          "version": 56,
+          "cp": 0,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "林幼嘉",
+              "tns": [],
+              "alias": [
+                "吕小布"
+              ],
+              "id": 33840498,
+              "alia": [
+                "吕小布"
+              ]
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 90,
+          "name": "光年之外",
+          "mark": 8256
+        },
+        {
+          "no": 1,
+          "rt": "",
+          "copyright": 0,
+          "fee": 8,
+          "hr": {
+            "br": 1603467,
+            "fid": 0,
+            "size": 55637362,
+            "vd": 2071,
+            "sr": 48000
+          },
+          "privilege": {
+            "flag": 1282053,
+            "code": 0,
+            "dlLevel": "none",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 8,
+            "dl": 0,
+            "plLevel": "exhigh",
+            "maxBrLevel": "jymaster",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 3406573494,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              },
+              {
+                "rate": 1999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "jymaster",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "jymaster",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 5,
+          "dt": 277559,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 3406573494,
+          "sq": {
+            "br": 840700,
+            "fid": 0,
+            "size": 29173163,
+            "vd": 2071,
+            "sr": 48000
+          },
+          "st": 0,
+          "cd": "01",
+          "publishTime": 0,
+          "cf": "",
+          "originCoverType": 0,
+          "h": {
+            "br": 320000,
+            "fid": 0,
+            "size": 11104365,
+            "vd": 2090,
+            "sr": 48000
+          },
+          "mv": 0,
+          "al": {
+            "picUrl": "http://p4.music.126.net/SDfGAZL2TlGHyNGE1X2KAg==/109951172952454045.jpg#hash=6b9e0b9dc6c8",
+            "name": "光年之外",
+            "tns": [],
+            "pic_str": "109951172952454045",
+            "id": 386921051,
+            "pic": 109951172952454050
+          },
+          "l": {
+            "br": 128000,
+            "fid": 0,
+            "size": 4441773,
+            "vd": 6700,
+            "sr": 48000
+          },
+          "m": {
+            "br": 192000,
+            "fid": 0,
+            "size": 6662637,
+            "vd": 4671,
+            "sr": 48000
+          },
+          "version": 4,
+          "cp": 0,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "Fri周五",
+              "tns": [],
+              "alias": [],
+              "id": 124268137
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 38,
+          "name": "光年之外",
+          "mark": 536879232
+        }
+      ],
+      "songCount": 318
+    },
+    "code": 200,
+    "trp": {
+      "rules": [
+        "search_tab_song::3368496002::searchAlg$isGlobalQuality$1"
+      ]
+    }
+  },
+  "error": null
+}

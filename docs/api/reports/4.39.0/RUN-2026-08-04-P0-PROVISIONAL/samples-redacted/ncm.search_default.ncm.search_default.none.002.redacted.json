@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "caseId": "ncm.search_default.none.002",
+    "apiAuditId": "ncm.search_default",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-04T10:52:30.869Z",
+    "endedAt": "2026-08-04T10:52:30.967Z",
+    "durationMs": 98,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "message": null,
+    "data": {
+      "showKeyword": "🔥甲乙丙丁 最近很火哦",
+      "styleKeyword": {
+        "keyWord": "🔥甲乙丙丁 最近很火哦",
+        "descWord": null
+      },
+      "realkeyword": "甲乙丙丁",
+      "searchType": 1,
+      "action": 0,
+      "alg": "dq_0_0_T3_R12_b79c72c3ce0242b0c9f64b078bbe1937_S0:6.1661_M1_H0_A0#",
+      "gap": 0,
+      "source": null,
+      "bizQueryInfo": "{\"showQuery\":\"🔥甲乙丙丁 最近很火哦\",\"source\":\"default_search\",\"intentStrategy\":\"R12\",\"bizIntentList\":[{\"searchQuery\":\"甲乙丙丁\",\"queryTemplateType\":\"UNKNOWN\",\"itemID\":\"0\",\"itemType\":\"query\",\"level\":1,\"dist\":null,\"tagTriggerSId\":null,\"tagTriggerSName\":null,\"tagTriggerAId\":null,\"tagTriggerAName\":null,\"triggerSRecText\":null,\"bestMatch\":true}],\"songRecIntent\":false,\"mixRecIntent\":null,\"newTotal\":true}",
+      "logInfo": null,
+      "imageUrl": null,
+      "trp_type": null,
+      "trp_id": null
+    }
+  },
+  "error": null
+}

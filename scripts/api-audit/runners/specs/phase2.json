@@ -1,0 +1,330 @@
+{
+  "note": "Phase 2 公共发现与 ID 生产者。关键词为预设词表（手册 §16.1 允许）；实体 ID 全部由上游响应生产并进入夹具池。",
+  "groups": [
+    {
+      "apiAuditId": "ncm.search",
+      "moduleName": "search",
+      "cases": [
+        { "caseId": "ncm.search.kw1.type1.none.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "1", "limit": 10, "offset": 0 }, "expectedClass": "song-results" },
+        { "caseId": "ncm.search.kw1.type1.none.002", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "1", "limit": 5, "offset": 15 }, "expectedClass": "song-results-midpage" },
+        { "caseId": "ncm.search.kw1.type100.none.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "100" }, "expectedClass": "artist-results" },
+        { "caseId": "ncm.search.kw1.type1000.none.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "1000" }, "expectedClass": "playlist-results" },
+        { "caseId": "ncm.search.kw1.type1004.none.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "1004" }, "expectedClass": "mv-results" },
+        { "caseId": "ncm.search.kw1.type1014.none.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "1014" }, "expectedClass": "video-results" },
+        { "caseId": "ncm.search.kw2.type1.none.001", "auth": "AUTH_NONE", "params": { "keywords": "周杰伦", "type": "1" }, "expectedClass": "song-results" },
+        { "caseId": "ncm.search.kw1.type1.anon.001", "auth": "AUTH_ANON", "params": { "keywords": "光年之外", "type": "1" }, "expectedClass": "song-results" },
+        { "caseId": "ncm.search.kw1.type1.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "keywords": "光年之外", "type": "1" }, "expectedClass": "song-results-or-fallback" },
+        { "caseId": "ncm.search.empty.none.neg.001", "auth": "AUTH_NONE", "params": { "keywords": "", "type": "1" }, "expectedClass": "negative-empty-keyword" },
+        { "caseId": "ncm.search.type999.none.neg.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "999" }, "expectedClass": "negative-invalid-enum" },
+        { "caseId": "ncm.search.kw1.type10.none.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "10" }, "expectedClass": "album-results" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.cloudsearch",
+      "moduleName": "cloudsearch",
+      "cases": [
+        { "caseId": "ncm.cloudsearch.kw1.none.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "1", "limit": 10, "offset": 0 }, "expectedClass": "song-results" },
+        { "caseId": "ncm.cloudsearch.kw2.none.001", "auth": "AUTH_NONE", "params": { "keywords": "周杰伦", "type": "1" }, "expectedClass": "song-results" },
+        { "caseId": "ncm.cloudsearch.kw1.anon.001", "auth": "AUTH_ANON", "params": { "keywords": "光年之外", "type": "1" }, "expectedClass": "song-results" },
+        { "caseId": "ncm.cloudsearch.kw1.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "keywords": "光年之外", "type": "1" }, "expectedClass": "song-results-or-fallback" },
+        { "caseId": "ncm.cloudsearch.page.boundary.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "1", "limit": 1, "offset": 0 }, "expectedClass": "first-page" },
+        { "caseId": "ncm.cloudsearch.page.mid.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "1", "limit": 10, "offset": 40 }, "expectedClass": "mid-page" },
+        { "caseId": "ncm.cloudsearch.empty.none.neg.001", "auth": "AUTH_NONE", "params": { "keywords": "", "type": "1" }, "expectedClass": "negative-empty-keyword" },
+        { "caseId": "ncm.cloudsearch.type999.none.neg.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "999" }, "expectedClass": "negative-invalid-enum" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.search_suggest",
+      "moduleName": "search_suggest",
+      "cases": [
+        { "caseId": "ncm.search_suggest.kw1.none.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外" }, "expectedClass": "suggest" },
+        { "caseId": "ncm.search_suggest.kw2.none.001", "auth": "AUTH_NONE", "params": { "keywords": "周杰伦" }, "expectedClass": "suggest" },
+        { "caseId": "ncm.search_suggest.kw1.anon.001", "auth": "AUTH_ANON", "params": { "keywords": "光年之外" }, "expectedClass": "suggest" },
+        { "caseId": "ncm.search_suggest.kw1.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "keywords": "光年之外" }, "expectedClass": "suggest-or-fallback" },
+        { "caseId": "ncm.search_suggest.empty.none.neg.001", "auth": "AUTH_NONE", "params": { "keywords": "" }, "expectedClass": "negative-empty" },
+        { "caseId": "ncm.search_suggest.mobile.none.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外", "type": "mobile" }, "expectedClass": "suggest-mobile" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.search_hot",
+      "moduleName": "search_hot",
+      "cases": [
+        { "caseId": "ncm.search_hot.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "hot-list" },
+        { "caseId": "ncm.search_hot.none.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "hot-list-repeat" },
+        { "caseId": "ncm.search_hot.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "hot-list" },
+        { "caseId": "ncm.search_hot.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "hot-list-or-fallback" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.search_hot_detail",
+      "moduleName": "search_hot_detail",
+      "cases": [
+        { "caseId": "ncm.search_hot_detail.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "hot-detail" },
+        { "caseId": "ncm.search_hot_detail.none.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "hot-detail-repeat" },
+        { "caseId": "ncm.search_hot_detail.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "hot-detail" },
+        { "caseId": "ncm.search_hot_detail.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "hot-detail-or-fallback" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.search_default",
+      "moduleName": "search_default",
+      "cases": [
+        { "caseId": "ncm.search_default.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "default-word" },
+        { "caseId": "ncm.search_default.none.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "default-word-repeat" },
+        { "caseId": "ncm.search_default.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "default-word" },
+        { "caseId": "ncm.search_default.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "default-word-or-fallback" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.search_multimatch",
+      "moduleName": "search_multimatch",
+      "cases": [
+        { "caseId": "ncm.search_multimatch.kw1.none.001", "auth": "AUTH_NONE", "params": { "keywords": "光年之外" }, "expectedClass": "multi-match" },
+        { "caseId": "ncm.search_multimatch.kw1.anon.001", "auth": "AUTH_ANON", "params": { "keywords": "光年之外" }, "expectedClass": "multi-match" },
+        { "caseId": "ncm.search_multimatch.kw1.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "keywords": "光年之外" }, "expectedClass": "multi-match-or-fallback" },
+        { "caseId": "ncm.search_multimatch.empty.none.neg.001", "auth": "AUTH_NONE", "params": { "keywords": "" }, "expectedClass": "negative-empty" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.banner",
+      "moduleName": "banner",
+      "cases": [
+        { "caseId": "ncm.banner.type0.none.001", "auth": "AUTH_NONE", "params": { "type": "0" }, "expectedClass": "pc-banner" },
+        { "caseId": "ncm.banner.type0.anon.001", "auth": "AUTH_ANON", "params": { "type": "0" }, "expectedClass": "pc-banner" },
+        { "caseId": "ncm.banner.type0.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "type": "0" }, "expectedClass": "pc-banner-or-fallback" },
+        { "caseId": "ncm.banner.type2.none.001", "auth": "AUTH_NONE", "params": { "type": "2" }, "expectedClass": "iphone-banner" },
+        { "caseId": "ncm.banner.type3.none.001", "auth": "AUTH_NONE", "params": { "type": "3" }, "expectedClass": "ipad-banner" },
+        { "caseId": "ncm.banner.type999.none.neg.001", "auth": "AUTH_NONE", "params": { "type": "999" }, "expectedClass": "negative-invalid-enum" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.personalized",
+      "moduleName": "personalized",
+      "cases": [
+        { "caseId": "ncm.personalized.min.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "recommend-playlists" },
+        { "caseId": "ncm.personalized.limit5.none.001", "auth": "AUTH_NONE", "params": { "limit": 5 }, "expectedClass": "recommend-playlists" },
+        { "caseId": "ncm.personalized.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "recommend-playlists" },
+        { "caseId": "ncm.personalized.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "recommend-playlists-or-fallback" },
+        { "caseId": "ncm.personalized.limit0.none.neg.001", "auth": "AUTH_NONE", "params": { "limit": 0 }, "expectedClass": "negative-limit-zero" },
+        { "caseId": "ncm.personalized.limit50.none.001", "auth": "AUTH_NONE", "params": { "limit": 50 }, "expectedClass": "recommend-playlists-large" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.toplist",
+      "moduleName": "toplist",
+      "cases": [
+        { "caseId": "ncm.toplist.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "toplist-list" },
+        { "caseId": "ncm.toplist.none.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "toplist-list-repeat" },
+        { "caseId": "ncm.toplist.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "toplist-list" },
+        { "caseId": "ncm.toplist.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "toplist-list-or-fallback" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.top_list",
+      "moduleName": "top_list",
+      "cases": [
+        { "caseId": "ncm.top_list.id.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:playlistId:0}}" }, "expectedClass": "toplist-detail" },
+        { "caseId": "ncm.top_list.id.none.002", "auth": "AUTH_NONE", "params": { "id": "{{pool:playlistId:1}}" }, "expectedClass": "toplist-detail" },
+        { "caseId": "ncm.top_list.id.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:playlistId:0}}" }, "expectedClass": "toplist-detail" },
+        { "caseId": "ncm.top_list.id.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "id": "{{pool:playlistId:0}}" }, "expectedClass": "toplist-detail-or-fallback" },
+        { "caseId": "ncm.top_list.idx.none.neg.001", "auth": "AUTH_NONE", "params": { "idx": 1 }, "expectedClass": "negative-idx-unsupported" },
+        { "caseId": "ncm.top_list.id0.none.neg.001", "auth": "AUTH_NONE", "params": { "id": "0" }, "expectedClass": "negative-invalid-id" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.top_song",
+      "moduleName": "top_song",
+      "cases": [
+        { "caseId": "ncm.top_song.type0.none.001", "auth": "AUTH_NONE", "params": { "type": "0" }, "expectedClass": "new-songs-all" },
+        { "caseId": "ncm.top_song.type7.none.001", "auth": "AUTH_NONE", "params": { "type": "7" }, "expectedClass": "new-songs-zh" },
+        { "caseId": "ncm.top_song.anon.001", "auth": "AUTH_ANON", "params": { "type": "0" }, "expectedClass": "new-songs" },
+        { "caseId": "ncm.top_song.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "type": "0" }, "expectedClass": "new-songs-or-fallback" },
+        { "caseId": "ncm.top_song.type999.none.neg.001", "auth": "AUTH_NONE", "params": { "type": "999" }, "expectedClass": "negative-invalid-enum" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.top_album",
+      "moduleName": "top_album",
+      "cases": [
+        { "caseId": "ncm.top_album.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "top-albums" },
+        { "caseId": "ncm.top_album.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "top-albums" },
+        { "caseId": "ncm.top_album.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "top-albums-or-fallback" },
+        { "caseId": "ncm.top_album.limit5.none.001", "auth": "AUTH_NONE", "params": { "limit": 5 }, "expectedClass": "top-albums" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.top_artists",
+      "moduleName": "top_artists",
+      "cases": [
+        { "caseId": "ncm.top_artists.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "top-artists" },
+        { "caseId": "ncm.top_artists.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "top-artists" },
+        { "caseId": "ncm.top_artists.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "top-artists-or-fallback" },
+        { "caseId": "ncm.top_artists.limit5.none.001", "auth": "AUTH_NONE", "params": { "limit": 5 }, "expectedClass": "top-artists" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.top_mv",
+      "moduleName": "top_mv",
+      "cases": [
+        { "caseId": "ncm.top_mv.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "top-mvs" },
+        { "caseId": "ncm.top_mv.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "top-mvs" },
+        { "caseId": "ncm.top_mv.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "top-mvs-or-fallback" },
+        { "caseId": "ncm.top_mv.limit5.none.001", "auth": "AUTH_NONE", "params": { "limit": 5 }, "expectedClass": "top-mvs" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.top_playlist",
+      "moduleName": "top_playlist",
+      "cases": [
+        { "caseId": "ncm.top_playlist.catall.hot.none.001", "auth": "AUTH_NONE", "params": { "cat": "全部", "order": "hot" }, "expectedClass": "playlists" },
+        { "caseId": "ncm.top_playlist.catrock.none.001", "auth": "AUTH_NONE", "params": { "cat": "摇滚", "order": "hot" }, "expectedClass": "playlists-rock" },
+        { "caseId": "ncm.top_playlist.ordernew.none.001", "auth": "AUTH_NONE", "params": { "cat": "全部", "order": "new" }, "expectedClass": "playlists-new" },
+        { "caseId": "ncm.top_playlist.anon.001", "auth": "AUTH_ANON", "params": { "cat": "全部", "order": "hot" }, "expectedClass": "playlists" },
+        { "caseId": "ncm.top_playlist.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "cat": "全部", "order": "hot" }, "expectedClass": "playlists-or-fallback" },
+        { "caseId": "ncm.top_playlist.catbad.none.neg.001", "auth": "AUTH_NONE", "params": { "cat": "不存在分类XYZ", "order": "hot" }, "expectedClass": "negative-invalid-cat" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.top_playlist_highquality",
+      "moduleName": "top_playlist_highquality",
+      "cases": [
+        { "caseId": "ncm.top_playlist_highquality.none.001", "auth": "AUTH_NONE", "params": { "cat": "全部" }, "expectedClass": "highquality-playlists" },
+        { "caseId": "ncm.top_playlist_highquality.anon.001", "auth": "AUTH_ANON", "params": { "cat": "全部" }, "expectedClass": "highquality-playlists" },
+        { "caseId": "ncm.top_playlist_highquality.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "cat": "全部" }, "expectedClass": "highquality-playlists-or-fallback" },
+        { "caseId": "ncm.top_playlist_highquality.catzh.none.001", "auth": "AUTH_NONE", "params": { "cat": "华语" }, "expectedClass": "highquality-playlists-zh" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.playlist_hot",
+      "moduleName": "playlist_hot",
+      "cases": [
+        { "caseId": "ncm.playlist_hot.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "hot-tags" },
+        { "caseId": "ncm.playlist_hot.none.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "hot-tags-repeat" },
+        { "caseId": "ncm.playlist_hot.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "hot-tags" },
+        { "caseId": "ncm.playlist_hot.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "hot-tags-or-fallback" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.playlist_catlist",
+      "moduleName": "playlist_catlist",
+      "cases": [
+        { "caseId": "ncm.playlist_catlist.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "categories" },
+        { "caseId": "ncm.playlist_catlist.none.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "categories-repeat" },
+        { "caseId": "ncm.playlist_catlist.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "categories" },
+        { "caseId": "ncm.playlist_catlist.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "categories-or-fallback" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.playlist_category_list",
+      "moduleName": "playlist_category_list",
+      "cases": [
+        { "caseId": "ncm.playlist_category_list.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "categories" },
+        { "caseId": "ncm.playlist_category_list.none.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "categories-repeat" },
+        { "caseId": "ncm.playlist_category_list.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "categories" },
+        { "caseId": "ncm.playlist_category_list.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "categories-or-fallback" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.playlist_highquality_tags",
+      "moduleName": "playlist_highquality_tags",
+      "cases": [
+        { "caseId": "ncm.playlist_highquality_tags.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "tags" },
+        { "caseId": "ncm.playlist_highquality_tags.none.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "tags-repeat" },
+        { "caseId": "ncm.playlist_highquality_tags.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "tags" },
+        { "caseId": "ncm.playlist_highquality_tags.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "tags-or-fallback" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_hot",
+      "moduleName": "dj_hot",
+      "cases": [
+        { "caseId": "ncm.dj_hot.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "hot-djs" },
+        { "caseId": "ncm.dj_hot.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "hot-djs" },
+        { "caseId": "ncm.dj_hot.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "hot-djs-or-fallback" },
+        { "caseId": "ncm.dj_hot.limit5.none.001", "auth": "AUTH_NONE", "params": { "limit": 5 }, "expectedClass": "hot-djs" },
+        { "caseId": "ncm.dj_hot.page.none.001", "auth": "AUTH_NONE", "params": { "limit": 10, "offset": 30 }, "expectedClass": "hot-djs-midpage" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_catelist",
+      "moduleName": "dj_catelist",
+      "cases": [
+        { "caseId": "ncm.dj_catelist.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "dj-categories" },
+        { "caseId": "ncm.dj_catelist.none.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "dj-categories-repeat" },
+        { "caseId": "ncm.dj_catelist.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "dj-categories" },
+        { "caseId": "ncm.dj_catelist.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "dj-categories-or-fallback" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_banner",
+      "moduleName": "dj_banner",
+      "cases": [
+        { "caseId": "ncm.dj_banner.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "dj-banner" },
+        { "caseId": "ncm.dj_banner.none.002", "auth": "AUTH_NONE", "params": {}, "expectedClass": "dj-banner-repeat" },
+        { "caseId": "ncm.dj_banner.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "dj-banner" },
+        { "caseId": "ncm.dj_banner.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "dj-banner-or-fallback" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.personalized_newsong",
+      "moduleName": "personalized_newsong",
+      "cases": [
+        { "caseId": "ncm.personalized_newsong.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "new-songs" },
+        { "caseId": "ncm.personalized_newsong.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "new-songs" },
+        { "caseId": "ncm.personalized_newsong.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "new-songs-or-fallback" },
+        { "caseId": "ncm.personalized_newsong.limit5.none.001", "auth": "AUTH_NONE", "params": { "limit": 5 }, "expectedClass": "new-songs" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.personalized_djprogram",
+      "moduleName": "personalized_djprogram",
+      "cases": [
+        { "caseId": "ncm.personalized_djprogram.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "dj-programs" },
+        { "caseId": "ncm.personalized_djprogram.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "dj-programs" },
+        { "caseId": "ncm.personalized_djprogram.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "dj-programs-or-fallback" },
+        { "caseId": "ncm.personalized_djprogram.limit5.none.001", "auth": "AUTH_NONE", "params": { "limit": 5 }, "expectedClass": "dj-programs" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.personalized_mv",
+      "moduleName": "personalized_mv",
+      "cases": [
+        { "caseId": "ncm.personalized_mv.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "mvs" },
+        { "caseId": "ncm.personalized_mv.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "mvs" },
+        { "caseId": "ncm.personalized_mv.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "mvs-or-fallback" },
+        { "caseId": "ncm.personalized_mv.limit5.none.001", "auth": "AUTH_NONE", "params": { "limit": 5 }, "expectedClass": "mvs" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.personalized_privatecontent",
+      "moduleName": "personalized_privatecontent",
+      "cases": [
+        { "caseId": "ncm.personalized_privatecontent.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "private-content" },
+        { "caseId": "ncm.personalized_privatecontent.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "private-content" },
+        { "caseId": "ncm.personalized_privatecontent.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "private-content-or-fallback" },
+        { "caseId": "ncm.personalized_privatecontent.limit5.none.001", "auth": "AUTH_NONE", "params": { "limit": 5 }, "expectedClass": "private-content" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.personalized_privatecontent_list",
+      "moduleName": "personalized_privatecontent_list",
+      "cases": [
+        { "caseId": "ncm.personalized_privatecontent_list.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "private-content-list" },
+        { "caseId": "ncm.personalized_privatecontent_list.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "private-content-list" },
+        { "caseId": "ncm.personalized_privatecontent_list.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "private-content-list-or-fallback" },
+        { "caseId": "ncm.personalized_privatecontent_list.limit5.none.001", "auth": "AUTH_NONE", "params": { "limit": 5 }, "expectedClass": "private-content-list" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.homepage_block_page",
+      "moduleName": "homepage_block_page",
+      "cases": [
+        { "caseId": "ncm.homepage_block_page.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "homepage-blocks" },
+        { "caseId": "ncm.homepage_block_page.anon.001", "auth": "AUTH_ANON", "params": {}, "expectedClass": "homepage-blocks" },
+        { "caseId": "ncm.homepage_block_page.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": {}, "expectedClass": "homepage-blocks-or-fallback" },
+        { "caseId": "ncm.homepage_block_page.refresh.none.001", "auth": "AUTH_NONE", "params": { "refresh": true }, "expectedClass": "homepage-blocks-refresh" },
+        { "caseId": "ncm.homepage_block_page.repeat.none.001", "auth": "AUTH_NONE", "params": {}, "expectedClass": "homepage-blocks-repeat" }
+      ]
+    }
+  ]
+}

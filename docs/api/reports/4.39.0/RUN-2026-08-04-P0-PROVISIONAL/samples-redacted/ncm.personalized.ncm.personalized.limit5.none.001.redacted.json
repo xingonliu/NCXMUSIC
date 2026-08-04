@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "caseId": "ncm.personalized.limit5.none.001",
+    "apiAuditId": "ncm.personalized",
+    "auth": "AUTH_NONE",
+    "params": {
+      "limit": 5
+    },
+    "startedAt": "2026-08-04T10:52:41.087Z",
+    "endedAt": "2026-08-04T10:52:41.225Z",
+    "durationMs": 138,
+    "attempts": 1
+  },
+  "body": {
+    "hasTaste": false,
+    "code": 200,
+    "category": 0,
+    "result": [
+      {
+        "id": 13570394126,
+        "type": 0,
+        "name": "【华语必听曲】通勤路30分钟刚刚好",
+        "copywriter": "",
+        "picUrl": "https://p4.music.126.net/H_HCgXm_z5sZ6rcTzZe-6Q==/109951171972007068.jpg#hash=a261549d1994",
+        "canDislike": true,
+        "trackNumberUpdateTime": 1784622244676,
+        "playCount": 107002,
+        "trackCount": 35,
+        "highQuality": false,
+        "alg": "byplaylist_sup_offline"
+      },
+      {
+        "id": 5142301485,
+        "type": 0,
+        "name": "“ 我们复合吧 我不想再喜欢别人了 ”",
+        "copywriter": "",
+        "picUrl": "https://p4.music.126.net/VTmQLMSbnIHEbQxWAlkyFw==/109951170622374399.jpg#hash=0dc809a1105a",
+        "canDislike": true,
+        "trackNumberUpdateTime": 1772555815419,
+        "playCount": 665165,
+        "trackCount": 57,
+        "highQuality": false,
+        "alg": "cityLevel_combine"
+      },
+      {
+        "id": 2224319101,
+        "type": 0,
+        "name": "所以呢 你会对我感到愧疚吗",
+        "copywriter": "",
+        "picUrl": "https://p4.music.126.net/GwGDGxYgqVM0uXfie7HyfQ==/109951168759592035.jpg#hash=18a3452ea081",
+        "canDislike": true,
+        "trackNumberUpdateTime": 1785587584309,
+        "playCount": 3723861,
+        "trackCount": 630,
+        "highQuality": false,
+        "alg": "cityLevel_combine"
+      },
+      {
+        "id": 5389305180,
+        "type": 0,
+        "name": "古风 从古至今未改变，报国之情不动摇。",
+        "copywriter": "热门歌单推荐",
+        "picUrl": "https://p4.music.126.net/Hp0iS94i0pJOD3sC5pRd8A==/109951165555733418.jpg#hash=2b9d62510c97",
+        "canDislike": true,
+        "trackNumberUpdateTime": 1784937063429,
+        "playCount": 978359,
+        "trackCount": 81,
+        "highQuality": false,
+        "alg": "hot_server"
+      },
+      {
+        "id": 105451029,
+        "type": 0,
+        "name": "《情书》——献给总是美丽的你",
+        "copywriter": "我想对你说的话，都藏在这个歌单里",
+        "picUrl": "https://p3.music.126.net/gvCRA0N-dnXz2GTl1OIhoA==/3354609977007324.jpg#hash=94958699cbcb",
+        "canDislike": true,
+        "trackNumberUpdateTime": 1508395899648,
+        "playCount": 11808822,
+        "trackCount": 125,
+        "highQuality": true,
+        "alg": "hot_server"
+      }
+    ]
+  },
+  "error": null
+}

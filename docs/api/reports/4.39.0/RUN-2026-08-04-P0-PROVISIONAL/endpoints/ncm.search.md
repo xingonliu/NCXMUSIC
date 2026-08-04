@@ -91,3 +91,23 @@
 - 是否建议进入 Capability Catalog：待定（Phase 15）
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
+
+## 14. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补）
+- 说明：见 §14 运行记录与字段表
+
+| caseId | auth | status | code | durationMs | note |
+| --- | --- | --- | --- | --- | --- |
+| ncm.search.empty.none.neg.001 | AUTH_NONE | - | 400 | 84 |  |
+| ncm.search.kw1.type1.anon.001 | AUTH_ANON | - | 200 | 371 |  |
+| ncm.search.kw1.type1.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 241 |  |
+| ncm.search.kw1.type1.none.001 | AUTH_NONE | - | 200 | 223 |  |
+| ncm.search.kw1.type1.none.002 | AUTH_NONE | - | 200 | 239 |  |
+| ncm.search.kw1.type10.none.001 | AUTH_NONE | - | 200 | 234 |  |
+| ncm.search.kw1.type100.none.001 | AUTH_NONE | - | 200 | 137 |  |
+| ncm.search.kw1.type1000.none.001 | AUTH_NONE | - | 200 | 205 |  |
+| ncm.search.kw1.type1004.none.001 | AUTH_NONE | - | 200 | 155 |  |
+| ncm.search.kw1.type1014.none.001 | AUTH_NONE | - | 200 | 143 |  |
+| ncm.search.kw2.type1.none.001 | AUTH_NONE | - | 200 | 177 |  |
+| ncm.search.type999.none.neg.001 | AUTH_NONE | - | 200 | 80 |  |

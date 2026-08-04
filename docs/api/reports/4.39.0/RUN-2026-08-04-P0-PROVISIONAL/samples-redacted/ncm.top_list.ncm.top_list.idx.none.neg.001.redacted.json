@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "caseId": "ncm.top_list.idx.none.neg.001",
+    "apiAuditId": "ncm.top_list",
+    "auth": "AUTH_NONE",
+    "params": {
+      "idx": 1
+    },
+    "startedAt": "2026-08-04T10:52:51.371Z",
+    "endedAt": "2026-08-04T10:52:51.371Z",
+    "durationMs": 0,
+    "attempts": 1
+  },
+  "body": {
+    "code": 500,
+    "msg": "不支持此方式调用,只支持id调用"
+  },
+  "error": null
+}

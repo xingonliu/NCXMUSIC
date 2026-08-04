@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.top_playlist.ordernew.none.001",
+    "apiAuditId": "ncm.top_playlist",
+    "auth": "AUTH_NONE",
+    "params": {
+      "cat": "全部",
+      "order": "new"
+    },
+    "startedAt": "2026-08-04T10:53:07.700Z",
+    "endedAt": "2026-08-04T10:53:07.764Z",
+    "durationMs": 64,
+    "attempts": 1
+  },
+  "body": {
+    "playlists": [],
+    "total": 0,
+    "code": 200,
+    "more": false,
+    "cat": "全部"
+  },
+  "error": null
+}

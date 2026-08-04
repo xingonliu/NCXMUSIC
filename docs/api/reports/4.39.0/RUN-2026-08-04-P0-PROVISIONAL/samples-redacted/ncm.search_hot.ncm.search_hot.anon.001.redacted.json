@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "caseId": "ncm.search_hot.anon.001",
+    "apiAuditId": "ncm.search_hot",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-04T10:52:26.615Z",
+    "endedAt": "2026-08-04T10:52:26.727Z",
+    "durationMs": 112,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "result": {
+      "hots": [
+        {
+          "first": "甲乙丙丁",
+          "second": 1,
+          "third": null,
+          "iconType": 1
+        },
+        {
+          "first": "海屿你",
+          "second": 1,
+          "third": null,
+          "iconType": 1
+        },
+        {
+          "first": "SWEAT",
+          "second": 1,
+          "third": null,
+          "iconType": 1
+        },
+        {
+          "first": "碎碎念",
+          "second": 1,
+          "third": null,
+          "iconType": 1
+        },
+        {
+          "first": "失眠",
+          "second": 1,
+          "third": null,
+          "iconType": 1
+        },
+        {
+          "first": "刻在我心底的名字",
+          "second": 1,
+          "third": null,
+          "iconType": 1
+        },
+        {
+          "first": "我不难过",
+          "second": 1,
+          "third": null,
+          "iconType": 1
+        },
+        {
+          "first": "幻痛药",
+          "second": 1,
+          "third": null,
+          "iconType": 1
+        },
+        {
+          "first": "水星奖",
+          "second": 1,
+          "third": null,
+          "iconType": 1
+        },
+        {
+          "first": "泪海",
+          "second": 1,
+          "third": null,
+          "iconType": 1
+        }
+      ]
+    }
+  },
+  "error": null
+}

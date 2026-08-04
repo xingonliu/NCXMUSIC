@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_banner.none.001",
+    "apiAuditId": "ncm.dj_banner",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-04T10:53:30.957Z",
+    "endedAt": "2026-08-04T10:53:31.013Z",
+    "durationMs": 56,
+    "attempts": 1
+  },
+  "body": {
+    "data": [
+      {
+        "targetId": 3725803359,
+        "targetType": 60001,
+        "pic": "http://p1.music.126.net/FXK9VDiSFk3UmyU3DX8fiA==/109951173686901002.jpg#hash=ed22aee1e912",
+        "url": "orpheus://program/3725803359",
+        "typeTitle": "人文历史",
+        "exclusive": false
+      },
+      {
+        "targetId": 3726034559,
+        "targetType": 60001,
+        "pic": "http://p1.music.126.net/D3ooLtm9sDQbm81j-GEzNg==/109951173686901973.jpg#hash=51841b961bd9",
+        "url": "orpheus://program/3726034559",
+        "typeTitle": "情感",
+        "exclusive": false
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

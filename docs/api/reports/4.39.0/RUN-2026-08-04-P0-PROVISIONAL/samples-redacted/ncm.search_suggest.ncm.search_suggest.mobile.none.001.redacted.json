@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "caseId": "ncm.search_suggest.mobile.none.001",
+    "apiAuditId": "ncm.search_suggest",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "光年之外",
+      "type": "mobile"
+    },
+    "startedAt": "2026-08-04T10:52:24.559Z",
+    "endedAt": "2026-08-04T10:52:24.668Z",
+    "durationMs": 109,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "allMatch": [
+        {
+          "keyword": "光年之外",
+          "type": 1,
+          "alg": "alg_suggest_other_Consume;Album;Song___{}",
+          "lastKeyword": "",
+          "feature": ""
+        },
+        {
+          "keyword": "光年之外 华晨宇",
+          "type": 1,
+          "alg": "alg_suggest_other_Consume;Song+Artist___{}",
+          "lastKeyword": "",
+          "feature": ""
+        },
+        {
+          "keyword": "光年之外 G.E.M.邓紫棋",
+          "type": 1,
+          "alg": "alg_suggest_other_Consume;Song+Artist___{}",
+          "lastKeyword": "",
+          "feature": ""
+        },
+        {
+          "keyword": "光年之外DJ",
+          "type": 1,
+          "alg": "alg_suggest_other_Consume;Song___{}",
+          "lastKeyword": "",
+          "feature": ""
+        },
+        {
+          "keyword": "光年之外g.e.m.邓紫棋华晨宇",
+          "type": 1,
+          "alg": "alg_suggest_other_Consume___{}",
+          "lastKeyword": "",
+          "feature": ""
+        },
+        {
+          "keyword": "光年之外刘宇宁",
+          "type": 1,
+          "alg": "alg_suggest_other_Consume;Song___{}",
+          "lastKeyword": "",
+          "feature": ""
+        }
+      ]
+    },
+    "code": 200
+  },
+  "error": null
+}

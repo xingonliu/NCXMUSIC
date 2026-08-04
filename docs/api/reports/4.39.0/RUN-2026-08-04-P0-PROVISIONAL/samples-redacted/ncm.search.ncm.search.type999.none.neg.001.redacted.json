@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.search.type999.none.neg.001",
+    "apiAuditId": "ncm.search",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "光年之外",
+      "type": "999"
+    },
+    "startedAt": "2026-08-04T10:52:12.581Z",
+    "endedAt": "2026-08-04T10:52:12.661Z",
+    "durationMs": 80,
+    "attempts": 1
+  },
+  "body": {
+    "result": {},
+    "code": 200
+  },
+  "error": null
+}

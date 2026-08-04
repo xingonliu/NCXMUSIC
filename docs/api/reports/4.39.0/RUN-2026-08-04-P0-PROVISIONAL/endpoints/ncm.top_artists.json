@@ -34,15 +34,44 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.top_artists.anon.001",
+        "auth": "AUTH_ANON",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.top_artists.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.top_artists.limit5.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.top_artists.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
   "evidence": []
 }

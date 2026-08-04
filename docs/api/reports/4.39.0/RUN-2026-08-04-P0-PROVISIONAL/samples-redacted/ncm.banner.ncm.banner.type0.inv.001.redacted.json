@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "caseId": "ncm.banner.type0.inv.001",
+    "apiAuditId": "ncm.banner",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "type": "0"
+    },
+    "startedAt": "2026-08-04T10:52:36.994Z",
+    "endedAt": "2026-08-04T10:52:37.111Z",
+    "durationMs": 117,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "trp": {
+      "rules": [
+        "BANNER_PC_V2::pc_banner_op_channel_1::linkPlatform$cc$pc_banner_op_channel$bpo$rt$0$pid$4420132$cid$BANNER_PC_V2$fgid$1487019$pgid$nonstandard$pc$4425326$",
+        "BANNER_PC_V2::pc_banner_op_channel_2::linkPlatform$cc$pc_banner_op_channel$bpo$rt$0$pid$4420020$rid$34784046$cid$mv$pc$BANNER_PC_V2$fgid$1487019$pgid$4425205$",
+        "BANNER_PC_V2::pc_banner_op_channel_7::linkPlatform$cc$pc_banner_op_channel$bpo$rt$0$pid$4419077$rid$album$pc$390094926$cid$BANNER_PC_V2$fgid$4425278$$1487019$pgid",
+        "BANNER_PC_V2::pc_banner_op_channel_8::linkPlatform$cc$pc_banner_op_channel$bpo$rt$0$pid$4420055$rid$album$pc$390102810$cid$BANNER_PC_V2$fgid$1487019$pgid$4426337$",
+        "BANNER_PC_V2::pc_banner_op_channel_9::linkPlatform$cc$pc_banner_op_channel$bpo$rt$0$pid$4427367$$album$pc$BANNER_PC_V2$fgid$4421085$rid$1487019$pgid$390097848$cid",
+        "BANNER_PC_V2::pc_banner_op_channel_3::linkPlatform$cc$pc_banner_op_channel$bpo$rt$song$pc$0$pid$4425178$$BANNER_PC_V2$fgid$1487019$pgid$4419932$rid$3369666014$cid",
+        "BANNER_PC_V2::pc_banner_op_channel_4::linkPlatform$cc$pc_banner_op_channel$bpo$rt$song$pc$0$pid$4421225$rid$3415831754$cid$BANNER_PC_V2$fgid$1487019$pgid$4427428$",
+        "BANNER_PC_V2::pc_banner_op_channel_5::linkPlatform$cc$pc_banner_op_channel$bpo$rt$0$pid$390522103$cid$4425270$$4421069$rid$album$pc$BANNER_PC_V2$fgid$1487019$pgid",
+        "BANNER_PC_V2::pc_banner_op_channel_6::linkPlatform$cc$pc_banner_op_channel$bpo$rt$song$pc$0$pid$4426311$$3414340057$cid$BANNER_PC_V2$fgid$1487019$pgid$4420028$rid"
+      ]
+    },
+    "banners": [
+      {
+        "targetId": 0,
+        "bigImageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81983514051/b556/7924/c6e5/1de7e4dab52fbd9f77a9afa2d118ca1b.png#hash=7d45ff33ca55",
+        "imageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81987194909/9aa6/28b8/0f55/22fb1ae808aa94d190cb20090f313505.png#hash=1f716e2bd838",
+        "targetType": 3000,
+        "typeTitle": "活动",
+        "s_ctrp": "linkPlatform$cc$pc_banner_op_channel$bpo$$rt$nonstandard$pc$BANNER_PC_V2$fgid$1487019$pgid$0$pid$4420132$cid$4425326$traceid$0000019fcc67692805450aaf79000006$bcc$pc_banner_op_channel$fromType$promotion$bpc$BANNER_PC_V2$spc$BANNER_PC_V2-1$fromId$1097041",
+        "url": "https://y.music.163.com/g/yida/act/kissoflife#hash=47d74ce1b8da"
+      },
+      {
+        "targetId": 34784046,
+        "bigImageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81975600886/8148/bc55/269f/724957ba433e125c43d4acb677c4fb3b.png#hash=e6b280166161",
+        "imageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81975602235/8efa/aa35/9de1/b852e1deaf1ef63181f5e4a508ed0ff3.png#hash=2e4bcf9c093a",
+        "targetType": 1004,
+        "typeTitle": "独家专访",
+        "s_ctrp": "linkPlatform$cc$pc_banner_op_channel$bpo$$rt$mv$pc$BANNER_PC_V2$fgid$1487019$pgid$0$pid$4420020$rid$34784046$cid$4425205$traceid$0000019fcc67692805450aaf79000006$bcc$pc_banner_op_channel$spc$BANNER_PC_V2-2$fromId$1096013$fromType$promotion$bpc$BANNER_PC_V2",
+        "url": "orpheus://mv/34784046"
+      },
+      {
+        "targetId": 3369666014,
+        "bigImageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81971816685/7f49/c2d1/4ca5/dbc2dc0639fc23fd67813372d80e5bc1.jpg#hash=00c4eb2bc561",
+        "imageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81971822978/1496/f385/5922/de5b2480b88bed787074430d6e9441d9.jpg#hash=73330bd5854e",
+        "targetType": 1,
+        "typeTitle": "热歌推荐",
+        "s_ctrp": "linkPlatform$cc$pc_banner_op_channel$bpo$$rt$song$pc$BANNER_PC_V2$fgid$1487019$pgid$0$pid$4419932$rid$3369666014$cid$4425178$traceid$0000019fcc67692805450aaf79000006$bcc$pc_banner_op_channel$spc$BANNER_PC_V2-3$fromId$1096011$fromType$promotion$bpc$BANNER_PC_V2",
+        "url": "orpheus://song/3369666014"
+      },
+      {
+        "targetId": 3415831754,
+        "bigImageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/82000584165/4ccc/f4f2/c515/891f07950b7839c20ef186a394aa861d.jpeg#hash=010d6d7a7409",
+        "imageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/82000589945/ffcf/5692/781c/d0860c1b3d975f80bf36ad10e77489fe.jpeg#hash=5e377023be07",
+        "targetType": 1,
+        "typeTitle": "新歌首发",
+        "s_ctrp": "linkPlatform$cc$pc_banner_op_channel$bpo$$rt$song$pc$BANNER_PC_V2$fgid$1487019$pgid$0$pid$4421225$rid$3415831754$cid$4427428$traceid$0000019fcc67692805450aaf79000006$bcc$pc_banner_op_channel$spc$BANNER_PC_V2-4$fromId$1095024$fromType$promotion$bpc$BANNER_PC_V2",
+        "url": "orpheus://song/3415831754"
+      },
+      {
+        "targetId": 390522103,
+        "bigImageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81978748203/65c3/202673174121/bigpic_607.jpg#hash=cc7f724e16d3",
+        "imageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81978763539/461c/202673174218/pic_400.jpg#hash=4c22729d25cd",
+        "targetType": 10,
+        "typeTitle": "新碟首发",
+        "s_ctrp": "linkPlatform$cc$pc_banner_op_channel$bpo$$rt$album$pc$BANNER_PC_V2$fgid$1487019$pgid$0$pid$4421069$rid$390522103$cid$4425270$traceid$0000019fcc67692805450aaf79000006$bcc$pc_banner_op_channel$spc$BANNER_PC_V2-5$fromId$1097037$fromType$promotion$bpc$BANNER_PC_V2",
+        "url": "orpheus://album/390522103"
+      },
+      {
+        "targetId": 3414340057,
+        "bigImageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81977010036/3af7/46ae/1c16/ccc33dd53377677c3b3a63a6b0120c20.jpg#hash=03fc834ebbeb",
+        "imageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81977009414/70e7/593b/24fd/e503f547b48b4d6c5b76b0c5132b41be.jpg#hash=de7e894bba3a",
+        "targetType": 1,
+        "typeTitle": "新歌首发",
+        "s_ctrp": "linkPlatform$cc$pc_banner_op_channel$bpo$$rt$song$pc$BANNER_PC_V2$fgid$1487019$pgid$0$pid$4420028$rid$3414340057$cid$4426311$traceid$0000019fcc67692805450aaf79000006$bcc$pc_banner_op_channel$spc$BANNER_PC_V2-6$fromId$1096036$fromType$promotion$bpc$BANNER_PC_V2",
+        "url": "orpheus://song/3414340057"
+      },
+      {
+        "targetId": 390094926,
+        "bigImageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81978741392/8f65/202673174059/yaka_bigPic.jpg#hash=8f4e5b264190",
+        "imageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81978747616/e5f3/202673174123/yaka_pic_400.jpg#hash=6a5139ded416",
+        "targetType": 10,
+        "typeTitle": "新碟首发",
+        "s_ctrp": "linkPlatform$cc$pc_banner_op_channel$bpo$$rt$album$pc$BANNER_PC_V2$fgid$1487019$pgid$0$pid$4419077$rid$390094926$cid$4425278$traceid$0000019fcc67692805450aaf79000006$bcc$pc_banner_op_channel$spc$BANNER_PC_V2-7$fromId$1097038$fromType$promotion$bpc$BANNER_PC_V2",
+        "url": "orpheus://album/390094926"
+      },
+      {
+        "targetId": 390102810,
+        "bigImageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81973329046/a380/202673123445/promotionrap2026bigpic.jpg#hash=cc4ac0b6c3b2",
+        "imageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81973330931/167e/202673123458/promotion_rap2026_pic400.jpg#hash=3b3823973d4e",
+        "targetType": 10,
+        "typeTitle": "新碟首发",
+        "s_ctrp": "linkPlatform$cc$pc_banner_op_channel$bpo$$rt$album$pc$BANNER_PC_V2$fgid$1487019$pgid$0$pid$4420055$rid$390102810$cid$4426337$traceid$0000019fcc67692805450aaf79000006$bcc$pc_banner_op_channel$spc$BANNER_PC_V2-8$fromId$1096041$fromType$promotion$bpc$BANNER_PC_V2",
+        "url": "orpheus://album/390102810"
+      },
+      {
+        "targetId": 390097848,
+        "bigImageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81914310444/0b3a/202663120112/gyws10_bigPic_20260731.jpg#hash=5ae39c289620",
+        "imageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81914312469/3be5/202663120113/gyws10_pic400_20260731.jpg#hash=f5f3cf13965f",
+        "targetType": 10,
+        "typeTitle": "新碟首发",
+        "s_ctrp": "linkPlatform$cc$pc_banner_op_channel$bpo$$rt$album$pc$BANNER_PC_V2$fgid$1487019$pgid$0$pid$4421085$rid$390097848$cid$4427367$traceid$0000019fcc67692805450aaf79000006$bcc$pc_banner_op_channel$spc$BANNER_PC_V2-9$fromId$1095037$fromType$promotion$bpc$BANNER_PC_V2",
+        "url": "orpheus://album/390097848"
+      }
+    ]
+  },
+  "error": null
+}

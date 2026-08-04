@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.search_multimatch.kw1.none.001",
+    "apiAuditId": "ncm.search_multimatch",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "光年之外"
+    },
+    "startedAt": "2026-08-04T10:52:32.486Z",
+    "endedAt": "2026-08-04T10:52:32.546Z",
+    "durationMs": 60,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "orders": []
+    },
+    "code": 200
+  },
+  "error": null
+}

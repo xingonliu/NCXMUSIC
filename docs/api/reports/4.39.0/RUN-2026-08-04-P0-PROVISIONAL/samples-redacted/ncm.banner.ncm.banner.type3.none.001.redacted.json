@@ -1,0 +1,612 @@
+{
+  "meta": {
+    "caseId": "ncm.banner.type3.none.001",
+    "apiAuditId": "ncm.banner",
+    "auth": "AUTH_NONE",
+    "params": {
+      "type": "3"
+    },
+    "startedAt": "2026-08-04T10:52:38.504Z",
+    "endedAt": "2026-08-04T10:52:38.627Z",
+    "durationMs": 123,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "trp": {
+      "rules": [
+        "BANNER_IPAD_HD::ipad_hd_banner_op_channel_1::linkPlatform$cc$ipad_hd_banner_op_channel$bpo$rt$0$pid$4420023$rid$34784046$cid$mv$pc$BANNER_IPAD_HD$fgid$4425208$$1513009$pgid",
+        "BANNER_IPAD_HD::ipad_hd_banner_op_channel_2::linkPlatform$cc$ipad_hd_banner_op_channel$bpo$rt$song$pc$0$pid$4419937$rid$BANNER_IPAD_HD$fgid$3369666014$cid$4425181$$1513009$pgid",
+        "BANNER_IPAD_HD::ipad_hd_banner_op_channel_3::linkPlatform$cc$ipad_hd_banner_op_channel$bpo$rt$song$pc$0$pid$3415831754$cid$4427431$$BANNER_IPAD_HD$fgid$4421228$rid$1513009$pgid",
+        "BANNER_IPAD_HD::ipad_hd_banner_op_channel_4::linkPlatform$cc$ipad_hd_banner_op_channel$bpo$rt$0$pid$390522103$cid$4425273$$album$pc$BANNER_IPAD_HD$fgid$4421072$rid$1513009$pgid",
+        "BANNER_IPAD_HD::ipad_hd_banner_op_channel_5::linkPlatform$cc$ipad_hd_banner_op_channel$bpo$rt$song$pc$0$pid$4420031$rid$3414340057$cid$BANNER_IPAD_HD$fgid$4426314$$1513009$pgid",
+        "BANNER_IPAD_HD::ipad_hd_banner_op_channel_6::linkPlatform$cc$ipad_hd_banner_op_channel$bpo$rt$0$pid$4425281$$album$pc$390094926$cid$BANNER_IPAD_HD$fgid$1513009$pgid$4419082$rid",
+        "BANNER_IPAD_HD::ipad_hd_banner_op_channel_7::linkPlatform$cc$ipad_hd_banner_op_channel$bpo$rt$0$pid$4420058$rid$4426340$$album$pc$390102810$cid$BANNER_IPAD_HD$fgid$1513009$pgid",
+        "BANNER_IPAD_HD::ipad_hd_banner_op_channel_8::linkPlatform$cc$ipad_hd_banner_op_channel$bpo$rt$0$pid$album$pc$4421088$rid$BANNER_IPAD_HD$fgid$390097848$cid$4427370$$1513009$pgid"
+      ]
+    },
+    "banners": [
+      {
+        "bannerId": "4888444",
+        "pic": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81975598420/8278/3450/6bf4/d71acc5ed2a9d4d237d11ea3004d0b7d.png#hash=1cacf39e58bf",
+        "titleColor": "blue",
+        "requestId": "",
+        "exclusive": false,
+        "bannerBizType": "force_banner",
+        "scm": "1.music-homepage.homepage_banner_force.banner.4888444.2087992660.null",
+        "alg": "banner-feature-4888444",
+        "s_ctrp": "linkPlatform$cc$ipad_hd_banner_op_channel$bpo$$rt$mv$pc$BANNER_IPAD_HD$fgid$1513009$pgid$0$pid$4420023$rid$34784046$cid$4425208$traceid$0000019fcc676f0a06420aaf6fa10006$bcc$ipad_hd_banner_op_channel$spc$BANNER_IPAD_HD-2$fromId$1096013$fromType$promotion$bpc$BANNER_IPAD_HD",
+        "targetId": 34784046,
+        "showAdTag": true,
+        "targetType": 1004,
+        "typeTitle": "独家专访",
+        "url": "orpheus://mv/34784046",
+        "encodeId": "34784046",
+        "monitorImpressList": [],
+        "monitorClickList": []
+      },
+      {
+        "bannerId": "4888340",
+        "pic": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81971811583/4c93/05e4/61d4/37660a14a6935df0075d55dba7f4cb1b.jpg#hash=7a21c63a691d",
+        "titleColor": "blue",
+        "requestId": "",
+        "exclusive": false,
+        "bannerBizType": "force_banner",
+        "scm": "1.music-homepage.homepage_banner_force.banner.4888340.2087958927.null",
+        "alg": "banner-feature-4888340",
+        "s_ctrp": "linkPlatform$cc$ipad_hd_banner_op_channel$bpo$$rt$song$pc$BANNER_IPAD_HD$fgid$1513009$pgid$0$pid$4419937$rid$3369666014$cid$4425181$traceid$0000019fcc676f0a06420aaf6fa10006$bcc$ipad_hd_banner_op_channel$spc$BANNER_IPAD_HD-3$fromId$1096011$fromType$promotion$bpc$BANNER_IPAD_HD",
+        "song": {
+          "no": 4,
+          "rt": "",
+          "copyright": 0,
+          "fee": 8,
+          "hr": {
+            "br": 2831152,
+            "fid": 0,
+            "size": 87855505,
+            "vd": -52303,
+            "sr": 96000
+          },
+          "privilege": {
+            "flag": 1544196,
+            "code": 0,
+            "dlLevel": "none",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 8,
+            "dl": 0,
+            "plLevel": "exhigh",
+            "maxBrLevel": "jymaster",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 3369666014,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              },
+              {
+                "rate": 1999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "jymaster",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "jymaster",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 100,
+          "dt": 248240,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 3369666014,
+          "alg": "banner-feature-4888340",
+          "sq": {
+            "br": 936784,
+            "fid": 0,
+            "size": 29073060,
+            "vd": -52299,
+            "sr": 48000
+          },
+          "st": 0,
+          "cd": "01",
+          "publishTime": 1773331200000,
+          "cf": "",
+          "originCoverType": 1,
+          "h": {
+            "br": 320000,
+            "fid": 0,
+            "size": 9932205,
+            "vd": -52316,
+            "sr": 48000
+          },
+          "mv": 34779825,
+          "al": {
+            "picUrl": "http://p3.music.126.net/wlpke49BdPJzaQI7cPHl-Q==/109951173557997835.jpg#hash=47c1380c7bbf",
+            "name": "明日世界ACT I",
+            "tns": [],
+            "pic_str": "109951173557997835",
+            "id": 370354921,
+            "pic": 109951173557997840
+          },
+          "l": {
+            "br": 128000,
+            "fid": 0,
+            "size": 3972909,
+            "vd": -48258,
+            "sr": 48000
+          },
+          "m": {
+            "br": 192000,
+            "fid": 0,
+            "size": 5959341,
+            "vd": -49776,
+            "sr": 48000
+          },
+          "version": 18,
+          "cp": 729013,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "汪苏泷",
+              "tns": [],
+              "alias": [],
+              "id": 5538
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 52,
+          "name": "写故事的人",
+          "mark": 17716748288
+        },
+        "targetId": 3369666014,
+        "showAdTag": true,
+        "targetType": 1,
+        "typeTitle": "热歌推荐",
+        "url": "orpheus://song/3369666014",
+        "encodeId": "3369666014",
+        "monitorImpressList": [],
+        "monitorClickList": []
+      },
+      {
+        "bannerId": "4889669",
+        "pic": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/82000583406/bfde/6e0b/d460/41002d238e35de2683e9d63b8a0fa70c.jpeg#hash=30f965ab7898",
+        "titleColor": "blue",
+        "requestId": "",
+        "exclusive": false,
+        "bannerBizType": "force_banner",
+        "scm": "1.music-homepage.homepage_banner_force.banner.4889669.2087958155.null",
+        "alg": "banner-feature-4889669",
+        "s_ctrp": "linkPlatform$cc$ipad_hd_banner_op_channel$bpo$$rt$song$pc$BANNER_IPAD_HD$fgid$1513009$pgid$0$pid$4421228$rid$3415831754$cid$4427431$traceid$0000019fcc676f0a06420aaf6fa10006$bcc$ipad_hd_banner_op_channel$spc$BANNER_IPAD_HD-4$fromId$1095024$fromType$promotion$bpc$BANNER_IPAD_HD",
+        "song": {
+          "no": 1,
+          "rt": "",
+          "copyright": 0,
+          "fee": 1,
+          "hr": {
+            "br": 2998238,
+            "fid": 0,
+            "size": 50597781,
+            "vd": -68002,
+            "sr": 96000
+          },
+          "privilege": {
+            "flag": 1561604,
+            "code": 0,
+            "dlLevel": "none",
+            "subp": 1,
+            "fl": 0,
+            "fee": 1,
+            "dl": 0,
+            "plLevel": "none",
+            "maxBrLevel": "jymaster",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 3415831754,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 1
+              },
+              {
+                "rate": 192000,
+                "chargeType": 1
+              },
+              {
+                "rate": 320000,
+                "chargeType": 1
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              },
+              {
+                "rate": 1999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": true
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "jymaster",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "jymaster",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "none",
+            "pl": 0
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 5,
+          "dt": 135000,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 3415831754,
+          "alg": "banner-feature-4889669",
+          "sq": {
+            "br": 1038076,
+            "fid": 0,
+            "size": 17520049,
+            "vd": -67991,
+            "sr": 48000
+          },
+          "st": 0,
+          "cd": "01",
+          "publishTime": 1785772800000,
+          "cf": "",
+          "originCoverType": 0,
+          "h": {
+            "br": 320003,
+            "fid": 0,
+            "size": 5401965,
+            "vd": -67996,
+            "sr": 48000
+          },
+          "mv": 34783437,
+          "al": {
+            "picUrl": "http://p3.music.126.net/T-ICksMIIKixnB7tmRgQww==/109951173686497794.jpg#hash=3426f1c173df",
+            "name": "FLIRTY",
+            "tns": [],
+            "pic_str": "109951173686497794",
+            "id": 390500636,
+            "pic": 109951173686497800
+          },
+          "l": {
+            "br": 128003,
+            "fid": 0,
+            "size": 2160813,
+            "vd": -63800,
+            "sr": 48000
+          },
+          "m": {
+            "br": 192003,
+            "fid": 0,
+            "size": 3241197,
+            "vd": -65441,
+            "sr": 48000
+          },
+          "version": 4,
+          "cp": 4586638,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "多荣",
+              "tns": [],
+              "alias": [],
+              "id": 12098022
+            },
+            {
+              "name": "朴宰范",
+              "tns": [],
+              "alias": [],
+              "id": 124542
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 38,
+          "name": "FLIRTY",
+          "mark": 536879104
+        },
+        "targetId": 3415831754,
+        "showAdTag": true,
+        "targetType": 1,
+        "typeTitle": "新歌首发",
+        "url": "orpheus://song/3415831754",
+        "encodeId": "3415831754",
+        "monitorImpressList": [],
+        "monitorClickList": []
+      },
+      {
+        "bannerId": "4889495",
+        "pic": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81978769821/e6b6/202673174223/pic_420.jpg#hash=6156e4a15dee",
+        "titleColor": "blue",
+        "requestId": "",
+        "exclusive": false,
+        "bannerBizType": "force_banner",
+        "scm": "1.music-homepage.homepage_banner_force.banner.4889495.2087899410.null",
+        "alg": "banner-feature-4889495",
+        "s_ctrp": "linkPlatform$cc$ipad_hd_banner_op_channel$bpo$$rt$album$pc$BANNER_IPAD_HD$fgid$1513009$pgid$0$pid$4421072$rid$390522103$cid$4425273$traceid$0000019fcc676f0a06420aaf6fa10006$bcc$ipad_hd_banner_op_channel$spc$BANNER_IPAD_HD-5$fromId$1097037$fromType$promotion$bpc$BANNER_IPAD_HD",
+        "targetId": 390522103,
+        "showAdTag": true,
+        "targetType": 10,
+        "typeTitle": "新碟首发",
+        "url": "orpheus://album/390522103",
+        "encodeId": "390522103",
+        "monitorImpressList": [],
+        "monitorClickList": []
+      },
+      {
+        "bannerId": "4888452",
+        "pic": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81977008550/15e5/6ad9/d226/de9602ab7f14a4fc236706d99aec3961.jpg#hash=7f7363763035",
+        "titleColor": "blue",
+        "requestId": "",
+        "exclusive": false,
+        "bannerBizType": "force_banner",
+        "scm": "1.music-homepage.homepage_banner_force.banner.4888452.2087906324.null",
+        "alg": "banner-feature-4888452",
+        "s_ctrp": "linkPlatform$cc$ipad_hd_banner_op_channel$bpo$$rt$song$pc$BANNER_IPAD_HD$fgid$1513009$pgid$0$pid$4420031$rid$3414340057$cid$4426314$traceid$0000019fcc676f0a06420aaf6fa10006$bcc$ipad_hd_banner_op_channel$spc$BANNER_IPAD_HD-6$fromId$1096036$fromType$promotion$bpc$BANNER_IPAD_HD",
+        "song": {
+          "no": 1,
+          "rt": "",
+          "copyright": 0,
+          "fee": 8,
+          "hr": {
+            "br": 1774287,
+            "fid": 0,
+            "size": 68791251,
+            "vd": -49708,
+            "sr": 48000
+          },
+          "privilege": {
+            "flag": 1544196,
+            "code": 0,
+            "dlLevel": "none",
+            "subp": 1,
+            "fl": 320000,
+            "fee": 8,
+            "dl": 0,
+            "plLevel": "exhigh",
+            "maxBrLevel": "jymaster",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 3414340057,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 0
+              },
+              {
+                "rate": 192000,
+                "chargeType": 0
+              },
+              {
+                "rate": 320000,
+                "chargeType": 0
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              },
+              {
+                "rate": 1999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": false
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "jymaster",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "jymaster",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "exhigh",
+            "pl": 320000
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 100,
+          "dt": 310144,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 3414340057,
+          "alg": "banner-feature-4888452",
+          "sq": {
+            "br": 1004269,
+            "fid": 0,
+            "size": 38939203,
+            "vd": -49708,
+            "sr": 48000
+          },
+          "st": 0,
+          "cd": "01",
+          "publishTime": 0,
+          "cf": "",
+          "originCoverType": 2,
+          "h": {
+            "br": 320001,
+            "fid": 0,
+            "size": 12408045,
+            "vd": -49709,
+            "sr": 48000
+          },
+          "mv": 0,
+          "al": {
+            "picUrl": "http://p3.music.126.net/r_iBiakzinVLZXgZ5EENrA==/109951173670194108.jpg#hash=1a63572700f5",
+            "name": "歌手2026 第11期",
+            "tns": [],
+            "pic_str": "109951173670194108",
+            "id": 390052133,
+            "pic": 109951173670194110
+          },
+          "originSongSimpleData": {
+            "artists": [
+              {
+                "name": "尤长靖",
+                "id": 13058503
+              }
+            ],
+            "name": "如果你也这样过",
+            "songId": 1490343020,
+            "albumMeta": {
+              "name": "AZORAland·我是尤长靖",
+              "id": 97409230
+            }
+          },
+          "l": {
+            "br": 128001,
+            "fid": 0,
+            "size": 4963245,
+            "vd": -45478,
+            "sr": 48000
+          },
+          "m": {
+            "br": 192001,
+            "fid": 0,
+            "size": 7444845,
+            "vd": -47150,
+            "sr": 48000
+          },
+          "version": 4,
+          "cp": 7395437,
+          "alia": [],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "尤长靖",
+              "tns": [],
+              "alias": [],
+              "id": 13058503
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 38,
+          "name": "如果你也这样过 (live)",
+          "mark": 17716748288
+        },
+        "targetId": 3414340057,
+        "showAdTag": true,
+        "targetType": 1,
+        "typeTitle": "新歌首发",
+        "url": "orpheus://song/3414340057",
+        "encodeId": "3414340057",
+        "monitorImpressList": [],
+        "monitorClickList": []
+      },
+      {
+        "bannerId": "4887466",
+        "pic": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81978746464/d058/202673174119/yakapic420.jpg#hash=9d52f1b6fffd",
+        "titleColor": "blue",
+        "requestId": "",
+        "exclusive": false,
+        "bannerBizType": "force_banner",
+        "scm": "1.music-homepage.homepage_banner_force.banner.4887466.2087903372.null",
+        "alg": "banner-feature-4887466",
+        "s_ctrp": "linkPlatform$cc$ipad_hd_banner_op_channel$bpo$$rt$album$pc$BANNER_IPAD_HD$fgid$1513009$pgid$0$pid$4419082$rid$390094926$cid$4425281$traceid$0000019fcc676f0a06420aaf6fa10006$bcc$ipad_hd_banner_op_channel$spc$BANNER_IPAD_HD-7$fromId$1097038$fromType$promotion$bpc$BANNER_IPAD_HD",
+        "targetId": 390094926,
+        "showAdTag": true,
+        "targetType": 10,
+        "typeTitle": "新碟首发",
+        "url": "orpheus://album/390094926",
+        "encodeId": "390094926",
+        "monitorImpressList": [],
+        "monitorClickList": []
+      },
+      {
+        "bannerId": "4888479",
+        "pic": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81973330962/1154/202673123458/promotion_rap2026_pic420.jpg#hash=8d5bb88cf18c",
+        "titleColor": "blue",
+        "requestId": "",
+        "exclusive": false,
+        "bannerBizType": "force_banner",
+        "scm": "1.music-homepage.homepage_banner_force.banner.4888479.2088084969.null",
+        "alg": "banner-feature-4888479",
+        "s_ctrp": "linkPlatform$cc$ipad_hd_banner_op_channel$bpo$$rt$album$pc$BANNER_IPAD_HD$fgid$1513009$pgid$0$pid$4420058$rid$390102810$cid$4426340$traceid$0000019fcc676f0a06420aaf6fa10006$bcc$ipad_hd_banner_op_channel$spc$BANNER_IPAD_HD-8$fromId$1096041$fromType$promotion$bpc$BANNER_IPAD_HD",
+        "targetId": 390102810,
+        "showAdTag": true,
+        "targetType": 10,
+        "typeTitle": "新碟首发",
+        "url": "orpheus://album/390102810",
+        "encodeId": "390102810",
+        "monitorImpressList": [],
+        "monitorClickList": []
+      },
+      {
+        "bannerId": "4889511",
+        "pic": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/81914310538/ab1c/202663120114/gyws10_pic420_20260731.jpg#hash=f3b368b993b7",
+        "titleColor": "blue",
+        "requestId": "",
+        "exclusive": false,
+        "bannerBizType": "force_banner",
+        "scm": "1.music-homepage.homepage_banner_force.banner.4889511.2088049352.null",
+        "alg": "banner-feature-4889511",
+        "s_ctrp": "linkPlatform$cc$ipad_hd_banner_op_channel$bpo$$rt$album$pc$BANNER_IPAD_HD$fgid$1513009$pgid$0$pid$4421088$rid$390097848$cid$4427370$traceid$0000019fcc676f0a06420aaf6fa10006$bcc$ipad_hd_banner_op_channel$spc$BANNER_IPAD_HD-9$fromId$1095037$fromType$promotion$bpc$BANNER_IPAD_HD",
+        "targetId": 390097848,
+        "showAdTag": true,
+        "targetType": 10,
+        "typeTitle": "新碟首发",
+        "url": "orpheus://album/390097848",
+        "encodeId": "390097848",
+        "monitorImpressList": [],
+        "monitorClickList": []
+      }
+    ]
+  },
+  "error": null
+}

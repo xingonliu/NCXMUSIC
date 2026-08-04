@@ -2048,10 +2048,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 6,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.banner.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.batch",
@@ -3148,10 +3148,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 8,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.cloudsearch.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.comment",
@@ -4764,10 +4764,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_banner.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.dj_category_excludehot",
@@ -4905,10 +4905,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_catelist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.dj_detail",
@@ -5287,10 +5287,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 5,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_hot.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.dj_paygift",
@@ -7137,10 +7137,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 5,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.homepage_block_page.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.homepage_dragon_ball",
@@ -10302,10 +10302,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 6,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.personalized_djprogram",
@@ -10349,10 +10349,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized_djprogram.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.personalized_mv",
@@ -10395,10 +10395,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized_mv.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.personalized_newsong",
@@ -10455,10 +10455,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized_newsong.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.personalized_privatecontent",
@@ -10501,10 +10501,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized_privatecontent.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.personalized_privatecontent_list",
@@ -10561,10 +10561,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized_privatecontent_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.pl_count",
@@ -10664,10 +10664,10 @@
         }
       ],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_category_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.playlist_catlist",
@@ -10710,10 +10710,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_catlist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.playlist_cover_update",
@@ -11129,10 +11129,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_highquality_tags.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.playlist_hot",
@@ -11175,10 +11175,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_hot.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.playlist_import_name_task_create",
@@ -14224,10 +14224,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 12,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.search_default",
@@ -14275,10 +14275,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_default.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.search_hot",
@@ -14326,10 +14326,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_hot.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.search_hot_detail",
@@ -14377,10 +14377,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_hot_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.search_match",
@@ -14514,10 +14514,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_multimatch.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.search_suggest",
@@ -14573,10 +14573,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 6,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_suggest.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.search_suggest_pc",
@@ -17522,10 +17522,10 @@
         }
       ],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_album.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.top_artists",
@@ -17581,10 +17581,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_artists.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.top_list",
@@ -17629,10 +17629,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 6,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.top_mv",
@@ -17693,10 +17693,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_mv.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.top_playlist",
@@ -17762,10 +17762,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 6,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_playlist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.top_playlist_highquality",
@@ -17826,10 +17826,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_playlist_highquality.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.top_song",
@@ -17890,10 +17890,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 5,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_song.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.topic_detail",
@@ -18088,10 +18088,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.toplist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
     },
     {
       "apiAuditId": "ncm.toplist_artist",

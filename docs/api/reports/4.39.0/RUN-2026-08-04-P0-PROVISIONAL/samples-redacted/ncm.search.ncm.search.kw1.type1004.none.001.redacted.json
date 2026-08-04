@@ -1,0 +1,598 @@
+{
+  "meta": {
+    "caseId": "ncm.search.kw1.type1004.none.001",
+    "apiAuditId": "ncm.search",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "光年之外",
+      "type": "1004"
+    },
+    "startedAt": "2026-08-04T10:52:07.574Z",
+    "endedAt": "2026-08-04T10:52:07.729Z",
+    "durationMs": 155,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "hlWords": null,
+      "mvCount": 31,
+      "mvs": [
+        {
+          "id": 5404646,
+          "cover": "http://p3.music.126.net/T5u6tvoe6_AJkbOBP6jsIQ==/18635622580858178.jpg#hash=ab7f48664e15",
+          "name": "光年之外",
+          "playCount": 25140730,
+          "briefDesc": " 邓紫棋深情献唱演绎史诗爱情",
+          "desc": null,
+          "artistName": "G.E.M.邓紫棋",
+          "artistId": 7763,
+          "duration": 235590,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 7763,
+              "name": "G.E.M.邓紫棋",
+              "alias": [
+                "邓紫棋",
+                "G.E.M.",
+                "邓诗颖",
+                "Tang Tsz-Kei",
+                "邓紫琪",
+                "金鱼",
+                "gem邓紫棋"
+              ],
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 14302862,
+          "cover": "http://p3.music.126.net/flRGYZPeIdoHWWZMjgUJvw==/109951166217883989.jpg#hash=743ab17d907a",
+          "name": "光年之外 (Live)",
+          "playCount": 109713,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "宋亚轩",
+          "artistId": 12316085,
+          "duration": 120000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 12316085,
+              "name": "宋亚轩",
+              "alias": [],
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 5433358,
+          "cover": "http://p4.music.126.net/X60DVfj4yIj5rvbgs1PScQ==/18651015743708490.jpg#hash=5d973e0ecc26",
+          "name": "泡沫 + 光年之外 第12届KKBOX风云榜颁奖礼 17/01/21 现场版",
+          "playCount": 2817506,
+          "briefDesc": "邓紫棋现场演绎《泡沫》《光年之外》",
+          "desc": null,
+          "artistName": "G.E.M.邓紫棋",
+          "artistId": 7763,
+          "duration": 665790,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 7763,
+              "name": "G.E.M.邓紫棋",
+              "alias": [
+                "邓紫棋",
+                "G.E.M.",
+                "邓诗颖",
+                "Tang Tsz-Kei",
+                "邓紫琪",
+                "金鱼",
+                "gem邓紫棋"
+              ],
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 5876658,
+          "cover": "http://p3.music.126.net/l2_DrXzqTMyp--r5Q_8f7A==/109951163267330388.jpg#hash=9f8c4d37dd4b",
+          "name": "光年之外的太阳 (Prod.by bounce like)",
+          "playCount": 4604,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "袁悠范",
+          "artistId": 12085579,
+          "duration": 270000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 12085579,
+              "name": "袁悠范",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 14541922,
+          "cover": "http://p4.music.126.net/DR2FpdDkYbv4E0VzTZR1Sg==/109951167625692026.jpg#hash=c0542890a30b",
+          "name": "光年之外 x Fractures  (Laughing Mashup)",
+          "playCount": 5066,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "Laughing",
+          "artistId": 35079027,
+          "duration": 234000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 35079027,
+              "name": "Laughing",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 10871063,
+          "cover": "http://p4.music.126.net/Zpu7IL-BFBWihiQSDXrQXQ==/109951164123578694.jpg#hash=ed251064f196",
+          "name": "光年之外 - 小提琴版",
+          "playCount": 28731,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "龚明威",
+          "artistId": 12320819,
+          "duration": 248000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 12320819,
+              "name": "龚明威",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 10887099,
+          "cover": "http://p4.music.126.net/Gy4WYUAwVl2viJWUw9mrhg==/109951164336262248.jpg#hash=1163ca071032",
+          "name": "《芒种》的伴奏竟然可以唱《光年之外》？【Vaniah维】",
+          "playCount": 58647,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "Vaniah维",
+          "artistId": 12259376,
+          "duration": 204000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 12259376,
+              "name": "Vaniah维",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 14252871,
+          "cover": "http://p3.music.126.net/xn6tPVz8-bFCYEhb5h9CXg==/109951165731763397.jpg#hash=60196c8f3293",
+          "name": "光年之外(Acoustic) 官方MV",
+          "playCount": 26579,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "史蒂夫Steve Rocks",
+          "artistId": 12280999,
+          "duration": 275000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 12280999,
+              "name": "史蒂夫Steve Rocks",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 10864841,
+          "cover": "http://p4.music.126.net/F3jZMWO_vtJZE0JBBtza4w==/109951164009492632.jpg#hash=df36021df2db",
+          "name": "光年之外（Cover：G.E.M.邓紫棋）",
+          "playCount": 27288,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "邓文怡",
+          "artistId": 12251309,
+          "duration": 236680,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 12251309,
+              "name": "邓文怡",
+              "alias": [],
+              "transNames": null
+            },
+            {
+              "id": 12311533,
+              "name": "邓力玮",
+              "alias": [],
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 14226082,
+          "cover": "http://p3.music.126.net/orxhKbrJbmP53TY7EVIqYg==/109951165625432467.jpg#hash=9117d366cfd0",
+          "name": "青岛城市管理学校2021文艺汇演《光年之外》卜沣、孟俊丽",
+          "playCount": 1571,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "青岛泰安",
+          "artistId": 37511311,
+          "duration": 124000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 37511311,
+              "name": "青岛泰安",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 10884444,
+          "cover": "http://p4.music.126.net/2xg88Wf0PC3FRjp3s7ltjw==/109951164295512805.jpg#hash=0718d5a0564b",
+          "name": "我的梦",
+          "playCount": 52016,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "汪小敏",
+          "artistId": 9881,
+          "duration": 222000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 9881,
+              "name": "汪小敏",
+              "alias": [
+                "Tracy"
+              ],
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 10808458,
+          "cover": "http://p3.music.126.net/jWtCmIF6e9d8uK7C1kRKbA==/109951163641107056.jpg#hash=85ff303eceac",
+          "name": "《光年之外》琥珀琴师Louis钢琴演奏-电影【太空旅客】中国区主题曲",
+          "playCount": 35030,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "琥珀琴师Louis",
+          "artistId": 14119829,
+          "duration": 136000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 14119829,
+              "name": "琥珀琴师Louis",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 10855033,
+          "cover": "http://p3.music.126.net/vW5MTmy1fG5J8nSx5gnRGw==/109951163859453928.jpg#hash=82b9ec255cd0",
+          "name": "光年之外（对唱版）（Cover：G.E.M.邓紫棋）",
+          "playCount": 19795,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "葡陌",
+          "artistId": 15200311,
+          "duration": 273000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 15200311,
+              "name": "葡陌",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 10887883,
+          "cover": "http://p3.music.126.net/Jk95qpYnAjmaWoXbcPG5dw==/109951164342652153.jpg#hash=6abf497cef86",
+          "name": "光年之外耳机双声道，左女声右男生",
+          "playCount": 2755,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "王升众",
+          "artistId": 33126555,
+          "duration": 117000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 33126555,
+              "name": "王升众",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 10944384,
+          "cover": "http://p3.music.126.net/CQAicgc0gSs3tNju5FY4VA==/109951165095890379.jpg#hash=2f70a722c744",
+          "name": "《光年之外+Here we are》",
+          "playCount": 9687,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "晨汐",
+          "artistId": 35176919,
+          "duration": 221000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 35176919,
+              "name": "晨汐",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 10873035,
+          "cover": "http://p3.music.126.net/MP3V17pqNwcM5jd73CGeUg==/109951164149857053.jpg#hash=c6c393565cd9",
+          "name": "《光年之外》 许琇淇/夏侯钰涵",
+          "playCount": 16210,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "许琇淇",
+          "artistId": 32500908,
+          "duration": 233000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 32500908,
+              "name": "许琇淇",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 10883509,
+          "cover": "http://p3.music.126.net/ISAgs2HMmM-8o8zckYRXBA==/109951164295333170.jpg#hash=2b9e09f079c5",
+          "name": "光年",
+          "playCount": 6448,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "李炜",
+          "artistId": 4089,
+          "duration": 207000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 4089,
+              "name": "李炜",
+              "alias": [
+                "Well Lee"
+              ],
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": [
+            "电视剧《初遇在光年之外》片尾曲"
+          ],
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 14211859,
+          "cover": "http://p4.music.126.net/tLLu8dMAwNBGypi8cgFaVg==/109951165546962469.jpg#hash=71fcd16dcc28",
+          "name": "仿生人 (动画版)",
+          "playCount": 19003,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "欧阳娜娜",
+          "artistId": 1087140,
+          "duration": 217000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 1087140,
+              "name": "欧阳娜娜",
+              "alias": [
+                "Nana Ou-yang",
+                "娜比"
+              ],
+              "transNames": null
+            }
+          ],
+          "transNames": [
+            "Alike"
+          ],
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 5819060,
+          "cover": "http://p4.music.126.net/pF5rkbiVQTHMGMj9QZbNhg==/109951163112313760.jpg#hash=958d9fb779fa",
+          "name": "喜欢你",
+          "playCount": 29048,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "胡灵",
+          "artistId": 7958,
+          "duration": 131000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 7958,
+              "name": "胡灵",
+              "alias": [
+                "Kiki"
+              ],
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 10926296,
+          "cover": "http://p4.music.126.net/zZT_cKjw_JilkdBcmsD8MQ==/109951164887484633.jpg#hash=401d301a4aa1",
+          "name": "木星",
+          "playCount": 4601,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "CADY",
+          "artistId": 1047298,
+          "duration": 237000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 1047298,
+              "name": "刘凯迪",
+              "alias": [
+                "Candy Liu"
+              ],
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 14481536,
+          "cover": "http://p4.music.126.net/xH8kzpQ7FFNnmqkBLgEofg==/109951166712753940.jpg#hash=04cc6b6c5bfa",
+          "name": "Stage.Daily LIVE 38期  谷蓝帝《亿万星球都不及你这颗尘埃耀眼》",
+          "playCount": 520,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "Stage.Daily",
+          "artistId": 50660318,
+          "duration": 300000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 50660318,
+              "name": "Stage.Daily",
+              "alias": [],
+              "transNames": null
+            },
+            {
+              "id": 31077858,
+              "name": "谷蓝帝",
+              "alias": null,
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        },
+        {
+          "id": 22656005,
+          "cover": "http://p4.music.126.net/IDJYVYLHeoO7lEQ2pZQudw==/109951170257280532.jpg#hash=791e6ac6d026",
+          "name": "12000 km",
+          "playCount": 1110,
+          "briefDesc": null,
+          "desc": null,
+          "artistName": "柯泯薰",
+          "artistId": 1043475,
+          "duration": 275000,
+          "mark": 0,
+          "arTransName": "",
+          "artists": [
+            {
+              "id": 1043475,
+              "name": "柯泯薰",
+              "alias": [
+                "Misi Ke"
+              ],
+              "transNames": null
+            }
+          ],
+          "transNames": null,
+          "alias": null,
+          "alg": "alg_search_precision_mv_tab_basic"
+        }
+      ]
+    },
+    "code": 200
+  },
+  "error": null
+}

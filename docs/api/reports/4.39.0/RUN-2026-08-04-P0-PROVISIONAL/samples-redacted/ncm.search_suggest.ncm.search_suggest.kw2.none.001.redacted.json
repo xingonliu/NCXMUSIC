@@ -1,0 +1,446 @@
+{
+  "meta": {
+    "caseId": "ncm.search_suggest.kw2.none.001",
+    "apiAuditId": "ncm.search_suggest",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "周杰伦"
+    },
+    "startedAt": "2026-08-04T10:52:21.453Z",
+    "endedAt": "2026-08-04T10:52:21.717Z",
+    "durationMs": 264,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "albums": [
+        {
+          "id": 21349,
+          "name": "看我72变",
+          "artist": {
+            "id": 7219,
+            "name": "蔡依林",
+            "picUrl": "https://p3.music.126.net/DHFeOZ7tjcDSY-oapbCcxg==/109951171072769603.jpg#hash=c349bd535e35",
+            "alias": [
+              "Jolin Cai"
+            ],
+            "albumSize": 55,
+            "musicSize": 808,
+            "picId": 109951171072769600,
+            "fansGroup": null,
+            "recommendText": null,
+            "appendRecText": null,
+            "fansSize": null,
+            "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+            "img1v1": 0,
+            "alia": [
+              "Jolin Cai"
+            ],
+            "trans": null
+          },
+          "publishTime": 1046966400000,
+          "size": 11,
+          "copyrightId": 7001,
+          "status": 1,
+          "picId": 109951172453712030,
+          "mark": 0
+        },
+        {
+          "id": 2261167,
+          "name": "2011 Hit Fm 年度百首单曲",
+          "artist": {
+            "id": 122455,
+            "name": "群星",
+            "picUrl": "https://p4.music.126.net/J3OcCN_ZmayD3zBOy2xX_Q==/109951170120537303.jpg#hash=6c475e7ac31f",
+            "alias": [
+              "华语群星"
+            ],
+            "albumSize": 14881,
+            "musicSize": 53229,
+            "picId": 109951170120537300,
+            "fansGroup": null,
+            "recommendText": null,
+            "appendRecText": null,
+            "fansSize": null,
+            "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+            "img1v1": 0,
+            "alia": [
+              "华语群星"
+            ],
+            "trans": null
+          },
+          "publishTime": 1325260800007,
+          "size": 97,
+          "copyrightId": 13013,
+          "status": 1,
+          "picId": 1406275388402888,
+          "mark": 0
+        }
+      ],
+      "artists": [
+        {
+          "id": 6452,
+          "name": "周杰伦",
+          "picUrl": "https://p3.music.126.net/NWv6PtSBkyWZzqbJVzBr7g==/109951169164936450.jpg#hash=e187cbbeaf1e",
+          "alias": [
+            "Jay Chou",
+            "周董"
+          ],
+          "albumSize": 41,
+          "musicSize": 568,
+          "picId": 109951169164936450,
+          "fansGroup": null,
+          "recommendText": null,
+          "appendRecText": null,
+          "fansSize": null,
+          "img1v1Url": "https://p4.music.126.net/_ECPuM0s0qtWhkpQOSTZUg==/109951169164936940.jpg#hash=02d72f393a96",
+          "img1v1": 109951169164936940,
+          "alia": [
+            "Jay Chou",
+            "周董"
+          ],
+          "trans": null
+        }
+      ],
+      "songs": [
+        {
+          "id": 210049,
+          "name": "布拉格广场",
+          "artists": [
+            {
+              "id": 7219,
+              "name": "蔡依林",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            },
+            {
+              "id": 6452,
+              "name": "周杰伦",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            }
+          ],
+          "album": {
+            "id": 21349,
+            "name": "看我72变",
+            "artist": {
+              "id": 0,
+              "name": "",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "img1v1": 0,
+              "trans": null
+            },
+            "publishTime": 1046966400000,
+            "size": 11,
+            "copyrightId": 7001,
+            "status": 1,
+            "picId": 109951172453712030,
+            "mark": 0
+          },
+          "duration": 294600,
+          "copyrightId": 7001,
+          "status": 0,
+          "alias": [
+            "单元剧《上班女郎》主题曲"
+          ],
+          "rtype": 0,
+          "ftype": 0,
+          "mvid": 186025,
+          "fee": 1,
+          "rUrl": null,
+          "mark": 17179877376
+        },
+        {
+          "id": 5257138,
+          "name": "屋顶",
+          "artists": [
+            {
+              "id": 6452,
+              "name": "周杰伦",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            },
+            {
+              "id": 9612,
+              "name": "温岚",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "img1v1": 0,
+              "trans": null
+            },
+            {
+              "id": 5360,
+              "name": "吴宗宪",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            }
+          ],
+          "album": {
+            "id": 512175,
+            "name": "男女情歌对唱冠军全记录",
+            "artist": {
+              "id": 0,
+              "name": "",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            },
+            "publishTime": 1170604800000,
+            "size": 26,
+            "copyrightId": 7001,
+            "status": 1,
+            "picId": 109951165671182690,
+            "mark": 0
+          },
+          "duration": 319039,
+          "copyrightId": 7001,
+          "status": 0,
+          "alias": [],
+          "rtype": 0,
+          "ftype": 0,
+          "mvid": 0,
+          "fee": 8,
+          "rUrl": null,
+          "mark": 17179877376
+        },
+        {
+          "id": 1888354230,
+          "name": "默 (Live)",
+          "artists": [
+            {
+              "id": 4292,
+              "name": "李荣浩",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            },
+            {
+              "id": 6452,
+              "name": "周杰伦",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            }
+          ],
+          "album": {
+            "id": 135010288,
+            "name": "2021中国好声音 第1期",
+            "artist": {
+              "id": 0,
+              "name": "",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "img1v1": 0,
+              "trans": null
+            },
+            "publishTime": 1627574400000,
+            "size": 22,
+            "copyrightId": -1,
+            "status": 0,
+            "picId": 109951166537300830,
+            "mark": 0
+          },
+          "duration": 133290,
+          "copyrightId": 0,
+          "status": 0,
+          "alias": [],
+          "rtype": 0,
+          "ftype": 0,
+          "mvid": 0,
+          "fee": 1,
+          "rUrl": null,
+          "mark": 17179877376
+        },
+        {
+          "id": 509781655,
+          "name": "想你就写信 (Live)",
+          "artists": [
+            {
+              "id": 6452,
+              "name": "周杰伦",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "img1v1": 0,
+              "trans": null
+            },
+            {
+              "id": 12010120,
+              "name": "李硕",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            },
+            {
+              "id": 12319226,
+              "name": "张鑫",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "img1v1": 0,
+              "trans": null
+            }
+          ],
+          "album": {
+            "id": 36412633,
+            "name": "中国新歌声第二季 第13期",
+            "artist": {
+              "id": 0,
+              "name": "",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            },
+            "publishTime": 1507046400000,
+            "size": 16,
+            "copyrightId": 0,
+            "status": -1,
+            "picId": 109951163038292180,
+            "mark": 0
+          },
+          "duration": 238698,
+          "copyrightId": 0,
+          "status": 0,
+          "alias": [],
+          "rtype": 0,
+          "ftype": 0,
+          "mvid": 0,
+          "fee": 1,
+          "rUrl": null,
+          "mark": 17179942912
+        }
+      ],
+      "order": [
+        "songs",
+        "artists",
+        "albums"
+      ]
+    },
+    "code": 200
+  },
+  "error": null
+}

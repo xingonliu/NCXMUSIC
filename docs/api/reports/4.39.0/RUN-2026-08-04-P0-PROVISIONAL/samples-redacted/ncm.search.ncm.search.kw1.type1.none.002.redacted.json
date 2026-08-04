@@ -1,0 +1,257 @@
+{
+  "meta": {
+    "caseId": "ncm.search.kw1.type1.none.002",
+    "apiAuditId": "ncm.search",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "光年之外",
+      "type": "1",
+      "limit": 5,
+      "offset": 15
+    },
+    "startedAt": "2026-08-04T10:52:05.516Z",
+    "endedAt": "2026-08-04T10:52:05.755Z",
+    "durationMs": 239,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "songs": [
+        {
+          "album": {
+            "publishTime": 0,
+            "size": 0,
+            "artist": {
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "musicSize": 0,
+              "albumSize": 0,
+              "img1v1": 0,
+              "name": "",
+              "alias": [],
+              "id": 0,
+              "picId": 0
+            },
+            "copyrightId": 0,
+            "name": "",
+            "id": 0,
+            "picId": 109951169284486140,
+            "mark": 0,
+            "status": 0
+          },
+          "fee": 0,
+          "duration": 215902,
+          "rtype": 0,
+          "ftype": 0,
+          "artists": [
+            {
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "musicSize": 0,
+              "albumSize": 0,
+              "img1v1": 0,
+              "name": "TF家族-左奇函",
+              "alias": [],
+              "id": 95358792,
+              "picId": 0
+            }
+          ],
+          "copyrightId": 0,
+          "mvid": 0,
+          "name": "光年之外",
+          "alias": [],
+          "id": 2120682038,
+          "mark": 128,
+          "status": 0
+        },
+        {
+          "album": {
+            "publishTime": 1609205961139,
+            "size": 45,
+            "artist": {
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "musicSize": 0,
+              "albumSize": 0,
+              "img1v1": 0,
+              "name": "",
+              "alias": [],
+              "id": 0,
+              "picId": 0
+            },
+            "copyrightId": 0,
+            "name": "孤独烟嗓",
+            "id": 120901693,
+            "picId": 109951165584926720,
+            "mark": 0,
+            "status": 1
+          },
+          "fee": 0,
+          "duration": 243598,
+          "rtype": 0,
+          "ftype": 0,
+          "artists": [
+            {
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "musicSize": 0,
+              "albumSize": 0,
+              "img1v1": 0,
+              "name": "六少飞",
+              "alias": [],
+              "id": 32462386,
+              "picId": 0
+            }
+          ],
+          "copyrightId": 0,
+          "mvid": 0,
+          "name": "光年之外（烟嗓版）",
+          "alias": [],
+          "id": 1807768233,
+          "mark": 128,
+          "status": 0
+        },
+        {
+          "album": {
+            "publishTime": 1782403200000,
+            "size": 1,
+            "artist": {
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "musicSize": 0,
+              "albumSize": 0,
+              "img1v1": 0,
+              "name": "",
+              "alias": [],
+              "id": 0,
+              "picId": 0
+            },
+            "copyrightId": 0,
+            "name": "光年之外(电吉他纯享)",
+            "id": 383773510,
+            "picId": 109951173460174200,
+            "mark": 0,
+            "status": 1
+          },
+          "fee": 8,
+          "duration": 21814,
+          "rtype": 0,
+          "ftype": 0,
+          "artists": [
+            {
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "musicSize": 0,
+              "albumSize": 0,
+              "img1v1": 0,
+              "name": "kawsar-Official",
+              "alias": [],
+              "id": 99397893,
+              "picId": 0
+            }
+          ],
+          "copyrightId": 0,
+          "mvid": 0,
+          "name": "光年之外(电吉他纯享)",
+          "alias": [],
+          "id": 3398315710,
+          "mark": 131200,
+          "status": 0
+        },
+        {
+          "album": {
+            "publishTime": 1526428800000,
+            "size": 48,
+            "artist": {
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "musicSize": 0,
+              "albumSize": 0,
+              "img1v1": 0,
+              "name": "",
+              "alias": [],
+              "id": 0,
+              "picId": 0
+            },
+            "copyrightId": 0,
+            "name": "抖音歌曲最新 纯乐集",
+            "id": 38792486,
+            "picId": 109951163696683950,
+            "mark": 0,
+            "status": 1
+          },
+          "fee": 0,
+          "duration": 233235,
+          "rtype": 0,
+          "ftype": 0,
+          "artists": [
+            {
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "musicSize": 0,
+              "albumSize": 0,
+              "img1v1": 0,
+              "name": "邓壬鑫",
+              "alias": [],
+              "id": 12306430,
+              "picId": 0
+            }
+          ],
+          "copyrightId": 0,
+          "mvid": 0,
+          "name": "光年之外（抖音治愈版）",
+          "alias": [],
+          "id": 1350688274,
+          "mark": 131072,
+          "status": 0
+        },
+        {
+          "album": {
+            "publishTime": 1668758086844,
+            "size": 43,
+            "artist": {
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "musicSize": 0,
+              "albumSize": 0,
+              "img1v1": 0,
+              "name": "",
+              "alias": [],
+              "id": 0,
+              "picId": 0
+            },
+            "copyrightId": 0,
+            "name": "邓紫棋合集",
+            "id": 155178525,
+            "picId": 109951168070719250,
+            "mark": 0,
+            "status": 1
+          },
+          "fee": 0,
+          "duration": 231320,
+          "rtype": 0,
+          "ftype": 0,
+          "artists": [
+            {
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "musicSize": 0,
+              "albumSize": 0,
+              "img1v1": 0,
+              "name": "一宁",
+              "alias": [],
+              "id": 31010281,
+              "picId": 0
+            }
+          ],
+          "copyrightId": 0,
+          "mvid": 0,
+          "name": "光年之外  伴奏（唯美钢琴）",
+          "alias": [],
+          "id": 1999626505,
+          "mark": 131200,
+          "status": 0
+        }
+      ],
+      "hasMore": true,
+      "songCount": 318
+    },
+    "code": 200,
+    "trp": {
+      "rules": [
+        "search_tab_song::2120682038::searchAlg$isGlobalQuality$1"
+      ]
+    }
+  },
+  "error": null
+}

@@ -16,10 +16,20 @@ const args = require('../lib/args.js')({
 const { SessionStore, cookieForLayer } = require('../lib/session.js')
 const { redact } = require('../lib/redact.js')
 const fieldsLib = require('../lib/fields.js')
+const { FixturePool, extract } = require('../lib/pool.js')
 
 const api = require(args.pkgPath)
 const store = new SessionStore(args.sessionDir)
 const spec = JSON.parse(fs.readFileSync(args.spec, 'utf8'))
+const pool = new FixturePool()
+const poolFile = path.join(args.rawDir, '03-fixture-pool.json')
+if (fs.existsSync(poolFile)) {
+  const prev = JSON.parse(fs.readFileSync(poolFile, 'utf8'))
+  for (const [entity, arr] of Object.entries(prev.pool || {})) {
+    pool.add(arr.map((e) => ({ ...e, producerCase: e.producerCase || '' })))
+  }
+  console.log('pool seeded from previous run:', [...pool.byEntity.keys()].map((k) => k + '=' + (pool.byEntity.get(k) || []).length).join(', '))
+}
 
 async function ensureXeapiKey() {
   const os = require('os')
@@ -82,6 +92,7 @@ function jitter() {
 }
 
 const requestLog = []
+const skippedLog = []
 const sampleManifest = []
 const fieldAgg = new Map()
 let networkCases = 0
@@ -192,8 +203,33 @@ async function main() {
         skipped++
         continue
       }
+      if (c.auth === 'AUTH_ANON' && !store.load('guest-01')) {
+        skippedLog.push({ caseId: c.caseId, apiAuditId: group.apiAuditId, auth: c.auth, reason: 'guest-01 session unavailable' })
+        skipped++
+        console.log('case:', c.caseId, '| SKIPPED (no guest session)')
+        continue
+      }
       await sleep(jitter())
-      const { record } = await executeCase(group.apiAuditId, c, moduleFn)
+      const resolved = {}
+      const lineages = {}
+      let missingPool = false
+      for (const [k, v] of Object.entries(c.params || {})) {
+        const r = pool.resolve(v)
+        if (r.lineage && r.lineage.missing) {
+          missingPool = true
+          console.log('case:', c.caseId, '| MISSING POOL VALUE', r.lineage.missing)
+          break
+        }
+        resolved[k] = r.value
+        if (r.lineage) lineages[k] = r.lineage
+      }
+      if (missingPool) {
+        skippedLog.push({ caseId: c.caseId, apiAuditId: group.apiAuditId, auth: c.auth, reason: 'pool value missing' })
+        skipped++
+        continue
+      }
+      const { record } = await executeCase(group.apiAuditId, { ...c, params: resolved }, moduleFn)
+      record.lineage = Object.keys(lineages).length ? lineages : null
       if (!localOnly) networkCases++
       else local++
       const rawFile = path.join(rawDir, record.apiAuditId + '.' + record.caseId + '.raw.json')
@@ -207,6 +243,11 @@ async function main() {
       console.log('case:', record.caseId, '| auth:', record.auth, '| status:', record.status, '| code:', record.code, '| ms:', record.durationMs, record.error ? '| err: ' + record.error.class : '')
       if (record.body && typeof record.body === 'object' && !record.error) {
         recordFields(record.apiAuditId, record.body, record.caseId, record.auth)
+        const entries = extract(record.body, record.apiAuditId, record.caseId)
+        if (entries.length) {
+          pool.add(entries)
+          console.log('fixtures +' + entries.length + ' for ' + record.apiAuditId + ' (pool: ' + [...pool.byEntity.keys()].map((k) => k + '=' + (pool.byEntity.get(k) || []).length).join(', ') + ')')
+        }
       }
       if (group.guestProducer && record.code === 200 && !record.error) {
         const cookieVal = record.body && record.body.cookie
@@ -246,8 +287,10 @@ async function main() {
   for (const r of requestLog) if (!seen.has(r.caseId)) existing.push(r)
   existing.sort((a, b) => a.caseId.localeCompare(b.caseId))
   fs.writeFileSync(logFile, existing.map((r) => JSON.stringify(r)).join('\n') + '\n')
+  fs.writeFileSync(path.join(args.rawDir, 'request-log', 'skipped.jsonl'), skippedLog.map((r) => JSON.stringify(r)).join('\n') + (skippedLog.length ? '\n' : ''))
+  fs.writeFileSync(poolFile, JSON.stringify({ runId: args.runId, generatedAt: new Date().toISOString(), pool: pool.dump() }, null, 2))
   fs.writeFileSync(path.join(args.reportDir, 'samples-manifest.json'), JSON.stringify({ runId: args.runId, samples: sampleManifest }, null, 2))
-  console.log('DONE total=' + total + ' local=' + local + ' network=' + networkCases + ' skipped=' + skipped)
+  console.log('DONE total=' + total + ' local=' + local + ' network=' + networkCases + ' skipped=' + skipped + ' poolEntities=' + pool.byEntity.size)
 }
 
 main().catch((e) => {

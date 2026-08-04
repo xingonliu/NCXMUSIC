@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "caseId": "ncm.personalized_mv.inv.001",
+    "apiAuditId": "ncm.personalized_mv",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-04T10:53:41.103Z",
+    "endedAt": "2026-08-04T10:53:41.184Z",
+    "durationMs": 81,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "category": 3,
+    "result": [
+      {
+        "id": 10973299,
+        "type": 5,
+        "name": "Mute",
+        "copywriter": "编辑推荐：孟美岐全新个人EP主打歌《Mute》",
+        "picUrl": "https://p3.music.126.net/T62FhTyq2Y-SY558NvME8g==/109951165498033031.jpg#hash=276e624ca115",
+        "canDislike": false,
+        "trackNumberUpdateTime": null,
+        "duration": 184000,
+        "playCount": 3310688,
+        "subed": false,
+        "artists": [
+          {
+            "id": 12098023,
+            "name": "孟美岐"
+          }
+        ],
+        "artistName": "孟美岐",
+        "artistId": 12098023,
+        "alg": "featured"
+      },
+      {
+        "id": 10972428,
+        "type": 5,
+        "name": "Monster",
+        "copywriter": "编辑推荐：闪光如雷悚人，亦如福光闪现即逝",
+        "picUrl": "https://p3.music.126.net/AGz7jlrXKhMevr3LyCHQXw==/109951165482711353.jpg#hash=3b2dae61c664",
+        "canDislike": false,
+        "trackNumberUpdateTime": null,
+        "duration": 183000,
+        "playCount": 4145248,
+        "subed": false,
+        "artists": [
+          {
+            "id": 956238,
+            "name": "Shawn Mendes"
+          },
+          {
+            "id": 35531,
+            "name": "Justin Bieber"
+          }
+        ],
+        "artistName": "Shawn Mendes",
+        "artistId": 956238,
+        "alg": "featured"
+      }
+    ]
+  },
+  "error": null
+}

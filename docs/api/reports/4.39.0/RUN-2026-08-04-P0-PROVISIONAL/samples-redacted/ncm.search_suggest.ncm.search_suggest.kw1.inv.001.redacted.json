@@ -1,0 +1,343 @@
+{
+  "meta": {
+    "caseId": "ncm.search_suggest.kw1.inv.001",
+    "apiAuditId": "ncm.search_suggest",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "keywords": "光年之外"
+    },
+    "startedAt": "2026-08-04T10:52:23.105Z",
+    "endedAt": "2026-08-04T10:52:23.209Z",
+    "durationMs": 104,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "albums": [
+        {
+          "id": 35093341,
+          "name": "光年之外",
+          "artist": {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "picUrl": "https://p4.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=620db1e771ea",
+            "alias": [
+              "G.E.M.",
+              "Gloria Tang"
+            ],
+            "albumSize": 57,
+            "musicSize": 420,
+            "picId": 109951167773880640,
+            "fansGroup": null,
+            "recommendText": null,
+            "appendRecText": null,
+            "fansSize": null,
+            "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+            "img1v1": 0,
+            "alia": [
+              "G.E.M.",
+              "Gloria Tang"
+            ],
+            "trans": null
+          },
+          "publishTime": 1483027200007,
+          "size": 1,
+          "copyrightId": 0,
+          "status": 0,
+          "picId": 18587244069235040,
+          "alia": [
+            "电影《太空旅客》中文主题曲"
+          ],
+          "mark": 0
+        },
+        {
+          "id": 146800577,
+          "name": "光年之外无名无姓的人",
+          "artist": {
+            "id": 8103,
+            "name": "花粥",
+            "picUrl": "https://p3.music.126.net/KLsHaBhm7QSejQa8JB9ZtA==/109951162845812387.jpg#hash=38ae1024373e",
+            "alias": [],
+            "albumSize": 62,
+            "musicSize": 297,
+            "picId": 109951162845812380,
+            "fansGroup": null,
+            "recommendText": null,
+            "appendRecText": null,
+            "fansSize": null,
+            "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+            "img1v1": 0,
+            "trans": null
+          },
+          "publishTime": 1655740800000,
+          "size": 2,
+          "copyrightId": -1,
+          "status": 0,
+          "picId": 109951167571404930,
+          "mark": 0
+        }
+      ],
+      "songs": [
+        {
+          "id": 449818741,
+          "name": "光年之外",
+          "artists": [
+            {
+              "id": 7763,
+              "name": "G.E.M.邓紫棋",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "img1v1": 0,
+              "trans": null
+            }
+          ],
+          "album": {
+            "id": 35093341,
+            "name": "光年之外",
+            "artist": {
+              "id": 0,
+              "name": "",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "img1v1": 0,
+              "trans": null
+            },
+            "publishTime": 1483027200007,
+            "size": 1,
+            "copyrightId": 0,
+            "status": 0,
+            "picId": 18587244069235040,
+            "alia": [
+              "电影《太空旅客》中文主题曲"
+            ],
+            "mark": 0
+          },
+          "duration": 235505,
+          "copyrightId": 1415926,
+          "status": 0,
+          "alias": [
+            "电影《太空旅客》中文主题曲"
+          ],
+          "rtype": 0,
+          "ftype": 0,
+          "mvid": 5404646,
+          "fee": 1,
+          "rUrl": null,
+          "mark": 17179877376
+        },
+        {
+          "id": 2714278528,
+          "name": "光年之外 (G.E.M.重生版)",
+          "artists": [
+            {
+              "id": 7763,
+              "name": "G.E.M.邓紫棋",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "img1v1": 0,
+              "trans": null
+            }
+          ],
+          "album": {
+            "id": 274821019,
+            "name": "I AM GLORIA",
+            "artist": {
+              "id": 0,
+              "name": "",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "img1v1": 0,
+              "trans": null
+            },
+            "publishTime": 1749657600000,
+            "size": 12,
+            "copyrightId": 4586667,
+            "status": 1,
+            "picId": 109951171291365380,
+            "mark": 0
+          },
+          "duration": 234951,
+          "copyrightId": 4586667,
+          "status": 0,
+          "alias": [],
+          "rtype": 0,
+          "ftype": 0,
+          "mvid": 0,
+          "fee": 1,
+          "rUrl": null,
+          "mark": 17716748288
+        },
+        {
+          "id": 552458417,
+          "name": "光年之外 (Live)",
+          "artists": [
+            {
+              "id": 861777,
+              "name": "华晨宇",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "img1v1": 0,
+              "trans": null
+            },
+            {
+              "id": 7763,
+              "name": "G.E.M.邓紫棋",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=aac7ca17fb20",
+              "img1v1": 0,
+              "trans": null
+            }
+          ],
+          "album": {
+            "id": 38299217,
+            "name": "歌手2018 歌王之战",
+            "artist": {
+              "id": 0,
+              "name": "",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            },
+            "publishTime": 1523548800000,
+            "size": 10,
+            "copyrightId": -1,
+            "status": 1,
+            "picId": 109951166557924020,
+            "mark": 0
+          },
+          "duration": 277098,
+          "copyrightId": 2706554,
+          "status": 0,
+          "alias": [],
+          "rtype": 0,
+          "ftype": 0,
+          "mvid": 0,
+          "fee": 1,
+          "rUrl": null,
+          "mark": 17716748288
+        },
+        {
+          "id": 1957514684,
+          "name": "光年之外无名无姓的人",
+          "artists": [
+            {
+              "id": 8103,
+              "name": "花粥",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            }
+          ],
+          "album": {
+            "id": 146800577,
+            "name": "光年之外无名无姓的人",
+            "artist": {
+              "id": 0,
+              "name": "",
+              "picUrl": null,
+              "alias": [],
+              "albumSize": 0,
+              "musicSize": 0,
+              "picId": 0,
+              "fansGroup": null,
+              "recommendText": null,
+              "appendRecText": null,
+              "fansSize": null,
+              "img1v1Url": "https://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=f391c081d527",
+              "img1v1": 0,
+              "trans": null
+            },
+            "publishTime": 1655740800000,
+            "size": 2,
+            "copyrightId": -1,
+            "status": 0,
+            "picId": 109951167571404930,
+            "mark": 0
+          },
+          "duration": 216263,
+          "copyrightId": 0,
+          "status": 0,
+          "alias": [],
+          "rtype": 0,
+          "ftype": 0,
+          "mvid": 0,
+          "fee": 8,
+          "rUrl": null,
+          "mark": 17716748288
+        }
+      ],
+      "order": [
+        "songs",
+        "albums"
+      ]
+    },
+    "code": 200
+  },
+  "error": null
+}

@@ -30,15 +30,58 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 6,
+    "cases": [
+      {
+        "caseId": "ncm.banner.type0.anon.001",
+        "auth": "AUTH_ANON",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.banner.type0.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.banner.type0.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.banner.type2.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.banner.type3.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.banner.type999.none.neg.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
   "evidence": []
 }

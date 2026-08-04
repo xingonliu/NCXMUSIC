@@ -160,3 +160,10 @@ node scripts/api-audit/runners/self-check.js --reportDir ...（零遗漏与脱�
 - guest-01 游客会话：**未建立（register_anonimous 被风控，见 B-005）**
 - xeapi 密钥引导：已建立（bootstrap-fallback-sk-static，见 C-001/XEAPI-001）
 - 关键契约事实：无效 Cookie 静默回退未登录（B-006）；user_detail 缺 uid 返回 code 400
+## 12. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：145（并发 1，抖动 350–800ms，无限流）
+- guest-01 游客会话：已建立（sha256 066dfe4c324b…），AUTH_ANON 层有效
+- 夹具池（8 桶）：songId=100, artistId=100, playlistId=100, mvId=52, albumId=100, djId=64, programId=12, toplistId=63
+- 契约事实：搜索空关键词 code 400；type/cat 非法枚举静默容忍（空 result 或回退默认）；top_list 仅接受榜单歌单 ID

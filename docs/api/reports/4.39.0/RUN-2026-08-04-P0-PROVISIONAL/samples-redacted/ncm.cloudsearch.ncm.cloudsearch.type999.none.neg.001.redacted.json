@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.cloudsearch.type999.none.neg.001",
+    "apiAuditId": "ncm.cloudsearch",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "光年之外",
+      "type": "999"
+    },
+    "startedAt": "2026-08-04T10:52:20.078Z",
+    "endedAt": "2026-08-04T10:52:20.155Z",
+    "durationMs": 77,
+    "attempts": 1
+  },
+  "body": {
+    "result": {},
+    "code": 200
+  },
+  "error": null
+}

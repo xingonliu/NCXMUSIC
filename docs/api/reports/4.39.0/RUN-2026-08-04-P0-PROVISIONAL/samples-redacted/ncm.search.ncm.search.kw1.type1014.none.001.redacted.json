@@ -1,0 +1,432 @@
+{
+  "meta": {
+    "caseId": "ncm.search.kw1.type1014.none.001",
+    "apiAuditId": "ncm.search",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "光年之外",
+      "type": "1014"
+    },
+    "startedAt": "2026-08-04T10:52:08.503Z",
+    "endedAt": "2026-08-04T10:52:08.646Z",
+    "durationMs": 143,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "videoCount": 22,
+      "hasMore": false,
+      "videos": [
+        {
+          "coverUrl": "https://p3.music.126.net/orxhKbrJbmP53TY7EVIqYg==/109951165625432467.jpg#hash=e9fab7e9d052",
+          "title": "青岛城市管理学校2021文艺汇演《光年之外》卜沣、孟俊丽",
+          "durationms": 124000,
+          "playTime": 1571,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 37511311,
+              "userName": "青岛泰安"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "14226082",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/xn6tPVz8-bFCYEhb5h9CXg==/109951165731763397.jpg#hash=c3c8116cb6e2",
+          "title": "光年之外(Acoustic) 官方MV",
+          "durationms": 275000,
+          "playTime": 26579,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 12280999,
+              "userName": "史蒂夫Steve Rocks"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "14252871",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/flRGYZPeIdoHWWZMjgUJvw==/109951166217883989.jpg#hash=b5982d60e6bd",
+          "title": "光年之外 (Live)",
+          "durationms": 120000,
+          "playTime": 109713,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 12316085,
+              "userName": "宋亚轩"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "14302862",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p3.music.126.net/Gy4WYUAwVl2viJWUw9mrhg==/109951164336262248.jpg#hash=d921d05818dc",
+          "title": "《芒种》的伴奏竟然可以唱《光年之外》？【Vaniah维】",
+          "durationms": 204000,
+          "playTime": 58647,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 12259376,
+              "userName": "Vaniah维"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "10887099",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/CQAicgc0gSs3tNju5FY4VA==/109951165095890379.jpg#hash=cbd747e995ec",
+          "title": "《光年之外+Here we are》",
+          "durationms": 221000,
+          "playTime": 9687,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 35176919,
+              "userName": "晨汐"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "10944384",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p3.music.126.net/MP3V17pqNwcM5jd73CGeUg==/109951164149857053.jpg#hash=d92972df0f65",
+          "title": "《光年之外》 许琇淇/夏侯钰涵",
+          "durationms": 233000,
+          "playTime": 16210,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 32500908,
+              "userName": "许琇淇"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "10873035",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/jWtCmIF6e9d8uK7C1kRKbA==/109951163641107056.jpg#hash=5edb653d3f50",
+          "title": "《光年之外》琥珀琴师Louis钢琴演奏-电影【太空旅客】中国区主题曲",
+          "durationms": 136000,
+          "playTime": 35030,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 14119829,
+              "userName": "琥珀琴师Louis"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "10808458",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/F3jZMWO_vtJZE0JBBtza4w==/109951164009492632.jpg#hash=fdbb2fcdd22e",
+          "title": "光年之外（Cover：G.E.M.邓紫棋）",
+          "durationms": 236680,
+          "playTime": 27288,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 12251309,
+              "userName": "邓文怡"
+            },
+            {
+              "userId": 12311533,
+              "userName": "邓力玮"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "10864841",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/T5u6tvoe6_AJkbOBP6jsIQ==/18635622580858178.jpg#hash=95f1b00e15ad",
+          "title": "光年之外",
+          "durationms": 235590,
+          "playTime": 25140730,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 7763,
+              "userName": "G.E.M.邓紫棋"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "5404646",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/vW5MTmy1fG5J8nSx5gnRGw==/109951163859453928.jpg#hash=fe26ecc0f300",
+          "title": "光年之外（对唱版）（Cover：G.E.M.邓紫棋）",
+          "durationms": 273000,
+          "playTime": 19795,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 15200311,
+              "userName": "葡陌"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "10855033",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p3.music.126.net/l2_DrXzqTMyp--r5Q_8f7A==/109951163267330388.jpg#hash=d62664ecda03",
+          "title": "光年之外的太阳 (Prod.by bounce like)",
+          "durationms": 270000,
+          "playTime": 4604,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 12085579,
+              "userName": "袁悠范"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "5876658",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/Zpu7IL-BFBWihiQSDXrQXQ==/109951164123578694.jpg#hash=0697b83e6ce6",
+          "title": "光年之外 - 小提琴版",
+          "durationms": 248000,
+          "playTime": 28731,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 12320819,
+              "userName": "龚明威"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "10871063",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/Jk95qpYnAjmaWoXbcPG5dw==/109951164342652153.jpg#hash=979f169194d3",
+          "title": "光年之外耳机双声道，左女声右男生",
+          "durationms": 117000,
+          "playTime": 2755,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 33126555,
+              "userName": "王升众"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "10887883",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p3.music.126.net/DR2FpdDkYbv4E0VzTZR1Sg==/109951167625692026.jpg#hash=2fa376f18a27",
+          "title": "光年之外 x Fractures  (Laughing Mashup)",
+          "durationms": 234000,
+          "playTime": 5066,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 35079027,
+              "userName": "Laughing"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "14541922",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/X60DVfj4yIj5rvbgs1PScQ==/18651015743708490.jpg#hash=51d81c4ce22c",
+          "title": "泡沫 + 光年之外 第12届KKBOX风云榜颁奖礼 17/01/21 现场版",
+          "durationms": 665790,
+          "playTime": 2817506,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 7763,
+              "userName": "G.E.M.邓紫棋"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "5433358",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/zZT_cKjw_JilkdBcmsD8MQ==/109951164887484633.jpg#hash=55b09c7c9004",
+          "title": "木星",
+          "durationms": 237000,
+          "playTime": 4601,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 1047298,
+              "userName": "CADY"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "10926296",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p3.music.126.net/xH8kzpQ7FFNnmqkBLgEofg==/109951166712753940.jpg#hash=2037c00b4e8a",
+          "title": "Stage.Daily LIVE 38期  谷蓝帝《亿万星球都不及你这颗尘埃耀眼》",
+          "durationms": 300000,
+          "playTime": 520,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 50660318,
+              "userName": "Stage.Daily"
+            },
+            {
+              "userId": 31077858,
+              "userName": "谷蓝帝"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "14481536",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/2xg88Wf0PC3FRjp3s7ltjw==/109951164295512805.jpg#hash=8e69f5040c27",
+          "title": "我的梦",
+          "durationms": 222000,
+          "playTime": 52016,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 9881,
+              "userName": "汪小敏"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "10884444",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p3.music.126.net/ISAgs2HMmM-8o8zckYRXBA==/109951164295333170.jpg#hash=57539dc0ff01",
+          "title": "光年",
+          "durationms": 207000,
+          "playTime": 6448,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 4089,
+              "userName": "李炜"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "10883509",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/tLLu8dMAwNBGypi8cgFaVg==/109951165546962469.jpg#hash=e41ebb07a572",
+          "title": "仿生人 (动画版)",
+          "durationms": 217000,
+          "playTime": 19003,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 1087140,
+              "userName": "欧阳娜娜"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "14211859",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p4.music.126.net/pF5rkbiVQTHMGMj9QZbNhg==/109951163112313760.jpg#hash=a65117623d2d",
+          "title": "喜欢你",
+          "durationms": 131000,
+          "playTime": 29048,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 7958,
+              "userName": "胡灵"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "5819060",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        },
+        {
+          "coverUrl": "https://p3.music.126.net/IDJYVYLHeoO7lEQ2pZQudw==/109951170257280532.jpg#hash=b3a508b8b840",
+          "title": "12000 km",
+          "durationms": 275000,
+          "playTime": 1110,
+          "type": 0,
+          "creator": [
+            {
+              "userId": 1043475,
+              "userName": "柯泯薰"
+            }
+          ],
+          "aliaName": null,
+          "transName": null,
+          "vid": "22656005",
+          "markTypes": null,
+          "alg": "alg_search_precision_video_tab_basic"
+        }
+      ],
+      "hlWords": [
+        "光年之外"
+      ]
+    },
+    "code": 200
+  },
+  "error": null
+}

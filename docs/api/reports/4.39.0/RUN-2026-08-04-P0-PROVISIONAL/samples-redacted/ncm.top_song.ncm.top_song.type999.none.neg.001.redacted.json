@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "caseId": "ncm.top_song.type999.none.neg.001",
+    "apiAuditId": "ncm.top_song",
+    "auth": "AUTH_NONE",
+    "params": {
+      "type": "999"
+    },
+    "startedAt": "2026-08-04T10:52:55.960Z",
+    "endedAt": "2026-08-04T10:52:56.028Z",
+    "durationMs": 68,
+    "attempts": 1
+  },
+  "body": {
+    "data": [],
+    "code": 200
+  },
+  "error": null
+}

@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "caseId": "ncm.search.kw1.type100.none.001",
+    "apiAuditId": "ncm.search",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "光年之外",
+      "type": "100"
+    },
+    "startedAt": "2026-08-04T10:52:06.180Z",
+    "endedAt": "2026-08-04T10:52:06.317Z",
+    "durationMs": 137,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "hasMore": false,
+      "artistCount": 5,
+      "hlWords": [
+        "光年之外"
+      ],
+      "artists": [
+        {
+          "id": 7763,
+          "name": "G.E.M.邓紫棋",
+          "picUrl": "https://p4.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=620db1e771ea",
+          "alias": [
+            "G.E.M.",
+            "Gloria Tang"
+          ],
+          "albumSize": 57,
+          "musicSize": 420,
+          "picId": 109951167773880640,
+          "fansGroup": null,
+          "recommendText": "",
+          "appendRecText": "演唱: 光年之外",
+          "fansSize": 14347003,
+          "img1v1Url": "https://p4.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=6d073e3265fb",
+          "accountId": 281382,
+          "img1v1": 109951167771736530,
+          "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8",
+          "mvSize": 116,
+          "followed": false,
+          "alg": "alg_search_precision_artist_tab_basic",
+          "alia": [
+            "G.E.M.",
+            "Gloria Tang"
+          ],
+          "trans": null
+        },
+        {
+          "id": 861777,
+          "name": "华晨宇",
+          "picUrl": "https://p3.music.126.net/btGSOfbnvaBsBvPv6UIhow==/109951170365595224.jpg#hash=5e7ec0b85537",
+          "alias": [
+            "花花"
+          ],
+          "albumSize": 37,
+          "musicSize": 300,
+          "picId": 109951170365595230,
+          "fansGroup": null,
+          "recommendText": "",
+          "appendRecText": "演唱: 光年之外",
+          "fansSize": 7106210,
+          "img1v1Url": "https://p4.music.126.net/AiwzfwDYNT-qYl4ZLsTvVQ==/109951170365548207.jpg#hash=965fd2688ccc",
+          "accountId": 43745724,
+          "img1v1": 109951170365548210,
+          "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8",
+          "mvSize": 81,
+          "followed": false,
+          "alg": "alg_search_precision_artist_tab_basic",
+          "alia": [
+            "花花"
+          ],
+          "trans": null
+        },
+        {
+          "id": 47299441,
+          "name": "一光年之外",
+          "picUrl": "https://p3.music.126.net/MCyz8AbNHx1T4pgL_CwMJQ==/109951165852270892.jpg#hash=58dc222fc512",
+          "alias": [],
+          "albumSize": 3,
+          "musicSize": 3,
+          "picId": 109951165852270900,
+          "fansGroup": null,
+          "recommendText": "",
+          "appendRecText": "",
+          "fansSize": 26,
+          "img1v1Url": "https://p3.music.126.net/zCYAqz6UPGR1rEY4Rr1BoA==/109951165852281539.jpg#hash=e38ef50b4117",
+          "accountId": 4953795356,
+          "img1v1": 109951165852281540,
+          "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4874132307/4499/f228/d867/da64b9725e125943ad4e14e4c72d0884.png#hash=30c5af5c53fd",
+          "mvSize": 0,
+          "followed": false,
+          "alg": "alg_search_precision_artist_tab_basic",
+          "trans": null
+        },
+        {
+          "id": 123805069,
+          "name": "愛在赤道變藍後的一百個光年之外",
+          "picUrl": "https://p4.music.126.net/3-nV1gXgcskmbCmRrMPwWA==/109951173001981450.jpg#hash=315135b5f28e",
+          "alias": [
+            "Melancholy"
+          ],
+          "albumSize": 1,
+          "musicSize": 2,
+          "picId": 109951173001981460,
+          "fansGroup": null,
+          "recommendText": "",
+          "appendRecText": "",
+          "fansSize": 35,
+          "img1v1Url": "https://p3.music.126.net/9LgrC_fXGS44C24-qnoKOQ==/109951173639737951.jpg#hash=8c6da04c9806",
+          "accountId": 12654007212,
+          "img1v1": 109951173639737950,
+          "identityIconUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/59679338493/06e3/631a/4c59/7e34d8deb3c3401f32d1f9579a8f1e0a.png#hash=51ea124a6fb4",
+          "mvSize": 0,
+          "followed": false,
+          "alg": "alg_search_precision_artist_tab_basic",
+          "alia": [
+            "Melancholy"
+          ],
+          "trans": null
+        },
+        {
+          "id": 1203045,
+          "name": "艾热 AIR",
+          "picUrl": "https://p4.music.126.net/2aCqy2k9cIMzJDd0TU9CMg==/109951164513946258.jpg#hash=4e7f1338211b",
+          "alias": [],
+          "albumSize": 50,
+          "musicSize": 282,
+          "picId": 109951164513946260,
+          "fansGroup": null,
+          "recommendText": "",
+          "appendRecText": "演唱: 光年之外",
+          "fansSize": 1301543,
+          "img1v1Url": "https://p3.music.126.net/tvy9BeZWZhqKfYKLHsSf-w==/109951172651091852.jpg#hash=88fe6ee26d75",
+          "accountId": 57784700,
+          "img1v1": 109951172651091860,
+          "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8",
+          "mvSize": 37,
+          "followed": false,
+          "alg": "alg_search_precision_artist_tab_basic",
+          "trans": null
+        }
+      ],
+      "searchQcReminder": null
+    },
+    "code": 200
+  },
+  "error": null
+}

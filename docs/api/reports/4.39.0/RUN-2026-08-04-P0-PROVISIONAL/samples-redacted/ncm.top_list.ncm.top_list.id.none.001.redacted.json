@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.top_list.id.none.001",
+    "apiAuditId": "ncm.top_list",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "2488306802"
+    },
+    "startedAt": "2026-08-04T10:52:48.581Z",
+    "endedAt": "2026-08-04T10:52:48.658Z",
+    "durationMs": 77,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "请求参数错误",
+    "debugInfo": null,
+    "data": null,
+    "failData": null,
+    "msg": "请求参数错误"
+  },
+  "error": null
+}

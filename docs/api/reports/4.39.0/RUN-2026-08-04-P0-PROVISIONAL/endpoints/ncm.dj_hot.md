@@ -89,3 +89,16 @@
 - 是否建议进入 Capability Catalog：待定（Phase 15）
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
+
+## 14. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补）
+- 说明：见 §14 运行记录与字段表
+
+| caseId | auth | status | code | durationMs | note |
+| --- | --- | --- | --- | --- | --- |
+| ncm.dj_hot.anon.001 | AUTH_ANON | - | 200 | 90 |  |
+| ncm.dj_hot.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 108 |  |
+| ncm.dj_hot.limit5.none.001 | AUTH_NONE | - | 200 | 71 |  |
+| ncm.dj_hot.none.001 | AUTH_NONE | - | 200 | 92 |  |
+| ncm.dj_hot.page.none.001 | AUTH_NONE | - | 200 | 92 |  |

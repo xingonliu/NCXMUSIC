@@ -1,0 +1,219 @@
+{
+  "meta": {
+    "caseId": "ncm.search_hot_detail.inv.001",
+    "apiAuditId": "ncm.search_hot_detail",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-04T10:52:29.861Z",
+    "endedAt": "2026-08-04T10:52:29.919Z",
+    "durationMs": 58,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": [
+      {
+        "searchWord": "甲乙丙丁",
+        "score": 96674,
+        "content": "",
+        "source": 0,
+        "iconType": 4,
+        "iconUrl": "https://p1.music.126.net/IBKnY_RCYTUAALcqWhAT6g==/109951163967994693.png#hash=35d334b2fb06",
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "海屿你",
+        "score": 68558,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "SWEAT",
+        "score": 66075,
+        "content": "吻妹回归",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": "featured"
+      },
+      {
+        "searchWord": "碎碎念",
+        "score": 57173,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "晨间新闻",
+        "score": 43521,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "幻痛药",
+        "score": 46710,
+        "content": "",
+        "source": 0,
+        "iconType": 5,
+        "iconUrl": "https://p1.music.126.net/PtgUJbcvDAY0HKWpmOB2HA==/109951163967988470.png#hash=40bc15614e15",
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "刻在我心底的名字",
+        "score": 58239,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "失眠",
+        "score": 50447,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "水星奖",
+        "score": 49714,
+        "content": "提名公布",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": "featured"
+      },
+      {
+        "searchWord": "我不难过",
+        "score": 46434,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "弹壳",
+        "score": 29459,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "The Gentlemen",
+        "score": 28706,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "反乌托邦",
+        "score": 26735,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "樱花草",
+        "score": 37213,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "知了",
+        "score": 28235,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "薛之谦",
+        "score": 36095,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "泪海",
+        "score": 39198,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "KISS OF LIFE",
+        "score": 35320,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "忘不掉的你",
+        "score": 27739,
+        "content": "",
+        "source": 0,
+        "iconType": 0,
+        "iconUrl": null,
+        "url": "",
+        "alg": null
+      },
+      {
+        "searchWord": "Dehors",
+        "score": 37871,
+        "content": "",
+        "source": 0,
+        "iconType": 5,
+        "iconUrl": "https://p1.music.126.net/PtgUJbcvDAY0HKWpmOB2HA==/109951163967988470.png#hash=40bc15614e15",
+        "url": "",
+        "alg": null
+      }
+    ],
+    "message": "success"
+  },
+  "error": null
+}

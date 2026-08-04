@@ -46,15 +46,100 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 12,
+    "cases": [
+      {
+        "caseId": "ncm.search.empty.none.neg.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 400,
+        "error": null
+      },
+      {
+        "caseId": "ncm.search.kw1.type1.anon.001",
+        "auth": "AUTH_ANON",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.search.kw1.type1.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.search.kw1.type1.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.search.kw1.type1.none.002",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.search.kw1.type10.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.search.kw1.type100.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.search.kw1.type1000.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.search.kw1.type1004.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.search.kw1.type1014.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.search.kw2.type1.none.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      },
+      {
+        "caseId": "ncm.search.type999.none.neg.001",
+        "auth": "AUTH_NONE",
+        "status": null,
+        "code": 200,
+        "error": null
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
   "evidence": []
 }

@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "caseId": "ncm.cloudsearch.page.boundary.001",
+    "apiAuditId": "ncm.cloudsearch",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "光年之外",
+      "type": "1",
+      "limit": 1,
+      "offset": 0
+    },
+    "startedAt": "2026-08-04T10:52:17.715Z",
+    "endedAt": "2026-08-04T10:52:17.960Z",
+    "durationMs": 245,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "songs": [
+        {
+          "no": 0,
+          "copyright": 2,
+          "fee": 1,
+          "privilege": {
+            "flag": 1541124,
+            "code": 0,
+            "dlLevel": "none",
+            "subp": 1,
+            "fl": 0,
+            "fee": 1,
+            "dl": 0,
+            "plLevel": "none",
+            "maxBrLevel": "jymaster",
+            "rightSource": 0,
+            "maxbr": 999000,
+            "id": 449818741,
+            "sp": 7,
+            "payed": 0,
+            "st": 0,
+            "chargeInfoList": [
+              {
+                "rate": 128000,
+                "chargeType": 1
+              },
+              {
+                "rate": 192000,
+                "chargeType": 1
+              },
+              {
+                "rate": 320000,
+                "chargeType": 1
+              },
+              {
+                "rate": 999000,
+                "chargeType": 1
+              }
+            ],
+            "freeTrialPrivilege": {
+              "userConsumable": false,
+              "resConsumable": true
+            },
+            "downloadMaxbr": 999000,
+            "downloadMaxBrLevel": "jymaster",
+            "cp": 1,
+            "preSell": false,
+            "playMaxBrLevel": "jymaster",
+            "cs": false,
+            "toast": false,
+            "playMaxbr": 999000,
+            "flLevel": "none",
+            "pl": 0
+          },
+          "mst": 9,
+          "pst": 0,
+          "pop": 100,
+          "dt": 235505,
+          "rtype": 0,
+          "s_id": 0,
+          "rtUrls": [],
+          "resourceState": true,
+          "id": 449818741,
+          "sq": {
+            "br": 887395,
+            "fid": 0,
+            "size": 26123277,
+            "vd": -45090,
+            "sr": 44100
+          },
+          "st": 0,
+          "cd": "1",
+          "publishTime": 1483027200007,
+          "cf": "",
+          "originCoverType": 1,
+          "h": {
+            "br": 320000,
+            "fid": 0,
+            "size": 9422933,
+            "vd": -44887,
+            "sr": 44100
+          },
+          "mv": 5404646,
+          "al": {
+            "picUrl": "http://p3.music.126.net/fkqFqMaEt0CzxYS-0NpCog==/18587244069235039.jpg#hash=70fe61f6b34c",
+            "name": "光年之外",
+            "tns": [],
+            "pic_str": "18587244069235039",
+            "id": 35093341,
+            "pic": 18587244069235040
+          },
+          "l": {
+            "br": 128000,
+            "fid": 0,
+            "size": 3769199,
+            "vd": -40588,
+            "sr": 44100
+          },
+          "m": {
+            "br": 192000,
+            "fid": 0,
+            "size": 5653777,
+            "vd": -42341,
+            "sr": 44100
+          },
+          "version": 105,
+          "cp": 1415926,
+          "alia": [
+            "电影《太空旅客》中文主题曲"
+          ],
+          "djId": 0,
+          "single": 0,
+          "ar": [
+            {
+              "name": "G.E.M.邓紫棋",
+              "tns": [],
+              "alias": [
+                "G.E.M.",
+                "Gloria Tang"
+              ],
+              "id": 7763,
+              "alia": [
+                "G.E.M.",
+                "Gloria Tang"
+              ]
+            }
+          ],
+          "ftype": 0,
+          "t": 0,
+          "v": 139,
+          "name": "光年之外",
+          "mark": 17179877376
+        }
+      ],
+      "songCount": 318
+    },
+    "code": 200,
+    "trp": {
+      "rules": [
+        "search_tab_song::449818741::searchAlg$isGlobalQuality$1"
+      ]
+    }
+  },
+  "error": null
+}

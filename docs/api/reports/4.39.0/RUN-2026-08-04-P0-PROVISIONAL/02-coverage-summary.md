@@ -209,3 +209,10 @@ fieldEvidenceCoverage = evidencedFieldCount / discoveredFieldCount   // 0 / 0（
 - 风控事件：register_anonimous 连续 code 400（退避 45s 后仍失败），已按手册停止该域并标记 rate_limited
 - 冲突：XEAPI-001（register_xeapikey 期望 sk，服务器返回 publicKey/version/nextUpdateTime）
 - 样本：24 个 raw + redacted（samples-manifest.json）
+## 11. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行接口数：30；总执行 case：145（全部为线上调用，并发 1 + 抖动 350–800ms）
+- 终态：30 个 partial（统一 blocker：AUTH_USER 登录层缺失）
+- 风控/失败：0（无限流、无失败）
+- 夹具池：songId=100, artistId=100, playlistId=100, mvId=52, albumId=100, djId=64, programId=12, toplistId=63
+- 关键契约事实：见 07-multivariable-diff.md §3 与 06-failures-and-blockers.md §5
