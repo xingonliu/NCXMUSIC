@@ -89,7 +89,6 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 15. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
 - 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
@@ -97,6 +96,36 @@
 | caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
 | ncm.simi_artist.anon.001 | AUTH_ANON | - | 200 | 89 |  |
-| ncm.simi_artist.id0.none.neg.001 | AUTH_NONE | err(301) | 301 |  | {"code":301,"message":"未登录"} |
-| ncm.simi_artist.inv.001 | AUTH_INVALID_EXPIRED | err(400) | -462 |  | {"code":-462,"data":{"actionCode":null,"verifyType":40,"verifyId":1007602,"verifyUrl":"https://st.music.163.com/encrypt- |
-| ncm.simi_artist.none.001 | AUTH_NONE | err(301) | 301 |  | {"code":301,"message":"未登录"} |
+| ncm.simi_artist.id0.none.neg.001 | AUTH_NONE | err | 301 | - | code 301 |
+| ncm.simi_artist.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.simi_artist.none.001 | AUTH_NONE | err | 301 | - | code 301 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `artists[].accountId` | union<null|number> | 3 | 2 | 0 | AUTH_ANON | `6228671` |
+| `artists[].albumSize` | number | 3 | 0 | 0 | AUTH_ANON | `73` |
+| `artists[].alg` | string | 3 | 0 | 0 | AUTH_ANON | `itembased` |
+| `artists[].alias[]` | string | 4 | 0 | 0 | AUTH_ANON | `JJ Lin` |
+| `artists[].briefDesc` | string | 3 | 0 | 0 | AUTH_ANON | `` |
+| `artists[].fansCount` | number | 3 | 0 | 0 | AUTH_ANON | `16432276` |
+| `artists[].followed` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `artists[].id` | number | 3 | 0 | 0 | AUTH_ANON | `3684` |
+| `artists[].identifyTag` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `artists[].img1v1Id` | number | 3 | 0 | 0 | AUTH_ANON | `109951168529049970` |
+| `artists[].img1v1Id_str` | string | 3 | 0 | 0 | AUTH_ANON | `109951168529049969` |
+| `artists[].img1v1Url` | string | 3 | 0 | 0 | AUTH_ANON | `http://p3.music.126.net/r6W-zCnV-aduVn_P` |
+| `artists[].isSubed` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `artists[].musicSize` | number | 3 | 0 | 0 | AUTH_ANON | `598` |
+| `artists[].mvSize` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `artists[].name` | string | 3 | 0 | 0 | AUTH_ANON | `林俊杰` |
+| `artists[].picId` | number | 3 | 0 | 0 | AUTH_ANON | `109951168529051970` |
+| `artists[].picId_str` | string | 3 | 0 | 0 | AUTH_ANON | `109951168529051968` |
+| `artists[].picUrl` | string | 3 | 0 | 0 | AUTH_ANON | `http://p4.music.126.net/78q0jUUJ0h08GxAs` |
+| `artists[].publishTime` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `artists[].showPrivateMsg` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `artists[].topicPerson` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `artists[].trans` | string | 3 | 0 | 0 | AUTH_ANON | `` |
+| `artists[].transNames` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |

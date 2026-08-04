@@ -89,7 +89,6 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 15. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
 - 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
@@ -100,3 +99,17 @@
 | ncm.lyric_new.id0.none.neg.001 | AUTH_NONE | - | 200 | 93 |  |
 | ncm.lyric_new.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 85 |  |
 | ncm.lyric_new.none.001 | AUTH_NONE | - | 200 | 69 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `briefDesc` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `200` |
+| `lrc.lyric` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `[00:00.00]暂无歌词` |
+| `lrc.version` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1` |
+| `needDesc` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `true` |
+| `qfy` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `sfy` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `sgc` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `uncollected` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `true` |

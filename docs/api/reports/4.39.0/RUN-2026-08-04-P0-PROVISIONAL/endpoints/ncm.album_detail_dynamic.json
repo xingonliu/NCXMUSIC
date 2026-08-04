@@ -37,39 +37,238 @@
       {
         "caseId": "ncm.album_detail_dynamic.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 76,
+        "error": null,
+        "sampleHash": "0bfc924c25893e73fe18d257e8178ed9051cc34a1fa67d4b8c2978d307f8e862",
+        "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.anon.001.raw.json"
       },
       {
         "caseId": "ncm.album_detail_dynamic.id0.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 104,
+        "error": null,
+        "sampleHash": "6846343fdde975ca2984f0712e654db85ca544832cb8e4ecc613b04e82a1ea18",
+        "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.id0.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.album_detail_dynamic.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 63,
+        "error": null,
+        "sampleHash": "1f838875b3bf44266a3473bde05ebc97c4bb1ca8e995586bf63ff1f9897ed53f",
+        "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.inv.001.raw.json"
       },
       {
         "caseId": "ncm.album_detail_dynamic.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 64,
+        "error": null,
+        "sampleHash": "7d60a54b5d86cb11bac2211cc3625e5a4fc8af901efe625c06f9d117365c1472",
+        "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "albumNearbyProduct.subTitle",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.album_detail_dynamic.none.001",
+      "example": "立即购买"
+    },
+    {
+      "jsonPath": "albumNearbyProduct.title",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.album_detail_dynamic.none.001",
+      "example": "邓紫棋实体专辑"
+    },
+    {
+      "jsonPath": "albumNearbyProduct.url",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.album_detail_dynamic.none.001",
+      "example": "https://music.163.com/store/product/column#hash=b09fd445e035"
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.album_detail_dynamic.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "commentCount",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.album_detail_dynamic.none.001",
+      "example": "811"
+    },
+    {
+      "jsonPath": "isSub",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.album_detail_dynamic.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "likedCount",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.album_detail_dynamic.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "onSale",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.album_detail_dynamic.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "shareCount",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.album_detail_dynamic.none.001",
+      "example": "2020"
+    },
+    {
+      "jsonPath": "subCount",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.album_detail_dynamic.none.001",
+      "example": "20818"
+    },
+    {
+      "jsonPath": "subTime",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.album_detail_dynamic.none.001",
+      "example": "0"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
   "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
-  "evidence": []
+  "evidence": [
+    {
+      "caseId": "ncm.album_detail_dynamic.anon.001",
+      "sampleHash": "0bfc924c25893e73fe18d257e8178ed9051cc34a1fa67d4b8c2978d307f8e862",
+      "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_detail_dynamic.id0.none.neg.001",
+      "sampleHash": "6846343fdde975ca2984f0712e654db85ca544832cb8e4ecc613b04e82a1ea18",
+      "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_detail_dynamic.inv.001",
+      "sampleHash": "1f838875b3bf44266a3473bde05ebc97c4bb1ca8e995586bf63ff1f9897ed53f",
+      "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_detail_dynamic.none.001",
+      "sampleHash": "7d60a54b5d86cb11bac2211cc3625e5a4fc8af901efe625c06f9d117365c1472",
+      "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.none.001.raw.json"
+    }
+  ]
 }

@@ -89,21 +89,19 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: AUTH_ANON/AUTH_USER/VIP 缺失；无 uid 生产路径（需登录账号））
-- 说明：NONE×3 结构稳定；INVALID×2 与 NONE 结构完全一致
+- 终态：**partial**（blocker: AUTH_USER 缺失；uid 生产路径阻塞）
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
-| ncm.user_account.inv.expired.001 | AUTH_INVALID_EXPIRED | err | 200 | 63 |  |
-| ncm.user_account.inv.truncated.001 | AUTH_INVALID_TRUNCATED | err | 200 | 62 |  |
-| ncm.user_account.none.min.001 | AUTH_NONE | err | 200 | 61 |  |
-| ncm.user_account.none.min.002 | AUTH_NONE | err | 200 | 60 |  |
-| ncm.user_account.none.min.003 | AUTH_NONE | err | 200 | 59 |  |
+| ncm.user_account.inv.expired.001 | AUTH_INVALID_EXPIRED | - | 200 | 63 |  |
+| ncm.user_account.inv.truncated.001 | AUTH_INVALID_TRUNCATED | - | 200 | 62 |  |
+| ncm.user_account.none.min.001 | AUTH_NONE | - | 200 | 61 |  |
+| ncm.user_account.none.min.002 | AUTH_NONE | - | 200 | 60 |  |
+| ncm.user_account.none.min.003 | AUTH_NONE | - | 200 | 59 |  |
 
-### 13.1 运行字段表（Phase 1）
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
 
 | JSONPath | rawType | presence | null | empty | auths | example |
 | --- | --- | --- | --- | --- | --- | --- |

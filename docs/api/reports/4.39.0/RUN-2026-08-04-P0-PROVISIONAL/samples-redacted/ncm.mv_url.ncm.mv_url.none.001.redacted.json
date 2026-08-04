@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "caseId": "ncm.mv_url.none.001",
+    "apiAuditId": "ncm.mv_url",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "5404646"
+    },
+    "startedAt": "2026-08-04T11:18:26.202Z",
+    "endedAt": "2026-08-04T11:18:26.309Z",
+    "durationMs": 107,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "id": 5404646,
+      "url": "http://vodkgeyttp8.vod.126.net/cloudmusic/IjBiITkyMTEgMSI2JCAwZA==/mv/5404646/41a8e7815c380b8840f3ec86e3e44e48.mp4?wsTime=1785842306&wsSecret=%3CREDACTED%3E#hash=a15a109b14fe",
+      "r": 1080,
+      "size": 82829918,
+      "md5": "",
+      "code": 200,
+      "expi": 3600,
+      "fee": 0,
+      "mvFee": 0,
+      "st": 0,
+      "promotionVo": null,
+      "msg": ""
+    }
+  },
+  "error": null
+}

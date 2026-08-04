@@ -91,12 +91,23 @@
 
 ## 14. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补）
-- 说明：见 §14 运行记录与字段表
+- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
 | ncm.dj_banner.anon.001 | AUTH_ANON | - | 200 | 64 |  |
 | ncm.dj_banner.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 81 |  |
 | ncm.dj_banner.none.001 | AUTH_NONE | - | 200 | 56 |  |
 | ncm.dj_banner.none.002 | AUTH_NONE | - | 200 | 62 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `200` |
+| `data[].exclusive` | boolean | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data[].pic` | string | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `http://p1.music.126.net/FXK9VDiSFk3UmyU3` |
+| `data[].targetId` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `3725803359` |
+| `data[].targetType` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `60001` |
+| `data[].typeTitle` | string | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `人文历史` |
+| `data[].url` | string | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `orpheus://program/3725803359` |

@@ -1,0 +1,183 @@
+{
+  "meta": {
+    "caseId": "ncm.song_detail.media-fixture.songA.001",
+    "apiAuditId": "ncm.song_detail",
+    "auth": "AUTH_NONE",
+    "params": {
+      "ids": "449818741"
+    },
+    "startedAt": "2026-08-04T11:10:18.678Z",
+    "endedAt": "2026-08-04T11:10:18.754Z",
+    "durationMs": 76,
+    "attempts": 1
+  },
+  "body": {
+    "songs": [
+      {
+        "name": "光年之外",
+        "mainTitle": null,
+        "additionalTitle": null,
+        "id": 449818741,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [
+          "电影《太空旅客》中文主题曲"
+        ],
+        "pop": 100,
+        "st": 0,
+        "rt": null,
+        "fee": 1,
+        "v": 139,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 35093341,
+          "name": "光年之外",
+          "picUrl": "https://p4.music.126.net/fkqFqMaEt0CzxYS-0NpCog==/18587244069235039.jpg#hash=730c05279360",
+          "tns": [],
+          "pic_str": "18587244069235039",
+          "pic": 18587244069235040
+        },
+        "dt": 235505,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 9422933,
+          "vd": -44887,
+          "sr": 44100
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 5653777,
+          "vd": -42341,
+          "sr": 44100
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 3769199,
+          "vd": -40588,
+          "sr": 44100
+        },
+        "sq": {
+          "br": 887395,
+          "fid": 0,
+          "size": 26123277,
+          "vd": -45090,
+          "sr": 44100
+        },
+        "hr": null,
+        "a": null,
+        "cd": "1",
+        "no": 0,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 2,
+        "s_id": 0,
+        "mark": 17179877376,
+        "originCoverType": 1,
+        "originSongSimpleData": null,
+        "tagPicList": null,
+        "resourceState": true,
+        "version": 105,
+        "songJumpInfo": null,
+        "entertainmentTags": null,
+        "awardTags": null,
+        "displayTags": null,
+        "artistClassics": false,
+        "markTags": [],
+        "songFeature": null,
+        "single": 0,
+        "noCopyrightRcmd": null,
+        "mv": 5404646,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 1415926,
+        "publishTime": 1483027200007
+      }
+    ],
+    "privileges": [
+      {
+        "id": 449818741,
+        "fee": 1,
+        "payed": 0,
+        "st": 0,
+        "pl": 0,
+        "dl": 0,
+        "sp": 7,
+        "cp": 1,
+        "subp": 1,
+        "cs": false,
+        "maxbr": 999000,
+        "fl": 0,
+        "toast": false,
+        "flag": 1541124,
+        "preSell": false,
+        "playMaxbr": 999000,
+        "downloadMaxbr": 999000,
+        "maxBrLevel": "jymaster",
+        "playMaxBrLevel": "jymaster",
+        "downloadMaxBrLevel": "jymaster",
+        "plLevel": "none",
+        "dlLevel": "none",
+        "flLevel": "none",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": true,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

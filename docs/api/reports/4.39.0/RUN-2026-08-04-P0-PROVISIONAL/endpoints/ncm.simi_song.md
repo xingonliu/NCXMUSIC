@@ -91,7 +91,6 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 15. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
 - 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
@@ -100,5 +99,12 @@
 | --- | --- | --- | --- | --- | --- |
 | ncm.simi_song.anon.001 | AUTH_ANON | - | 200 | 71 |  |
 | ncm.simi_song.id0.none.neg.001 | AUTH_NONE | - | 200 | 65 |  |
-| ncm.simi_song.inv.001 | AUTH_INVALID_EXPIRED | err(400) | -462 |  | {"code":-462,"data":{"actionCode":null,"verifyType":40,"verifyId":1007602,"verifyUrl":"https://st.music.163.com/encrypt- |
+| ncm.simi_song.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
 | ncm.simi_song.none.001 | AUTH_NONE | - | 200 | 221 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `200` |
+| `songs` | array<unknown> | 3 | 0 | 3 | AUTH_ANON,AUTH_NONE | `undefined` |

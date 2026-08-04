@@ -91,12 +91,43 @@
 
 ## 14. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补）
-- 说明：见 §14 运行记录与字段表
+- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
 | ncm.dj_catelist.anon.001 | AUTH_ANON | - | 200 | 60 |  |
 | ncm.dj_catelist.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 59 |  |
 | ncm.dj_catelist.none.001 | AUTH_NONE | - | 200 | 56 |  |
 | ncm.dj_catelist.none.002 | AUTH_NONE | - | 200 | 419 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `categories[].id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `3` |
+| `categories[].name` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `情感` |
+| `categories[].pic56x56Id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404091540` |
+| `categories[].pic56x56IdStr` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404091541` |
+| `categories[].pic56x56Url` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p4.music.126.net/mk24oOQQKiUIr14` |
+| `categories[].pic84x84Id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404092530` |
+| `categories[].pic84x84IdUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p4.music.126.net/7Qm5KCFbxCKKhao` |
+| `categories[].pic96x96Id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404086270` |
+| `categories[].pic96x96IdStr` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404086270` |
+| `categories[].pic96x96Url` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p3.music.126.net/ZcHIE0jRkdJpng8` |
+| `categories[].picIPad` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404094510` |
+| `categories[].picIPadStr` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404094515` |
+| `categories[].picIPadUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p4.music.126.net/ZKRoJeha-OEcHhT` |
+| `categories[].picMacId` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404092603` |
+| `categories[].picMacUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p3.music.126.net/-4U8WbXI60U7Xzq` |
+| `categories[].picPCBlack` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404093580` |
+| `categories[].picPCBlackStr` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404093587` |
+| `categories[].picPCBlackUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p3.music.126.net/I7ymGxYlegjAtus` |
+| `categories[].picPCWhite` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404086290` |
+| `categories[].picPCWhiteStr` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404086285` |
+| `categories[].picPCWhiteUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p4.music.126.net/MtiYAilGXGeNgGB` |
+| `categories[].picUWPId` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165404091156` |
+| `categories[].picUWPUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p4.music.126.net/CYe8zN09HBrrBTW` |
+| `categories[].picWeb` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165406422560` |
+| `categories[].picWebStr` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951165406422565` |
+| `categories[].picWebUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p4.music.126.net/icULXvfqWJMFvcj` |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `200` |

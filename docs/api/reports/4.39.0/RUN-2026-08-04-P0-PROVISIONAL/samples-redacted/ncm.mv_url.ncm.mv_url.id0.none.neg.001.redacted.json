@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "caseId": "ncm.mv_url.id0.none.neg.001",
+    "apiAuditId": "ncm.mv_url",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-04T11:18:58.462Z",
+    "endedAt": "2026-08-04T11:18:58.521Z",
+    "durationMs": 59,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "id": 0,
+      "url": null,
+      "r": 0,
+      "size": 0,
+      "md5": null,
+      "code": 404,
+      "expi": 0,
+      "fee": 0,
+      "mvFee": 0,
+      "st": 0,
+      "promotionVo": null,
+      "msg": null
+    }
+  },
+  "error": null
+}

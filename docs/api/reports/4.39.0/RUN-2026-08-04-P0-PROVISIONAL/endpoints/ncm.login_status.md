@@ -89,21 +89,19 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: AUTH_ANON/AUTH_USER/VIP 缺失；分层稳定性未满足（无参数接口无法产生每层 3 个有差异样本））
-- 说明：NONE×3 结构稳定；INVALID×2 与 NONE 结构完全一致（无效 Cookie 静默回退未登录，无失效错误）
+- 终态：**partial**（blocker: AUTH_ANON/USER 层缺样本；无参数接口无法满足每层 3 个有差异样本）
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
-| ncm.login_status.inv.expired.001 | AUTH_INVALID_EXPIRED | err | - | 60 |  |
-| ncm.login_status.inv.truncated.001 | AUTH_INVALID_TRUNCATED | err | - | 66 |  |
-| ncm.login_status.none.min.001 | AUTH_NONE | err | - | 69 |  |
-| ncm.login_status.none.min.002 | AUTH_NONE | err | - | 64 |  |
-| ncm.login_status.none.min.003 | AUTH_NONE | err | - | 58 |  |
+| ncm.login_status.inv.expired.001 | AUTH_INVALID_EXPIRED | - | - | 60 |  |
+| ncm.login_status.inv.truncated.001 | AUTH_INVALID_TRUNCATED | - | - | 66 |  |
+| ncm.login_status.none.min.001 | AUTH_NONE | - | - | 69 |  |
+| ncm.login_status.none.min.002 | AUTH_NONE | - | - | 64 |  |
+| ncm.login_status.none.min.003 | AUTH_NONE | - | - | 58 |  |
 
-### 13.1 运行字段表（Phase 1）
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
 
 | JSONPath | rawType | presence | null | empty | auths | example |
 | --- | --- | --- | --- | --- | --- | --- |

@@ -31,39 +31,223 @@
       {
         "caseId": "ncm.personalized_privatecontent.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 63,
+        "error": null,
+        "sampleHash": "4cbd9a9df2a8fae244a8caa70572ee45d565630dada398d63ff110781319a52c",
+        "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.anon.001.raw.json"
       },
       {
         "caseId": "ncm.personalized_privatecontent.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 64,
+        "error": null,
+        "sampleHash": "275f9b612a4c197affcf5650eb461353dd255c92e96beb4ad575a07a1c48e76b",
+        "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.inv.001.raw.json"
       },
       {
         "caseId": "ncm.personalized_privatecontent.limit5.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 54,
+        "error": null,
+        "sampleHash": "2c29d38837eb40f10eaa19989185dd4a57768f9ae23b34b2791e6c24f2fc9098",
+        "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.limit5.none.001.raw.json"
       },
       {
         "caseId": "ncm.personalized_privatecontent.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 60,
+        "error": null,
+        "sampleHash": "0b4d356c14defdb231941fa476aea675340b8b0a7f46332db5de9054edc2c237",
+        "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_privatecontent.anon.001",
+      "lastSeenCase": "ncm.personalized_privatecontent.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "name",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_privatecontent.anon.001",
+      "lastSeenCase": "ncm.personalized_privatecontent.none.001",
+      "example": "独家放送"
+    },
+    {
+      "jsonPath": "result[].alg",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_privatecontent.anon.001",
+      "lastSeenCase": "ncm.personalized_privatecontent.none.001",
+      "example": "featured"
+    },
+    {
+      "jsonPath": "result[].copywriter",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_privatecontent.anon.001",
+      "lastSeenCase": "ncm.personalized_privatecontent.none.001",
+      "example": "《超级面对面》第254期 keshi：我的音乐永远新鲜"
+    },
+    {
+      "jsonPath": "result[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_privatecontent.anon.001",
+      "lastSeenCase": "ncm.personalized_privatecontent.none.001",
+      "example": "14514232"
+    },
+    {
+      "jsonPath": "result[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_privatecontent.anon.001",
+      "lastSeenCase": "ncm.personalized_privatecontent.none.001",
+      "example": "《超级面对面》第254期 keshi：我的音乐永远新鲜"
+    },
+    {
+      "jsonPath": "result[].picUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_privatecontent.anon.001",
+      "lastSeenCase": "ncm.personalized_privatecontent.none.001",
+      "example": "https://p4.music.126.net/ZfQoqzo0rTqe3sFKkDnGuw==/1099511672"
+    },
+    {
+      "jsonPath": "result[].sPicUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_privatecontent.anon.001",
+      "lastSeenCase": "ncm.personalized_privatecontent.none.001",
+      "example": "https://p3.music.126.net/xLa1qgy1Mu3wRXFZ3GNLiA==/1099511672"
+    },
+    {
+      "jsonPath": "result[].type",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_privatecontent.anon.001",
+      "lastSeenCase": "ncm.personalized_privatecontent.none.001",
+      "example": "5"
+    },
+    {
+      "jsonPath": "result[].url",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_privatecontent.anon.001",
+      "lastSeenCase": "ncm.personalized_privatecontent.none.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.personalized_privatecontent.anon.001",
+      "sampleHash": "4cbd9a9df2a8fae244a8caa70572ee45d565630dada398d63ff110781319a52c",
+      "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.personalized_privatecontent.inv.001",
+      "sampleHash": "275f9b612a4c197affcf5650eb461353dd255c92e96beb4ad575a07a1c48e76b",
+      "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.personalized_privatecontent.limit5.none.001",
+      "sampleHash": "2c29d38837eb40f10eaa19989185dd4a57768f9ae23b34b2791e6c24f2fc9098",
+      "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.limit5.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.personalized_privatecontent.none.001",
+      "sampleHash": "0b4d356c14defdb231941fa476aea675340b8b0a7f46332db5de9054edc2c237",
+      "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.none.001.raw.json"
+    }
+  ]
 }

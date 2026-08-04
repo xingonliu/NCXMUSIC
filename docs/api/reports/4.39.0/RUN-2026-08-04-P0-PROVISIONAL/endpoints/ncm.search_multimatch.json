@@ -43,39 +43,103 @@
       {
         "caseId": "ncm.search_multimatch.empty.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 400,
-        "error": null
+        "durationMs": 92,
+        "error": null,
+        "sampleHash": "adabe554b43148cc76602c8cbca9ac6914a21b8186fc5b8f7a8a5d1ef6e8f8e2",
+        "rawFile": "ncm.search_multimatch.ncm.search_multimatch.empty.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.search_multimatch.kw1.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 85,
+        "error": null,
+        "sampleHash": "768d3fa56dd75fabeba7cdbf2bf65dc56c0a53a6d09cb3b071491e02dd3443a3",
+        "rawFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.anon.001.raw.json"
       },
       {
         "caseId": "ncm.search_multimatch.kw1.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 74,
+        "error": null,
+        "sampleHash": "8404610d930d891a000ee12f882be9cd97ae3e80dd5483f61f6c4c7fd4b58ed7",
+        "rawFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.inv.001.raw.json"
       },
       {
         "caseId": "ncm.search_multimatch.kw1.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 60,
+        "error": null,
+        "sampleHash": "9b97a9b117979cd91439f4c5c479fe25594af12df45f2765552ae0025afdfeb9",
+        "rawFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.search_multimatch.empty.none.neg.001",
+      "lastSeenCase": "ncm.search_multimatch.kw1.none.001",
+      "example": "400"
+    },
+    {
+      "jsonPath": "result.orders",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_multimatch.kw1.anon.001",
+      "lastSeenCase": "ncm.search_multimatch.kw1.none.001",
+      "example": "undefined"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.search_multimatch.empty.none.neg.001",
+      "sampleHash": "adabe554b43148cc76602c8cbca9ac6914a21b8186fc5b8f7a8a5d1ef6e8f8e2",
+      "rawFile": "ncm.search_multimatch.ncm.search_multimatch.empty.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search_multimatch.kw1.anon.001",
+      "sampleHash": "768d3fa56dd75fabeba7cdbf2bf65dc56c0a53a6d09cb3b071491e02dd3443a3",
+      "rawFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search_multimatch.kw1.inv.001",
+      "sampleHash": "8404610d930d891a000ee12f882be9cd97ae3e80dd5483f61f6c4c7fd4b58ed7",
+      "rawFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search_multimatch.kw1.none.001",
+      "sampleHash": "9b97a9b117979cd91439f4c5c479fe25594af12df45f2765552ae0025afdfeb9",
+      "rawFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.none.001.raw.json"
+    }
+  ]
 }

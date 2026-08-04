@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "caseId": "ncm.song_url_v1.B.standard.none.001",
+    "apiAuditId": "ncm.song_url_v1",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "1345292174",
+      "level": "standard"
+    },
+    "startedAt": "2026-08-04T11:10:27.150Z",
+    "endedAt": "2026-08-04T11:10:27.254Z",
+    "durationMs": 104,
+    "attempts": 1
+  },
+  "body": {
+    "data": [
+      {
+        "id": 1345292174,
+        "url": "http://m8.music.126.net/20260804193527/60226b50385539119e2295848ee70c5b/ymusic/0f0e/0e52/0408/8d00ddfc1f9853a7c9023b8b40fd2fe7.mp3#hash=7c5bb7cb5ae7",
+        "br": 128000,
+        "size": 499087,
+        "md5": "8d00ddfc1f9853a7c9023b8b40fd2fe7",
+        "code": 200,
+        "expi": 1200,
+        "type": "mp3",
+        "gain": 0,
+        "peak": 0,
+        "closedGain": -6,
+        "closedPeak": 0,
+        "fee": 0,
+        "uf": null,
+        "payed": 0,
+        "flag": 1605888,
+        "canExtend": false,
+        "freeTrialInfo": null,
+        "level": "standard",
+        "encodeType": "mp3",
+        "channelLayout": null,
+        "freeTrialPrivilege": {
+          "resConsumable": false,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "freeTimeTrialPrivilege": {
+          "resConsumable": false,
+          "userConsumable": false,
+          "type": 0,
+          "remainTime": 0
+        },
+        "urlSource": 0,
+        "rightSource": 0,
+        "podcastCtrp": null,
+        "effectTypes": null,
+        "time": 31130,
+        "message": null,
+        "levelConfuse": null,
+        "musicId": "3665210718",
+        "accompany": null,
+        "sr": 44100,
+        "auEff": null,
+        "immerseType": null,
+        "beatType": 0
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

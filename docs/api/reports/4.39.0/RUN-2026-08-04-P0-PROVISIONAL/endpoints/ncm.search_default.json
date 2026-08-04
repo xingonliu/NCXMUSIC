@@ -36,39 +36,313 @@
       {
         "caseId": "ncm.search_default.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 135,
+        "error": null,
+        "sampleHash": "269d697fc3186f960c7b009486ab4bf41251715874f0be2320462967d1049fdd",
+        "rawFile": "ncm.search_default.ncm.search_default.anon.001.raw.json"
       },
       {
         "caseId": "ncm.search_default.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 86,
+        "error": null,
+        "sampleHash": "49caf279e57f807a9651f37f36c0d24382b4a0bca0c94322193ce88678a87653",
+        "rawFile": "ncm.search_default.ncm.search_default.inv.001.raw.json"
       },
       {
         "caseId": "ncm.search_default.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 86,
+        "error": null,
+        "sampleHash": "ee2dc4981c8b7c46aa20691c085c06583eaa9e6727ab07e0852c225b89507893",
+        "rawFile": "ncm.search_default.ncm.search_default.none.001.raw.json"
       },
       {
         "caseId": "ncm.search_default.none.002",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 98,
+        "error": null,
+        "sampleHash": "35c16fd632a33e72956c429236ce9d3ecfb91027d2cd0b2be91ab4e7fea769e3",
+        "rawFile": "ncm.search_default.ncm.search_default.none.002.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.action",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.alg",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": "dq_0_0_T3_R12_a156f41aefaefd2bb3233ca3f0c92b29_S0:2.6422_M1_"
+    },
+    {
+      "jsonPath": "data.bizQueryInfo",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": "{\"showQuery\":\"🔥甲乙丙丁 最近很火哦\",\"source\":\"default_search\",\"inten"
+    },
+    {
+      "jsonPath": "data.gap",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.imageUrl",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.logInfo",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.realkeyword",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": "甲乙丙丁"
+    },
+    {
+      "jsonPath": "data.searchType",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.showKeyword",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": "🔥甲乙丙丁 最近很火哦"
+    },
+    {
+      "jsonPath": "data.source",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.styleKeyword.descWord",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.styleKeyword.keyWord",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": "🔥甲乙丙丁 最近很火哦"
+    },
+    {
+      "jsonPath": "data.trp_id",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.trp_type",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search_default.anon.001",
+      "lastSeenCase": "ncm.search_default.none.002",
+      "example": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.search_default.anon.001",
+      "sampleHash": "269d697fc3186f960c7b009486ab4bf41251715874f0be2320462967d1049fdd",
+      "rawFile": "ncm.search_default.ncm.search_default.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search_default.inv.001",
+      "sampleHash": "49caf279e57f807a9651f37f36c0d24382b4a0bca0c94322193ce88678a87653",
+      "rawFile": "ncm.search_default.ncm.search_default.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search_default.none.001",
+      "sampleHash": "ee2dc4981c8b7c46aa20691c085c06583eaa9e6727ab07e0852c225b89507893",
+      "rawFile": "ncm.search_default.ncm.search_default.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search_default.none.002",
+      "sampleHash": "35c16fd632a33e72956c429236ce9d3ecfb91027d2cd0b2be91ab4e7fea769e3",
+      "rawFile": "ncm.search_default.ncm.search_default.none.002.raw.json"
+    }
+  ]
 }

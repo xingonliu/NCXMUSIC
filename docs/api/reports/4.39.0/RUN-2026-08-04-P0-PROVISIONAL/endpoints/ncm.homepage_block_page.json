@@ -40,46 +40,5048 @@
       {
         "caseId": "ncm.homepage_block_page.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 796,
+        "error": null,
+        "sampleHash": "591f54c8daa36a87b66f7448c8321ea1254025cfe6ff2c58f058fd930ee784a8",
+        "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.anon.001.raw.json"
       },
       {
         "caseId": "ncm.homepage_block_page.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 112,
+        "error": null,
+        "sampleHash": "9c99ea7478f310ff8e692403aa3d8617825c89ccbbe78c9527c7cc7e7ab942e7",
+        "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.inv.001.raw.json"
       },
       {
         "caseId": "ncm.homepage_block_page.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 348,
+        "error": null,
+        "sampleHash": "4915512f6dd75aba0dc82a6ea6751cdaef3ff1ee9415336a331efe559a36600f",
+        "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.none.001.raw.json"
       },
       {
         "caseId": "ncm.homepage_block_page.refresh.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 119,
+        "error": null,
+        "sampleHash": "aca53d4bb1a04880bdef7b5d37bcc4ec838c960947ce43cce233daabd0eae56f",
+        "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.refresh.none.001.raw.json"
       },
       {
         "caseId": "ncm.homepage_block_page.repeat.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 98,
+        "error": null,
+        "sampleHash": "0e143e08895295c62e08a3900d564e1ffacb47b247d6ee23fd31a851b95235fe",
+        "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.repeat.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.blockCodeOrderList",
+      "rawType": "null",
+      "presence": 5,
+      "nulls": 5,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].action",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "orpheus://playlistCollection?referLog=HOMEPAGE_BLOCK_PLAYLIS"
+    },
+    {
+      "jsonPath": "data.blocks[].actionType",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "orpheus"
+    },
+    {
+      "jsonPath": "data.blocks[].blockCode",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "HOMEPAGE_BLOCK_PLAYLIST_RCMD"
+    },
+    {
+      "jsonPath": "data.blocks[].blockDemote",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].blockStyle",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].canClose",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].canFeedback",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].action",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "orpheus://playlist/750445279?autoplay=0&referLog=HOMEPAGE_BL"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].actionType",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "orpheus"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].alg",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "alg-music-rec-village_playlist-alg_nsearch_lantag"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].creativeId",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "750445279"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].creativeType",
+      "rawType": "string",
+      "presence": 25,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "list"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].logInfo",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "{\"deepScore\":\"0.0\",\"cartScore\":\"0.0\",\"src\":\"208948\",\"clickSc"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].position",
+      "rawType": "number",
+      "presence": 25,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].action",
+      "rawType": "string",
+      "presence": 53,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "orpheus://playlist/750445279?autoplay=0&referLog=HOMEPAGE_BL"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].actionType",
+      "rawType": "string",
+      "presence": 53,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "orpheus"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].alg",
+      "rawType": "union<string|null>",
+      "presence": 53,
+      "nulls": 21,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "alg-music-rec-village_playlist-alg_nsearch_lantag"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].ctrp",
+      "rawType": "null",
+      "presence": 53,
+      "nulls": 53,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].likedCount",
+      "rawType": "null",
+      "presence": 53,
+      "nulls": 53,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].logInfo",
+      "rawType": "union<null|string>",
+      "presence": 53,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "{\"category1\":\"lan\",\"category2\":\"欧美\"}"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].name",
+      "rawType": "null",
+      "presence": 53,
+      "nulls": 53,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].playParams",
+      "rawType": "null",
+      "presence": 53,
+      "nulls": 53,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].position",
+      "rawType": "null",
+      "presence": 53,
+      "nulls": 53,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].replyCount",
+      "rawType": "null",
+      "presence": 53,
+      "nulls": 53,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceContentList",
+      "rawType": "null",
+      "presence": 53,
+      "nulls": 53,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo",
+      "rawType": "null",
+      "presence": 13,
+      "nulls": 13,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.alias",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "[]"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].albumSize",
+      "rawType": "number",
+      "presence": 22,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].alias",
+      "rawType": "union<array<unknown>|null>",
+      "presence": 22,
+      "nulls": 2,
+      "empties": 20,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].briefDesc",
+      "rawType": "string",
+      "presence": 22,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].id",
+      "rawType": "number",
+      "presence": 22,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "90331"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].img1v1Id",
+      "rawType": "number",
+      "presence": 22,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].img1v1Url",
+      "rawType": "union<string|null>",
+      "presence": 22,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "http://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/56393951388"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].musicSize",
+      "rawType": "number",
+      "presence": 22,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].name",
+      "rawType": "string",
+      "presence": 22,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "Charlie Puth"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].picId",
+      "rawType": "number",
+      "presence": 22,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].picUrl",
+      "rawType": "union<string|null>",
+      "presence": 22,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].topicPerson",
+      "rawType": "number",
+      "presence": 22,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.artists[].trans",
+      "rawType": "union<string|null>",
+      "presence": 22,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.commentSimpleData.commentId",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "137291804"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.commentSimpleData.content",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "极品蓝调 前奏秒杀"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.commentSimpleData.threadId",
+      "rawType": "union<string|null>",
+      "presence": 5,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "R_SO_4_19827042"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.commentSimpleData.userId",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "94505459"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.commentSimpleData.userName",
+      "rawType": "union<string|null>",
+      "presence": 5,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "千与千寻的夏天丶"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.hasListened",
+      "rawType": "boolean",
+      "presence": 40,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.highQuality",
+      "rawType": "boolean",
+      "presence": 23,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.playCount",
+      "rawType": "number",
+      "presence": 23,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "44055536"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.alias",
+      "rawType": "array<unknown>",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 15,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.albumSize",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.alias",
+      "rawType": "array<unknown>",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 15,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.briefDesc",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.img1v1Id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.img1v1Url",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "http://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/56393951388"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.musicSize",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.name",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.picId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.picUrl",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.topicPerson",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.trans",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].albumSize",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].alias",
+      "rawType": "array<unknown>",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 15,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].briefDesc",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "90331"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].img1v1Id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].img1v1Url",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "http://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/56393951388"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].musicSize",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].name",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "Charlie Puth"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].picId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].picUrl",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].topicPerson",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artists[].trans",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.blurPicUrl",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "http://p3.music.126.net/ZnSOe-J4MEfPj1J5ocEtwQ==/10995116398"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.briefDesc",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.commentThreadId",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "R_AL_3_34766248"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.company",
+      "rawType": "union<string|null>",
+      "presence": 15,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "华纳音乐"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.companyId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.copyrightId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "7002"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.description",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.dolbyMark",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.gapless",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "34766248"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.mark",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.name",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "We Don't Talk Anymore (Mr. Collipark Remix)"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.onSale",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.pic",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "109951163983943020"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.picId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "109951163983943020"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.picId_str",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "109951163983943030"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.picUrl",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "http://p3.music.126.net/ZnSOe-J4MEfPj1J5ocEtwQ==/10995116398"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.publishTime",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1467907200000"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.size",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.songs",
+      "rawType": "array<unknown>",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 15,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.status",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "3"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.subType",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "Remix"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.tags",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.transName",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.type",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "Single"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.alias",
+      "rawType": "array<unknown>",
+      "presence": 14,
+      "nulls": 0,
+      "empties": 14,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.alias[]",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "影视剧《人鱼》主题曲"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].albumSize",
+      "rawType": "number",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].alias",
+      "rawType": "array<unknown>",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 20,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].briefDesc",
+      "rawType": "string",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].id",
+      "rawType": "number",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "90331"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].img1v1Id",
+      "rawType": "number",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].img1v1Url",
+      "rawType": "string",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "http://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/56393951388"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].musicSize",
+      "rawType": "number",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].name",
+      "rawType": "string",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "Charlie Puth"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].picId",
+      "rawType": "number",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].picUrl",
+      "rawType": "string",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].topicPerson",
+      "rawType": "number",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.artists[].trans",
+      "rawType": "string",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.audition",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.bMusic.bitrate",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "128000"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.bMusic.dfsId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.bMusic.extension",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "mp3"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.bMusic.id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "7485118694"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.bMusic.name",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.bMusic.playTime",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "254400"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.bMusic.size",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "4071384"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.bMusic.sr",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "44100"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.bMusic.volumeDelta",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "-74581"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.commentThreadId",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "R_SO_4_420478436"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.copyFrom",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.copyright",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.copyrightId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "7002"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.crbt",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.dayPlays",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.disc",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.duration",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "254400"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.fee",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.ftype",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hearTime",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hMusic.bitrate",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "320000"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hMusic.dfsId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hMusic.extension",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "mp3"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hMusic.id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "7485118696"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hMusic.name",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hMusic.playTime",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "254400"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hMusic.size",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "10178395"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hMusic.sr",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "44100"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hMusic.volumeDelta",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "-78806"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hrMusic",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hrMusic.bitrate",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "3085167"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hrMusic.dfsId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hrMusic.extension",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "flac"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hrMusic.id",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "16918157009"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hrMusic.name",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hrMusic.playTime",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "173000"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hrMusic.size",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "66719947"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hrMusic.sr",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "96000"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.hrMusic.volumeDelta",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "-68644"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "420478436"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.lMusic.bitrate",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "128000"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.lMusic.dfsId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.lMusic.extension",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "mp3"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.lMusic.id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "7485118694"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.lMusic.name",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.lMusic.playTime",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "254400"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.lMusic.size",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "4071384"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.lMusic.sr",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "44100"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.lMusic.volumeDelta",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "-74581"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mark",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mMusic.bitrate",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "192000"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mMusic.dfsId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mMusic.extension",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "mp3"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mMusic.id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "7485118695"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mMusic.name",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mMusic.playTime",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "254400"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mMusic.size",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "6107054"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mMusic.sr",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "44100"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mMusic.volumeDelta",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "-76270"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mp3Url",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.mvid",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.name",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "We Don't Talk Anymore (Mr. Collipark Remix)"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.no",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.noCopyrightRcmd",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.originCoverType",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.originSongSimpleData",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.playedNum",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.popularity",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "100"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.position",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.publishTime",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1467907200007"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.ringtone",
+      "rawType": "union<null|string>",
+      "presence": 15,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.rtUrl",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.rtUrls",
+      "rawType": "array<unknown>",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 15,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.rtype",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.rurl",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.score",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "100"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.sign",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.single",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.sqMusic.bitrate",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1001017"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.sqMusic.dfsId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.sqMusic.extension",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "flac"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.sqMusic.id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "7485118701"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.sqMusic.name",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.sqMusic.playTime",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "254400"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.sqMusic.size",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "31832364"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.sqMusic.sr",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "44100"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.sqMusic.volumeDelta",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "-78854"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.starred",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.starredNum",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.status",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.transName",
+      "rawType": "union<null|string>",
+      "presence": 15,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "靠近"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.transNames[]",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "靠近"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.videoInfo",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.bd",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.chargeInfoList[].chargeMessage",
+      "rawType": "null",
+      "presence": 45,
+      "nulls": 45,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.chargeInfoList[].chargeType",
+      "rawType": "number",
+      "presence": 45,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.chargeInfoList[].chargeUrl",
+      "rawType": "null",
+      "presence": 45,
+      "nulls": 45,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.chargeInfoList[].rate",
+      "rawType": "number",
+      "presence": 45,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "128000"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.code",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.cp",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.cs",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.dl",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.dlLevel",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "none"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.dlLevels",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.downloadMaxbr",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "999000"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.downloadMaxBrLevel",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "jymaster"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.fee",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.fl",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.flag",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1541124"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.flLevel",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "none"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.freeTrialPrivilege.cannotListenReason",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.freeTrialPrivilege.freeLimitTagType",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.freeTrialPrivilege.listenType",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "3"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.freeTrialPrivilege.playReason",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.freeTrialPrivilege.resConsumable",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.freeTrialPrivilege.userConsumable",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "420478436"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.ignoreCache",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.maxbr",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "999000"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.maxBrLevel",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "jymaster"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.message",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.paidBigBang",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.payed",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.pc",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.pl",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.playMaxbr",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "999000"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.playMaxBrLevel",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "jymaster"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.plLevel",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "none"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.plLevels",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.preSell",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.realPayed",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.rightSource",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.rscl",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.sp",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "7"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.st",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.subp",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songPrivilege.toast",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.specialType",
+      "rawType": "number",
+      "presence": 23,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceId",
+      "rawType": "union<string|null>",
+      "presence": 53,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "750445279"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceState",
+      "rawType": "null",
+      "presence": 53,
+      "nulls": 53,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceType",
+      "rawType": "string",
+      "presence": 53,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "list"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceUrl",
+      "rawType": "null",
+      "presence": 53,
+      "nulls": 53,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.image.action",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.image.imageUrl",
+      "rawType": "string",
+      "presence": 53,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "http://p3.music.126.net/c7Gekyb26TumOhCeISyx8w==/10995117023"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.image.imageUrl2",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/1507482884"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.image.purePicture",
+      "rawType": "boolean",
+      "presence": 53,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.image.title",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.labelTexts",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.labelTexts[]",
+      "rawType": "string",
+      "presence": 56,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "华语"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.mainTitle.canShowTitleLogo",
+      "rawType": "boolean",
+      "presence": 53,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.mainTitle.title",
+      "rawType": "string",
+      "presence": 53,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "网易云音乐10万+评论合集"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.rcmdShowType",
+      "rawType": "string",
+      "presence": 53,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "DEFAULT"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitle.canShowTitleLogo",
+      "rawType": "boolean",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitle.rcmdText",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "独家首发30天"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitle.title",
+      "rawType": "string",
+      "presence": 29,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "超70%人播放"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitle.titleId",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "title_10004"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitle.titleType",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "songRcmdTag"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].valid",
+      "rawType": "boolean",
+      "presence": 53,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.button.action",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "orpheus://nm/discovery/newsongalbum?tab=song&referLog=HOMEPA"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.button.actionType",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "orpheus"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.button.biData",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.button.iconUrl",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.button.text",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "更多新歌"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.image.imageUrl",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "http://p3.music.126.net/c7Gekyb26TumOhCeISyx8w==/10995117023"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.image.purePicture",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.labelTexts",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.labelTexts[]",
+      "rawType": "string",
+      "presence": 32,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "华语"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.mainTitle.canShowTitleLogo",
+      "rawType": "boolean",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.mainTitle.title",
+      "rawType": "string",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "网易云音乐10万+评论合集"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.rcmdShowType",
+      "rawType": "string",
+      "presence": 21,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "DEFAULT"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.subTitle.canShowTitleLogo",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.subTitle.title",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.containerType",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "rn"
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.rnContent.component",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "rn-homepage-modules_dragonBall"
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.rnContent.engineId",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.rnContent.estimatedHeight",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "98"
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.rnContent.estimatedRatio",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.rnContent.moduleName",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "rn-homepage-modules"
+    },
+    {
+      "jsonPath": "data.blocks[].dislikeShowType",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].adDispatchJson",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].adid",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].adLocation",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].adSource",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].adurlV2",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].alg",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "banner-feature-1717750480637393"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].bannerBizType",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "force_banner"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].bannerId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "1717750480637393"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].dynamicVideoData",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].encodeId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "924680166"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].event",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].exclusive",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].extMonitor",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].extMonitorInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].logContext",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].mainTitle",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorBlackList",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorClick",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorClickList",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorImpress",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorImpressList",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorType",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].pic",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "http://p1.music.126.net/uE3Plj0H0aniKkKffs7bjg==/10995116966"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].pid",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].program",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].requestId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].s_ctrp",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "syspf_resourceType_1000-syspf_resourceId_924680166"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].scm",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "1.music-homepage-home.homepage_banner_force.banner.9432965.1"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].showAdTag",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].showContext",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].song",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].targetId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "924680166"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].targetType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "1000"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].titleColor",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "red"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].typeTitle",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "歌单"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].url",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].video",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.inv.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].resourceIdList[]",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "420478436"
+    },
+    {
+      "jsonPath": "data.blocks[].showType",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "HOMEPAGE_SLIDE_PLAYLIST"
+    },
+    {
+      "jsonPath": "data.blocks[].sort",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.button.action",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "orpheus://playlistCollection?referLog=HOMEPAGE_BLOCK_PLAYLIS"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.button.actionType",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "orpheus"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.button.biData",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.button.iconUrl",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.button.text",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "查看更多"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.mainTitle.canShowTitleLogo",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.mainTitle.title",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.rcmdShowType",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "DEFAULT"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.subTitle.canShowTitleLogo",
+      "rawType": "boolean",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.subTitle.title",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "推荐歌单"
+    },
+    {
+      "jsonPath": "data.blockUUIDs",
+      "rawType": "null",
+      "presence": 5,
+      "nulls": 5,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.cursor",
+      "rawType": "null",
+      "presence": 5,
+      "nulls": 5,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.demote",
+      "rawType": "boolean",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.exposedResource",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "{\"song\":[\"17282443\",\"431610014\",\"1440570723\",\"472045959\",\"16"
+    },
+    {
+      "jsonPath": "data.guideToast.hasGuideToast",
+      "rawType": "boolean",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.guideToast.toastList",
+      "rawType": "array<unknown>",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 5,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.hasMore",
+      "rawType": "boolean",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.internalTest",
+      "rawType": "null",
+      "presence": 5,
+      "nulls": 5,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.pageConfig.abtest[]",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "homepage-v7.3"
+    },
+    {
+      "jsonPath": "data.pageConfig.fullscreen",
+      "rawType": "boolean",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.pageConfig.homepageMode",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "RCMD_MODE"
+    },
+    {
+      "jsonPath": "data.pageConfig.nodataToast",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "到底啦~"
+    },
+    {
+      "jsonPath": "data.pageConfig.orderInfo",
+      "rawType": "union<null|string>",
+      "presence": 5,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "PLAYLIST_MODE_0bc7f39b-06ce-4331-bd35-d9d73ff5e126"
+    },
+    {
+      "jsonPath": "data.pageConfig.refreshInterval",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "120000"
+    },
+    {
+      "jsonPath": "data.pageConfig.refreshToast",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.pageConfig.showModeEntry",
+      "rawType": "boolean",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.pageConfig.songLabelMarkLimit",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.pageConfig.songLabelMarkPriority[]",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "trial"
+    },
+    {
+      "jsonPath": "data.pageConfig.title",
+      "rawType": "null",
+      "presence": 5,
+      "nulls": 5,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.titles",
+      "rawType": "array<unknown>",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 5,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.repeat.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "trp.rules[]",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.homepage_block_page.anon.001",
+      "lastSeenCase": "ncm.homepage_block_page.anon.001",
+      "example": "PAGE_DISCOVERY_DIGITAL_ALBUM_CARD::*::linkPlatform$cc$discov"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.homepage_block_page.anon.001",
+      "sampleHash": "591f54c8daa36a87b66f7448c8321ea1254025cfe6ff2c58f058fd930ee784a8",
+      "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.homepage_block_page.inv.001",
+      "sampleHash": "9c99ea7478f310ff8e692403aa3d8617825c89ccbbe78c9527c7cc7e7ab942e7",
+      "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.homepage_block_page.none.001",
+      "sampleHash": "4915512f6dd75aba0dc82a6ea6751cdaef3ff1ee9415336a331efe559a36600f",
+      "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.homepage_block_page.refresh.none.001",
+      "sampleHash": "aca53d4bb1a04880bdef7b5d37bcc4ec838c960947ce43cce233daabd0eae56f",
+      "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.refresh.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.homepage_block_page.repeat.none.001",
+      "sampleHash": "0e143e08895295c62e08a3900d564e1ffacb47b247d6ee23fd31a851b95235fe",
+      "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.repeat.none.001.raw.json"
+    }
+  ]
 }

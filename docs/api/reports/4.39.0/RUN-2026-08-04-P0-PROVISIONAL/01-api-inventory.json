@@ -2051,7 +2051,7 @@
       "executedCaseCount": 6,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.banner.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.batch",
@@ -3151,7 +3151,7 @@
       "executedCaseCount": 8,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.cloudsearch.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.comment",
@@ -4767,7 +4767,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_banner.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.dj_category_excludehot",
@@ -4908,7 +4908,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_catelist.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.dj_detail",
@@ -5290,7 +5290,7 @@
       "executedCaseCount": 5,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_hot.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.dj_paygift",
@@ -7140,7 +7140,7 @@
       "executedCaseCount": 5,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.homepage_block_page.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.homepage_dragon_ball",
@@ -8440,7 +8440,7 @@
       "executedCaseCount": 2,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.login_qr_key.md",
-      "blocker": "未完成 AUTH_ANON/AUTH_USER 层与扫码流程；unikey 为一次性凭据仅本地保留"
+      "blocker": "未完成扫码流程与更多登录层；unikey 一次性凭据仅本地保留"
     },
     {
       "apiAuditId": "ncm.login_refresh",
@@ -8532,7 +8532,7 @@
       "executedCaseCount": 5,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.login_status.md",
-      "blocker": "AUTH_ANON/AUTH_USER/VIP 缺失；分层稳定性未满足（无参数接口无法产生每层 3 个有差异样本）"
+      "blocker": "AUTH_ANON/USER 层缺样本；无参数接口无法满足每层 3 个有差异样本"
     },
     {
       "apiAuditId": "ncm.logout",
@@ -10305,7 +10305,7 @@
       "executedCaseCount": 6,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.personalized_djprogram",
@@ -10352,7 +10352,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized_djprogram.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.personalized_mv",
@@ -10398,7 +10398,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized_mv.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.personalized_newsong",
@@ -10458,7 +10458,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized_newsong.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.personalized_privatecontent",
@@ -10504,7 +10504,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized_privatecontent.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.personalized_privatecontent_list",
@@ -10564,7 +10564,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personalized_privatecontent_list.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.pl_count",
@@ -10667,7 +10667,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_category_list.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.playlist_catlist",
@@ -10713,7 +10713,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_catlist.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.playlist_cover_update",
@@ -11132,7 +11132,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_highquality_tags.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.playlist_hot",
@@ -11178,7 +11178,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playlist_hot.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.playlist_import_name_task_create",
@@ -12873,7 +12873,7 @@
       "executedCaseCount": 2,
       "terminalStatus": "rate_limited",
       "reportPath": "endpoints/ncm.register_anonimous.md",
-      "blocker": "匿名注册风控：1 次成功（证据未持久化，见运行日志）+ 退避 45s 后仍 3 次 code 400；需冷却后重试"
+      "blocker": "匿名注册风控：成功路径已验证 1 次后被连续 code 400，退避后仍失败"
     },
     {
       "apiAuditId": "ncm.register_cellphone",
@@ -13075,7 +13075,7 @@
       "executedCaseCount": 3,
       "terminalStatus": "failed_stable",
       "reportPath": "endpoints/ncm.register_xeapikey.md",
-      "blocker": "上游模块契约与服务器响应冲突：模块要求解密负载含 sk，服务器返回 publicKey/version/nextUpdateTime；静态常量 xeapiSignKey 作为 sk 的引导回退已实测可用（conflictId XEAPI-001）"
+      "blocker": "XEAPI-001：模块要求解密负载含 sk，服务器返回 publicKey/version/nextUpdateTime；xeapiSignKey 静态密钥回退引导可用"
     },
     {
       "apiAuditId": "ncm.related_allvideo",
@@ -14227,7 +14227,7 @@
       "executedCaseCount": 12,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.search_default",
@@ -14278,7 +14278,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_default.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.search_hot",
@@ -14329,7 +14329,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_hot.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.search_hot_detail",
@@ -14380,7 +14380,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_hot_detail.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.search_match",
@@ -14517,7 +14517,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_multimatch.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.search_suggest",
@@ -14576,7 +14576,7 @@
       "executedCaseCount": 6,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_suggest.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.search_suggest_pc",
@@ -17525,7 +17525,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_album.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.top_artists",
@@ -17584,7 +17584,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_artists.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.top_list",
@@ -17632,7 +17632,7 @@
       "executedCaseCount": 6,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_list.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.top_mv",
@@ -17696,7 +17696,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_mv.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.top_playlist",
@@ -17765,7 +17765,7 @@
       "executedCaseCount": 6,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_playlist.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.top_playlist_highquality",
@@ -17829,7 +17829,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_playlist_highquality.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.top_song",
@@ -17893,7 +17893,7 @@
       "executedCaseCount": 5,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.top_song.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.topic_detail",
@@ -18091,7 +18091,7 @@
       "executedCaseCount": 4,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.toplist.md",
-      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补"
+      "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成"
     },
     {
       "apiAuditId": "ncm.toplist_artist",
@@ -18632,7 +18632,7 @@
       "executedCaseCount": 5,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.user_account.md",
-      "blocker": "AUTH_ANON/AUTH_USER/VIP 缺失；无 uid 生产路径（需登录账号）"
+      "blocker": "AUTH_USER 缺失；uid 生产路径阻塞"
     },
     {
       "apiAuditId": "ncm.user_audio",
@@ -19060,7 +19060,7 @@
       "executedCaseCount": 1,
       "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.user_detail.md",
-      "blocker": "缺 uid（uid 生产需 AUTH_USER）；仅完成缺失必填负向"
+      "blocker": "缺 uid（需 AUTH_USER）；仅缺失必填负向"
     },
     {
       "apiAuditId": "ncm.user_detail_new",

@@ -179,3 +179,45 @@ node scripts/api-audit/runners/self-check.js --reportDir ...（零遗漏与脱�
 - 线上请求数：106（含失败重跑取证，全部持久化错误响应体）
 - 风控状态变化：运行期出现 -462 验证挑战（verifyType 40），Phase 4 媒体请求须降低速率并观察
 - 日志修正：本次起错误响应（status/body/cookieCount）完整落盘
+
+## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：0（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
+- guest-01 游客会话：已建立（AUTH_ANON 层有效）
+- 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
+
+## 12. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：0（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
+- guest-01 游客会话：已建立（AUTH_ANON 层有效）
+- 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
+
+## 13. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：0（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
+- guest-01 游客会话：已建立（AUTH_ANON 层有效）
+- 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
+
+## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：327（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
+- guest-01 游客会话：已建立（AUTH_ANON 层有效）
+- 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
+
+## 12. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：327（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
+- guest-01 游客会话：已建立（AUTH_ANON 层有效）
+- 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
+
+## 13. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：327（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
+- guest-01 游客会话：已建立（AUTH_ANON 层有效）
+- 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s

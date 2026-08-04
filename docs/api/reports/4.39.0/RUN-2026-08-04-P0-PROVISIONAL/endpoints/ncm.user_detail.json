@@ -37,9 +37,12 @@
       {
         "caseId": "ncm.user_detail.none.neg.missing-uid.001",
         "auth": "AUTH_NONE",
+        "phase": 1,
         "code": 400,
         "durationMs": 62,
-        "error": null
+        "error": null,
+        "sampleHash": "d5f4ed3fbe5bd853dbdb69cfb64dd67c6e5226f88e717820378bd8c3bd3046e9",
+        "rawFile": "ncm.user_detail.ncm.user_detail.none.neg.missing-uid.001.raw.json"
       }
     ]
   },
@@ -47,34 +50,28 @@
     {
       "jsonPath": "code",
       "rawType": "number",
-      "presenceCount": 1,
-      "sampleCount": 1,
-      "nullCount": 0,
-      "emptyCount": 0,
-      "authConditions": [
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
         "AUTH_NONE"
       ],
-      "exampleRedacted": "400",
-      "sourceEvidence": "runtime-phase1",
-      "semanticName": "",
-      "semanticConfidence": "unknown",
-      "conflictId": null
+      "firstSeenCase": "ncm.user_detail.none.neg.missing-uid.001",
+      "lastSeenCase": "ncm.user_detail.none.neg.missing-uid.001",
+      "example": "400"
     },
     {
       "jsonPath": "message",
       "rawType": "string",
-      "presenceCount": 1,
-      "sampleCount": 1,
-      "nullCount": 0,
-      "emptyCount": 0,
-      "authConditions": [
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
         "AUTH_NONE"
       ],
-      "exampleRedacted": "参数错误",
-      "sourceEvidence": "runtime-phase1",
-      "semanticName": "",
-      "semanticConfidence": "unknown",
-      "conflictId": null
+      "firstSeenCase": "ncm.user_detail.none.neg.missing-uid.001",
+      "lastSeenCase": "ncm.user_detail.none.neg.missing-uid.001",
+      "example": "参数错误"
     }
   ],
   "errors": [],
@@ -82,12 +79,12 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "缺 uid（uid 生产需 AUTH_USER）；仅完成缺失必填负向",
+  "blocker": "缺 uid（需 AUTH_USER）；仅缺失必填负向",
   "evidence": [
     {
       "caseId": "ncm.user_detail.none.neg.missing-uid.001",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.user_detail.ncm.user_detail.none.neg.missing-uid.001.raw.json"
+      "sampleHash": "d5f4ed3fbe5bd853dbdb69cfb64dd67c6e5226f88e717820378bd8c3bd3046e9",
+      "rawFile": "ncm.user_detail.ncm.user_detail.none.neg.missing-uid.001.raw.json"
     }
   ]
 }

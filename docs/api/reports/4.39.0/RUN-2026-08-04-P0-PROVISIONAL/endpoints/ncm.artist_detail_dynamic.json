@@ -37,39 +37,193 @@
       {
         "caseId": "ncm.artist_detail_dynamic.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 205,
+        "error": null,
+        "sampleHash": "c7fe8336038e5b370c9dacf4023ffda959a53fdbb8ec59e117d31097e10694ae",
+        "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.anon.001.raw.json"
       },
       {
         "caseId": "ncm.artist_detail_dynamic.id0.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 201,
+        "error": null,
+        "sampleHash": "7779bb223929b1fe6dc5ec758e2cb48594a903f1f4316fcea20bee838438f8fb",
+        "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.id0.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.artist_detail_dynamic.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 124,
+        "error": null,
+        "sampleHash": "b97c12d731b4f187a453d67b0293f45d2c711ae4af12d82b18f4f8ad61aba1e9",
+        "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.inv.001.raw.json"
       },
       {
         "caseId": "ncm.artist_detail_dynamic.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 170,
+        "error": null,
+        "sampleHash": "3a13283c4475cdfe7d225d7e67fae251eb907e18dbc3ccea9d461bbd5c9a6e5d",
+        "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.artist_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.artist_detail_dynamic.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "concert.onlineCount",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.artist_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.artist_detail_dynamic.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "concert.simpleConcert",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.artist_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.artist_detail_dynamic.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "concert.view",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.artist_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.artist_detail_dynamic.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "followed",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.artist_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.artist_detail_dynamic.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "rcmdResource",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.artist_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.artist_detail_dynamic.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "videoNum[].cat",
+      "rawType": "number",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.artist_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.artist_detail_dynamic.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "videoNum[].num",
+      "rawType": "number",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.artist_detail_dynamic.anon.001",
+      "lastSeenCase": "ncm.artist_detail_dynamic.none.001",
+      "example": "116"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
   "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
-  "evidence": []
+  "evidence": [
+    {
+      "caseId": "ncm.artist_detail_dynamic.anon.001",
+      "sampleHash": "c7fe8336038e5b370c9dacf4023ffda959a53fdbb8ec59e117d31097e10694ae",
+      "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_detail_dynamic.id0.none.neg.001",
+      "sampleHash": "7779bb223929b1fe6dc5ec758e2cb48594a903f1f4316fcea20bee838438f8fb",
+      "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_detail_dynamic.inv.001",
+      "sampleHash": "b97c12d731b4f187a453d67b0293f45d2c711ae4af12d82b18f4f8ad61aba1e9",
+      "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_detail_dynamic.none.001",
+      "sampleHash": "3a13283c4475cdfe7d225d7e67fae251eb907e18dbc3ccea9d461bbd5c9a6e5d",
+      "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.none.001.raw.json"
+    }
+  ]
 }

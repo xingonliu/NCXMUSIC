@@ -31,16 +31,22 @@
       {
         "caseId": "ncm.register_anonimous.none.min.001",
         "auth": "AUTH_NONE",
+        "phase": 1,
         "code": 400,
         "durationMs": 91,
-        "error": null
+        "error": null,
+        "sampleHash": "80f7234835e13a2939d2b8b1a7e95087a0accb01d5ac89addf38887f0f220d86",
+        "rawFile": "ncm.register_anonimous.ncm.register_anonimous.none.min.001.raw.json"
       },
       {
         "caseId": "ncm.register_anonimous.none.repeat.002",
         "auth": "AUTH_NONE",
+        "phase": 1,
         "code": 400,
         "durationMs": 86,
-        "error": null
+        "error": null,
+        "sampleHash": "3e0b0863a841b4b2b24bf25835658fe29c2138308ad8bd58b7db7c7cf026ca1b",
+        "rawFile": "ncm.register_anonimous.ncm.register_anonimous.none.repeat.002.raw.json"
       }
     ]
   },
@@ -48,18 +54,15 @@
     {
       "jsonPath": "code",
       "rawType": "number",
-      "presenceCount": 2,
-      "sampleCount": 2,
-      "nullCount": 0,
-      "emptyCount": 0,
-      "authConditions": [
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
         "AUTH_NONE"
       ],
-      "exampleRedacted": "400",
-      "sourceEvidence": "runtime-phase1",
-      "semanticName": "",
-      "semanticConfidence": "unknown",
-      "conflictId": null
+      "firstSeenCase": "ncm.register_anonimous.none.min.001",
+      "lastSeenCase": "ncm.register_anonimous.none.repeat.002",
+      "example": "400"
     }
   ],
   "errors": [],
@@ -67,17 +70,17 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "rate_limited",
-  "blocker": "匿名注册风控：1 次成功（证据未持久化，见运行日志）+ 退避 45s 后仍 3 次 code 400；需冷却后重试",
+  "blocker": "匿名注册风控：成功路径已验证 1 次后被连续 code 400，退避后仍失败",
   "evidence": [
     {
       "caseId": "ncm.register_anonimous.none.min.001",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.register_anonimous.ncm.register_anonimous.none.min.001.raw.json"
+      "sampleHash": "80f7234835e13a2939d2b8b1a7e95087a0accb01d5ac89addf38887f0f220d86",
+      "rawFile": "ncm.register_anonimous.ncm.register_anonimous.none.min.001.raw.json"
     },
     {
       "caseId": "ncm.register_anonimous.none.repeat.002",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.register_anonimous.ncm.register_anonimous.none.repeat.002.raw.json"
+      "sampleHash": "3e0b0863a841b4b2b24bf25835658fe29c2138308ad8bd58b7db7c7cf026ca1b",
+      "rawFile": "ncm.register_anonimous.ncm.register_anonimous.none.repeat.002.raw.json"
     }
   ]
 }

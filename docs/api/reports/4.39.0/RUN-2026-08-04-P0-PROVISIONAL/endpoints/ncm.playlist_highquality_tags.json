@@ -31,39 +31,163 @@
       {
         "caseId": "ncm.playlist_highquality_tags.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 62,
+        "error": null,
+        "sampleHash": "bae4d55d348242c0cdf4780faddc9ce64c84c48b8e395a414c373343584e4ad5",
+        "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.anon.001.raw.json"
       },
       {
         "caseId": "ncm.playlist_highquality_tags.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 55,
+        "error": null,
+        "sampleHash": "66f0b17953fe90a00948c96fd99b4630616688abd128ea73bc9f39de3a9256ae",
+        "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.inv.001.raw.json"
       },
       {
         "caseId": "ncm.playlist_highquality_tags.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 106,
+        "error": null,
+        "sampleHash": "d770ef699101e9eb63b60d017368a880b2e69e9cf848fef6c721958602f88569",
+        "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.001.raw.json"
       },
       {
         "caseId": "ncm.playlist_highquality_tags.none.002",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 53,
+        "error": null,
+        "sampleHash": "0d1b43d73aec4fbbae2eedca3812c2c2a922a0a0abb85202fbc406b9402046bd",
+        "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.002.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_highquality_tags.anon.001",
+      "lastSeenCase": "ncm.playlist_highquality_tags.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "tags[].category",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_highquality_tags.anon.001",
+      "lastSeenCase": "ncm.playlist_highquality_tags.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "tags[].hot",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_highquality_tags.anon.001",
+      "lastSeenCase": "ncm.playlist_highquality_tags.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "tags[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_highquality_tags.anon.001",
+      "lastSeenCase": "ncm.playlist_highquality_tags.none.002",
+      "example": "5001"
+    },
+    {
+      "jsonPath": "tags[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_highquality_tags.anon.001",
+      "lastSeenCase": "ncm.playlist_highquality_tags.none.002",
+      "example": "华语"
+    },
+    {
+      "jsonPath": "tags[].type",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_highquality_tags.anon.001",
+      "lastSeenCase": "ncm.playlist_highquality_tags.none.002",
+      "example": "0"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.playlist_highquality_tags.anon.001",
+      "sampleHash": "bae4d55d348242c0cdf4780faddc9ce64c84c48b8e395a414c373343584e4ad5",
+      "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playlist_highquality_tags.inv.001",
+      "sampleHash": "66f0b17953fe90a00948c96fd99b4630616688abd128ea73bc9f39de3a9256ae",
+      "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playlist_highquality_tags.none.001",
+      "sampleHash": "d770ef699101e9eb63b60d017368a880b2e69e9cf848fef6c721958602f88569",
+      "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playlist_highquality_tags.none.002",
+      "sampleHash": "0d1b43d73aec4fbbae2eedca3812c2c2a922a0a0abb85202fbc406b9402046bd",
+      "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.002.raw.json"
+    }
+  ]
 }

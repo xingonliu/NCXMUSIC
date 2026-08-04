@@ -45,25 +45,33 @@
       {
         "caseId": "ncm.simi_song.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 71,
+        "error": null,
+        "sampleHash": "e8f2f14b12a5f87940500d922fe9569aedd9a138f69d65cb8a8721431a968fcd",
+        "rawFile": "ncm.simi_song.ncm.simi_song.anon.001.raw.json"
       },
       {
         "caseId": "ncm.simi_song.id0.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 65,
+        "error": null,
+        "sampleHash": "7f4ca0fd7c0473e692ddfddc2a1331c24486e5d0774222cc1302a0154a3e542f",
+        "rawFile": "ncm.simi_song.ncm.simi_song.id0.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.simi_song.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 3,
         "status": "error",
         "code": -462,
         "error": {
           "class": "other",
           "status": 400,
+          "code": -462,
           "body": {
             "code": -462,
             "data": {
@@ -87,23 +95,78 @@
             "message": "请完成验证操作"
           },
           "message": "[object Object]"
-        }
+        },
+        "sampleHash": "28b5303c934193bdcc37810fd81d1c54d1b443e7bc0fa07985071bca064c8051",
+        "rawFile": "ncm.simi_song.ncm.simi_song.inv.001.raw.json"
       },
       {
         "caseId": "ncm.simi_song.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 221,
+        "error": null,
+        "sampleHash": "c9401aa601776d50c93a05e28b246a3587fe639e982cea2a2b0e5875d0e9c063",
+        "rawFile": "ncm.simi_song.ncm.simi_song.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.simi_song.anon.001",
+      "lastSeenCase": "ncm.simi_song.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "songs",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.simi_song.anon.001",
+      "lastSeenCase": "ncm.simi_song.none.001",
+      "example": "undefined"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
   "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
-  "evidence": []
+  "evidence": [
+    {
+      "caseId": "ncm.simi_song.anon.001",
+      "sampleHash": "e8f2f14b12a5f87940500d922fe9569aedd9a138f69d65cb8a8721431a968fcd",
+      "rawFile": "ncm.simi_song.ncm.simi_song.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_song.id0.none.neg.001",
+      "sampleHash": "7f4ca0fd7c0473e692ddfddc2a1331c24486e5d0774222cc1302a0154a3e542f",
+      "rawFile": "ncm.simi_song.ncm.simi_song.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_song.inv.001",
+      "sampleHash": "28b5303c934193bdcc37810fd81d1c54d1b443e7bc0fa07985071bca064c8051",
+      "rawFile": "ncm.simi_song.ncm.simi_song.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_song.none.001",
+      "sampleHash": "c9401aa601776d50c93a05e28b246a3587fe639e982cea2a2b0e5875d0e9c063",
+      "rawFile": "ncm.simi_song.ncm.simi_song.none.001.raw.json"
+    }
+  ]
 }

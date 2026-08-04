@@ -40,53 +40,313 @@
       {
         "caseId": "ncm.personalized.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 229,
+        "error": null,
+        "sampleHash": "147e3e88fa49711090cef6ef559ea1acb1a14b49461d2ab8f082210eb47b67f6",
+        "rawFile": "ncm.personalized.ncm.personalized.anon.001.raw.json"
       },
       {
         "caseId": "ncm.personalized.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 184,
+        "error": null,
+        "sampleHash": "577296a98c05e8dddcee03269b2ab121c14d83d78e08d290d63409c62e7cf570",
+        "rawFile": "ncm.personalized.ncm.personalized.inv.001.raw.json"
       },
       {
         "caseId": "ncm.personalized.limit0.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 212,
+        "error": null,
+        "sampleHash": "7268d5921266aedb4e4dc7a2f2cc2a2e2a9961ce380cdfb2eade50d272e4b036",
+        "rawFile": "ncm.personalized.ncm.personalized.limit0.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.personalized.limit5.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 138,
+        "error": null,
+        "sampleHash": "0dae024c2f918a7b0df0c85198cf853b7b3947b02a6d818eda9e2448b4d2ae3b",
+        "rawFile": "ncm.personalized.ncm.personalized.limit5.none.001.raw.json"
       },
       {
         "caseId": "ncm.personalized.limit50.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 244,
+        "error": null,
+        "sampleHash": "07e9dbaf2364a3d553820e5ea0371d1993fcb5923b56258329d625c6857ee76c",
+        "rawFile": "ncm.personalized.ncm.personalized.limit50.none.001.raw.json"
       },
       {
         "caseId": "ncm.personalized.min.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 342,
+        "error": null,
+        "sampleHash": "4a22a16516371f9fc873db0f94ef0eebca3696ede24f76a605e2b3ed3bcfff70",
+        "rawFile": "ncm.personalized.ncm.personalized.min.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "category",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "hasTaste",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result[].alg",
+      "rawType": "string",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "byNewUserGroup_combine"
+    },
+    {
+      "jsonPath": "result[].canDislike",
+      "rawType": "boolean",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "result[].copywriter",
+      "rawType": "string",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result[].highQuality",
+      "rawType": "boolean",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result[].id",
+      "rawType": "number",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "14068522243"
+    },
+    {
+      "jsonPath": "result[].name",
+      "rawType": "string",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "【K-POP】韩国女团超燃舞曲！！"
+    },
+    {
+      "jsonPath": "result[].picUrl",
+      "rawType": "string",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "https://p3.music.126.net/8M5h_gZ3kyoEMtBenxDj2A==/1099511719"
+    },
+    {
+      "jsonPath": "result[].playCount",
+      "rawType": "number",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "127166"
+    },
+    {
+      "jsonPath": "result[].trackCount",
+      "rawType": "number",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "173"
+    },
+    {
+      "jsonPath": "result[].trackNumberUpdateTime",
+      "rawType": "number",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "1756981264775"
+    },
+    {
+      "jsonPath": "result[].type",
+      "rawType": "number",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized.anon.001",
+      "lastSeenCase": "ncm.personalized.min.none.001",
+      "example": "0"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.personalized.anon.001",
+      "sampleHash": "147e3e88fa49711090cef6ef559ea1acb1a14b49461d2ab8f082210eb47b67f6",
+      "rawFile": "ncm.personalized.ncm.personalized.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.personalized.inv.001",
+      "sampleHash": "577296a98c05e8dddcee03269b2ab121c14d83d78e08d290d63409c62e7cf570",
+      "rawFile": "ncm.personalized.ncm.personalized.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.personalized.limit0.none.neg.001",
+      "sampleHash": "7268d5921266aedb4e4dc7a2f2cc2a2e2a9961ce380cdfb2eade50d272e4b036",
+      "rawFile": "ncm.personalized.ncm.personalized.limit0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.personalized.limit5.none.001",
+      "sampleHash": "0dae024c2f918a7b0df0c85198cf853b7b3947b02a6d818eda9e2448b4d2ae3b",
+      "rawFile": "ncm.personalized.ncm.personalized.limit5.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.personalized.limit50.none.001",
+      "sampleHash": "07e9dbaf2364a3d553820e5ea0371d1993fcb5923b56258329d625c6857ee76c",
+      "rawFile": "ncm.personalized.ncm.personalized.limit50.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.personalized.min.none.001",
+      "sampleHash": "4a22a16516371f9fc873db0f94ef0eebca3696ede24f76a605e2b3ed3bcfff70",
+      "rawFile": "ncm.personalized.ncm.personalized.min.none.001.raw.json"
+    }
+  ]
 }

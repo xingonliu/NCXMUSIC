@@ -37,46 +37,1716 @@
       {
         "caseId": "ncm.artist_desc.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 67,
+        "error": null,
+        "sampleHash": "bc7910a6e34c6018f391b9bc2cae411529d32e132baa94d5929bae46a9da62a4",
+        "rawFile": "ncm.artist_desc.ncm.artist_desc.anon.001.raw.json"
       },
       {
         "caseId": "ncm.artist_desc.id0.none.neg.001",
         "auth": "AUTH_NONE",
+        "phase": 3,
         "status": "error",
         "code": 404,
         "error": {
           "class": "other",
           "status": 404,
+          "code": 404,
           "body": {
             "code": 404
           },
           "message": "[object Object]"
-        }
+        },
+        "sampleHash": "69b3f29de670fbb1151dadc3c1281636d27be297a84ca3467194f1f4a1658455",
+        "rawFile": "ncm.artist_desc.ncm.artist_desc.id0.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.artist_desc.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 61,
+        "error": null,
+        "sampleHash": "fd508588b7851b5664248c1d595ba7967dd8e6a566d5fb1ac4d55df9cf331fb0",
+        "rawFile": "ncm.artist_desc.ncm.artist_desc.inv.001.raw.json"
       },
       {
         "caseId": "ncm.artist_desc.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 58,
+        "error": null,
+        "sampleHash": "d544a1d9418afb50cb8ce657bf41750d165d9bf7725a7f12c0e131899c5fb291",
+        "rawFile": "ncm.artist_desc.ncm.artist_desc.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "briefDesc",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "邓紫棋（G.E.M.），本名邓诗颖，1991年8月16日出生于上海市，中国香港流行乐女歌手、词曲作者、音乐制作人。\n20"
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "count",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "introduction[].ti",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "代表作品"
+    },
+    {
+      "jsonPath": "introduction[].txt",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "泡沫、光年之外、来自天堂的魔鬼、句号、倒数、画、我的秘密、再见、多远都要在一起、摩天动物园、Where Did U Go"
+    },
+    {
+      "jsonPath": "topicData[].addTime",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "1500973322914"
+    },
+    {
+      "jsonPath": "topicData[].categoryId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "topicData[].categoryName",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "口袋乐评"
+    },
+    {
+      "jsonPath": "topicData[].commentCount",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "2777"
+    },
+    {
+      "jsonPath": "topicData[].commentThreadId",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "A_TO_6_18550061"
+    },
+    {
+      "jsonPath": "topicData[].coverUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "http://p3.music.126.net/kQrjbW-Ipi81j1z9V2bvaQ==/19083123811"
+    },
+    {
+      "jsonPath": "topicData[].creator.accountStatus",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].creator.accountType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].creator.anchor",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "topicData[].creator.authenticated",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "topicData[].creator.authenticationTypes",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].creator.authority",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].creator.authStatus",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].creator.avatarDetail",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "topicData[].creator.avatarImgId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "109951163106156700"
+    },
+    {
+      "jsonPath": "topicData[].creator.avatarUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "http://p4.music.126.net/5yb4TeARG924XpzbKCNoKg==/10995116310"
+    },
+    {
+      "jsonPath": "topicData[].creator.backgroundImgId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "2002210674180199"
+    },
+    {
+      "jsonPath": "topicData[].creator.backgroundUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "http://p1.music.126.net/VTW4vsN08vwL3uSQqPyHqg==/20022106741"
+    },
+    {
+      "jsonPath": "topicData[].creator.birthday",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "802022400000"
+    },
+    {
+      "jsonPath": "topicData[].creator.city",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "110101"
+    },
+    {
+      "jsonPath": "topicData[].creator.createTime",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "1470741806564"
+    },
+    {
+      "jsonPath": "topicData[].creator.defaultAvatar",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "topicData[].creator.description",
+      "rawType": "union<null|string>",
+      "presence": 6,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "YOHO!GIRL官方账号"
+    },
+    {
+      "jsonPath": "topicData[].creator.detailDescription",
+      "rawType": "union<null|string>",
+      "presence": 6,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "YOHO!GIRL官方账号"
+    },
+    {
+      "jsonPath": "topicData[].creator.djStatus",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].creator.experts",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "topicData[].creator.expertTags",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "topicData[].creator.followed",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "topicData[].creator.gender",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "topicData[].creator.lastLoginIP",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "61.135.255.86"
+    },
+    {
+      "jsonPath": "topicData[].creator.lastLoginTime",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "1522229823516"
+    },
+    {
+      "jsonPath": "topicData[].creator.locationStatus",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "30"
+    },
+    {
+      "jsonPath": "topicData[].creator.mutual",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "topicData[].creator.nickname",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "Cutties"
+    },
+    {
+      "jsonPath": "topicData[].creator.province",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "110000"
+    },
+    {
+      "jsonPath": "topicData[].creator.remarkName",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "topicData[].creator.shortUserName",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "topicData[].creator.signature",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "topicData[].creator.userId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "316704573"
+    },
+    {
+      "jsonPath": "topicData[].creator.userName",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "topicData[].creator.userType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].creator.vipType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].creator.viptypeVersion",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].id",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "18550061"
+    },
+    {
+      "jsonPath": "topicData[].liked",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "topicData[].likedCount",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "9595"
+    },
+    {
+      "jsonPath": "topicData[].mainTitle",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "出道9年，你最爱邓紫棋哪首歌曲？"
+    },
+    {
+      "jsonPath": "topicData[].memo",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "topicData[].number",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "5"
+    },
+    {
+      "jsonPath": "topicData[].readCount",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "553454"
+    },
+    {
+      "jsonPath": "topicData[].recmdContent",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "出道9年，经历风雨后的邓紫棋愈加耀眼，相信下个9年，邓紫棋会变得更好~"
+    },
+    {
+      "jsonPath": "topicData[].recmdTitle",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "出道9年，你最爱邓紫棋哪首歌曲？"
+    },
+    {
+      "jsonPath": "topicData[].rectanglePicUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "http://p3.music.126.net/yYzezuqmAYSez7wBC_GRGg==/19051237974"
+    },
+    {
+      "jsonPath": "topicData[].relatedResource",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "topicData[].reward",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "topicData[].rewardCount",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].rewardMoney",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].seriesId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "2490076"
+    },
+    {
+      "jsonPath": "topicData[].shareContent",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "topicData[].shareCount",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "1403"
+    },
+    {
+      "jsonPath": "topicData[].showComment",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "topicData[].showRelated",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "topicData[].summary",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "出道9年，经历风雨后的邓紫棋愈加耀眼，相信下个9年，邓紫棋会变得更好~"
+    },
+    {
+      "jsonPath": "topicData[].tags[]",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "邓紫棋"
+    },
+    {
+      "jsonPath": "topicData[].title",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "出道9年，你最爱邓紫棋哪首歌曲？"
+    },
+    {
+      "jsonPath": "topicData[].topic.addTime",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "1500973294440"
+    },
+    {
+      "jsonPath": "topicData[].topic.adInfo",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "topicData[].topic.auditor",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "topicData[].topic.auditStatus",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].topic.auditTime",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].topic.categoryId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "topicData[].topic.content[].content",
+      "rawType": "union<string|null>",
+      "presence": 18,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "<p>7月10日是邓紫棋出道9周年的纪念日，邓紫棋也在微博中晒出了纪念日与蛋糕的合照~</p>"
+    },
+    {
+      "jsonPath": "topicData[].topic.content[].id",
+      "rawType": "number",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].topic.content[].type",
+      "rawType": "number",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "13"
+    },
+    {
+      "jsonPath": "topicData[].topic.cover",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "19083123811936976"
+    },
+    {
+      "jsonPath": "topicData[].topic.delReason",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "topicData[].topic.fromBackend",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "topicData[].topic.headPic",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].topic.hotScore",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "topicData[].topic.id",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "18550061"
+    },
+    {
+      "jsonPath": "topicData[].topic.mainTitle",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "出道9年，你最爱邓紫棋哪首歌曲？"
+    },
+    {
+      "jsonPath": "topicData[].topic.memo",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "topicData[].topic.number",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "5"
+    },
+    {
+      "jsonPath": "topicData[].topic.pubImmidiatly",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "topicData[].topic.pubTime",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "1500973322914"
+    },
+    {
+      "jsonPath": "topicData[].topic.readCount",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "553454"
+    },
+    {
+      "jsonPath": "topicData[].topic.recomdContent",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "topicData[].topic.recomdTitle",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "topicData[].topic.rectanglePic",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "19051237974735670"
+    },
+    {
+      "jsonPath": "topicData[].topic.reward",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "topicData[].topic.seriesId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "2490076"
+    },
+    {
+      "jsonPath": "topicData[].topic.shareContent",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "topicData[].topic.showComment",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "topicData[].topic.showRelated",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "topicData[].topic.startText",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "7月10日是邓紫棋出道9周年的纪念日，邓紫棋也在微博中晒出了纪念日与蛋糕的合照~ 作为90后的邓紫棋居然已经出道9年了，"
+    },
+    {
+      "jsonPath": "topicData[].topic.status",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "topicData[].topic.summary",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "出道9年，经历风雨后的邓紫棋愈加耀眼，相信下个9年，邓紫棋会变得更好~"
+    },
+    {
+      "jsonPath": "topicData[].topic.tags[]",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "邓紫棋"
+    },
+    {
+      "jsonPath": "topicData[].topic.title",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "出道9年，你最爱邓紫棋哪首歌曲？"
+    },
+    {
+      "jsonPath": "topicData[].topic.updateTime",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "1502439547112"
+    },
+    {
+      "jsonPath": "topicData[].topic.userId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "316704573"
+    },
+    {
+      "jsonPath": "topicData[].topic.wxTitle",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "topicData[].url",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "/m/topic/18550061"
+    },
+    {
+      "jsonPath": "topicData[].wxTitle",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_desc.anon.001",
+      "lastSeenCase": "ncm.artist_desc.none.001",
+      "example": "出道9年，你最爱邓紫棋哪首歌曲？"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
   "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
-  "evidence": []
+  "evidence": [
+    {
+      "caseId": "ncm.artist_desc.anon.001",
+      "sampleHash": "bc7910a6e34c6018f391b9bc2cae411529d32e132baa94d5929bae46a9da62a4",
+      "rawFile": "ncm.artist_desc.ncm.artist_desc.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_desc.id0.none.neg.001",
+      "sampleHash": "69b3f29de670fbb1151dadc3c1281636d27be297a84ca3467194f1f4a1658455",
+      "rawFile": "ncm.artist_desc.ncm.artist_desc.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_desc.inv.001",
+      "sampleHash": "fd508588b7851b5664248c1d595ba7967dd8e6a566d5fb1ac4d55df9cf331fb0",
+      "rawFile": "ncm.artist_desc.ncm.artist_desc.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_desc.none.001",
+      "sampleHash": "d544a1d9418afb50cb8ce657bf41750d165d9bf7725a7f12c0e131899c5fb291",
+      "rawFile": "ncm.artist_desc.ncm.artist_desc.none.001.raw.json"
+    }
+  ]
 }

@@ -35,25 +35,69 @@
       {
         "caseId": "ncm.related_playlist.id0.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 217,
+        "error": null,
+        "sampleHash": "c4bd01a62f4c442db054a3b9a3176c8c18efa958ea0c08ee011214bcad728d3b",
+        "rawFile": "ncm.related_playlist.ncm.related_playlist.id0.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.related_playlist.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 256,
+        "error": null,
+        "sampleHash": "aaab74a7eafcd8ce73b6bb2f5c3d1b1ccb871db26ece1ae991d437cda84f470d",
+        "rawFile": "ncm.related_playlist.ncm.related_playlist.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.related_playlist.id0.none.neg.001",
+      "lastSeenCase": "ncm.related_playlist.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "playlists",
+      "rawType": "array<unknown>",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 2,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.related_playlist.id0.none.neg.001",
+      "lastSeenCase": "ncm.related_playlist.none.001",
+      "example": "undefined"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
   "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
-  "evidence": []
+  "evidence": [
+    {
+      "caseId": "ncm.related_playlist.id0.none.neg.001",
+      "sampleHash": "c4bd01a62f4c442db054a3b9a3176c8c18efa958ea0c08ee011214bcad728d3b",
+      "rawFile": "ncm.related_playlist.ncm.related_playlist.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.related_playlist.none.001",
+      "sampleHash": "aaab74a7eafcd8ce73b6bb2f5c3d1b1ccb871db26ece1ae991d437cda84f470d",
+      "rawFile": "ncm.related_playlist.ncm.related_playlist.none.001.raw.json"
+    }
+  ]
 }

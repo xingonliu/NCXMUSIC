@@ -1,0 +1,104 @@
+{
+  "note": "Phase 4 播放媒体。canonical 配置（enhanced 缺失，登记 B-003）；AUTH_VIP/AUTH_PURCHASED 缺失，音质矩阵按可取得层执行并标记 blocked_by_prerequisite。媒体 URL 仅小范围探测（HEAD/Range 0-1），不下载完整音频。",
+  "groups": [
+    {
+      "apiAuditId": "ncm.song_detail",
+      "moduleName": "song_detail",
+      "enrichment": true,
+      "cases": [
+        { "caseId": "ncm.song_detail.media-fixture.songA.001", "auth": "AUTH_NONE", "params": { "ids": "{{pool:songId:0}}" }, "expectedClass": "media-fixture-label" },
+        { "caseId": "ncm.song_detail.media-fixture.songB.001", "auth": "AUTH_NONE", "params": { "ids": "{{pool:songId:31}}" }, "expectedClass": "media-fixture-label" },
+        { "caseId": "ncm.song_detail.media-fixture.songC.001", "auth": "AUTH_NONE", "params": { "ids": "{{pool:songId:63}}" }, "expectedClass": "media-fixture-label" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.song_url_v1",
+      "moduleName": "song_url_v1",
+      "cases": [
+        { "caseId": "ncm.song_url_v1.A.standard.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "standard" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.higher.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "higher" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.exhigh.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "exhigh" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.lossless.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "lossless" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.hires.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "hires" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.jyeffect.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "jyeffect" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.sky.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "sky" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.dolby.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "dolby" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.jymaster.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "jymaster" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.B.standard.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}", "level": "standard" }, "expectedClass": "media-url-vip-content" },
+        { "caseId": "ncm.song_url_v1.B.higher.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}", "level": "higher" }, "expectedClass": "media-url-vip-content" },
+        { "caseId": "ncm.song_url_v1.B.exhigh.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}", "level": "exhigh" }, "expectedClass": "media-url-vip-content" },
+        { "caseId": "ncm.song_url_v1.B.lossless.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}", "level": "lossless" }, "expectedClass": "media-url-vip-content" },
+        { "caseId": "ncm.song_url_v1.B.hires.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}", "level": "hires" }, "expectedClass": "media-url-vip-content" },
+        { "caseId": "ncm.song_url_v1.B.jyeffect.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}", "level": "jyeffect" }, "expectedClass": "media-url-vip-content" },
+        { "caseId": "ncm.song_url_v1.B.sky.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}", "level": "sky" }, "expectedClass": "media-url-vip-content" },
+        { "caseId": "ncm.song_url_v1.B.dolby.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}", "level": "dolby" }, "expectedClass": "media-url-vip-content" },
+        { "caseId": "ncm.song_url_v1.B.jymaster.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}", "level": "jymaster" }, "expectedClass": "media-url-vip-content" },
+        { "caseId": "ncm.song_url_v1.A.standard.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}", "level": "standard" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.higher.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}", "level": "higher" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.exhigh.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}", "level": "exhigh" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.lossless.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}", "level": "lossless" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.hires.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}", "level": "hires" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.jyeffect.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}", "level": "jyeffect" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.sky.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}", "level": "sky" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.dolby.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}", "level": "dolby" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.jymaster.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}", "level": "jymaster" }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url_v1.A.standard.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "id": "{{pool:songId:0}}", "level": "standard" }, "expectedClass": "media-url-or-fallback" },
+        { "caseId": "ncm.song_url_v1.A.exhigh.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "id": "{{pool:songId:0}}", "level": "exhigh" }, "expectedClass": "media-url-or-fallback" },
+        { "caseId": "ncm.song_url_v1.A.lossless.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "id": "{{pool:songId:0}}", "level": "lossless" }, "expectedClass": "media-url-or-fallback" },
+        { "caseId": "ncm.song_url_v1.A.sky.c51.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "sky", "immerseType": "c51" }, "expectedClass": "media-url-sky-c51" },
+        { "caseId": "ncm.song_url_v1.A.sky.ste.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "sky", "immerseType": "ste" }, "expectedClass": "media-url-sky-ste" },
+        { "caseId": "ncm.song_url_v1.A.sky.aac.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "sky", "immerseType": "aac" }, "expectedClass": "media-url-sky-aac" },
+        { "caseId": "ncm.song_url_v1.A.standard.id0.none.neg.001", "auth": "AUTH_NONE", "params": { "id": "0", "level": "standard" }, "expectedClass": "negative-invalid-id" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.song_url",
+      "moduleName": "song_url",
+      "cases": [
+        { "caseId": "ncm.song_url.A.br999.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "br": 999000 }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url.B.br999.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}", "br": 999000 }, "expectedClass": "media-url-vip-content" },
+        { "caseId": "ncm.song_url.A.br320.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}", "br": 320000 }, "expectedClass": "media-url" },
+        { "caseId": "ncm.song_url.A.br128.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "id": "{{pool:songId:0}}", "br": 128000 }, "expectedClass": "media-url-or-fallback" },
+        { "caseId": "ncm.song_url.A.id0.none.neg.001", "auth": "AUTH_NONE", "params": { "id": "0", "br": 999000 }, "expectedClass": "negative-invalid-id" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.song_url_v1_302",
+      "moduleName": "song_url_v1_302",
+      "cases": [
+        { "caseId": "ncm.song_url_v1_302.A.standard.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "standard" }, "expectedClass": "media-url-302" },
+        { "caseId": "ncm.song_url_v1_302.A.lossless.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "lossless" }, "expectedClass": "media-url-302" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.song_download_url",
+      "moduleName": "song_download_url",
+      "cases": [
+        { "caseId": "ncm.song_download_url.A.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}" }, "expectedClass": "download-url" },
+        { "caseId": "ncm.song_download_url.B.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}" }, "expectedClass": "download-url-vip" },
+        { "caseId": "ncm.song_download_url.A.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}" }, "expectedClass": "download-url" },
+        { "caseId": "ncm.song_download_url.A.id0.none.neg.001", "auth": "AUTH_NONE", "params": { "id": "0" }, "expectedClass": "negative-invalid-id" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.song_download_url_v1",
+      "moduleName": "song_download_url_v1",
+      "cases": [
+        { "caseId": "ncm.song_download_url_v1.A.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:0}}", "level": "standard" }, "expectedClass": "download-url" },
+        { "caseId": "ncm.song_download_url_v1.B.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:songId:31}}", "level": "standard" }, "expectedClass": "download-url-vip" },
+        { "caseId": "ncm.song_download_url_v1.A.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:songId:0}}", "level": "standard" }, "expectedClass": "download-url" },
+        { "caseId": "ncm.song_download_url_v1.A.id0.none.neg.001", "auth": "AUTH_NONE", "params": { "id": "0", "level": "standard" }, "expectedClass": "negative-invalid-id" }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.mv_url",
+      "moduleName": "mv_url",
+      "cases": [
+        { "caseId": "ncm.mv_url.none.001", "auth": "AUTH_NONE", "params": { "id": "{{pool:mvId:0}}" }, "expectedClass": "mv-url" },
+        { "caseId": "ncm.mv_url.anon.001", "auth": "AUTH_ANON", "params": { "id": "{{pool:mvId:0}}" }, "expectedClass": "mv-url" },
+        { "caseId": "ncm.mv_url.inv.001", "auth": "AUTH_INVALID_EXPIRED", "params": { "id": "{{pool:mvId:0}}" }, "expectedClass": "mv-url-or-fallback" },
+        { "caseId": "ncm.mv_url.id0.none.neg.001", "auth": "AUTH_NONE", "params": { "id": "0" }, "expectedClass": "negative-invalid-id" }
+      ]
+    }
+  ]
+}

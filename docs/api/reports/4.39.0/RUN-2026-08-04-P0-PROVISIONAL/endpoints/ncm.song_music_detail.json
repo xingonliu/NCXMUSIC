@@ -36,39 +36,148 @@
       {
         "caseId": "ncm.song_music_detail.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 3,
         "code": 400,
-        "error": null
+        "durationMs": 131,
+        "error": null,
+        "sampleHash": "da03fe8786c96e5e703c9ea7dc2e4e3962018342ae2e25122847a5421c455aeb",
+        "rawFile": "ncm.song_music_detail.ncm.song_music_detail.anon.001.raw.json"
       },
       {
         "caseId": "ncm.song_music_detail.id0.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 400,
-        "error": null
+        "durationMs": 76,
+        "error": null,
+        "sampleHash": "70b94dfd837f4e2eab65c92c465b264e16d958de4eb9ca833454420a79dfe747",
+        "rawFile": "ncm.song_music_detail.ncm.song_music_detail.id0.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.song_music_detail.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 3,
         "code": 400,
-        "error": null
+        "durationMs": 90,
+        "error": null,
+        "sampleHash": "f7d556af1540c6eb82082b52cbc00c6583447ae242cbe26ae652c8323bf7e5ea",
+        "rawFile": "ncm.song_music_detail.ncm.song_music_detail.inv.001.raw.json"
       },
       {
         "caseId": "ncm.song_music_detail.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 400,
-        "error": null
+        "durationMs": 77,
+        "error": null,
+        "sampleHash": "3da3a3e2a8126cf8744a4878c0ea0249e7526988f12e47b1b91d193ffec8e41a",
+        "rawFile": "ncm.song_music_detail.ncm.song_music_detail.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_music_detail.anon.001",
+      "lastSeenCase": "ncm.song_music_detail.none.001",
+      "example": "400"
+    },
+    {
+      "jsonPath": "data",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_music_detail.anon.001",
+      "lastSeenCase": "ncm.song_music_detail.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "error",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_music_detail.anon.001",
+      "lastSeenCase": "ncm.song_music_detail.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_music_detail.anon.001",
+      "lastSeenCase": "ncm.song_music_detail.none.001",
+      "example": "参数异常"
+    },
+    {
+      "jsonPath": "success",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_music_detail.anon.001",
+      "lastSeenCase": "ncm.song_music_detail.none.001",
+      "example": "false"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
   "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
-  "evidence": []
+  "evidence": [
+    {
+      "caseId": "ncm.song_music_detail.anon.001",
+      "sampleHash": "da03fe8786c96e5e703c9ea7dc2e4e3962018342ae2e25122847a5421c455aeb",
+      "rawFile": "ncm.song_music_detail.ncm.song_music_detail.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_music_detail.id0.none.neg.001",
+      "sampleHash": "70b94dfd837f4e2eab65c92c465b264e16d958de4eb9ca833454420a79dfe747",
+      "rawFile": "ncm.song_music_detail.ncm.song_music_detail.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_music_detail.inv.001",
+      "sampleHash": "f7d556af1540c6eb82082b52cbc00c6583447ae242cbe26ae652c8323bf7e5ea",
+      "rawFile": "ncm.song_music_detail.ncm.song_music_detail.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_music_detail.none.001",
+      "sampleHash": "3da3a3e2a8126cf8744a4878c0ea0249e7526988f12e47b1b91d193ffec8e41a",
+      "rawFile": "ncm.song_music_detail.ncm.song_music_detail.none.001.raw.json"
+    }
+  ]
 }

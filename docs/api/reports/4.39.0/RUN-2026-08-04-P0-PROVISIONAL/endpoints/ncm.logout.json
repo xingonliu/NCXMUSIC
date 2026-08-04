@@ -31,16 +31,22 @@
       {
         "caseId": "ncm.logout.inv.truncated.001",
         "auth": "AUTH_INVALID_TRUNCATED",
+        "phase": 1,
         "code": 200,
         "durationMs": 81,
-        "error": null
+        "error": null,
+        "sampleHash": "c30a1797329c4d6dc9f08774cf3ade2b4e7294e5b179f7cc77746113d742a6e2",
+        "rawFile": "ncm.logout.ncm.logout.inv.truncated.001.raw.json"
       },
       {
         "caseId": "ncm.logout.none.neg.001",
         "auth": "AUTH_NONE",
+        "phase": 1,
         "code": 200,
         "durationMs": 81,
-        "error": null
+        "error": null,
+        "sampleHash": "c19bcbd6c82e90263d5338aa2d3b854130006ac79d99e2909f8e9c6bcb58d4a6",
+        "rawFile": "ncm.logout.ncm.logout.none.neg.001.raw.json"
       }
     ]
   },
@@ -48,19 +54,16 @@
     {
       "jsonPath": "code",
       "rawType": "number",
-      "presenceCount": 2,
-      "sampleCount": 2,
-      "nullCount": 0,
-      "emptyCount": 0,
-      "authConditions": [
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
         "AUTH_INVALID_TRUNCATED",
         "AUTH_NONE"
       ],
-      "exampleRedacted": "200",
-      "sourceEvidence": "runtime-phase1",
-      "semanticName": "",
-      "semanticConfidence": "unknown",
-      "conflictId": null
+      "firstSeenCase": "ncm.logout.inv.truncated.001",
+      "lastSeenCase": "ncm.logout.none.neg.001",
+      "example": "200"
     }
   ],
   "errors": [],
@@ -72,13 +75,13 @@
   "evidence": [
     {
       "caseId": "ncm.logout.inv.truncated.001",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.logout.ncm.logout.inv.truncated.001.raw.json"
+      "sampleHash": "c30a1797329c4d6dc9f08774cf3ade2b4e7294e5b179f7cc77746113d742a6e2",
+      "rawFile": "ncm.logout.ncm.logout.inv.truncated.001.raw.json"
     },
     {
       "caseId": "ncm.logout.none.neg.001",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.logout.ncm.logout.none.neg.001.raw.json"
+      "sampleHash": "c19bcbd6c82e90263d5338aa2d3b854130006ac79d99e2909f8e9c6bcb58d4a6",
+      "rawFile": "ncm.logout.ncm.logout.none.neg.001.raw.json"
     }
   ]
 }

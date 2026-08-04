@@ -5,2201 +5,2649 @@
       "caseId": "ncm.album_detail_dynamic.anon.001",
       "apiAuditId": "ncm.album_detail_dynamic",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.anon.001.raw.json",
+      "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.anon.001.raw.json",
       "rawSha256": "0bfc924c25893e73fe18d257e8178ed9051cc34a1fa67d4b8c2978d307f8e862",
-      "redactedFile": "samples-redacted\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.anon.001.redacted.json"
+      "redactedFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.album_detail_dynamic.id0.none.neg.001",
       "apiAuditId": "ncm.album_detail_dynamic",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.id0.none.neg.001.raw.json",
       "rawSha256": "6846343fdde975ca2984f0712e654db85ca544832cb8e4ecc613b04e82a1ea18",
-      "redactedFile": "samples-redacted\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.album_detail_dynamic.inv.001",
       "apiAuditId": "ncm.album_detail_dynamic",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.inv.001.raw.json",
+      "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.inv.001.raw.json",
       "rawSha256": "1f838875b3bf44266a3473bde05ebc97c4bb1ca8e995586bf63ff1f9897ed53f",
-      "redactedFile": "samples-redacted\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.inv.001.redacted.json"
+      "redactedFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.album_detail_dynamic.none.001",
       "apiAuditId": "ncm.album_detail_dynamic",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.none.001.raw.json",
+      "rawFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.none.001.raw.json",
       "rawSha256": "7d60a54b5d86cb11bac2211cc3625e5a4fc8af901efe625c06f9d117365c1472",
-      "redactedFile": "samples-redacted\\ncm.album_detail_dynamic.ncm.album_detail_dynamic.none.001.redacted.json"
+      "redactedFile": "ncm.album_detail_dynamic.ncm.album_detail_dynamic.none.001.redacted.json"
     },
     {
       "caseId": "ncm.album_detail.anon.001",
       "apiAuditId": "ncm.album_detail",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.album_detail.ncm.album_detail.anon.001.raw.json",
+      "rawFile": "ncm.album_detail.ncm.album_detail.anon.001.raw.json",
       "rawSha256": "8c993c039cbbc56eda98c679a3da296e85063d49416de8fb6f756b9e07f606e8",
-      "redactedFile": "samples-redacted\\ncm.album_detail.ncm.album_detail.anon.001.redacted.json"
+      "redactedFile": "ncm.album_detail.ncm.album_detail.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.album_detail.id0.none.neg.001",
       "apiAuditId": "ncm.album_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.album_detail.ncm.album_detail.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.album_detail.ncm.album_detail.id0.none.neg.001.raw.json",
       "rawSha256": "49949bacdbbbdd9254bae5bcc816b59d8492e24fb64a15f5c817957f7bd1acee",
-      "redactedFile": "samples-redacted\\ncm.album_detail.ncm.album_detail.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.album_detail.ncm.album_detail.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.album_detail.inv.001",
       "apiAuditId": "ncm.album_detail",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.album_detail.ncm.album_detail.inv.001.raw.json",
+      "rawFile": "ncm.album_detail.ncm.album_detail.inv.001.raw.json",
       "rawSha256": "a961a1c503495c3618b64f82d33536a19d98532454d356f133ce9659ae913069",
-      "redactedFile": "samples-redacted\\ncm.album_detail.ncm.album_detail.inv.001.redacted.json"
+      "redactedFile": "ncm.album_detail.ncm.album_detail.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.album_detail.none.001",
       "apiAuditId": "ncm.album_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.album_detail.ncm.album_detail.none.001.raw.json",
+      "rawFile": "ncm.album_detail.ncm.album_detail.none.001.raw.json",
       "rawSha256": "472be1920279046db63ea824c26349128bd5e374de1e2dbac24738f6c6821529",
-      "redactedFile": "samples-redacted\\ncm.album_detail.ncm.album_detail.none.001.redacted.json"
+      "redactedFile": "ncm.album_detail.ncm.album_detail.none.001.redacted.json"
     },
     {
       "caseId": "ncm.album_privilege.anon.001",
       "apiAuditId": "ncm.album_privilege",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.album_privilege.ncm.album_privilege.anon.001.raw.json",
+      "rawFile": "ncm.album_privilege.ncm.album_privilege.anon.001.raw.json",
       "rawSha256": "85cc6caee87f0f4002768e5b4da7ff3c192c35f7214ad35f0d8cc58fe07038bf",
-      "redactedFile": "samples-redacted\\ncm.album_privilege.ncm.album_privilege.anon.001.redacted.json"
+      "redactedFile": "ncm.album_privilege.ncm.album_privilege.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.album_privilege.id0.none.neg.001",
       "apiAuditId": "ncm.album_privilege",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.album_privilege.ncm.album_privilege.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.album_privilege.ncm.album_privilege.id0.none.neg.001.raw.json",
       "rawSha256": "8b012b58faa34592914777b815308cab10346056e9cee32372208039ef89bc32",
-      "redactedFile": "samples-redacted\\ncm.album_privilege.ncm.album_privilege.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.album_privilege.ncm.album_privilege.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.album_privilege.inv.001",
       "apiAuditId": "ncm.album_privilege",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.album_privilege.ncm.album_privilege.inv.001.raw.json",
+      "rawFile": "ncm.album_privilege.ncm.album_privilege.inv.001.raw.json",
       "rawSha256": "d428dee649343bbad69d72e8d8b750d4937682cfb95ec69cce63793c19a40828",
-      "redactedFile": "samples-redacted\\ncm.album_privilege.ncm.album_privilege.inv.001.redacted.json"
+      "redactedFile": "ncm.album_privilege.ncm.album_privilege.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.album_privilege.none.001",
       "apiAuditId": "ncm.album_privilege",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.album_privilege.ncm.album_privilege.none.001.raw.json",
+      "rawFile": "ncm.album_privilege.ncm.album_privilege.none.001.raw.json",
       "rawSha256": "555504c49e40f9b47adb9a5d5924c66c6c50e91755e4df76dd61257f24ae55f3",
-      "redactedFile": "samples-redacted\\ncm.album_privilege.ncm.album_privilege.none.001.redacted.json"
+      "redactedFile": "ncm.album_privilege.ncm.album_privilege.none.001.redacted.json"
     },
     {
       "caseId": "ncm.album.anon.001",
       "apiAuditId": "ncm.album",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.album.ncm.album.anon.001.raw.json",
+      "rawFile": "ncm.album.ncm.album.anon.001.raw.json",
       "rawSha256": "53b16e0ed419cff0e7e9393faba2cd8d8b9a53730b68777e378030256452ff57",
-      "redactedFile": "samples-redacted\\ncm.album.ncm.album.anon.001.redacted.json"
+      "redactedFile": "ncm.album.ncm.album.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.album.id0.none.neg.001",
       "apiAuditId": "ncm.album",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.album.ncm.album.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.album.ncm.album.id0.none.neg.001.raw.json",
       "rawSha256": "9be0bfed996ccafa741cd2803f10ec02c37da9f01757e9846519b17c37bf99df",
-      "redactedFile": "samples-redacted\\ncm.album.ncm.album.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.album.ncm.album.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.album.inv.001",
       "apiAuditId": "ncm.album",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.album.ncm.album.inv.001.raw.json",
+      "rawFile": "ncm.album.ncm.album.inv.001.raw.json",
       "rawSha256": "d92bbe115514be25b101a15d093e00d0d885ca23f05b27b86755dfb231a8a2d6",
-      "redactedFile": "samples-redacted\\ncm.album.ncm.album.inv.001.redacted.json"
+      "redactedFile": "ncm.album.ncm.album.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.album.none.001",
       "apiAuditId": "ncm.album",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.album.ncm.album.none.001.raw.json",
+      "rawFile": "ncm.album.ncm.album.none.001.raw.json",
       "rawSha256": "2e7d742d3aab1b824d828b423c3351fbeeb2082603f8a43dc994f96c834653f9",
-      "redactedFile": "samples-redacted\\ncm.album.ncm.album.none.001.redacted.json"
+      "redactedFile": "ncm.album.ncm.album.none.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_album.anon.001",
       "apiAuditId": "ncm.artist_album",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.artist_album.ncm.artist_album.anon.001.raw.json",
+      "rawFile": "ncm.artist_album.ncm.artist_album.anon.001.raw.json",
       "rawSha256": "4f820dea3e65e8470ab11a8e8e89982b87c46851f28617f96d18e2223f4a3f28",
-      "redactedFile": "samples-redacted\\ncm.artist_album.ncm.artist_album.anon.001.redacted.json"
+      "redactedFile": "ncm.artist_album.ncm.artist_album.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_album.id0.none.neg.001",
       "apiAuditId": "ncm.artist_album",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_album.ncm.artist_album.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.artist_album.ncm.artist_album.id0.none.neg.001.raw.json",
       "rawSha256": "d82cb96ba21e2031c2db75925a6126f468e0f30561568b0f429f89928b67ca59",
-      "redactedFile": "samples-redacted\\ncm.artist_album.ncm.artist_album.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.artist_album.ncm.artist_album.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_album.inv.001",
       "apiAuditId": "ncm.artist_album",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.artist_album.ncm.artist_album.inv.001.raw.json",
+      "rawFile": "ncm.artist_album.ncm.artist_album.inv.001.raw.json",
       "rawSha256": "22895444ad30a7a1b09e042bc547e6d32dace7e153f16ce10204feb40532a1ea",
-      "redactedFile": "samples-redacted\\ncm.artist_album.ncm.artist_album.inv.001.redacted.json"
+      "redactedFile": "ncm.artist_album.ncm.artist_album.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_album.none.001",
       "apiAuditId": "ncm.artist_album",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_album.ncm.artist_album.none.001.raw.json",
+      "rawFile": "ncm.artist_album.ncm.artist_album.none.001.raw.json",
       "rawSha256": "6fa8d1f99c4fc2d411a36056aee9b2fca1bf6ca730eefb654249aa92e13434ee",
-      "redactedFile": "samples-redacted\\ncm.artist_album.ncm.artist_album.none.001.redacted.json"
+      "redactedFile": "ncm.artist_album.ncm.artist_album.none.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_album.page.none.001",
       "apiAuditId": "ncm.artist_album",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_album.ncm.artist_album.page.none.001.raw.json",
+      "rawFile": "ncm.artist_album.ncm.artist_album.page.none.001.raw.json",
       "rawSha256": "1911f101a6b346e5d9d4ea72b57de3fe55177e1f78d29ddf77325916e75e498b",
-      "redactedFile": "samples-redacted\\ncm.artist_album.ncm.artist_album.page.none.001.redacted.json"
+      "redactedFile": "ncm.artist_album.ncm.artist_album.page.none.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_desc.anon.001",
       "apiAuditId": "ncm.artist_desc",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.artist_desc.ncm.artist_desc.anon.001.raw.json",
+      "rawFile": "ncm.artist_desc.ncm.artist_desc.anon.001.raw.json",
       "rawSha256": "bc7910a6e34c6018f391b9bc2cae411529d32e132baa94d5929bae46a9da62a4",
-      "redactedFile": "samples-redacted\\ncm.artist_desc.ncm.artist_desc.anon.001.redacted.json"
+      "redactedFile": "ncm.artist_desc.ncm.artist_desc.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_desc.id0.none.neg.001",
       "apiAuditId": "ncm.artist_desc",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_desc.ncm.artist_desc.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.artist_desc.ncm.artist_desc.id0.none.neg.001.raw.json",
       "rawSha256": "69b3f29de670fbb1151dadc3c1281636d27be297a84ca3467194f1f4a1658455",
-      "redactedFile": "samples-redacted\\ncm.artist_desc.ncm.artist_desc.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.artist_desc.ncm.artist_desc.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_desc.inv.001",
       "apiAuditId": "ncm.artist_desc",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.artist_desc.ncm.artist_desc.inv.001.raw.json",
+      "rawFile": "ncm.artist_desc.ncm.artist_desc.inv.001.raw.json",
       "rawSha256": "fd508588b7851b5664248c1d595ba7967dd8e6a566d5fb1ac4d55df9cf331fb0",
-      "redactedFile": "samples-redacted\\ncm.artist_desc.ncm.artist_desc.inv.001.redacted.json"
+      "redactedFile": "ncm.artist_desc.ncm.artist_desc.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_desc.none.001",
       "apiAuditId": "ncm.artist_desc",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_desc.ncm.artist_desc.none.001.raw.json",
+      "rawFile": "ncm.artist_desc.ncm.artist_desc.none.001.raw.json",
       "rawSha256": "d544a1d9418afb50cb8ce657bf41750d165d9bf7725a7f12c0e131899c5fb291",
-      "redactedFile": "samples-redacted\\ncm.artist_desc.ncm.artist_desc.none.001.redacted.json"
+      "redactedFile": "ncm.artist_desc.ncm.artist_desc.none.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_detail_dynamic.anon.001",
       "apiAuditId": "ncm.artist_detail_dynamic",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.anon.001.raw.json",
+      "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.anon.001.raw.json",
       "rawSha256": "c7fe8336038e5b370c9dacf4023ffda959a53fdbb8ec59e117d31097e10694ae",
-      "redactedFile": "samples-redacted\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.anon.001.redacted.json"
+      "redactedFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_detail_dynamic.id0.none.neg.001",
       "apiAuditId": "ncm.artist_detail_dynamic",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.id0.none.neg.001.raw.json",
       "rawSha256": "7779bb223929b1fe6dc5ec758e2cb48594a903f1f4316fcea20bee838438f8fb",
-      "redactedFile": "samples-redacted\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_detail_dynamic.inv.001",
       "apiAuditId": "ncm.artist_detail_dynamic",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.inv.001.raw.json",
+      "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.inv.001.raw.json",
       "rawSha256": "b97c12d731b4f187a453d67b0293f45d2c711ae4af12d82b18f4f8ad61aba1e9",
-      "redactedFile": "samples-redacted\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.inv.001.redacted.json"
+      "redactedFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_detail_dynamic.none.001",
       "apiAuditId": "ncm.artist_detail_dynamic",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.none.001.raw.json",
+      "rawFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.none.001.raw.json",
       "rawSha256": "3a13283c4475cdfe7d225d7e67fae251eb907e18dbc3ccea9d461bbd5c9a6e5d",
-      "redactedFile": "samples-redacted\\ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.none.001.redacted.json"
+      "redactedFile": "ncm.artist_detail_dynamic.ncm.artist_detail_dynamic.none.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_detail.anon.001",
       "apiAuditId": "ncm.artist_detail",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.artist_detail.ncm.artist_detail.anon.001.raw.json",
+      "rawFile": "ncm.artist_detail.ncm.artist_detail.anon.001.raw.json",
       "rawSha256": "d5a63dd11091b58bacd738858266e4dcc449dcfa2b48cc43882ad3f2b569ff25",
-      "redactedFile": "samples-redacted\\ncm.artist_detail.ncm.artist_detail.anon.001.redacted.json"
+      "redactedFile": "ncm.artist_detail.ncm.artist_detail.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_detail.id0.none.neg.001",
       "apiAuditId": "ncm.artist_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_detail.ncm.artist_detail.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.artist_detail.ncm.artist_detail.id0.none.neg.001.raw.json",
       "rawSha256": "c4202a6506b44b74aa71b8f6bb2f99ccecb2d022587ff65f253d07afb108865c",
-      "redactedFile": "samples-redacted\\ncm.artist_detail.ncm.artist_detail.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.artist_detail.ncm.artist_detail.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_detail.inv.001",
       "apiAuditId": "ncm.artist_detail",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.artist_detail.ncm.artist_detail.inv.001.raw.json",
+      "rawFile": "ncm.artist_detail.ncm.artist_detail.inv.001.raw.json",
       "rawSha256": "bd75c984ea42fc3390bf88d2f05fe77163dd861b5d7bfafd8d07ee950e437d34",
-      "redactedFile": "samples-redacted\\ncm.artist_detail.ncm.artist_detail.inv.001.redacted.json"
+      "redactedFile": "ncm.artist_detail.ncm.artist_detail.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_detail.none.001",
       "apiAuditId": "ncm.artist_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_detail.ncm.artist_detail.none.001.raw.json",
+      "rawFile": "ncm.artist_detail.ncm.artist_detail.none.001.raw.json",
       "rawSha256": "6d8bf4d10245c3b09dab69c75344deaad3d1990cd013498c0ea6fe866e8b49a6",
-      "redactedFile": "samples-redacted\\ncm.artist_detail.ncm.artist_detail.none.001.redacted.json"
+      "redactedFile": "ncm.artist_detail.ncm.artist_detail.none.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_songs.anon.001",
       "apiAuditId": "ncm.artist_songs",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.anon.001.raw.json",
+      "rawFile": "ncm.artist_songs.ncm.artist_songs.anon.001.raw.json",
       "rawSha256": "49dae657bd12c25a5558ceb361c3a95496a2ba03ccc0fe0d169d3b31943218a1",
-      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.anon.001.redacted.json"
+      "redactedFile": "ncm.artist_songs.ncm.artist_songs.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_songs.hot.none.001",
       "apiAuditId": "ncm.artist_songs",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.hot.none.001.raw.json",
+      "rawFile": "ncm.artist_songs.ncm.artist_songs.hot.none.001.raw.json",
       "rawSha256": "436ea0a970ed66cf3a04037295bcdcafd89a9cdd166f247b0fbf7d8687e50ed4",
-      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.hot.none.001.redacted.json"
+      "redactedFile": "ncm.artist_songs.ncm.artist_songs.hot.none.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_songs.id0.none.neg.001",
       "apiAuditId": "ncm.artist_songs",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.artist_songs.ncm.artist_songs.id0.none.neg.001.raw.json",
       "rawSha256": "8bb9831a3c52e48e3dea9130dbc5fc894b138a47e7ffc1c627eca4c7c10a00d6",
-      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.artist_songs.ncm.artist_songs.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_songs.inv.001",
       "apiAuditId": "ncm.artist_songs",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.inv.001.raw.json",
+      "rawFile": "ncm.artist_songs.ncm.artist_songs.inv.001.raw.json",
       "rawSha256": "fde1770ebd45dadd0ca6fa250fbb42209a5b9d02312f4d698e6f43442e57ee56",
-      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.inv.001.redacted.json"
+      "redactedFile": "ncm.artist_songs.ncm.artist_songs.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_songs.page.none.001",
       "apiAuditId": "ncm.artist_songs",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.page.none.001.raw.json",
+      "rawFile": "ncm.artist_songs.ncm.artist_songs.page.none.001.raw.json",
       "rawSha256": "660debbc2ed7d7b08bdee804595f90a7d7d00df1abaf23524573252169c1e352",
-      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.page.none.001.redacted.json"
+      "redactedFile": "ncm.artist_songs.ncm.artist_songs.page.none.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_songs.time.none.001",
       "apiAuditId": "ncm.artist_songs",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_songs.ncm.artist_songs.time.none.001.raw.json",
+      "rawFile": "ncm.artist_songs.ncm.artist_songs.time.none.001.raw.json",
       "rawSha256": "aeb354eddfe98b298f4a61dd7aa079ccb112bc79d6e09eb573df2cc41c28d6fa",
-      "redactedFile": "samples-redacted\\ncm.artist_songs.ncm.artist_songs.time.none.001.redacted.json"
+      "redactedFile": "ncm.artist_songs.ncm.artist_songs.time.none.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_top_song.anon.001",
       "apiAuditId": "ncm.artist_top_song",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.artist_top_song.ncm.artist_top_song.anon.001.raw.json",
+      "rawFile": "ncm.artist_top_song.ncm.artist_top_song.anon.001.raw.json",
       "rawSha256": "98b30b47d31705424a002ebd1672d0538c719d82f6c61afbb6b880e483fbba44",
-      "redactedFile": "samples-redacted\\ncm.artist_top_song.ncm.artist_top_song.anon.001.redacted.json"
+      "redactedFile": "ncm.artist_top_song.ncm.artist_top_song.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_top_song.id0.none.neg.001",
       "apiAuditId": "ncm.artist_top_song",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_top_song.ncm.artist_top_song.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.artist_top_song.ncm.artist_top_song.id0.none.neg.001.raw.json",
       "rawSha256": "c2baa5ad1699fe8da7bfa5bc9929d21c7cb7bdec5f206894bdd21abe48ed4e5d",
-      "redactedFile": "samples-redacted\\ncm.artist_top_song.ncm.artist_top_song.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.artist_top_song.ncm.artist_top_song.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_top_song.inv.001",
       "apiAuditId": "ncm.artist_top_song",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.artist_top_song.ncm.artist_top_song.inv.001.raw.json",
+      "rawFile": "ncm.artist_top_song.ncm.artist_top_song.inv.001.raw.json",
       "rawSha256": "5c3a7265a9c4ee10249cae442d544660e5c2f187b6d18ecd0069f269dd275503",
-      "redactedFile": "samples-redacted\\ncm.artist_top_song.ncm.artist_top_song.inv.001.redacted.json"
+      "redactedFile": "ncm.artist_top_song.ncm.artist_top_song.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.artist_top_song.none.001",
       "apiAuditId": "ncm.artist_top_song",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artist_top_song.ncm.artist_top_song.none.001.raw.json",
+      "rawFile": "ncm.artist_top_song.ncm.artist_top_song.none.001.raw.json",
       "rawSha256": "c1737352debc57a544738899f10dd74138c94fdfb9e2a781a8234b2f510d5c8b",
-      "redactedFile": "samples-redacted\\ncm.artist_top_song.ncm.artist_top_song.none.001.redacted.json"
+      "redactedFile": "ncm.artist_top_song.ncm.artist_top_song.none.001.redacted.json"
     },
     {
       "caseId": "ncm.artists.anon.001",
       "apiAuditId": "ncm.artists",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.artists.ncm.artists.anon.001.raw.json",
+      "rawFile": "ncm.artists.ncm.artists.anon.001.raw.json",
       "rawSha256": "673f0c0328d8181381df8baa587a7395232834d75cece6286f9e865b831405ff",
-      "redactedFile": "samples-redacted\\ncm.artists.ncm.artists.anon.001.redacted.json"
+      "redactedFile": "ncm.artists.ncm.artists.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.artists.id0.none.neg.001",
       "apiAuditId": "ncm.artists",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artists.ncm.artists.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.artists.ncm.artists.id0.none.neg.001.raw.json",
       "rawSha256": "610722ccf515f6f0b47d4bbb0aed38a3cd814c79ae764003c785aade71e44b37",
-      "redactedFile": "samples-redacted\\ncm.artists.ncm.artists.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.artists.ncm.artists.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.artists.inv.001",
       "apiAuditId": "ncm.artists",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.artists.ncm.artists.inv.001.raw.json",
+      "rawFile": "ncm.artists.ncm.artists.inv.001.raw.json",
       "rawSha256": "9d5e69125ab87ac3fba3866345d7aabc46075aa58670fec9a49c6fd8e744a987",
-      "redactedFile": "samples-redacted\\ncm.artists.ncm.artists.inv.001.redacted.json"
+      "redactedFile": "ncm.artists.ncm.artists.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.artists.none.001",
       "apiAuditId": "ncm.artists",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.artists.ncm.artists.none.001.raw.json",
+      "rawFile": "ncm.artists.ncm.artists.none.001.raw.json",
       "rawSha256": "101d21fb74378ef1fce343bcbb68b542dfa84782f78959a88acaa615dcbc5b8a",
-      "redactedFile": "samples-redacted\\ncm.artists.ncm.artists.none.001.redacted.json"
+      "redactedFile": "ncm.artists.ncm.artists.none.001.redacted.json"
     },
     {
       "caseId": "ncm.banner.type0.anon.001",
       "apiAuditId": "ncm.banner",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.banner.ncm.banner.type0.anon.001.raw.json",
+      "rawFile": "ncm.banner.ncm.banner.type0.anon.001.raw.json",
       "rawSha256": "e63dd5b301a6c460c7b39ff42b3b3630e22093bbba0cfa361c224ebc14e616d8",
-      "redactedFile": "samples-redacted\\ncm.banner.ncm.banner.type0.anon.001.redacted.json"
+      "redactedFile": "ncm.banner.ncm.banner.type0.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.banner.type0.inv.001",
       "apiAuditId": "ncm.banner",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.banner.ncm.banner.type0.inv.001.raw.json",
+      "rawFile": "ncm.banner.ncm.banner.type0.inv.001.raw.json",
       "rawSha256": "1b1859aa94261264c512e177966fd58ae54f0ace300f8bafd22d43abc4c1cd53",
-      "redactedFile": "samples-redacted\\ncm.banner.ncm.banner.type0.inv.001.redacted.json"
+      "redactedFile": "ncm.banner.ncm.banner.type0.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.banner.type0.none.001",
       "apiAuditId": "ncm.banner",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.banner.ncm.banner.type0.none.001.raw.json",
+      "rawFile": "ncm.banner.ncm.banner.type0.none.001.raw.json",
       "rawSha256": "0c079a639675c804ff4a0603db746dfd7dde8f90cd2b97ad597cd8caa04679d4",
-      "redactedFile": "samples-redacted\\ncm.banner.ncm.banner.type0.none.001.redacted.json"
+      "redactedFile": "ncm.banner.ncm.banner.type0.none.001.redacted.json"
     },
     {
       "caseId": "ncm.banner.type2.none.001",
       "apiAuditId": "ncm.banner",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.banner.ncm.banner.type2.none.001.raw.json",
+      "rawFile": "ncm.banner.ncm.banner.type2.none.001.raw.json",
       "rawSha256": "f7c721cbdb256cb3b823afaf23b82000dbb1583bcdda4600b7341d981a22370f",
-      "redactedFile": "samples-redacted\\ncm.banner.ncm.banner.type2.none.001.redacted.json"
+      "redactedFile": "ncm.banner.ncm.banner.type2.none.001.redacted.json"
     },
     {
       "caseId": "ncm.banner.type3.none.001",
       "apiAuditId": "ncm.banner",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.banner.ncm.banner.type3.none.001.raw.json",
+      "rawFile": "ncm.banner.ncm.banner.type3.none.001.raw.json",
       "rawSha256": "0a8cd8c00e89da4179e428fbfb5418f14c5f9ad9c90f3395a9503cf836b8d37f",
-      "redactedFile": "samples-redacted\\ncm.banner.ncm.banner.type3.none.001.redacted.json"
+      "redactedFile": "ncm.banner.ncm.banner.type3.none.001.redacted.json"
     },
     {
       "caseId": "ncm.banner.type999.none.neg.001",
       "apiAuditId": "ncm.banner",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.banner.ncm.banner.type999.none.neg.001.raw.json",
+      "rawFile": "ncm.banner.ncm.banner.type999.none.neg.001.raw.json",
       "rawSha256": "5eb89542289f99deb0b4e5f11ffc0111fad548dafcf760cbc6809898cd99c8d6",
-      "redactedFile": "samples-redacted\\ncm.banner.ncm.banner.type999.none.neg.001.redacted.json"
+      "redactedFile": "ncm.banner.ncm.banner.type999.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.check_music.anon.001",
       "apiAuditId": "ncm.check_music",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.check_music.ncm.check_music.anon.001.raw.json",
+      "rawFile": "ncm.check_music.ncm.check_music.anon.001.raw.json",
       "rawSha256": "8832fd611a06475889426c270c13347415c6a710c305203658e9650ddf4d306d",
-      "redactedFile": "samples-redacted\\ncm.check_music.ncm.check_music.anon.001.redacted.json"
+      "redactedFile": "ncm.check_music.ncm.check_music.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.check_music.br320.none.001",
       "apiAuditId": "ncm.check_music",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.check_music.ncm.check_music.br320.none.001.raw.json",
+      "rawFile": "ncm.check_music.ncm.check_music.br320.none.001.raw.json",
       "rawSha256": "163f5835d27c11274802d78ea88644780bf3fae2ab79be56149f5493e35013f0",
-      "redactedFile": "samples-redacted\\ncm.check_music.ncm.check_music.br320.none.001.redacted.json"
+      "redactedFile": "ncm.check_music.ncm.check_music.br320.none.001.redacted.json"
     },
     {
       "caseId": "ncm.check_music.br999.none.001",
       "apiAuditId": "ncm.check_music",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.check_music.ncm.check_music.br999.none.001.raw.json",
+      "rawFile": "ncm.check_music.ncm.check_music.br999.none.001.raw.json",
       "rawSha256": "5fc7f63171957e3b8c0b7d815fe1dc6b40f55906afcbb56780e952674a6fd8ce",
-      "redactedFile": "samples-redacted\\ncm.check_music.ncm.check_music.br999.none.001.redacted.json"
+      "redactedFile": "ncm.check_music.ncm.check_music.br999.none.001.redacted.json"
     },
     {
       "caseId": "ncm.check_music.id0.none.neg.001",
       "apiAuditId": "ncm.check_music",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.check_music.ncm.check_music.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.check_music.ncm.check_music.id0.none.neg.001.raw.json",
       "rawSha256": "d20b9eab3550033a9c27c3c95e00aa54d5098a1154577f7d656b054e7299cdf7",
-      "redactedFile": "samples-redacted\\ncm.check_music.ncm.check_music.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.check_music.ncm.check_music.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.check_music.inv.001",
       "apiAuditId": "ncm.check_music",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.check_music.ncm.check_music.inv.001.raw.json",
+      "rawFile": "ncm.check_music.ncm.check_music.inv.001.raw.json",
       "rawSha256": "cc6b671564c600c1e8a32cf79057a8e6b45d29c71ebdcef5639efcb856975aae",
-      "redactedFile": "samples-redacted\\ncm.check_music.ncm.check_music.inv.001.redacted.json"
+      "redactedFile": "ncm.check_music.ncm.check_music.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.cloudsearch.empty.none.neg.001",
       "apiAuditId": "ncm.cloudsearch",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.cloudsearch.ncm.cloudsearch.empty.none.neg.001.raw.json",
+      "rawFile": "ncm.cloudsearch.ncm.cloudsearch.empty.none.neg.001.raw.json",
       "rawSha256": "b6dd82a86b97021f24e4033acff0fae5193d78705df0b7f3772ee7a43a656464",
-      "redactedFile": "samples-redacted\\ncm.cloudsearch.ncm.cloudsearch.empty.none.neg.001.redacted.json"
+      "redactedFile": "ncm.cloudsearch.ncm.cloudsearch.empty.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.cloudsearch.kw1.anon.001",
       "apiAuditId": "ncm.cloudsearch",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.cloudsearch.ncm.cloudsearch.kw1.anon.001.raw.json",
+      "rawFile": "ncm.cloudsearch.ncm.cloudsearch.kw1.anon.001.raw.json",
       "rawSha256": "a0fd9dac39a595d726675fd422b0db3abee81c75ef235631d9e33d98523441d1",
-      "redactedFile": "samples-redacted\\ncm.cloudsearch.ncm.cloudsearch.kw1.anon.001.redacted.json"
+      "redactedFile": "ncm.cloudsearch.ncm.cloudsearch.kw1.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.cloudsearch.kw1.inv.001",
       "apiAuditId": "ncm.cloudsearch",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.cloudsearch.ncm.cloudsearch.kw1.inv.001.raw.json",
+      "rawFile": "ncm.cloudsearch.ncm.cloudsearch.kw1.inv.001.raw.json",
       "rawSha256": "6d282f701865642a4f5d4085c8240c467ffab63e4a203d0fe96990c4b2092854",
-      "redactedFile": "samples-redacted\\ncm.cloudsearch.ncm.cloudsearch.kw1.inv.001.redacted.json"
+      "redactedFile": "ncm.cloudsearch.ncm.cloudsearch.kw1.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.cloudsearch.kw1.none.001",
       "apiAuditId": "ncm.cloudsearch",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.cloudsearch.ncm.cloudsearch.kw1.none.001.raw.json",
+      "rawFile": "ncm.cloudsearch.ncm.cloudsearch.kw1.none.001.raw.json",
       "rawSha256": "6399683ba10b303e157478bc0cd5be3470231bff2a4a02307773aa0fe9a5a205",
-      "redactedFile": "samples-redacted\\ncm.cloudsearch.ncm.cloudsearch.kw1.none.001.redacted.json"
+      "redactedFile": "ncm.cloudsearch.ncm.cloudsearch.kw1.none.001.redacted.json"
     },
     {
       "caseId": "ncm.cloudsearch.kw2.none.001",
       "apiAuditId": "ncm.cloudsearch",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.cloudsearch.ncm.cloudsearch.kw2.none.001.raw.json",
+      "rawFile": "ncm.cloudsearch.ncm.cloudsearch.kw2.none.001.raw.json",
       "rawSha256": "4fee00ef5e03a7c0c4fc82fe02f61fe536a8d99c447796acd1f04e6b944529ea",
-      "redactedFile": "samples-redacted\\ncm.cloudsearch.ncm.cloudsearch.kw2.none.001.redacted.json"
+      "redactedFile": "ncm.cloudsearch.ncm.cloudsearch.kw2.none.001.redacted.json"
     },
     {
       "caseId": "ncm.cloudsearch.page.boundary.001",
       "apiAuditId": "ncm.cloudsearch",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.cloudsearch.ncm.cloudsearch.page.boundary.001.raw.json",
+      "rawFile": "ncm.cloudsearch.ncm.cloudsearch.page.boundary.001.raw.json",
       "rawSha256": "2502522b509af888a98860415eb970bb11fd6774dcc0642b308c893fb313fa82",
-      "redactedFile": "samples-redacted\\ncm.cloudsearch.ncm.cloudsearch.page.boundary.001.redacted.json"
+      "redactedFile": "ncm.cloudsearch.ncm.cloudsearch.page.boundary.001.redacted.json"
     },
     {
       "caseId": "ncm.cloudsearch.page.mid.001",
       "apiAuditId": "ncm.cloudsearch",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.cloudsearch.ncm.cloudsearch.page.mid.001.raw.json",
+      "rawFile": "ncm.cloudsearch.ncm.cloudsearch.page.mid.001.raw.json",
       "rawSha256": "a44a88022f6e6b520596ce952fc6c6b366139a3e08513971a7aaecc46d710bde",
-      "redactedFile": "samples-redacted\\ncm.cloudsearch.ncm.cloudsearch.page.mid.001.redacted.json"
+      "redactedFile": "ncm.cloudsearch.ncm.cloudsearch.page.mid.001.redacted.json"
     },
     {
       "caseId": "ncm.cloudsearch.type999.none.neg.001",
       "apiAuditId": "ncm.cloudsearch",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.cloudsearch.ncm.cloudsearch.type999.none.neg.001.raw.json",
+      "rawFile": "ncm.cloudsearch.ncm.cloudsearch.type999.none.neg.001.raw.json",
       "rawSha256": "1460ca002e8350cdf3c023f2a8115276ef7fbf67e017732b462a0247c11071c0",
-      "redactedFile": "samples-redacted\\ncm.cloudsearch.ncm.cloudsearch.type999.none.neg.001.redacted.json"
+      "redactedFile": "ncm.cloudsearch.ncm.cloudsearch.type999.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_banner.anon.001",
       "apiAuditId": "ncm.dj_banner",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.dj_banner.ncm.dj_banner.anon.001.raw.json",
+      "rawFile": "ncm.dj_banner.ncm.dj_banner.anon.001.raw.json",
       "rawSha256": "d0a546b1dae6924f1a19b356ef81e6de7cedca651ba31f1d0c970107b93aabd9",
-      "redactedFile": "samples-redacted\\ncm.dj_banner.ncm.dj_banner.anon.001.redacted.json"
+      "redactedFile": "ncm.dj_banner.ncm.dj_banner.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_banner.inv.001",
       "apiAuditId": "ncm.dj_banner",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.dj_banner.ncm.dj_banner.inv.001.raw.json",
+      "rawFile": "ncm.dj_banner.ncm.dj_banner.inv.001.raw.json",
       "rawSha256": "513246a7b61cdfa672adbdeea44052fe0f217d90eda46e5612cbbfce6433b2be",
-      "redactedFile": "samples-redacted\\ncm.dj_banner.ncm.dj_banner.inv.001.redacted.json"
+      "redactedFile": "ncm.dj_banner.ncm.dj_banner.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_banner.none.001",
       "apiAuditId": "ncm.dj_banner",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.dj_banner.ncm.dj_banner.none.001.raw.json",
+      "rawFile": "ncm.dj_banner.ncm.dj_banner.none.001.raw.json",
       "rawSha256": "1285501c6b282867953023f97f5706c14c836b80a03b9a9c3d7ae11034783e17",
-      "redactedFile": "samples-redacted\\ncm.dj_banner.ncm.dj_banner.none.001.redacted.json"
+      "redactedFile": "ncm.dj_banner.ncm.dj_banner.none.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_banner.none.002",
       "apiAuditId": "ncm.dj_banner",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.dj_banner.ncm.dj_banner.none.002.raw.json",
+      "rawFile": "ncm.dj_banner.ncm.dj_banner.none.002.raw.json",
       "rawSha256": "6d02795fed595c357255d48a4ea1f6c91887f2ee325e2407ae2d2fbe1a0eb89b",
-      "redactedFile": "samples-redacted\\ncm.dj_banner.ncm.dj_banner.none.002.redacted.json"
+      "redactedFile": "ncm.dj_banner.ncm.dj_banner.none.002.redacted.json"
     },
     {
       "caseId": "ncm.dj_catelist.anon.001",
       "apiAuditId": "ncm.dj_catelist",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.dj_catelist.ncm.dj_catelist.anon.001.raw.json",
+      "rawFile": "ncm.dj_catelist.ncm.dj_catelist.anon.001.raw.json",
       "rawSha256": "4f55d6a878cbe7bd9b56dccce6434dea36533f071e2155747b17c555216728a6",
-      "redactedFile": "samples-redacted\\ncm.dj_catelist.ncm.dj_catelist.anon.001.redacted.json"
+      "redactedFile": "ncm.dj_catelist.ncm.dj_catelist.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_catelist.inv.001",
       "apiAuditId": "ncm.dj_catelist",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.dj_catelist.ncm.dj_catelist.inv.001.raw.json",
+      "rawFile": "ncm.dj_catelist.ncm.dj_catelist.inv.001.raw.json",
       "rawSha256": "9a7aaec01bdf69667339a3e8a375a499b1815d477fef7d91448db2f2b9d4c6d4",
-      "redactedFile": "samples-redacted\\ncm.dj_catelist.ncm.dj_catelist.inv.001.redacted.json"
+      "redactedFile": "ncm.dj_catelist.ncm.dj_catelist.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_catelist.none.001",
       "apiAuditId": "ncm.dj_catelist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.dj_catelist.ncm.dj_catelist.none.001.raw.json",
+      "rawFile": "ncm.dj_catelist.ncm.dj_catelist.none.001.raw.json",
       "rawSha256": "07d1cfa55767ef72eae3fb50c113376d363d561541b0cdb3d76dca07ad8653a1",
-      "redactedFile": "samples-redacted\\ncm.dj_catelist.ncm.dj_catelist.none.001.redacted.json"
+      "redactedFile": "ncm.dj_catelist.ncm.dj_catelist.none.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_catelist.none.002",
       "apiAuditId": "ncm.dj_catelist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.dj_catelist.ncm.dj_catelist.none.002.raw.json",
+      "rawFile": "ncm.dj_catelist.ncm.dj_catelist.none.002.raw.json",
       "rawSha256": "3c11a9f4c3e7e9e0f0cd156d34bce6eb309a2fd67868361a7a0a316cc6181310",
-      "redactedFile": "samples-redacted\\ncm.dj_catelist.ncm.dj_catelist.none.002.redacted.json"
+      "redactedFile": "ncm.dj_catelist.ncm.dj_catelist.none.002.redacted.json"
     },
     {
       "caseId": "ncm.dj_hot.anon.001",
       "apiAuditId": "ncm.dj_hot",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.dj_hot.ncm.dj_hot.anon.001.raw.json",
+      "rawFile": "ncm.dj_hot.ncm.dj_hot.anon.001.raw.json",
       "rawSha256": "51c349de451938b3c37d7ba6b3897295586dd9de8e93bbe08f74fadf57a3e5a8",
-      "redactedFile": "samples-redacted\\ncm.dj_hot.ncm.dj_hot.anon.001.redacted.json"
+      "redactedFile": "ncm.dj_hot.ncm.dj_hot.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_hot.inv.001",
       "apiAuditId": "ncm.dj_hot",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.dj_hot.ncm.dj_hot.inv.001.raw.json",
+      "rawFile": "ncm.dj_hot.ncm.dj_hot.inv.001.raw.json",
       "rawSha256": "90e4b85fec4773193030bdbf49e0701d4a0650b30ff2ab2eb391b85d2f5b70a7",
-      "redactedFile": "samples-redacted\\ncm.dj_hot.ncm.dj_hot.inv.001.redacted.json"
+      "redactedFile": "ncm.dj_hot.ncm.dj_hot.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_hot.limit5.none.001",
       "apiAuditId": "ncm.dj_hot",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.dj_hot.ncm.dj_hot.limit5.none.001.raw.json",
+      "rawFile": "ncm.dj_hot.ncm.dj_hot.limit5.none.001.raw.json",
       "rawSha256": "84b705d172e5e1b6e56275be55f47c8d1bb4cd4b478e54e7ac37e55f81b6e67a",
-      "redactedFile": "samples-redacted\\ncm.dj_hot.ncm.dj_hot.limit5.none.001.redacted.json"
+      "redactedFile": "ncm.dj_hot.ncm.dj_hot.limit5.none.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_hot.none.001",
       "apiAuditId": "ncm.dj_hot",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.dj_hot.ncm.dj_hot.none.001.raw.json",
+      "rawFile": "ncm.dj_hot.ncm.dj_hot.none.001.raw.json",
       "rawSha256": "065b19493fccca97366db0ae84b8d432ef64f453f7a47965ae69dff335fdb117",
-      "redactedFile": "samples-redacted\\ncm.dj_hot.ncm.dj_hot.none.001.redacted.json"
+      "redactedFile": "ncm.dj_hot.ncm.dj_hot.none.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_hot.page.none.001",
       "apiAuditId": "ncm.dj_hot",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.dj_hot.ncm.dj_hot.page.none.001.raw.json",
+      "rawFile": "ncm.dj_hot.ncm.dj_hot.page.none.001.raw.json",
       "rawSha256": "f928fd2b7a131e49e7a0a34c4876c3d5b6c99a7a50c4b9cd534878accc97e524",
-      "redactedFile": "samples-redacted\\ncm.dj_hot.ncm.dj_hot.page.none.001.redacted.json"
+      "redactedFile": "ncm.dj_hot.ncm.dj_hot.page.none.001.redacted.json"
     },
     {
       "caseId": "ncm.homepage_block_page.anon.001",
       "apiAuditId": "ncm.homepage_block_page",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.homepage_block_page.ncm.homepage_block_page.anon.001.raw.json",
+      "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.anon.001.raw.json",
       "rawSha256": "591f54c8daa36a87b66f7448c8321ea1254025cfe6ff2c58f058fd930ee784a8",
-      "redactedFile": "samples-redacted\\ncm.homepage_block_page.ncm.homepage_block_page.anon.001.redacted.json"
+      "redactedFile": "ncm.homepage_block_page.ncm.homepage_block_page.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.homepage_block_page.inv.001",
       "apiAuditId": "ncm.homepage_block_page",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.homepage_block_page.ncm.homepage_block_page.inv.001.raw.json",
+      "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.inv.001.raw.json",
       "rawSha256": "9c99ea7478f310ff8e692403aa3d8617825c89ccbbe78c9527c7cc7e7ab942e7",
-      "redactedFile": "samples-redacted\\ncm.homepage_block_page.ncm.homepage_block_page.inv.001.redacted.json"
+      "redactedFile": "ncm.homepage_block_page.ncm.homepage_block_page.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.homepage_block_page.none.001",
       "apiAuditId": "ncm.homepage_block_page",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.homepage_block_page.ncm.homepage_block_page.none.001.raw.json",
+      "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.none.001.raw.json",
       "rawSha256": "4915512f6dd75aba0dc82a6ea6751cdaef3ff1ee9415336a331efe559a36600f",
-      "redactedFile": "samples-redacted\\ncm.homepage_block_page.ncm.homepage_block_page.none.001.redacted.json"
+      "redactedFile": "ncm.homepage_block_page.ncm.homepage_block_page.none.001.redacted.json"
     },
     {
       "caseId": "ncm.homepage_block_page.refresh.none.001",
       "apiAuditId": "ncm.homepage_block_page",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.homepage_block_page.ncm.homepage_block_page.refresh.none.001.raw.json",
+      "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.refresh.none.001.raw.json",
       "rawSha256": "aca53d4bb1a04880bdef7b5d37bcc4ec838c960947ce43cce233daabd0eae56f",
-      "redactedFile": "samples-redacted\\ncm.homepage_block_page.ncm.homepage_block_page.refresh.none.001.redacted.json"
+      "redactedFile": "ncm.homepage_block_page.ncm.homepage_block_page.refresh.none.001.redacted.json"
     },
     {
       "caseId": "ncm.homepage_block_page.repeat.none.001",
       "apiAuditId": "ncm.homepage_block_page",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.homepage_block_page.ncm.homepage_block_page.repeat.none.001.raw.json",
+      "rawFile": "ncm.homepage_block_page.ncm.homepage_block_page.repeat.none.001.raw.json",
       "rawSha256": "0e143e08895295c62e08a3900d564e1ffacb47b247d6ee23fd31a851b95235fe",
-      "redactedFile": "samples-redacted\\ncm.homepage_block_page.ncm.homepage_block_page.repeat.none.001.redacted.json"
+      "redactedFile": "ncm.homepage_block_page.ncm.homepage_block_page.repeat.none.001.redacted.json"
     },
     {
       "caseId": "ncm.inner_version.none.min.001",
       "apiAuditId": "ncm.inner_version",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.inner_version.ncm.inner_version.none.min.001.raw.json",
+      "rawFile": "ncm.inner_version.ncm.inner_version.none.min.001.raw.json",
       "rawSha256": "7f8da05d3060d6d9e49961474dd3b8e6456346d95209c5f413c3aacc05c28ebb",
-      "redactedFile": "samples-redacted\\ncm.inner_version.ncm.inner_version.none.min.001.redacted.json"
+      "redactedFile": "ncm.inner_version.ncm.inner_version.none.min.001.redacted.json"
     },
     {
       "caseId": "ncm.inner_version.none.min.002",
       "apiAuditId": "ncm.inner_version",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.inner_version.ncm.inner_version.none.min.002.raw.json",
+      "rawFile": "ncm.inner_version.ncm.inner_version.none.min.002.raw.json",
       "rawSha256": "638a15ff0c4b960fe54b023a7d32a0a377ef0eadcf0c12f5912d4575846b0ca7",
-      "redactedFile": "samples-redacted\\ncm.inner_version.ncm.inner_version.none.min.002.redacted.json"
+      "redactedFile": "ncm.inner_version.ncm.inner_version.none.min.002.redacted.json"
     },
     {
       "caseId": "ncm.inner_version.none.min.003",
       "apiAuditId": "ncm.inner_version",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.inner_version.ncm.inner_version.none.min.003.raw.json",
+      "rawFile": "ncm.inner_version.ncm.inner_version.none.min.003.raw.json",
       "rawSha256": "9479dc66afe093de3f00715a72f36924eaf97dadcb2330a43b832bfe33a29d17",
-      "redactedFile": "samples-redacted\\ncm.inner_version.ncm.inner_version.none.min.003.redacted.json"
+      "redactedFile": "ncm.inner_version.ncm.inner_version.none.min.003.redacted.json"
     },
     {
       "caseId": "ncm.inner_version.none.neg.004",
       "apiAuditId": "ncm.inner_version",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.inner_version.ncm.inner_version.none.neg.004.raw.json",
+      "rawFile": "ncm.inner_version.ncm.inner_version.none.neg.004.raw.json",
       "rawSha256": "e0195dc85477c5e020cef04a7c5b5b6d904ba2e5e82da6bb660574c3532a5be8",
-      "redactedFile": "samples-redacted\\ncm.inner_version.ncm.inner_version.none.neg.004.redacted.json"
+      "redactedFile": "ncm.inner_version.ncm.inner_version.none.neg.004.redacted.json"
     },
     {
       "caseId": "ncm.login_qr_key.none.min.001",
       "apiAuditId": "ncm.login_qr_key",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.login_qr_key.ncm.login_qr_key.none.min.001.raw.json",
+      "rawFile": "ncm.login_qr_key.ncm.login_qr_key.none.min.001.raw.json",
       "rawSha256": "2b57fe87101c975dcbd3fc999bb59eb56e6639046d5d66f42c77389a64feb47d",
-      "redactedFile": "samples-redacted\\ncm.login_qr_key.ncm.login_qr_key.none.min.001.redacted.json"
+      "redactedFile": "ncm.login_qr_key.ncm.login_qr_key.none.min.001.redacted.json"
     },
     {
       "caseId": "ncm.login_qr_key.none.min.002",
       "apiAuditId": "ncm.login_qr_key",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.login_qr_key.ncm.login_qr_key.none.min.002.raw.json",
+      "rawFile": "ncm.login_qr_key.ncm.login_qr_key.none.min.002.raw.json",
       "rawSha256": "4803e530b91a66936d5937fb670ed8c23376685534a984fb61e17c0470bcb805",
-      "redactedFile": "samples-redacted\\ncm.login_qr_key.ncm.login_qr_key.none.min.002.redacted.json"
+      "redactedFile": "ncm.login_qr_key.ncm.login_qr_key.none.min.002.redacted.json"
     },
     {
       "caseId": "ncm.login_status.inv.expired.001",
       "apiAuditId": "ncm.login_status",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.login_status.ncm.login_status.inv.expired.001.raw.json",
+      "rawFile": "ncm.login_status.ncm.login_status.inv.expired.001.raw.json",
       "rawSha256": "83e8afc0aa1bf1c8822a4bc95902fb491f4704d1d5f94f1ee23af31ab134680b",
-      "redactedFile": "samples-redacted\\ncm.login_status.ncm.login_status.inv.expired.001.redacted.json"
+      "redactedFile": "ncm.login_status.ncm.login_status.inv.expired.001.redacted.json"
     },
     {
       "caseId": "ncm.login_status.inv.truncated.001",
       "apiAuditId": "ncm.login_status",
       "auth": "AUTH_INVALID_TRUNCATED",
-      "rawFile": "raw\\ncm.login_status.ncm.login_status.inv.truncated.001.raw.json",
+      "rawFile": "ncm.login_status.ncm.login_status.inv.truncated.001.raw.json",
       "rawSha256": "b8ece7cb125ada412badd4c59d8fc3b86a30344e06f3ea4b6ed2e077318f3384",
-      "redactedFile": "samples-redacted\\ncm.login_status.ncm.login_status.inv.truncated.001.redacted.json"
+      "redactedFile": "ncm.login_status.ncm.login_status.inv.truncated.001.redacted.json"
     },
     {
       "caseId": "ncm.login_status.none.min.001",
       "apiAuditId": "ncm.login_status",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.login_status.ncm.login_status.none.min.001.raw.json",
+      "rawFile": "ncm.login_status.ncm.login_status.none.min.001.raw.json",
       "rawSha256": "a70ad99b0c9b26f2fd3220b78c58f8bd9186320a40cede47c0207b7af417855d",
-      "redactedFile": "samples-redacted\\ncm.login_status.ncm.login_status.none.min.001.redacted.json"
+      "redactedFile": "ncm.login_status.ncm.login_status.none.min.001.redacted.json"
     },
     {
       "caseId": "ncm.login_status.none.min.002",
       "apiAuditId": "ncm.login_status",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.login_status.ncm.login_status.none.min.002.raw.json",
+      "rawFile": "ncm.login_status.ncm.login_status.none.min.002.raw.json",
       "rawSha256": "0ad33719af27e1fe03c31aba3efba24f36f139b072753ae3333d66b3a1e3507f",
-      "redactedFile": "samples-redacted\\ncm.login_status.ncm.login_status.none.min.002.redacted.json"
+      "redactedFile": "ncm.login_status.ncm.login_status.none.min.002.redacted.json"
     },
     {
       "caseId": "ncm.login_status.none.min.003",
       "apiAuditId": "ncm.login_status",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.login_status.ncm.login_status.none.min.003.raw.json",
+      "rawFile": "ncm.login_status.ncm.login_status.none.min.003.raw.json",
       "rawSha256": "e9681ae299018f309d0651a41fddd9f9004abde85dfa4b47a332cd7a2401a219",
-      "redactedFile": "samples-redacted\\ncm.login_status.ncm.login_status.none.min.003.redacted.json"
+      "redactedFile": "ncm.login_status.ncm.login_status.none.min.003.redacted.json"
     },
     {
       "caseId": "ncm.logout.inv.truncated.001",
       "apiAuditId": "ncm.logout",
       "auth": "AUTH_INVALID_TRUNCATED",
-      "rawFile": "raw\\ncm.logout.ncm.logout.inv.truncated.001.raw.json",
+      "rawFile": "ncm.logout.ncm.logout.inv.truncated.001.raw.json",
       "rawSha256": "c30a1797329c4d6dc9f08774cf3ade2b4e7294e5b179f7cc77746113d742a6e2",
-      "redactedFile": "samples-redacted\\ncm.logout.ncm.logout.inv.truncated.001.redacted.json"
+      "redactedFile": "ncm.logout.ncm.logout.inv.truncated.001.redacted.json"
     },
     {
       "caseId": "ncm.logout.none.neg.001",
       "apiAuditId": "ncm.logout",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.logout.ncm.logout.none.neg.001.raw.json",
+      "rawFile": "ncm.logout.ncm.logout.none.neg.001.raw.json",
       "rawSha256": "c19bcbd6c82e90263d5338aa2d3b854130006ac79d99e2909f8e9c6bcb58d4a6",
-      "redactedFile": "samples-redacted\\ncm.logout.ncm.logout.none.neg.001.redacted.json"
+      "redactedFile": "ncm.logout.ncm.logout.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.lyric_new.anon.001",
       "apiAuditId": "ncm.lyric_new",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.lyric_new.ncm.lyric_new.anon.001.raw.json",
+      "rawFile": "ncm.lyric_new.ncm.lyric_new.anon.001.raw.json",
       "rawSha256": "70672fb1522957de7c5a550d1355667a4468dfd579e364a8f57cd147c95dc099",
-      "redactedFile": "samples-redacted\\ncm.lyric_new.ncm.lyric_new.anon.001.redacted.json"
+      "redactedFile": "ncm.lyric_new.ncm.lyric_new.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.lyric_new.id0.none.neg.001",
       "apiAuditId": "ncm.lyric_new",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.lyric_new.ncm.lyric_new.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.lyric_new.ncm.lyric_new.id0.none.neg.001.raw.json",
       "rawSha256": "cb112c5aa6bf310b76b12827c3bfa094576fdd27440153af1d4d1a497408d469",
-      "redactedFile": "samples-redacted\\ncm.lyric_new.ncm.lyric_new.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.lyric_new.ncm.lyric_new.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.lyric_new.inv.001",
       "apiAuditId": "ncm.lyric_new",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.lyric_new.ncm.lyric_new.inv.001.raw.json",
+      "rawFile": "ncm.lyric_new.ncm.lyric_new.inv.001.raw.json",
       "rawSha256": "91ddc1e910c9a33b68cb19178e6c1fd142e9b68d18facdbbb9025ffa5d73b242",
-      "redactedFile": "samples-redacted\\ncm.lyric_new.ncm.lyric_new.inv.001.redacted.json"
+      "redactedFile": "ncm.lyric_new.ncm.lyric_new.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.lyric_new.none.001",
       "apiAuditId": "ncm.lyric_new",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.lyric_new.ncm.lyric_new.none.001.raw.json",
+      "rawFile": "ncm.lyric_new.ncm.lyric_new.none.001.raw.json",
       "rawSha256": "b39177b97492083f8b2e74bc2350e9b9b32a75fa916c9d01ccba8ca9103d8e87",
-      "redactedFile": "samples-redacted\\ncm.lyric_new.ncm.lyric_new.none.001.redacted.json"
+      "redactedFile": "ncm.lyric_new.ncm.lyric_new.none.001.redacted.json"
     },
     {
       "caseId": "ncm.lyric.anon.001",
       "apiAuditId": "ncm.lyric",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.lyric.ncm.lyric.anon.001.raw.json",
+      "rawFile": "ncm.lyric.ncm.lyric.anon.001.raw.json",
       "rawSha256": "88b16ddcbc8cd33af7d387cf7d408b6a92def6805ae0d287a4cf5011f55a521b",
-      "redactedFile": "samples-redacted\\ncm.lyric.ncm.lyric.anon.001.redacted.json"
+      "redactedFile": "ncm.lyric.ncm.lyric.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.lyric.id0.none.neg.001",
       "apiAuditId": "ncm.lyric",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.lyric.ncm.lyric.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.lyric.ncm.lyric.id0.none.neg.001.raw.json",
       "rawSha256": "9342922e7b41f7414598cac910349986f713d6e2c06d18849d1f9235fdd7e4bb",
-      "redactedFile": "samples-redacted\\ncm.lyric.ncm.lyric.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.lyric.ncm.lyric.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.lyric.inv.001",
       "apiAuditId": "ncm.lyric",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.lyric.ncm.lyric.inv.001.raw.json",
+      "rawFile": "ncm.lyric.ncm.lyric.inv.001.raw.json",
       "rawSha256": "b3dadd3c5414ad4f358aa65c381c88a3e5226fe999b9abbcdd1de5a234ec7a5b",
-      "redactedFile": "samples-redacted\\ncm.lyric.ncm.lyric.inv.001.redacted.json"
+      "redactedFile": "ncm.lyric.ncm.lyric.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.lyric.none.001",
       "apiAuditId": "ncm.lyric",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.lyric.ncm.lyric.none.001.raw.json",
+      "rawFile": "ncm.lyric.ncm.lyric.none.001.raw.json",
       "rawSha256": "b62155412214d5c06702fbe09c890df80845d209e0370fdb5510041113fa974a",
-      "redactedFile": "samples-redacted\\ncm.lyric.ncm.lyric.none.001.redacted.json"
+      "redactedFile": "ncm.lyric.ncm.lyric.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_url.anon.001",
+      "apiAuditId": "ncm.mv_url",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.mv_url.ncm.mv_url.anon.001.raw.json",
+      "rawSha256": "29e82008482720ee60af78051c60a908bbf1a7eb9286c66c5c177832f82595a6",
+      "redactedFile": "ncm.mv_url.ncm.mv_url.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_url.id0.none.neg.001",
+      "apiAuditId": "ncm.mv_url",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_url.ncm.mv_url.id0.none.neg.001.raw.json",
+      "rawSha256": "1d77199df214b2a52069e253efdb94f7d7138e2614da779831d7abeff9d09fb1",
+      "redactedFile": "ncm.mv_url.ncm.mv_url.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_url.inv.001",
+      "apiAuditId": "ncm.mv_url",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.mv_url.ncm.mv_url.inv.001.raw.json",
+      "rawSha256": "ea8da7c7ef918f8888e77e392a9256d2e268f686c76eb5cabe7a11bc6f68889a",
+      "redactedFile": "ncm.mv_url.ncm.mv_url.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_url.none.001",
+      "apiAuditId": "ncm.mv_url",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_url.ncm.mv_url.none.001.raw.json",
+      "rawSha256": "bfb1ee5ad0944f366a61ac2ef5169002ea9a427ea87cff2011fd4e2ae42c2e0b",
+      "redactedFile": "ncm.mv_url.ncm.mv_url.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_djprogram.anon.001",
       "apiAuditId": "ncm.personalized_djprogram",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.personalized_djprogram.ncm.personalized_djprogram.anon.001.raw.json",
+      "rawFile": "ncm.personalized_djprogram.ncm.personalized_djprogram.anon.001.raw.json",
       "rawSha256": "bfb9434aaa7fe46367ffb1359f15cde5d61c6d22ce23620dc7e2d3f89494e5e3",
-      "redactedFile": "samples-redacted\\ncm.personalized_djprogram.ncm.personalized_djprogram.anon.001.redacted.json"
+      "redactedFile": "ncm.personalized_djprogram.ncm.personalized_djprogram.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_djprogram.inv.001",
       "apiAuditId": "ncm.personalized_djprogram",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.personalized_djprogram.ncm.personalized_djprogram.inv.001.raw.json",
+      "rawFile": "ncm.personalized_djprogram.ncm.personalized_djprogram.inv.001.raw.json",
       "rawSha256": "1c301a69fd5433c7eabcd9025b744e7faab5fedbc9b53bef6a4eebf2cd5778b7",
-      "redactedFile": "samples-redacted\\ncm.personalized_djprogram.ncm.personalized_djprogram.inv.001.redacted.json"
+      "redactedFile": "ncm.personalized_djprogram.ncm.personalized_djprogram.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_djprogram.limit5.none.001",
       "apiAuditId": "ncm.personalized_djprogram",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized_djprogram.ncm.personalized_djprogram.limit5.none.001.raw.json",
+      "rawFile": "ncm.personalized_djprogram.ncm.personalized_djprogram.limit5.none.001.raw.json",
       "rawSha256": "26ec58e404fc4138a53ad22da923467f86c6e4022d32e58278f03a6fd90416af",
-      "redactedFile": "samples-redacted\\ncm.personalized_djprogram.ncm.personalized_djprogram.limit5.none.001.redacted.json"
+      "redactedFile": "ncm.personalized_djprogram.ncm.personalized_djprogram.limit5.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_djprogram.none.001",
       "apiAuditId": "ncm.personalized_djprogram",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized_djprogram.ncm.personalized_djprogram.none.001.raw.json",
+      "rawFile": "ncm.personalized_djprogram.ncm.personalized_djprogram.none.001.raw.json",
       "rawSha256": "f195faeae605965dcab2171f75da6088d6a02b53331fb7a4ed900ccf91a76acb",
-      "redactedFile": "samples-redacted\\ncm.personalized_djprogram.ncm.personalized_djprogram.none.001.redacted.json"
+      "redactedFile": "ncm.personalized_djprogram.ncm.personalized_djprogram.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_mv.anon.001",
       "apiAuditId": "ncm.personalized_mv",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.personalized_mv.ncm.personalized_mv.anon.001.raw.json",
+      "rawFile": "ncm.personalized_mv.ncm.personalized_mv.anon.001.raw.json",
       "rawSha256": "f0019e011307091510da430bbca1076ea0253f42898924dc978f3526c836b9f7",
-      "redactedFile": "samples-redacted\\ncm.personalized_mv.ncm.personalized_mv.anon.001.redacted.json"
+      "redactedFile": "ncm.personalized_mv.ncm.personalized_mv.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_mv.inv.001",
       "apiAuditId": "ncm.personalized_mv",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.personalized_mv.ncm.personalized_mv.inv.001.raw.json",
+      "rawFile": "ncm.personalized_mv.ncm.personalized_mv.inv.001.raw.json",
       "rawSha256": "f007e5089959a2eb6949bc4d602807293ff2cf3d31786a6bdb17f9ce3ae6b8cb",
-      "redactedFile": "samples-redacted\\ncm.personalized_mv.ncm.personalized_mv.inv.001.redacted.json"
+      "redactedFile": "ncm.personalized_mv.ncm.personalized_mv.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_mv.limit5.none.001",
       "apiAuditId": "ncm.personalized_mv",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized_mv.ncm.personalized_mv.limit5.none.001.raw.json",
+      "rawFile": "ncm.personalized_mv.ncm.personalized_mv.limit5.none.001.raw.json",
       "rawSha256": "8e43039dc7c8082b527d7db5f67d1dd422696e07a895173985af6204ff833f08",
-      "redactedFile": "samples-redacted\\ncm.personalized_mv.ncm.personalized_mv.limit5.none.001.redacted.json"
+      "redactedFile": "ncm.personalized_mv.ncm.personalized_mv.limit5.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_mv.none.001",
       "apiAuditId": "ncm.personalized_mv",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized_mv.ncm.personalized_mv.none.001.raw.json",
+      "rawFile": "ncm.personalized_mv.ncm.personalized_mv.none.001.raw.json",
       "rawSha256": "607953d55432c98a5d056ed57701021a229e5c78f5c2cd47bbd16ed7eaaf1c4e",
-      "redactedFile": "samples-redacted\\ncm.personalized_mv.ncm.personalized_mv.none.001.redacted.json"
+      "redactedFile": "ncm.personalized_mv.ncm.personalized_mv.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_newsong.anon.001",
       "apiAuditId": "ncm.personalized_newsong",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.personalized_newsong.ncm.personalized_newsong.anon.001.raw.json",
+      "rawFile": "ncm.personalized_newsong.ncm.personalized_newsong.anon.001.raw.json",
       "rawSha256": "bdebadeceeea887dcb8d18bd13efb2013a5a4d045234f80242d61f288b8d97f3",
-      "redactedFile": "samples-redacted\\ncm.personalized_newsong.ncm.personalized_newsong.anon.001.redacted.json"
+      "redactedFile": "ncm.personalized_newsong.ncm.personalized_newsong.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_newsong.inv.001",
       "apiAuditId": "ncm.personalized_newsong",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.personalized_newsong.ncm.personalized_newsong.inv.001.raw.json",
+      "rawFile": "ncm.personalized_newsong.ncm.personalized_newsong.inv.001.raw.json",
       "rawSha256": "fafe8cb8f4982d6274a52adb300a73455d8c799df84a13116c1166c70f087249",
-      "redactedFile": "samples-redacted\\ncm.personalized_newsong.ncm.personalized_newsong.inv.001.redacted.json"
+      "redactedFile": "ncm.personalized_newsong.ncm.personalized_newsong.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_newsong.limit5.none.001",
       "apiAuditId": "ncm.personalized_newsong",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized_newsong.ncm.personalized_newsong.limit5.none.001.raw.json",
+      "rawFile": "ncm.personalized_newsong.ncm.personalized_newsong.limit5.none.001.raw.json",
       "rawSha256": "1909ab28834c96fbb431feceba40cb153e526d84407732d7920457f6a9a52c48",
-      "redactedFile": "samples-redacted\\ncm.personalized_newsong.ncm.personalized_newsong.limit5.none.001.redacted.json"
+      "redactedFile": "ncm.personalized_newsong.ncm.personalized_newsong.limit5.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_newsong.none.001",
       "apiAuditId": "ncm.personalized_newsong",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized_newsong.ncm.personalized_newsong.none.001.raw.json",
+      "rawFile": "ncm.personalized_newsong.ncm.personalized_newsong.none.001.raw.json",
       "rawSha256": "554754c020d1c318ccaa3ca665eedf738d37e5a8a317ca8b4c5ec9deffe86ed2",
-      "redactedFile": "samples-redacted\\ncm.personalized_newsong.ncm.personalized_newsong.none.001.redacted.json"
+      "redactedFile": "ncm.personalized_newsong.ncm.personalized_newsong.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_privatecontent_list.anon.001",
       "apiAuditId": "ncm.personalized_privatecontent_list",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.anon.001.raw.json",
+      "rawFile": "ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.anon.001.raw.json",
       "rawSha256": "9dc96538713f8ea6bec2e7e8bee52dc815a0fcd798ae3e2186b336ae2c55e2f3",
-      "redactedFile": "samples-redacted\\ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.anon.001.redacted.json"
+      "redactedFile": "ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_privatecontent_list.inv.001",
       "apiAuditId": "ncm.personalized_privatecontent_list",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.inv.001.raw.json",
+      "rawFile": "ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.inv.001.raw.json",
       "rawSha256": "2ad84c6918a174a9b7722a454710c3ea0e1db27abf1fdb637eb36d1f3e8f90cd",
-      "redactedFile": "samples-redacted\\ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.inv.001.redacted.json"
+      "redactedFile": "ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_privatecontent_list.limit5.none.001",
       "apiAuditId": "ncm.personalized_privatecontent_list",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.limit5.none.001.raw.json",
+      "rawFile": "ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.limit5.none.001.raw.json",
       "rawSha256": "1e7fe915fc47de6351e41f1e083005517a29bcf23bf186a8bbafcbd6fd9c9183",
-      "redactedFile": "samples-redacted\\ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.limit5.none.001.redacted.json"
+      "redactedFile": "ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.limit5.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_privatecontent_list.none.001",
       "apiAuditId": "ncm.personalized_privatecontent_list",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.none.001.raw.json",
+      "rawFile": "ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.none.001.raw.json",
       "rawSha256": "e6063c060af403b597417ff7bf205da2ef50952f72a7119f094687c908cde40f",
-      "redactedFile": "samples-redacted\\ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.none.001.redacted.json"
+      "redactedFile": "ncm.personalized_privatecontent_list.ncm.personalized_privatecontent_list.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_privatecontent.anon.001",
       "apiAuditId": "ncm.personalized_privatecontent",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.personalized_privatecontent.ncm.personalized_privatecontent.anon.001.raw.json",
+      "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.anon.001.raw.json",
       "rawSha256": "4cbd9a9df2a8fae244a8caa70572ee45d565630dada398d63ff110781319a52c",
-      "redactedFile": "samples-redacted\\ncm.personalized_privatecontent.ncm.personalized_privatecontent.anon.001.redacted.json"
+      "redactedFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_privatecontent.inv.001",
       "apiAuditId": "ncm.personalized_privatecontent",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.personalized_privatecontent.ncm.personalized_privatecontent.inv.001.raw.json",
+      "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.inv.001.raw.json",
       "rawSha256": "275f9b612a4c197affcf5650eb461353dd255c92e96beb4ad575a07a1c48e76b",
-      "redactedFile": "samples-redacted\\ncm.personalized_privatecontent.ncm.personalized_privatecontent.inv.001.redacted.json"
+      "redactedFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_privatecontent.limit5.none.001",
       "apiAuditId": "ncm.personalized_privatecontent",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized_privatecontent.ncm.personalized_privatecontent.limit5.none.001.raw.json",
+      "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.limit5.none.001.raw.json",
       "rawSha256": "2c29d38837eb40f10eaa19989185dd4a57768f9ae23b34b2791e6c24f2fc9098",
-      "redactedFile": "samples-redacted\\ncm.personalized_privatecontent.ncm.personalized_privatecontent.limit5.none.001.redacted.json"
+      "redactedFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.limit5.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized_privatecontent.none.001",
       "apiAuditId": "ncm.personalized_privatecontent",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized_privatecontent.ncm.personalized_privatecontent.none.001.raw.json",
+      "rawFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.none.001.raw.json",
       "rawSha256": "0b4d356c14defdb231941fa476aea675340b8b0a7f46332db5de9054edc2c237",
-      "redactedFile": "samples-redacted\\ncm.personalized_privatecontent.ncm.personalized_privatecontent.none.001.redacted.json"
+      "redactedFile": "ncm.personalized_privatecontent.ncm.personalized_privatecontent.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized.anon.001",
       "apiAuditId": "ncm.personalized",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.personalized.ncm.personalized.anon.001.raw.json",
+      "rawFile": "ncm.personalized.ncm.personalized.anon.001.raw.json",
       "rawSha256": "147e3e88fa49711090cef6ef559ea1acb1a14b49461d2ab8f082210eb47b67f6",
-      "redactedFile": "samples-redacted\\ncm.personalized.ncm.personalized.anon.001.redacted.json"
+      "redactedFile": "ncm.personalized.ncm.personalized.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized.inv.001",
       "apiAuditId": "ncm.personalized",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.personalized.ncm.personalized.inv.001.raw.json",
+      "rawFile": "ncm.personalized.ncm.personalized.inv.001.raw.json",
       "rawSha256": "577296a98c05e8dddcee03269b2ab121c14d83d78e08d290d63409c62e7cf570",
-      "redactedFile": "samples-redacted\\ncm.personalized.ncm.personalized.inv.001.redacted.json"
+      "redactedFile": "ncm.personalized.ncm.personalized.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized.limit0.none.neg.001",
       "apiAuditId": "ncm.personalized",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized.ncm.personalized.limit0.none.neg.001.raw.json",
+      "rawFile": "ncm.personalized.ncm.personalized.limit0.none.neg.001.raw.json",
       "rawSha256": "7268d5921266aedb4e4dc7a2f2cc2a2e2a9961ce380cdfb2eade50d272e4b036",
-      "redactedFile": "samples-redacted\\ncm.personalized.ncm.personalized.limit0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.personalized.ncm.personalized.limit0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized.limit5.none.001",
       "apiAuditId": "ncm.personalized",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized.ncm.personalized.limit5.none.001.raw.json",
+      "rawFile": "ncm.personalized.ncm.personalized.limit5.none.001.raw.json",
       "rawSha256": "0dae024c2f918a7b0df0c85198cf853b7b3947b02a6d818eda9e2448b4d2ae3b",
-      "redactedFile": "samples-redacted\\ncm.personalized.ncm.personalized.limit5.none.001.redacted.json"
+      "redactedFile": "ncm.personalized.ncm.personalized.limit5.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized.limit50.none.001",
       "apiAuditId": "ncm.personalized",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized.ncm.personalized.limit50.none.001.raw.json",
+      "rawFile": "ncm.personalized.ncm.personalized.limit50.none.001.raw.json",
       "rawSha256": "07e9dbaf2364a3d553820e5ea0371d1993fcb5923b56258329d625c6857ee76c",
-      "redactedFile": "samples-redacted\\ncm.personalized.ncm.personalized.limit50.none.001.redacted.json"
+      "redactedFile": "ncm.personalized.ncm.personalized.limit50.none.001.redacted.json"
     },
     {
       "caseId": "ncm.personalized.min.none.001",
       "apiAuditId": "ncm.personalized",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.personalized.ncm.personalized.min.none.001.raw.json",
+      "rawFile": "ncm.personalized.ncm.personalized.min.none.001.raw.json",
       "rawSha256": "4a22a16516371f9fc873db0f94ef0eebca3696ede24f76a605e2b3ed3bcfff70",
-      "redactedFile": "samples-redacted\\ncm.personalized.ncm.personalized.min.none.001.redacted.json"
+      "redactedFile": "ncm.personalized.ncm.personalized.min.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_category_list.anon.001",
       "apiAuditId": "ncm.playlist_category_list",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.playlist_category_list.ncm.playlist_category_list.anon.001.raw.json",
+      "rawFile": "ncm.playlist_category_list.ncm.playlist_category_list.anon.001.raw.json",
       "rawSha256": "b86b73e64b26a2a65ad5090b2f8c5c26c2f169fac40fb275dcce24e271a36d10",
-      "redactedFile": "samples-redacted\\ncm.playlist_category_list.ncm.playlist_category_list.anon.001.redacted.json"
+      "redactedFile": "ncm.playlist_category_list.ncm.playlist_category_list.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_category_list.inv.001",
       "apiAuditId": "ncm.playlist_category_list",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.playlist_category_list.ncm.playlist_category_list.inv.001.raw.json",
+      "rawFile": "ncm.playlist_category_list.ncm.playlist_category_list.inv.001.raw.json",
       "rawSha256": "fc67a1d306367a2f8b6fe25e424ee89bd502a1a7ebee76c3f83e24b47002d998",
-      "redactedFile": "samples-redacted\\ncm.playlist_category_list.ncm.playlist_category_list.inv.001.redacted.json"
+      "redactedFile": "ncm.playlist_category_list.ncm.playlist_category_list.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_category_list.none.001",
       "apiAuditId": "ncm.playlist_category_list",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_category_list.ncm.playlist_category_list.none.001.raw.json",
+      "rawFile": "ncm.playlist_category_list.ncm.playlist_category_list.none.001.raw.json",
       "rawSha256": "6ece7be44deba699fce9a2e5b4d403ee57821cd09ff2c1ab2e280fe1f68a3d74",
-      "redactedFile": "samples-redacted\\ncm.playlist_category_list.ncm.playlist_category_list.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_category_list.ncm.playlist_category_list.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_category_list.none.002",
       "apiAuditId": "ncm.playlist_category_list",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_category_list.ncm.playlist_category_list.none.002.raw.json",
+      "rawFile": "ncm.playlist_category_list.ncm.playlist_category_list.none.002.raw.json",
       "rawSha256": "4f17eca4600f277343d07d6246fd771443461ccde82c510e3741a9b9dfbe3239",
-      "redactedFile": "samples-redacted\\ncm.playlist_category_list.ncm.playlist_category_list.none.002.redacted.json"
+      "redactedFile": "ncm.playlist_category_list.ncm.playlist_category_list.none.002.redacted.json"
     },
     {
       "caseId": "ncm.playlist_catlist.anon.001",
       "apiAuditId": "ncm.playlist_catlist",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.playlist_catlist.ncm.playlist_catlist.anon.001.raw.json",
+      "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.anon.001.raw.json",
       "rawSha256": "c1788bc0100252a405424324a5e04c7edcf87735fb689971bfd0db8b461ddf66",
-      "redactedFile": "samples-redacted\\ncm.playlist_catlist.ncm.playlist_catlist.anon.001.redacted.json"
+      "redactedFile": "ncm.playlist_catlist.ncm.playlist_catlist.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_catlist.inv.001",
       "apiAuditId": "ncm.playlist_catlist",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.playlist_catlist.ncm.playlist_catlist.inv.001.raw.json",
+      "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.inv.001.raw.json",
       "rawSha256": "266371ae5750eba08914de312f533950412cb7f0969169d4cdc2118ecbf1ebbb",
-      "redactedFile": "samples-redacted\\ncm.playlist_catlist.ncm.playlist_catlist.inv.001.redacted.json"
+      "redactedFile": "ncm.playlist_catlist.ncm.playlist_catlist.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_catlist.none.001",
       "apiAuditId": "ncm.playlist_catlist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_catlist.ncm.playlist_catlist.none.001.raw.json",
+      "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.none.001.raw.json",
       "rawSha256": "6caed15010d24fb46362ff04a99f92651f7e3a99f3100daea403a54393a117cc",
-      "redactedFile": "samples-redacted\\ncm.playlist_catlist.ncm.playlist_catlist.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_catlist.ncm.playlist_catlist.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_catlist.none.002",
       "apiAuditId": "ncm.playlist_catlist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_catlist.ncm.playlist_catlist.none.002.raw.json",
+      "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.none.002.raw.json",
       "rawSha256": "b92088a5a25619b22977d3020bdc4f845fbff2aa36869eb47f6268597fdb9f4f",
-      "redactedFile": "samples-redacted\\ncm.playlist_catlist.ncm.playlist_catlist.none.002.redacted.json"
+      "redactedFile": "ncm.playlist_catlist.ncm.playlist_catlist.none.002.redacted.json"
     },
     {
       "caseId": "ncm.playlist_detail_dynamic.anon.001",
       "apiAuditId": "ncm.playlist_detail_dynamic",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.anon.001.raw.json",
+      "rawFile": "ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.anon.001.raw.json",
       "rawSha256": "e6586d6525febd20539e9ecda5bfde358492decda75ecfd90aee92f6c4ca86a6",
-      "redactedFile": "samples-redacted\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.anon.001.redacted.json"
+      "redactedFile": "ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_detail_dynamic.id0.none.neg.001",
       "apiAuditId": "ncm.playlist_detail_dynamic",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.id0.none.neg.001.raw.json",
       "rawSha256": "4f2605ceecac7dd64a50afcd43af3ef2d5fca05d1d07a4a2a9441e7d7221be88",
-      "redactedFile": "samples-redacted\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_detail_dynamic.inv.001",
       "apiAuditId": "ncm.playlist_detail_dynamic",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.inv.001.raw.json",
+      "rawFile": "ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.inv.001.raw.json",
       "rawSha256": "7d844c12586732b1087a513f54b0f273402d5d3be60c8afa6607bf13a717928f",
-      "redactedFile": "samples-redacted\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.inv.001.redacted.json"
+      "redactedFile": "ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_detail_dynamic.none.001",
       "apiAuditId": "ncm.playlist_detail_dynamic",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.none.001.raw.json",
+      "rawFile": "ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.none.001.raw.json",
       "rawSha256": "ed0a114d156f21e1c9b78fb54043f27008254e7f7096454287c1f79a4e5f0612",
-      "redactedFile": "samples-redacted\\ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_detail.id0.none.neg.001",
       "apiAuditId": "ncm.playlist_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.playlist_detail.ncm.playlist_detail.id0.none.neg.001.raw.json",
       "rawSha256": "f3f0552ee726e7fbb382c58c1b26c813eb59f926fa34b19487240537e43fa73f",
-      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.playlist_detail.ncm.playlist_detail.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_detail.nonexist.none.neg.001",
       "apiAuditId": "ncm.playlist_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.nonexist.none.neg.001.raw.json",
+      "rawFile": "ncm.playlist_detail.ncm.playlist_detail.nonexist.none.neg.001.raw.json",
       "rawSha256": "a4d1cb828e2b6231a82a9736a3e0353df90435ccdb5934c1d565ecbc0fce17d6",
-      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.nonexist.none.neg.001.redacted.json"
+      "redactedFile": "ncm.playlist_detail.ncm.playlist_detail.nonexist.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_detail.pl.anon.001",
       "apiAuditId": "ncm.playlist_detail",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.pl.anon.001.raw.json",
+      "rawFile": "ncm.playlist_detail.ncm.playlist_detail.pl.anon.001.raw.json",
       "rawSha256": "ff54a3704e39589feea31777ee124de9de34d4070937535357f09b3eecf0416f",
-      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.pl.anon.001.redacted.json"
+      "redactedFile": "ncm.playlist_detail.ncm.playlist_detail.pl.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_detail.pl.inv.001",
       "apiAuditId": "ncm.playlist_detail",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.pl.inv.001.raw.json",
+      "rawFile": "ncm.playlist_detail.ncm.playlist_detail.pl.inv.001.raw.json",
       "rawSha256": "c4006b6948e8d3d83761a1684095a142494b13b1ee53acedbd6ba5b2d0494e8c",
-      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.pl.inv.001.redacted.json"
+      "redactedFile": "ncm.playlist_detail.ncm.playlist_detail.pl.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_detail.pl.none.001",
       "apiAuditId": "ncm.playlist_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.pl.none.001.raw.json",
+      "rawFile": "ncm.playlist_detail.ncm.playlist_detail.pl.none.001.raw.json",
       "rawSha256": "0216ef6e069962c2a350d00854758fea1eb6353b874a437df765ae0fc1ee9a67",
-      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.pl.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_detail.ncm.playlist_detail.pl.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_detail.toplist.none.001",
       "apiAuditId": "ncm.playlist_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_detail.ncm.playlist_detail.toplist.none.001.raw.json",
+      "rawFile": "ncm.playlist_detail.ncm.playlist_detail.toplist.none.001.raw.json",
       "rawSha256": "565fd482c5ef77ff8dc9ef7b1e1d1ccb93633ee3bade2c243827a52ff9581fde",
-      "redactedFile": "samples-redacted\\ncm.playlist_detail.ncm.playlist_detail.toplist.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_detail.ncm.playlist_detail.toplist.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_highquality_tags.anon.001",
       "apiAuditId": "ncm.playlist_highquality_tags",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.anon.001.raw.json",
+      "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.anon.001.raw.json",
       "rawSha256": "bae4d55d348242c0cdf4780faddc9ce64c84c48b8e395a414c373343584e4ad5",
-      "redactedFile": "samples-redacted\\ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.anon.001.redacted.json"
+      "redactedFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_highquality_tags.inv.001",
       "apiAuditId": "ncm.playlist_highquality_tags",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.inv.001.raw.json",
+      "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.inv.001.raw.json",
       "rawSha256": "66f0b17953fe90a00948c96fd99b4630616688abd128ea73bc9f39de3a9256ae",
-      "redactedFile": "samples-redacted\\ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.inv.001.redacted.json"
+      "redactedFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_highquality_tags.none.001",
       "apiAuditId": "ncm.playlist_highquality_tags",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.001.raw.json",
+      "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.001.raw.json",
       "rawSha256": "d770ef699101e9eb63b60d017368a880b2e69e9cf848fef6c721958602f88569",
-      "redactedFile": "samples-redacted\\ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_highquality_tags.none.002",
       "apiAuditId": "ncm.playlist_highquality_tags",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.002.raw.json",
+      "rawFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.002.raw.json",
       "rawSha256": "0d1b43d73aec4fbbae2eedca3812c2c2a922a0a0abb85202fbc406b9402046bd",
-      "redactedFile": "samples-redacted\\ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.002.redacted.json"
+      "redactedFile": "ncm.playlist_highquality_tags.ncm.playlist_highquality_tags.none.002.redacted.json"
     },
     {
       "caseId": "ncm.playlist_hot.anon.001",
       "apiAuditId": "ncm.playlist_hot",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.playlist_hot.ncm.playlist_hot.anon.001.raw.json",
+      "rawFile": "ncm.playlist_hot.ncm.playlist_hot.anon.001.raw.json",
       "rawSha256": "f1bd0a249057fb83cf0b58f48c27c2c80c1ba6924b8303053a7c164545c9605f",
-      "redactedFile": "samples-redacted\\ncm.playlist_hot.ncm.playlist_hot.anon.001.redacted.json"
+      "redactedFile": "ncm.playlist_hot.ncm.playlist_hot.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_hot.inv.001",
       "apiAuditId": "ncm.playlist_hot",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.playlist_hot.ncm.playlist_hot.inv.001.raw.json",
+      "rawFile": "ncm.playlist_hot.ncm.playlist_hot.inv.001.raw.json",
       "rawSha256": "11aafa23cf2fbc58d4cf41074ff19e9aaf598f3f98076173f27403b6a6c6b46d",
-      "redactedFile": "samples-redacted\\ncm.playlist_hot.ncm.playlist_hot.inv.001.redacted.json"
+      "redactedFile": "ncm.playlist_hot.ncm.playlist_hot.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_hot.none.001",
       "apiAuditId": "ncm.playlist_hot",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_hot.ncm.playlist_hot.none.001.raw.json",
+      "rawFile": "ncm.playlist_hot.ncm.playlist_hot.none.001.raw.json",
       "rawSha256": "9a01160930c2f8000ee577c6f936171fea5e9d965db2b7a5891912dfbe095844",
-      "redactedFile": "samples-redacted\\ncm.playlist_hot.ncm.playlist_hot.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_hot.ncm.playlist_hot.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_hot.none.002",
       "apiAuditId": "ncm.playlist_hot",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_hot.ncm.playlist_hot.none.002.raw.json",
+      "rawFile": "ncm.playlist_hot.ncm.playlist_hot.none.002.raw.json",
       "rawSha256": "46dc733767e9380b73b94746e2e81ebe661e1d6a12514c5ab395f80655b23a07",
-      "redactedFile": "samples-redacted\\ncm.playlist_hot.ncm.playlist_hot.none.002.redacted.json"
+      "redactedFile": "ncm.playlist_hot.ncm.playlist_hot.none.002.redacted.json"
     },
     {
       "caseId": "ncm.playlist_subscribers.anon.001",
       "apiAuditId": "ncm.playlist_subscribers",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.playlist_subscribers.ncm.playlist_subscribers.anon.001.raw.json",
+      "rawFile": "ncm.playlist_subscribers.ncm.playlist_subscribers.anon.001.raw.json",
       "rawSha256": "4349910906047cb05764580b1c63872ac716d09f9380523eca85afc850178095",
-      "redactedFile": "samples-redacted\\ncm.playlist_subscribers.ncm.playlist_subscribers.anon.001.redacted.json"
+      "redactedFile": "ncm.playlist_subscribers.ncm.playlist_subscribers.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_subscribers.id0.none.neg.001",
       "apiAuditId": "ncm.playlist_subscribers",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_subscribers.ncm.playlist_subscribers.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.playlist_subscribers.ncm.playlist_subscribers.id0.none.neg.001.raw.json",
       "rawSha256": "bff9c664c6b02e6d63d154cf75e630ab43dcfb5e08c9d456e9b14a134f1bb049",
-      "redactedFile": "samples-redacted\\ncm.playlist_subscribers.ncm.playlist_subscribers.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.playlist_subscribers.ncm.playlist_subscribers.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_subscribers.inv.001",
       "apiAuditId": "ncm.playlist_subscribers",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.playlist_subscribers.ncm.playlist_subscribers.inv.001.raw.json",
+      "rawFile": "ncm.playlist_subscribers.ncm.playlist_subscribers.inv.001.raw.json",
       "rawSha256": "2fbe0a319e9cef399dafb9d8e82758e38b96e27d75c2260ba223e7489469b717",
-      "redactedFile": "samples-redacted\\ncm.playlist_subscribers.ncm.playlist_subscribers.inv.001.redacted.json"
+      "redactedFile": "ncm.playlist_subscribers.ncm.playlist_subscribers.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_subscribers.none.001",
       "apiAuditId": "ncm.playlist_subscribers",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_subscribers.ncm.playlist_subscribers.none.001.raw.json",
+      "rawFile": "ncm.playlist_subscribers.ncm.playlist_subscribers.none.001.raw.json",
       "rawSha256": "399f6fe476b7054de391b006f259185ef9a42a741e66fcd00d9a722e5f4c25c2",
-      "redactedFile": "samples-redacted\\ncm.playlist_subscribers.ncm.playlist_subscribers.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_subscribers.ncm.playlist_subscribers.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_subscribers.page.none.001",
       "apiAuditId": "ncm.playlist_subscribers",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_subscribers.ncm.playlist_subscribers.page.none.001.raw.json",
+      "rawFile": "ncm.playlist_subscribers.ncm.playlist_subscribers.page.none.001.raw.json",
       "rawSha256": "ccc057574901912afc2b0c2c1ad743020e0feafcb9d959e4a14116bcd04efe65",
-      "redactedFile": "samples-redacted\\ncm.playlist_subscribers.ncm.playlist_subscribers.page.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_subscribers.ncm.playlist_subscribers.page.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_track_all.anon.001",
       "apiAuditId": "ncm.playlist_track_all",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.anon.001.raw.json",
+      "rawFile": "ncm.playlist_track_all.ncm.playlist_track_all.anon.001.raw.json",
       "rawSha256": "b9866d83979ce5c7c67dcb2e568734687b4b7d472955c67cbfa9fcf6bbb8ccef",
-      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.anon.001.redacted.json"
+      "redactedFile": "ncm.playlist_track_all.ncm.playlist_track_all.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_track_all.first.none.001",
       "apiAuditId": "ncm.playlist_track_all",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.first.none.001.raw.json",
+      "rawFile": "ncm.playlist_track_all.ncm.playlist_track_all.first.none.001.raw.json",
       "rawSha256": "65c0de82ec2ffa7d83f44208be56bd2d276b6485e39a353b842efab988f082c0",
-      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.first.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_track_all.ncm.playlist_track_all.first.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_track_all.id0.none.neg.001",
       "apiAuditId": "ncm.playlist_track_all",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.playlist_track_all.ncm.playlist_track_all.id0.none.neg.001.raw.json",
       "rawSha256": "2af253a006e5a4675448672bb8e28c0b6068a0b8963aa90a207a4e867f7ca7ef",
-      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.playlist_track_all.ncm.playlist_track_all.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_track_all.inv.001",
       "apiAuditId": "ncm.playlist_track_all",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.inv.001.raw.json",
+      "rawFile": "ncm.playlist_track_all.ncm.playlist_track_all.inv.001.raw.json",
       "rawSha256": "3bcaffaa505e3bd696685c391be39fad01ce0a65f701ea35c173e90ce634cfd2",
-      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.inv.001.redacted.json"
+      "redactedFile": "ncm.playlist_track_all.ncm.playlist_track_all.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_track_all.limit0.none.bnd.001",
       "apiAuditId": "ncm.playlist_track_all",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.limit0.none.bnd.001.raw.json",
+      "rawFile": "ncm.playlist_track_all.ncm.playlist_track_all.limit0.none.bnd.001.raw.json",
       "rawSha256": "07d96a14c04b1b8385a0adf69bd63c0e53e6c391fac1ca91064ce33926df04b7",
-      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.limit0.none.bnd.001.redacted.json"
+      "redactedFile": "ncm.playlist_track_all.ncm.playlist_track_all.limit0.none.bnd.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_track_all.mid.none.001",
       "apiAuditId": "ncm.playlist_track_all",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.mid.none.001.raw.json",
+      "rawFile": "ncm.playlist_track_all.ncm.playlist_track_all.mid.none.001.raw.json",
       "rawSha256": "f010ddf54b8b7fdb8f580252723f1f13e5661ff013cfba8640b17380d131a599",
-      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.mid.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_track_all.ncm.playlist_track_all.mid.none.001.redacted.json"
     },
     {
       "caseId": "ncm.playlist_track_all.toplist.none.001",
       "apiAuditId": "ncm.playlist_track_all",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.playlist_track_all.ncm.playlist_track_all.toplist.none.001.raw.json",
+      "rawFile": "ncm.playlist_track_all.ncm.playlist_track_all.toplist.none.001.raw.json",
       "rawSha256": "2f310bd7b36143d531244ac9366edbda379693d552ebe46ff1fe75df63581f1a",
-      "redactedFile": "samples-redacted\\ncm.playlist_track_all.ncm.playlist_track_all.toplist.none.001.redacted.json"
+      "redactedFile": "ncm.playlist_track_all.ncm.playlist_track_all.toplist.none.001.redacted.json"
     },
     {
       "caseId": "ncm.register_anonimous.none.min.001",
       "apiAuditId": "ncm.register_anonimous",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.register_anonimous.ncm.register_anonimous.none.min.001.raw.json",
+      "rawFile": "ncm.register_anonimous.ncm.register_anonimous.none.min.001.raw.json",
       "rawSha256": "80f7234835e13a2939d2b8b1a7e95087a0accb01d5ac89addf38887f0f220d86",
-      "redactedFile": "samples-redacted\\ncm.register_anonimous.ncm.register_anonimous.none.min.001.redacted.json"
+      "redactedFile": "ncm.register_anonimous.ncm.register_anonimous.none.min.001.redacted.json"
     },
     {
       "caseId": "ncm.register_anonimous.none.repeat.002",
       "apiAuditId": "ncm.register_anonimous",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.register_anonimous.ncm.register_anonimous.none.repeat.002.raw.json",
+      "rawFile": "ncm.register_anonimous.ncm.register_anonimous.none.repeat.002.raw.json",
       "rawSha256": "3e0b0863a841b4b2b24bf25835658fe29c2138308ad8bd58b7db7c7cf026ca1b",
-      "redactedFile": "samples-redacted\\ncm.register_anonimous.ncm.register_anonimous.none.repeat.002.redacted.json"
+      "redactedFile": "ncm.register_anonimous.ncm.register_anonimous.none.repeat.002.redacted.json"
     },
     {
       "caseId": "ncm.register_xeapikey.none.min.001",
       "apiAuditId": "ncm.register_xeapikey",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.001.raw.json",
+      "rawFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.001.raw.json",
       "rawSha256": "330a5379029dc70a2d2eaddeb69e4105d2c334cf83afccafdaf22db7c6e4d9f0",
-      "redactedFile": "samples-redacted\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.001.redacted.json"
+      "redactedFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.001.redacted.json"
     },
     {
       "caseId": "ncm.register_xeapikey.none.min.002",
       "apiAuditId": "ncm.register_xeapikey",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.002.raw.json",
+      "rawFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.002.raw.json",
       "rawSha256": "adccea91abe0ab09ef76384dcfcacc916f55df9f28f5e82ff2f4aaf751fee9ff",
-      "redactedFile": "samples-redacted\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.002.redacted.json"
+      "redactedFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.002.redacted.json"
     },
     {
       "caseId": "ncm.register_xeapikey.none.min.003",
       "apiAuditId": "ncm.register_xeapikey",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.raw.json",
+      "rawFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.raw.json",
       "rawSha256": "760c37fbfeb49fd4aa91cac4e13e1b1e494fa950a6b0bf74cdb164c8556d85c3",
-      "redactedFile": "samples-redacted\\ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.redacted.json"
+      "redactedFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.redacted.json"
     },
     {
       "caseId": "ncm.related_playlist.id0.none.neg.001",
       "apiAuditId": "ncm.related_playlist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.related_playlist.ncm.related_playlist.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.related_playlist.ncm.related_playlist.id0.none.neg.001.raw.json",
       "rawSha256": "c4bd01a62f4c442db054a3b9a3176c8c18efa958ea0c08ee011214bcad728d3b",
-      "redactedFile": "samples-redacted\\ncm.related_playlist.ncm.related_playlist.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.related_playlist.ncm.related_playlist.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.related_playlist.none.001",
       "apiAuditId": "ncm.related_playlist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.related_playlist.ncm.related_playlist.none.001.raw.json",
+      "rawFile": "ncm.related_playlist.ncm.related_playlist.none.001.raw.json",
       "rawSha256": "aaab74a7eafcd8ce73b6bb2f5c3d1b1ccb871db26ece1ae991d437cda84f470d",
-      "redactedFile": "samples-redacted\\ncm.related_playlist.ncm.related_playlist.none.001.redacted.json"
+      "redactedFile": "ncm.related_playlist.ncm.related_playlist.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search_default.anon.001",
       "apiAuditId": "ncm.search_default",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.search_default.ncm.search_default.anon.001.raw.json",
+      "rawFile": "ncm.search_default.ncm.search_default.anon.001.raw.json",
       "rawSha256": "269d697fc3186f960c7b009486ab4bf41251715874f0be2320462967d1049fdd",
-      "redactedFile": "samples-redacted\\ncm.search_default.ncm.search_default.anon.001.redacted.json"
+      "redactedFile": "ncm.search_default.ncm.search_default.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.search_default.inv.001",
       "apiAuditId": "ncm.search_default",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.search_default.ncm.search_default.inv.001.raw.json",
+      "rawFile": "ncm.search_default.ncm.search_default.inv.001.raw.json",
       "rawSha256": "49caf279e57f807a9651f37f36c0d24382b4a0bca0c94322193ce88678a87653",
-      "redactedFile": "samples-redacted\\ncm.search_default.ncm.search_default.inv.001.redacted.json"
+      "redactedFile": "ncm.search_default.ncm.search_default.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.search_default.none.001",
       "apiAuditId": "ncm.search_default",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_default.ncm.search_default.none.001.raw.json",
+      "rawFile": "ncm.search_default.ncm.search_default.none.001.raw.json",
       "rawSha256": "ee2dc4981c8b7c46aa20691c085c06583eaa9e6727ab07e0852c225b89507893",
-      "redactedFile": "samples-redacted\\ncm.search_default.ncm.search_default.none.001.redacted.json"
+      "redactedFile": "ncm.search_default.ncm.search_default.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search_default.none.002",
       "apiAuditId": "ncm.search_default",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_default.ncm.search_default.none.002.raw.json",
+      "rawFile": "ncm.search_default.ncm.search_default.none.002.raw.json",
       "rawSha256": "35c16fd632a33e72956c429236ce9d3ecfb91027d2cd0b2be91ab4e7fea769e3",
-      "redactedFile": "samples-redacted\\ncm.search_default.ncm.search_default.none.002.redacted.json"
+      "redactedFile": "ncm.search_default.ncm.search_default.none.002.redacted.json"
     },
     {
       "caseId": "ncm.search_hot_detail.anon.001",
       "apiAuditId": "ncm.search_hot_detail",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.search_hot_detail.ncm.search_hot_detail.anon.001.raw.json",
+      "rawFile": "ncm.search_hot_detail.ncm.search_hot_detail.anon.001.raw.json",
       "rawSha256": "786caa7de9766ee5a8782535cfbe70ca244d9aa022538ed2ffaffa575e5eaacf",
-      "redactedFile": "samples-redacted\\ncm.search_hot_detail.ncm.search_hot_detail.anon.001.redacted.json"
+      "redactedFile": "ncm.search_hot_detail.ncm.search_hot_detail.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.search_hot_detail.inv.001",
       "apiAuditId": "ncm.search_hot_detail",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.search_hot_detail.ncm.search_hot_detail.inv.001.raw.json",
+      "rawFile": "ncm.search_hot_detail.ncm.search_hot_detail.inv.001.raw.json",
       "rawSha256": "a854a43b7c3f6c8f09819bed1c646b473cd18d81de09370c6a643e73df9aec4e",
-      "redactedFile": "samples-redacted\\ncm.search_hot_detail.ncm.search_hot_detail.inv.001.redacted.json"
+      "redactedFile": "ncm.search_hot_detail.ncm.search_hot_detail.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.search_hot_detail.none.001",
       "apiAuditId": "ncm.search_hot_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_hot_detail.ncm.search_hot_detail.none.001.raw.json",
+      "rawFile": "ncm.search_hot_detail.ncm.search_hot_detail.none.001.raw.json",
       "rawSha256": "192c6c2de39baa6fe9c9049ea1c031ab7640ff4197c808c1ad2dd10211e859cd",
-      "redactedFile": "samples-redacted\\ncm.search_hot_detail.ncm.search_hot_detail.none.001.redacted.json"
+      "redactedFile": "ncm.search_hot_detail.ncm.search_hot_detail.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search_hot_detail.none.002",
       "apiAuditId": "ncm.search_hot_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_hot_detail.ncm.search_hot_detail.none.002.raw.json",
+      "rawFile": "ncm.search_hot_detail.ncm.search_hot_detail.none.002.raw.json",
       "rawSha256": "59de4dde22aca11508a31d92f563c2d969a0e2fdd8b4dd5886c5820aacd3b0df",
-      "redactedFile": "samples-redacted\\ncm.search_hot_detail.ncm.search_hot_detail.none.002.redacted.json"
+      "redactedFile": "ncm.search_hot_detail.ncm.search_hot_detail.none.002.redacted.json"
     },
     {
       "caseId": "ncm.search_hot.anon.001",
       "apiAuditId": "ncm.search_hot",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.search_hot.ncm.search_hot.anon.001.raw.json",
+      "rawFile": "ncm.search_hot.ncm.search_hot.anon.001.raw.json",
       "rawSha256": "0d9321ebc31e23d9080bf6cbf3ad2da8e64f6e2109337ed8f8a602f62de773a2",
-      "redactedFile": "samples-redacted\\ncm.search_hot.ncm.search_hot.anon.001.redacted.json"
+      "redactedFile": "ncm.search_hot.ncm.search_hot.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.search_hot.inv.001",
       "apiAuditId": "ncm.search_hot",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.search_hot.ncm.search_hot.inv.001.raw.json",
+      "rawFile": "ncm.search_hot.ncm.search_hot.inv.001.raw.json",
       "rawSha256": "2b518b59e7327fbfa6556528c3bc449c1a8208fda3532daf450b610273866991",
-      "redactedFile": "samples-redacted\\ncm.search_hot.ncm.search_hot.inv.001.redacted.json"
+      "redactedFile": "ncm.search_hot.ncm.search_hot.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.search_hot.none.001",
       "apiAuditId": "ncm.search_hot",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_hot.ncm.search_hot.none.001.raw.json",
+      "rawFile": "ncm.search_hot.ncm.search_hot.none.001.raw.json",
       "rawSha256": "bb3cfb0dc0568b1c2bfb707edb9ec4eb0acd6360ebcceb12f20abbff5434fb34",
-      "redactedFile": "samples-redacted\\ncm.search_hot.ncm.search_hot.none.001.redacted.json"
+      "redactedFile": "ncm.search_hot.ncm.search_hot.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search_hot.none.002",
       "apiAuditId": "ncm.search_hot",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_hot.ncm.search_hot.none.002.raw.json",
+      "rawFile": "ncm.search_hot.ncm.search_hot.none.002.raw.json",
       "rawSha256": "a3d010aad1074fd3495572a3acea89b5a09c12810999080e9137aaeb326ba0a6",
-      "redactedFile": "samples-redacted\\ncm.search_hot.ncm.search_hot.none.002.redacted.json"
+      "redactedFile": "ncm.search_hot.ncm.search_hot.none.002.redacted.json"
     },
     {
       "caseId": "ncm.search_multimatch.empty.none.neg.001",
       "apiAuditId": "ncm.search_multimatch",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_multimatch.ncm.search_multimatch.empty.none.neg.001.raw.json",
+      "rawFile": "ncm.search_multimatch.ncm.search_multimatch.empty.none.neg.001.raw.json",
       "rawSha256": "adabe554b43148cc76602c8cbca9ac6914a21b8186fc5b8f7a8a5d1ef6e8f8e2",
-      "redactedFile": "samples-redacted\\ncm.search_multimatch.ncm.search_multimatch.empty.none.neg.001.redacted.json"
+      "redactedFile": "ncm.search_multimatch.ncm.search_multimatch.empty.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.search_multimatch.kw1.anon.001",
       "apiAuditId": "ncm.search_multimatch",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.search_multimatch.ncm.search_multimatch.kw1.anon.001.raw.json",
+      "rawFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.anon.001.raw.json",
       "rawSha256": "768d3fa56dd75fabeba7cdbf2bf65dc56c0a53a6d09cb3b071491e02dd3443a3",
-      "redactedFile": "samples-redacted\\ncm.search_multimatch.ncm.search_multimatch.kw1.anon.001.redacted.json"
+      "redactedFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.search_multimatch.kw1.inv.001",
       "apiAuditId": "ncm.search_multimatch",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.search_multimatch.ncm.search_multimatch.kw1.inv.001.raw.json",
+      "rawFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.inv.001.raw.json",
       "rawSha256": "8404610d930d891a000ee12f882be9cd97ae3e80dd5483f61f6c4c7fd4b58ed7",
-      "redactedFile": "samples-redacted\\ncm.search_multimatch.ncm.search_multimatch.kw1.inv.001.redacted.json"
+      "redactedFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.search_multimatch.kw1.none.001",
       "apiAuditId": "ncm.search_multimatch",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_multimatch.ncm.search_multimatch.kw1.none.001.raw.json",
+      "rawFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.none.001.raw.json",
       "rawSha256": "9b97a9b117979cd91439f4c5c479fe25594af12df45f2765552ae0025afdfeb9",
-      "redactedFile": "samples-redacted\\ncm.search_multimatch.ncm.search_multimatch.kw1.none.001.redacted.json"
+      "redactedFile": "ncm.search_multimatch.ncm.search_multimatch.kw1.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search_suggest.empty.none.neg.001",
       "apiAuditId": "ncm.search_suggest",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_suggest.ncm.search_suggest.empty.none.neg.001.raw.json",
+      "rawFile": "ncm.search_suggest.ncm.search_suggest.empty.none.neg.001.raw.json",
       "rawSha256": "88608c58bd6d00e540d5a6c91f7c8c827bc28c0863becf66fc8b992f16e65852",
-      "redactedFile": "samples-redacted\\ncm.search_suggest.ncm.search_suggest.empty.none.neg.001.redacted.json"
+      "redactedFile": "ncm.search_suggest.ncm.search_suggest.empty.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.search_suggest.kw1.anon.001",
       "apiAuditId": "ncm.search_suggest",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.search_suggest.ncm.search_suggest.kw1.anon.001.raw.json",
+      "rawFile": "ncm.search_suggest.ncm.search_suggest.kw1.anon.001.raw.json",
       "rawSha256": "75bb5eedf716f501825797afd4cc7080c2a34d2b2e837c90a6d7209866e0486c",
-      "redactedFile": "samples-redacted\\ncm.search_suggest.ncm.search_suggest.kw1.anon.001.redacted.json"
+      "redactedFile": "ncm.search_suggest.ncm.search_suggest.kw1.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.search_suggest.kw1.inv.001",
       "apiAuditId": "ncm.search_suggest",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.search_suggest.ncm.search_suggest.kw1.inv.001.raw.json",
+      "rawFile": "ncm.search_suggest.ncm.search_suggest.kw1.inv.001.raw.json",
       "rawSha256": "7471c3c8df04f130511a798d585eb9642894f16e7e5d9c3e30d306dc60667996",
-      "redactedFile": "samples-redacted\\ncm.search_suggest.ncm.search_suggest.kw1.inv.001.redacted.json"
+      "redactedFile": "ncm.search_suggest.ncm.search_suggest.kw1.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.search_suggest.kw1.none.001",
       "apiAuditId": "ncm.search_suggest",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_suggest.ncm.search_suggest.kw1.none.001.raw.json",
+      "rawFile": "ncm.search_suggest.ncm.search_suggest.kw1.none.001.raw.json",
       "rawSha256": "015c47919c3d0998bacd1daac5724d5f4972bce5c4a46bf794c30ac5128ec7a5",
-      "redactedFile": "samples-redacted\\ncm.search_suggest.ncm.search_suggest.kw1.none.001.redacted.json"
+      "redactedFile": "ncm.search_suggest.ncm.search_suggest.kw1.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search_suggest.kw2.none.001",
       "apiAuditId": "ncm.search_suggest",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_suggest.ncm.search_suggest.kw2.none.001.raw.json",
+      "rawFile": "ncm.search_suggest.ncm.search_suggest.kw2.none.001.raw.json",
       "rawSha256": "119a7875bee6453803aeb8467a09bba761edf07125c320727b663d9e7c837f60",
-      "redactedFile": "samples-redacted\\ncm.search_suggest.ncm.search_suggest.kw2.none.001.redacted.json"
+      "redactedFile": "ncm.search_suggest.ncm.search_suggest.kw2.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search_suggest.mobile.none.001",
       "apiAuditId": "ncm.search_suggest",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search_suggest.ncm.search_suggest.mobile.none.001.raw.json",
+      "rawFile": "ncm.search_suggest.ncm.search_suggest.mobile.none.001.raw.json",
       "rawSha256": "32648c05922381b2556b36463005ca07c95b0f13069e3d2b8bea52cb07438242",
-      "redactedFile": "samples-redacted\\ncm.search_suggest.ncm.search_suggest.mobile.none.001.redacted.json"
+      "redactedFile": "ncm.search_suggest.ncm.search_suggest.mobile.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search.empty.none.neg.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search.ncm.search.empty.none.neg.001.raw.json",
+      "rawFile": "ncm.search.ncm.search.empty.none.neg.001.raw.json",
       "rawSha256": "9723de759d9337a6238450eb0e6bbdcc5220b47c39e09672692545caa5346cfe",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.empty.none.neg.001.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.empty.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.search.kw1.type1.anon.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.search.ncm.search.kw1.type1.anon.001.raw.json",
+      "rawFile": "ncm.search.ncm.search.kw1.type1.anon.001.raw.json",
       "rawSha256": "c97947377a2383638ca05c84e365e9c56f09972ce9ba342a73d1423d5e5e389d",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.kw1.type1.anon.001.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.kw1.type1.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.search.kw1.type1.inv.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.search.ncm.search.kw1.type1.inv.001.raw.json",
+      "rawFile": "ncm.search.ncm.search.kw1.type1.inv.001.raw.json",
       "rawSha256": "2e91b72b08783f66bb4f80236a0ace9275b4e48e50e923ee27d70bcc1f1c1d83",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.kw1.type1.inv.001.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.kw1.type1.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.search.kw1.type1.none.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search.ncm.search.kw1.type1.none.001.raw.json",
+      "rawFile": "ncm.search.ncm.search.kw1.type1.none.001.raw.json",
       "rawSha256": "70ba5e833ae6d3a678c7d63ca8fecb2eb0d75af35879d1ace59d706fe8a51643",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.kw1.type1.none.001.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.kw1.type1.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search.kw1.type1.none.002",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search.ncm.search.kw1.type1.none.002.raw.json",
+      "rawFile": "ncm.search.ncm.search.kw1.type1.none.002.raw.json",
       "rawSha256": "b65db5a71abf1908c79c009e4235fa100e8f91f728270aca287a63743787ae2e",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.kw1.type1.none.002.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.kw1.type1.none.002.redacted.json"
     },
     {
       "caseId": "ncm.search.kw1.type10.none.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search.ncm.search.kw1.type10.none.001.raw.json",
+      "rawFile": "ncm.search.ncm.search.kw1.type10.none.001.raw.json",
       "rawSha256": "27efd24e6c745ddf154180493e687dcf7d679cc0e850ce4c807921e3d015904f",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.kw1.type10.none.001.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.kw1.type10.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search.kw1.type100.none.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search.ncm.search.kw1.type100.none.001.raw.json",
+      "rawFile": "ncm.search.ncm.search.kw1.type100.none.001.raw.json",
       "rawSha256": "ab5f092fa96602e60ac4852c9e2f396ee01a3f370387f2a1e412ea45b82fd9cc",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.kw1.type100.none.001.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.kw1.type100.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search.kw1.type1000.none.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search.ncm.search.kw1.type1000.none.001.raw.json",
+      "rawFile": "ncm.search.ncm.search.kw1.type1000.none.001.raw.json",
       "rawSha256": "322e6c207748f45b0bc021082ec1c275a587669ac39d6a8f361d2ea740659cc5",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.kw1.type1000.none.001.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.kw1.type1000.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search.kw1.type1004.none.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search.ncm.search.kw1.type1004.none.001.raw.json",
+      "rawFile": "ncm.search.ncm.search.kw1.type1004.none.001.raw.json",
       "rawSha256": "34fbac49c3987ecf4586c74e6df81ab75d7b05dceb2dfa5119d8a8ad7d112ce7",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.kw1.type1004.none.001.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.kw1.type1004.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search.kw1.type1014.none.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search.ncm.search.kw1.type1014.none.001.raw.json",
+      "rawFile": "ncm.search.ncm.search.kw1.type1014.none.001.raw.json",
       "rawSha256": "e737d9c9eb0c060d2bfe4693819bd1f5e33675f936f510a5d9a827a558d60b4d",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.kw1.type1014.none.001.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.kw1.type1014.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search.kw2.type1.none.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search.ncm.search.kw2.type1.none.001.raw.json",
+      "rawFile": "ncm.search.ncm.search.kw2.type1.none.001.raw.json",
       "rawSha256": "d3283f62877c862c0ee6de24d974e0c8ee48af984a7d9d60baec26d4dff36c16",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.kw2.type1.none.001.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.kw2.type1.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search.type999.none.neg.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.search.ncm.search.type999.none.neg.001.raw.json",
+      "rawFile": "ncm.search.ncm.search.type999.none.neg.001.raw.json",
       "rawSha256": "4e8e5feb3c3bdb4d878395b051a875959c6490b7cafcf560dc6fdc91fe45f1f7",
-      "redactedFile": "samples-redacted\\ncm.search.ncm.search.type999.none.neg.001.redacted.json"
+      "redactedFile": "ncm.search.ncm.search.type999.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_artist.anon.001",
       "apiAuditId": "ncm.simi_artist",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.simi_artist.ncm.simi_artist.anon.001.raw.json",
+      "rawFile": "ncm.simi_artist.ncm.simi_artist.anon.001.raw.json",
       "rawSha256": "7ea853cea9dcc5ae39521f7e097a6fe2fafe84ae2d12994f706d58c02931dabc",
-      "redactedFile": "samples-redacted\\ncm.simi_artist.ncm.simi_artist.anon.001.redacted.json"
+      "redactedFile": "ncm.simi_artist.ncm.simi_artist.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_artist.id0.none.neg.001",
       "apiAuditId": "ncm.simi_artist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.simi_artist.ncm.simi_artist.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.simi_artist.ncm.simi_artist.id0.none.neg.001.raw.json",
       "rawSha256": "bf4e7b2ac79467c02b74254107c37ce6c1ad666b8808058fc7fd0cc5a8c25874",
-      "redactedFile": "samples-redacted\\ncm.simi_artist.ncm.simi_artist.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.simi_artist.ncm.simi_artist.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_artist.inv.001",
       "apiAuditId": "ncm.simi_artist",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.simi_artist.ncm.simi_artist.inv.001.raw.json",
+      "rawFile": "ncm.simi_artist.ncm.simi_artist.inv.001.raw.json",
       "rawSha256": "2b7419b208fe412d33295f8764c07568d8c860113cc8e9cac26370e11e9dd405",
-      "redactedFile": "samples-redacted\\ncm.simi_artist.ncm.simi_artist.inv.001.redacted.json"
+      "redactedFile": "ncm.simi_artist.ncm.simi_artist.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_artist.none.001",
       "apiAuditId": "ncm.simi_artist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.simi_artist.ncm.simi_artist.none.001.raw.json",
+      "rawFile": "ncm.simi_artist.ncm.simi_artist.none.001.raw.json",
       "rawSha256": "3b0410e79b5a925aa04bd43e2d83c0841ecabf588462905e44c4ab7c4d074f31",
-      "redactedFile": "samples-redacted\\ncm.simi_artist.ncm.simi_artist.none.001.redacted.json"
+      "redactedFile": "ncm.simi_artist.ncm.simi_artist.none.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_playlist.anon.001",
       "apiAuditId": "ncm.simi_playlist",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.simi_playlist.ncm.simi_playlist.anon.001.raw.json",
+      "rawFile": "ncm.simi_playlist.ncm.simi_playlist.anon.001.raw.json",
       "rawSha256": "2c366f042a0baa1b5ac22fce1e8460bbe55b691b341e2104cc08701c37b2054f",
-      "redactedFile": "samples-redacted\\ncm.simi_playlist.ncm.simi_playlist.anon.001.redacted.json"
+      "redactedFile": "ncm.simi_playlist.ncm.simi_playlist.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_playlist.id0.none.neg.001",
       "apiAuditId": "ncm.simi_playlist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.simi_playlist.ncm.simi_playlist.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.simi_playlist.ncm.simi_playlist.id0.none.neg.001.raw.json",
       "rawSha256": "b56ded0d895d08c0b6e34901b17ac121c04fe6c18a36a086e96f2063907c7dee",
-      "redactedFile": "samples-redacted\\ncm.simi_playlist.ncm.simi_playlist.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.simi_playlist.ncm.simi_playlist.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_playlist.inv.001",
       "apiAuditId": "ncm.simi_playlist",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.simi_playlist.ncm.simi_playlist.inv.001.raw.json",
+      "rawFile": "ncm.simi_playlist.ncm.simi_playlist.inv.001.raw.json",
       "rawSha256": "c2ec565dc096c9ebad96e83cd989fc94f68e98fefd2344f5cc35af18d469c8eb",
-      "redactedFile": "samples-redacted\\ncm.simi_playlist.ncm.simi_playlist.inv.001.redacted.json"
+      "redactedFile": "ncm.simi_playlist.ncm.simi_playlist.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_playlist.none.001",
       "apiAuditId": "ncm.simi_playlist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.simi_playlist.ncm.simi_playlist.none.001.raw.json",
+      "rawFile": "ncm.simi_playlist.ncm.simi_playlist.none.001.raw.json",
       "rawSha256": "bc7767e283c908fe46fb2b2669d469a9e4f6cf42dc0822c2a73cc50bb06dd15d",
-      "redactedFile": "samples-redacted\\ncm.simi_playlist.ncm.simi_playlist.none.001.redacted.json"
+      "redactedFile": "ncm.simi_playlist.ncm.simi_playlist.none.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_song.anon.001",
       "apiAuditId": "ncm.simi_song",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.simi_song.ncm.simi_song.anon.001.raw.json",
+      "rawFile": "ncm.simi_song.ncm.simi_song.anon.001.raw.json",
       "rawSha256": "e8f2f14b12a5f87940500d922fe9569aedd9a138f69d65cb8a8721431a968fcd",
-      "redactedFile": "samples-redacted\\ncm.simi_song.ncm.simi_song.anon.001.redacted.json"
+      "redactedFile": "ncm.simi_song.ncm.simi_song.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_song.id0.none.neg.001",
       "apiAuditId": "ncm.simi_song",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.simi_song.ncm.simi_song.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.simi_song.ncm.simi_song.id0.none.neg.001.raw.json",
       "rawSha256": "7f4ca0fd7c0473e692ddfddc2a1331c24486e5d0774222cc1302a0154a3e542f",
-      "redactedFile": "samples-redacted\\ncm.simi_song.ncm.simi_song.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.simi_song.ncm.simi_song.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_song.inv.001",
       "apiAuditId": "ncm.simi_song",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.simi_song.ncm.simi_song.inv.001.raw.json",
+      "rawFile": "ncm.simi_song.ncm.simi_song.inv.001.raw.json",
       "rawSha256": "28b5303c934193bdcc37810fd81d1c54d1b443e7bc0fa07985071bca064c8051",
-      "redactedFile": "samples-redacted\\ncm.simi_song.ncm.simi_song.inv.001.redacted.json"
+      "redactedFile": "ncm.simi_song.ncm.simi_song.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_song.none.001",
       "apiAuditId": "ncm.simi_song",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.simi_song.ncm.simi_song.none.001.raw.json",
+      "rawFile": "ncm.simi_song.ncm.simi_song.none.001.raw.json",
       "rawSha256": "c9401aa601776d50c93a05e28b246a3587fe639e982cea2a2b0e5875d0e9c063",
-      "redactedFile": "samples-redacted\\ncm.simi_song.ncm.simi_song.none.001.redacted.json"
+      "redactedFile": "ncm.simi_song.ncm.simi_song.none.001.redacted.json"
     },
     {
       "caseId": "ncm.song_detail.empty.none.neg.001",
       "apiAuditId": "ncm.song_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.empty.none.neg.001.raw.json",
+      "rawFile": "ncm.song_detail.ncm.song_detail.empty.none.neg.001.raw.json",
       "rawSha256": "f3c36cb9121233d33974ac9f507dd92653229c6fd9cc8661833299a9386df76f",
-      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.empty.none.neg.001.redacted.json"
+      "redactedFile": "ncm.song_detail.ncm.song_detail.empty.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_detail.media-fixture.songA.001",
+      "apiAuditId": "ncm.song_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_detail.ncm.song_detail.media-fixture.songA.001.raw.json",
+      "rawSha256": "2a5ef9a8a7760449a7dfe67f058c33d0f26a46c30c07c936b2e03f7ab1f8a7bd",
+      "redactedFile": "ncm.song_detail.ncm.song_detail.media-fixture.songA.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_detail.media-fixture.songB.001",
+      "apiAuditId": "ncm.song_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_detail.ncm.song_detail.media-fixture.songB.001.raw.json",
+      "rawSha256": "7935339cfa0cfb6d9ca2825622062d1939de0b8c4b54129c3b4b32ccfff28742",
+      "redactedFile": "ncm.song_detail.ncm.song_detail.media-fixture.songB.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_detail.media-fixture.songC.001",
+      "apiAuditId": "ncm.song_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_detail.ncm.song_detail.media-fixture.songC.001.raw.json",
+      "rawSha256": "471ca9d240f67a307b4bbbf22a4c486a59c5fd5df1c615dc18b3fc5dd6fd055f",
+      "redactedFile": "ncm.song_detail.ncm.song_detail.media-fixture.songC.001.redacted.json"
     },
     {
       "caseId": "ncm.song_detail.multi.none.001",
       "apiAuditId": "ncm.song_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.multi.none.001.raw.json",
+      "rawFile": "ncm.song_detail.ncm.song_detail.multi.none.001.raw.json",
       "rawSha256": "37cb3309049d86a36939e23f0a4bac2cc3465c48ef1053b2ae6b470e0459c81b",
-      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.multi.none.001.redacted.json"
+      "redactedFile": "ncm.song_detail.ncm.song_detail.multi.none.001.redacted.json"
     },
     {
       "caseId": "ncm.song_detail.nonexist.none.neg.001",
       "apiAuditId": "ncm.song_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.nonexist.none.neg.001.raw.json",
+      "rawFile": "ncm.song_detail.ncm.song_detail.nonexist.none.neg.001.raw.json",
       "rawSha256": "374ee5a8561f85f522853a38958d90d9af1df1c84cd86871cee61e0706ba31e2",
-      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.nonexist.none.neg.001.redacted.json"
+      "redactedFile": "ncm.song_detail.ncm.song_detail.nonexist.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.song_detail.single.anon.001",
       "apiAuditId": "ncm.song_detail",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.single.anon.001.raw.json",
+      "rawFile": "ncm.song_detail.ncm.song_detail.single.anon.001.raw.json",
       "rawSha256": "18f74faa66de5ba168c158ce6205c9bac5f3a693df604ba93d05464b11f69746",
-      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.single.anon.001.redacted.json"
+      "redactedFile": "ncm.song_detail.ncm.song_detail.single.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.song_detail.single.inv.001",
       "apiAuditId": "ncm.song_detail",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.single.inv.001.raw.json",
+      "rawFile": "ncm.song_detail.ncm.song_detail.single.inv.001.raw.json",
       "rawSha256": "73dc6177f252bf4236af442df4e9f2a623db9444a9e72f756e4682633e2bae2f",
-      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.single.inv.001.redacted.json"
+      "redactedFile": "ncm.song_detail.ncm.song_detail.single.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.song_detail.single.none.001",
       "apiAuditId": "ncm.song_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.song_detail.ncm.song_detail.single.none.001.raw.json",
+      "rawFile": "ncm.song_detail.ncm.song_detail.single.none.001.raw.json",
       "rawSha256": "f97c56ab6a7a6b13d9e65b41566a57d8fc6a184ba59d80816bcdd96865ab8728",
-      "redactedFile": "samples-redacted\\ncm.song_detail.ncm.song_detail.single.none.001.redacted.json"
+      "redactedFile": "ncm.song_detail.ncm.song_detail.single.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_download_url_v1.A.anon.001",
+      "apiAuditId": "ncm.song_download_url_v1",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.anon.001.raw.json",
+      "rawSha256": "cdb08297a15d6645c2a31c2ce40e696d203c8779860828e5c419411eac0dde89",
+      "redactedFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_download_url_v1.A.id0.none.neg.001",
+      "apiAuditId": "ncm.song_download_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.id0.none.neg.001.raw.json",
+      "rawSha256": "87b7f86494673089bff949e26d32afc7128a9dc4cfc6d3d32fa04153d23e7a25",
+      "redactedFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_download_url_v1.A.none.001",
+      "apiAuditId": "ncm.song_download_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.none.001.raw.json",
+      "rawSha256": "f09273b7fae5798efa7a4c798add22404d74d90e0526a2c69ae0565c5400847d",
+      "redactedFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.A.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_download_url_v1.B.none.001",
+      "apiAuditId": "ncm.song_download_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.B.none.001.raw.json",
+      "rawSha256": "0bd045acf9bdba29a71a00eb026b9f26a7dbdecb9525eca97dd7a03201c6a529",
+      "redactedFile": "ncm.song_download_url_v1.ncm.song_download_url_v1.B.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_download_url.A.anon.001",
+      "apiAuditId": "ncm.song_download_url",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_download_url.ncm.song_download_url.A.anon.001.raw.json",
+      "rawSha256": "fb452dbe5a4d92a8659d56ed252d17fedd125b4a53835f62e00a597fce258d41",
+      "redactedFile": "ncm.song_download_url.ncm.song_download_url.A.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_download_url.A.id0.none.neg.001",
+      "apiAuditId": "ncm.song_download_url",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_download_url.ncm.song_download_url.A.id0.none.neg.001.raw.json",
+      "rawSha256": "2b25ea9815e54600d80b117beccbc3587e46f1b090dfcca5ade3191d3776c182",
+      "redactedFile": "ncm.song_download_url.ncm.song_download_url.A.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_download_url.A.none.001",
+      "apiAuditId": "ncm.song_download_url",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_download_url.ncm.song_download_url.A.none.001.raw.json",
+      "rawSha256": "81d6b0b700b4e0fa522fda00605edfb7063ed77b861daf62f03a642bc0e7aef4",
+      "redactedFile": "ncm.song_download_url.ncm.song_download_url.A.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_download_url.B.none.001",
+      "apiAuditId": "ncm.song_download_url",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_download_url.ncm.song_download_url.B.none.001.raw.json",
+      "rawSha256": "00ff7af513bd2172c28a9e3f312ead8fa27d14d2be86067464caea3191b17e78",
+      "redactedFile": "ncm.song_download_url.ncm.song_download_url.B.none.001.redacted.json"
     },
     {
       "caseId": "ncm.song_music_detail.anon.001",
       "apiAuditId": "ncm.song_music_detail",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.song_music_detail.ncm.song_music_detail.anon.001.raw.json",
+      "rawFile": "ncm.song_music_detail.ncm.song_music_detail.anon.001.raw.json",
       "rawSha256": "da03fe8786c96e5e703c9ea7dc2e4e3962018342ae2e25122847a5421c455aeb",
-      "redactedFile": "samples-redacted\\ncm.song_music_detail.ncm.song_music_detail.anon.001.redacted.json"
+      "redactedFile": "ncm.song_music_detail.ncm.song_music_detail.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.song_music_detail.id0.none.neg.001",
       "apiAuditId": "ncm.song_music_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.song_music_detail.ncm.song_music_detail.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.song_music_detail.ncm.song_music_detail.id0.none.neg.001.raw.json",
       "rawSha256": "70b94dfd837f4e2eab65c92c465b264e16d958de4eb9ca833454420a79dfe747",
-      "redactedFile": "samples-redacted\\ncm.song_music_detail.ncm.song_music_detail.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.song_music_detail.ncm.song_music_detail.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.song_music_detail.inv.001",
       "apiAuditId": "ncm.song_music_detail",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.song_music_detail.ncm.song_music_detail.inv.001.raw.json",
+      "rawFile": "ncm.song_music_detail.ncm.song_music_detail.inv.001.raw.json",
       "rawSha256": "f7d556af1540c6eb82082b52cbc00c6583447ae242cbe26ae652c8323bf7e5ea",
-      "redactedFile": "samples-redacted\\ncm.song_music_detail.ncm.song_music_detail.inv.001.redacted.json"
+      "redactedFile": "ncm.song_music_detail.ncm.song_music_detail.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.song_music_detail.none.001",
       "apiAuditId": "ncm.song_music_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.song_music_detail.ncm.song_music_detail.none.001.raw.json",
+      "rawFile": "ncm.song_music_detail.ncm.song_music_detail.none.001.raw.json",
       "rawSha256": "3da3a3e2a8126cf8744a4878c0ea0249e7526988f12e47b1b91d193ffec8e41a",
-      "redactedFile": "samples-redacted\\ncm.song_music_detail.ncm.song_music_detail.none.001.redacted.json"
+      "redactedFile": "ncm.song_music_detail.ncm.song_music_detail.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1_302.A.lossless.none.001",
+      "apiAuditId": "ncm.song_url_v1_302",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1_302.ncm.song_url_v1_302.A.lossless.none.001.raw.json",
+      "rawSha256": "fab64060353685499322d38a6e399f6f7bf41302f3066cf91cf7cf52ab52ffa8",
+      "redactedFile": "ncm.song_url_v1_302.ncm.song_url_v1_302.A.lossless.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1_302.A.standard.none.001",
+      "apiAuditId": "ncm.song_url_v1_302",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1_302.ncm.song_url_v1_302.A.standard.none.001.raw.json",
+      "rawSha256": "8e825b86817e63b9f95f792be62bb3577f9e376a3d6eaa99366d8cd7b6c69e14",
+      "redactedFile": "ncm.song_url_v1_302.ncm.song_url_v1_302.A.standard.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.dolby.anon.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.dolby.anon.001.raw.json",
+      "rawSha256": "e369cc8ae978f2c852a49a56ee433512bd097d66212d6badc29d1c50a86aacb5",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.dolby.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.dolby.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.dolby.none.001.raw.json",
+      "rawSha256": "04606c2aa3ac8238f1ddb940ade9c8b0370761cb62bfe0fa447f60dcd73a8bae",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.dolby.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.exhigh.anon.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.anon.001.raw.json",
+      "rawSha256": "0c9f7cc484eb2c83f2352050425bb75ff239066b63ecdc6ee3305078d23a4d52",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.exhigh.inv.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.inv.001.raw.json",
+      "rawSha256": "6bcb68d8779b28662450407a94073d7d2fd37c6599c9185ad42e4823bbc2b6f5",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.exhigh.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.none.001.raw.json",
+      "rawSha256": "3460d92b702792debaca63d6ec08005652847bb11e9a22893bc3b62fe2fc2b0b",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.exhigh.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.higher.anon.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.higher.anon.001.raw.json",
+      "rawSha256": "9991d679f946628ebfcbe9b54b34aa8f3424242ef526dbeb300911313aadd06f",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.higher.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.higher.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.higher.none.001.raw.json",
+      "rawSha256": "0e586cbbf4c6b6a9d46f5520466f68fc4591ee8a76e4f7808ad531240dd47371",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.higher.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.hires.anon.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.hires.anon.001.raw.json",
+      "rawSha256": "0e2d0f33797ce17ba8722250f35946bb66e6c5c8849c8c160a648c24786fe0a6",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.hires.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.hires.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.hires.none.001.raw.json",
+      "rawSha256": "541fd5e3b0adb5ce02de3a15b4580903ec47b5f4f2f479525273ba248487ef01",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.hires.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.jyeffect.anon.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jyeffect.anon.001.raw.json",
+      "rawSha256": "a8c056728949d149319a34b3dcf5dd86aa739cec15619c766ae1004acb12c8b5",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.jyeffect.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.jyeffect.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jyeffect.none.001.raw.json",
+      "rawSha256": "ff80730be6e2167b77ca63e80ab987035da27f4006266f7c9338e7f018906829",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.jyeffect.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.jymaster.anon.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jymaster.anon.001.raw.json",
+      "rawSha256": "a7f7a282d5105e0657d98098856e39b2a9460a07b82300af9ef695c219bfd6f0",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.jymaster.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.jymaster.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.jymaster.none.001.raw.json",
+      "rawSha256": "061008c1959035fc926415b53d401e85d846957da0ba2f24410dff4f1052845e",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.jymaster.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.lossless.anon.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.anon.001.raw.json",
+      "rawSha256": "8ff0756890c7c34e0980c40acc4757a6a1435b30ff7538ff90c0c7cad870726b",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.lossless.inv.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.inv.001.raw.json",
+      "rawSha256": "5462ba6954da657680ac02a7d5de4d749f11c8c6356716288eada3840ab573db",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.lossless.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.none.001.raw.json",
+      "rawSha256": "35a1524f147008b47148cd2656a880e03ba7bf069c8b0a0c4bd7bfffe00553f9",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.lossless.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.sky.aac.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.aac.none.001.raw.json",
+      "rawSha256": "ae1981c76a11a6f75ced5fba93ae60a5be1bc46336ddca7e189029e1af123ed0",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.aac.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.sky.anon.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.anon.001.raw.json",
+      "rawSha256": "3f9d8bc255614101e92e9ca0650b236bf3b7829421a0a076a880830338aeece8",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.sky.c51.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.c51.none.001.raw.json",
+      "rawSha256": "c1b3a51e1e99557119bc33d835a0ab2d7ce10db31a0030cedb06945857246154",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.c51.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.sky.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.none.001.raw.json",
+      "rawSha256": "e66bbec6cbd1ea486d1f308582d7bfdce5a4b839351903961ae4845d75212bd7",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.sky.ste.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.ste.none.001.raw.json",
+      "rawSha256": "b7cfb8549b382fcfee5d79711d9468048c07d134d8de684a5f201d731932f999",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.sky.ste.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.standard.anon.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.anon.001.raw.json",
+      "rawSha256": "19ad326f4278fc6224978efd717e44d7fbbab82a286cff373815aaa0b97d2fb8",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.standard.id0.none.neg.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.id0.none.neg.001.raw.json",
+      "rawSha256": "256f49ed333df5f72f93b7071f0e32ca47dec1db989a369963760c6a25d1faaf",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.standard.inv.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.inv.001.raw.json",
+      "rawSha256": "84f428d7506e1b7bcf4240b2ba2a8d1ad26a635022cebc81d0682816d8822b05",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.A.standard.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.none.001.raw.json",
+      "rawSha256": "5023c8e5ebae2ef96c4631ee7dc5da9867f8db657ee40a7ea096fa78a9268f55",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.A.standard.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.dolby.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.dolby.none.001.raw.json",
+      "rawSha256": "b7e98dea31b2208fd0d5c51663699235139f6e54dd8a2e704c075f3faff8f549",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.B.dolby.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.exhigh.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.exhigh.none.001.raw.json",
+      "rawSha256": "33ab68e275c7afac02f38b7832ac75280a48b3dc4d11e92a2eedb8344000c7ad",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.B.exhigh.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.higher.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.higher.none.001.raw.json",
+      "rawSha256": "98710c9fbc56538945dc13651addb5bcf548ea22e9f050a8fa6db3bd23d9e2bf",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.B.higher.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.hires.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.hires.none.001.raw.json",
+      "rawSha256": "10430a97af92519001e44ae0e1c1e9a0d51a1615b504d2bbd5213d98ba71f9d3",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.B.hires.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.jyeffect.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.jyeffect.none.001.raw.json",
+      "rawSha256": "19f5648c0404564fc5f1700c49f571b73f8b845588c30d8d3c1daf40d4657b27",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.B.jyeffect.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.jymaster.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.jymaster.none.001.raw.json",
+      "rawSha256": "6f25ba3312625805df868373690785b015f37801a9c99433f6635e318be78611",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.B.jymaster.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.lossless.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.lossless.none.001.raw.json",
+      "rawSha256": "11134100e7ab99f0b12fec825415c48a7a7754ef46d66fde2f7939f041f3b04b",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.B.lossless.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.sky.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.sky.none.001.raw.json",
+      "rawSha256": "1baa7b825ab388b41071444a70df95df1a4a436cf91957c5e684dad69984d010",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.B.sky.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_v1.B.standard.none.001",
+      "apiAuditId": "ncm.song_url_v1",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_v1.ncm.song_url_v1.B.standard.none.001.raw.json",
+      "rawSha256": "e82bf7c9d83b2d604afe515079a6e49fb6efb72dd093519534e0419f58a36ed8",
+      "redactedFile": "ncm.song_url_v1.ncm.song_url_v1.B.standard.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url.A.br128.inv.001",
+      "apiAuditId": "ncm.song_url",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.song_url.ncm.song_url.A.br128.inv.001.raw.json",
+      "rawSha256": "bc8bd1a719a96d212914b0489b0447680ae5a51c98e8011039aba52c3fe2558c",
+      "redactedFile": "ncm.song_url.ncm.song_url.A.br128.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url.A.br320.anon.001",
+      "apiAuditId": "ncm.song_url",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_url.ncm.song_url.A.br320.anon.001.raw.json",
+      "rawSha256": "75101a29bb082f6b5783bc2e03ff7297a5d5ade89ab300cfadb771662af7fcca",
+      "redactedFile": "ncm.song_url.ncm.song_url.A.br320.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url.A.br999.none.001",
+      "apiAuditId": "ncm.song_url",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url.ncm.song_url.A.br999.none.001.raw.json",
+      "rawSha256": "de997ad3554faba19ed3da54644ff16265c847eb90280f9bf2359caa9c31c0cf",
+      "redactedFile": "ncm.song_url.ncm.song_url.A.br999.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url.A.id0.none.neg.001",
+      "apiAuditId": "ncm.song_url",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url.ncm.song_url.A.id0.none.neg.001.raw.json",
+      "rawSha256": "d93e90d0e635ad5725e7410efee7cbec647a1537ea94f478a65a4500df631ecb",
+      "redactedFile": "ncm.song_url.ncm.song_url.A.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url.B.br999.none.001",
+      "apiAuditId": "ncm.song_url",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url.ncm.song_url.B.br999.none.001.raw.json",
+      "rawSha256": "a6d41d0afee868b3a28ea121d3f57e8970211c548db8274cfacc3a7beea8cc65",
+      "redactedFile": "ncm.song_url.ncm.song_url.B.br999.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_album.anon.001",
       "apiAuditId": "ncm.top_album",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.top_album.ncm.top_album.anon.001.raw.json",
+      "rawFile": "ncm.top_album.ncm.top_album.anon.001.raw.json",
       "rawSha256": "03d342b88f3f7c12277554915c5d608a153cd42b53f8e41b77b04871f4d7fd91",
-      "redactedFile": "samples-redacted\\ncm.top_album.ncm.top_album.anon.001.redacted.json"
+      "redactedFile": "ncm.top_album.ncm.top_album.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.top_album.inv.001",
       "apiAuditId": "ncm.top_album",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.top_album.ncm.top_album.inv.001.raw.json",
+      "rawFile": "ncm.top_album.ncm.top_album.inv.001.raw.json",
       "rawSha256": "bac2e51620b01e918f3c385c60ab33439d98429264f1fea8ec6686f934f9e5cd",
-      "redactedFile": "samples-redacted\\ncm.top_album.ncm.top_album.inv.001.redacted.json"
+      "redactedFile": "ncm.top_album.ncm.top_album.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.top_album.limit5.none.001",
       "apiAuditId": "ncm.top_album",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_album.ncm.top_album.limit5.none.001.raw.json",
+      "rawFile": "ncm.top_album.ncm.top_album.limit5.none.001.raw.json",
       "rawSha256": "5857d5c32d9a7c8b76d1e2e0c49163e8f2a9e57e0bf0d774bbadb468b0eb1c16",
-      "redactedFile": "samples-redacted\\ncm.top_album.ncm.top_album.limit5.none.001.redacted.json"
+      "redactedFile": "ncm.top_album.ncm.top_album.limit5.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_album.none.001",
       "apiAuditId": "ncm.top_album",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_album.ncm.top_album.none.001.raw.json",
+      "rawFile": "ncm.top_album.ncm.top_album.none.001.raw.json",
       "rawSha256": "f36d0c19406cb4757823d0f8431956daf599b391a120edd5dc589f3fef9842c6",
-      "redactedFile": "samples-redacted\\ncm.top_album.ncm.top_album.none.001.redacted.json"
+      "redactedFile": "ncm.top_album.ncm.top_album.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_artists.anon.001",
       "apiAuditId": "ncm.top_artists",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.top_artists.ncm.top_artists.anon.001.raw.json",
+      "rawFile": "ncm.top_artists.ncm.top_artists.anon.001.raw.json",
       "rawSha256": "c95914ba2024e2c73fe15f221bdc38127dab996711a83816b5087b25297b7c71",
-      "redactedFile": "samples-redacted\\ncm.top_artists.ncm.top_artists.anon.001.redacted.json"
+      "redactedFile": "ncm.top_artists.ncm.top_artists.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.top_artists.inv.001",
       "apiAuditId": "ncm.top_artists",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.top_artists.ncm.top_artists.inv.001.raw.json",
+      "rawFile": "ncm.top_artists.ncm.top_artists.inv.001.raw.json",
       "rawSha256": "94c9aebe008ad0406a8d00410e7adf811c9607924f00a756e244e2fdd9fe39c6",
-      "redactedFile": "samples-redacted\\ncm.top_artists.ncm.top_artists.inv.001.redacted.json"
+      "redactedFile": "ncm.top_artists.ncm.top_artists.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.top_artists.limit5.none.001",
       "apiAuditId": "ncm.top_artists",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_artists.ncm.top_artists.limit5.none.001.raw.json",
+      "rawFile": "ncm.top_artists.ncm.top_artists.limit5.none.001.raw.json",
       "rawSha256": "7fff6e4283cebd701a4352419a344e336cc52e5ad1b99c2adeedfb37d4b6541c",
-      "redactedFile": "samples-redacted\\ncm.top_artists.ncm.top_artists.limit5.none.001.redacted.json"
+      "redactedFile": "ncm.top_artists.ncm.top_artists.limit5.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_artists.none.001",
       "apiAuditId": "ncm.top_artists",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_artists.ncm.top_artists.none.001.raw.json",
+      "rawFile": "ncm.top_artists.ncm.top_artists.none.001.raw.json",
       "rawSha256": "48e20174192354ae27ddfaf61792d512d9e1a46c8bb00d606463f8b23ec22df3",
-      "redactedFile": "samples-redacted\\ncm.top_artists.ncm.top_artists.none.001.redacted.json"
+      "redactedFile": "ncm.top_artists.ncm.top_artists.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_list.id.anon.001",
       "apiAuditId": "ncm.top_list",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.top_list.ncm.top_list.id.anon.001.raw.json",
+      "rawFile": "ncm.top_list.ncm.top_list.id.anon.001.raw.json",
       "rawSha256": "bf8a29ae05d925e752327ebc3cdb8d03f88a10f9fbf64790ff9d3bc4b72df4ab",
-      "redactedFile": "samples-redacted\\ncm.top_list.ncm.top_list.id.anon.001.redacted.json"
+      "redactedFile": "ncm.top_list.ncm.top_list.id.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.top_list.id.inv.001",
       "apiAuditId": "ncm.top_list",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.top_list.ncm.top_list.id.inv.001.raw.json",
+      "rawFile": "ncm.top_list.ncm.top_list.id.inv.001.raw.json",
       "rawSha256": "217d738a801c9dbcf04613201fb747ebb664445b89988f6f4478efa0190fe295",
-      "redactedFile": "samples-redacted\\ncm.top_list.ncm.top_list.id.inv.001.redacted.json"
+      "redactedFile": "ncm.top_list.ncm.top_list.id.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.top_list.id.none.001",
       "apiAuditId": "ncm.top_list",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_list.ncm.top_list.id.none.001.raw.json",
+      "rawFile": "ncm.top_list.ncm.top_list.id.none.001.raw.json",
       "rawSha256": "91db62f09bb98b81958160fbee8099e792972fae628f2cec0aa1064bb6ad7f7f",
-      "redactedFile": "samples-redacted\\ncm.top_list.ncm.top_list.id.none.001.redacted.json"
+      "redactedFile": "ncm.top_list.ncm.top_list.id.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_list.id.none.002",
       "apiAuditId": "ncm.top_list",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_list.ncm.top_list.id.none.002.raw.json",
+      "rawFile": "ncm.top_list.ncm.top_list.id.none.002.raw.json",
       "rawSha256": "cd26958a521e56ab21a028ad5cd74b652243c308c060829d2dbf0c7fd745fb1d",
-      "redactedFile": "samples-redacted\\ncm.top_list.ncm.top_list.id.none.002.redacted.json"
+      "redactedFile": "ncm.top_list.ncm.top_list.id.none.002.redacted.json"
     },
     {
       "caseId": "ncm.top_list.id0.none.neg.001",
       "apiAuditId": "ncm.top_list",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_list.ncm.top_list.id0.none.neg.001.raw.json",
+      "rawFile": "ncm.top_list.ncm.top_list.id0.none.neg.001.raw.json",
       "rawSha256": "4020fa12ad1a8729272778f1ab910e1085ec0e615b2f5ac0b70c1980b7457b89",
-      "redactedFile": "samples-redacted\\ncm.top_list.ncm.top_list.id0.none.neg.001.redacted.json"
+      "redactedFile": "ncm.top_list.ncm.top_list.id0.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.top_list.idx.none.neg.001",
       "apiAuditId": "ncm.top_list",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_list.ncm.top_list.idx.none.neg.001.raw.json",
+      "rawFile": "ncm.top_list.ncm.top_list.idx.none.neg.001.raw.json",
       "rawSha256": "8aa3967206ba1c3659d652a67f7ce2b928022fd0f71249841178d630a7df9562",
-      "redactedFile": "samples-redacted\\ncm.top_list.ncm.top_list.idx.none.neg.001.redacted.json"
+      "redactedFile": "ncm.top_list.ncm.top_list.idx.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.top_mv.anon.001",
       "apiAuditId": "ncm.top_mv",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.top_mv.ncm.top_mv.anon.001.raw.json",
+      "rawFile": "ncm.top_mv.ncm.top_mv.anon.001.raw.json",
       "rawSha256": "a5fef578b7a1da279871ba13c11babd3cf48b38b7d36026b189a8231eb5e6125",
-      "redactedFile": "samples-redacted\\ncm.top_mv.ncm.top_mv.anon.001.redacted.json"
+      "redactedFile": "ncm.top_mv.ncm.top_mv.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.top_mv.inv.001",
       "apiAuditId": "ncm.top_mv",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.top_mv.ncm.top_mv.inv.001.raw.json",
+      "rawFile": "ncm.top_mv.ncm.top_mv.inv.001.raw.json",
       "rawSha256": "50af6ef403125ced895c2fceb8dd9f524126c0b9198148915799b2a34fca911a",
-      "redactedFile": "samples-redacted\\ncm.top_mv.ncm.top_mv.inv.001.redacted.json"
+      "redactedFile": "ncm.top_mv.ncm.top_mv.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.top_mv.limit5.none.001",
       "apiAuditId": "ncm.top_mv",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_mv.ncm.top_mv.limit5.none.001.raw.json",
+      "rawFile": "ncm.top_mv.ncm.top_mv.limit5.none.001.raw.json",
       "rawSha256": "7fc9135f94e470a595318be9a8c0264dcf6413d90dc770512cad40710cf75ae7",
-      "redactedFile": "samples-redacted\\ncm.top_mv.ncm.top_mv.limit5.none.001.redacted.json"
+      "redactedFile": "ncm.top_mv.ncm.top_mv.limit5.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_mv.none.001",
       "apiAuditId": "ncm.top_mv",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_mv.ncm.top_mv.none.001.raw.json",
+      "rawFile": "ncm.top_mv.ncm.top_mv.none.001.raw.json",
       "rawSha256": "10b2e7367446bf0028bbcba4252126504d4a2814a9049404ce8f6b4f2fa38850",
-      "redactedFile": "samples-redacted\\ncm.top_mv.ncm.top_mv.none.001.redacted.json"
+      "redactedFile": "ncm.top_mv.ncm.top_mv.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_playlist_highquality.anon.001",
       "apiAuditId": "ncm.top_playlist_highquality",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.top_playlist_highquality.ncm.top_playlist_highquality.anon.001.raw.json",
+      "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.anon.001.raw.json",
       "rawSha256": "72bd84de78c9286896ed2014621962ddd68f2f561476aee442b588cbcaa42e5f",
-      "redactedFile": "samples-redacted\\ncm.top_playlist_highquality.ncm.top_playlist_highquality.anon.001.redacted.json"
+      "redactedFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.top_playlist_highquality.catzh.none.001",
       "apiAuditId": "ncm.top_playlist_highquality",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_playlist_highquality.ncm.top_playlist_highquality.catzh.none.001.raw.json",
+      "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.catzh.none.001.raw.json",
       "rawSha256": "df303605987dec54ac67b44465c3bc0c6adf3c110bef197ec913b6d31102471f",
-      "redactedFile": "samples-redacted\\ncm.top_playlist_highquality.ncm.top_playlist_highquality.catzh.none.001.redacted.json"
+      "redactedFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.catzh.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_playlist_highquality.inv.001",
       "apiAuditId": "ncm.top_playlist_highquality",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.top_playlist_highquality.ncm.top_playlist_highquality.inv.001.raw.json",
+      "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.inv.001.raw.json",
       "rawSha256": "4eefb47ee6500c4b76abc793b5e787486aedad36e77dea21c2141944d5b82143",
-      "redactedFile": "samples-redacted\\ncm.top_playlist_highquality.ncm.top_playlist_highquality.inv.001.redacted.json"
+      "redactedFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.top_playlist_highquality.none.001",
       "apiAuditId": "ncm.top_playlist_highquality",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_playlist_highquality.ncm.top_playlist_highquality.none.001.raw.json",
+      "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.none.001.raw.json",
       "rawSha256": "81d064c60fff13436b11a16a376caacabba4d8b12ecbd704ed91bfa1adc5fb7f",
-      "redactedFile": "samples-redacted\\ncm.top_playlist_highquality.ncm.top_playlist_highquality.none.001.redacted.json"
+      "redactedFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_playlist.anon.001",
       "apiAuditId": "ncm.top_playlist",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.top_playlist.ncm.top_playlist.anon.001.raw.json",
+      "rawFile": "ncm.top_playlist.ncm.top_playlist.anon.001.raw.json",
       "rawSha256": "809a9bf1758ce785b1263a3823807b94070fa475b5e2933ca6ca83d7e9971ee7",
-      "redactedFile": "samples-redacted\\ncm.top_playlist.ncm.top_playlist.anon.001.redacted.json"
+      "redactedFile": "ncm.top_playlist.ncm.top_playlist.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.top_playlist.catall.hot.none.001",
       "apiAuditId": "ncm.top_playlist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_playlist.ncm.top_playlist.catall.hot.none.001.raw.json",
+      "rawFile": "ncm.top_playlist.ncm.top_playlist.catall.hot.none.001.raw.json",
       "rawSha256": "bf23aaf3971452bca34925884d201966ed5938cae222b2e96f78aeeaf60d35a1",
-      "redactedFile": "samples-redacted\\ncm.top_playlist.ncm.top_playlist.catall.hot.none.001.redacted.json"
+      "redactedFile": "ncm.top_playlist.ncm.top_playlist.catall.hot.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_playlist.catbad.none.neg.001",
       "apiAuditId": "ncm.top_playlist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_playlist.ncm.top_playlist.catbad.none.neg.001.raw.json",
+      "rawFile": "ncm.top_playlist.ncm.top_playlist.catbad.none.neg.001.raw.json",
       "rawSha256": "17048feffdbb54576bcdaeb7bf98bdd1f6e426ab36736c674832c45d0fb939c9",
-      "redactedFile": "samples-redacted\\ncm.top_playlist.ncm.top_playlist.catbad.none.neg.001.redacted.json"
+      "redactedFile": "ncm.top_playlist.ncm.top_playlist.catbad.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.top_playlist.catrock.none.001",
       "apiAuditId": "ncm.top_playlist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_playlist.ncm.top_playlist.catrock.none.001.raw.json",
+      "rawFile": "ncm.top_playlist.ncm.top_playlist.catrock.none.001.raw.json",
       "rawSha256": "17f0e99770459b89a84a30e5ef1beca57c3e24c442ff22edcd104627dad386b6",
-      "redactedFile": "samples-redacted\\ncm.top_playlist.ncm.top_playlist.catrock.none.001.redacted.json"
+      "redactedFile": "ncm.top_playlist.ncm.top_playlist.catrock.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_playlist.inv.001",
       "apiAuditId": "ncm.top_playlist",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.top_playlist.ncm.top_playlist.inv.001.raw.json",
+      "rawFile": "ncm.top_playlist.ncm.top_playlist.inv.001.raw.json",
       "rawSha256": "74f9f64be9cbdb375d321c25a3d23bbb2668d57abc7a0c58e571d1f2957b2907",
-      "redactedFile": "samples-redacted\\ncm.top_playlist.ncm.top_playlist.inv.001.redacted.json"
+      "redactedFile": "ncm.top_playlist.ncm.top_playlist.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.top_playlist.ordernew.none.001",
       "apiAuditId": "ncm.top_playlist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_playlist.ncm.top_playlist.ordernew.none.001.raw.json",
+      "rawFile": "ncm.top_playlist.ncm.top_playlist.ordernew.none.001.raw.json",
       "rawSha256": "2193ffd01d0b5f5080158ed1d2fd0d3628c8f5634eec19cf04093125da73496f",
-      "redactedFile": "samples-redacted\\ncm.top_playlist.ncm.top_playlist.ordernew.none.001.redacted.json"
+      "redactedFile": "ncm.top_playlist.ncm.top_playlist.ordernew.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_song.anon.001",
       "apiAuditId": "ncm.top_song",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.top_song.ncm.top_song.anon.001.raw.json",
+      "rawFile": "ncm.top_song.ncm.top_song.anon.001.raw.json",
       "rawSha256": "2fa52567d1a9d714b2acacf3fdf1f6872fbf41cacfebfb90018990266c1e55bd",
-      "redactedFile": "samples-redacted\\ncm.top_song.ncm.top_song.anon.001.redacted.json"
+      "redactedFile": "ncm.top_song.ncm.top_song.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.top_song.inv.001",
       "apiAuditId": "ncm.top_song",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.top_song.ncm.top_song.inv.001.raw.json",
+      "rawFile": "ncm.top_song.ncm.top_song.inv.001.raw.json",
       "rawSha256": "c11b431765e9ac3c351184ab71f38a2a82bc104ef9d28db3106864eed97f8bbe",
-      "redactedFile": "samples-redacted\\ncm.top_song.ncm.top_song.inv.001.redacted.json"
+      "redactedFile": "ncm.top_song.ncm.top_song.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.top_song.type0.none.001",
       "apiAuditId": "ncm.top_song",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_song.ncm.top_song.type0.none.001.raw.json",
+      "rawFile": "ncm.top_song.ncm.top_song.type0.none.001.raw.json",
       "rawSha256": "1e09baf6363a22fcd43d520bce1dd0882512da510151b5f2ec3972a45f3b1fa2",
-      "redactedFile": "samples-redacted\\ncm.top_song.ncm.top_song.type0.none.001.redacted.json"
+      "redactedFile": "ncm.top_song.ncm.top_song.type0.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_song.type7.none.001",
       "apiAuditId": "ncm.top_song",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_song.ncm.top_song.type7.none.001.raw.json",
+      "rawFile": "ncm.top_song.ncm.top_song.type7.none.001.raw.json",
       "rawSha256": "001bf241e21e569570b60faf2db4b1577a791c3145c5fc11672cf2133adb2559",
-      "redactedFile": "samples-redacted\\ncm.top_song.ncm.top_song.type7.none.001.redacted.json"
+      "redactedFile": "ncm.top_song.ncm.top_song.type7.none.001.redacted.json"
     },
     {
       "caseId": "ncm.top_song.type999.none.neg.001",
       "apiAuditId": "ncm.top_song",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.top_song.ncm.top_song.type999.none.neg.001.raw.json",
+      "rawFile": "ncm.top_song.ncm.top_song.type999.none.neg.001.raw.json",
       "rawSha256": "cc92c12ce8880482616ceb89f4144135957bdcaa3f7e7dbb380a2bc9f7d36002",
-      "redactedFile": "samples-redacted\\ncm.top_song.ncm.top_song.type999.none.neg.001.redacted.json"
+      "redactedFile": "ncm.top_song.ncm.top_song.type999.none.neg.001.redacted.json"
     },
     {
       "caseId": "ncm.toplist.anon.001",
       "apiAuditId": "ncm.toplist",
       "auth": "AUTH_ANON",
-      "rawFile": "raw\\ncm.toplist.ncm.toplist.anon.001.raw.json",
+      "rawFile": "ncm.toplist.ncm.toplist.anon.001.raw.json",
       "rawSha256": "8a3f6f3c40d4635cb423331c8033b37a1e7f24ed85a5ae508624c21cf85800f5",
-      "redactedFile": "samples-redacted\\ncm.toplist.ncm.toplist.anon.001.redacted.json"
+      "redactedFile": "ncm.toplist.ncm.toplist.anon.001.redacted.json"
     },
     {
       "caseId": "ncm.toplist.inv.001",
       "apiAuditId": "ncm.toplist",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.toplist.ncm.toplist.inv.001.raw.json",
+      "rawFile": "ncm.toplist.ncm.toplist.inv.001.raw.json",
       "rawSha256": "8e846937eda9d96d4f1dce33e9b98de718a8adfafc8725c3b5e89a4cd9a0ad97",
-      "redactedFile": "samples-redacted\\ncm.toplist.ncm.toplist.inv.001.redacted.json"
+      "redactedFile": "ncm.toplist.ncm.toplist.inv.001.redacted.json"
     },
     {
       "caseId": "ncm.toplist.none.001",
       "apiAuditId": "ncm.toplist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.toplist.ncm.toplist.none.001.raw.json",
+      "rawFile": "ncm.toplist.ncm.toplist.none.001.raw.json",
       "rawSha256": "67a05d9fba9a2288948e19fbfe77ee9c8be6499779be341d4436672995e4ec03",
-      "redactedFile": "samples-redacted\\ncm.toplist.ncm.toplist.none.001.redacted.json"
+      "redactedFile": "ncm.toplist.ncm.toplist.none.001.redacted.json"
     },
     {
       "caseId": "ncm.toplist.none.002",
       "apiAuditId": "ncm.toplist",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.toplist.ncm.toplist.none.002.raw.json",
+      "rawFile": "ncm.toplist.ncm.toplist.none.002.raw.json",
       "rawSha256": "2b971a05b6420bad8064ef8258aec258e8f8bc239a6a594ffd70521036c5834e",
-      "redactedFile": "samples-redacted\\ncm.toplist.ncm.toplist.none.002.redacted.json"
+      "redactedFile": "ncm.toplist.ncm.toplist.none.002.redacted.json"
     },
     {
       "caseId": "ncm.user_account.inv.expired.001",
       "apiAuditId": "ncm.user_account",
       "auth": "AUTH_INVALID_EXPIRED",
-      "rawFile": "raw\\ncm.user_account.ncm.user_account.inv.expired.001.raw.json",
+      "rawFile": "ncm.user_account.ncm.user_account.inv.expired.001.raw.json",
       "rawSha256": "e651633f0563f88217f2594c4d99d83d612b4fc078ed43273f7ad4290ad5a1ab",
-      "redactedFile": "samples-redacted\\ncm.user_account.ncm.user_account.inv.expired.001.redacted.json"
+      "redactedFile": "ncm.user_account.ncm.user_account.inv.expired.001.redacted.json"
     },
     {
       "caseId": "ncm.user_account.inv.truncated.001",
       "apiAuditId": "ncm.user_account",
       "auth": "AUTH_INVALID_TRUNCATED",
-      "rawFile": "raw\\ncm.user_account.ncm.user_account.inv.truncated.001.raw.json",
+      "rawFile": "ncm.user_account.ncm.user_account.inv.truncated.001.raw.json",
       "rawSha256": "45b0148abf8ac35e69c938bf3493338307e59ea6462b0d35d5d6454b86d71215",
-      "redactedFile": "samples-redacted\\ncm.user_account.ncm.user_account.inv.truncated.001.redacted.json"
+      "redactedFile": "ncm.user_account.ncm.user_account.inv.truncated.001.redacted.json"
     },
     {
       "caseId": "ncm.user_account.none.min.001",
       "apiAuditId": "ncm.user_account",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.user_account.ncm.user_account.none.min.001.raw.json",
+      "rawFile": "ncm.user_account.ncm.user_account.none.min.001.raw.json",
       "rawSha256": "43609da6734433168d19515f0026e774f63bba2f2a66a0298979bade5a5d2a20",
-      "redactedFile": "samples-redacted\\ncm.user_account.ncm.user_account.none.min.001.redacted.json"
+      "redactedFile": "ncm.user_account.ncm.user_account.none.min.001.redacted.json"
     },
     {
       "caseId": "ncm.user_account.none.min.002",
       "apiAuditId": "ncm.user_account",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.user_account.ncm.user_account.none.min.002.raw.json",
+      "rawFile": "ncm.user_account.ncm.user_account.none.min.002.raw.json",
       "rawSha256": "21b1e1f9556fbbe359810b5cd6b5ee48469733832dd33a832ef5f0245f9a02d1",
-      "redactedFile": "samples-redacted\\ncm.user_account.ncm.user_account.none.min.002.redacted.json"
+      "redactedFile": "ncm.user_account.ncm.user_account.none.min.002.redacted.json"
     },
     {
       "caseId": "ncm.user_account.none.min.003",
       "apiAuditId": "ncm.user_account",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.user_account.ncm.user_account.none.min.003.raw.json",
+      "rawFile": "ncm.user_account.ncm.user_account.none.min.003.raw.json",
       "rawSha256": "d8e1813291f7e3f80976db3c487cee323b41ac670e5105aa987eb182989ef6f3",
-      "redactedFile": "samples-redacted\\ncm.user_account.ncm.user_account.none.min.003.redacted.json"
+      "redactedFile": "ncm.user_account.ncm.user_account.none.min.003.redacted.json"
     },
     {
       "caseId": "ncm.user_detail.none.neg.missing-uid.001",
       "apiAuditId": "ncm.user_detail",
       "auth": "AUTH_NONE",
-      "rawFile": "raw\\ncm.user_detail.ncm.user_detail.none.neg.missing-uid.001.raw.json",
+      "rawFile": "ncm.user_detail.ncm.user_detail.none.neg.missing-uid.001.raw.json",
       "rawSha256": "d5f4ed3fbe5bd853dbdb69cfb64dd67c6e5226f88e717820378bd8c3bd3046e9",
-      "redactedFile": "samples-redacted\\ncm.user_detail.ncm.user_detail.none.neg.missing-uid.001.redacted.json"
+      "redactedFile": "ncm.user_detail.ncm.user_detail.none.neg.missing-uid.001.redacted.json"
     }
   ]
 }

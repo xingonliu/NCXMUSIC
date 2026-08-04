@@ -35,53 +35,1876 @@
       {
         "caseId": "ncm.banner.type0.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 154,
+        "error": null,
+        "sampleHash": "e63dd5b301a6c460c7b39ff42b3b3630e22093bbba0cfa361c224ebc14e616d8",
+        "rawFile": "ncm.banner.ncm.banner.type0.anon.001.raw.json"
       },
       {
         "caseId": "ncm.banner.type0.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 117,
+        "error": null,
+        "sampleHash": "1b1859aa94261264c512e177966fd58ae54f0ace300f8bafd22d43abc4c1cd53",
+        "rawFile": "ncm.banner.ncm.banner.type0.inv.001.raw.json"
       },
       {
         "caseId": "ncm.banner.type0.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 106,
+        "error": null,
+        "sampleHash": "0c079a639675c804ff4a0603db746dfd7dde8f90cd2b97ad597cd8caa04679d4",
+        "rawFile": "ncm.banner.ncm.banner.type0.none.001.raw.json"
       },
       {
         "caseId": "ncm.banner.type2.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 99,
+        "error": null,
+        "sampleHash": "f7c721cbdb256cb3b823afaf23b82000dbb1583bcdda4600b7341d981a22370f",
+        "rawFile": "ncm.banner.ncm.banner.type2.none.001.raw.json"
       },
       {
         "caseId": "ncm.banner.type3.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 123,
+        "error": null,
+        "sampleHash": "0a8cd8c00e89da4179e428fbfb5418f14c5f9ad9c90f3395a9503cf836b8d37f",
+        "rawFile": "ncm.banner.ncm.banner.type3.none.001.raw.json"
       },
       {
         "caseId": "ncm.banner.type999.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 101,
+        "error": null,
+        "sampleHash": "5eb89542289f99deb0b4e5f11ffc0111fad548dafcf760cbc6809898cd99c8d6",
+        "rawFile": "ncm.banner.ncm.banner.type999.none.neg.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "banners[].adDispatchJson",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].adid",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].adLocation",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].adSource",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].adurlV2",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].alg",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "banner-feature-1717750403848278"
+    },
+    {
+      "jsonPath": "banners[].bannerBizType",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "force_banner"
+    },
+    {
+      "jsonPath": "banners[].bannerId",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "1717750403848278"
+    },
+    {
+      "jsonPath": "banners[].bigImageUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type0.anon.001",
+      "lastSeenCase": "ncm.banner.type999.none.neg.001",
+      "example": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/8198351405"
+    },
+    {
+      "jsonPath": "banners[].dynamicVideoData",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].encodeId",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].event",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].exclusive",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "banners[].extMonitor",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].extMonitorInfo",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].imageUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type0.anon.001",
+      "lastSeenCase": "ncm.banner.type999.none.neg.001",
+      "example": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/8198719490"
+    },
+    {
+      "jsonPath": "banners[].logContext",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].mainTitle",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].monitorBlackList",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].monitorClick",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].monitorClickList",
+      "rawType": "array<unknown>",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 6,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "banners[].monitorImpress",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].monitorImpressList",
+      "rawType": "array<unknown>",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 6,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "banners[].monitorType",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].pic",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "http://p1.music.126.net/ah0tWohGfH48V9HJWr3ziQ==/10995116966"
+    },
+    {
+      "jsonPath": "banners[].pid",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].program",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].requestId",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "banners[].s_ctrp",
+      "rawType": "string",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type0.anon.001",
+      "lastSeenCase": "ncm.banner.type999.none.neg.001",
+      "example": "linkPlatform$cc$pc_banner_op_channel$bpo$$rt$nonstandard$pc$"
+    },
+    {
+      "jsonPath": "banners[].scm",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "1.music-homepage.homepage_banner_force.banner.9432964.147193"
+    },
+    {
+      "jsonPath": "banners[].showAdTag",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "banners[].showContext",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].song",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "banners[].song.al.id",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "370354921"
+    },
+    {
+      "jsonPath": "banners[].song.al.name",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "明日世界ACT I"
+    },
+    {
+      "jsonPath": "banners[].song.al.pic",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "109951173557997840"
+    },
+    {
+      "jsonPath": "banners[].song.al.pic_str",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "109951173557997835"
+    },
+    {
+      "jsonPath": "banners[].song.al.picUrl",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "http://p3.music.126.net/wlpke49BdPJzaQI7cPHl-Q==/10995117355"
+    },
+    {
+      "jsonPath": "banners[].song.al.tns",
+      "rawType": "array<unknown>",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 2,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "banners[].song.alg",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "banner-feature-4888340"
+    },
+    {
+      "jsonPath": "banners[].song.alia",
+      "rawType": "array<unknown>",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 2,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "banners[].song.ar[].alias",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "banners[].song.ar[].id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "5538"
+    },
+    {
+      "jsonPath": "banners[].song.ar[].name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "汪苏泷"
+    },
+    {
+      "jsonPath": "banners[].song.ar[].tns",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "banners[].song.cd",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "01"
+    },
+    {
+      "jsonPath": "banners[].song.cf",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "banners[].song.copyright",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.cp",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "729013"
+    },
+    {
+      "jsonPath": "banners[].song.djId",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.dt",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "248240"
+    },
+    {
+      "jsonPath": "banners[].song.fee",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "8"
+    },
+    {
+      "jsonPath": "banners[].song.ftype",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.h.br",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "320000"
+    },
+    {
+      "jsonPath": "banners[].song.h.fid",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.h.size",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "9932205"
+    },
+    {
+      "jsonPath": "banners[].song.h.sr",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "48000"
+    },
+    {
+      "jsonPath": "banners[].song.h.vd",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "-52316"
+    },
+    {
+      "jsonPath": "banners[].song.hr.br",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "2831152"
+    },
+    {
+      "jsonPath": "banners[].song.hr.fid",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.hr.size",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "87855505"
+    },
+    {
+      "jsonPath": "banners[].song.hr.sr",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "96000"
+    },
+    {
+      "jsonPath": "banners[].song.hr.vd",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "-52303"
+    },
+    {
+      "jsonPath": "banners[].song.id",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "3369666014"
+    },
+    {
+      "jsonPath": "banners[].song.l.br",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "128000"
+    },
+    {
+      "jsonPath": "banners[].song.l.fid",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.l.size",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "3972909"
+    },
+    {
+      "jsonPath": "banners[].song.l.sr",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "48000"
+    },
+    {
+      "jsonPath": "banners[].song.l.vd",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "-48258"
+    },
+    {
+      "jsonPath": "banners[].song.m.br",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "192000"
+    },
+    {
+      "jsonPath": "banners[].song.m.fid",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.m.size",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "5959341"
+    },
+    {
+      "jsonPath": "banners[].song.m.sr",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "48000"
+    },
+    {
+      "jsonPath": "banners[].song.m.vd",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "-49776"
+    },
+    {
+      "jsonPath": "banners[].song.mark",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "17716748288"
+    },
+    {
+      "jsonPath": "banners[].song.mst",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "9"
+    },
+    {
+      "jsonPath": "banners[].song.mv",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "34779825"
+    },
+    {
+      "jsonPath": "banners[].song.name",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "写故事的人"
+    },
+    {
+      "jsonPath": "banners[].song.no",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "banners[].song.originCoverType",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "banners[].song.pop",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "100"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.chargeInfoList[].chargeType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.chargeInfoList[].rate",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "128000"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.code",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.cp",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.cs",
+      "rawType": "boolean",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.dl",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.dlLevel",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "none"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.downloadMaxbr",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "999000"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.downloadMaxBrLevel",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "jymaster"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.fee",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "8"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.fl",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "320000"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.flag",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "1544196"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.flLevel",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "exhigh"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.freeTrialPrivilege.resConsumable",
+      "rawType": "boolean",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.freeTrialPrivilege.userConsumable",
+      "rawType": "boolean",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.id",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "3369666014"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.maxbr",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "999000"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.maxBrLevel",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "jymaster"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.payed",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.pl",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "320000"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.playMaxbr",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "999000"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.playMaxBrLevel",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "jymaster"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.plLevel",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "exhigh"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.preSell",
+      "rawType": "boolean",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.rightSource",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.sp",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "7"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.st",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.subp",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "banners[].song.privilege.toast",
+      "rawType": "boolean",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "banners[].song.pst",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.publishTime",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "1773331200000"
+    },
+    {
+      "jsonPath": "banners[].song.resourceState",
+      "rawType": "boolean",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "banners[].song.rt",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "banners[].song.rtUrls",
+      "rawType": "array<unknown>",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 2,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "banners[].song.rtype",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.s_id",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.single",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.sq.br",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "936784"
+    },
+    {
+      "jsonPath": "banners[].song.sq.fid",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.sq.size",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "29073060"
+    },
+    {
+      "jsonPath": "banners[].song.sq.sr",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "48000"
+    },
+    {
+      "jsonPath": "banners[].song.sq.vd",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "-52299"
+    },
+    {
+      "jsonPath": "banners[].song.st",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.t",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].song.v",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "52"
+    },
+    {
+      "jsonPath": "banners[].song.version",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type3.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "18"
+    },
+    {
+      "jsonPath": "banners[].targetId",
+      "rawType": "number",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type0.anon.001",
+      "lastSeenCase": "ncm.banner.type999.none.neg.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "banners[].targetType",
+      "rawType": "number",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type0.anon.001",
+      "lastSeenCase": "ncm.banner.type999.none.neg.001",
+      "example": "3000"
+    },
+    {
+      "jsonPath": "banners[].titleColor",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type3.none.001",
+      "example": "blue"
+    },
+    {
+      "jsonPath": "banners[].typeTitle",
+      "rawType": "string",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type0.anon.001",
+      "lastSeenCase": "ncm.banner.type999.none.neg.001",
+      "example": "活动"
+    },
+    {
+      "jsonPath": "banners[].url",
+      "rawType": "union<string|null>",
+      "presence": 18,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type0.anon.001",
+      "lastSeenCase": "ncm.banner.type999.none.neg.001",
+      "example": "https://y.music.163.com/g/yida/act/kissoflife#hash=47d74ce1b"
+    },
+    {
+      "jsonPath": "banners[].video",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type2.none.001",
+      "lastSeenCase": "ncm.banner.type2.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type0.anon.001",
+      "lastSeenCase": "ncm.banner.type999.none.neg.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "trp.rules[]",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.banner.type0.anon.001",
+      "lastSeenCase": "ncm.banner.type999.none.neg.001",
+      "example": "BANNER_PC_V2::pc_banner_op_channel_1::linkPlatform$cc$pc_ban"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.banner.type0.anon.001",
+      "sampleHash": "e63dd5b301a6c460c7b39ff42b3b3630e22093bbba0cfa361c224ebc14e616d8",
+      "rawFile": "ncm.banner.ncm.banner.type0.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.banner.type0.inv.001",
+      "sampleHash": "1b1859aa94261264c512e177966fd58ae54f0ace300f8bafd22d43abc4c1cd53",
+      "rawFile": "ncm.banner.ncm.banner.type0.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.banner.type0.none.001",
+      "sampleHash": "0c079a639675c804ff4a0603db746dfd7dde8f90cd2b97ad597cd8caa04679d4",
+      "rawFile": "ncm.banner.ncm.banner.type0.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.banner.type2.none.001",
+      "sampleHash": "f7c721cbdb256cb3b823afaf23b82000dbb1583bcdda4600b7341d981a22370f",
+      "rawFile": "ncm.banner.ncm.banner.type2.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.banner.type3.none.001",
+      "sampleHash": "0a8cd8c00e89da4179e428fbfb5418f14c5f9ad9c90f3395a9503cf836b8d37f",
+      "rawFile": "ncm.banner.ncm.banner.type3.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.banner.type999.none.neg.001",
+      "sampleHash": "5eb89542289f99deb0b4e5f11ffc0111fad548dafcf760cbc6809898cd99c8d6",
+      "rawFile": "ncm.banner.ncm.banner.type999.none.neg.001.raw.json"
+    }
+  ]
 }

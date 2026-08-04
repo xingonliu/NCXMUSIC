@@ -93,12 +93,122 @@
 
 ## 14. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补）
-- 说明：见 §14 运行记录与字段表
+- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
 | ncm.top_playlist_highquality.anon.001 | AUTH_ANON | - | 200 | 144 |  |
 | ncm.top_playlist_highquality.catzh.none.001 | AUTH_NONE | - | 200 | 142 |  |
 | ncm.top_playlist_highquality.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 136 |  |
 | ncm.top_playlist_highquality.none.001 | AUTH_NONE | - | 200 | 137 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `200` |
+| `lasttime` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1638864996000` |
+| `more` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `true` |
+| `playlists[].adType` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].anonimous` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `playlists[].cloudTrackCount` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].commentCount` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `281` |
+| `playlists[].commentThreadId` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `A_PL_0_6666112560` |
+| `playlists[].copywriter` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `playlists[].coverImgId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951165813403260` |
+| `playlists[].coverImgId_str` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951165813403264` |
+| `playlists[].coverImgUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `http://p4.music.126.net/SA6bW1UlPP04rFB2` |
+| `playlists[].coverStatus` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `3` |
+| `playlists[].createTime` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1616028342548` |
+| `playlists[].creator.accountStatus` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].creator.anchor` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `true` |
+| `playlists[].creator.authenticationTypes` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `528448` |
+| `playlists[].creator.authority` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].creator.authStatus` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].creator.avatarDetail.identityIconUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `https://p5.music.126.net/obj/wo3DlcOGw6D` |
+| `playlists[].creator.avatarDetail.identityLevel` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `3` |
+| `playlists[].creator.avatarDetail.userType` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `200` |
+| `playlists[].creator.avatarImgId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951166482035730` |
+| `playlists[].creator.avatarImgId_str` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951166482035726` |
+| `playlists[].creator.avatarImgIdStr` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951166482035726` |
+| `playlists[].creator.avatarUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `http://p1.music.126.net/Ucwr8nSWgsZemlwR` |
+| `playlists[].creator.backgroundImgId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951165424649820` |
+| `playlists[].creator.backgroundImgIdStr` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951165424649829` |
+| `playlists[].creator.backgroundUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `http://p1.music.126.net/PHPJLipW-QACxLrA` |
+| `playlists[].creator.birthday` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `878313600000` |
+| `playlists[].creator.city` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1007700` |
+| `playlists[].creator.defaultAvatar` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `playlists[].creator.description` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `playlists[].creator.detailDescription` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `playlists[].creator.djStatus` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `10` |
+| `playlists[].creator.experts` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `playlists[].creator.expertTags[]` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `英伦` |
+| `playlists[].creator.followed` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `playlists[].creator.gender` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1` |
+| `playlists[].creator.mutual` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `playlists[].creator.nickname` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `十三逆旅Corbin` |
+| `playlists[].creator.province` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1000000` |
+| `playlists[].creator.remarkName` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `playlists[].creator.signature` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `听不尽的摇滚，读不完的诗。
+` |
+| `playlists[].creator.userId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `341030416` |
+| `playlists[].creator.userType` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `200` |
+| `playlists[].creator.vipType` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `11` |
+| `playlists[].description` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `可爱的摇滚是怎么样的呢？
+编曲“妙思清奇”，听感极具丰富，上头洗脑不按常理出牌，` |
+| `playlists[].highQuality` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `true` |
+| `playlists[].id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `6666112560` |
+| `playlists[].name` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `可爱摇滚｜一剂抵挡春困的上好良药` |
+| `playlists[].newImported` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `playlists[].ordered` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `true` |
+| `playlists[].playCount` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `6792089` |
+| `playlists[].privacy` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].recommendInfo` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `playlists[].recommendText` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `playlists[].shareCount` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `3002` |
+| `playlists[].socialPlaylistCover` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `playlists[].specialType` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].status` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].subscribed` | union<boolean|null> | 12 | 9 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `playlists[].subscribedCount` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `36411` |
+| `playlists[].subscribers[].accountStatus` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].subscribers[].anchor` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `playlists[].subscribers[].authenticationTypes` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].subscribers[].authority` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].subscribers[].authStatus` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].subscribers[].avatarDetail` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `playlists[].subscribers[].avatarImgId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951166641692820` |
+| `playlists[].subscribers[].avatarImgId_str` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951166641692819` |
+| `playlists[].subscribers[].avatarImgIdStr` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951166641692819` |
+| `playlists[].subscribers[].avatarUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `http://p1.music.126.net/FOP6J7_zHK0U1MRM` |
+| `playlists[].subscribers[].backgroundImgId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951166641685170` |
+| `playlists[].subscribers[].backgroundImgIdStr` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951166641685163` |
+| `playlists[].subscribers[].backgroundUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `http://p1.music.126.net/fmrmH5-qHs6hTJ47` |
+| `playlists[].subscribers[].birthday` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1113235200000` |
+| `playlists[].subscribers[].city` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `440100` |
+| `playlists[].subscribers[].defaultAvatar` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `playlists[].subscribers[].description` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `playlists[].subscribers[].detailDescription` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `playlists[].subscribers[].djStatus` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].subscribers[].experts` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `playlists[].subscribers[].expertTags` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `playlists[].subscribers[].followed` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `playlists[].subscribers[].gender` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].subscribers[].mutual` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `playlists[].subscribers[].nickname` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `三川川山` |
+| `playlists[].subscribers[].province` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `440000` |
+| `playlists[].subscribers[].remarkName` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `playlists[].subscribers[].signature` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `playlists[].subscribers[].userId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1836132563` |
+| `playlists[].subscribers[].userType` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].subscribers[].vipType` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `11` |
+| `playlists[].tag` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `欧美,摇滚,快乐` |
+| `playlists[].tags[]` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `欧美` |
+| `playlists[].totalDuration` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `playlists[].trackCount` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `125` |
+| `playlists[].trackNumberUpdateTime` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1773660381543` |
+| `playlists[].tracks` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `playlists[].trackUpdateTime` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1785634217751` |
+| `playlists[].updateTime` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1773717413000` |
+| `playlists[].userId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `341030416` |
+| `total` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `402` |

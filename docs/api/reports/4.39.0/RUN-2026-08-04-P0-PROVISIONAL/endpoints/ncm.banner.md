@@ -91,10 +91,9 @@
 
 ## 14. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补）
-- 说明：见 §14 运行记录与字段表
+- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
 | ncm.banner.type0.anon.001 | AUTH_ANON | - | 200 | 154 |  |
 | ncm.banner.type0.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 117 |  |
@@ -102,3 +101,143 @@
 | ncm.banner.type2.none.001 | AUTH_NONE | - | 200 | 99 |  |
 | ncm.banner.type3.none.001 | AUTH_NONE | - | 200 | 123 |  |
 | ncm.banner.type999.none.neg.001 | AUTH_NONE | - | 200 | 101 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `banners[].adDispatchJson` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].adid` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].adLocation` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].adSource` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].adurlV2` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].alg` | string | 6 | 0 | 0 | AUTH_NONE | `banner-feature-1717750403848278` |
+| `banners[].bannerBizType` | string | 6 | 0 | 0 | AUTH_NONE | `force_banner` |
+| `banners[].bannerId` | string | 6 | 0 | 0 | AUTH_NONE | `1717750403848278` |
+| `banners[].bigImageUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p5.music.126.net/obj/wonDlsKUwrL` |
+| `banners[].dynamicVideoData` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].encodeId` | string | 6 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].event` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].exclusive` | boolean | 6 | 0 | 0 | AUTH_NONE | `false` |
+| `banners[].extMonitor` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].extMonitorInfo` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].imageUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p5.music.126.net/obj/wonDlsKUwrL` |
+| `banners[].logContext` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].mainTitle` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].monitorBlackList` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].monitorClick` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].monitorClickList` | array<unknown> | 6 | 0 | 6 | AUTH_NONE | `undefined` |
+| `banners[].monitorImpress` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].monitorImpressList` | array<unknown> | 6 | 0 | 6 | AUTH_NONE | `undefined` |
+| `banners[].monitorType` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].pic` | string | 6 | 0 | 0 | AUTH_NONE | `http://p1.music.126.net/ah0tWohGfH48V9HJ` |
+| `banners[].pid` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].program` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].requestId` | string | 6 | 0 | 0 | AUTH_NONE | `` |
+| `banners[].s_ctrp` | string | 18 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `linkPlatform$cc$pc_banner_op_channel$bpo` |
+| `banners[].scm` | string | 6 | 0 | 0 | AUTH_NONE | `1.music-homepage.homepage_banner_force.b` |
+| `banners[].showAdTag` | boolean | 6 | 0 | 0 | AUTH_NONE | `true` |
+| `banners[].showContext` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].song` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `banners[].song.al.id` | number | 2 | 0 | 0 | AUTH_NONE | `370354921` |
+| `banners[].song.al.name` | string | 2 | 0 | 0 | AUTH_NONE | `明日世界ACT I` |
+| `banners[].song.al.pic` | number | 2 | 0 | 0 | AUTH_NONE | `109951173557997840` |
+| `banners[].song.al.pic_str` | string | 2 | 0 | 0 | AUTH_NONE | `109951173557997835` |
+| `banners[].song.al.picUrl` | string | 2 | 0 | 0 | AUTH_NONE | `http://p3.music.126.net/wlpke49BdPJzaQI7` |
+| `banners[].song.al.tns` | array<unknown> | 2 | 0 | 2 | AUTH_NONE | `undefined` |
+| `banners[].song.alg` | string | 2 | 0 | 0 | AUTH_NONE | `banner-feature-4888340` |
+| `banners[].song.alia` | array<unknown> | 2 | 0 | 2 | AUTH_NONE | `undefined` |
+| `banners[].song.ar[].alias` | array<unknown> | 3 | 0 | 3 | AUTH_NONE | `undefined` |
+| `banners[].song.ar[].id` | number | 3 | 0 | 0 | AUTH_NONE | `5538` |
+| `banners[].song.ar[].name` | string | 3 | 0 | 0 | AUTH_NONE | `汪苏泷` |
+| `banners[].song.ar[].tns` | array<unknown> | 3 | 0 | 3 | AUTH_NONE | `undefined` |
+| `banners[].song.cd` | string | 2 | 0 | 0 | AUTH_NONE | `01` |
+| `banners[].song.cf` | string | 2 | 0 | 0 | AUTH_NONE | `` |
+| `banners[].song.copyright` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.cp` | number | 2 | 0 | 0 | AUTH_NONE | `729013` |
+| `banners[].song.djId` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.dt` | number | 2 | 0 | 0 | AUTH_NONE | `248240` |
+| `banners[].song.fee` | number | 2 | 0 | 0 | AUTH_NONE | `8` |
+| `banners[].song.ftype` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.h.br` | number | 2 | 0 | 0 | AUTH_NONE | `320000` |
+| `banners[].song.h.fid` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.h.size` | number | 2 | 0 | 0 | AUTH_NONE | `9932205` |
+| `banners[].song.h.sr` | number | 2 | 0 | 0 | AUTH_NONE | `48000` |
+| `banners[].song.h.vd` | number | 2 | 0 | 0 | AUTH_NONE | `-52316` |
+| `banners[].song.hr.br` | number | 2 | 0 | 0 | AUTH_NONE | `2831152` |
+| `banners[].song.hr.fid` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.hr.size` | number | 2 | 0 | 0 | AUTH_NONE | `87855505` |
+| `banners[].song.hr.sr` | number | 2 | 0 | 0 | AUTH_NONE | `96000` |
+| `banners[].song.hr.vd` | number | 2 | 0 | 0 | AUTH_NONE | `-52303` |
+| `banners[].song.id` | number | 2 | 0 | 0 | AUTH_NONE | `3369666014` |
+| `banners[].song.l.br` | number | 2 | 0 | 0 | AUTH_NONE | `128000` |
+| `banners[].song.l.fid` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.l.size` | number | 2 | 0 | 0 | AUTH_NONE | `3972909` |
+| `banners[].song.l.sr` | number | 2 | 0 | 0 | AUTH_NONE | `48000` |
+| `banners[].song.l.vd` | number | 2 | 0 | 0 | AUTH_NONE | `-48258` |
+| `banners[].song.m.br` | number | 2 | 0 | 0 | AUTH_NONE | `192000` |
+| `banners[].song.m.fid` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.m.size` | number | 2 | 0 | 0 | AUTH_NONE | `5959341` |
+| `banners[].song.m.sr` | number | 2 | 0 | 0 | AUTH_NONE | `48000` |
+| `banners[].song.m.vd` | number | 2 | 0 | 0 | AUTH_NONE | `-49776` |
+| `banners[].song.mark` | number | 2 | 0 | 0 | AUTH_NONE | `17716748288` |
+| `banners[].song.mst` | number | 2 | 0 | 0 | AUTH_NONE | `9` |
+| `banners[].song.mv` | number | 2 | 0 | 0 | AUTH_NONE | `34779825` |
+| `banners[].song.name` | string | 2 | 0 | 0 | AUTH_NONE | `写故事的人` |
+| `banners[].song.no` | number | 2 | 0 | 0 | AUTH_NONE | `4` |
+| `banners[].song.originCoverType` | number | 2 | 0 | 0 | AUTH_NONE | `1` |
+| `banners[].song.pop` | number | 2 | 0 | 0 | AUTH_NONE | `100` |
+| `banners[].song.privilege.chargeInfoList[].chargeType` | number | 6 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.privilege.chargeInfoList[].rate` | number | 6 | 0 | 0 | AUTH_NONE | `128000` |
+| `banners[].song.privilege.code` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.privilege.cp` | number | 2 | 0 | 0 | AUTH_NONE | `1` |
+| `banners[].song.privilege.cs` | boolean | 2 | 0 | 0 | AUTH_NONE | `false` |
+| `banners[].song.privilege.dl` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.privilege.dlLevel` | string | 2 | 0 | 0 | AUTH_NONE | `none` |
+| `banners[].song.privilege.downloadMaxbr` | number | 2 | 0 | 0 | AUTH_NONE | `999000` |
+| `banners[].song.privilege.downloadMaxBrLevel` | string | 2 | 0 | 0 | AUTH_NONE | `jymaster` |
+| `banners[].song.privilege.fee` | number | 2 | 0 | 0 | AUTH_NONE | `8` |
+| `banners[].song.privilege.fl` | number | 2 | 0 | 0 | AUTH_NONE | `320000` |
+| `banners[].song.privilege.flag` | number | 2 | 0 | 0 | AUTH_NONE | `1544196` |
+| `banners[].song.privilege.flLevel` | string | 2 | 0 | 0 | AUTH_NONE | `exhigh` |
+| `banners[].song.privilege.freeTrialPrivilege.resConsumable` | boolean | 2 | 0 | 0 | AUTH_NONE | `false` |
+| `banners[].song.privilege.freeTrialPrivilege.userConsumable` | boolean | 2 | 0 | 0 | AUTH_NONE | `false` |
+| `banners[].song.privilege.id` | number | 2 | 0 | 0 | AUTH_NONE | `3369666014` |
+| `banners[].song.privilege.maxbr` | number | 2 | 0 | 0 | AUTH_NONE | `999000` |
+| `banners[].song.privilege.maxBrLevel` | string | 2 | 0 | 0 | AUTH_NONE | `jymaster` |
+| `banners[].song.privilege.payed` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.privilege.pl` | number | 2 | 0 | 0 | AUTH_NONE | `320000` |
+| `banners[].song.privilege.playMaxbr` | number | 2 | 0 | 0 | AUTH_NONE | `999000` |
+| `banners[].song.privilege.playMaxBrLevel` | string | 2 | 0 | 0 | AUTH_NONE | `jymaster` |
+| `banners[].song.privilege.plLevel` | string | 2 | 0 | 0 | AUTH_NONE | `exhigh` |
+| `banners[].song.privilege.preSell` | boolean | 2 | 0 | 0 | AUTH_NONE | `false` |
+| `banners[].song.privilege.rightSource` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.privilege.sp` | number | 2 | 0 | 0 | AUTH_NONE | `7` |
+| `banners[].song.privilege.st` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.privilege.subp` | number | 2 | 0 | 0 | AUTH_NONE | `1` |
+| `banners[].song.privilege.toast` | boolean | 2 | 0 | 0 | AUTH_NONE | `false` |
+| `banners[].song.pst` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.publishTime` | number | 2 | 0 | 0 | AUTH_NONE | `1773331200000` |
+| `banners[].song.resourceState` | boolean | 2 | 0 | 0 | AUTH_NONE | `true` |
+| `banners[].song.rt` | string | 2 | 0 | 0 | AUTH_NONE | `` |
+| `banners[].song.rtUrls` | array<unknown> | 2 | 0 | 2 | AUTH_NONE | `undefined` |
+| `banners[].song.rtype` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.s_id` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.single` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.sq.br` | number | 2 | 0 | 0 | AUTH_NONE | `936784` |
+| `banners[].song.sq.fid` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.sq.size` | number | 2 | 0 | 0 | AUTH_NONE | `29073060` |
+| `banners[].song.sq.sr` | number | 2 | 0 | 0 | AUTH_NONE | `48000` |
+| `banners[].song.sq.vd` | number | 2 | 0 | 0 | AUTH_NONE | `-52299` |
+| `banners[].song.st` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.t` | number | 2 | 0 | 0 | AUTH_NONE | `0` |
+| `banners[].song.v` | number | 2 | 0 | 0 | AUTH_NONE | `52` |
+| `banners[].song.version` | number | 2 | 0 | 0 | AUTH_NONE | `18` |
+| `banners[].targetId` | number | 18 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `banners[].targetType` | number | 18 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `3000` |
+| `banners[].titleColor` | string | 6 | 0 | 0 | AUTH_NONE | `blue` |
+| `banners[].typeTitle` | string | 18 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `活动` |
+| `banners[].url` | union<string|null> | 18 | 1 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://y.music.163.com/g/yida/act/kisso` |
+| `banners[].video` | null | 3 | 3 | 0 | AUTH_NONE |  |
+| `code` | number | 6 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `200` |
+| `trp.rules[]` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `BANNER_PC_V2::pc_banner_op_channel_1::li` |

@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "caseId": "ncm.song_download_url_v1.A.anon.001",
+    "apiAuditId": "ncm.song_download_url_v1",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "449818741",
+      "level": "standard"
+    },
+    "startedAt": "2026-08-04T11:17:54.876Z",
+    "endedAt": "2026-08-04T11:17:54.999Z",
+    "durationMs": 123,
+    "attempts": 1
+  },
+  "body": {
+    "data": {
+      "id": 449818741,
+      "url": null,
+      "br": 0,
+      "size": 0,
+      "md5": null,
+      "code": -105,
+      "expi": 1200,
+      "type": null,
+      "gain": 0,
+      "peak": null,
+      "closedGain": 0,
+      "closedPeak": 0,
+      "fee": 1,
+      "uf": null,
+      "payed": 0,
+      "flag": 1541124,
+      "canExtend": false,
+      "freeTrialInfo": null,
+      "level": null,
+      "encodeType": null,
+      "channelLayout": null,
+      "freeTrialPrivilege": {
+        "resConsumable": false,
+        "userConsumable": false,
+        "listenType": 0,
+        "cannotListenReason": 1,
+        "playReason": null,
+        "freeLimitTagType": null
+      },
+      "freeTimeTrialPrivilege": {
+        "resConsumable": false,
+        "userConsumable": false,
+        "type": 0,
+        "remainTime": 0
+      },
+      "urlSource": 0,
+      "rightSource": 0,
+      "podcastCtrp": null,
+      "effectTypes": null,
+      "time": 0,
+      "message": null,
+      "levelConfuse": null,
+      "musicId": null,
+      "accompany": null,
+      "sr": 0,
+      "auEff": null,
+      "immerseType": null,
+      "beatType": 0
+    },
+    "code": 200
+  },
+  "error": null
+}

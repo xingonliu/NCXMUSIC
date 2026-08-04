@@ -90,14 +90,12 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**failed_stable**（blocker: 上游模块契约与服务器响应冲突：模块要求解密负载含 sk，服务器返回 publicKey/version/nextUpdateTime；静态常量 xeapiSignKey 作为 sk 的引导回退已实测可用（conflictId XEAPI-001））
-- 说明：失败 ≥3 次且可复现；回退引导为绕过方案，非模块契约本身
+- 终态：**failed_stable**（blocker: XEAPI-001：模块要求解密负载含 sk，服务器返回 publicKey/version/nextUpdateTime；xeapiSignKey 静态密钥回退引导可用）
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
-| ncm.register_xeapikey.none.min.001 | AUTH_NONE | err | - |  | other: xeapi public key response missing sk |
-| ncm.register_xeapikey.none.min.002 | AUTH_NONE | err | - |  | other: xeapi public key response missing sk |
-| ncm.register_xeapikey.none.min.003 | AUTH_NONE | err | - |  | other: xeapi public key response missing sk |
+| ncm.register_xeapikey.none.min.001 | AUTH_NONE | err | - | - | other |
+| ncm.register_xeapikey.none.min.002 | AUTH_NONE | err | - | - | other |
+| ncm.register_xeapikey.none.min.003 | AUTH_NONE | err | - | - | other |

@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "caseId": "ncm.song_detail.media-fixture.songC.001",
+    "apiAuditId": "ncm.song_detail",
+    "auth": "AUTH_NONE",
+    "params": {
+      "ids": "2740240014"
+    },
+    "startedAt": "2026-08-04T11:10:20.395Z",
+    "endedAt": "2026-08-04T11:10:20.483Z",
+    "durationMs": 88,
+    "attempts": 1
+  },
+  "body": {
+    "songs": [
+      {
+        "name": "Still Breathing (Acoustic)",
+        "mainTitle": "Still Breathing ",
+        "additionalTitle": "(Acoustic)",
+        "id": 2740240014,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 7763,
+            "name": "G.E.M.邓紫棋",
+            "tns": [],
+            "alias": []
+          },
+          {
+            "id": 14621097,
+            "name": "Faouzia",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [],
+        "pop": 100,
+        "st": 0,
+        "rt": "",
+        "fee": 1,
+        "v": 46,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 282980763,
+          "name": "Still Breathing",
+          "picUrl": "https://p4.music.126.net/f2KNx2NGP8ic7OO8fSvesA==/109951173628440395.jpg#hash=a0cb8b080e4a",
+          "tns": [],
+          "pic_str": "109951173628440395",
+          "pic": 109951173628440400
+        },
+        "dt": 208554,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 8344365,
+          "vd": -70725,
+          "sr": 48000
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 5006637,
+          "vd": -68132,
+          "sr": 48000
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 3337773,
+          "vd": -66452,
+          "sr": 48000
+        },
+        "sq": {
+          "br": 952964,
+          "fid": 0,
+          "size": 24846998,
+          "vd": -70718,
+          "sr": 48000
+        },
+        "hr": {
+          "br": 1717157,
+          "fid": 0,
+          "size": 44768984,
+          "vd": -70718,
+          "sr": 48000
+        },
+        "a": null,
+        "cd": "01",
+        "no": 1,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 1,
+        "s_id": 0,
+        "mark": 17717010432,
+        "originCoverType": 1,
+        "originSongSimpleData": null,
+        "tagPicList": null,
+        "resourceState": true,
+        "version": 12,
+        "songJumpInfo": null,
+        "entertainmentTags": null,
+        "awardTags": null,
+        "displayTags": null,
+        "artistClassics": false,
+        "markTags": [],
+        "songFeature": null,
+        "single": 0,
+        "noCopyrightRcmd": null,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 1416336,
+        "mv": 22783543,
+        "publishTime": 1756396800000
+      }
+    ],
+    "privileges": [
+      {
+        "id": 2740240014,
+        "fee": 1,
+        "payed": 0,
+        "st": 0,
+        "pl": 0,
+        "dl": 0,
+        "sp": 7,
+        "cp": 1,
+        "subp": 1,
+        "cs": false,
+        "maxbr": 999000,
+        "fl": 0,
+        "toast": false,
+        "flag": 1545476,
+        "preSell": false,
+        "playMaxbr": 999000,
+        "downloadMaxbr": 999000,
+        "maxBrLevel": "jymaster",
+        "playMaxBrLevel": "jymaster",
+        "downloadMaxBrLevel": "jymaster",
+        "plLevel": "none",
+        "dlLevel": "none",
+        "flLevel": "none",
+        "rscl": null,
+        "freeTrialPrivilege": {
+          "resConsumable": true,
+          "userConsumable": false,
+          "listenType": null,
+          "cannotListenReason": null,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "rightSource": 0,
+        "chargeInfoList": [
+          {
+            "rate": 128000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 192000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 320000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          },
+          {
+            "rate": 1999000,
+            "chargeUrl": null,
+            "chargeMessage": null,
+            "chargeType": 1
+          }
+        ],
+        "code": 0,
+        "message": null,
+        "plLevels": null,
+        "dlLevels": null,
+        "ignoreCache": null,
+        "bd": null
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

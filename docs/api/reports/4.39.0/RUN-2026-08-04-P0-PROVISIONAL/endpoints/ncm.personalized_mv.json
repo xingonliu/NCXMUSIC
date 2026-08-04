@@ -31,39 +31,328 @@
       {
         "caseId": "ncm.personalized_mv.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 96,
+        "error": null,
+        "sampleHash": "f0019e011307091510da430bbca1076ea0253f42898924dc978f3526c836b9f7",
+        "rawFile": "ncm.personalized_mv.ncm.personalized_mv.anon.001.raw.json"
       },
       {
         "caseId": "ncm.personalized_mv.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 81,
+        "error": null,
+        "sampleHash": "f007e5089959a2eb6949bc4d602807293ff2cf3d31786a6bdb17f9ce3ae6b8cb",
+        "rawFile": "ncm.personalized_mv.ncm.personalized_mv.inv.001.raw.json"
       },
       {
         "caseId": "ncm.personalized_mv.limit5.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 67,
+        "error": null,
+        "sampleHash": "8e43039dc7c8082b527d7db5f67d1dd422696e07a895173985af6204ff833f08",
+        "rawFile": "ncm.personalized_mv.ncm.personalized_mv.limit5.none.001.raw.json"
       },
       {
         "caseId": "ncm.personalized_mv.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 99,
+        "error": null,
+        "sampleHash": "607953d55432c98a5d056ed57701021a229e5c78f5c2cd47bbd16ed7eaaf1c4e",
+        "rawFile": "ncm.personalized_mv.ncm.personalized_mv.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "category",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "3"
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "result[].alg",
+      "rawType": "string",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "featured"
+    },
+    {
+      "jsonPath": "result[].artistId",
+      "rawType": "number",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "12098023"
+    },
+    {
+      "jsonPath": "result[].artistName",
+      "rawType": "string",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "孟美岐"
+    },
+    {
+      "jsonPath": "result[].artists[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "12098023"
+    },
+    {
+      "jsonPath": "result[].artists[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "孟美岐"
+    },
+    {
+      "jsonPath": "result[].canDislike",
+      "rawType": "boolean",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result[].copywriter",
+      "rawType": "string",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "编辑推荐：孟美岐全新个人EP主打歌《Mute》"
+    },
+    {
+      "jsonPath": "result[].duration",
+      "rawType": "number",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "184000"
+    },
+    {
+      "jsonPath": "result[].id",
+      "rawType": "number",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "10973299"
+    },
+    {
+      "jsonPath": "result[].name",
+      "rawType": "string",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "Mute"
+    },
+    {
+      "jsonPath": "result[].picUrl",
+      "rawType": "string",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "https://p3.music.126.net/T62FhTyq2Y-SY558NvME8g==/1099511654"
+    },
+    {
+      "jsonPath": "result[].playCount",
+      "rawType": "number",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "3310688"
+    },
+    {
+      "jsonPath": "result[].subed",
+      "rawType": "boolean",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result[].trackNumberUpdateTime",
+      "rawType": "null",
+      "presence": 8,
+      "nulls": 8,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result[].type",
+      "rawType": "number",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.personalized_mv.anon.001",
+      "lastSeenCase": "ncm.personalized_mv.none.001",
+      "example": "5"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.personalized_mv.anon.001",
+      "sampleHash": "f0019e011307091510da430bbca1076ea0253f42898924dc978f3526c836b9f7",
+      "rawFile": "ncm.personalized_mv.ncm.personalized_mv.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.personalized_mv.inv.001",
+      "sampleHash": "f007e5089959a2eb6949bc4d602807293ff2cf3d31786a6bdb17f9ce3ae6b8cb",
+      "rawFile": "ncm.personalized_mv.ncm.personalized_mv.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.personalized_mv.limit5.none.001",
+      "sampleHash": "8e43039dc7c8082b527d7db5f67d1dd422696e07a895173985af6204ff833f08",
+      "rawFile": "ncm.personalized_mv.ncm.personalized_mv.limit5.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.personalized_mv.none.001",
+      "sampleHash": "607953d55432c98a5d056ed57701021a229e5c78f5c2cd47bbd16ed7eaaf1c4e",
+      "rawFile": "ncm.personalized_mv.ncm.personalized_mv.none.001.raw.json"
+    }
+  ]
 }

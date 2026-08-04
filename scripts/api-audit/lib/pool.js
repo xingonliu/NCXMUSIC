@@ -1,18 +1,41 @@
 'use strict'
 
-const ENTITY_RULES = [
-  [/toplist|top_list/i, 'toplistId'],
-  [/song|track/i, 'songId'],
-  [/playlist|sheet/i, 'playlistId'],
-  [/artist/i, 'artistId'],
-  [/album/i, 'albumId'],
-  [/mv/i, 'mvId'],
-  [/video/i, 'videoId'],
-  [/djradio|dj_radio|dj/i, 'djId'],
-  [/program/i, 'programId'],
-  [/userprofile|user/i, 'userId'],
-  [/event/i, 'eventId'],
-]
+const ENTITY_BY_PARENT = {
+  song: 'songId',
+  songs: 'songId',
+  track: 'songId',
+  tracks: 'songId',
+  artist: 'artistId',
+  artists: 'artistId',
+  album: 'albumId',
+  albums: 'albumId',
+  playlist: 'playlistId',
+  playlists: 'playlistId',
+  sheet: 'playlistId',
+  sheets: 'playlistId',
+  toplist: 'toplistId',
+  topList: 'toplistId',
+  mv: 'mvId',
+  mvs: 'mvId',
+  video: 'videoId',
+  videos: 'videoId',
+  dj: 'djId',
+  djRadio: 'djId',
+  djRadios: 'djId',
+  program: 'programId',
+  programs: 'programId',
+  user: 'userId',
+  users: 'userId',
+  userprofile: 'userId',
+  userprofiles: 'userId',
+  event: 'eventId',
+  events: 'eventId',
+}
+
+function parentOf(context) {
+  const seg = context.replace(/\[\]$/, '').split('.').pop()
+  return seg || ''
+}
 
 const EXCLUDE_KEY = /trackIds|alias|albumName|artistName|songName|playlistName|transNames|tags|genre|desc|comment/i
 
@@ -38,14 +61,8 @@ function extract(body, apiAuditId, caseId) {
   collect(body, '', raw)
   const out = []
   for (const f of raw) {
-    let entity = null
-    for (const [re, ent] of ENTITY_RULES) {
-      if (re.test(f.context)) {
-        entity = ent
-        break
-      }
-    }
-    if (!entity && /^list(\[\])?$/i.test(f.context) && /^ncm\.(toplist|top_list|toplist_)/i.test(apiAuditId)) {
+    let entity = ENTITY_BY_PARENT[parentOf(f.context)] || null
+    if (!entity && /^list(\[\])?$/i.test(parentOf(f.context) || '') && /^ncm\.(toplist|top_list|toplist_)/i.test(apiAuditId)) {
       entity = 'toplistId'
     }
     if (entity) out.push({ entityType: entity, id: f.id, jsonPath: f.jsonPath, producerApi: apiAuditId, producerCase: caseId })

@@ -30,39 +30,943 @@
       {
         "caseId": "ncm.toplist.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 163,
+        "error": null,
+        "sampleHash": "8a3f6f3c40d4635cb423331c8033b37a1e7f24ed85a5ae508624c21cf85800f5",
+        "rawFile": "ncm.toplist.ncm.toplist.anon.001.raw.json"
       },
       {
         "caseId": "ncm.toplist.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 130,
+        "error": null,
+        "sampleHash": "8e846937eda9d96d4f1dce33e9b98de718a8adfafc8725c3b5e89a4cd9a0ad97",
+        "rawFile": "ncm.toplist.ncm.toplist.inv.001.raw.json"
       },
       {
         "caseId": "ncm.toplist.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 125,
+        "error": null,
+        "sampleHash": "67a05d9fba9a2288948e19fbfe77ee9c8be6499779be341d4436672995e4ec03",
+        "rawFile": "ncm.toplist.ncm.toplist.none.001.raw.json"
       },
       {
         "caseId": "ncm.toplist.none.002",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 133,
+        "error": null,
+        "sampleHash": "2b971a05b6420bad8064ef8258aec258e8f8bc239a6a594ffd70521036c5834e",
+        "rawFile": "ncm.toplist.ncm.toplist.none.002.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "artistToplist.coverUrl",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "https://p4.music.126.net/MJdmNzZwTCz0b4IpHJV6Wg==/1099511628"
+    },
+    {
+      "jsonPath": "artistToplist.name",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "云音乐歌手榜"
+    },
+    {
+      "jsonPath": "artistToplist.position",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "5"
+    },
+    {
+      "jsonPath": "artistToplist.upateFrequency",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "每天更新"
+    },
+    {
+      "jsonPath": "artistToplist.updateFrequency",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "每天更新"
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "list[].adType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "list[].algType",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].anonimous",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "list[].artists",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].backgroundCoverId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "list[].backgroundCoverUrl",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].cloudTrackCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "list[].commentThreadId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "A_PL_0_19723756"
+    },
+    {
+      "jsonPath": "list[].coverImageUrl",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].coverImgId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "109951170048506930"
+    },
+    {
+      "jsonPath": "list[].coverImgId_str",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "109951170048506929"
+    },
+    {
+      "jsonPath": "list[].coverImgUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "https://p4.music.126.net/rIi7Qzy2i2Y_1QD7cd0MYA==/1099511700"
+    },
+    {
+      "jsonPath": "list[].coverText",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].createTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "1404115136883"
+    },
+    {
+      "jsonPath": "list[].creator",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].description",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "云音乐中每天热度上升最快的100首单曲，每日更新。"
+    },
+    {
+      "jsonPath": "list[].englishTitle",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].highQuality",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "list[].iconImageUrl",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "19723756"
+    },
+    {
+      "jsonPath": "list[].mix",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "list[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "飙升榜"
+    },
+    {
+      "jsonPath": "list[].newImported",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "list[].opRecommend",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "list[].ordered",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "list[].originalCoverId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "list[].playCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "6481031168"
+    },
+    {
+      "jsonPath": "list[].playlistType",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "UGC"
+    },
+    {
+      "jsonPath": "list[].privacy",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "list[].promptedMgcInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].recommendInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].socialPlaylistCover",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].specialType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "10"
+    },
+    {
+      "jsonPath": "list[].status",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "list[].subscribed",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].subscribedCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "4206047"
+    },
+    {
+      "jsonPath": "list[].subscribers",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "list[].tags",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "list[].titleImage",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "list[].titleImageUrl",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].ToplistType",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "S"
+    },
+    {
+      "jsonPath": "list[].topTrackIds",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].totalDuration",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "list[].trackCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "100"
+    },
+    {
+      "jsonPath": "list[].trackNumberUpdateTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "1785814584418"
+    },
+    {
+      "jsonPath": "list[].tracks",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "list[].trackUpdateTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "1785824834259"
+    },
+    {
+      "jsonPath": "list[].tsSongCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "list[].uiPlaylistType",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "UGC"
+    },
+    {
+      "jsonPath": "list[].updateFrequency",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "刚刚更新"
+    },
+    {
+      "jsonPath": "list[].updateTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "1785814584524"
+    },
+    {
+      "jsonPath": "list[].userId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.toplist.anon.001",
+      "lastSeenCase": "ncm.toplist.none.002",
+      "example": "1"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.toplist.anon.001",
+      "sampleHash": "8a3f6f3c40d4635cb423331c8033b37a1e7f24ed85a5ae508624c21cf85800f5",
+      "rawFile": "ncm.toplist.ncm.toplist.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.toplist.inv.001",
+      "sampleHash": "8e846937eda9d96d4f1dce33e9b98de718a8adfafc8725c3b5e89a4cd9a0ad97",
+      "rawFile": "ncm.toplist.ncm.toplist.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.toplist.none.001",
+      "sampleHash": "67a05d9fba9a2288948e19fbfe77ee9c8be6499779be341d4436672995e4ec03",
+      "rawFile": "ncm.toplist.ncm.toplist.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.toplist.none.002",
+      "sampleHash": "2b971a05b6420bad8064ef8258aec258e8f8bc239a6a594ffd70521036c5834e",
+      "rawFile": "ncm.toplist.ncm.toplist.none.002.raw.json"
+    }
+  ]
 }

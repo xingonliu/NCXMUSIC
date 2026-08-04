@@ -45,39 +45,103 @@
       {
         "caseId": "ncm.simi_playlist.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 110,
+        "error": null,
+        "sampleHash": "2c366f042a0baa1b5ac22fce1e8460bbe55b691b341e2104cc08701c37b2054f",
+        "rawFile": "ncm.simi_playlist.ncm.simi_playlist.anon.001.raw.json"
       },
       {
         "caseId": "ncm.simi_playlist.id0.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 60,
+        "error": null,
+        "sampleHash": "b56ded0d895d08c0b6e34901b17ac121c04fe6c18a36a086e96f2063907c7dee",
+        "rawFile": "ncm.simi_playlist.ncm.simi_playlist.id0.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.simi_playlist.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 62,
+        "error": null,
+        "sampleHash": "c2ec565dc096c9ebad96e83cd989fc94f68e98fefd2344f5cc35af18d469c8eb",
+        "rawFile": "ncm.simi_playlist.ncm.simi_playlist.inv.001.raw.json"
       },
       {
         "caseId": "ncm.simi_playlist.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 107,
+        "error": null,
+        "sampleHash": "bc7767e283c908fe46fb2b2669d469a9e4f6cf42dc0822c2a73cc50bb06dd15d",
+        "rawFile": "ncm.simi_playlist.ncm.simi_playlist.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_playlist.anon.001",
+      "lastSeenCase": "ncm.simi_playlist.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "playlists",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_playlist.anon.001",
+      "lastSeenCase": "ncm.simi_playlist.none.001",
+      "example": "undefined"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
   "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
-  "evidence": []
+  "evidence": [
+    {
+      "caseId": "ncm.simi_playlist.anon.001",
+      "sampleHash": "2c366f042a0baa1b5ac22fce1e8460bbe55b691b341e2104cc08701c37b2054f",
+      "rawFile": "ncm.simi_playlist.ncm.simi_playlist.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_playlist.id0.none.neg.001",
+      "sampleHash": "b56ded0d895d08c0b6e34901b17ac121c04fe6c18a36a086e96f2063907c7dee",
+      "rawFile": "ncm.simi_playlist.ncm.simi_playlist.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_playlist.inv.001",
+      "sampleHash": "c2ec565dc096c9ebad96e83cd989fc94f68e98fefd2344f5cc35af18d469c8eb",
+      "rawFile": "ncm.simi_playlist.ncm.simi_playlist.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_playlist.none.001",
+      "sampleHash": "bc7767e283c908fe46fb2b2669d469a9e4f6cf42dc0822c2a73cc50bb06dd15d",
+      "rawFile": "ncm.simi_playlist.ncm.simi_playlist.none.001.raw.json"
+    }
+  ]
 }

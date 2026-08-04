@@ -276,6 +276,10 @@ async function main() {
         console.log('RATE-LIMIT signal detected; backing off 30s')
         await sleep(30000)
       }
+      if (record.error && record.error.body && record.error.body.code === -462) {
+        console.log('VERIFY CHALLENGE (-462) detected; backing off 30s')
+        await sleep(30000)
+      }
     }
   }
 

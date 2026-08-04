@@ -51,95 +51,2667 @@
       {
         "caseId": "ncm.search.empty.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 400,
-        "error": null
+        "durationMs": 84,
+        "error": null,
+        "sampleHash": "9723de759d9337a6238450eb0e6bbdcc5220b47c39e09672692545caa5346cfe",
+        "rawFile": "ncm.search.ncm.search.empty.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.search.kw1.type1.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 371,
+        "error": null,
+        "sampleHash": "c97947377a2383638ca05c84e365e9c56f09972ce9ba342a73d1423d5e5e389d",
+        "rawFile": "ncm.search.ncm.search.kw1.type1.anon.001.raw.json"
       },
       {
         "caseId": "ncm.search.kw1.type1.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 241,
+        "error": null,
+        "sampleHash": "2e91b72b08783f66bb4f80236a0ace9275b4e48e50e923ee27d70bcc1f1c1d83",
+        "rawFile": "ncm.search.ncm.search.kw1.type1.inv.001.raw.json"
       },
       {
         "caseId": "ncm.search.kw1.type1.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 223,
+        "error": null,
+        "sampleHash": "70ba5e833ae6d3a678c7d63ca8fecb2eb0d75af35879d1ace59d706fe8a51643",
+        "rawFile": "ncm.search.ncm.search.kw1.type1.none.001.raw.json"
       },
       {
         "caseId": "ncm.search.kw1.type1.none.002",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 239,
+        "error": null,
+        "sampleHash": "b65db5a71abf1908c79c009e4235fa100e8f91f728270aca287a63743787ae2e",
+        "rawFile": "ncm.search.ncm.search.kw1.type1.none.002.raw.json"
       },
       {
         "caseId": "ncm.search.kw1.type10.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 234,
+        "error": null,
+        "sampleHash": "27efd24e6c745ddf154180493e687dcf7d679cc0e850ce4c807921e3d015904f",
+        "rawFile": "ncm.search.ncm.search.kw1.type10.none.001.raw.json"
       },
       {
         "caseId": "ncm.search.kw1.type100.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 137,
+        "error": null,
+        "sampleHash": "ab5f092fa96602e60ac4852c9e2f396ee01a3f370387f2a1e412ea45b82fd9cc",
+        "rawFile": "ncm.search.ncm.search.kw1.type100.none.001.raw.json"
       },
       {
         "caseId": "ncm.search.kw1.type1000.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 205,
+        "error": null,
+        "sampleHash": "322e6c207748f45b0bc021082ec1c275a587669ac39d6a8f361d2ea740659cc5",
+        "rawFile": "ncm.search.ncm.search.kw1.type1000.none.001.raw.json"
       },
       {
         "caseId": "ncm.search.kw1.type1004.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 155,
+        "error": null,
+        "sampleHash": "34fbac49c3987ecf4586c74e6df81ab75d7b05dceb2dfa5119d8a8ad7d112ce7",
+        "rawFile": "ncm.search.ncm.search.kw1.type1004.none.001.raw.json"
       },
       {
         "caseId": "ncm.search.kw1.type1014.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 143,
+        "error": null,
+        "sampleHash": "e737d9c9eb0c060d2bfe4693819bd1f5e33675f936f510a5d9a827a558d60b4d",
+        "rawFile": "ncm.search.ncm.search.kw1.type1014.none.001.raw.json"
       },
       {
         "caseId": "ncm.search.kw2.type1.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 177,
+        "error": null,
+        "sampleHash": "d3283f62877c862c0ee6de24d974e0c8ee48af984a7d9d60baec26d4dff36c16",
+        "rawFile": "ncm.search.ncm.search.kw2.type1.none.001.raw.json"
       },
       {
         "caseId": "ncm.search.type999.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 80,
+        "error": null,
+        "sampleHash": "4e8e5feb3c3bdb4d878395b051a875959c6490b7cafcf560dc6fdc91fe45f1f7",
+        "rawFile": "ncm.search.ncm.search.type999.none.neg.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.search.empty.none.neg.001",
+      "lastSeenCase": "ncm.search.type999.none.neg.001",
+      "example": "400"
+    },
+    {
+      "jsonPath": "result.albumCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "453"
+    },
+    {
+      "jsonPath": "result.albums[].alg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "alg_search_precision_album_tab_basic"
+    },
+    {
+      "jsonPath": "result.albums[].alias",
+      "rawType": "array<unknown>",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 2,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "result.albums[].alias[]",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "电影《太空旅客》中文主题曲"
+    },
+    {
+      "jsonPath": "result.albums[].artist.albumSize",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "57"
+    },
+    {
+      "jsonPath": "result.albums[].artist.alia",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "result.albums[].artist.alia[]",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "G.E.M."
+    },
+    {
+      "jsonPath": "result.albums[].artist.alias",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "result.albums[].artist.alias[]",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "G.E.M."
+    },
+    {
+      "jsonPath": "result.albums[].artist.briefDesc",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.albums[].artist.id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "7763"
+    },
+    {
+      "jsonPath": "result.albums[].artist.img1v1Id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "109951167771736530"
+    },
+    {
+      "jsonPath": "result.albums[].artist.img1v1Id_str",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "109951167771736533"
+    },
+    {
+      "jsonPath": "result.albums[].artist.img1v1Url",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "http://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/56393951388"
+    },
+    {
+      "jsonPath": "result.albums[].artist.musicSize",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "420"
+    },
+    {
+      "jsonPath": "result.albums[].artist.name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "G.E.M.邓紫棋"
+    },
+    {
+      "jsonPath": "result.albums[].artist.picId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "109951167773880640"
+    },
+    {
+      "jsonPath": "result.albums[].artist.picId_str",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "109951167773880633"
+    },
+    {
+      "jsonPath": "result.albums[].artist.picUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "http://p4.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/10995116777"
+    },
+    {
+      "jsonPath": "result.albums[].artist.topicPerson",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.albums[].artist.trans",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.albums[].artists[].albumSize",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.albums[].artists[].alias",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "result.albums[].artists[].briefDesc",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.albums[].artists[].id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "7763"
+    },
+    {
+      "jsonPath": "result.albums[].artists[].img1v1Id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "109951167771736530"
+    },
+    {
+      "jsonPath": "result.albums[].artists[].img1v1Id_str",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "109951167771736533"
+    },
+    {
+      "jsonPath": "result.albums[].artists[].img1v1Url",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "http://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/56393951388"
+    },
+    {
+      "jsonPath": "result.albums[].artists[].musicSize",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.albums[].artists[].name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "G.E.M.邓紫棋"
+    },
+    {
+      "jsonPath": "result.albums[].artists[].picId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.albums[].artists[].picUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.albums[].artists[].topicPerson",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.albums[].artists[].trans",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.albums[].blurPicUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "http://p4.music.126.net/fkqFqMaEt0CzxYS-0NpCog==/18587244069"
+    },
+    {
+      "jsonPath": "result.albums[].briefDesc",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.albums[].commentThreadId",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "R_AL_3_35093341"
+    },
+    {
+      "jsonPath": "result.albums[].company",
+      "rawType": "union<string|null>",
+      "presence": 3,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "蜂鸟音乐"
+    },
+    {
+      "jsonPath": "result.albums[].companyId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.albums[].containedSong",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.albums[].copyrightId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.albums[].description",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.albums[].id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "35093341"
+    },
+    {
+      "jsonPath": "result.albums[].mark",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.albums[].name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "光年之外"
+    },
+    {
+      "jsonPath": "result.albums[].onSale",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result.albums[].paid",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result.albums[].pic",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "18587244069235040"
+    },
+    {
+      "jsonPath": "result.albums[].picId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "18587244069235040"
+    },
+    {
+      "jsonPath": "result.albums[].picId_str",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "18587244069235039"
+    },
+    {
+      "jsonPath": "result.albums[].picUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "http://p4.music.126.net/fkqFqMaEt0CzxYS-0NpCog==/18587244069"
+    },
+    {
+      "jsonPath": "result.albums[].publishTime",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "1483027200007"
+    },
+    {
+      "jsonPath": "result.albums[].size",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "result.albums[].songs",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.albums[].status",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.albums[].tags",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.albums[].type",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type10.none.001",
+      "example": "Single"
+    },
+    {
+      "jsonPath": "result.artistCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "5"
+    },
+    {
+      "jsonPath": "result.artists[].accountId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "281382"
+    },
+    {
+      "jsonPath": "result.artists[].albumSize",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "57"
+    },
+    {
+      "jsonPath": "result.artists[].alg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "alg_search_precision_artist_tab_basic"
+    },
+    {
+      "jsonPath": "result.artists[].alia[]",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "G.E.M."
+    },
+    {
+      "jsonPath": "result.artists[].alias",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "result.artists[].alias[]",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "G.E.M."
+    },
+    {
+      "jsonPath": "result.artists[].appendRecText",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "演唱: 光年之外"
+    },
+    {
+      "jsonPath": "result.artists[].fansGroup",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.artists[].fansSize",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "14347003"
+    },
+    {
+      "jsonPath": "result.artists[].followed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result.artists[].id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "7763"
+    },
+    {
+      "jsonPath": "result.artists[].identityIconUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880"
+    },
+    {
+      "jsonPath": "result.artists[].img1v1",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "109951167771736530"
+    },
+    {
+      "jsonPath": "result.artists[].img1v1Url",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "https://p4.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/1099511677"
+    },
+    {
+      "jsonPath": "result.artists[].musicSize",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "420"
+    },
+    {
+      "jsonPath": "result.artists[].mvSize",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "116"
+    },
+    {
+      "jsonPath": "result.artists[].name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "G.E.M.邓紫棋"
+    },
+    {
+      "jsonPath": "result.artists[].picId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "109951167773880640"
+    },
+    {
+      "jsonPath": "result.artists[].picUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": "https://p4.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/1099511677"
+    },
+    {
+      "jsonPath": "result.artists[].recommendText",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.artists[].trans",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type100.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.hasMore",
+      "rawType": "boolean",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "result.hlWords",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.hlWords[]",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type10.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": "光年之外"
+    },
+    {
+      "jsonPath": "result.mvCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "31"
+    },
+    {
+      "jsonPath": "result.mvs[].alg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "alg_search_precision_mv_tab_basic"
+    },
+    {
+      "jsonPath": "result.mvs[].alias",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.mvs[].artistId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "7763"
+    },
+    {
+      "jsonPath": "result.mvs[].artistName",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "G.E.M.邓紫棋"
+    },
+    {
+      "jsonPath": "result.mvs[].artists[].alias",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "result.mvs[].artists[].alias[]",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "邓紫棋"
+    },
+    {
+      "jsonPath": "result.mvs[].artists[].id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "7763"
+    },
+    {
+      "jsonPath": "result.mvs[].artists[].name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "G.E.M.邓紫棋"
+    },
+    {
+      "jsonPath": "result.mvs[].artists[].transNames",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.mvs[].arTransName",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.mvs[].briefDesc",
+      "rawType": "union<string|null>",
+      "presence": 3,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": " 邓紫棋深情献唱演绎史诗爱情"
+    },
+    {
+      "jsonPath": "result.mvs[].cover",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "http://p3.music.126.net/T5u6tvoe6_AJkbOBP6jsIQ==/18635622580"
+    },
+    {
+      "jsonPath": "result.mvs[].desc",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.mvs[].duration",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "235590"
+    },
+    {
+      "jsonPath": "result.mvs[].id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "5404646"
+    },
+    {
+      "jsonPath": "result.mvs[].mark",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.mvs[].name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "光年之外"
+    },
+    {
+      "jsonPath": "result.mvs[].playCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": "25140730"
+    },
+    {
+      "jsonPath": "result.mvs[].transNames",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1004.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1004.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.playlistCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "291"
+    },
+    {
+      "jsonPath": "result.playlists[].action",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "orpheus://nm/playlist/detail?id=2488306802&autoplay=&referLo"
+    },
+    {
+      "jsonPath": "result.playlists[].actionType",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "orpheus"
+    },
+    {
+      "jsonPath": "result.playlists[].alg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "alg_search_rec_playlist_tab_basic_rewrite_{\"hit\":\"SongIdList"
+    },
+    {
+      "jsonPath": "result.playlists[].bookCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "88394"
+    },
+    {
+      "jsonPath": "result.playlists[].coverImgUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "http://p1.music.126.net/fkqFqMaEt0CzxYS-0NpCog==/18587244069"
+    },
+    {
+      "jsonPath": "result.playlists[].creator.authStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.playlists[].creator.avatarUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "http://p3.music.126.net/Yaj02ehGq7ZKreCAA_dXCQ==/10995116360"
+    },
+    {
+      "jsonPath": "result.playlists[].creator.experts",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.playlists[].creator.expertTags",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.playlists[].creator.nickname",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "Master-辰曜"
+    },
+    {
+      "jsonPath": "result.playlists[].creator.userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "1298326298"
+    },
+    {
+      "jsonPath": "result.playlists[].creator.userType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.playlists[].description",
+      "rawType": "union<null|string>",
+      "presence": 3,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "那个被称作“神仙打架”的年代，华语乐坛的夜空仿佛被无数颗璀璨的星辰点亮。那是一个不需要刻意去记歌名，只要前奏一响，就能瞬"
+    },
+    {
+      "jsonPath": "result.playlists[].highQuality",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result.playlists[].id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "2488306802"
+    },
+    {
+      "jsonPath": "result.playlists[].name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "邓紫棋热门单曲"
+    },
+    {
+      "jsonPath": "result.playlists[].officialPlaylistTitle",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.playlists[].officialTags",
+      "rawType": "null",
+      "presence": 2,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.playlists[].officialTags[]",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "最多人点"
+    },
+    {
+      "jsonPath": "result.playlists[].playCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "9528324"
+    },
+    {
+      "jsonPath": "result.playlists[].playlistType",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "UGC"
+    },
+    {
+      "jsonPath": "result.playlists[].recommendText",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "包含《光年之外》"
+    },
+    {
+      "jsonPath": "result.playlists[].score",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.playlists[].specialType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.playlists[].subscribed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result.playlists[].trackCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "49"
+    },
+    {
+      "jsonPath": "result.playlists[].userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1000.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": "1298326298"
+    },
+    {
+      "jsonPath": "result.searchQcReminder",
+      "rawType": "null",
+      "presence": 2,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type100.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1000.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.songCount",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "318"
+    },
+    {
+      "jsonPath": "result.songs[].album.alia[]",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1.none.001",
+      "example": "电影《太空旅客》中文主题曲"
+    },
+    {
+      "jsonPath": "result.songs[].album.artist.albumSize",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].album.artist.alias",
+      "rawType": "array<unknown>",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 15,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "result.songs[].album.artist.id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].album.artist.img1v1",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].album.artist.img1v1Url",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138"
+    },
+    {
+      "jsonPath": "result.songs[].album.artist.musicSize",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].album.artist.name",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.songs[].album.artist.picId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].album.copyrightId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].album.id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "35093341"
+    },
+    {
+      "jsonPath": "result.songs[].album.mark",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].album.name",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "光年之外"
+    },
+    {
+      "jsonPath": "result.songs[].album.picId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "18587244069235040"
+    },
+    {
+      "jsonPath": "result.songs[].album.publishTime",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "1483027200007"
+    },
+    {
+      "jsonPath": "result.songs[].album.size",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "result.songs[].album.status",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].alias",
+      "rawType": "array<unknown>",
+      "presence": 11,
+      "nulls": 0,
+      "empties": 11,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "result.songs[].alias[]",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "电影《太空旅客》中文主题曲"
+    },
+    {
+      "jsonPath": "result.songs[].artists[].albumSize",
+      "rawType": "number",
+      "presence": 23,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].artists[].alias",
+      "rawType": "array<unknown>",
+      "presence": 23,
+      "nulls": 0,
+      "empties": 23,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "result.songs[].artists[].id",
+      "rawType": "number",
+      "presence": 23,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "7763"
+    },
+    {
+      "jsonPath": "result.songs[].artists[].img1v1",
+      "rawType": "number",
+      "presence": 23,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].artists[].img1v1Url",
+      "rawType": "string",
+      "presence": 23,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "https://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138"
+    },
+    {
+      "jsonPath": "result.songs[].artists[].musicSize",
+      "rawType": "number",
+      "presence": 23,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].artists[].name",
+      "rawType": "string",
+      "presence": 23,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "G.E.M.邓紫棋"
+    },
+    {
+      "jsonPath": "result.songs[].artists[].picId",
+      "rawType": "number",
+      "presence": 23,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].copyrightId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "1415926"
+    },
+    {
+      "jsonPath": "result.songs[].duration",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "235505"
+    },
+    {
+      "jsonPath": "result.songs[].fee",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "result.songs[].ftype",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "449818741"
+    },
+    {
+      "jsonPath": "result.songs[].mark",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "17179877376"
+    },
+    {
+      "jsonPath": "result.songs[].mvid",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "5404646"
+    },
+    {
+      "jsonPath": "result.songs[].name",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "光年之外"
+    },
+    {
+      "jsonPath": "result.songs[].rtype",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.songs[].status",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.videoCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": "22"
+    },
+    {
+      "jsonPath": "result.videos[].alg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": "alg_search_precision_video_tab_basic"
+    },
+    {
+      "jsonPath": "result.videos[].aliaName",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.videos[].coverUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": "https://p3.music.126.net/orxhKbrJbmP53TY7EVIqYg==/1099511656"
+    },
+    {
+      "jsonPath": "result.videos[].creator[].userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": "37511311"
+    },
+    {
+      "jsonPath": "result.videos[].creator[].userName",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": "青岛泰安"
+    },
+    {
+      "jsonPath": "result.videos[].durationms",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": "124000"
+    },
+    {
+      "jsonPath": "result.videos[].markTypes",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.videos[].playTime",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": "1571"
+    },
+    {
+      "jsonPath": "result.videos[].title",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": "青岛城市管理学校2021文艺汇演《光年之外》卜沣、孟俊丽"
+    },
+    {
+      "jsonPath": "result.videos[].transName",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.videos[].type",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.videos[].vid",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "example": "14226082"
+    },
+    {
+      "jsonPath": "trp.rules[]",
+      "rawType": "string",
+      "presence": 13,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1.anon.001",
+      "lastSeenCase": "ncm.search.kw2.type1.none.001",
+      "example": "search_tab_song::552458417::searchAlg$isGlobalQuality$1"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.search.empty.none.neg.001",
+      "sampleHash": "9723de759d9337a6238450eb0e6bbdcc5220b47c39e09672692545caa5346cfe",
+      "rawFile": "ncm.search.ncm.search.empty.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type1.anon.001",
+      "sampleHash": "c97947377a2383638ca05c84e365e9c56f09972ce9ba342a73d1423d5e5e389d",
+      "rawFile": "ncm.search.ncm.search.kw1.type1.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type1.inv.001",
+      "sampleHash": "2e91b72b08783f66bb4f80236a0ace9275b4e48e50e923ee27d70bcc1f1c1d83",
+      "rawFile": "ncm.search.ncm.search.kw1.type1.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type1.none.001",
+      "sampleHash": "70ba5e833ae6d3a678c7d63ca8fecb2eb0d75af35879d1ace59d706fe8a51643",
+      "rawFile": "ncm.search.ncm.search.kw1.type1.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type1.none.002",
+      "sampleHash": "b65db5a71abf1908c79c009e4235fa100e8f91f728270aca287a63743787ae2e",
+      "rawFile": "ncm.search.ncm.search.kw1.type1.none.002.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type10.none.001",
+      "sampleHash": "27efd24e6c745ddf154180493e687dcf7d679cc0e850ce4c807921e3d015904f",
+      "rawFile": "ncm.search.ncm.search.kw1.type10.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type100.none.001",
+      "sampleHash": "ab5f092fa96602e60ac4852c9e2f396ee01a3f370387f2a1e412ea45b82fd9cc",
+      "rawFile": "ncm.search.ncm.search.kw1.type100.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type1000.none.001",
+      "sampleHash": "322e6c207748f45b0bc021082ec1c275a587669ac39d6a8f361d2ea740659cc5",
+      "rawFile": "ncm.search.ncm.search.kw1.type1000.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type1004.none.001",
+      "sampleHash": "34fbac49c3987ecf4586c74e6df81ab75d7b05dceb2dfa5119d8a8ad7d112ce7",
+      "rawFile": "ncm.search.ncm.search.kw1.type1004.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type1014.none.001",
+      "sampleHash": "e737d9c9eb0c060d2bfe4693819bd1f5e33675f936f510a5d9a827a558d60b4d",
+      "rawFile": "ncm.search.ncm.search.kw1.type1014.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw2.type1.none.001",
+      "sampleHash": "d3283f62877c862c0ee6de24d974e0c8ee48af984a7d9d60baec26d4dff36c16",
+      "rawFile": "ncm.search.ncm.search.kw2.type1.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.type999.none.neg.001",
+      "sampleHash": "4e8e5feb3c3bdb4d878395b051a875959c6490b7cafcf560dc6fdc91fe45f1f7",
+      "rawFile": "ncm.search.ncm.search.type999.none.neg.001.raw.json"
+    }
+  ]
 }

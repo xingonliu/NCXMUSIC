@@ -1,0 +1,79 @@
+{
+  "meta": {
+    "caseId": "ncm.song_url_v1.A.lossless.anon.001",
+    "apiAuditId": "ncm.song_url_v1",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "449818741",
+      "level": "lossless"
+    },
+    "startedAt": "2026-08-04T11:10:35.788Z",
+    "endedAt": "2026-08-04T11:10:35.926Z",
+    "durationMs": 138,
+    "attempts": 1
+  },
+  "body": {
+    "data": [
+      {
+        "id": 449818741,
+        "url": "http://m702.music.126.net/20260804193535/c7c46a7295045a4f1837392a39298380/jd-musicrep-ts/1a7f/b834/b6aa/6d022858528f8d8b3cb329a5321e3909.mp3#hash=8a5fae284eaa",
+        "br": 128012,
+        "size": 481115,
+        "md5": "6d022858528f8d8b3cb329a5321e3909",
+        "code": 200,
+        "expi": 1200,
+        "type": "MP3",
+        "gain": 1.5,
+        "peak": 0,
+        "closedGain": -6,
+        "closedPeak": 0.999,
+        "fee": 1,
+        "uf": null,
+        "payed": 0,
+        "flag": 2065412,
+        "canExtend": false,
+        "freeTrialInfo": {
+          "fragmentType": 6,
+          "start": 0,
+          "end": 30,
+          "algData": {
+            "fragSource": "alg",
+            "audioEffect": 1
+          }
+        },
+        "level": "standard",
+        "encodeType": "mp3",
+        "channelLayout": null,
+        "freeTrialPrivilege": {
+          "resConsumable": false,
+          "userConsumable": false,
+          "listenType": 0,
+          "cannotListenReason": 1,
+          "playReason": null,
+          "freeLimitTagType": null
+        },
+        "freeTimeTrialPrivilege": {
+          "resConsumable": false,
+          "userConsumable": false,
+          "type": 0,
+          "remainTime": 0
+        },
+        "urlSource": 0,
+        "rightSource": 0,
+        "podcastCtrp": null,
+        "effectTypes": null,
+        "time": 30040,
+        "message": null,
+        "levelConfuse": null,
+        "musicId": "11273635073",
+        "accompany": null,
+        "sr": 44100,
+        "auEff": 1,
+        "immerseType": null,
+        "beatType": 0
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

@@ -32,39 +32,208 @@
       {
         "caseId": "ncm.lyric.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 115,
+        "error": null,
+        "sampleHash": "88b16ddcbc8cd33af7d387cf7d408b6a92def6805ae0d287a4cf5011f55a521b",
+        "rawFile": "ncm.lyric.ncm.lyric.anon.001.raw.json"
       },
       {
         "caseId": "ncm.lyric.id0.none.neg.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 86,
+        "error": null,
+        "sampleHash": "9342922e7b41f7414598cac910349986f713d6e2c06d18849d1f9235fdd7e4bb",
+        "rawFile": "ncm.lyric.ncm.lyric.id0.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.lyric.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 80,
+        "error": null,
+        "sampleHash": "b3dadd3c5414ad4f358aa65c381c88a3e5226fe999b9abbcdd1de5a234ec7a5b",
+        "rawFile": "ncm.lyric.ncm.lyric.inv.001.raw.json"
       },
       {
         "caseId": "ncm.lyric.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 84,
+        "error": null,
+        "sampleHash": "b62155412214d5c06702fbe09c890df80845d209e0370fdb5510041113fa974a",
+        "rawFile": "ncm.lyric.ncm.lyric.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "briefDesc",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.lyric.anon.001",
+      "lastSeenCase": "ncm.lyric.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.lyric.anon.001",
+      "lastSeenCase": "ncm.lyric.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "lrc.lyric",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.lyric.anon.001",
+      "lastSeenCase": "ncm.lyric.none.001",
+      "example": "[00:00.00]暂无歌词"
+    },
+    {
+      "jsonPath": "lrc.version",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.lyric.anon.001",
+      "lastSeenCase": "ncm.lyric.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "needDesc",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.lyric.anon.001",
+      "lastSeenCase": "ncm.lyric.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "qfy",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.lyric.anon.001",
+      "lastSeenCase": "ncm.lyric.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "sfy",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.lyric.anon.001",
+      "lastSeenCase": "ncm.lyric.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "sgc",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.lyric.anon.001",
+      "lastSeenCase": "ncm.lyric.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "uncollected",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.lyric.anon.001",
+      "lastSeenCase": "ncm.lyric.none.001",
+      "example": "true"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
   "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
-  "evidence": []
+  "evidence": [
+    {
+      "caseId": "ncm.lyric.anon.001",
+      "sampleHash": "88b16ddcbc8cd33af7d387cf7d408b6a92def6805ae0d287a4cf5011f55a521b",
+      "rawFile": "ncm.lyric.ncm.lyric.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.lyric.id0.none.neg.001",
+      "sampleHash": "9342922e7b41f7414598cac910349986f713d6e2c06d18849d1f9235fdd7e4bb",
+      "rawFile": "ncm.lyric.ncm.lyric.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.lyric.inv.001",
+      "sampleHash": "b3dadd3c5414ad4f358aa65c381c88a3e5226fe999b9abbcdd1de5a234ec7a5b",
+      "rawFile": "ncm.lyric.ncm.lyric.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.lyric.none.001",
+      "sampleHash": "b62155412214d5c06702fbe09c890df80845d209e0370fdb5510041113fa974a",
+      "rawFile": "ncm.lyric.ncm.lyric.none.001.raw.json"
+    }
+  ]
 }

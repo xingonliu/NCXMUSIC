@@ -42,39 +42,1633 @@
       {
         "caseId": "ncm.top_playlist_highquality.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 144,
+        "error": null,
+        "sampleHash": "72bd84de78c9286896ed2014621962ddd68f2f561476aee442b588cbcaa42e5f",
+        "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.anon.001.raw.json"
       },
       {
         "caseId": "ncm.top_playlist_highquality.catzh.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 142,
+        "error": null,
+        "sampleHash": "df303605987dec54ac67b44465c3bc0c6adf3c110bef197ec913b6d31102471f",
+        "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.catzh.none.001.raw.json"
       },
       {
         "caseId": "ncm.top_playlist_highquality.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 136,
+        "error": null,
+        "sampleHash": "4eefb47ee6500c4b76abc793b5e787486aedad36e77dea21c2141944d5b82143",
+        "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.inv.001.raw.json"
       },
       {
         "caseId": "ncm.top_playlist_highquality.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 137,
+        "error": null,
+        "sampleHash": "81d064c60fff13436b11a16a376caacabba4d8b12ecbd704ed91bfa1adc5fb7f",
+        "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "lasttime",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "1638864996000"
+    },
+    {
+      "jsonPath": "more",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "playlists[].adType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].anonimous",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "playlists[].cloudTrackCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].commentCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "281"
+    },
+    {
+      "jsonPath": "playlists[].commentThreadId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "A_PL_0_6666112560"
+    },
+    {
+      "jsonPath": "playlists[].copywriter",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "playlists[].coverImgId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951165813403260"
+    },
+    {
+      "jsonPath": "playlists[].coverImgId_str",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951165813403264"
+    },
+    {
+      "jsonPath": "playlists[].coverImgUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "http://p4.music.126.net/SA6bW1UlPP04rFB2pj-FvQ==/10995116581"
+    },
+    {
+      "jsonPath": "playlists[].coverStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "3"
+    },
+    {
+      "jsonPath": "playlists[].createTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "1616028342548"
+    },
+    {
+      "jsonPath": "playlists[].creator.accountStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].creator.anchor",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "playlists[].creator.authenticationTypes",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "528448"
+    },
+    {
+      "jsonPath": "playlists[].creator.authority",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].creator.authStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].creator.avatarDetail.identityIconUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340168"
+    },
+    {
+      "jsonPath": "playlists[].creator.avatarDetail.identityLevel",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "3"
+    },
+    {
+      "jsonPath": "playlists[].creator.avatarDetail.userType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "playlists[].creator.avatarImgId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951166482035730"
+    },
+    {
+      "jsonPath": "playlists[].creator.avatarImgId_str",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951166482035726"
+    },
+    {
+      "jsonPath": "playlists[].creator.avatarImgIdStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951166482035726"
+    },
+    {
+      "jsonPath": "playlists[].creator.avatarUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "http://p1.music.126.net/Ucwr8nSWgsZemlwRIbGkhg==/10995116648"
+    },
+    {
+      "jsonPath": "playlists[].creator.backgroundImgId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951165424649820"
+    },
+    {
+      "jsonPath": "playlists[].creator.backgroundImgIdStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951165424649829"
+    },
+    {
+      "jsonPath": "playlists[].creator.backgroundUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "http://p1.music.126.net/PHPJLipW-QACxLrAbaGlcw==/10995116542"
+    },
+    {
+      "jsonPath": "playlists[].creator.birthday",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "878313600000"
+    },
+    {
+      "jsonPath": "playlists[].creator.city",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "1007700"
+    },
+    {
+      "jsonPath": "playlists[].creator.defaultAvatar",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "playlists[].creator.description",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "playlists[].creator.detailDescription",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "playlists[].creator.djStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "10"
+    },
+    {
+      "jsonPath": "playlists[].creator.experts",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "playlists[].creator.expertTags[]",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "英伦"
+    },
+    {
+      "jsonPath": "playlists[].creator.followed",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "playlists[].creator.gender",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "playlists[].creator.mutual",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "playlists[].creator.nickname",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "十三逆旅Corbin"
+    },
+    {
+      "jsonPath": "playlists[].creator.province",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "1000000"
+    },
+    {
+      "jsonPath": "playlists[].creator.remarkName",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "playlists[].creator.signature",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "听不尽的摇滚，读不完的诗。\n"
+    },
+    {
+      "jsonPath": "playlists[].creator.userId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "341030416"
+    },
+    {
+      "jsonPath": "playlists[].creator.userType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "playlists[].creator.vipType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "11"
+    },
+    {
+      "jsonPath": "playlists[].description",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "可爱的摇滚是怎么样的呢？\n编曲“妙思清奇”，听感极具丰富，上头洗脑不按常理出牌，旋律另类新趣令人诧异，颠覆广大听众对摇滚"
+    },
+    {
+      "jsonPath": "playlists[].highQuality",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "playlists[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "6666112560"
+    },
+    {
+      "jsonPath": "playlists[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "可爱摇滚｜一剂抵挡春困的上好良药"
+    },
+    {
+      "jsonPath": "playlists[].newImported",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "playlists[].ordered",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "playlists[].playCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "6792089"
+    },
+    {
+      "jsonPath": "playlists[].privacy",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].recommendInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "playlists[].recommendText",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "playlists[].shareCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "3002"
+    },
+    {
+      "jsonPath": "playlists[].socialPlaylistCover",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "playlists[].specialType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].status",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].subscribed",
+      "rawType": "union<boolean|null>",
+      "presence": 12,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "playlists[].subscribedCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "36411"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].accountStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].anchor",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].authenticationTypes",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].authority",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].authStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].avatarDetail",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].avatarImgId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951166641692820"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].avatarImgId_str",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951166641692819"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].avatarImgIdStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951166641692819"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].avatarUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "http://p1.music.126.net/FOP6J7_zHK0U1MRMOJHN3g==/10995116664"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].backgroundImgId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951166641685170"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].backgroundImgIdStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "109951166641685163"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].backgroundUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "http://p1.music.126.net/fmrmH5-qHs6hTJ47S2nsDA==/10995116664"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].birthday",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "1113235200000"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].city",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "440100"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].defaultAvatar",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].description",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].detailDescription",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].djStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].experts",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].expertTags",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].followed",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].gender",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].mutual",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].nickname",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "三川川山"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].province",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "440000"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].remarkName",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].signature",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].userId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "1836132563"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].userType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].subscribers[].vipType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "11"
+    },
+    {
+      "jsonPath": "playlists[].tag",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "欧美,摇滚,快乐"
+    },
+    {
+      "jsonPath": "playlists[].tags[]",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "欧美"
+    },
+    {
+      "jsonPath": "playlists[].totalDuration",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "playlists[].trackCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "125"
+    },
+    {
+      "jsonPath": "playlists[].trackNumberUpdateTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "1773660381543"
+    },
+    {
+      "jsonPath": "playlists[].tracks",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "playlists[].trackUpdateTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "1785634217751"
+    },
+    {
+      "jsonPath": "playlists[].updateTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "1773717413000"
+    },
+    {
+      "jsonPath": "playlists[].userId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "341030416"
+    },
+    {
+      "jsonPath": "total",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.top_playlist_highquality.anon.001",
+      "lastSeenCase": "ncm.top_playlist_highquality.none.001",
+      "example": "402"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.top_playlist_highquality.anon.001",
+      "sampleHash": "72bd84de78c9286896ed2014621962ddd68f2f561476aee442b588cbcaa42e5f",
+      "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.top_playlist_highquality.catzh.none.001",
+      "sampleHash": "df303605987dec54ac67b44465c3bc0c6adf3c110bef197ec913b6d31102471f",
+      "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.catzh.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.top_playlist_highquality.inv.001",
+      "sampleHash": "4eefb47ee6500c4b76abc793b5e787486aedad36e77dea21c2141944d5b82143",
+      "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.top_playlist_highquality.none.001",
+      "sampleHash": "81d064c60fff13436b11a16a376caacabba4d8b12ecbd704ed91bfa1adc5fb7f",
+      "rawFile": "ncm.top_playlist_highquality.ncm.top_playlist_highquality.none.001.raw.json"
+    }
+  ]
 }

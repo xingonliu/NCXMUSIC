@@ -89,18 +89,16 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: 未完成 AUTH_ANON/AUTH_USER 层与扫码流程；unikey 为一次性凭据仅本地保留）
-- 说明：NONE×2 返回 unikey（UUID），两次轮换；unikey 已入脱敏名单
+- 终态：**partial**（blocker: 未完成扫码流程与更多登录层；unikey 一次性凭据仅本地保留）
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
-| ncm.login_qr_key.none.min.001 | AUTH_NONE | err | 200 | 72 |  |
-| ncm.login_qr_key.none.min.002 | AUTH_NONE | err | 200 | 166 |  |
+| ncm.login_qr_key.none.min.001 | AUTH_NONE | - | 200 | 72 |  |
+| ncm.login_qr_key.none.min.002 | AUTH_NONE | - | 200 | 166 |  |
 
-### 13.1 运行字段表（Phase 1）
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
 
 | JSONPath | rawType | presence | null | empty | auths | example |
 | --- | --- | --- | --- | --- | --- | --- |

@@ -92,10 +92,9 @@
 
 ## 14. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补）
-- 说明：见 §14 运行记录与字段表
+- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
 | ncm.search_suggest.empty.none.neg.001 | AUTH_NONE | - | 400 | 56 |  |
 | ncm.search_suggest.kw1.anon.001 | AUTH_ANON | - | 200 | 84 |  |
@@ -103,3 +102,105 @@
 | ncm.search_suggest.kw1.none.001 | AUTH_NONE | - | 200 | 86 |  |
 | ncm.search_suggest.kw2.none.001 | AUTH_NONE | - | 200 | 264 |  |
 | ncm.search_suggest.mobile.none.001 | AUTH_NONE | - | 200 | 109 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 6 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `400` |
+| `result.albums[].alia[]` | string | 3 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `电影《太空旅客》中文主题曲` |
+| `result.albums[].artist.albumSize` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `57` |
+| `result.albums[].artist.alia[]` | string | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `G.E.M.` |
+| `result.albums[].artist.alias` | array<unknown> | 3 | 0 | 3 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `undefined` |
+| `result.albums[].artist.alias[]` | string | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `G.E.M.` |
+| `result.albums[].artist.appendRecText` | null | 8 | 8 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.albums[].artist.fansGroup` | null | 8 | 8 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.albums[].artist.fansSize` | null | 8 | 8 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.albums[].artist.id` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `7763` |
+| `result.albums[].artist.img1v1` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.albums[].artist.img1v1Url` | string | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p4.music.126.net/6y-UleORITEDbvr` |
+| `result.albums[].artist.musicSize` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `420` |
+| `result.albums[].artist.name` | string | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `G.E.M.邓紫棋` |
+| `result.albums[].artist.picId` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951167773880640` |
+| `result.albums[].artist.picUrl` | string | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p3.music.126.net/fq1O8ZRT5_FHzg_` |
+| `result.albums[].artist.recommendText` | null | 8 | 8 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.albums[].artist.trans` | null | 8 | 8 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.albums[].copyrightId` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.albums[].id` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `35093341` |
+| `result.albums[].mark` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.albums[].name` | string | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `光年之外` |
+| `result.albums[].picId` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `18587244069235040` |
+| `result.albums[].publishTime` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1483027200007` |
+| `result.albums[].size` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1` |
+| `result.albums[].status` | number | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.allMatch[].alg` | string | 3 | 0 | 0 | AUTH_NONE | `alg_suggest_other_Consume;Album;Song___{` |
+| `result.allMatch[].feature` | string | 3 | 0 | 0 | AUTH_NONE | `` |
+| `result.allMatch[].keyword` | string | 3 | 0 | 0 | AUTH_NONE | `光年之外` |
+| `result.allMatch[].lastKeyword` | string | 3 | 0 | 0 | AUTH_NONE | `` |
+| `result.allMatch[].type` | number | 3 | 0 | 0 | AUTH_NONE | `1` |
+| `result.artists[].albumSize` | number | 1 | 0 | 0 | AUTH_NONE | `41` |
+| `result.artists[].alia[]` | string | 2 | 0 | 0 | AUTH_NONE | `Jay Chou` |
+| `result.artists[].alias[]` | string | 2 | 0 | 0 | AUTH_NONE | `Jay Chou` |
+| `result.artists[].appendRecText` | null | 1 | 1 | 0 | AUTH_NONE |  |
+| `result.artists[].fansGroup` | null | 1 | 1 | 0 | AUTH_NONE |  |
+| `result.artists[].fansSize` | null | 1 | 1 | 0 | AUTH_NONE |  |
+| `result.artists[].id` | number | 1 | 0 | 0 | AUTH_NONE | `6452` |
+| `result.artists[].img1v1` | number | 1 | 0 | 0 | AUTH_NONE | `109951169164936940` |
+| `result.artists[].img1v1Url` | string | 1 | 0 | 0 | AUTH_NONE | `https://p4.music.126.net/_ECPuM0s0qtWhkp` |
+| `result.artists[].musicSize` | number | 1 | 0 | 0 | AUTH_NONE | `568` |
+| `result.artists[].name` | string | 1 | 0 | 0 | AUTH_NONE | `周杰伦` |
+| `result.artists[].picId` | number | 1 | 0 | 0 | AUTH_NONE | `109951169164936450` |
+| `result.artists[].picUrl` | string | 1 | 0 | 0 | AUTH_NONE | `https://p3.music.126.net/NWv6PtSBkyWZzqb` |
+| `result.artists[].recommendText` | null | 1 | 1 | 0 | AUTH_NONE |  |
+| `result.artists[].trans` | null | 1 | 1 | 0 | AUTH_NONE |  |
+| `result.order[]` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `songs` |
+| `result.songs[].album.alia[]` | string | 3 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `电影《太空旅客》中文主题曲` |
+| `result.songs[].album.artist.albumSize` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].album.artist.alias` | array<unknown> | 12 | 0 | 12 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `undefined` |
+| `result.songs[].album.artist.appendRecText` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].album.artist.fansGroup` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].album.artist.fansSize` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].album.artist.id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].album.artist.img1v1` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].album.artist.img1v1Url` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p3.music.126.net/6y-UleORITEDbvr` |
+| `result.songs[].album.artist.musicSize` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].album.artist.name` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `result.songs[].album.artist.picId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].album.artist.picUrl` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].album.artist.recommendText` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].album.artist.trans` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].album.copyrightId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].album.id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `35093341` |
+| `result.songs[].album.mark` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].album.name` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `光年之外` |
+| `result.songs[].album.picId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `18587244069235040` |
+| `result.songs[].album.publishTime` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1483027200007` |
+| `result.songs[].album.size` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1` |
+| `result.songs[].album.status` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].alias` | array<unknown> | 8 | 0 | 8 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `undefined` |
+| `result.songs[].alias[]` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `电影《太空旅客》中文主题曲` |
+| `result.songs[].artists[].albumSize` | number | 19 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].artists[].alias` | array<unknown> | 19 | 0 | 19 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `undefined` |
+| `result.songs[].artists[].appendRecText` | null | 19 | 19 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].artists[].fansGroup` | null | 19 | 19 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].artists[].fansSize` | null | 19 | 19 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].artists[].id` | number | 19 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `7763` |
+| `result.songs[].artists[].img1v1` | number | 19 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].artists[].img1v1Url` | string | 19 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p4.music.126.net/6y-UleORITEDbvr` |
+| `result.songs[].artists[].musicSize` | number | 19 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].artists[].name` | string | 19 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `G.E.M.邓紫棋` |
+| `result.songs[].artists[].picId` | number | 19 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].artists[].picUrl` | null | 19 | 19 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].artists[].recommendText` | null | 19 | 19 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].artists[].trans` | null | 19 | 19 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].copyrightId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1415926` |
+| `result.songs[].duration` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `235505` |
+| `result.songs[].fee` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1` |
+| `result.songs[].ftype` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `449818741` |
+| `result.songs[].mark` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `17179877376` |
+| `result.songs[].mvid` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `5404646` |
+| `result.songs[].name` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `光年之外` |
+| `result.songs[].rtype` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.songs[].rUrl` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `result.songs[].status` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |

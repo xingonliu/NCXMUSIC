@@ -89,7 +89,6 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 15. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
 - 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
@@ -100,3 +99,13 @@
 | ncm.song_music_detail.id0.none.neg.001 | AUTH_NONE | - | 400 | 76 |  |
 | ncm.song_music_detail.inv.001 | AUTH_INVALID_EXPIRED | - | 400 | 90 |  |
 | ncm.song_music_detail.none.001 | AUTH_NONE | - | 400 | 77 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `400` |
+| `data` | null | 4 | 4 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `error` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `true` |
+| `message` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `参数异常` |
+| `success` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |

@@ -28,30 +28,42 @@
       {
         "caseId": "ncm.inner_version.none.min.001",
         "auth": "AUTH_NONE",
+        "phase": 1,
         "code": 200,
         "durationMs": 0,
-        "error": null
+        "error": null,
+        "sampleHash": "7f8da05d3060d6d9e49961474dd3b8e6456346d95209c5f413c3aacc05c28ebb",
+        "rawFile": "ncm.inner_version.ncm.inner_version.none.min.001.raw.json"
       },
       {
         "caseId": "ncm.inner_version.none.min.002",
         "auth": "AUTH_NONE",
+        "phase": 1,
         "code": 200,
         "durationMs": 0,
-        "error": null
+        "error": null,
+        "sampleHash": "638a15ff0c4b960fe54b023a7d32a0a377ef0eadcf0c12f5912d4575846b0ca7",
+        "rawFile": "ncm.inner_version.ncm.inner_version.none.min.002.raw.json"
       },
       {
         "caseId": "ncm.inner_version.none.min.003",
         "auth": "AUTH_NONE",
+        "phase": 1,
         "code": 200,
         "durationMs": 0,
-        "error": null
+        "error": null,
+        "sampleHash": "9479dc66afe093de3f00715a72f36924eaf97dadcb2330a43b832bfe33a29d17",
+        "rawFile": "ncm.inner_version.ncm.inner_version.none.min.003.raw.json"
       },
       {
         "caseId": "ncm.inner_version.none.neg.004",
         "auth": "AUTH_NONE",
+        "phase": 1,
         "code": 200,
         "durationMs": 0,
-        "error": null
+        "error": null,
+        "sampleHash": "e0195dc85477c5e020cef04a7c5b5b6d904ba2e5e82da6bb660574c3532a5be8",
+        "rawFile": "ncm.inner_version.ncm.inner_version.none.neg.004.raw.json"
       }
     ]
   },
@@ -59,34 +71,28 @@
     {
       "jsonPath": "code",
       "rawType": "number",
-      "presenceCount": 4,
-      "sampleCount": 4,
-      "nullCount": 0,
-      "emptyCount": 0,
-      "authConditions": [
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
         "AUTH_NONE"
       ],
-      "exampleRedacted": "200",
-      "sourceEvidence": "runtime-phase1",
-      "semanticName": "",
-      "semanticConfidence": "unknown",
-      "conflictId": null
+      "firstSeenCase": "ncm.inner_version.none.min.001",
+      "lastSeenCase": "ncm.inner_version.none.neg.004",
+      "example": "200"
     },
     {
       "jsonPath": "data.version",
       "rawType": "string",
-      "presenceCount": 4,
-      "sampleCount": 4,
-      "nullCount": 0,
-      "emptyCount": 0,
-      "authConditions": [
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
         "AUTH_NONE"
       ],
-      "exampleRedacted": "4.39.0",
-      "sourceEvidence": "runtime-phase1",
-      "semanticName": "",
-      "semanticConfidence": "unknown",
-      "conflictId": null
+      "firstSeenCase": "ncm.inner_version.none.min.001",
+      "lastSeenCase": "ncm.inner_version.none.neg.004",
+      "example": "4.39.0"
     }
   ],
   "errors": [],
@@ -98,23 +104,23 @@
   "evidence": [
     {
       "caseId": "ncm.inner_version.none.min.001",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.inner_version.ncm.inner_version.none.min.001.raw.json"
+      "sampleHash": "7f8da05d3060d6d9e49961474dd3b8e6456346d95209c5f413c3aacc05c28ebb",
+      "rawFile": "ncm.inner_version.ncm.inner_version.none.min.001.raw.json"
     },
     {
       "caseId": "ncm.inner_version.none.min.002",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.inner_version.ncm.inner_version.none.min.002.raw.json"
+      "sampleHash": "638a15ff0c4b960fe54b023a7d32a0a377ef0eadcf0c12f5912d4575846b0ca7",
+      "rawFile": "ncm.inner_version.ncm.inner_version.none.min.002.raw.json"
     },
     {
       "caseId": "ncm.inner_version.none.min.003",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.inner_version.ncm.inner_version.none.min.003.raw.json"
+      "sampleHash": "9479dc66afe093de3f00715a72f36924eaf97dadcb2330a43b832bfe33a29d17",
+      "rawFile": "ncm.inner_version.ncm.inner_version.none.min.003.raw.json"
     },
     {
       "caseId": "ncm.inner_version.none.neg.004",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.inner_version.ncm.inner_version.none.neg.004.raw.json"
+      "sampleHash": "e0195dc85477c5e020cef04a7c5b5b6d904ba2e5e82da6bb660574c3532a5be8",
+      "rawFile": "ncm.inner_version.ncm.inner_version.none.neg.004.raw.json"
     }
   ]
 }

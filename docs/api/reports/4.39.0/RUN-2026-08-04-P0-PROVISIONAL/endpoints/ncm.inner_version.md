@@ -89,20 +89,18 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
 - 终态：**passed**
-- 说明：本地常量返回（localOnly）；未登录/游客/无效 Cookie 与多余参数均返回同一结构，登录与参数维度不适用已取证
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
-| ncm.inner_version.none.min.001 | AUTH_NONE | err | 200 |  |  |
-| ncm.inner_version.none.min.002 | AUTH_NONE | err | 200 |  |  |
-| ncm.inner_version.none.min.003 | AUTH_NONE | err | 200 |  |  |
-| ncm.inner_version.none.neg.004 | AUTH_NONE | err | 200 |  |  |
+| ncm.inner_version.none.min.001 | AUTH_NONE | - | 200 | - |  |
+| ncm.inner_version.none.min.002 | AUTH_NONE | - | 200 | - |  |
+| ncm.inner_version.none.min.003 | AUTH_NONE | - | 200 | - |  |
+| ncm.inner_version.none.neg.004 | AUTH_NONE | - | 200 | - |  |
 
-### 13.1 运行字段表（Phase 1）
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
 
 | JSONPath | rawType | presence | null | empty | auths | example |
 | --- | --- | --- | --- | --- | --- | --- |

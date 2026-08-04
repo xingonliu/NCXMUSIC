@@ -92,7 +92,6 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 15. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
 - 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
@@ -101,7 +100,122 @@
 | --- | --- | --- | --- | --- | --- |
 | ncm.artist_songs.anon.001 | AUTH_ANON | - | 200 | 217 |  |
 | ncm.artist_songs.hot.none.001 | AUTH_NONE | - | 200 | 120 |  |
-| ncm.artist_songs.id0.none.neg.001 | AUTH_NONE | err(400) | -462 |  | {"code":-462,"data":{"actionCode":null,"verifyType":40,"verifyId":1007602,"verifyUrl":"https://st.music.163.com/encrypt- |
+| ncm.artist_songs.id0.none.neg.001 | AUTH_NONE | err | -462 | - | code -462 |
 | ncm.artist_songs.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 345 |  |
 | ncm.artist_songs.page.none.001 | AUTH_NONE | - | 200 | 140 |  |
 | ncm.artist_songs.time.none.001 | AUTH_NONE | - | 200 | 112 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 5 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `200` |
+| `more` | boolean | 5 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `true` |
+| `songs[].a` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].al.alia[]` | string | 7 | 0 | 0 | AUTH_ANON,AUTH_NONE | `Heartbeat` |
+| `songs[].al.id` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `174925713` |
+| `songs[].al.name` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `T.I.M.E.` |
+| `songs[].al.pic` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951168919708420` |
+| `songs[].al.pic_str` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `109951168919708423` |
+| `songs[].al.picUrl` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `https://p4.music.126.net/aJWtwvdYRXvKUpA` |
+| `songs[].al.tns[]` | string | 2 | 0 | 0 | AUTH_NONE | `争` |
+| `songs[].alia` | array<unknown> | 12 | 0 | 12 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `undefined` |
+| `songs[].alia[]` | string | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `Full Stop` |
+| `songs[].ar[].id` | number | 22 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `7763` |
+| `songs[].ar[].name` | string | 22 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `G.E.M.邓紫棋` |
+| `songs[].artistClassics` | boolean | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `true` |
+| `songs[].cd` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `01` |
+| `songs[].cf` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `songs[].cp` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `2713508` |
+| `songs[].crbt` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].djId` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].dt` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `253735` |
+| `songs[].fee` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1` |
+| `songs[].ftype` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].h.br` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `320000` |
+| `songs[].h.fid` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].h.size` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `10152045` |
+| `songs[].h.sr` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `48000` |
+| `songs[].h.vd` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `-27088` |
+| `songs[].hr` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].hr.br` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `1620630` |
+| `songs[].hr.fid` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `songs[].hr.size` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `51401370` |
+| `songs[].hr.sr` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `48000` |
+| `songs[].hr.vd` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `-27451` |
+| `songs[].id` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `2083785152` |
+| `songs[].l.br` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `128000` |
+| `songs[].l.fid` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].l.size` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `4060845` |
+| `songs[].l.sr` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `48000` |
+| `songs[].l.vd` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `-22900` |
+| `songs[].m.br` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `192000` |
+| `songs[].m.fid` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].m.size` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `6091245` |
+| `songs[].m.sr` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `48000` |
+| `songs[].m.vd` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `-24509` |
+| `songs[].mark` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `17716748288` |
+| `songs[].mst` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `9` |
+| `songs[].mv` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].name` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `唯一` |
+| `songs[].no` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `2` |
+| `songs[].noCopyrightRcmd` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].pop` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `100` |
+| `songs[].privilege.bd` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].privilege.chargeInfoList[].chargeMessage` | null | 45 | 45 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].privilege.chargeInfoList[].chargeType` | number | 45 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1` |
+| `songs[].privilege.chargeInfoList[].chargeUrl` | null | 45 | 45 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].privilege.chargeInfoList[].rate` | number | 45 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `128000` |
+| `songs[].privilege.code` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].privilege.cp` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1` |
+| `songs[].privilege.cs` | boolean | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `songs[].privilege.dl` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].privilege.dlLevel` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `none` |
+| `songs[].privilege.dlLevels` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].privilege.downloadMaxbr` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `999000` |
+| `songs[].privilege.downloadMaxBrLevel` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `jymaster` |
+| `songs[].privilege.fee` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1` |
+| `songs[].privilege.fl` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].privilege.flag` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1545476` |
+| `songs[].privilege.flLevel` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `none` |
+| `songs[].privilege.freeTrialPrivilege.cannotListenReason` | union<number|null> | 15 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1` |
+| `songs[].privilege.freeTrialPrivilege.freeLimitTagType` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].privilege.freeTrialPrivilege.listenType` | union<number|null> | 15 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].privilege.freeTrialPrivilege.playReason` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].privilege.freeTrialPrivilege.resConsumable` | boolean | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `songs[].privilege.freeTrialPrivilege.userConsumable` | boolean | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `songs[].privilege.id` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `2083785152` |
+| `songs[].privilege.ignoreCache` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].privilege.maxbr` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `999000` |
+| `songs[].privilege.maxBrLevel` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `jymaster` |
+| `songs[].privilege.message` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].privilege.payed` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].privilege.pl` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].privilege.playMaxbr` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `999000` |
+| `songs[].privilege.playMaxBrLevel` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `jymaster` |
+| `songs[].privilege.plLevel` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `none` |
+| `songs[].privilege.plLevels` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].privilege.preSell` | boolean | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `songs[].privilege.rightSource` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].privilege.rscl` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].privilege.sp` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `7` |
+| `songs[].privilege.st` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].privilege.subp` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1` |
+| `songs[].privilege.toast` | boolean | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `songs[].pst` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].rt` | union<string|null> | 15 | 3 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `songs[].rtUrl` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].rtUrls` | array<unknown> | 15 | 0 | 15 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `undefined` |
+| `songs[].rtype` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].rurl` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].songJumpInfo` | null | 15 | 15 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `songs[].sq.br` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `853817` |
+| `songs[].sq.fid` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].sq.size` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `27080453` |
+| `songs[].sq.sr` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `48000` |
+| `songs[].sq.vd` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `-28035` |
+| `songs[].st` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1` |
+| `songs[].t` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `songs[].tns[]` | string | 4 | 0 | 0 | AUTH_NONE | `Long After` |
+| `songs[].v` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `4` |
+| `total` | number | 5 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `420` |

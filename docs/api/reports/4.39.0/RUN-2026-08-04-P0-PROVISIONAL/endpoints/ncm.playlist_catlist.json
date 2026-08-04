@@ -31,39 +31,433 @@
       {
         "caseId": "ncm.playlist_catlist.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 126,
+        "error": null,
+        "sampleHash": "c1788bc0100252a405424324a5e04c7edcf87735fb689971bfd0db8b461ddf66",
+        "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.anon.001.raw.json"
       },
       {
         "caseId": "ncm.playlist_catlist.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 103,
+        "error": null,
+        "sampleHash": "266371ae5750eba08914de312f533950412cb7f0969169d4cdc2118ecbf1ebbb",
+        "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.inv.001.raw.json"
       },
       {
         "caseId": "ncm.playlist_catlist.none.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 93,
+        "error": null,
+        "sampleHash": "6caed15010d24fb46362ff04a99f92651f7e3a99f3100daea403a54393a117cc",
+        "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.none.001.raw.json"
       },
       {
         "caseId": "ncm.playlist_catlist.none.002",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 2,
         "code": 200,
-        "error": null
+        "durationMs": 195,
+        "error": null,
+        "sampleHash": "b92088a5a25619b22977d3020bdc4f845fbff2aa36869eb47f6268597fdb9f4f",
+        "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.none.002.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "all.activity",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "all.category",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "4"
+    },
+    {
+      "jsonPath": "all.hot",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "all.imgId",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "all.imgUrl",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "all.name",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "全部歌单"
+    },
+    {
+      "jsonPath": "all.resourceCount",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "1000"
+    },
+    {
+      "jsonPath": "all.resourceType",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "all.type",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "categories.0",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "语种"
+    },
+    {
+      "jsonPath": "categories.1",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "风格"
+    },
+    {
+      "jsonPath": "categories.2",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "场景"
+    },
+    {
+      "jsonPath": "categories.3",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "情感"
+    },
+    {
+      "jsonPath": "categories.4",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "主题"
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "sub[].activity",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "sub[].category",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "4"
+    },
+    {
+      "jsonPath": "sub[].hot",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "sub[].imgId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "sub[].imgUrl",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "sub[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "综艺"
+    },
+    {
+      "jsonPath": "sub[].resourceCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "1000"
+    },
+    {
+      "jsonPath": "sub[].resourceType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "sub[].type",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_catlist.anon.001",
+      "lastSeenCase": "ncm.playlist_catlist.none.002",
+      "example": "0"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成；分层稳定性按层判定待补",
-  "evidence": []
+  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "evidence": [
+    {
+      "caseId": "ncm.playlist_catlist.anon.001",
+      "sampleHash": "c1788bc0100252a405424324a5e04c7edcf87735fb689971bfd0db8b461ddf66",
+      "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playlist_catlist.inv.001",
+      "sampleHash": "266371ae5750eba08914de312f533950412cb7f0969169d4cdc2118ecbf1ebbb",
+      "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playlist_catlist.none.001",
+      "sampleHash": "6caed15010d24fb46362ff04a99f92651f7e3a99f3100daea403a54393a117cc",
+      "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playlist_catlist.none.002",
+      "sampleHash": "b92088a5a25619b22977d3020bdc4f845fbff2aa36869eb47f6268597fdb9f4f",
+      "rawFile": "ncm.playlist_catlist.ncm.playlist_catlist.none.002.raw.json"
+    }
+  ]
 }

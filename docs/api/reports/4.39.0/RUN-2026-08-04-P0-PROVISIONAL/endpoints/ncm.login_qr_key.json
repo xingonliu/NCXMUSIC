@@ -31,16 +31,22 @@
       {
         "caseId": "ncm.login_qr_key.none.min.001",
         "auth": "AUTH_NONE",
+        "phase": 1,
         "code": 200,
         "durationMs": 72,
-        "error": null
+        "error": null,
+        "sampleHash": "2b57fe87101c975dcbd3fc999bb59eb56e6639046d5d66f42c77389a64feb47d",
+        "rawFile": "ncm.login_qr_key.ncm.login_qr_key.none.min.001.raw.json"
       },
       {
         "caseId": "ncm.login_qr_key.none.min.002",
         "auth": "AUTH_NONE",
+        "phase": 1,
         "code": 200,
         "durationMs": 166,
-        "error": null
+        "error": null,
+        "sampleHash": "4803e530b91a66936d5937fb670ed8c23376685534a984fb61e17c0470bcb805",
+        "rawFile": "ncm.login_qr_key.ncm.login_qr_key.none.min.002.raw.json"
       }
     ]
   },
@@ -48,50 +54,41 @@
     {
       "jsonPath": "code",
       "rawType": "number",
-      "presenceCount": 2,
-      "sampleCount": 2,
-      "nullCount": 0,
-      "emptyCount": 0,
-      "authConditions": [
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
         "AUTH_NONE"
       ],
-      "exampleRedacted": "200",
-      "sourceEvidence": "runtime-phase1",
-      "semanticName": "",
-      "semanticConfidence": "unknown",
-      "conflictId": null
+      "firstSeenCase": "ncm.login_qr_key.none.min.001",
+      "lastSeenCase": "ncm.login_qr_key.none.min.002",
+      "example": "200"
     },
     {
       "jsonPath": "data.code",
       "rawType": "number",
-      "presenceCount": 2,
-      "sampleCount": 2,
-      "nullCount": 0,
-      "emptyCount": 0,
-      "authConditions": [
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
         "AUTH_NONE"
       ],
-      "exampleRedacted": "200",
-      "sourceEvidence": "runtime-phase1",
-      "semanticName": "",
-      "semanticConfidence": "unknown",
-      "conflictId": null
+      "firstSeenCase": "ncm.login_qr_key.none.min.001",
+      "lastSeenCase": "ncm.login_qr_key.none.min.002",
+      "example": "200"
     },
     {
       "jsonPath": "data.unikey",
       "rawType": "string",
-      "presenceCount": 2,
-      "sampleCount": 2,
-      "nullCount": 0,
-      "emptyCount": 0,
-      "authConditions": [
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
         "AUTH_NONE"
       ],
-      "exampleRedacted": "6d9aad50-72ca-4641-9e94-787cca2d5c0f",
-      "sourceEvidence": "runtime-phase1",
-      "semanticName": "",
-      "semanticConfidence": "unknown",
-      "conflictId": null
+      "firstSeenCase": "ncm.login_qr_key.none.min.001",
+      "lastSeenCase": "ncm.login_qr_key.none.min.002",
+      "example": "6d9aad50-72ca-4641-9e94-787cca2d5c0f"
     }
   ],
   "errors": [],
@@ -99,17 +96,17 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "未完成 AUTH_ANON/AUTH_USER 层与扫码流程；unikey 为一次性凭据仅本地保留",
+  "blocker": "未完成扫码流程与更多登录层；unikey 一次性凭据仅本地保留",
   "evidence": [
     {
       "caseId": "ncm.login_qr_key.none.min.001",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.login_qr_key.ncm.login_qr_key.none.min.001.raw.json"
+      "sampleHash": "2b57fe87101c975dcbd3fc999bb59eb56e6639046d5d66f42c77389a64feb47d",
+      "rawFile": "ncm.login_qr_key.ncm.login_qr_key.none.min.001.raw.json"
     },
     {
       "caseId": "ncm.login_qr_key.none.min.002",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.login_qr_key.ncm.login_qr_key.none.min.002.raw.json"
+      "sampleHash": "4803e530b91a66936d5937fb670ed8c23376685534a984fb61e17c0470bcb805",
+      "rawFile": "ncm.login_qr_key.ncm.login_qr_key.none.min.002.raw.json"
     }
   ]
 }

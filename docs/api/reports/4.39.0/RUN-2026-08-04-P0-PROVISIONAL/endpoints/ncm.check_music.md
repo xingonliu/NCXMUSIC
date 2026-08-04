@@ -90,7 +90,6 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 15. Phase 3 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
 - 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
@@ -102,3 +101,11 @@
 | ncm.check_music.br999.none.001 | AUTH_NONE | - | 200 | 93 |  |
 | ncm.check_music.id0.none.neg.001 | AUTH_NONE | - | 200 | 82 |  |
 | ncm.check_music.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 70 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 5 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `200` |
+| `message` | string | 5 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `亲爱的,暂无版权` |
+| `success` | boolean | 5 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |

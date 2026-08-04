@@ -38,32 +38,47 @@
       {
         "caseId": "ncm.register_xeapikey.none.min.001",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 1,
+        "status": "error",
         "code": null,
         "error": {
           "class": "other",
+          "code": null,
+          "body": null,
           "message": "xeapi public key response missing sk"
-        }
+        },
+        "sampleHash": "330a5379029dc70a2d2eaddeb69e4105d2c334cf83afccafdaf22db7c6e4d9f0",
+        "rawFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.001.raw.json"
       },
       {
         "caseId": "ncm.register_xeapikey.none.min.002",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 1,
+        "status": "error",
         "code": null,
         "error": {
           "class": "other",
+          "code": null,
+          "body": null,
           "message": "xeapi public key response missing sk"
-        }
+        },
+        "sampleHash": "adccea91abe0ab09ef76384dcfcacc916f55df9f28f5e82ff2f4aaf751fee9ff",
+        "rawFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.002.raw.json"
       },
       {
         "caseId": "ncm.register_xeapikey.none.min.003",
         "auth": "AUTH_NONE",
-        "status": null,
+        "phase": 1,
+        "status": "error",
         "code": null,
         "error": {
           "class": "other",
+          "code": null,
+          "body": null,
           "message": "xeapi public key response missing sk"
-        }
+        },
+        "sampleHash": "760c37fbfeb49fd4aa91cac4e13e1b1e494fa950a6b0bf74cdb164c8556d85c3",
+        "rawFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.raw.json"
       }
     ]
   },
@@ -75,22 +90,22 @@
     "XEAPI-001"
   ],
   "terminalStatus": "failed_stable",
-  "blocker": "上游模块契约与服务器响应冲突：模块要求解密负载含 sk，服务器返回 publicKey/version/nextUpdateTime；静态常量 xeapiSignKey 作为 sk 的引导回退已实测可用（conflictId XEAPI-001）",
+  "blocker": "XEAPI-001：模块要求解密负载含 sk，服务器返回 publicKey/version/nextUpdateTime；xeapiSignKey 静态密钥回退引导可用",
   "evidence": [
     {
       "caseId": "ncm.register_xeapikey.none.min.001",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.register_xeapikey.ncm.register_xeapikey.none.min.001.raw.json"
+      "sampleHash": "330a5379029dc70a2d2eaddeb69e4105d2c334cf83afccafdaf22db7c6e4d9f0",
+      "rawFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.001.raw.json"
     },
     {
       "caseId": "ncm.register_xeapikey.none.min.002",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.register_xeapikey.ncm.register_xeapikey.none.min.002.raw.json"
+      "sampleHash": "adccea91abe0ab09ef76384dcfcacc916f55df9f28f5e82ff2f4aaf751fee9ff",
+      "rawFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.002.raw.json"
     },
     {
       "caseId": "ncm.register_xeapikey.none.min.003",
-      "sampleHash": null,
-      "rawFile": "raw/ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.raw.json"
+      "sampleHash": "760c37fbfeb49fd4aa91cac4e13e1b1e494fa950a6b0bf74cdb164c8556d85c3",
+      "rawFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.raw.json"
     }
   ]
 }

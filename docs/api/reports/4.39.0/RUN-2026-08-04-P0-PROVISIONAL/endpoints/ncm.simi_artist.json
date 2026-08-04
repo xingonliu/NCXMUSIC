@@ -37,33 +37,42 @@
       {
         "caseId": "ncm.simi_artist.anon.001",
         "auth": "AUTH_ANON",
-        "status": null,
+        "phase": 3,
         "code": 200,
-        "error": null
+        "durationMs": 89,
+        "error": null,
+        "sampleHash": "7ea853cea9dcc5ae39521f7e097a6fe2fafe84ae2d12994f706d58c02931dabc",
+        "rawFile": "ncm.simi_artist.ncm.simi_artist.anon.001.raw.json"
       },
       {
         "caseId": "ncm.simi_artist.id0.none.neg.001",
         "auth": "AUTH_NONE",
+        "phase": 3,
         "status": "error",
         "code": 301,
         "error": {
           "class": "other",
           "status": 301,
+          "code": 301,
           "body": {
             "code": 301,
             "message": "未登录"
           },
           "message": "[object Object]"
-        }
+        },
+        "sampleHash": "bf4e7b2ac79467c02b74254107c37ce6c1ad666b8808058fc7fd0cc5a8c25874",
+        "rawFile": "ncm.simi_artist.ncm.simi_artist.id0.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.simi_artist.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 3,
         "status": "error",
         "code": -462,
         "error": {
           "class": "other",
           "status": 400,
+          "code": -462,
           "body": {
             "code": -462,
             "data": {
@@ -87,31 +96,384 @@
             "message": "请完成验证操作"
           },
           "message": "[object Object]"
-        }
+        },
+        "sampleHash": "2b7419b208fe412d33295f8764c07568d8c860113cc8e9cac26370e11e9dd405",
+        "rawFile": "ncm.simi_artist.ncm.simi_artist.inv.001.raw.json"
       },
       {
         "caseId": "ncm.simi_artist.none.001",
         "auth": "AUTH_NONE",
+        "phase": 3,
         "status": "error",
         "code": 301,
         "error": {
           "class": "other",
           "status": 301,
+          "code": 301,
           "body": {
             "code": 301,
             "message": "未登录"
           },
           "message": "[object Object]"
-        }
+        },
+        "sampleHash": "3b0410e79b5a925aa04bd43e2d83c0841ecabf588462905e44c4ab7c4d074f31",
+        "rawFile": "ncm.simi_artist.ncm.simi_artist.none.001.raw.json"
       }
     ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "artists[].accountId",
+      "rawType": "union<null|number>",
+      "presence": 3,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "6228671"
+    },
+    {
+      "jsonPath": "artists[].albumSize",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "73"
+    },
+    {
+      "jsonPath": "artists[].alg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "itembased"
+    },
+    {
+      "jsonPath": "artists[].alias[]",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "JJ Lin"
+    },
+    {
+      "jsonPath": "artists[].briefDesc",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "artists[].fansCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "16432276"
+    },
+    {
+      "jsonPath": "artists[].followed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "artists[].id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "3684"
+    },
+    {
+      "jsonPath": "artists[].identifyTag",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "artists[].img1v1Id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "109951168529049970"
+    },
+    {
+      "jsonPath": "artists[].img1v1Id_str",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "109951168529049969"
+    },
+    {
+      "jsonPath": "artists[].img1v1Url",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "http://p3.music.126.net/r6W-zCnV-aduVn_PLZYuYg==/10995116852"
+    },
+    {
+      "jsonPath": "artists[].isSubed",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "artists[].musicSize",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "598"
+    },
+    {
+      "jsonPath": "artists[].mvSize",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "artists[].name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "林俊杰"
+    },
+    {
+      "jsonPath": "artists[].picId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "109951168529051970"
+    },
+    {
+      "jsonPath": "artists[].picId_str",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "109951168529051968"
+    },
+    {
+      "jsonPath": "artists[].picUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "http://p4.music.126.net/78q0jUUJ0h08GxAs2G-tCA==/10995116852"
+    },
+    {
+      "jsonPath": "artists[].publishTime",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "artists[].showPrivateMsg",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "artists[].topicPerson",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "artists[].trans",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "artists[].transNames",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_artist.anon.001",
+      "lastSeenCase": "ncm.simi_artist.anon.001",
+      "example": "200"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
   "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
-  "evidence": []
+  "evidence": [
+    {
+      "caseId": "ncm.simi_artist.anon.001",
+      "sampleHash": "7ea853cea9dcc5ae39521f7e097a6fe2fafe84ae2d12994f706d58c02931dabc",
+      "rawFile": "ncm.simi_artist.ncm.simi_artist.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_artist.id0.none.neg.001",
+      "sampleHash": "bf4e7b2ac79467c02b74254107c37ce6c1ad666b8808058fc7fd0cc5a8c25874",
+      "rawFile": "ncm.simi_artist.ncm.simi_artist.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_artist.inv.001",
+      "sampleHash": "2b7419b208fe412d33295f8764c07568d8c860113cc8e9cac26370e11e9dd405",
+      "rawFile": "ncm.simi_artist.ncm.simi_artist.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_artist.none.001",
+      "sampleHash": "3b0410e79b5a925aa04bd43e2d83c0841ecabf588462905e44c4ab7c4d074f31",
+      "rawFile": "ncm.simi_artist.ncm.simi_artist.none.001.raw.json"
+    }
+  ]
 }

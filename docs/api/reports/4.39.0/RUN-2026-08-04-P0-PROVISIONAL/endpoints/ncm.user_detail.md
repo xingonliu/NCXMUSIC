@@ -89,17 +89,15 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: 缺 uid（uid 生产需 AUTH_USER）；仅完成缺失必填负向）
-- 说明：缺 uid 返回 {"code":400,"message":"参数错误"}
+- 终态：**partial**（blocker: 缺 uid（需 AUTH_USER）；仅缺失必填负向）
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
-| ncm.user_detail.none.neg.missing-uid.001 | AUTH_NONE | err | 400 | 62 |  |
+| ncm.user_detail.none.neg.missing-uid.001 | AUTH_NONE | - | 400 | 62 |  |
 
-### 13.1 运行字段表（Phase 1）
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
 
 | JSONPath | rawType | presence | null | empty | auths | example |
 | --- | --- | --- | --- | --- | --- | --- |

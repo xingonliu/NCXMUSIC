@@ -89,18 +89,16 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**rate_limited**（blocker: 匿名注册风控：1 次成功（证据未持久化，见运行日志）+ 退避 45s 后仍 3 次 code 400；需冷却后重试）
-- 说明：成功路径已验证（返回 code/userId/createTime/cookie），当前被上游风控
+- 终态：**rate_limited**（blocker: 匿名注册风控：成功路径已验证 1 次后被连续 code 400，退避后仍失败）
 
-| caseId | auth | status | code | durationMs | note |
+| caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
-| ncm.register_anonimous.none.min.001 | AUTH_NONE | err | 400 | 91 |  |
-| ncm.register_anonimous.none.repeat.002 | AUTH_NONE | err | 400 | 86 |  |
+| ncm.register_anonimous.none.min.001 | AUTH_NONE | - | 400 | 91 |  |
+| ncm.register_anonimous.none.repeat.002 | AUTH_NONE | - | 400 | 86 |  |
 
-### 13.1 运行字段表（Phase 1）
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
 
 | JSONPath | rawType | presence | null | empty | auths | example |
 | --- | --- | --- | --- | --- | --- | --- |

@@ -37,62 +37,78 @@
       {
         "caseId": "ncm.album_detail.anon.001",
         "auth": "AUTH_ANON",
+        "phase": 3,
         "status": "error",
         "code": 404,
         "error": {
           "class": "other",
           "status": 404,
+          "code": 404,
           "body": {
             "code": 404,
             "message": "无专辑商品"
           },
           "message": "[object Object]"
-        }
+        },
+        "sampleHash": "8c993c039cbbc56eda98c679a3da296e85063d49416de8fb6f756b9e07f606e8",
+        "rawFile": "ncm.album_detail.ncm.album_detail.anon.001.raw.json"
       },
       {
         "caseId": "ncm.album_detail.id0.none.neg.001",
         "auth": "AUTH_NONE",
+        "phase": 3,
         "status": "error",
         "code": 404,
         "error": {
           "class": "other",
           "status": 404,
+          "code": 404,
           "body": {
             "code": 404,
             "message": "无专辑商品"
           },
           "message": "[object Object]"
-        }
+        },
+        "sampleHash": "49949bacdbbbdd9254bae5bcc816b59d8492e24fb64a15f5c817957f7bd1acee",
+        "rawFile": "ncm.album_detail.ncm.album_detail.id0.none.neg.001.raw.json"
       },
       {
         "caseId": "ncm.album_detail.inv.001",
         "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 3,
         "status": "error",
         "code": 404,
         "error": {
           "class": "other",
           "status": 404,
+          "code": 404,
           "body": {
             "code": 404,
             "message": "无专辑商品"
           },
           "message": "[object Object]"
-        }
+        },
+        "sampleHash": "a961a1c503495c3618b64f82d33536a19d98532454d356f133ce9659ae913069",
+        "rawFile": "ncm.album_detail.ncm.album_detail.inv.001.raw.json"
       },
       {
         "caseId": "ncm.album_detail.none.001",
         "auth": "AUTH_NONE",
+        "phase": 3,
         "status": "error",
         "code": 404,
         "error": {
           "class": "other",
           "status": 404,
+          "code": 404,
           "body": {
             "code": 404,
             "message": "无专辑商品"
           },
           "message": "[object Object]"
-        }
+        },
+        "sampleHash": "472be1920279046db63ea824c26349128bd5e374de1e2dbac24738f6c6821529",
+        "rawFile": "ncm.album_detail.ncm.album_detail.none.001.raw.json"
       }
     ]
   },
@@ -103,5 +119,26 @@
   "conflictIds": [],
   "terminalStatus": "partial",
   "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
-  "evidence": []
+  "evidence": [
+    {
+      "caseId": "ncm.album_detail.anon.001",
+      "sampleHash": "8c993c039cbbc56eda98c679a3da296e85063d49416de8fb6f756b9e07f606e8",
+      "rawFile": "ncm.album_detail.ncm.album_detail.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_detail.id0.none.neg.001",
+      "sampleHash": "49949bacdbbbdd9254bae5bcc816b59d8492e24fb64a15f5c817957f7bd1acee",
+      "rawFile": "ncm.album_detail.ncm.album_detail.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_detail.inv.001",
+      "sampleHash": "a961a1c503495c3618b64f82d33536a19d98532454d356f133ce9659ae913069",
+      "rawFile": "ncm.album_detail.ncm.album_detail.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_detail.none.001",
+      "sampleHash": "472be1920279046db63ea824c26349128bd5e374de1e2dbac24738f6c6821529",
+      "rawFile": "ncm.album_detail.ncm.album_detail.none.001.raw.json"
+    }
+  ]
 }
