@@ -113,6 +113,9 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-071 | 播放过程中修改全局音质后，立即为当前歌曲解析新媒体源并尽量保持播放进度。切换前正在播放则新源就绪后继续播放，切换前暂停则保持暂停；允许一次短暂缓冲，不从头重播。 |
 | C-072 | 首版源码采用“单仓库、单应用包、模块化单体”，不预先拆分多个 workspace package。通过 Main、Preload、Renderer、Utility 进程入口，业务领域、共享契约和基础设施目录及 import 规则强制边界；达到独立发布或复用条件后再拆 workspace。 |
 | C-073 | Renderer 是单页面应用，应用内页面切换全部通过 Vue Router 完成，不以重载窗口或新建 BrowserWindow 代替导航。歌单、专辑、歌手、歌曲等二级页面统一在 PageHeader 左侧提供返回按钮：优先返回有效的应用内路由历史；直接打开且无可返回历史时回退到该页面定义的稳定父级路由。 |
+| C-074 | 前端建立单一 Design System：所有页面只通过 Design Tokens、通用组件、布局模式和领域组件构建，不允许业务页面复制按钮、Header、浮层、消息反馈或直接定义另一套视觉常量。 |
+| C-075 | 首版统一提供 Button/IconButton、表单控件、Toast、Dialog、AlertDialog、Drawer、Popover、菜单、Tooltip、加载/空/错状态等通用组件；浮层按任务语义选择，审批不能降级成 Toast 或普通确认弹窗。 |
+| C-076 | PageHeader 是一级与二级页面的唯一标准 Header；二级页面返回行为由路由元数据驱动。业务页面的按钮必须使用统一 Button/IconButton，并完整覆盖 Hover、Pressed、Focus、Disabled 和 Loading 状态。 |
 
 ## 3. 目标用户与使用场景
 
@@ -971,7 +974,9 @@ OpenAI 标准接口通常通过 `GET /v1/models` 返回当前凭据可用的模�
 
 ### 5.15 前端通用组件体系
 
-前端不得在业务页面重复实现按钮、弹窗、消息和列表交互。组件体系分为四层：
+前端不得在业务页面重复实现按钮、弹窗、消息和列表交互。组件体系摘要如下：
+
+详细组件清单、Token 数值、浮层语义、PageHeader 和 Button 契约以 `docs/design/NcxMusic-Design-System.md` 为唯一规范来源；本节只保留产品范围摘要。
 
 #### Design Tokens
 
@@ -1161,6 +1166,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 - D-007（已确认）：NeteaseCloudMusicApiEnhanced 作为内置本地依赖，与 Agent Runtime、MCP、Dynamic Skill、权限中间件和 Shell Executor 一起运行在独立 Electron Utility Process；Main 负责凭据、窗口、受限 IPC 和进程监督。
 - D-008（部分确认）：网易云登录位于模型配置前且允许跳过；跳过后调用游客登录。游客后的二次登录入口位置待确认。
 - D-009（已确认）：首版代码库使用单应用包的模块化单体；以进程入口、领域、共享契约和基础设施分层，不在首版提前引入多 workspace package。
+- D-010（已确认）：使用 pnpm + electron-vite + electron-builder；Utility Process 作为独立构建入口，不同时引入 Electron Forge。
 
 ### P1：Agent 行为
 
@@ -1246,6 +1252,7 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 - D-707（已确认）：页面使用 Section 化结构，并建设统一的 Design Tokens、基础组件、浮层反馈和音乐业务组件。
 - D-708（已确认）：Renderer 使用 Vue SPA；`AudioHost` 与播放引擎常驻 AppShell 根层、独立于 RouterView。PlayerBar 通过类型化路由元数据控制显示，设置和个人信息页隐藏，主/次导航及歌单、歌手、专辑列表与详情页展示。
 - D-709（已确认）：应用内页面切换全部使用 Vue Router；二级页面由统一 PageHeader 展示返回按钮，有应用内历史时返回上一页，否则回退到该路由声明的稳定父级页面。
+- D-710（已确认）：建立单一 Design System，冻结首版通用组件范围以及浮层、PageHeader、Button 和交互状态的统一契约；具体品牌配色在视觉方向确认后写入语义 Token。
 
 ## 12. 决策记录
 
@@ -1292,6 +1299,8 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒�
 | 2026-08-04 | D-814 | 播放中修改音质立即为当前歌曲切换新源，保留进度和播放意图并防止异步结果越代。 | 音质设置、当前播放、媒体换源、竞态控制 |
 | 2026-08-04 | D-009 | 首版采用单仓库、单应用包的模块化单体，以目录和 import 规则约束进程与领域边界。 | 源码组织、构建、测试、贡献指南、未来拆包 |
 | 2026-08-04 | D-709 | Renderer 采用纯 SPA 路由导航；二级页面统一提供带稳定父级回退的返回按钮。 | Vue Router、PageHeader、深链与状态恢复、页面导航 |
+| 2026-08-04 | D-010 | 使用 pnpm、electron-vite 与 electron-builder 组成单包开发、构建和分发工具链，不引入 Electron Forge。 | 开发脚本、进程构建、安装包、签名、公证、CI |
+| 2026-08-04 | D-710 | 建立统一 Design System，页面复用通用组件、布局模式和语义 Token，不在业务内派生第二套 UI 规则。 | 全部 Renderer 页面、组件开发、交互一致性、视觉验收 |
 
 ## 13. 暂定里程碑
 

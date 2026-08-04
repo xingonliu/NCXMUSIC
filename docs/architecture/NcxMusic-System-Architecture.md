@@ -11,6 +11,7 @@
 | --- | --- | --- |
 | A-001 | Electron 采用 Main + Preload + Renderer + Utility Process 拓扑；内部通信使用受限 IPC/MessagePort，不建 localhost/SSE 服务。 | 已确认 |
 | A-002 | 首版使用单仓库、单应用包、模块化单体；不预先拆多个 workspace package。 | 已确认 |
+| A-003 | 使用 pnpm 管理单包依赖；electron-vite 负责开发与进程构建，electron-builder 负责 Windows/macOS 分发产物、签名和公证；不引入 Electron Forge。 | 已确认 |
 
 ## 2. 运行时拓扑
 
@@ -89,7 +90,28 @@ tools/
 
 组合根之外禁止随意读取全局单例。需要全局寿命的对象由组合根创建一次，再显式注入使用方。
 
-## 6. 未来拆分 workspace 的触发条件
+## 6. 开发、构建与分发工具链
+
+- 根目录只保留一个 `package.json`、一份 `pnpm-lock.yaml` 和一组统一脚本，不为进程入口建立独立 package。
+- `electron-vite` 负责开发服务器、Renderer HMR、Main/Preload 热重载和生产构建。Main 构建配置增加 Utility Process 独立入口，并输出稳定文件名供 `utilityProcess.fork()` 启动。
+- `electron-builder` 只消费构建完成的产物：Windows 首选 NSIS，macOS 输出 DMG 与 ZIP；签名证书、公证凭据和发布令牌只从 CI Secret 或本机安全环境注入。
+- 自动更新是否进入首版另行确认；如果启用，沿用 electron-builder 生成的更新元数据与兼容产物，不另建第二套打包流程。
+- 不同时引入 Electron Forge。Forge 与 electron-vite/electron-builder 在构建、打包和发布编排上职责重叠，会增加两套配置之间的漂移风险。
+- Electron、Node.js、pnpm、electron-vite 和 electron-builder 的精确版本在技术验证阶段共同冻结，并由锁文件和 CI 运行时文件约束；架构文档不写死未经验证的版本号。
+
+标准脚本语义冻结为：
+
+```text
+pnpm dev          # 启动 Main、Preload、Renderer 与 Utility Process 开发环境
+pnpm typecheck    # 全进程 TypeScript 检查
+pnpm lint         # 代码规范与依赖边界检查
+pnpm test         # 单元与契约测试
+pnpm build        # 只生成生产构建目录
+pnpm package      # 生成当前平台未发布安装包
+pnpm release      # 仅供受保护 CI 发布，不作为本地常规命令
+```
+
+## 7. 未来拆分 workspace 的触发条件
 
 只在至少出现一项明确需求时拆分内部 package：
 
@@ -100,13 +122,12 @@ tools/
 
 代码行数、目录数量或“看起来更专业”不是拆包理由。
 
-## 7. 待续架构决策
+## 8. 待续架构决策
 
-1. A-003：构建、开发和打包工具链。
-2. A-004：跨进程契约、Schema 版本和 MessagePort 重连。
-3. A-005：SQLite、文件快照、Credential Vault 与账户数据边界。
-4. A-006：手写 Agent Runtime 状态机、工具调度和任务限额。
-5. A-007：Policy Engine、审批挂起/恢复和安全动作分类。
-6. A-008：Dynamic Skill 隔离、MCP 生命周期与 Shell 执行边界。
-7. A-009：记忆、画像和模型输入的存储/隐私架构。
-8. A-010：ASR 技术路线、快捷键与语音任务生命周期。
+1. A-004：跨进程契约、Schema 版本和 MessagePort 重连。
+2. A-005：SQLite、文件快照、Credential Vault 与账户数据边界。
+3. A-006：手写 Agent Runtime 状态机、工具调度和任务限额。
+4. A-007：Policy Engine、审批挂起/恢复和安全动作分类。
+5. A-008：Dynamic Skill 隔离、MCP 生命周期与 Shell 执行边界。
+6. A-009：记忆、画像和模型输入的存储/隐私架构。
+7. A-010：ASR 技术路线、快捷键与语音任务生命周期。
