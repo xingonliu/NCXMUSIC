@@ -157,10 +157,11 @@ maxActiveTurns       = 1
 
 - Policy 返回 `require_approval` 后创建稳定 `approvalId`，Tool Call 进入 `awaiting_approval`。
 - ApprovalCard 只显示“批准”“拒绝”两个按钮；不提供“批准本次”“本会话允许”“总是允许”或其他授权范围。
-- 审批卡片关闭、拒绝、取消和超时必须映射成不同内部原因；面向模型返回裁剪后的结构化结果。
+- ApprovalCard 不提供关闭按钮，并在创建 5 分钟后固定过期。离开小 N 页面、收起侧边栏或最小化窗口不会处理审批；Renderer 重载从 Snapshot 恢复卡片和剩余时间。
+- 用户拒绝映射为 `USER_REJECTED`，过期映射为 `APPROVAL_EXPIRED`，应用退出、账号切换、Utility Process 故障或 Turn 取消映射为 `APPROVAL_CANCELLED`；面向模型返回裁剪后的结构化结果。
 - 用户批准只解除当前规范化 Tool Call 的挂起，不代表相同工具、参数或后续调用获得会话级或永久授权。工具、参数、目标账号、账户 generation 或 `commandId` 改变后必须重新判断。
 - 审批过程中不能预执行底层副作用、预启动 Shell/MCP 进程或提前写配置。
-- 具体权限等级、超时、恢复和授权记忆由 A-007 定义。
+- 具体权限等级、硬禁清单和授权边界由 A-007 定义。
 
 ## 9. 取消语义
 
@@ -168,7 +169,7 @@ maxActiveTurns       = 1
 
 1. Provider 流使用 AbortSignal 立即请求取消。
 2. 尚未开始的 Tool Call 标为 `cancelled` 并从队列移除。
-3. 未决审批关闭为 `approval_cancelled`，不是伪造“用户拒绝”。
+3. 未决审批进入 `approval_cancelled`，不是伪造“用户拒绝”。
 4. 正在执行且支持取消的工具接收 AbortSignal。
 5. 已越过不可逆提交点的工具继续获取真实结果，不能向用户谎报已撤销；结果只用于状态一致性和审计，不自动开启下一轮模型调用。
 6. Turn 在所有必要清理完成后进入 `cancelled`，UI 清除 Streaming/Running 状态。

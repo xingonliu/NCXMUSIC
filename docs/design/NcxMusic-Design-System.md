@@ -225,7 +225,7 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 - ToolExecutionCard、ApprovalCard、ProfileAnalysisPrompt、MemoryStatus。
 - VoiceOverlay、VoiceWaveform、VoiceStateLabel。
 
-`ToolExecutionCard` 展示工具名称、状态、耗时、摘要结果和可展开技术详情。`ApprovalCard` 是独立业务组件，必须同时展示操作对象、影响、风险原因，以及文案固定为“批准”“拒绝”的两个按钮；不能增加会话级/永久授权，不能用通用 Dialog、Toast 或 ToolExecutionCard 的普通状态代替。
+`ToolExecutionCard` 展示工具名称、状态、耗时、摘要结果和可展开技术详情。`ApprovalCard` 是独立业务组件，必须同时展示操作对象、影响、风险原因、轻量剩余有效时间，以及文案固定为“批准”“拒绝”的两个按钮；没有关闭图标，不能增加会话级/永久授权，不能用通用 Dialog、Toast 或 ToolExecutionCard 的普通状态代替。
 
 ### 4.5 后续组件（P1）
 

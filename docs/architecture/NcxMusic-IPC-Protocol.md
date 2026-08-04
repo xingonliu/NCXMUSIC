@@ -134,6 +134,8 @@ interface ProtocolError {
 - `CAPABILITY_UNAVAILABLE`
 - `POLICY_DENIED`
 - `USER_REJECTED`
+- `APPROVAL_EXPIRED`
+- `APPROVAL_CANCELLED`
 
 `message` 是可安全显示或记录的摘要，不能包含堆栈、Cookie、API Key、完整模型请求、Shell 环境或原始上游响应。开发日志中的技术详情同样先脱敏。
 
