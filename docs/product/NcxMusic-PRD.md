@@ -89,6 +89,8 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-048 | 画像增量更新按启动时的加权变化量检查：喜欢歌曲每首权重 1.5，自建歌单歌曲每首权重 1，收藏歌单不计；累计变化超过 30 时提示更新。 |
 | C-049 | 小 N 可以通过 `mcp_manager` 发起 MCP Server 安装，但每一次安装都必须弹出批准/拒绝卡片并取得当次明确同意；拒绝时底层安装逻辑零执行。 |
 | C-050 | MCP 安装审批不提供“本会话允许”或“总是允许”，音乐与 Shell 的其他审批豁免规则不能覆盖它。 |
+| C-051 | Electron Main 负责窗口、登录 Session、Credential Vault、进程监督和安全 IPC；Agent Runtime、NeteaseCloudMusicApiEnhanced、MCP、Dynamic Skill、权限中间件与 Shell Executor 运行在独立 Utility Process。 |
+| C-052 | Renderer 与本地后端不建立 SSE/localhost 服务；模型增量、工具状态和审批事件通过 Electron IPC/MessagePort 传递。Provider 上游可使用其原生流式协议，但必须在 Utility Process 内归一化。 |
 
 ## 3. 目标用户与使用场景
 
@@ -272,8 +274,8 @@ PageShell
 
 `MUSIC_U` 等同于长期登录凭据，必须遵守：
 
-- 只允许 Electron 主进程或独立本地服务读取。
-- Renderer、Agent Prompt、模型请求、Tool Call 参数和 SSE 事件均不得包含原值。
+- 只允许 Electron Main 的 Credential Vault 和经过授权的 Utility Process API Adapter 在执行请求时读取；跨进程传递只走专用受控通道并尽量缩短内存驻留时间。
+- Renderer、Agent Prompt、模型请求、Tool Call 参数和 IPC 业务事件均不得包含原值。
 - 本地持久化前使用操作系统安全能力加密；不以明文 JSON、LocalStorage 或普通配置文件保存。
 - 日志中只允许记录“是否存在、校验状态、过期状态”，禁止记录原值或可逆片段。
 - API Adapter 在请求发出前从 Credential Vault 读取，并在内部拼接 `MUSIC_U=<value>`。
@@ -623,7 +625,7 @@ Tool Call
   └─ deny: 不执行并返回结构化拒绝
 ```
 
-审批请求必须包含操作名称、影响对象、关键参数、风险解释和可选过期时间。审批事件当前要求通过 SSE 推送；Electron 本地进程拓扑和 SSE/IPC 的职责边界待确认。
+审批请求必须包含操作名称、影响对象、关键参数、风险解释和可选过期时间。Utility Process 产生审批事件，经 Main/Preload 的受限 IPC 桥推送给 Renderer；批准/拒绝响应沿同一路径返回并再次进行 Schema、任务 ID 和状态校验。首版不为内部通信启动 SSE 或 localhost HTTP 服务。
 
 其他审批行为暂定如下，后续需要逐项确认：
 
@@ -825,7 +827,7 @@ OpenAI 标准接口通常通过 `GET /v1/models` 返回当前凭据可用的模�
 | 协议适配器 | 用途 | 首版结论 |
 | --- | --- | --- |
 | OpenAI Chat Completions Compatible | OpenAI、大多数国内厂商、中转站、OpenRouter、兼容的本地服务 | 首版支持，作为默认兼容层 |
-| Anthropic Messages | Claude 官方 API，原生 content blocks、tool use/tool result 和 SSE 事件 | 首版支持 |
+| Anthropic Messages | Claude 官方 API，原生 content blocks、tool use/tool result 和上游流式事件 | 首版支持 |
 | Google Gemini `generateContent` | Gemini 官方 API，原生 parts、functionCall/functionResponse、流式与后续多模态能力 | 首版支持 |
 
 厂商策略：
@@ -937,26 +939,30 @@ OpenAI 标准接口通常通过 `GET /v1/models` 返回当前凭据可用的模�
 Renderer/UI
   ├─ 播放器与业务页面
   ├─ Agent 侧边栏
-  ├─ Tool Call 卡片
-  ├─ Approval 卡片
+  ├─ Tool Call / Approval 卡片
   └─ Voice Overlay
-          │
+          │ 受限 IPC / MessagePort
        Preload Bridge
           │
-Electron Main / Local Agent Service
-  ├─ Handwritten Agent Runtime
-  ├─ Prompt & Context Builder
-  ├─ Tool Registry
-  ├─ Entity Resolver
-  ├─ Deterministic Policy Engine
-  ├─ Approval Coordinator
-  ├─ Music API Adapters
-  ├─ MCP Client Manager
-  ├─ Dynamic Skill Loader
+Electron Main
+  ├─ Window / Session / Credential Vault
+  ├─ IPC Gateway（Schema 校验与事件裁剪）
+  └─ Utility Process Supervisor
+          │ postMessage / MessagePort
+          ▼
+Agent Utility Process
+  ├─ Handwritten Agent Runtime / Context Builder
+  ├─ Tool Registry / Entity Resolver
+  ├─ Deterministic Policy Engine / Approval Coordinator
+  ├─ NeteaseCloudMusicApiEnhanced / Music API Adapters
+  ├─ MCP Client Manager / Dynamic Skill Loader
   ├─ Shell Executor
-  ├─ Profile & Memory Store
-  └─ Audit/Event Store
+  └─ Profile / Memory / Audit Stores
 ```
+
+Main 使用 `utilityProcess.fork()` 管理 Agent Utility Process。跨进程消息采用可版本化的统一事件信封，至少包含 `protocolVersion`、`taskId`、`eventId`、`sequence`、`type` 和经过裁剪的 `payload`。模型供应商的 SSE、chunked stream 或其他上游流式格式只在 Provider Adapter 内解析，Renderer 只接收归一化增量事件。
+
+Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、拒绝未决审批、清理 MessagePort 并按待确认的重启策略恢复；应用退出时显式终止 Utility Process 及其 MCP/Shell 子进程。Renderer 重载后重新握手并获取任务快照，不能复用失效端口。Utility Process 只接收显式构造的最小环境变量，不继承不必要的 Main 进程环境。
 
 安全边界原则：Renderer 不直接获得 Node.js、Shell、文件系统、网易云凭据或任意网络访问能力；所有特权操作通过最小化桥接接口进入主进程或独立本地服务。
 
@@ -1002,7 +1008,7 @@ Electron Main / Local Agent Service
 | R-005 | 全量画像分析耗时长、API 请求量大。 | 缓存、增量分析、后台任务和阶段性画像。 |
 | R-006 | 模型猜测或混淆歌曲/歌单 ID。 | Entity Resolver、候选集和消歧流程。 |
 | R-007 | 全局快捷键冲突或无法可靠监听松开。 | 技术验证、允许改键、原生监听备选。 |
-| R-008 | SSE、Electron IPC 与本地服务边界不清。 | 先确认运行拓扑，再冻结事件协议。 |
+| R-008 | Utility Process 崩溃、Renderer 重载或高频增量导致事件丢失、乱序或积压。 | 版本化事件信封、单任务 sequence、快照重同步、背压和明确的进程退出清理。 |
 | R-009 | “性格分析”可能给出过度确定的心理结论。 | 定位为音乐偏好倾向，展示依据和不确定性。 |
 
 ## 11. 需求访谈与决策清单
@@ -1019,7 +1025,7 @@ Electron Main / Local Agent Service
 - D-004（部分确认）：Windows 与 macOS 是首版目标平台并采用统一视觉语言；Linux 是否进入首版及其支持等级待确认。
 - D-005（已确认）：侧栏采用上中下三区；主导航为“发现、搜索、小 N”，次导航覆盖我喜欢、自建和收藏歌单并独立滚动，底部账户和设置分两行展示。
 - D-006（已确认）：用户配置自己的模型 API；首版协议为 OpenAI Compatible、Anthropic Messages 和 Gemini generateContent。
-- D-007（部分确认）：NeteaseCloudMusicApiEnhanced 以内置本地依赖运行，不使用外部托管 API。Agent Runtime 与音乐 API 的最终进程隔离方式待确认。
+- D-007（已确认）：NeteaseCloudMusicApiEnhanced 作为内置本地依赖，与 Agent Runtime、MCP、Dynamic Skill、权限中间件和 Shell Executor 一起运行在独立 Electron Utility Process；Main 负责凭据、窗口、受限 IPC 和进程监督。
 - D-008（部分确认）：网易云登录位于模型配置前且允许跳过；跳过后调用游客登录。游客后的二次登录入口位置待确认。
 
 ### P1：Agent 行为
@@ -1109,6 +1115,7 @@ Electron Main / Local Agent Service
 | 2026-08-04 | D-108 | 重新打开长期记忆检索选型；全文、向量和混合方案均待测试后确认。 | 记忆检索、安装体积、隐私、模型配置 |
 | 2026-08-04 | D-303 | 画像启动继续采用输入框上方的主动提示；更新采用阈值 30、喜欢歌曲 1.5、自建歌单歌曲 1、收藏歌单 0 的变化评分。 | 用户画像、Agent Composer、推荐 |
 | 2026-08-04 | D-504 | 允许小 N 发起 MCP 安装，但每次都必须展示批准/拒绝卡片并取得当次明确同意，不允许记忆授权。 | MCP、权限中间件、审批组件 |
+| 2026-08-04 | D-007 | 确认 Main + Utility Process 拓扑；内部流式增量和审批事件使用 IPC/MessagePort，不建设 SSE/localhost 服务。 | Electron 进程、Agent Runtime、音乐 API、通信与安全边界 |
 
 ## 13. 暂定里程碑
 
