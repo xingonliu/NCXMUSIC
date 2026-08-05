@@ -191,7 +191,7 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-149 | Windows 自绘窗口按钮不仿制 Snap Layout 悬停面板；保留 `Win+Z`、拖拽贴边等系统窗口管理能力。若未来必须支持按钮悬停 Snap Layout，应改用原生 `titleBarOverlay` 并重新评估视觉，不能用私有或脆弱的系统 Hack。 |
 | C-150 | 播放快照不按时间自动过期；语义状态变化后短防抖原子写入，播放进度每 5 秒节流并在暂停、Seek、最小化和退出前刷新。恢复歌曲失效时保留队列，用户播放后再按不可播放规则处理。 |
 | C-151 | Utility Process 意外退出后按 1 秒、2 秒、5 秒最多自动重启 3 次，稳定运行 5 分钟后清零失败窗口；连续失败则本次会话停用本地服务并提供显式重试，不重放旧 Turn 或副作用。 |
-| C-152 | Electron `globalShortcut` 不具备全局 keyup，按住说话必须通过 Phase 0 原生 Input Hook 验证；验证失败的平台禁用全局按住说话并保留输入区麦克风按钮，不静默改成切换式录音。 |
+| C-152 | 全局按住说话固定采用 `uiohook-napi` + 独立 InputHookHost 获取 keydown/keyup；Electron `globalShortcut` 只用于组合键注册/冲突检测，不能替代松开事件。用户拒绝平台权限或 Hook 不可用时保留输入区麦克风按钮，不静默改成切换式录音。 |
 | C-153 | Shell Tool 默认启用且安全等级为 S1；使用确定性语法、命令、路径和作用域分类，工作区只由用户授权，凭据不进入环境。无法可靠回收完整进程树时首版 Shell Tool 保持关闭。 |
 | C-154 | 首版圆角线性图标冻结为当前官方 Vue 包 `@lucide/vue` 的命名导入；缺失的音乐业务图标进入 NcxMusic 自有 Icon Registry，不允许页面混用其他图标库。 |
 | C-155 | 开发顺序采用技术门禁 → 工程/UI 骨架 → 账户与 Music Service → 搜索播放纵向闭环 → 完整音乐页面 → 小云 → 画像记忆 → 语音与扩展 → 双平台发布。 |
@@ -1086,6 +1086,8 @@ toolCallId
 - 全局快捷键默认是 `Alt+Space`，设置页允许重新录制组合键。保存前先尝试注册；冲突或平台拒绝时保留旧快捷键并显示原因，不抢占其他应用、不静默改成另一组合。
 - Agent 输入区始终提供麦克风按钮。全局快捷键不可用时，用户仍可在应用内按住该按钮完成相同的录音流程。
 
+全局键盘监听、Voice Session 状态、录音尾部收束、平台权限和隐私边界以 `docs/architecture/NcxMusic-Voice-Input.md` 为准。
+
 工程验证事项：
 
 - 各已支持模型协议如何探测并调用语音输入/转写能力，属于 Provider Adapter 技术验证，不新增独立 ASR Profile。
@@ -1340,7 +1342,8 @@ Renderer/UI
 Electron Main
   ├─ Window / Session / Credential Vault
   ├─ IPC Gateway（Schema 校验与事件裁剪）
-  └─ Utility Process Supervisor
+  ├─ Utility Process Supervisor
+  └─ InputHookHost Supervisor（uiohook-napi）
           │ postMessage / MessagePort
           ▼
 Agent Utility Process
@@ -1550,7 +1553,7 @@ Utility Process 崩溃或意外退出时，Main 负责更新 Agent 可用状态�
 - D-724（已确认）：首版目标用户以愿意 BYOK 的网易云桌面中重度用户为核心，以长时桌面听歌用户和开源扩展用户为次级；作为 Alpha 后验证的产品假设，不阻塞开发。
 - D-725（已确认）：播放快照不按时间过期；语义状态短防抖写入、进度 5 秒节流并在关键生命周期刷新，恢复失效歌曲时不在启动阶段静默改队列。
 - D-726（已确认）：Utility Process 意外退出按 1/2/5 秒最多重启 3 次，稳定 5 分钟清零；连续失败后本次会话停用本地服务并等待显式重试。
-- D-727（已确认）：全局按住说话不能只依赖 Electron `globalShortcut`；Phase 0 验证独立 InputHookHost。失败平台禁用全局快捷键并保留应用内按住麦克风，不改成切换式录音。
+- D-727（已确认）：全局按住说话采用 `uiohook-napi` + 独立 InputHookHost；Electron `globalShortcut` 仅负责注册/冲突检测。Phase 0 验证原生模块打包、签名、权限和按键冲突，不再比较其他 Hook 方案。
 - D-728（已确认）：Shell 默认启用且为 S1，执行环境、工作区、输出、分类和进程监督按独立 Shell Execution Baseline；若完整进程树回收验证失败，首版保持 Shell Tool 关闭。
 - D-729（已确认）：通用图标使用当前官方 Vue 包 `@lucide/vue` 命名导入并经过自有 Icon Registry；业务页面不混用图标库。
 - D-730（已确认）：首版开发阶段和依赖门禁以 `NcxMusic-Development-Roadmap.md` 为执行基线。
@@ -1655,7 +1658,7 @@ Utility Process 崩溃或意外退出时，Main 负责更新 Agent 可用状态�
 | 2026-08-05 | D-720～D-722 | 首版不实现应用内更新；页面范围冻结；搜索与推荐的“播放全部”按可见集合替换队列并从首项播放。 | 发布、路由、Section、播放队列、关于页 |
 | 2026-08-05 | D-724/D-729 | 冻结首版目标用户假设与 `@lucide/vue` 圆角线性图标基线；用户假设在 Alpha 后验证。 | 产品定位、引导、Design System、Icon Registry |
 | 2026-08-05 | D-725/D-726 | 冻结播放快照写入/恢复默认和 Utility Process 有界重启策略。 | PlaybackStore、Main Supervisor、IPC 恢复、故障 UI |
-| 2026-08-05 | D-727/D-728 | 全局按住说话和 Shell 进程树作为 Phase 0 硬门禁；失败时分别回退应用内麦克风或关闭 Shell Tool。 | InputHookHost、平台权限、Shell Executor、安全与打包 |
+| 2026-08-05 | D-727/D-728 | 全局按住说话冻结为 `uiohook-napi` + 独立 InputHookHost，Shell 进程树仍为 Phase 0 硬门禁；权限/Hook 不可用时回退应用内麦克风，Shell 回收失败则关闭 Tool。 | InputHookHost、平台权限、Shell Executor、安全与打包 |
 | 2026-08-05 | D-730 | 开发执行顺序冻结为技术门禁、工程/UI、账户服务、播放闭环、页面、小云、画像、扩展、发布。 | Roadmap、API Gate、测试与里程碑 |
 | 2026-08-05 | D-731 | 撤回首页及其他页面的固定 Section 清单与顺序；统一容器先开发，最终装配留待专项讨论。 | 全部页面、Section Registry、产品访谈、验收 |
 

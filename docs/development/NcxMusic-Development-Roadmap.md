@@ -244,7 +244,7 @@ Phase 0 技术门禁
 ## 14. 开工后的首批任务顺序
 
 1. 创建 `package.json`、锁文件、版本约束和标准脚本。
-2. 建立四进程目录、electron-vite 多入口和最小启动窗口。
+2. 建立 Main、Preload、Renderer、Utility 与可选 InputHookHost 目录，配置 electron-vite 多入口和最小启动窗口。
 3. 建立共享 Zod Contract、受限 Preload 与 Utility ping/snapshot。
 4. 建立测试、Lint、依赖边界和双平台 CI。
 5. 实现 Design Tokens、`@lucide/vue` Icon Registry、Button/IconButton 和 UI Lab。

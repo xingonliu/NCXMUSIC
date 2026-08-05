@@ -18,7 +18,7 @@
 | A-007 | Policy Engine 使用正向能力注册和确定性纯函数分类；审批/选择通过状态机挂起和快照恢复，LLM 不参与权限判断。 | 已确认 |
 | A-008 | Dynamic Skill 使用独立 Skill Host 子进程；MCP 使用官方 SDK 稳定 v1.x 的 `stdio` 与 Streamable HTTP，扩展经统一命名、审批、进程监督、原子更新与回滚管理。 | 已确认 |
 | A-009 | 账户存储、SQLite FTS5 记忆检索、画像快照、基础资料、保留与删除边界由统一 Storage Architecture 管理。 | 已确认 |
-| A-010 | 全局按住说话使用独立 InputHookHost 候选实现；Electron `globalShortcut` 只承担可用的组合键注册，不能替代 keyup。失败平台回退应用内麦克风按钮。 | 产品边界确认，Phase 0 验证 |
+| A-010 | 全局按住说话固定使用 `uiohook-napi` + 独立 InputHookHost；Electron `globalShortcut` 只承担组合键注册/冲突检测，不能替代 keyup。权限拒绝或 Hook 不可用时回退应用内麦克风按钮。 | 架构确认，Phase 0 验证 |
 | A-011 | Shell 使用独立安全等级、授权工作区、保守语法分类、最小环境、输出上限和完整进程树监督；详细契约见 Shell Execution Baseline。 | 架构确认，Phase 0 验证 |
 | A-012 | 播放器使用根层唯一 AudioHost、领域命令、generation 和播放快照；直接 HTTPS 与受控媒体代理、系统媒体中心集成进入 Phase 0 对比。 | 架构确认，Phase 0 验证 |
 
@@ -35,10 +35,11 @@ Preload Bridge ↔ Electron Main ↔ Utility Process
                   │                 ├─ Music API Service
                   │                 ├─ MCP Manager / Skill Host Supervisor / Shell
                   │                 └─ Profile / Memory / Audit
+                  ├─ InputHookHost（uiohook-napi，仅快捷键状态）
                   └─ Window / Session / Credential / Supervisor
 ```
 
-- Main 只拥有窗口、登录 Session、凭据、应用生命周期、全局快捷键和 Utility Process 监督能力，不承载 Agent 主循环或音乐业务。
+- Main 只拥有窗口、登录 Session、凭据、应用生命周期、全局快捷键及本地进程监督能力，不承载 Agent 主循环或音乐业务。InputHookHost 由 Main 监督，但只回传匹配快捷键的 pressed/released 状态。
 - Preload 只暴露按用例命名的最小化方法和订阅函数，不暴露完整 `ipcRenderer`、Node.js 或通用任意通道。
 - Renderer 持有 Vue UI、Pinia 读模型和唯一 HTMLAudioElement / PlaybackCoordinator，不获取 Cookie、Shell、文件系统或 NeteaseCloudMusicApiEnhanced 实例。
 - Renderer 是单页面应用，业务页面全部通过 Vue Router 切换；二级路由由统一 PageHeader 提供返回动作，无有效应用内历史时使用路由声明的稳定父级回退，不通过重载或新建窗口模拟导航。
@@ -53,6 +54,8 @@ Agent Turn、Tool 调度、限制、审批挂起、取消和事件快照规则�
 
 Dynamic Skill 包、独立 Host、MCP Transport、工具命名、生命周期和回滚规则见 `docs/architecture/NcxMusic-Extensions-Architecture.md`。
 
+全局按住说话、InputHookHost、录音与平台权限规则见 `docs/architecture/NcxMusic-Voice-Input.md`。
+
 ## 3. 源码组织
 
 ```text
@@ -61,6 +64,7 @@ src/
 ├─ preload/                 # contextBridge 与受限 IPC 适配
 ├─ renderer/                # Vue SPA、Pinia、AudioHost、Design System
 ├─ utility/                 # Utility Process 组合根与任务监督
+├─ input-hook/              # uiohook-napi 独立 Host，仅输出快捷键状态
 ├─ domains/
 │  ├─ player/               # 播放状态、队列、命令与纯算法
 │  ├─ music/                # 歌曲/歌单用例、统一实体与 Service Port
@@ -79,7 +83,8 @@ src/
    ├─ credentials/          # 平台 Credential Vault 适配
    ├─ extensions/           # Dynamic Skill Host、MCP Client 与扩展生命周期
    ├─ media/                # HTMLAudioElement / Media Session 副作用适配
-   └─ shell/                # PowerShell / zsh 执行适配
+   ├─ shell/                # PowerShell / zsh 执行适配
+   └─ voice/                # 快捷键、录音、ASR 与 Audio Focus 适配
 
 tools/
 └─ api-lab/                 # API First 脚本、脱敏样本与字段分析，不打进生产包
