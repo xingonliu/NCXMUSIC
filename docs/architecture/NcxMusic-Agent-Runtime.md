@@ -70,7 +70,7 @@ queued
   └─ limit_reached → finalizing → completed
 ```
 
-同一会话只有一个 Active Turn。关闭小云侧边栏、路由跳转或语音悬浮组件消失不会取消 Turn。点击停止、退出应用、账号切换或 Runtime 故障触发相应取消/失败规则；用户在 Active Turn 中发送新消息时，旧 Turn 以 `superseded_by_user_message` 取消，再立即用新消息创建 Turn。
+同一会话只有一个 Active Turn。离开小云路由、折叠主导航、最小化窗口或语音悬浮组件消失不会取消 Turn。点击停止、退出应用、账号切换或 Runtime 故障触发相应取消/失败规则；用户在 Active Turn 中发送新消息时，旧 Turn 以 `superseded_by_user_message` 取消，再立即用新消息创建 Turn。
 
 ## 4. Tool Call 状态机
 
@@ -211,7 +211,7 @@ Policy Engine 先把音乐 Tool Call 归一化为稳定动作类别，再用用�
 
 - Policy 返回 `require_approval` 后创建稳定 `approvalId`，Tool Call 进入 `awaiting_approval`。
 - ApprovalCard 只显示“批准”“拒绝”两个按钮；不提供“批准本次”“本会话允许”“总是允许”或其他授权范围。
-- ApprovalCard 不提供关闭按钮，并在创建 5 分钟后固定过期。离开小云页面、收起侧边栏或最小化窗口不会处理审批；Renderer 重载从 Snapshot 恢复卡片和剩余时间。
+- ApprovalCard 不提供关闭按钮，并在创建 5 分钟后固定过期。离开小云页面、折叠主导航或最小化窗口不会处理审批；Renderer 重载从 Snapshot 恢复卡片和剩余时间。
 - 用户拒绝映射为 `USER_REJECTED`，过期映射为 `APPROVAL_EXPIRED`，应用退出、账号切换、Utility Process 故障或 Turn 取消映射为 `APPROVAL_CANCELLED`；面向模型返回裁剪后的结构化结果。
 - 用户批准只解除当前规范化 Tool Call 的挂起，不代表相同工具、参数或后续调用获得会话级或永久授权。工具、参数、目标账号、账户 generation 或 `commandId` 改变后必须重新判断。
 - 审批过程中不能预执行底层副作用、预启动 Shell/MCP 进程或提前写配置。

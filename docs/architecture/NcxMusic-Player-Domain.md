@@ -272,7 +272,7 @@ interface QueueController {
 - 歌单、专辑、“我喜欢”和歌手热门歌曲等集合详情中的歌曲行：`replaceAndPlay`，用当前完整列表替换队列，`startIndex` 指向点击项。
 - 小云精确点播、全局搜索单曲和推荐单曲卡片：`insertAndPlay`，插入当前项之后并立即切换播放。
 
-页面或 Agent 的其他动作必须明确选择 `replaceAndPlay`、`insertAndPlay`、`playNext` 或 `enqueue`。搜索和推荐 Section 的“播放全部”、电台/MV 等后续来源仍待确认。
+页面或 Agent 的其他动作必须明确选择 `replaceAndPlay`、`insertAndPlay`、`playNext` 或 `enqueue`。搜索和推荐 Section 的“播放全部”调用 `replaceAndPlay`，以当前可见歌曲集合替换队列并从第一首开始。电台、MV 等非首版页面若后续立项，必须在接入时另行冻结队列语义。
 
 ### 4.3 索引、删除与上一首
 

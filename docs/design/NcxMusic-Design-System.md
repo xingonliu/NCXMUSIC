@@ -1,13 +1,13 @@
 # NcxMusic Design System 基线
 
-> 文档状态：Baseline 0.1（组件与交互基线已建立，品牌配色与图标方案待视觉阶段确认）
+> 文档状态：Baseline 0.2（组件、品牌色、功能层材质与窗口响应基线已建立）
 > 建立日期：2026-08-04
-> 最后更新：2026-08-04
+> 最后更新：2026-08-05
 > 用途：定义 Renderer 的组件范围、统一页面模式、设计 Token 和验收规则
 
 ## 1. 设计目标
 
-NcxMusic 采用精致、克制、接近 macOS 质感的跨平台桌面视觉，但不逐像素复制系统组件。Windows 与 macOS 共用同一套产品语言，只在窗口材质、系统字体回退和平台能力上适配。
+NcxMusic 采用精致、鲜明、接近 Apple 音乐产品质感的跨平台桌面视觉，但不逐像素复制系统组件。Windows 与 macOS 共用红色强调、圆角线性图标和功能层 Liquid Glass，只在窗口控件、系统材质、字体回退和平台能力上适配。
 
 设计系统遵守以下原则：
 
@@ -145,7 +145,9 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 
 阴影颜色由亮/暗主题 Token 决定，不能在组件内写固定黑色透明度。深色主题主要依靠描边和表面明度区分层级，避免大面积黑影。
 
-模糊只用于窗口 Chrome、全局浮层背景和已确认的渐变模糊遮罩：`blur-sm: 12 px`、`blur-md: 20 px`、`blur-lg: 32 px`。普通 Card 不使用背景模糊，避免性能消耗和视觉噪声。
+模糊与 Liquid Glass 用于独立的功能层：WindowChrome、右键菜单、Header 浮动按钮或按钮组、窗口控制组、Popover、DropdownMenu、Tooltip、全局浮层背景和全屏顶部渐变遮罩。`blur-sm: 12 px`、`blur-md: 20 px`、`blur-lg: 32 px` 只是强度 Token，组件还必须组合主题化半透明填充、细描边、高光和阴影，不能只加 `backdrop-filter`。
+
+普通内容 Card、TrackRow、Section 背景和大面积内容画布继续使用标准 Surface，不叠加玻璃。相邻玻璃层应合并为同一容器，禁止多个半透明背板彼此重叠。应用启用降低透明度、平台能够检测到系统降低透明度、GPU 能力不足或 `backdrop-filter` 不可用时，必须回退到不透明 `surface-overlay`，并保持相同的边界、层级和可读性。
 
 ### 3.6 动效与 Hover
 
@@ -175,7 +177,14 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 
 ### 3.8 颜色 Token
 
-首版先冻结语义名称，具体色值在视觉方向确认后统一填入：
+首版品牌与主要强调色采用 Apple Music 风格红色体系，而不是声称复刻 Apple 的内部品牌规范：
+
+- 浅色主题 `accent: #FA2D48`。
+- 深色主题 `accent: #FF375F`。
+- `accent-hover` 与 `accent-pressed` 由主题调色板预先计算并固化，业务组件不得运行时随意调亮或调暗。
+- `on-accent` 默认使用白色，并在视觉回归中检查文本、图标与 Focus Ring 对比度。
+
+其余语义 Token：
 
 - Surface：`canvas`、`surface`、`surface-raised`、`surface-overlay`、`control-hover`、`control-pressed`、`control-selected`。
 - Text：`text-primary`、`text-secondary`、`text-tertiary`、`text-disabled`。
@@ -185,7 +194,7 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 - Music：`vip`、`paid`、`playing`。
 - Agent：`agent-accent`、`agent-surface`、`approval-pending`。
 
-禁止直接以 `red-500` 等原始色阶表达产品语义；危险操作必须使用 `danger` 语义 Token。
+`agent-accent` 默认映射到品牌 `accent`，不再建立第二套小云品牌色。禁止直接以 `red-500` 等原始色阶表达产品语义；危险操作必须使用独立 `danger` 语义 Token，并结合危险图标和明确文案，不能只用与品牌红的细微色差表达风险。
 
 ## 4. 首版组件范围
 
@@ -238,12 +247,12 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 
 ### 4.4 Agent 领域组件（P0）
 
-- AgentSidebar、AgentComposer、ChatMessage、StreamingMessage。
+- AgentPage、AgentConversation、AgentComposer、ChatMessage、StreamingMessage。
 - MusicSafetyControl、CommandSafetyControl。
 - ToolExecutionCard、ApprovalCard、SelectionCard、ProfileAnalysisPrompt、MemoryStatus。
 - VoiceOverlay、VoiceWaveform、VoiceStateLabel。
 
-`ToolExecutionCard` 展示工具名称、状态、耗时、摘要结果和可展开技术详情。`ApprovalCard` 是独立业务组件，必须同时展示操作对象、影响、风险原因、轻量剩余有效时间，以及文案固定为“批准”“拒绝”的两个按钮；没有关闭图标，不能增加会话级/永久授权，不能用通用 Dialog、Toast 或 ToolExecutionCard 的普通状态代替。
+`ToolExecutionCard` 收起态展示来源图标、操作名称、状态、结果摘要和耗时；展开态展示经过脱敏的参数、执行步骤以及结果或错误。原始错误、堆栈和 `toolCallId` 只在开发者模式展示，普通模式不得泄露凭据、Cookie、本机路径或底层协议噪声。`ApprovalCard` 是独立业务组件，必须同时展示操作对象、影响、风险原因、轻量剩余有效时间，以及文案固定为“批准”“拒绝”的两个按钮；没有关闭图标，不能增加会话级/永久授权，不能用通用 Dialog、Toast 或 ToolExecutionCard 的普通状态代替。
 
 `SelectionCard` 是 `request_user_selection` Tool 的内联快捷提问组件，帮助用户在 2~5 个结构化答案中选择、减少文字输入。它允许在同一卡片混排两种 Option Row：音乐实体使用 `MediaArtwork thumbnail` 并展示名称、歌手、专辑和权益小标；普通文字选项展示标题和一行可选说明。单选模式整行点击后立即提交；多选模式使用明确的选中标记，允许勾选 1~5 项，并在至少一项已选时启用“完成”按钮。两种模式都支持方向键移动焦点；单选用 Enter 选择并提交，多选用 Space 切换选项，再聚焦“完成”并按 Enter 提交。卡片始终提供“取消”次要按钮，不使用“批准/拒绝”文案；提交只返回回答，绝不执行选项文案描述的动作。固定 10 分钟到期后进入只读过期态；选择、取消和过期状态都必须保留结果并锁定全部交互。
 
@@ -302,6 +311,17 @@ interface PageRouteMeta {
 - 详情页的大封面与元信息使用 EntityHero，位于 PageHeader 下方。
 - Sticky 状态、标题折叠和背景材质由 PageHeader 自己处理，页面不能复制 Sticky Header。
 
+### 6.1 WindowChrome 与响应式窗口
+
+- 主窗口默认 1280×800，最小 960×640；内容宽度低于 1100px 时进入紧凑布局，页面横向内边距从 24px 降为 16px，并降低非关键元信息密度。
+- 小云只存在于一级路由页面，没有全局 Agent 侧边栏、覆盖形态、拖拽宽度或相应偏好。
+- macOS 使用隐藏标题栏下的系统原生交通灯，并通过 Electron 的窗口按钮位置能力与左侧导航顶区对齐。Renderer 不绘制仿制交通灯，也不接管其 Hover、全屏或辅助功能行为。
+- Windows 使用 Header 最右侧常驻的 `WindowControlGroup`，三个合并按钮依次为最小化、最大化/还原、关闭；中间按钮不等价于应用全屏。最大化状态由 Main 推送的窗口快照驱动，不能由 Renderer 猜测。
+- Windows 窗口按钮经 Preload 的类型化命令调用 Main；关闭按钮遵守“关闭窗口：最小化 / 退出应用”设置。Renderer 不获得通用 IPC、BrowserWindow 或 `webContents` 能力。
+- Windows 自绘按钮不实现系统 Snap Layout 悬停面板，但不得破坏 `Win+Z`、拖拽贴边和系统快捷键。若未来必须支持按钮 Hover Snap Layout，只能切换原生 `titleBarOverlay` 并重新验收视觉。
+- Header 的可拖动区域使用显式 drag region；所有按钮、输入框、菜单触发器和可交互控件必须标记为 no-drag。右侧布局始终预留窗口控制组宽度，标题和页面操作不得进入该区域。
+- 普通与最大化状态保持窗口控件可见。全屏状态隐藏窗口控件；指针进入顶部导航感应区后，以渐变模糊与 Liquid Glass 显示，离开后按动效 Token 收起。
+
 ## 7. Button 与 IconButton 契约
 
 Button 只提供 `primary`、`secondary`、`ghost`、`danger` 四种视觉变体和 `compact`、`default`、`prominent` 三种尺寸。业务语义通过文案和图标表达，不增加“播放按钮色”“歌单按钮色”等页面级变体。
@@ -311,7 +331,7 @@ Button 只提供 `primary`、`secondary`、`ghost`、`danger` 四种视觉变体
 | 形式 | 组件 | 示例 | 规则 |
 | --- | --- | --- | --- |
 | 纯文字 | Button | 确认、取消 | 文字必须是明确动词；同一区域最多一个 Primary |
-| 纯图标 | IconButton | 关闭侧边栏、收藏、播放、下一首 | 必须提供 `label`，鼠标停留后显示 Tooltip |
+| 纯图标 | IconButton | 折叠主导航、收藏、播放、下一首 | 必须提供 `label`，鼠标停留后显示 Tooltip |
 | 图标+文字 | Button | 设置图标 +“设置” | 使用 `leadingIcon` 或 `trailingIcon`，不能手工拼接两个点击区 |
 
 ### 7.1 IconButton 视觉
@@ -350,7 +370,7 @@ Button 只提供 `primary`、`secondary`、`ghost`、`danger` 四种视觉变体
 - 支持鼠标右键、键盘 Context Menu 键和 `Shift+F10`。打开后使用方向键导航、Enter 执行、Escape 关闭并恢复焦点。
 - 生产菜单不提供“检查元素”“刷新页面”“另存图片”等浏览器开发项；开发构建可通过显式开发开关提供调试菜单。
 
-视觉规格：默认宽度 220 px、最大宽度 280 px；Item 高度 30 px，图标 16 px；使用 `radius-lg`、`elevation-2` 和 `layer-popover`。快捷键靠右使用次级文本。危险动作位于末组并使用 Danger 语义，分隔线不能连续或出现在首尾。
+视觉规格：默认宽度 220 px、最大宽度 280 px；Item 高度 30 px，图标 16 px；使用 `radius-lg`、`elevation-2`、`layer-popover` 和 `glass-regular` 功能层材质。快捷键靠右使用次级文本。危险动作位于末组并使用 Danger 语义，分隔线不能连续或出现在首尾。背景内容导致对比度不足或透明度不可用时，材质自动回退为不透明 `surface-overlay`。
 
 具体首版对象菜单建议以 `docs/design/NcxMusic-Context-Menu-Matrix.md` 为准。
 
@@ -386,12 +406,12 @@ src/renderer/features/
 - 建立开发专用 UI Lab，展示每个组件的尺寸、主题、状态、长文本、中文/英文、空数据和错误边界；UI Lab 不进入生产导航。
 - 通用组件至少覆盖键盘交互、焦点恢复、ARIA 语义和视觉快照测试；复杂组件增加交互测试。
 
-## 11. 尚待视觉阶段确认
+## 11. 尚待工程初始化冻结
 
-首版同时提供亮色与暗色主题，默认跟随操作系统并允许用户手动固定；以下仍需在视觉阶段冻结：
+首版同时提供亮色与暗色主题，默认跟随操作系统并允许用户手动固定。产品级视觉方向已经确认，只剩以下工程依赖需要在初始化阶段通过 UI Lab 冻结：
 
-1. 品牌主色以及亮/暗主题的具体 Token 色值。
-2. 图标库与音乐业务专用图标风格。
-3. 最小窗口尺寸与紧凑密度触发点。
+1. 承载圆角线性风格的具体开源图标包，以及缺失的音乐业务专用图标绘制清单。
+2. Windows/macOS 在不同 GPU、系统透明度与高对比度设置下的 Liquid Glass 降级参数。
+3. Windows 自绘窗口按钮和 macOS 原生交通灯在 100%～200% 缩放及全屏切换下的精确尺寸、命中区与对齐值。
 
-以上项目确认后只修改 Token 或 Primitive 实现，不改变本文件已经冻结的组件语义和页面复用规则。
+这些验证只冻结依赖和平台参数，不再改变已确认的品牌色、系统字体、窗口尺寸、组件语义和页面复用规则。

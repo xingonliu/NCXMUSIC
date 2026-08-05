@@ -110,7 +110,7 @@ tools/
 - 根目录只保留一个 `package.json`、一份 `pnpm-lock.yaml` 和一组统一脚本，不为进程入口建立独立 package。
 - `electron-vite` 负责开发服务器、Renderer HMR、Main/Preload 热重载和生产构建。Main 构建配置增加 Utility Process 独立入口，并输出稳定文件名供 `utilityProcess.fork()` 启动。
 - `electron-builder` 只消费构建完成的产物：Windows 首选 NSIS，macOS 输出 DMG 与 ZIP；签名证书、公证凭据和发布令牌只从 CI Secret 或本机安全环境注入。
-- 自动更新是否进入首版另行确认；如果启用，沿用 electron-builder 生成的更新元数据与兼容产物，不另建第二套打包流程。
+- 首版不引入 updater，不实现应用内检查更新、自动下载或安装。`electron-builder` 只负责生成 Windows/macOS 安装与归档产物；关于页展示当前版本和开源仓库入口，用户自行获取新版本。
 - 不同时引入 Electron Forge。Forge 与 electron-vite/electron-builder 在构建、打包和发布编排上职责重叠，会增加两套配置之间的漂移风险。
 - Electron、Node.js、pnpm、electron-vite 和 electron-builder 的精确版本在技术验证阶段共同冻结，并由锁文件和 CI 运行时文件约束；架构文档不写死未经验证的版本号。
 
