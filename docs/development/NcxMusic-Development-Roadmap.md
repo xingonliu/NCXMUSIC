@@ -4,7 +4,6 @@
 > 建立日期：2026-08-05
 > 范围：Windows、macOS 首个开源版本
 > 功能范围：`docs/product/NcxMusic-V1-Feature-Inventory.md`
-> 顺序执行提示词：`docs/development/agent-prompts/README.md`
 > 权威性：本文件是唯一开发先后顺序；其他文档只能细化任务，不得另建冲突路线
 > 原则：Phase 顺序表示依赖关系，不表示未经团队容量评估的工期承诺
 
@@ -77,8 +76,6 @@ Phase 0 技术门禁
 2. 建立 Main/Preload/Renderer/Utility 最小运行链路、构建入口和双平台 CI。
 3. 执行 `NcxMusic-Technical-Spike-Plan.md` 的 T-01～T-08。
 4. 为通过的结论建立 ADR；失败方案移出生产入口。
-
-> 执行记录（2026-08-05）：T-01 已 `pass`；T-02 的自动化隔离/租约/脱敏与 Windows packaged 场景已通过，但用户要求暂缓真实 AUTH_USER 交互矩阵，Checkpoint 保持 `partial`。用户允许继续其余 Phase 0 Spike，不代表 T-02 或 Phase 0 Gate 已通过。
 
 ### 完成门禁
 
