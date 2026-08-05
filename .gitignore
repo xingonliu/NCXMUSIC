@@ -6,3 +6,11 @@
 
 # API 审计原始层（禁止提交：原始响应、凭据、临时数据）
 .artifacts/
+
+# Node / Electron 构建产物
+node_modules/
+out/
+release/
+coverage/
+test-results/
+*.log
