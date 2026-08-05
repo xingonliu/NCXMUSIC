@@ -327,7 +327,7 @@ Button 只提供 `primary`、`secondary`、`ghost`、`danger` 四种视觉变体
 
 - 全局 Reka TooltipProvider 使用 `delayDuration = 1500`；为满足每个图标都需停留 1.5 秒的规则，`skipDelayDuration` 同样设为 1500。
 - 键盘 Tab Focus 时按无障碍行为立即显示，不强制等待 1.5 秒；Escape 关闭。
-- 内容由功能名和可选快捷键组成，例如 Windows/Linux 显示“搜索  Ctrl+K”，macOS 显示“搜索  ⌘K”。快捷键使用独立 Keycap 样式，不能和名称连成普通正文。
+- 内容由功能名和可选快捷键组成，例如 Windows 显示“搜索  Ctrl+K”，macOS 显示“搜索  ⌘K”。快捷键使用独立 Keycap 样式，不能和名称连成普通正文。
 - Tooltip 只负责解释，不承载按钮状态、错误或必须点击的操作；状态通过 `aria-label`、选中态和页面反馈表达。
 - Disabled 按钮如需说明原因，由外层 Tooltip Trigger 承载，并显示“暂不可用”的具体原因。
 
@@ -388,7 +388,9 @@ src/renderer/features/
 
 ## 11. 尚待视觉阶段确认
 
-1. 品牌主色、亮/暗主题的具体色值与默认主题。
+首版同时提供亮色与暗色主题，默认跟随操作系统并允许用户手动固定；以下仍需在视觉阶段冻结：
+
+1. 品牌主色以及亮/暗主题的具体 Token 色值。
 2. 图标库与音乐业务专用图标风格。
 3. 最小窗口尺寸与紧凑密度触发点。
 
