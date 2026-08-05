@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_info_list.id0.none.neg.001",
+    "apiAuditId": "ncm.comment_info_list",
+    "auth": "AUTH_NONE",
+    "params": {
+      "0": "ids",
+      "1": "id",
+      "2": "type",
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T03:21:56.205Z",
+    "endedAt": "2026-08-05T03:21:56.265Z",
+    "durationMs": 60,
+    "attempts": 1
+  },
+  "body": {
+    "data": [],
+    "code": 200
+  },
+  "error": null
+}

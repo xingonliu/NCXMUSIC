@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.login_qr_check.none.002",
+    "apiAuditId": "ncm.login_qr_check",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:14.343Z",
+    "endedAt": "2026-08-05T03:24:14.414Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "result is not defined",
+    "status": null,
+    "body": null,
+    "cookieCount": null
+  }
+}

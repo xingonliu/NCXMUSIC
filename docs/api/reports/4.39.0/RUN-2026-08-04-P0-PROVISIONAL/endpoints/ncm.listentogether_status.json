@@ -23,15 +23,452 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.listentogether_status.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 63,
+        "error": null,
+        "sampleHash": "971fcfed6bea29118de13f1227d3571bf2068835a5bcde98142431ac10083649",
+        "rawFile": "ncm.listentogether_status.ncm.listentogether_status.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_status.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "cb8fc4169c70fe15c6dd69ff066e77f812b5b789c0fda23bf48cbbf8b78de0d7",
+        "rawFile": "ncm.listentogether_status.ncm.listentogether_status.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_status.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "e8e6348cc8c9addace91d642d599155bd155b46391f46bdc68a685c63ea7c815",
+        "rawFile": "ncm.listentogether_status.ncm.listentogether_status.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_status.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "7d43ab23818374fdc362fd3f449c7c75dee427afe59d81af6c4dfcca406d1162",
+        "rawFile": "ncm.listentogether_status.ncm.listentogether_status.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.anotherDeviceInfo",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.anotherFollowStatus",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.inRoom",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.roomInfo.agoraChannelId",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "817719179453579264"
+    },
+    {
+      "jsonPath": "data.roomInfo.alg",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.roomInfo.chatRoomId",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "15699202461"
+    },
+    {
+      "jsonPath": "data.roomInfo.creatorId",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "17788444306"
+    },
+    {
+      "jsonPath": "data.roomInfo.effectiveDurationMs",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "1800000"
+    },
+    {
+      "jsonPath": "data.roomInfo.listeningRefer",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.roomInfo.ltType",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.roomInfo.matchedReason",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.roomInfo.openHeartRcmd",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.roomInfo.roomCreateTime",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "1785900244869"
+    },
+    {
+      "jsonPath": "data.roomInfo.roomId",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "60a0ee8db931aac73a62b37e25e72f9b_1785900244"
+    },
+    {
+      "jsonPath": "data.roomInfo.roomRTCType",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.roomInfo.roomType",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "FRIEND"
+    },
+    {
+      "jsonPath": "data.roomInfo.roomUsers",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.roomInfo.roomVipAbGroup.huiyuan_ListenTogether_TSpop",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "c"
+    },
+    {
+      "jsonPath": "data.roomInfo.unlockChatNeededMs",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.roomInfo.unlockedIdentity",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.roomInfo.unlockIdentityNeededMs",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.roomInfo.unlockTextChatNeededMs",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.roomInfo.waitMs",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "120000"
+    },
+    {
+      "jsonPath": "data.status",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": "NOT_CONNECTED"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.listentogether_status.anon.001",
+      "lastSeenCase": "ncm.listentogether_status.anon.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.listentogether_status.anon.001",
+      "sampleHash": "971fcfed6bea29118de13f1227d3571bf2068835a5bcde98142431ac10083649",
+      "rawFile": "ncm.listentogether_status.ncm.listentogether_status.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_status.inv.001",
+      "sampleHash": "cb8fc4169c70fe15c6dd69ff066e77f812b5b789c0fda23bf48cbbf8b78de0d7",
+      "rawFile": "ncm.listentogether_status.ncm.listentogether_status.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_status.none.001",
+      "sampleHash": "e8e6348cc8c9addace91d642d599155bd155b46391f46bdc68a685c63ea7c815",
+      "rawFile": "ncm.listentogether_status.ncm.listentogether_status.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_status.none.002",
+      "sampleHash": "7d43ab23818374fdc362fd3f449c7c75dee427afe59d81af6c4dfcca406d1162",
+      "rawFile": "ncm.listentogether_status.ncm.listentogether_status.none.002.raw.json"
+    }
+  ]
 }

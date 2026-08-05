@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.digitalAlbum_sales.none.002",
+    "apiAuditId": "ncm.digitalAlbum_sales",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:22:07.849Z",
+    "endedAt": "2026-08-05T03:22:07.904Z",
+    "durationMs": 55,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "参数错误",
+    "code": 400,
+    "massage": "参数错误"
+  },
+  "error": null
+}

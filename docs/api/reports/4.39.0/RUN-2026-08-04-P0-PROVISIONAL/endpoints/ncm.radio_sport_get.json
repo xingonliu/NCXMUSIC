@@ -31,15 +31,1560 @@
   },
   "matrix": {
     "planned": 5,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.radio_sport_get.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 141,
+        "error": null,
+        "sampleHash": "5ee05607eba86711a7f75281fb26cf4e4d384b279558c8c2f5abad1bea88be6a",
+        "rawFile": "ncm.radio_sport_get.ncm.radio_sport_get.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.radio_sport_get.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 106,
+        "error": null,
+        "sampleHash": "84974260bce82d5c0660f8f7e0be04857418bf7ff14ac6fe4bfc3b71378e4e01",
+        "rawFile": "ncm.radio_sport_get.ncm.radio_sport_get.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.radio_sport_get.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 91,
+        "error": null,
+        "sampleHash": "d161494be16c8c72ef95fd34dad5db3bb0bc56fcf1b06acbd878c2605799e3af",
+        "rawFile": "ncm.radio_sport_get.ncm.radio_sport_get.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.radio_sport_get.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 100,
+        "error": null,
+        "sampleHash": "c15dffcc41fc7a3e95c3ec60675edcf64369d1b1af64cf6577f200c6f61d454d",
+        "rawFile": "ncm.radio_sport_get.ncm.radio_sport_get.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data[].a",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].al.id",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "122257911"
+    },
+    {
+      "jsonPath": "data[].al.name",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "Dehors"
+    },
+    {
+      "jsonPath": "data[].al.pic",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "109951169635570080"
+    },
+    {
+      "jsonPath": "data[].al.pic_str",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "109951169635570073"
+    },
+    {
+      "jsonPath": "data[].al.picUrl",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "http://p3.music.126.net/7IM_iRaCe2Pe9TU7PMTdqQ==/10995116963"
+    },
+    {
+      "jsonPath": "data[].al.tns",
+      "rawType": "array<unknown>",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 7,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data[].alg",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "itembased"
+    },
+    {
+      "jsonPath": "data[].alia",
+      "rawType": "array<unknown>",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 6,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data[].alia[]",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.none.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.001",
+      "example": "反乌托邦拼接版"
+    },
+    {
+      "jsonPath": "data[].ar[].alias",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data[].ar[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "338718"
+    },
+    {
+      "jsonPath": "data[].ar[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "JORDANN"
+    },
+    {
+      "jsonPath": "data[].ar[].tns",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data[].bpm",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "110"
+    },
+    {
+      "jsonPath": "data[].cd",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "01"
+    },
+    {
+      "jsonPath": "data[].cf",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data[].copyright",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data[].cp",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "743010"
+    },
+    {
+      "jsonPath": "data[].crbt",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].djId",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].dt",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "195096"
+    },
+    {
+      "jsonPath": "data[].fee",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "8"
+    },
+    {
+      "jsonPath": "data[].ftype",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].h.br",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "320002"
+    },
+    {
+      "jsonPath": "data[].h.fid",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].h.size",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "7806476"
+    },
+    {
+      "jsonPath": "data[].h.vd",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "-57343"
+    },
+    {
+      "jsonPath": "data[].id",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "1815725297"
+    },
+    {
+      "jsonPath": "data[].l.br",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "128002"
+    },
+    {
+      "jsonPath": "data[].l.fid",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].l.size",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "3122617"
+    },
+    {
+      "jsonPath": "data[].l.vd",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "-52945"
+    },
+    {
+      "jsonPath": "data[].m.br",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "192002"
+    },
+    {
+      "jsonPath": "data[].m.fid",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].m.size",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "4683903"
+    },
+    {
+      "jsonPath": "data[].m.vd",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "-54719"
+    },
+    {
+      "jsonPath": "data[].mst",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "9"
+    },
+    {
+      "jsonPath": "data[].mv",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "14674387"
+    },
+    {
+      "jsonPath": "data[].name",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "Dehors"
+    },
+    {
+      "jsonPath": "data[].no",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data[].pop",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "100"
+    },
+    {
+      "jsonPath": "data[].privilege.bd",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.chargeInfoList[].chargeMessage",
+      "rawType": "null",
+      "presence": 21,
+      "nulls": 21,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.chargeInfoList[].chargeType",
+      "rawType": "number",
+      "presence": 21,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].privilege.chargeInfoList[].chargeUrl",
+      "rawType": "null",
+      "presence": 21,
+      "nulls": 21,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.chargeInfoList[].rate",
+      "rawType": "number",
+      "presence": 21,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "128000"
+    },
+    {
+      "jsonPath": "data[].privilege.code",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].privilege.cp",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data[].privilege.cs",
+      "rawType": "boolean",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].privilege.dl",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].privilege.dlLevel",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "none"
+    },
+    {
+      "jsonPath": "data[].privilege.dlLevels",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.downloadMaxbr",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "999000"
+    },
+    {
+      "jsonPath": "data[].privilege.downloadMaxBrLevel",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "jymaster"
+    },
+    {
+      "jsonPath": "data[].privilege.fee",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "8"
+    },
+    {
+      "jsonPath": "data[].privilege.fl",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "320000"
+    },
+    {
+      "jsonPath": "data[].privilege.flag",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "1540100"
+    },
+    {
+      "jsonPath": "data[].privilege.flLevel",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "exhigh"
+    },
+    {
+      "jsonPath": "data[].privilege.freeTrialPrivilege.cannotListenReason",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.freeTrialPrivilege.freeLimitTagType",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.freeTrialPrivilege.listenType",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.freeTrialPrivilege.playReason",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.freeTrialPrivilege.resConsumable",
+      "rawType": "boolean",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].privilege.freeTrialPrivilege.userConsumable",
+      "rawType": "boolean",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].privilege.id",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "1815725297"
+    },
+    {
+      "jsonPath": "data[].privilege.ignoreCache",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.maxbr",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "999000"
+    },
+    {
+      "jsonPath": "data[].privilege.maxBrLevel",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "jymaster"
+    },
+    {
+      "jsonPath": "data[].privilege.message",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.paidBigBang",
+      "rawType": "boolean",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].privilege.payed",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].privilege.pc",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.pl",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "320000"
+    },
+    {
+      "jsonPath": "data[].privilege.playMaxbr",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "999000"
+    },
+    {
+      "jsonPath": "data[].privilege.playMaxBrLevel",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "jymaster"
+    },
+    {
+      "jsonPath": "data[].privilege.plLevel",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "exhigh"
+    },
+    {
+      "jsonPath": "data[].privilege.plLevels",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.preSell",
+      "rawType": "boolean",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].privilege.realPayed",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].privilege.rightSource",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].privilege.rscl",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].privilege.sp",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "7"
+    },
+    {
+      "jsonPath": "data[].privilege.st",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].privilege.subp",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data[].privilege.toast",
+      "rawType": "boolean",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].pst",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].publishTime",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "1494172800000"
+    },
+    {
+      "jsonPath": "data[].rt",
+      "rawType": "string",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data[].rtUrl",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].rtUrls",
+      "rawType": "array<unknown>",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 7,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data[].rtype",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].rurl",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].s_id",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].st",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].t",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].tns[]",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.001",
+      "example": "外面"
+    },
+    {
+      "jsonPath": "data[].v",
+      "rawType": "number",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.radio_sport_get.anon.001",
+      "lastSeenCase": "ncm.radio_sport_get.none.002",
+      "example": "66"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.radio_sport_get.anon.001",
+      "sampleHash": "5ee05607eba86711a7f75281fb26cf4e4d384b279558c8c2f5abad1bea88be6a",
+      "rawFile": "ncm.radio_sport_get.ncm.radio_sport_get.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.radio_sport_get.inv.001",
+      "sampleHash": "84974260bce82d5c0660f8f7e0be04857418bf7ff14ac6fe4bfc3b71378e4e01",
+      "rawFile": "ncm.radio_sport_get.ncm.radio_sport_get.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.radio_sport_get.none.001",
+      "sampleHash": "d161494be16c8c72ef95fd34dad5db3bb0bc56fcf1b06acbd878c2605799e3af",
+      "rawFile": "ncm.radio_sport_get.ncm.radio_sport_get.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.radio_sport_get.none.002",
+      "sampleHash": "c15dffcc41fc7a3e95c3ec60675edcf64369d1b1af64cf6577f200c6f61d454d",
+      "rawFile": "ncm.radio_sport_get.ncm.radio_sport_get.none.002.raw.json"
+    }
+  ]
 }

@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_today_perfered.none.001",
+    "apiAuditId": "ncm.dj_today_perfered",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:20.729Z",
+    "endedAt": "2026-08-05T03:23:20.799Z",
+    "durationMs": 70,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "msg": null,
+    "data": []
+  },
+  "error": null
+}

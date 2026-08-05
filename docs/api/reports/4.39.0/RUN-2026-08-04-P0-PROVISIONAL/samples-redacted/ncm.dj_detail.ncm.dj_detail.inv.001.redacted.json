@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_detail.inv.001",
+    "apiAuditId": "ncm.dj_detail",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:22:17.890Z",
+    "endedAt": "2026-08-05T03:22:17.964Z",
+    "durationMs": 74,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "msg": "参数错误",
+    "data": null
+  },
+  "error": null
+}

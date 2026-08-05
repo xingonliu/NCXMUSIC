@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.api.anon.001",
+    "apiAuditId": "ncm.api",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:30.490Z",
+    "endedAt": "2026-08-05T03:21:30.491Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "Cannot read properties of undefined (reading 'indexOf')",
+    "status": null,
+    "body": null,
+    "cookieCount": null
+  }
+}

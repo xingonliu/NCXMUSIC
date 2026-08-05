@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.broadcast_channel_currentinfo.anon.001",
+    "apiAuditId": "ncm.broadcast_channel_currentinfo",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:44.738Z",
+    "endedAt": "2026-08-05T03:21:44.841Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 502,
+    "body": {
+      "code": 502,
+      "msg": "Request failed with status code 400"
+    },
+    "cookieCount": 0
+  }
+}

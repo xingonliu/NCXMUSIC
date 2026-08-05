@@ -89,3 +89,13 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 17. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**failed_stable**（blocker: 模块级异常（非网络）：Cannot read properties of undefined (reading 'name')）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.cloud.anon.001 | AUTH_ANON | err | - | - | other |
+| ncm.cloud.inv.001 | AUTH_INVALID_EXPIRED | err | - | - | other |
+| ncm.cloud.none.001 | AUTH_NONE | err | - | - | other |
+| ncm.cloud.none.002 | AUTH_NONE | err | - | - | other |

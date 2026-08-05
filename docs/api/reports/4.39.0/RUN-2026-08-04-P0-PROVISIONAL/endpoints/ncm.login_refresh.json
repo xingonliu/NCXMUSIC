@@ -26,15 +26,147 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.login_refresh.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 302,
+        "durationMs": 197,
+        "error": null,
+        "sampleHash": "93082ae96e86c110fc232b5841fb612f5da69f5ae220b1ead4d5592506704f2f",
+        "rawFile": "ncm.login_refresh.ncm.login_refresh.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.login_refresh.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301,
+            "message": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "605bc77666dce7d499c4e917265dbeaa3d69cf571260b740713af8f910fc6fc1",
+        "rawFile": "ncm.login_refresh.ncm.login_refresh.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.login_refresh.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301,
+            "message": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "df4dbcc6b4e7daf5fa133f79b3aba20ad277afc17b49b6e5788a67f4eb1d51e4",
+        "rawFile": "ncm.login_refresh.ncm.login_refresh.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.login_refresh.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301,
+            "message": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "3f4bc7e7d158c4027205805bf77d4a28b690ee0ebe9e2a002652df56ff7dfee0",
+        "rawFile": "ncm.login_refresh.ncm.login_refresh.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.login_refresh.anon.001",
+      "lastSeenCase": "ncm.login_refresh.anon.001",
+      "example": "302"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.login_refresh.anon.001",
+      "lastSeenCase": "ncm.login_refresh.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.login_refresh.anon.001",
+      "lastSeenCase": "ncm.login_refresh.anon.001",
+      "example": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.login_refresh.anon.001",
+      "sampleHash": "93082ae96e86c110fc232b5841fb612f5da69f5ae220b1ead4d5592506704f2f",
+      "rawFile": "ncm.login_refresh.ncm.login_refresh.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_refresh.inv.001",
+      "sampleHash": "605bc77666dce7d499c4e917265dbeaa3d69cf571260b740713af8f910fc6fc1",
+      "rawFile": "ncm.login_refresh.ncm.login_refresh.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_refresh.none.001",
+      "sampleHash": "df4dbcc6b4e7daf5fa133f79b3aba20ad277afc17b49b6e5788a67f4eb1d51e4",
+      "rawFile": "ncm.login_refresh.ncm.login_refresh.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_refresh.none.002",
+      "sampleHash": "3f4bc7e7d158c4027205805bf77d4a28b690ee0ebe9e2a002652df56ff7dfee0",
+      "rawFile": "ncm.login_refresh.ncm.login_refresh.none.002.raw.json"
+    }
+  ]
 }

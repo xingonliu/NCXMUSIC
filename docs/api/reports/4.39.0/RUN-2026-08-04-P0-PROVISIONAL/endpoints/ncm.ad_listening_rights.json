@@ -23,15 +23,654 @@
   },
   "matrix": {
     "planned": 5,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.ad_listening_rights.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 124,
+        "error": null,
+        "sampleHash": "bf21a549cbd8b18781b9aa07fa82fc8d231e6cffe9d264e8db4f22629120fa34",
+        "rawFile": "ncm.ad_listening_rights.ncm.ad_listening_rights.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.ad_listening_rights.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 2001,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": 2001,
+          "body": {
+            "code": 2001,
+            "message": "暂时无法参加，请确保账号已登录~，状态码2001",
+            "data": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "c87cbcd5fced1103b5ccbd6d66ada207bdeb50ce4e92ef16a8adc1fec4048087",
+        "rawFile": "ncm.ad_listening_rights.ncm.ad_listening_rights.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.ad_listening_rights.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 2001,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": 2001,
+          "body": {
+            "code": 2001,
+            "message": "暂时无法参加，请确保账号已登录~，状态码2001",
+            "data": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "d836513bbf73efe0e2768ddc7b0b16ba20b509c82d06b4533c46ff7985bd1bdb",
+        "rawFile": "ncm.ad_listening_rights.ncm.ad_listening_rights.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.ad_listening_rights.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 2001,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": 2001,
+          "body": {
+            "code": 2001,
+            "message": "暂时无法参加，请确保账号已登录~，状态码2001",
+            "data": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "f38b5b65f10ec7b312725a20ffa12fc89dce1cd81559189d12185f5f6795a7ca",
+        "rawFile": "ncm.ad_listening_rights.ncm.ad_listening_rights.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.actionTitle",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "领30分钟"
+    },
+    {
+      "jsonPath": "data.actionUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "orpheus://nm/motivationAd/show?adPosition=400002&source=130&"
+    },
+    {
+      "jsonPath": "data.assetCardStyle",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "t1"
+    },
+    {
+      "jsonPath": "data.cardContent.actionTitle",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "点击领取30分钟免费听"
+    },
+    {
+      "jsonPath": "data.cardContent.actionUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "orpheus://nm/motivationAd/show?adPosition=400002&resourceId="
+    },
+    {
+      "jsonPath": "data.cardContent.amount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "30"
+    },
+    {
+      "jsonPath": "data.cardContent.cardTopLeftTitle",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "看视频 续时长"
+    },
+    {
+      "jsonPath": "data.cardContent.cardTopRightDesc",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "浏览小视频，获取免费听时长"
+    },
+    {
+      "jsonPath": "data.cardContent.unit",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "分钟"
+    },
+    {
+      "jsonPath": "data.cardType",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "data.rightsCoverToday",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.rightsEndTime",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.rightsRemainingTime",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.rightsUpperLimit",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.ruleTitle",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "免费听歌活动规则"
+    },
+    {
+      "jsonPath": "data.ruleUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "https://y.music.163.com/g/yida/adfeaa5979f940d2bf37539e04224"
+    },
+    {
+      "jsonPath": "data.status",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "INIT"
+    },
+    {
+      "jsonPath": "data.title",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "看视频 免费听VIP歌曲"
+    },
+    {
+      "jsonPath": "data.vipInfoContent",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.vipInfoContentV2",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.yunbeiEntry",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.adInfo.actionUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "orpheus://nm/motivationAd/show?adPosition=400002&source=538&"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.adInfo.amount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "268"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.adInfo.baseSource",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "538"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.adInfo.behaviorSeqNo",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "ad:mall:behavior:0e80d544554749eebca0e3cb2e80e7b6:LAi"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.adInfo.bonusSource",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "539"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.adInfo.limit",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.entranceType",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "FREE_LISTEN_VIP_EXCHANGE"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.esource",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "free_listen_vip_exchange"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.exchangePrice",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "6000"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.productImgUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "http://p1.music.126.net/Wssw1avnLUKJobKiI1rVXg==/10995117367"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.productName",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "【每日可领】黑胶VIP天卡"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.productStatus",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "3"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.productType",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.showValueLabel",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.skuId",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "866400807"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.withdrawAmount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.withdrawUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "https://st.music.163.com/g/ad-music/withdrawal/index.html#ha"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.yunbeiAmount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.yunbeiEntryV2.yunbeiCenterUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": "orpheus://rnpage?component=rn-cloudshell-center"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights.anon.001",
+      "example": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.ad_listening_rights.anon.001",
+      "sampleHash": "bf21a549cbd8b18781b9aa07fa82fc8d231e6cffe9d264e8db4f22629120fa34",
+      "rawFile": "ncm.ad_listening_rights.ncm.ad_listening_rights.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.ad_listening_rights.inv.001",
+      "sampleHash": "c87cbcd5fced1103b5ccbd6d66ada207bdeb50ce4e92ef16a8adc1fec4048087",
+      "rawFile": "ncm.ad_listening_rights.ncm.ad_listening_rights.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.ad_listening_rights.none.001",
+      "sampleHash": "d836513bbf73efe0e2768ddc7b0b16ba20b509c82d06b4533c46ff7985bd1bdb",
+      "rawFile": "ncm.ad_listening_rights.ncm.ad_listening_rights.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.ad_listening_rights.none.002",
+      "sampleHash": "f38b5b65f10ec7b312725a20ffa12fc89dce1cd81559189d12185f5f6795a7ca",
+      "rawFile": "ncm.ad_listening_rights.ncm.ad_listening_rights.none.002.raw.json"
+    }
+  ]
 }

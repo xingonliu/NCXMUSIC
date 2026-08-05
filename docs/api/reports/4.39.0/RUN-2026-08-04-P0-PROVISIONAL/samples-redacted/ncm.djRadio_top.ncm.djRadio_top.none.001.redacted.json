@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "caseId": "ncm.djRadio_top.none.001",
+    "apiAuditId": "ncm.djRadio_top",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:37.920Z",
+    "endedAt": "2026-08-05T03:23:37.992Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 301,
+    "body": {
+      "code": 301,
+      "message": "系统错误",
+      "debugInfo": null,
+      "data": null,
+      "failData": null
+    },
+    "cookieCount": 1
+  }
+}

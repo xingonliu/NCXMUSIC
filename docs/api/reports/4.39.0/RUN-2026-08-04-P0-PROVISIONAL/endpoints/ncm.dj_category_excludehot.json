@@ -27,15 +27,483 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.dj_category_excludehot.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 271,
+        "error": null,
+        "sampleHash": "0321b92ec2161605b818d8fa88159c00c5e192c6eb04b94ad6c7ac568e1d09ac",
+        "rawFile": "ncm.dj_category_excludehot.ncm.dj_category_excludehot.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_category_excludehot.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 69,
+        "error": null,
+        "sampleHash": "87c622c7022bdfd82b671b309c2b03c7169d73e9a636236efcf60677752d347f",
+        "rawFile": "ncm.dj_category_excludehot.ncm.dj_category_excludehot.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_category_excludehot.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 55,
+        "error": null,
+        "sampleHash": "664c5316214e015d25b18c24ea4d7162dd397b9c196196b9f2e9ec7a840a1822",
+        "rawFile": "ncm.dj_category_excludehot.ncm.dj_category_excludehot.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_category_excludehot.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 63,
+        "error": null,
+        "sampleHash": "acdd0f173abc506161029e4a40bfd4f9091bd2ba13687c703d8fcc35e8072caa",
+        "rawFile": "ncm.dj_category_excludehot.ncm.dj_category_excludehot.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "11"
+    },
+    {
+      "jsonPath": "data[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "知识"
+    },
+    {
+      "jsonPath": "data[].pic56x56Id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108734880"
+    },
+    {
+      "jsonPath": "data[].pic56x56IdStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108734873"
+    },
+    {
+      "jsonPath": "data[].pic56x56Url",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "https://p3.music.126.net/S7xbLcLVSQKbw-aSrULB-w==/1099511661"
+    },
+    {
+      "jsonPath": "data[].pic84x84Id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108736830"
+    },
+    {
+      "jsonPath": "data[].pic84x84IdUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "https://p4.music.126.net/GPd3Pk-XtKekwuXiV4jJEA==/1099511661"
+    },
+    {
+      "jsonPath": "data[].pic96x96Id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108737810"
+    },
+    {
+      "jsonPath": "data[].pic96x96IdStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108737806"
+    },
+    {
+      "jsonPath": "data[].pic96x96Url",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "https://p4.music.126.net/7F0vZQ4D3jaUDhMQ6TEltQ==/1099511661"
+    },
+    {
+      "jsonPath": "data[].picIPad",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108740640"
+    },
+    {
+      "jsonPath": "data[].picIPadStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108740646"
+    },
+    {
+      "jsonPath": "data[].picIPadUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "https://p3.music.126.net/iwe1bKXrqE5nhUWz3YB1lg==/1099511661"
+    },
+    {
+      "jsonPath": "data[].picMacId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108743077"
+    },
+    {
+      "jsonPath": "data[].picMacUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "https://p3.music.126.net/BkDGDDGmuzJYrQJhgrRINQ==/1099511661"
+    },
+    {
+      "jsonPath": "data[].picPCBlack",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108742600"
+    },
+    {
+      "jsonPath": "data[].picPCBlackStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108742588"
+    },
+    {
+      "jsonPath": "data[].picPCBlackUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "https://p4.music.126.net/lgaPhsLoAANtHH7Hqa5N2g==/1099511661"
+    },
+    {
+      "jsonPath": "data[].picPCWhite",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108742100"
+    },
+    {
+      "jsonPath": "data[].picPCWhiteStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108742099"
+    },
+    {
+      "jsonPath": "data[].picPCWhiteUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "https://p3.music.126.net/4Pg6ZQ0eZ-xou1c-QZUL0A==/1099511661"
+    },
+    {
+      "jsonPath": "data[].picUWPId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108736879"
+    },
+    {
+      "jsonPath": "data[].picUWPUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "https://p3.music.126.net/Schoe7YN5LN9IJJ_zsIQtQ==/1099511661"
+    },
+    {
+      "jsonPath": "data[].picWeb",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108735870"
+    },
+    {
+      "jsonPath": "data[].picWebStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "109951166108735875"
+    },
+    {
+      "jsonPath": "data[].picWebUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_excludehot.anon.001",
+      "lastSeenCase": "ncm.dj_category_excludehot.none.002",
+      "example": "https://p4.music.126.net/wOmtE80i2EMG2dR7DnTJUw==/1099511661"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.dj_category_excludehot.anon.001",
+      "sampleHash": "0321b92ec2161605b818d8fa88159c00c5e192c6eb04b94ad6c7ac568e1d09ac",
+      "rawFile": "ncm.dj_category_excludehot.ncm.dj_category_excludehot.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_category_excludehot.inv.001",
+      "sampleHash": "87c622c7022bdfd82b671b309c2b03c7169d73e9a636236efcf60677752d347f",
+      "rawFile": "ncm.dj_category_excludehot.ncm.dj_category_excludehot.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_category_excludehot.none.001",
+      "sampleHash": "664c5316214e015d25b18c24ea4d7162dd397b9c196196b9f2e9ec7a840a1822",
+      "rawFile": "ncm.dj_category_excludehot.ncm.dj_category_excludehot.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_category_excludehot.none.002",
+      "sampleHash": "acdd0f173abc506161029e4a40bfd4f9091bd2ba13687c703d8fcc35e8072caa",
+      "rawFile": "ncm.dj_category_excludehot.ncm.dj_category_excludehot.none.002.raw.json"
+    }
+  ]
 }

@@ -66,15 +66,512 @@
   },
   "matrix": {
     "planned": 5,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.ad_listening_rights_gain.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 307,
+        "error": null,
+        "sampleHash": "130bdd9e4ec555f2d51e9ad99bd23d36f801e08705516a34af3e55e1386c2f37",
+        "rawFile": "ncm.ad_listening_rights_gain.ncm.ad_listening_rights_gain.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.ad_listening_rights_gain.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 2001,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": 2001,
+          "body": {
+            "code": 2001,
+            "message": "暂时无法参加，请确保账号已登录~，状态码2001",
+            "data": {
+              "gainFlag": false,
+              "showContent": "暂时无法参加，请确保账号已登录~",
+              "showElement": null,
+              "rightsUpperLimit": true,
+              "continueContent": null,
+              "canPlayContinuously": false,
+              "gainRightsDuration": null,
+              "rightsDurationUnit": null,
+              "vipButtonInfo": null,
+              "adButtonInfo": null,
+              "extraButtonInfo": null,
+              "rightsEndDialogType": null,
+              "rightsEndDialogBgUrl": null,
+              "rightsEndDialogTitle": null,
+              "rightsEndDialogSubTitle": null,
+              "adWatchRecords": null,
+              "adWatchStatus": false,
+              "needLink": true,
+              "linkPosition": null,
+              "activityEndDate": null,
+              "effectType": null
+            }
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "8f90c3d0374ac40e2246fae994c6ead3b822ad7b0a039298fa6be17e2c9e0219",
+        "rawFile": "ncm.ad_listening_rights_gain.ncm.ad_listening_rights_gain.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.ad_listening_rights_gain.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 2001,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": 2001,
+          "body": {
+            "code": 2001,
+            "message": "暂时无法参加，请确保账号已登录~，状态码2001",
+            "data": {
+              "gainFlag": false,
+              "showContent": "暂时无法参加，请确保账号已登录~",
+              "showElement": null,
+              "rightsUpperLimit": true,
+              "continueContent": null,
+              "canPlayContinuously": false,
+              "gainRightsDuration": null,
+              "rightsDurationUnit": null,
+              "vipButtonInfo": null,
+              "adButtonInfo": null,
+              "extraButtonInfo": null,
+              "rightsEndDialogType": null,
+              "rightsEndDialogBgUrl": null,
+              "rightsEndDialogTitle": null,
+              "rightsEndDialogSubTitle": null,
+              "adWatchRecords": null,
+              "adWatchStatus": false,
+              "needLink": true,
+              "linkPosition": null,
+              "activityEndDate": null,
+              "effectType": null
+            }
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "204aed604706d2b424dfd264f089735decc10ddf4f72aa1e273936fb1d82e8d0",
+        "rawFile": "ncm.ad_listening_rights_gain.ncm.ad_listening_rights_gain.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.ad_listening_rights_gain.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 2001,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": 2001,
+          "body": {
+            "code": 2001,
+            "message": "暂时无法参加，请确保账号已登录~，状态码2001",
+            "data": {
+              "gainFlag": false,
+              "showContent": "暂时无法参加，请确保账号已登录~",
+              "showElement": null,
+              "rightsUpperLimit": true,
+              "continueContent": null,
+              "canPlayContinuously": false,
+              "gainRightsDuration": null,
+              "rightsDurationUnit": null,
+              "vipButtonInfo": null,
+              "adButtonInfo": null,
+              "extraButtonInfo": null,
+              "rightsEndDialogType": null,
+              "rightsEndDialogBgUrl": null,
+              "rightsEndDialogTitle": null,
+              "rightsEndDialogSubTitle": null,
+              "adWatchRecords": null,
+              "adWatchStatus": false,
+              "needLink": true,
+              "linkPosition": null,
+              "activityEndDate": null,
+              "effectType": null
+            }
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "0242487bb31e025d1c4e4b401d91586a8cc8deb703916641015cac1141de9112",
+        "rawFile": "ncm.ad_listening_rights_gain.ncm.ad_listening_rights_gain.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.data.activityEndDate",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.data.adButtonInfo.buttonReqUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "orpheus://nm/motivationAd/show?adPosition=400002&resourceId="
+    },
+    {
+      "jsonPath": "data.data.adButtonInfo.buttonTitle",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "立即获得"
+    },
+    {
+      "jsonPath": "data.data.adWatchRecords",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.data.adWatchStatus",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.data.canPlayContinuously",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.data.continueContent",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "再看一个最高获得26分钟时长"
+    },
+    {
+      "jsonPath": "data.data.effectType",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.data.extraButtonInfo.buttonReqUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "https://st.music.163.com/g/ad-music#hash=2b17ab3bf714"
+    },
+    {
+      "jsonPath": "data.data.extraButtonInfo.buttonTitle",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "探索更多免费听歌权益"
+    },
+    {
+      "jsonPath": "data.data.gainFlag",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.data.gainRightsDuration",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "30"
+    },
+    {
+      "jsonPath": "data.data.linkPosition",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.data.needLink",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.data.rightsDurationUnit",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "分钟"
+    },
+    {
+      "jsonPath": "data.data.rightsEndDialogBgUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/3124352433"
+    },
+    {
+      "jsonPath": "data.data.rightsEndDialogSubTitle",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "再看一段广告，至少再得30分钟免费听"
+    },
+    {
+      "jsonPath": "data.data.rightsEndDialogTitle",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "恭喜，获得免费听歌时长"
+    },
+    {
+      "jsonPath": "data.data.rightsEndDialogType",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.data.rightsUpperLimit",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.data.showContent",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "恭喜获得30分VIP歌曲畅听权益"
+    },
+    {
+      "jsonPath": "data.data.showElement",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.data.vipButtonInfo",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.message",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "lastSeenCase": "ncm.ad_listening_rights_gain.anon.001",
+      "example": "处理成功"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.ad_listening_rights_gain.anon.001",
+      "sampleHash": "130bdd9e4ec555f2d51e9ad99bd23d36f801e08705516a34af3e55e1386c2f37",
+      "rawFile": "ncm.ad_listening_rights_gain.ncm.ad_listening_rights_gain.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.ad_listening_rights_gain.inv.001",
+      "sampleHash": "8f90c3d0374ac40e2246fae994c6ead3b822ad7b0a039298fa6be17e2c9e0219",
+      "rawFile": "ncm.ad_listening_rights_gain.ncm.ad_listening_rights_gain.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.ad_listening_rights_gain.none.001",
+      "sampleHash": "204aed604706d2b424dfd264f089735decc10ddf4f72aa1e273936fb1d82e8d0",
+      "rawFile": "ncm.ad_listening_rights_gain.ncm.ad_listening_rights_gain.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.ad_listening_rights_gain.none.002",
+      "sampleHash": "0242487bb31e025d1c4e4b401d91586a8cc8deb703916641015cac1141de9112",
+      "rawFile": "ncm.ad_listening_rights_gain.ncm.ad_listening_rights_gain.none.002.raw.json"
+    }
+  ]
 }

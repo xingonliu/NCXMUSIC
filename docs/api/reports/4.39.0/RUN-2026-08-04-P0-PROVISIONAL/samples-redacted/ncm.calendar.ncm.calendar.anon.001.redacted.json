@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "caseId": "ncm.calendar.anon.001",
+    "apiAuditId": "ncm.calendar",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:50.202Z",
+    "endedAt": "2026-08-05T03:21:50.310Z",
+    "durationMs": 108,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "abtest": null,
+      "calendarEvents": [],
+      "calendarConfig": {
+        "button": {
+          "text": "每日运势",
+          "targetUrl": "orpheus://miniProgram?appId=5fe1d3b78581f79050924831&pageId=index&dev=false&query=market%3Drecommend"
+        }
+      }
+    },
+    "message": ""
+  },
+  "error": null
+}

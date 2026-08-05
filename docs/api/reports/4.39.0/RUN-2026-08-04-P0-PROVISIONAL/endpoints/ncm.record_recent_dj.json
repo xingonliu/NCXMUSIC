@@ -33,15 +33,138 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.record_recent_dj.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 56,
+        "error": null,
+        "sampleHash": "067b58fb4d71fb13588635668d437bfbf7be7eef32fbee3b5d1c9cbac71c15f8",
+        "rawFile": "ncm.record_recent_dj.ncm.record_recent_dj.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.record_recent_dj.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 58,
+        "error": null,
+        "sampleHash": "8c9caa00e09e711626a494b1530cbbf6caf6429357ec7f674c6b05a609c1a014",
+        "rawFile": "ncm.record_recent_dj.ncm.record_recent_dj.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.record_recent_dj.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 52,
+        "error": null,
+        "sampleHash": "ae40a74c87d3bbf0dfa68aa50d7ec4239cbab79c1f9c0aa1ad1513b5918f6219",
+        "rawFile": "ncm.record_recent_dj.ncm.record_recent_dj.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.record_recent_dj.page.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 51,
+        "error": null,
+        "sampleHash": "abf7aaaefafd635f9c30a39588573ccdae09cf0321701479a8ead8704f8e9ddd",
+        "rawFile": "ncm.record_recent_dj.ncm.record_recent_dj.page.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.record_recent_dj.anon.001",
+      "lastSeenCase": "ncm.record_recent_dj.page.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.list",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.record_recent_dj.anon.001",
+      "lastSeenCase": "ncm.record_recent_dj.page.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.total",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.record_recent_dj.anon.001",
+      "lastSeenCase": "ncm.record_recent_dj.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.record_recent_dj.anon.001",
+      "lastSeenCase": "ncm.record_recent_dj.page.none.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.record_recent_dj.anon.001",
+      "sampleHash": "067b58fb4d71fb13588635668d437bfbf7be7eef32fbee3b5d1c9cbac71c15f8",
+      "rawFile": "ncm.record_recent_dj.ncm.record_recent_dj.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.record_recent_dj.inv.001",
+      "sampleHash": "8c9caa00e09e711626a494b1530cbbf6caf6429357ec7f674c6b05a609c1a014",
+      "rawFile": "ncm.record_recent_dj.ncm.record_recent_dj.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.record_recent_dj.none.001",
+      "sampleHash": "ae40a74c87d3bbf0dfa68aa50d7ec4239cbab79c1f9c0aa1ad1513b5918f6219",
+      "rawFile": "ncm.record_recent_dj.ncm.record_recent_dj.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.record_recent_dj.page.none.001",
+      "sampleHash": "abf7aaaefafd635f9c30a39588573ccdae09cf0321701479a8ead8704f8e9ddd",
+      "rawFile": "ncm.record_recent_dj.ncm.record_recent_dj.page.none.001.raw.json"
+    }
+  ]
 }

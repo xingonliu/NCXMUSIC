@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "caseId": "ncm.decrypt.inv.001",
+    "apiAuditId": "ncm.decrypt",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:22:03.915Z",
+    "endedAt": "2026-08-05T03:22:03.915Z",
+    "durationMs": 0,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "data is required"
+  },
+  "error": null
+}

@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "caseId": "ncm.playmode_intelligence_list.inv.001",
+    "apiAuditId": "ncm.playmode_intelligence_list",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "0": "id",
+      "1": "pid",
+      "2": "sid",
+      "3": "count",
+      "pid": "2936255937"
+    },
+    "startedAt": "2026-08-05T03:24:36.398Z",
+    "endedAt": "2026-08-05T03:24:36.499Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 500,
+    "body": {
+      "success": false,
+      "code": 500,
+      "message": "",
+      "data": null,
+      "ignore": false,
+      "present": false,
+      "empty": false
+    },
+    "cookieCount": 1
+  }
+}

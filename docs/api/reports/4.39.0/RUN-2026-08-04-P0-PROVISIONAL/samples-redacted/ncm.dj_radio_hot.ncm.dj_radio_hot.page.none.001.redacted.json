@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_radio_hot.page.none.001",
+    "apiAuditId": "ncm.dj_radio_hot",
+    "auth": "AUTH_NONE",
+    "params": {
+      "limit": 5,
+      "offset": 10
+    },
+    "startedAt": "2026-08-05T03:23:11.112Z",
+    "endedAt": "2026-08-05T03:23:11.164Z",
+    "durationMs": 52,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "msg": "参数错误",
+    "data": null
+  },
+  "error": null
+}

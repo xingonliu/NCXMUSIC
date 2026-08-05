@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "caseId": "ncm.pl_count.none.001",
+    "apiAuditId": "ncm.pl_count",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:32.202Z",
+    "endedAt": "2026-08-05T03:24:32.266Z",
+    "durationMs": 64,
+    "attempts": 1
+  },
+  "body": "",
+  "error": null
+}

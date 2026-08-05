@@ -1,0 +1,413 @@
+{
+  "meta": {
+    "caseId": "ncm.broadcast_channel_list.none.001",
+    "apiAuditId": "ncm.broadcast_channel_list",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:46.159Z",
+    "endedAt": "2026-08-05T03:21:46.261Z",
+    "durationMs": 102,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "hasMore": true,
+      "list": [
+        {
+          "id": 1349,
+          "regionName": "河北",
+          "name": "经典音乐 FM90.5",
+          "coverUrl": "http://p4.music.126.net/AHA3f7eDgiezxW_e1Ln_AA==/109951165549814171.jpg#hash=6edb0dbd2265",
+          "subed": false,
+          "score": 1281,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 131,
+          "regionName": "广东",
+          "name": "东莞综合广播",
+          "coverUrl": "http://p3.music.126.net/LmrMoLVL_bsFH4aFb8Zkpw==/109951165549814308.jpg#hash=7476cf7dddb5",
+          "subed": false,
+          "score": 1166,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 1153,
+          "regionName": "广东",
+          "name": "FM88.7 清远综合广播",
+          "coverUrl": "http://p3.music.126.net/6QmcgTfZqowoSEDB-zL0yg==/109951165549816864.jpg#hash=ca1839390b75",
+          "subed": false,
+          "score": 1084,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 113,
+          "regionName": "广东",
+          "name": "梅州广播电视台综合广播",
+          "coverUrl": "http://p4.music.126.net/mxpNortIxF8Ls9Og2WP3zg==/109951165549811847.jpg#hash=40e67bbc037b",
+          "subed": false,
+          "score": 1048,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 505,
+          "regionName": "广东",
+          "name": "惠州综合广播FM100",
+          "coverUrl": "http://p3.music.126.net/U3Rj85fob8CM7ZzX6mVBow==/109951165549820656.jpg#hash=200439aaceaa",
+          "subed": false,
+          "score": 1009,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 129,
+          "regionName": "广东",
+          "name": "珠海电台先锋951",
+          "coverUrl": "http://p3.music.126.net/rNmT7bHX88mKQkahagH84A==/109951165549806917.jpg#hash=5e6a5f956350",
+          "subed": false,
+          "score": 996,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 633,
+          "regionName": "广东",
+          "name": "湛江交通音乐广播",
+          "coverUrl": "http://p4.music.126.net/IKP-u_5qq3cCU4NigQ1GrA==/109951165549816658.jpg#hash=1dfdd8f71353",
+          "subed": false,
+          "score": 1002,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 506,
+          "regionName": "广东",
+          "name": "988惠州经济环保广播",
+          "coverUrl": "http://p3.music.126.net/g1txnklXSSd2mvQ3ZCDMmg==/109951165549812778.jpg#hash=c989d6a25dc3",
+          "subed": false,
+          "score": 985,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 114,
+          "regionName": "广东",
+          "name": "梅州广播交通台",
+          "coverUrl": "http://p3.music.126.net/4kxbHF2Rv1e_aJxS9pI4Qw==/109951165549822028.jpg#hash=9aacec3e7eca",
+          "subed": false,
+          "score": 975,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 537,
+          "regionName": "广东",
+          "name": "湛江经济广播",
+          "coverUrl": "http://p3.music.126.net/aZCuou8-dOmWJkz1vu46nA==/109951165549809449.jpg#hash=a5f1ad69843f",
+          "subed": false,
+          "score": 1022,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 952,
+          "regionName": "广东",
+          "name": "云浮电台综合广播",
+          "coverUrl": "http://p3.music.126.net/R1Sv7qzzQrsBpEG1KYB49w==/109951165549821040.jpg#hash=7f6038586b0c",
+          "subed": false,
+          "score": 1189,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 518,
+          "regionName": "广东",
+          "name": "开平广播电台",
+          "coverUrl": "http://p3.music.126.net/_o3AjuR9MXogp0BFgUloYQ==/109951165549809852.jpg#hash=7431255c04b5",
+          "subed": false,
+          "score": 1130,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 949,
+          "regionName": "广东",
+          "name": "澄海人民广播电台",
+          "coverUrl": "http://p3.music.126.net/feGbmQCcXtWYwNHr6-W99A==/109951165549814195.jpg#hash=bed4aaabf3b6",
+          "subed": false,
+          "score": 1111,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 1309,
+          "regionName": "广东",
+          "name": "增城电台FM89.0",
+          "coverUrl": "http://p4.music.126.net/_vkPnKsP4hBt4g0unFRkTQ==/109951165549820632.jpg#hash=aec0c607ceee",
+          "subed": false,
+          "score": 1069,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 1104,
+          "regionName": "广东",
+          "name": "佛冈电台",
+          "coverUrl": "http://p3.music.126.net/5AMtj36d13iQRxUPxdq8Ww==/109951165549811401.jpg#hash=7c2e41f2420e",
+          "subed": false,
+          "score": 990,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 1116,
+          "regionName": "广东",
+          "name": "阳江综合资讯广播",
+          "coverUrl": "http://p3.music.126.net/0MbEIwlT4jm71ODXf-cMlg==/109951165549818641.jpg#hash=3c610e585b77",
+          "subed": false,
+          "score": 981,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 1159,
+          "regionName": "广东",
+          "name": "从化广播电视台综合广播",
+          "coverUrl": "http://p3.music.126.net/P5Bj601rwu8P2T8CmUzZ4Q==/109951165549818046.jpg#hash=7fb0f226e54b",
+          "subed": false,
+          "score": 975,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 1156,
+          "regionName": "广东",
+          "name": "化州人民广播电台",
+          "coverUrl": "http://p3.music.126.net/1rEPDMIQyCTUlNhoJkXYRQ==/109951165549814672.jpg#hash=fcc519fadfbf",
+          "subed": false,
+          "score": 968,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 1115,
+          "regionName": "广东",
+          "name": "阳江旅游环保广播",
+          "coverUrl": "http://p4.music.126.net/7zBfGqjinaU2CQ4ZjHYljA==/109951165549815791.jpg#hash=0b36033c81f1",
+          "subed": false,
+          "score": 1066,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 1069201,
+          "regionName": "网络台",
+          "name": "24小时资讯热点",
+          "coverUrl": "http://p4.music.126.net/vfVO-5sN8mM_eg_LOeXf3w==/109951168492183651.jpg#hash=f24ea783adfb",
+          "subed": false,
+          "score": 1000000,
+          "source": "RADIO_GPT",
+          "roomId": 7001
+        },
+        {
+          "id": 172,
+          "regionName": "河北",
+          "name": "河北新闻广播",
+          "coverUrl": "http://p3.music.126.net/MzMR_EgMWL6H4T-VYSuWzg==/109951165549807406.jpg#hash=a63651dec202",
+          "subed": false,
+          "score": 1542,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 175,
+          "regionName": "河北",
+          "name": "河北音乐广播",
+          "coverUrl": "http://p3.music.126.net/Lts8EdPSMDDRN6jbzZbQWw==/109951165549809875.jpg#hash=9929dc5cec77",
+          "subed": false,
+          "score": 1487,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 14,
+          "regionName": "北京",
+          "name": "北京交通广播",
+          "coverUrl": "http://p4.music.126.net/baaw36IxJzEKi0QgKH-qoA==/109951165549821631.jpg#hash=d5e1d84ffede",
+          "subed": false,
+          "score": 1472,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 5,
+          "regionName": "上海",
+          "name": "上海新闻广播",
+          "coverUrl": "http://p3.music.126.net/QgI331teB2mfgyAbNh5HYg==/109951165549810905.jpg#hash=7e3ca0e686f4",
+          "subed": false,
+          "score": 1451,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 16,
+          "regionName": "北京",
+          "name": "北京新闻广播",
+          "coverUrl": "http://p4.music.126.net/5o_XkFndpdB2OWCzRdRIcw==/109951165549822499.jpg#hash=447fd7ca4600",
+          "subed": false,
+          "score": 1451,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 9,
+          "regionName": "上海",
+          "name": "第一财经广播",
+          "coverUrl": "http://p4.music.126.net/Gf0BpSV3qL49OwnSDiVW6w==/109951165549820024.jpg#hash=29b2de781029",
+          "subed": false,
+          "score": 1425,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 475,
+          "regionName": "黑龙江",
+          "name": "黑龙江交通广播",
+          "coverUrl": "http://p4.music.126.net/Kf6WNDQNjj2HHq_wFbu5fA==/109951165549811281.jpg#hash=a8fc3b492916",
+          "subed": false,
+          "score": 1422,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 174,
+          "regionName": "河北",
+          "name": "河北交通广播",
+          "coverUrl": "http://p3.music.126.net/s4XkH8PblHhd8UCdL-6eZg==/109951165549809997.jpg#hash=4c133a4851e5",
+          "subed": false,
+          "score": 1409,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 50,
+          "regionName": "辽宁",
+          "name": "辽宁都市广播",
+          "coverUrl": "http://p3.music.126.net/9PRfv2acZCkKXxZkt4bfCw==/109951165549811929.jpg#hash=a1c6e89f0bab",
+          "subed": false,
+          "score": 1386,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 11,
+          "regionName": "北京",
+          "name": "北京文艺广播",
+          "coverUrl": "http://p3.music.126.net/xUJ6-5OqtOosvpMO67STOg==/109951165549814691.jpg#hash=34ef76a39f9f",
+          "subed": false,
+          "score": 1378,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 6,
+          "regionName": "上海",
+          "name": "上海流行音乐LoveRadio",
+          "coverUrl": "http://p3.music.126.net/KMK9mQoE6nR0kW_eI4WqVQ==/109951165549815653.jpg#hash=c69736dc8336",
+          "subed": false,
+          "score": 1376,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 461,
+          "regionName": "吉林",
+          "name": "吉林新闻综合广播",
+          "coverUrl": "http://p3.music.126.net/Pb3AddR1yDBMdZAfEoYXzg==/109951165549811322.jpg#hash=ee3ac5a6571f",
+          "subed": false,
+          "score": 1375,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 432,
+          "regionName": "山西",
+          "name": "FM107太原交通广播",
+          "coverUrl": "http://p4.music.126.net/2CpXLj0rrAQic969sB4B-w==/109951165549813740.jpg#hash=cb06e302f483",
+          "subed": false,
+          "score": 1374,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 470,
+          "regionName": "吉林",
+          "name": "长春交通之声",
+          "coverUrl": "http://p4.music.126.net/tO_UTnUy-XupqT3g-No6Iw==/109951165549820100.jpg#hash=cce729d372d0",
+          "subed": false,
+          "score": 1366,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 7,
+          "regionName": "上海",
+          "name": "上海动感101",
+          "coverUrl": "http://p4.music.126.net/BRThGsuUM9Y_kxI5W1868Q==/109951165549816677.jpg#hash=0909d4968fc4",
+          "subed": false,
+          "score": 1357,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 557,
+          "regionName": "辽宁",
+          "name": "辽宁交通广播FM97.5",
+          "coverUrl": "http://p3.music.126.net/OMY_XQ2Waz5rVcbEajs_MA==/109951165549813770.jpg#hash=e25f05911d97",
+          "subed": false,
+          "score": 1354,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 147,
+          "regionName": "湖北",
+          "name": "湖北之声",
+          "coverUrl": "http://p3.music.126.net/UovRqGe8AgFo15ZVUbCFcg==/109951165549818069.jpg#hash=e42709f902ca",
+          "subed": false,
+          "score": 1352,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 548,
+          "regionName": "山西",
+          "name": "880山西交通广播",
+          "coverUrl": "http://p4.music.126.net/0PPr-scTxT6eqZZMuwbVQw==/109951165549820602.jpg#hash=f88f43640f3d",
+          "subed": false,
+          "score": 1347,
+          "source": "QT",
+          "roomId": 0
+        },
+        {
+          "id": 360,
+          "regionName": "山西",
+          "name": "FM1044太原经济广播",
+          "coverUrl": "http://p4.music.126.net/T7WLLY8kUU2GYWbs5p8LMA==/109951165549809409.jpg#hash=fcaedd194731",
+          "subed": false,
+          "score": 1329,
+          "source": "QT",
+          "roomId": 0
+        }
+      ],
+      "total": 843
+    },
+    "message": ""
+  },
+  "error": null
+}

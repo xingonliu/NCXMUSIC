@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.record_recent_voice.inv.001",
+    "apiAuditId": "ncm.record_recent_voice",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:25:07.337Z",
+    "endedAt": "2026-08-05T03:25:07.399Z",
+    "durationMs": 62,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "total": 0,
+      "list": []
+    },
+    "message": ""
+  },
+  "error": null
+}

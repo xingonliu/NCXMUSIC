@@ -39,15 +39,4434 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.program_recommend.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 160,
+        "error": null,
+        "sampleHash": "e660fc824a508ee1ca7d30496bc423987fa673b1161096b998888f9553412b6b",
+        "rawFile": "ncm.program_recommend.ncm.program_recommend.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.program_recommend.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 121,
+        "error": null,
+        "sampleHash": "773322d72970580fdf930a2ad36be2ac2f6cc3f163403bc42ae5217c3d55416d",
+        "rawFile": "ncm.program_recommend.ncm.program_recommend.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.program_recommend.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 154,
+        "error": null,
+        "sampleHash": "8635fb94be68debd08da0fd5511e42fa6866ecc28151df98dc6edf07a5420e86",
+        "rawFile": "ncm.program_recommend.ncm.program_recommend.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.program_recommend.page.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 257,
+        "error": null,
+        "sampleHash": "709c327f7da0d8d3eaf26a9c229470d4b1d604db0f13aa2065f94becb01e2234",
+        "rawFile": "ncm.program_recommend.ncm.program_recommend.page.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "more",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "name",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "3073100386"
+    },
+    {
+      "jsonPath": "programs[].additionIconList",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].adIconInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].aiGenerated",
+      "rawType": "union<boolean|null>",
+      "presence": 12,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].alg",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "featured"
+    },
+    {
+      "jsonPath": "programs[].auditDisPlayStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "programs[].auditStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "10"
+    },
+    {
+      "jsonPath": "programs[].authDTO",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].bdAuditStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "programs[].blurCoverUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "http://music.163.com/api/dj/img/blur/109951173694342727#hash"
+    },
+    {
+      "jsonPath": "programs[].brandInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].buyed",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].buyedNew",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].canReward",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].categoryId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "programs[].categoryName",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].channels[]",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "音乐故事"
+    },
+    {
+      "jsonPath": "programs[].classicRelationSong",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].classicStyleInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].code",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].commentCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].commentThreadId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "A_DJ_1_3726261168"
+    },
+    {
+      "jsonPath": "programs[].commonModule",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].coverId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "109951173694342720"
+    },
+    {
+      "jsonPath": "programs[].coverUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "https://p3.music.126.net/8RQvPRer8zRy02KrVW4atQ==/1099511736"
+    },
+    {
+      "jsonPath": "programs[].createEventId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].createTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "1785859200000"
+    },
+    {
+      "jsonPath": "programs[].ctrp",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].description",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "上一期我们和你聊了聊「流行之后」Madonna 麦当娜，相信许多人应该依旧意犹未尽，毕竟Madonna作为一名职业生涯至"
+    },
+    {
+      "jsonPath": "programs[].disPlayStatus",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].dj.accountStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].dj.anchor",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].dj.authenticationTypes",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "16384"
+    },
+    {
+      "jsonPath": "programs[].dj.authority",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].dj.authStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].dj.avatarDetail",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].dj.avatarImgId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "109951169956474140"
+    },
+    {
+      "jsonPath": "programs[].dj.avatarImgId_str",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "109951169956474137"
+    },
+    {
+      "jsonPath": "programs[].dj.avatarImgIdStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "109951169956474137"
+    },
+    {
+      "jsonPath": "programs[].dj.avatarUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "http://p4.music.126.net/XaZW2GtcPy0DUsbmbB5HzQ==/10995116995"
+    },
+    {
+      "jsonPath": "programs[].dj.backgroundImgId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "109951162868128400"
+    },
+    {
+      "jsonPath": "programs[].dj.backgroundImgIdStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "109951162868128395"
+    },
+    {
+      "jsonPath": "programs[].dj.backgroundUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "http://p4.music.126.net/2zSNIqTcpHL2jIvU6hG0EA==/10995116286"
+    },
+    {
+      "jsonPath": "programs[].dj.birthday",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].dj.brand",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "音乐丹行道"
+    },
+    {
+      "jsonPath": "programs[].dj.city",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "110101"
+    },
+    {
+      "jsonPath": "programs[].dj.defaultAvatar",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].dj.description",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].dj.detailDescription",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].dj.djStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "10"
+    },
+    {
+      "jsonPath": "programs[].dj.experts",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].dj.experts.1",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.none.001",
+      "example": "音乐原创视频达人"
+    },
+    {
+      "jsonPath": "programs[].dj.expertTags",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].dj.followed",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].dj.gender",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].dj.mutual",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].dj.nickname",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "不单调的主播"
+    },
+    {
+      "jsonPath": "programs[].dj.province",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "110000"
+    },
+    {
+      "jsonPath": "programs[].dj.remarkName",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].dj.signature",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].dj.userId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "9659926727"
+    },
+    {
+      "jsonPath": "programs[].dj.userType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "205"
+    },
+    {
+      "jsonPath": "programs[].dj.vipType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].djPlayRecordVo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].duration",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "4336248"
+    },
+    {
+      "jsonPath": "programs[].existLyric",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].feeScope",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].h5Links",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].icon",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "3726261168"
+    },
+    {
+      "jsonPath": "programs[].isPublish",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "programs[].likedCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].listenerCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "58"
+    },
+    {
+      "jsonPath": "programs[].liveInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.alias",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.albumSize",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.alias",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.briefDesc",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.img1v1Id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.img1v1Url",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "http://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/56393951388"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.musicSize",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.picId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.picUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.topicPerson",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artist.trans",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].albumSize",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].alias",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].briefDesc",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].img1v1Id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].img1v1Url",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "http://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/56393951388"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].musicSize",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].picId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].picUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].topicPerson",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.artists[].trans",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.blurPicUrl",
+      "rawType": "union<null|string>",
+      "presence": 12,
+      "nulls": 8,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "http://p4.music.126.net/UvDnHerlFr5PfiXXZ1MV7Q==/10995117366"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.briefDesc",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.commentThreadId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "R_AL_3_0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.company",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.companyId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.copyrightId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.description",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.mark",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.name",
+      "rawType": "union<null|string>",
+      "presence": 12,
+      "nulls": 8,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "[DJ节目]邓大宽的DJ节目 第12期"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.pic",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.picId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.picId_str",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "109951173669513336"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.picUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "http://p4.music.126.net/0ju8ET1ApZSXfWacc4w49w==/10995116948"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.publishTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.size",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.songs",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.status",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.subType",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.tags",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.transName",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.album.type",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.alias",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].albumSize",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].alias",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].briefDesc",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].img1v1Id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].img1v1Url",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "http://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/56393951388"
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].musicSize",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "不单调的主播"
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].picId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].picUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].topicPerson",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.artists[].trans",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.audition",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.bMusic.bitrate",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "320000"
+    },
+    {
+      "jsonPath": "programs[].mainSong.bMusic.dfsId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.bMusic.extension",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "mp3"
+    },
+    {
+      "jsonPath": "programs[].mainSong.bMusic.id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "17019516130"
+    },
+    {
+      "jsonPath": "programs[].mainSong.bMusic.name",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.bMusic.playTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "4336248"
+    },
+    {
+      "jsonPath": "programs[].mainSong.bMusic.size",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "173654498"
+    },
+    {
+      "jsonPath": "programs[].mainSong.bMusic.sr",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "44100"
+    },
+    {
+      "jsonPath": "programs[].mainSong.bMusic.volumeDelta",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.commentThreadId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "R_SO_4_3416405314"
+    },
+    {
+      "jsonPath": "programs[].mainSong.copyFrom",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.copyright",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "programs[].mainSong.copyrightId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.crbt",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.dayPlays",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.disc",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].mainSong.duration",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "4336248"
+    },
+    {
+      "jsonPath": "programs[].mainSong.fee",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.ftype",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.hearTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.hMusic",
+      "rawType": "null",
+      "presence": 2,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.page.none.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.hMusic.bitrate",
+      "rawType": "number",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "320000"
+    },
+    {
+      "jsonPath": "programs[].mainSong.hMusic.dfsId",
+      "rawType": "number",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.hMusic.extension",
+      "rawType": "string",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "mp3"
+    },
+    {
+      "jsonPath": "programs[].mainSong.hMusic.id",
+      "rawType": "number",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "17019516130"
+    },
+    {
+      "jsonPath": "programs[].mainSong.hMusic.name",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.hMusic.playTime",
+      "rawType": "number",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "4336248"
+    },
+    {
+      "jsonPath": "programs[].mainSong.hMusic.size",
+      "rawType": "number",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "173654498"
+    },
+    {
+      "jsonPath": "programs[].mainSong.hMusic.sr",
+      "rawType": "number",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "44100"
+    },
+    {
+      "jsonPath": "programs[].mainSong.hMusic.volumeDelta",
+      "rawType": "number",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "3416405314"
+    },
+    {
+      "jsonPath": "programs[].mainSong.lMusic.bitrate",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "320000"
+    },
+    {
+      "jsonPath": "programs[].mainSong.lMusic.dfsId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.lMusic.extension",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "mp3"
+    },
+    {
+      "jsonPath": "programs[].mainSong.lMusic.id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "17019516130"
+    },
+    {
+      "jsonPath": "programs[].mainSong.lMusic.name",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.lMusic.playTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "4336248"
+    },
+    {
+      "jsonPath": "programs[].mainSong.lMusic.size",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "173654498"
+    },
+    {
+      "jsonPath": "programs[].mainSong.lMusic.sr",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "44100"
+    },
+    {
+      "jsonPath": "programs[].mainSong.lMusic.volumeDelta",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.mark",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.mMusic",
+      "rawType": "null",
+      "presence": 11,
+      "nulls": 11,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.mMusic.bitrate",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.page.none.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "192000"
+    },
+    {
+      "jsonPath": "programs[].mainSong.mMusic.dfsId",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.page.none.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.mMusic.extension",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.page.none.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "mp3"
+    },
+    {
+      "jsonPath": "programs[].mainSong.mMusic.id",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.page.none.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "16720592969"
+    },
+    {
+      "jsonPath": "programs[].mainSong.mMusic.name",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.page.none.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.mMusic.playTime",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.page.none.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "942236"
+    },
+    {
+      "jsonPath": "programs[].mainSong.mMusic.size",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.page.none.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "22617778"
+    },
+    {
+      "jsonPath": "programs[].mainSong.mMusic.sr",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.page.none.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "44100"
+    },
+    {
+      "jsonPath": "programs[].mainSong.mMusic.volumeDelta",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.page.none.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.mp3Url",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.mvid",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "「流行之后」Madonna 麦当娜，一个集音乐、时尚、话题于一体的流行符号 Vol.2"
+    },
+    {
+      "jsonPath": "programs[].mainSong.no",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.noCopyrightRcmd",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.playedNum",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.popularity",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "5"
+    },
+    {
+      "jsonPath": "programs[].mainSong.position",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.publishTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "1785843875104"
+    },
+    {
+      "jsonPath": "programs[].mainSong.ringtone",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.rtUrl",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.rtUrls",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "programs[].mainSong.rtype",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.rurl",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.score",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "5"
+    },
+    {
+      "jsonPath": "programs[].mainSong.sign",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainSong.starred",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].mainSong.starredNum",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.status",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].mainSong.transName",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].mainTrackId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "3416405314"
+    },
+    {
+      "jsonPath": "programs[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "「流行之后」Madonna 麦当娜，一个集音乐、时尚、话题于一体的流行符号 Vol.2"
+    },
+    {
+      "jsonPath": "programs[].participateAnchors",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].privacy",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].programDesc",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].programFeeType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].programGuests",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].pubStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "programs[].radio.buyed",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].radio.category",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "音乐播客"
+    },
+    {
+      "jsonPath": "programs[].radio.categoryId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "programs[].radio.createTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "1723194932022"
+    },
+    {
+      "jsonPath": "programs[].radio.desc",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "音乐推荐，明星对话，这里永远给你比想象多更多"
+    },
+    {
+      "jsonPath": "programs[].radio.descPicList",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.descPicList[].content",
+      "rawType": "string",
+      "presence": 16,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].radio.descPicList[].height",
+      "rawType": "null",
+      "presence": 16,
+      "nulls": 16,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.descPicList[].id",
+      "rawType": "number",
+      "presence": 16,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].radio.descPicList[].nestedData.attributes",
+      "rawType": "null",
+      "presence": 16,
+      "nulls": 16,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.descPicList[].nestedData.textList[].attributes",
+      "rawType": "null",
+      "presence": 16,
+      "nulls": 16,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.descPicList[].nestedData.textList[].text",
+      "rawType": "string",
+      "presence": 16,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "音乐推荐，明星对话，这里永远给你比想象多更多"
+    },
+    {
+      "jsonPath": "programs[].radio.descPicList[].timeStamp",
+      "rawType": "null",
+      "presence": 16,
+      "nulls": 16,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.descPicList[].type",
+      "rawType": "number",
+      "presence": 16,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "programs[].radio.descPicList[].width",
+      "rawType": "null",
+      "presence": 16,
+      "nulls": 16,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.discountPrice",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.dj",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.dynamic",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].radio.feeScope",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].radio.finished",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].radio.icon",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "1211420489"
+    },
+    {
+      "jsonPath": "programs[].radio.intervenePicId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "109951169905354500"
+    },
+    {
+      "jsonPath": "programs[].radio.intervenePicUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "https://p3.music.126.net/jFDZD3bpaBKHiqfrS78q4g==/1099511699"
+    },
+    {
+      "jsonPath": "programs[].radio.lastProgramCreateTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "1785859200000"
+    },
+    {
+      "jsonPath": "programs[].radio.lastProgramId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "3726261168"
+    },
+    {
+      "jsonPath": "programs[].radio.lastProgramName",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.liveInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.manualTagsDTO",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "音乐丹行道"
+    },
+    {
+      "jsonPath": "programs[].radio.operateUidList",
+      "rawType": "array<unknown>",
+      "presence": 7,
+      "nulls": 0,
+      "empties": 7,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "programs[].radio.operateUidList[]",
+      "rawType": "number",
+      "presence": 8,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "95711499"
+    },
+    {
+      "jsonPath": "programs[].radio.originalPrice",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].radio.participateUidList",
+      "rawType": "array<unknown>",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 10,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "programs[].radio.participateUidList[]",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.page.none.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "4942501347"
+    },
+    {
+      "jsonPath": "programs[].radio.picId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "109951169905354500"
+    },
+    {
+      "jsonPath": "programs[].radio.picUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "https://p4.music.126.net/jFDZD3bpaBKHiqfrS78q4g==/1099511699"
+    },
+    {
+      "jsonPath": "programs[].radio.playCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].radio.price",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].radio.privacy",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].radio.programCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "154"
+    },
+    {
+      "jsonPath": "programs[].radio.purchaseCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].radio.radioFeeType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].radio.replaceRadio",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.replaceRadioId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].radio.secondCategory",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "音乐鉴赏"
+    },
+    {
+      "jsonPath": "programs[].radio.shortName",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].radio.subCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "5542"
+    },
+    {
+      "jsonPath": "programs[].radio.subed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].radio.taskId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].radio.underShelf",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].radio.videos",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].reason",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "programs[].recommended",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].replaceResource",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].replaceVoiceId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].reward",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].scheduledPublishTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "1785859200000"
+    },
+    {
+      "jsonPath": "programs[].score",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].secondCategoryId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "3074096"
+    },
+    {
+      "jsonPath": "programs[].secondCategoryName",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].seqNo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].serialNum",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "154"
+    },
+    {
+      "jsonPath": "programs[].shareCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "programs[].smallLanguageAuditStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].songs",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].songTimeStamps",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].specialTags",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].specialType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "40"
+    },
+    {
+      "jsonPath": "programs[].subscribed",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "programs[].subscribedCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].themeType",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].titbitImages",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].titbits",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "programs[].trackCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "programs[].videoInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.program_recommend.anon.001",
+      "lastSeenCase": "ncm.program_recommend.page.none.001",
+      "example": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.program_recommend.anon.001",
+      "sampleHash": "e660fc824a508ee1ca7d30496bc423987fa673b1161096b998888f9553412b6b",
+      "rawFile": "ncm.program_recommend.ncm.program_recommend.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.program_recommend.inv.001",
+      "sampleHash": "773322d72970580fdf930a2ad36be2ac2f6cc3f163403bc42ae5217c3d55416d",
+      "rawFile": "ncm.program_recommend.ncm.program_recommend.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.program_recommend.none.001",
+      "sampleHash": "8635fb94be68debd08da0fd5511e42fa6866ecc28151df98dc6edf07a5420e86",
+      "rawFile": "ncm.program_recommend.ncm.program_recommend.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.program_recommend.page.none.001",
+      "sampleHash": "709c327f7da0d8d3eaf26a9c229470d4b1d604db0f13aa2065f94becb01e2234",
+      "rawFile": "ncm.program_recommend.ncm.program_recommend.page.none.001.raw.json"
+    }
+  ]
 }

@@ -26,15 +26,123 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.homepage_dragon_ball.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 94,
+        "error": null,
+        "sampleHash": "5ffa68c7b0fb80535fbd5dc8765a18ef8ac8659a50bbcbc442792a644076b62c",
+        "rawFile": "ncm.homepage_dragon_ball.ncm.homepage_dragon_ball.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.homepage_dragon_ball.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 81,
+        "error": null,
+        "sampleHash": "bd427c2aeeac7906d27c1b2970873acd7bea02613152c06b86d8342374268088",
+        "rawFile": "ncm.homepage_dragon_ball.ncm.homepage_dragon_ball.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.homepage_dragon_ball.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 79,
+        "error": null,
+        "sampleHash": "bdac74df774002364c7015f95156f2b1dfd4db34e41bf9fae7fdef96ddad24d4",
+        "rawFile": "ncm.homepage_dragon_ball.ncm.homepage_dragon_ball.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.homepage_dragon_ball.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 78,
+        "error": null,
+        "sampleHash": "c8d62824374ee360788ca2b30958b8fc730f9fbae31d7499a65222186c9f61c4",
+        "rawFile": "ncm.homepage_dragon_ball.ncm.homepage_dragon_ball.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_dragon_ball.anon.001",
+      "lastSeenCase": "ncm.homepage_dragon_ball.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_dragon_ball.anon.001",
+      "lastSeenCase": "ncm.homepage_dragon_ball.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.homepage_dragon_ball.anon.001",
+      "lastSeenCase": "ncm.homepage_dragon_ball.none.002",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.homepage_dragon_ball.anon.001",
+      "sampleHash": "5ffa68c7b0fb80535fbd5dc8765a18ef8ac8659a50bbcbc442792a644076b62c",
+      "rawFile": "ncm.homepage_dragon_ball.ncm.homepage_dragon_ball.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.homepage_dragon_ball.inv.001",
+      "sampleHash": "bd427c2aeeac7906d27c1b2970873acd7bea02613152c06b86d8342374268088",
+      "rawFile": "ncm.homepage_dragon_ball.ncm.homepage_dragon_ball.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.homepage_dragon_ball.none.001",
+      "sampleHash": "bdac74df774002364c7015f95156f2b1dfd4db34e41bf9fae7fdef96ddad24d4",
+      "rawFile": "ncm.homepage_dragon_ball.ncm.homepage_dragon_ball.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.homepage_dragon_ball.none.002",
+      "sampleHash": "c8d62824374ee360788ca2b30958b8fc730f9fbae31d7499a65222186c9f61c4",
+      "rawFile": "ncm.homepage_dragon_ball.ncm.homepage_dragon_ball.none.002.raw.json"
+    }
+  ]
 }

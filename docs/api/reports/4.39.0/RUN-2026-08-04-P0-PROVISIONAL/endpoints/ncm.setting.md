@@ -89,3 +89,87 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 17. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.setting.anon.001 | AUTH_ANON | - | 200 | 115 |  |
+| ncm.setting.inv.001 | AUTH_INVALID_EXPIRED | - | 400 | 54 |  |
+| ncm.setting.none.001 | AUTH_NONE | - | 400 | 50 |  |
+| ncm.setting.none.002 | AUTH_NONE | - | 400 | 55 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `200` |
+| `setting.adRecommendSetting` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.ageSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.allowCommentFavoriteNotify` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.allowDJProgramShareNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowDJProgramSubscriptionNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowDJRadioSubscriptionNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowFollowedCanSeeMyPlayRecord` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowImportDoubanPlaylist` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowImportXiamiPlaylist` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowKtvRoomNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowLikedNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowNewFollowerNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowNotePlaySongNotify` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.allowNoteRedSongNotify` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.allowOfflineCommentNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowOfflineCommentReplyNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowOfflineForwardNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowOfflineNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowOfflinePrivateMessageNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowPeopleCanSeeMyPlayRecord` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowPlaylistShareNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowSongRedSongNotify` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.allowSubscriptionNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.allowVideoSubscriptionNotify` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.areaSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.broadcastSetting` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.collegeSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.commentLiveBroadcastSetting` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.commentSetting` | number | 1 | 0 | 0 | AUTH_ANON | `2` |
+| `setting.concertSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.double_flow_auto_play_switch` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.fansRequestUpdate` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.finishedFollowGuide` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.followSingerSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.importedDoubanPlaylist` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `setting.importedXiamiPlaylist` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `setting.inNoteBeta` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.messageRejectStatus` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.musicJarReceiveNotifySwitch` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.mutualFollowSeeOnline` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.needRcmdEvent` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.newSongDiskSetting` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `setting.peopleNearbyCanSeeMe` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `setting.personalizedAdRecommendSwitch` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.personalServiceSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.phoneFriendSetting` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `setting.playRecordSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.profileSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.reduceAdSwitch` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.sendMiuiMsg` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `setting.shareSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.showCityMusicStyleLabel` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.showedSharkBabyVinylEntry` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.showFMAtBottomTab` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.showFMAtBottomTabMagicOs` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.showMagentAtBottomTab` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.showMoreLocalsListenLabel` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.showNoteAtBottomTab` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.showSearchAtBottomTab` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.showSearchAtBottomTabMagicOs` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `setting.socialPlaylistSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.socialSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.topLayerNotifySetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.user_auto_play_switch` | number | 1 | 0 | 0 | AUTH_ANON | `-1` |
+| `setting.userId` | number | 1 | 0 | 0 | AUTH_ANON | `17788444306` |
+| `setting.video_bg_switch_key` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.villageAgeSetting` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `setting.voiceAutoPlay` | number | 1 | 0 | 0 | AUTH_ANON | `1` |

@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "caseId": "ncm.radio_sport_get.none.002",
+    "apiAuditId": "ncm.radio_sport_get",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:44.202Z",
+    "endedAt": "2026-08-05T03:24:44.302Z",
+    "durationMs": 100,
+    "attempts": 1
+  },
+  "body": {
+    "data": [
+      {
+        "name": "一半一半",
+        "id": 3333988321,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 49141872,
+            "name": "Top Barry",
+            "tns": [],
+            "alias": []
+          },
+          {
+            "id": 51265187,
+            "name": "INDEcompany",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [],
+        "pop": 100,
+        "st": 0,
+        "rt": "",
+        "fee": 8,
+        "v": 38,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 356555705,
+          "name": "一半一半",
+          "picUrl": "http://p4.music.126.net/EgbPD3CwVQojZ4OWse4YrA==/109951172511748152.jpg#hash=b2787265e50d",
+          "tns": [],
+          "pic_str": "109951172511748152",
+          "pic": 109951172511748160
+        },
+        "dt": 235285,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 9413805,
+          "vd": -47581
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 5648301,
+          "vd": -44958
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 3765549,
+          "vd": -43225
+        },
+        "a": null,
+        "cd": "01",
+        "no": 1,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 1,
+        "s_id": 0,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 1416618,
+        "mv": 0,
+        "publishTime": 1767456000000,
+        "privilege": {
+          "id": 3333988321,
+          "fee": 8,
+          "payed": 0,
+          "realPayed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 0,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "pc": null,
+          "toast": false,
+          "flag": 1544452,
+          "paidBigBang": false,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "jymaster",
+          "playMaxBrLevel": "jymaster",
+          "downloadMaxBrLevel": "jymaster",
+          "plLevel": "exhigh",
+          "dlLevel": "none",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            },
+            {
+              "rate": 1999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        },
+        "alg": "itembased",
+        "bpm": "110"
+      },
+      {
+        "name": "锈 (我们两个都拉过勾)",
+        "id": 2648204040,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 12641765,
+            "name": "江辰",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [],
+        "pop": 100,
+        "st": 0,
+        "rt": "",
+        "fee": 8,
+        "v": 46,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 254316363,
+          "name": "瘾",
+          "picUrl": "http://p4.music.126.net/Kc9SWUoUlrcf7tPihgap-A==/109951170169444876.jpg#hash=7844a82d9b21",
+          "tns": [],
+          "pic_str": "109951170169444876",
+          "pic": 109951170169444880
+        },
+        "dt": 221544,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 8863913,
+          "vd": -70033
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 5318365,
+          "vd": -67559
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 3545591,
+          "vd": -66116
+        },
+        "a": null,
+        "cd": "01",
+        "no": 3,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 0,
+        "s_id": 0,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 7001,
+        "mv": 0,
+        "publishTime": 1733500800000,
+        "privilege": {
+          "id": 2648204040,
+          "fee": 8,
+          "payed": 0,
+          "realPayed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 0,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "pc": null,
+          "toast": false,
+          "flag": 1540352,
+          "paidBigBang": false,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "jymaster",
+          "playMaxBrLevel": "jymaster",
+          "downloadMaxBrLevel": "jymaster",
+          "plLevel": "exhigh",
+          "dlLevel": "none",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        },
+        "alg": "itembased",
+        "bpm": "110"
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

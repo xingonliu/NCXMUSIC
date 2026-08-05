@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.ad_listening_rights.inv.001",
+    "apiAuditId": "ncm.ad_listening_rights",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:22.302Z",
+    "endedAt": "2026-08-05T03:21:22.388Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 400,
+    "body": {
+      "code": 2001,
+      "message": "暂时无法参加，请确保账号已登录~，状态码2001",
+      "data": null
+    },
+    "cookieCount": 0
+  }
+}

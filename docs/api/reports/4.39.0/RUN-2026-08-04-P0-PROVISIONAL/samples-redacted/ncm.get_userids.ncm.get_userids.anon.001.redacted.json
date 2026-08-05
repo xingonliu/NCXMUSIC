@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.get_userids.anon.001",
+    "apiAuditId": "ncm.get_userids",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:44.072Z",
+    "endedAt": "2026-08-05T03:23:44.136Z",
+    "durationMs": 64,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "参数错误",
+    "code": 400,
+    "message": "参数错误"
+  },
+  "error": null
+}

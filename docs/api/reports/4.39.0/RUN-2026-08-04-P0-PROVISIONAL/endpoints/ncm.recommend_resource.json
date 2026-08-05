@@ -26,15 +26,612 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.recommend_resource.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 184,
+        "error": null,
+        "sampleHash": "8eac698dec5fd606a7d98d654b4b69c13ecf0b2eedf207ab84fd23d9f457fdf6",
+        "rawFile": "ncm.recommend_resource.ncm.recommend_resource.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.recommend_resource.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "6ab1bf8600aa1625bc2b65af3b0707c8843f300e414094d92ce013b81b6efdd8",
+        "rawFile": "ncm.recommend_resource.ncm.recommend_resource.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.recommend_resource.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "2a1aadb839dcba74a7ec925fdfcc60e096545ac951594850937d2a7532bd9a37",
+        "rawFile": "ncm.recommend_resource.ncm.recommend_resource.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.recommend_resource.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "7e5320d3b82d68e8d5a4a5729f35c2e49fe7d9c0803e0ae36c9b6ab955424e8c",
+        "rawFile": "ncm.recommend_resource.ncm.recommend_resource.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "featureFirst",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "haveRcmdSongs",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "recommend[].alg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "byNewUserGroup_combine"
+    },
+    {
+      "jsonPath": "recommend[].copywriter",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "recommend[].createTime",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "1753875728770"
+    },
+    {
+      "jsonPath": "recommend[].creator.accountStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "recommend[].creator.authority",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "recommend[].creator.authStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "recommend[].creator.avatarImgId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "109951167584339280"
+    },
+    {
+      "jsonPath": "recommend[].creator.avatarImgIdStr",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "109951167584339278"
+    },
+    {
+      "jsonPath": "recommend[].creator.avatarUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "https://p4.music.126.net/i_cBHCXeSx60dgg3YdJw2g==/1099511675"
+    },
+    {
+      "jsonPath": "recommend[].creator.backgroundImgId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "109951162868128400"
+    },
+    {
+      "jsonPath": "recommend[].creator.backgroundImgIdStr",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "109951162868128395"
+    },
+    {
+      "jsonPath": "recommend[].creator.backgroundUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "http://p1.music.126.net/2zSNIqTcpHL2jIvU6hG0EA==/10995116286"
+    },
+    {
+      "jsonPath": "recommend[].creator.birthday",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "recommend[].creator.city",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "330100"
+    },
+    {
+      "jsonPath": "recommend[].creator.defaultAvatar",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "recommend[].creator.description",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "recommend[].creator.detailDescription",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "recommend[].creator.djStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "recommend[].creator.expertTags",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "recommend[].creator.followed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "recommend[].creator.gender",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "recommend[].creator.mutual",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "recommend[].creator.nickname",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "辅助做眼离奇失踪"
+    },
+    {
+      "jsonPath": "recommend[].creator.province",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "330000"
+    },
+    {
+      "jsonPath": "recommend[].creator.remarkName",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "recommend[].creator.signature",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "recommend[].creator.userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "7883273021"
+    },
+    {
+      "jsonPath": "recommend[].creator.userType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "recommend[].creator.vipType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "recommend[].id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "14060893769"
+    },
+    {
+      "jsonPath": "recommend[].name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "循环百次的耐听歌曲推荐"
+    },
+    {
+      "jsonPath": "recommend[].picUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "https://p4.music.126.net/35Beaf6W2IYrG4Jt6_sMbQ==/1099511720"
+    },
+    {
+      "jsonPath": "recommend[].playcount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "251372"
+    },
+    {
+      "jsonPath": "recommend[].trackCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "299"
+    },
+    {
+      "jsonPath": "recommend[].type",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "recommend[].userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.recommend_resource.anon.001",
+      "lastSeenCase": "ncm.recommend_resource.anon.001",
+      "example": "7883273021"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.recommend_resource.anon.001",
+      "sampleHash": "8eac698dec5fd606a7d98d654b4b69c13ecf0b2eedf207ab84fd23d9f457fdf6",
+      "rawFile": "ncm.recommend_resource.ncm.recommend_resource.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.recommend_resource.inv.001",
+      "sampleHash": "6ab1bf8600aa1625bc2b65af3b0707c8843f300e414094d92ce013b81b6efdd8",
+      "rawFile": "ncm.recommend_resource.ncm.recommend_resource.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.recommend_resource.none.001",
+      "sampleHash": "2a1aadb839dcba74a7ec925fdfcc60e096545ac951594850937d2a7532bd9a37",
+      "rawFile": "ncm.recommend_resource.ncm.recommend_resource.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.recommend_resource.none.002",
+      "sampleHash": "7e5320d3b82d68e8d5a4a5729f35c2e49fe7d9c0803e0ae36c9b6ab955424e8c",
+      "rawFile": "ncm.recommend_resource.ncm.recommend_resource.none.002.raw.json"
+    }
+  ]
 }

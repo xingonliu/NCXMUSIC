@@ -46,9 +46,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.activate_init_profile.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.ad_get",
@@ -95,10 +95,10 @@
         }
       ],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.ad_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.ad_listening_rights",
@@ -138,10 +138,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.ad_listening_rights.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.ad_listening_rights_gain",
@@ -201,10 +201,10 @@
         }
       ],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.ad_listening_rights_gain.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.aidj_content_rcmd",
@@ -247,10 +247,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.aidj_content_rcmd.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.album",
@@ -798,7 +798,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.album_sub.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.album_sublist",
@@ -858,7 +858,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.album_sublist.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.api",
@@ -903,10 +903,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "failed_stable",
       "reportPath": "endpoints/ncm.api.md",
-      "blocker": ""
+      "blocker": "模块级异常（非网络）：Cannot read properties of undefined (reading 'indexOf')"
     },
     {
       "apiAuditId": "ncm.artist_album",
@@ -1689,7 +1689,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.artist_sub.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.artist_sublist",
@@ -1749,7 +1749,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.artist_sublist.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.artist_top_song",
@@ -1957,10 +1957,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.audio_match.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.avatar_upload",
@@ -2001,9 +2001,9 @@
       "defaults": [],
       "plannedCaseCount": 7,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.avatar_upload.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.banner",
@@ -2091,10 +2091,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.batch.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.broadcast_category_region_get",
@@ -2134,10 +2134,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.broadcast_category_region_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.broadcast_channel_collect_list",
@@ -2186,10 +2186,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.broadcast_channel_collect_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.broadcast_channel_currentinfo",
@@ -2231,10 +2231,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.broadcast_channel_currentinfo.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.broadcast_channel_list",
@@ -2303,10 +2303,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.broadcast_channel_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.broadcast_sub",
@@ -2350,9 +2350,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.broadcast_sub.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.calendar",
@@ -2395,10 +2395,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.calendar.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.captcha_safe_sent",
@@ -2446,9 +2446,9 @@
       ],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.captcha_safe_sent.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.captcha_sent",
@@ -2497,9 +2497,9 @@
       ],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.captcha_sent.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.captcha_sent_v1",
@@ -2548,9 +2548,9 @@
       ],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.captcha_sent_v1.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.captcha_verify",
@@ -2603,9 +2603,9 @@
       ],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.captcha_verify.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.cellphone_existence_check",
@@ -2649,9 +2649,9 @@
       "defaults": [],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.cellphone_existence_check.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.chart_detail",
@@ -2696,9 +2696,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.chart_detail.md",
-      "blocker": ""
+      "blocker": "缺夹具：chartId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.chart_song_detail",
@@ -2743,9 +2743,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.chart_song_detail.md",
-      "blocker": ""
+      "blocker": "缺夹具：chartId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.check_music",
@@ -2833,10 +2833,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "failed_stable",
       "reportPath": "endpoints/ncm.cloud.md",
-      "blocker": ""
+      "blocker": "模块级异常（非网络）：Cannot read properties of undefined (reading 'name')"
     },
     {
       "apiAuditId": "ncm.cloud_import",
@@ -2895,9 +2895,9 @@
       ],
       "plannedCaseCount": 7,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_safety",
       "reportPath": "endpoints/ncm.cloud_import.md",
-      "blocker": ""
+      "blocker": "支付/购买类：仅静态分析与负向探测，成功路径不执行（手册 §12.8）"
     },
     {
       "apiAuditId": "ncm.cloud_lyric_get",
@@ -2943,9 +2943,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.cloud_lyric_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.cloud_match",
@@ -2992,9 +2992,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.cloud_match.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.cloud_upload_complete",
@@ -3035,9 +3035,9 @@
       "defaults": [],
       "plannedCaseCount": 7,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.cloud_upload_complete.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.cloud_upload_token",
@@ -3078,9 +3078,9 @@
       "defaults": [],
       "plannedCaseCount": 7,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.cloud_upload_token.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.cloudsearch",
@@ -3259,7 +3259,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.comment_add.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.comment_album",
@@ -3378,7 +3378,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.comment_delete.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.comment_dj",
@@ -3510,9 +3510,9 @@
       ],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "partial",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.comment_event.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "缺夹具：eventId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.comment_floor",
@@ -3760,10 +3760,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "blocked_by_prerequisite",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.comment_info_list.md",
-      "blocker": "缺夹具：videoId/threadId/style 无生产者（search type=1002/1014 被 -462 阻断）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.comment_like",
@@ -3818,7 +3818,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.comment_like.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.comment_music",
@@ -4129,7 +4129,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.comment_reply.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.comment_report",
@@ -4181,7 +4181,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.comment_report.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.comment_video",
@@ -4246,9 +4246,9 @@
       ],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "partial",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.comment_video.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.countries_code_list",
@@ -4288,10 +4288,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.countries_code_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.creator_authinfo_get",
@@ -4331,10 +4331,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.creator_authinfo_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.daily_signin",
@@ -4382,9 +4382,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.daily_signin.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.decrypt",
@@ -4429,10 +4429,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.decrypt.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.device_kickoff",
@@ -4481,9 +4481,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.device_kickoff.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.device_list",
@@ -4524,9 +4524,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.device_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.digitalAlbum_detail",
@@ -4568,10 +4568,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.digitalAlbum_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.digitalAlbum_ordering",
@@ -4616,9 +4616,9 @@
       "defaults": [],
       "plannedCaseCount": 2,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_safety",
       "reportPath": "endpoints/ncm.digitalAlbum_ordering.md",
-      "blocker": ""
+      "blocker": "支付/购买类：仅静态分析与负向探测，成功路径不执行（手册 §12.8）"
     },
     {
       "apiAuditId": "ncm.digitalAlbum_purchased",
@@ -4673,9 +4673,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.digitalAlbum_purchased.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.digitalAlbum_sales",
@@ -4717,10 +4717,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.digitalAlbum_sales.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_banner",
@@ -4811,10 +4811,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_category_excludehot.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_category_recommend",
@@ -4858,10 +4858,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_category_recommend.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_catelist",
@@ -4954,10 +4954,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_difm_all_style_channel",
@@ -5008,10 +5008,10 @@
         }
       ],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_difm_all_style_channel.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_difm_channel_subscribe",
@@ -5060,9 +5060,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.dj_difm_channel_subscribe.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_difm_channel_unsubscribe",
@@ -5111,9 +5111,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.dj_difm_channel_unsubscribe.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_difm_playing_tracks_list",
@@ -5172,10 +5172,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_difm_playing_tracks_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_difm_subscribe_channels_get",
@@ -5227,9 +5227,9 @@
       ],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.dj_difm_subscribe_channels_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_hot",
@@ -5349,9 +5349,9 @@
       ],
       "plannedCaseCount": 2,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_safety",
       "reportPath": "endpoints/ncm.dj_paygift.md",
-      "blocker": ""
+      "blocker": "支付/购买类：仅静态分析与负向探测，成功路径不执行（手册 §12.8）"
     },
     {
       "apiAuditId": "ncm.dj_personalize_recommend",
@@ -5404,10 +5404,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_personalize_recommend.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_program",
@@ -5467,10 +5467,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_program.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_program_detail",
@@ -5518,10 +5518,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_program_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_program_toplist",
@@ -5579,10 +5579,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_program_toplist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_program_toplist_hours",
@@ -5635,10 +5635,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_program_toplist_hours.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_radio_hot",
@@ -5697,10 +5697,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_radio_hot.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_recommend",
@@ -5744,10 +5744,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_recommend.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_recommend_type",
@@ -5793,10 +5793,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_recommend_type.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_sub",
@@ -5844,9 +5844,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.dj_sub.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_sublist",
@@ -5905,9 +5905,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.dj_sublist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_subscriber",
@@ -5967,10 +5967,10 @@
         }
       ],
       "plannedCaseCount": 4,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_subscriber.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_today_perfered",
@@ -6021,10 +6021,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_today_perfered.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_toplist",
@@ -6083,10 +6083,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_toplist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_toplist_hours",
@@ -6139,10 +6139,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_toplist_hours.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_toplist_newcomer",
@@ -6200,10 +6200,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_toplist_newcomer.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_toplist_pay",
@@ -6256,10 +6256,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_toplist_pay.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.dj_toplist_popular",
@@ -6312,10 +6312,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.dj_toplist_popular.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.djRadio_top",
@@ -6377,10 +6377,10 @@
         }
       ],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.djRadio_top.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.eapi_decrypt",
@@ -6423,10 +6423,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.eapi_decrypt.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.event",
@@ -6477,9 +6477,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.event.md",
-      "blocker": ""
+      "blocker": "缺夹具：eventId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.event_del",
@@ -6524,9 +6524,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.event_del.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.event_forward",
@@ -6575,9 +6575,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.event_forward.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.event_privacy",
@@ -6622,9 +6622,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.event_privacy.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.fanscenter_basicinfo_age_get",
@@ -6665,9 +6665,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.fanscenter_basicinfo_age_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.fanscenter_basicinfo_gender_get",
@@ -6708,9 +6708,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.fanscenter_basicinfo_gender_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.fanscenter_basicinfo_province_get",
@@ -6751,9 +6751,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.fanscenter_basicinfo_province_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.fanscenter_overview_get",
@@ -6794,9 +6794,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.fanscenter_overview_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.fanscenter_trend_list",
@@ -6846,9 +6846,9 @@
       ],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.fanscenter_trend_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.fm_trash",
@@ -6897,9 +6897,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.fm_trash.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.follow",
@@ -6943,9 +6943,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.follow.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.get_userids",
@@ -6987,10 +6987,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.get_userids.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.history_recommend_songs",
@@ -7034,9 +7034,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.history_recommend_songs.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.history_recommend_songs_detail",
@@ -7087,9 +7087,9 @@
       ],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.history_recommend_songs_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.homepage_block_page",
@@ -7183,10 +7183,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.homepage_dragon_ball.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.hot_topic",
@@ -7240,10 +7240,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.hot_topic.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.hug_comment",
@@ -7291,9 +7291,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.hug_comment.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.inner_version",
@@ -7384,9 +7384,9 @@
       ],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.lbs_city_code.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.like",
@@ -7432,7 +7432,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.like.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.likelist",
@@ -7479,7 +7479,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.likelist.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listen_data_realtime_report",
@@ -7527,9 +7527,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.listen_data_realtime_report.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listen_data_report",
@@ -7578,9 +7578,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.listen_data_report.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listen_data_song_play_rank",
@@ -7629,9 +7629,9 @@
       ],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.listen_data_song_play_rank.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listen_data_today_song",
@@ -7672,9 +7672,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.listen_data_today_song.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listen_data_total",
@@ -7715,9 +7715,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.listen_data_total.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listen_data_year_report",
@@ -7758,9 +7758,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.listen_data_year_report.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listentogether_accept",
@@ -7803,10 +7803,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.listentogether_accept.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listentogether_end",
@@ -7848,10 +7848,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.listentogether_end.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listentogether_heatbeat",
@@ -7896,10 +7896,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.listentogether_heatbeat.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listentogether_play_command",
@@ -7952,10 +7952,10 @@
         }
       ],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.listentogether_play_command.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listentogether_room_check",
@@ -7997,10 +7997,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.listentogether_room_check.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listentogether_room_create",
@@ -8040,10 +8040,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.listentogether_room_create.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listentogether_status",
@@ -8083,10 +8083,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.listentogether_status.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.listentogether_sync_list_command",
@@ -8135,10 +8135,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "failed_stable",
       "reportPath": "endpoints/ncm.listentogether_sync_list_command.md",
-      "blocker": ""
+      "blocker": "模块级异常（非网络）：Cannot read properties of undefined (reading 'split')"
     },
     {
       "apiAuditId": "ncm.listentogether_sync_playlist_get",
@@ -8180,10 +8180,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.listentogether_sync_playlist_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.login",
@@ -8231,9 +8231,9 @@
       "defaults": [],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.login.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.login_cellphone",
@@ -8293,9 +8293,9 @@
       ],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.login_cellphone.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.login_qr_check",
@@ -8340,10 +8340,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.login_qr_check.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.login_qr_create",
@@ -8391,10 +8391,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.login_qr_create.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.login_qr_key",
@@ -8483,10 +8483,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.login_refresh.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.login_status",
@@ -8721,9 +8721,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.middle_play_do_lottery.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.middle_play_lottery_remain_chance",
@@ -8771,9 +8771,9 @@
       ],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.middle_play_lottery_remain_chance.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.mlog_music_rcmd",
@@ -8831,9 +8831,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.mlog_music_rcmd.md",
-      "blocker": ""
+      "blocker": "缺夹具：mlogId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.mlog_to_video",
@@ -8880,9 +8880,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.mlog_to_video.md",
-      "blocker": ""
+      "blocker": "缺夹具：mlogId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.mlog_url",
@@ -8935,9 +8935,9 @@
       ],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.mlog_url.md",
-      "blocker": ""
+      "blocker": "缺夹具：mlogId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.msg_comments",
@@ -8994,9 +8994,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.msg_comments.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.msg_forwards",
@@ -9051,9 +9051,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.msg_forwards.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.msg_notices",
@@ -9104,9 +9104,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.msg_notices.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.msg_private",
@@ -9163,9 +9163,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.msg_private.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.msg_private_history",
@@ -9224,9 +9224,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.msg_private_history.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.msg_recentcontact",
@@ -9267,9 +9267,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.msg_recentcontact.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.music_first_listen_info",
@@ -9313,10 +9313,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.music_first_listen_info.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.musician_cloudbean",
@@ -9357,9 +9357,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.musician_cloudbean.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.musician_cloudbean_obtain",
@@ -9403,9 +9403,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.musician_cloudbean_obtain.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.musician_data_overview",
@@ -9446,9 +9446,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.musician_data_overview.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.musician_play_trend",
@@ -9492,9 +9492,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.musician_play_trend.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.musician_sign",
@@ -9535,9 +9535,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.musician_sign.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.musician_tasks",
@@ -9578,9 +9578,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.musician_tasks.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.musician_tasks_new",
@@ -9621,9 +9621,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.musician_tasks_new.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.musician_vip_tasks",
@@ -9664,9 +9664,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.musician_vip_tasks.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.mv_all",
@@ -9989,7 +9989,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.mv_sub.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.mv_sublist",
@@ -10048,7 +10048,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.mv_sublist.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.mv_url",
@@ -10145,10 +10145,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 8,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.nickname_check.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.personal_fm",
@@ -10188,10 +10188,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personal_fm.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.personal_fm_mode",
@@ -10242,10 +10242,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.personal_fm_mode.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.personalized",
@@ -10604,10 +10604,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.pl_count.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_category_list",
@@ -10764,7 +10764,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_cover_update.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_create",
@@ -10823,7 +10823,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_create.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_delete",
@@ -10873,7 +10873,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_delete.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_desc_update",
@@ -10924,7 +10924,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_desc_update.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_detail",
@@ -11230,7 +11230,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_import_name_task_create.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_import_task_status",
@@ -11280,7 +11280,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_import_task_status.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_mylike",
@@ -11340,7 +11340,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_mylike.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_name_update",
@@ -11391,7 +11391,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_name_update.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_order_update",
@@ -11441,7 +11441,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_order_update.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_privacy",
@@ -11491,7 +11491,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_privacy.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_subscribe",
@@ -11543,7 +11543,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_subscribe.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_subscribers",
@@ -11656,7 +11656,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_tags_update.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_track_add",
@@ -11712,7 +11712,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_track_add.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_track_all",
@@ -11827,7 +11827,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_track_delete.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_tracks",
@@ -11941,7 +11941,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_update.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_update_playcount",
@@ -11991,7 +11991,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.playlist_update_playcount.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playlist_video_recent",
@@ -12089,10 +12089,10 @@
         }
       ],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playmode_intelligence_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.playmode_song_vector",
@@ -12134,10 +12134,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.playmode_song_vector.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.program_recommend",
@@ -12196,10 +12196,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.program_recommend.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.radio_sport_get",
@@ -12250,10 +12250,10 @@
         }
       ],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.radio_sport_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rebind",
@@ -12304,9 +12304,9 @@
       ],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rebind.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.recent_listen_list",
@@ -12347,9 +12347,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.recent_listen_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.recommend_resource",
@@ -12392,10 +12392,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.recommend_resource.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.recommend_songs",
@@ -12440,10 +12440,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.recommend_songs.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.recommend_songs_dislike",
@@ -12489,9 +12489,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.recommend_songs_dislike.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.record_recent_album",
@@ -12544,10 +12544,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.record_recent_album.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.record_recent_dj",
@@ -12600,10 +12600,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.record_recent_dj.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.record_recent_playlist",
@@ -12656,10 +12656,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.record_recent_playlist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.record_recent_song",
@@ -12712,10 +12712,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.record_recent_song.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.record_recent_video",
@@ -12768,10 +12768,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.record_recent_video.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.record_recent_voice",
@@ -12824,10 +12824,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.record_recent_voice.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.register_anonimous",
@@ -12928,9 +12928,9 @@
       ],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.register_cellphone.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.register_checktoken_v2",
@@ -12976,9 +12976,9 @@
       "defaults": [],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.register_checktoken_v2.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.register_checktoken_v3",
@@ -13024,9 +13024,9 @@
       "defaults": [],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.register_checktoken_v3.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.register_xeapikey",
@@ -13212,9 +13212,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.relay_play_state_submit.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rep_ugc_activity_collect",
@@ -13262,9 +13262,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rep_ugc_activity_collect.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rep_ugc_activity_get",
@@ -13305,9 +13305,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rep_ugc_activity_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rep_ugc_exam_info_get",
@@ -13350,9 +13350,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rep_ugc_exam_info_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rep_ugc_exam_question_single_get",
@@ -13396,9 +13396,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rep_ugc_exam_question_single_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rep_ugc_exam_result_get",
@@ -13442,9 +13442,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rep_ugc_exam_result_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rep_ugc_exam_start",
@@ -13487,9 +13487,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rep_ugc_exam_start.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rep_ugc_exam_submit",
@@ -13535,9 +13535,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rep_ugc_exam_submit.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rep_ugc_user_collect-vip",
@@ -13585,9 +13585,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rep_ugc_user_collect-vip.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rep_ugc_user_get",
@@ -13628,9 +13628,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rep_ugc_user_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rep_ugc_user_sign",
@@ -13671,9 +13671,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rep_ugc_user_sign.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.rep_ugc_user_vip",
@@ -13714,9 +13714,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.rep_ugc_user_vip.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.resource_like",
@@ -13764,9 +13764,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.resource_like.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.sati_resource_list",
@@ -13809,9 +13809,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.sati_resource_list.md",
-      "blocker": ""
+      "blocker": "缺夹具：satiId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.sati_resource_list_more",
@@ -13854,9 +13854,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.sati_resource_list_more.md",
-      "blocker": ""
+      "blocker": "缺夹具：satiId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.sati_resource_sub",
@@ -13900,9 +13900,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.sati_resource_sub.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.sati_resource_sub_list",
@@ -13943,9 +13943,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.sati_resource_sub_list.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.sati_tag_list",
@@ -13986,9 +13986,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.sati_tag_list.md",
-      "blocker": ""
+      "blocker": "缺夹具：satiId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.sati_timescene_resources_get",
@@ -14029,9 +14029,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.sati_timescene_resources_get.md",
-      "blocker": ""
+      "blocker": "缺夹具：satiId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.scrobble",
@@ -14077,9 +14077,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.scrobble.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.scrobble_v1",
@@ -14146,9 +14146,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.scrobble_v1.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.search",
@@ -14451,10 +14451,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_match.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.search_multimatch",
@@ -14631,10 +14631,10 @@
         }
       ],
       "plannedCaseCount": 10,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.search_suggest_pc.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.send_album",
@@ -14684,9 +14684,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.send_album.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.send_playlist",
@@ -14731,9 +14731,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.send_playlist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.send_song",
@@ -14783,9 +14783,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.send_song.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.send_text",
@@ -14829,9 +14829,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.send_text.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.setting",
@@ -14871,10 +14871,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.setting.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.share_resource",
@@ -14932,9 +14932,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.share_resource.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.sheet_list",
@@ -14986,9 +14986,9 @@
       ],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.sheet_list.md",
-      "blocker": ""
+      "blocker": "缺夹具：sheetId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.sheet_preview",
@@ -15034,9 +15034,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.sheet_preview.md",
-      "blocker": ""
+      "blocker": "缺夹具：sheetId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.sign_happy_info",
@@ -15077,9 +15077,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.sign_happy_info.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.signin_progress",
@@ -15127,9 +15127,9 @@
       ],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.signin_progress.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.simi_artist",
@@ -15516,7 +15516,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_cloud_download.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_copyright_rcmd",
@@ -15723,7 +15723,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_downlist.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_download_url",
@@ -15924,7 +15924,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_like.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_like_check",
@@ -15973,7 +15973,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_like_check.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_lyrics_mark",
@@ -16022,7 +16022,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_lyrics_mark.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_lyrics_mark_add",
@@ -16082,7 +16082,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_lyrics_mark_add.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_lyrics_mark_del",
@@ -16131,7 +16131,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_lyrics_mark_del.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_lyrics_mark_user_page",
@@ -16190,7 +16190,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_lyrics_mark_user_page.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_monthdownlist",
@@ -16249,7 +16249,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_monthdownlist.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_music_detail",
@@ -16349,7 +16349,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_order_update.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_purchased",
@@ -16408,7 +16408,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_purchased.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_red_count",
@@ -16516,7 +16516,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_singledownlist.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_url",
@@ -16616,7 +16616,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.song_url_match.md",
-      "blocker": "unblock 匹配工具，依赖 enhanced 配置（B-003）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.song_url_ncmget",
@@ -16853,10 +16853,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.starpick_comments_summary.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.style_album",
@@ -16924,7 +16924,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.style_album.md",
-      "blocker": "缺夹具：videoId/threadId/style 无生产者（search type=1002/1014 被 -462 阻断）"
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.style_artist",
@@ -16987,7 +16987,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.style_artist.md",
-      "blocker": "缺夹具：videoId/threadId/style 无生产者（search type=1002/1014 被 -462 阻断）"
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.style_detail",
@@ -17037,7 +17037,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.style_detail.md",
-      "blocker": "缺夹具：videoId/threadId/style 无生产者（search type=1002/1014 被 -462 阻断）"
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.style_list",
@@ -17148,7 +17148,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.style_playlist.md",
-      "blocker": "缺夹具：videoId/threadId/style 无生产者（search type=1002/1014 被 -462 阻断）"
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.style_preference",
@@ -17196,7 +17196,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.style_preference.md",
-      "blocker": "缺夹具：videoId/threadId/style 无生产者（search type=1002/1014 被 -462 阻断）"
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.style_song",
@@ -17264,7 +17264,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.style_song.md",
-      "blocker": "缺夹具：videoId/threadId/style 无生产者（search type=1002/1014 被 -462 阻断）"
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.summary_annual",
@@ -17307,9 +17307,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.summary_annual.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.thinktank_audit_resource_detail",
@@ -17357,9 +17357,9 @@
       ],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.thinktank_audit_resource_detail.md",
-      "blocker": ""
+      "blocker": "缺夹具：thinktankId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.thinktank_audit_resource_update",
@@ -17409,9 +17409,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.thinktank_audit_resource_update.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.threshold_detail_get",
@@ -17451,10 +17451,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 5,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.threshold_detail_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.top_album",
@@ -17938,9 +17938,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.topic_detail.md",
-      "blocker": ""
+      "blocker": "缺夹具：topicId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.topic_detail_event_hot",
@@ -17985,9 +17985,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.topic_detail_event_hot.md",
-      "blocker": ""
+      "blocker": "缺夹具：topicId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.topic_sublist",
@@ -18044,9 +18044,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.topic_sublist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.toplist",
@@ -18140,10 +18140,10 @@
         }
       ],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.toplist_artist.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.toplist_detail",
@@ -18185,10 +18185,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.toplist_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.toplist_detail_v2",
@@ -18230,10 +18230,10 @@
       "params": [],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.toplist_detail_v2.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.ugc_album_get",
@@ -18276,9 +18276,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.ugc_album_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.ugc_artist_get",
@@ -18321,9 +18321,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.ugc_artist_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.ugc_artist_search",
@@ -18374,9 +18374,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.ugc_artist_search.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.ugc_detail",
@@ -18451,9 +18451,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.ugc_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.ugc_mv_get",
@@ -18496,9 +18496,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.ugc_mv_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.ugc_song_get",
@@ -18541,9 +18541,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.ugc_song_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.ugc_user_devote",
@@ -18584,9 +18584,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.ugc_user_devote.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_account",
@@ -18680,9 +18680,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_audio.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_binding",
@@ -18730,9 +18730,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_binding.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_bindingcellphone",
@@ -18786,9 +18786,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_bindingcellphone.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_cloud",
@@ -18846,9 +18846,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_cloud.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_cloud_del",
@@ -18896,9 +18896,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_cloud_del.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_cloud_detail",
@@ -18946,9 +18946,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_cloud_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_comment_history",
@@ -19008,9 +19008,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_comment_history.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_detail",
@@ -19107,10 +19107,10 @@
       ],
       "defaults": [],
       "plannedCaseCount": 6,
-      "executedCaseCount": 0,
-      "terminalStatus": "",
+      "executedCaseCount": 4,
+      "terminalStatus": "partial",
       "reportPath": "endpoints/ncm.user_detail_new.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_dj",
@@ -19170,9 +19170,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_dj.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_event",
@@ -19228,9 +19228,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_event.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_event_all",
@@ -19273,9 +19273,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_event_all.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_follow_mixed",
@@ -19497,7 +19497,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_level.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_medal",
@@ -19545,9 +19545,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_medal.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_mutualfollow_get",
@@ -19595,9 +19595,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_mutualfollow_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_playlist",
@@ -19783,7 +19783,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_playlist_create.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_record",
@@ -19893,9 +19893,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_replacephone.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_social_status",
@@ -19943,9 +19943,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_social_status.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_social_status_edit",
@@ -19994,9 +19994,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_social_status_edit.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_social_status_rcmd",
@@ -20040,9 +20040,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_social_status_rcmd.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_social_status_support",
@@ -20086,9 +20086,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_social_status_support.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_subcount",
@@ -20134,7 +20134,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_subcount.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.user_update",
@@ -20185,9 +20185,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.user_update.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.verify_getQr",
@@ -20237,9 +20237,9 @@
       "defaults": [],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.verify_getQr.md",
-      "blocker": ""
+      "blocker": "网易云盾验证码流程（需真实交互）"
     },
     {
       "apiAuditId": "ncm.verify_qrcodestatus",
@@ -20285,9 +20285,9 @@
       "defaults": [],
       "plannedCaseCount": 8,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.verify_qrcodestatus.md",
-      "blocker": ""
+      "blocker": "网易云盾验证码流程（需真实交互）"
     },
     {
       "apiAuditId": "ncm.video_category_list",
@@ -20593,7 +20593,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.video_sub.md",
-      "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）"
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.video_timeline_all",
@@ -20797,9 +20797,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_growthpoint.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_growthpoint_details",
@@ -20854,9 +20854,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_growthpoint_details.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_growthpoint_get",
@@ -20899,9 +20899,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_growthpoint_get.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_growthpoint_getall",
@@ -20942,9 +20942,9 @@
       "defaults": [],
       "plannedCaseCount": 5,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_growthpoint_getall.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_info",
@@ -20994,9 +20994,9 @@
       ],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_info.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_info_v2",
@@ -21046,9 +21046,9 @@
       ],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_info_v2.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_sign",
@@ -21089,9 +21089,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_sign.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_sign_detail",
@@ -21134,9 +21134,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_sign_detail.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_sign_history",
@@ -21184,9 +21184,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_sign_history.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_sign_info",
@@ -21227,9 +21227,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_sign_info.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_tasks",
@@ -21270,9 +21270,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_tasks.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_tasks_v1",
@@ -21315,9 +21315,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_tasks_v1.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.vip_timemachine",
@@ -21364,9 +21364,9 @@
       "defaults": [],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.vip_timemachine.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.voice_delete",
@@ -21414,9 +21414,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.voice_delete.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.voice_detail",
@@ -21464,9 +21464,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.voice_detail.md",
-      "blocker": ""
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.voice_lyric",
@@ -21514,9 +21514,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.voice_lyric.md",
-      "blocker": ""
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.voice_upload",
@@ -21600,9 +21600,9 @@
       ],
       "plannedCaseCount": 7,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.voice_upload.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.voicelist_detail",
@@ -21650,9 +21650,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.voicelist_detail.md",
-      "blocker": ""
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.voicelist_list",
@@ -21711,9 +21711,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.voicelist_list.md",
-      "blocker": ""
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.voicelist_list_search",
@@ -21776,9 +21776,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.voicelist_list_search.md",
-      "blocker": ""
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.voicelist_my_created",
@@ -21831,9 +21831,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.voicelist_my_created.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.voicelist_search",
@@ -21896,9 +21896,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.voicelist_search.md",
-      "blocker": ""
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
     },
     {
       "apiAuditId": "ncm.voicelist_trans",
@@ -21969,9 +21969,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.voicelist_trans.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.weblog",
@@ -22014,9 +22014,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.weblog.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.yunbei",
@@ -22057,9 +22057,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.yunbei.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.yunbei_expense",
@@ -22114,9 +22114,9 @@
       ],
       "plannedCaseCount": 10,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.yunbei_expense.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.yunbei_info",
@@ -22157,9 +22157,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.yunbei_info.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.yunbei_rcmd_song",
@@ -22213,9 +22213,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.yunbei_rcmd_song.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.yunbei_rcmd_song_history",
@@ -22270,9 +22270,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.yunbei_rcmd_song_history.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.yunbei_receipt",
@@ -22327,9 +22327,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.yunbei_receipt.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.yunbei_sign",
@@ -22370,9 +22370,9 @@
       "defaults": [],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.yunbei_sign.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.yunbei_task_finish",
@@ -22421,9 +22421,9 @@
       ],
       "plannedCaseCount": 4,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.yunbei_task_finish.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.yunbei_tasks",
@@ -22464,9 +22464,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.yunbei_tasks.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.yunbei_tasks_todo",
@@ -22507,9 +22507,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.yunbei_tasks_todo.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.yunbei_today",
@@ -22550,9 +22550,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "blocked_by_prerequisite",
       "reportPath": "endpoints/ncm.yunbei_today.md",
-      "blocker": ""
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
     },
     {
       "apiAuditId": "ncm.comment_hotwall_list",
@@ -22596,7 +22596,7 @@
       "executedCaseCount": 0,
       "terminalStatus": "not_exported",
       "reportPath": "endpoints/ncm.comment_hotwall_list.md",
-      "blocker": "interface.d.ts 声明存在但无模块文件（moduleMissing）"
+      "blocker": "interface.d.ts 声明存在但无模块文件"
     },
     {
       "apiAuditId": "ncm.user_safe",
@@ -22638,9 +22638,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "not_exported",
       "reportPath": "endpoints/ncm.user_safe.md",
-      "blocker": ""
+      "blocker": "interface.d.ts 声明存在但无模块文件"
     },
     {
       "apiAuditId": "ncm.listen_together_status",
@@ -22679,9 +22679,9 @@
       "defaults": [],
       "plannedCaseCount": 6,
       "executedCaseCount": 0,
-      "terminalStatus": "",
+      "terminalStatus": "not_exported",
       "reportPath": "endpoints/ncm.listen_together_status.md",
-      "blocker": ""
+      "blocker": "interface.d.ts 声明存在但无模块文件（对应模块 listentogether_status）"
     }
   ]
 }

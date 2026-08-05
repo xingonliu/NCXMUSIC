@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "caseId": "ncm.hot_topic.anon.001",
+    "apiAuditId": "ncm.hot_topic",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:49.580Z",
+    "endedAt": "2026-08-05T03:23:49.642Z",
+    "durationMs": 62,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "hot": [
+      {
+        "actId": 115842105,
+        "title": "最后的水族馆",
+        "text": [
+          "欢迎来到水族馆，进入无边界海域的听觉之旅"
+        ],
+        "participateCount": 8076,
+        "iconUrl": null,
+        "readCnt": null,
+        "topicDisplayType": null,
+        "bizId": null,
+        "bizType": null,
+        "memberCount": null,
+        "onlineNum": null,
+        "sharePicUrl": "https://p3.music.126.net/wdKjMvO2A7XTbti5wDqtpg==/109951166784247177.jpg#hash=6e6e70758e5d",
+        "reason": "",
+        "isDefaultImg": false,
+        "alg": "featured"
+      }
+    ]
+  },
+  "error": null
+}

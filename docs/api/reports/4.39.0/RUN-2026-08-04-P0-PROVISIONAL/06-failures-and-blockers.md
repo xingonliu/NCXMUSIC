@@ -91,3 +91,10 @@ runId：`RUN-2026-08-04-P0-PROVISIONAL`
 - **B-007 Phase 5 暂缓（操作者指示，2026-08-04）**：用户私有读取域本轮不执行测试，raw 层无新增样本；清单中该域接口保持未测状态（executedCaseCount=0、terminalStatus 空）。
 - 原因：AUTH_USER 账号缺失（B-002），未登录负向层价值有限且不构成三态对比。
 - 补测方案：账号到位后按 §7 Phase 5 顺序执行 user_playlist/likelist/user_record/user_cloud 等，复用现有夹具池与运行器（--filter 单组重跑）。
+
+## 8. Phase 6 运行发现（RUN-2026-08-04-P0-PROVISIONAL）
+
+- **登录门槛**（剩余域）：personal_fm/personal_fm_mode/recommend_songs/recommend_resource/login_refresh/digitalAlbum_detail 等私有化接口在未登录层返回 301/需登录错误；AUTH_ANON 表现各异（运行时样本为准）（raw 样本 301 各 case）
+- **风控验证挑战**（剩余域）：-462（verifyId 1007602）在部分剩余接口的 AUTH_INVALID 层触发（raw 样本 *inv.* ERR-462）
+- **模块级异常**（剩余域）：无 HTTP 状态的本地异常按 failed_stable 自动判定（终态由运行器证据推导）（remain-status.json 运行后细化）
+- **本地工具**（剩余域）：decrypt/eapi_decrypt/audio_match 为本地加密/指纹工具（无 request 调用），本域补测（raw 样本 local.*）

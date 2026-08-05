@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_toplist_hours.page.none.001",
+    "apiAuditId": "ncm.dj_toplist_hours",
+    "auth": "AUTH_NONE",
+    "params": {
+      "limit": 5,
+      "offset": 10
+    },
+    "startedAt": "2026-08-05T03:23:27.402Z",
+    "endedAt": "2026-08-05T03:23:27.564Z",
+    "durationMs": 162,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "msg": null,
+    "data": {
+      "total": 5,
+      "updateTime": 1785900207535,
+      "list": [
+        {
+          "id": 5144656665,
+          "rank": 1,
+          "lastRank": 4,
+          "score": 984431,
+          "nickName": "路灯下的癞皮狗",
+          "avatarUrl": "https://p3.music.126.net/hQmYHt9yCfh5hHctuuQbqQ==/109951171467785780.jpg#hash=ba55d926688a",
+          "userType": 101,
+          "userFollowedCount": 561,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": {
+            "userType": 101,
+            "identityLevel": 1,
+            "identityIconUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/59679338493/06e3/631a/4c59/7e34d8deb3c3401f32d1f9579a8f1e0a.png#hash=51ea124a6fb4"
+          },
+          "roomNo": 0
+        },
+        {
+          "id": 42982153,
+          "rank": 2,
+          "lastRank": 14,
+          "score": 776590,
+          "nickName": "主播莫大人",
+          "avatarUrl": "https://p3.music.126.net/ntgHCz6DBiPxeN-SQU40Tg==/109951167989772366.jpg#hash=7872c39ba77d",
+          "userType": 4,
+          "userFollowedCount": 49089,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": {
+            "userType": 4,
+            "identityLevel": 1,
+            "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4874132307/4499/f228/d867/da64b9725e125943ad4e14e4c72d0884.png#hash=30c5af5c53fd"
+          },
+          "roomNo": 0
+        },
+        {
+          "id": 1969931419,
+          "rank": 3,
+          "lastRank": 19,
+          "score": 540142,
+          "nickName": "声动活泼",
+          "avatarUrl": "https://p3.music.126.net/JBRO5YCLlYU0OfJgaR0Fbw==/109951164484307879.jpg#hash=308715eaec3f",
+          "userType": 205,
+          "userFollowedCount": 12536,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": {
+            "userType": 205,
+            "identityLevel": 4,
+            "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340194/0903/b735/7c7a/0dddcdf78047d397d24125840e54ab5b.png#hash=de2abfedf945"
+          },
+          "roomNo": 0
+        },
+        {
+          "id": 646189376,
+          "rank": 4,
+          "lastRank": -1,
+          "score": 513366,
+          "nickName": "cn_czx",
+          "avatarUrl": "https://p4.music.126.net/t2om1J0513cB4mMGrmL3Hg==/109951172506885879.jpg#hash=59669e3bef74",
+          "userType": 0,
+          "userFollowedCount": 2804,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": null,
+          "roomNo": 0
+        },
+        {
+          "id": 287921940,
+          "rank": 5,
+          "lastRank": 3,
+          "score": 416411,
+          "nickName": "开心锤锤",
+          "avatarUrl": "https://p4.music.126.net/vWnSwzZM_jXU_UW__dhL7g==/109951169745927601.jpg#hash=eaa5378a831f",
+          "userType": 4,
+          "userFollowedCount": 77108,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": {
+            "userType": 4,
+            "identityLevel": 1,
+            "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4874132307/4499/f228/d867/da64b9725e125943ad4e14e4c72d0884.png#hash=30c5af5c53fd"
+          },
+          "roomNo": 0
+        }
+      ]
+    }
+  },
+  "error": null
+}

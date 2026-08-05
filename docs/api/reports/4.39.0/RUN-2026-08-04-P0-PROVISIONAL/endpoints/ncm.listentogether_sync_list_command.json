@@ -44,15 +44,101 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.listentogether_sync_list_command.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'split')"
+        },
+        "sampleHash": "f49e2614146440708421b17b2986918baae27fb7ba18826abbe9290f7a1e2265",
+        "rawFile": "ncm.listentogether_sync_list_command.ncm.listentogether_sync_list_command.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_sync_list_command.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'split')"
+        },
+        "sampleHash": "bc5ced7b7ac5a109f0aaf328b372c60dd452d84f5340a0658162cff52b7e3ebe",
+        "rawFile": "ncm.listentogether_sync_list_command.ncm.listentogether_sync_list_command.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_sync_list_command.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'split')"
+        },
+        "sampleHash": "6e146d9f8f93d2238fbcf9f4421af1f34278660568ad73f70e35873a45c7c47c",
+        "rawFile": "ncm.listentogether_sync_list_command.ncm.listentogether_sync_list_command.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_sync_list_command.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'split')"
+        },
+        "sampleHash": "1695298a513edb400bb11e1da41340fa9413cea716b755351faa6e9991406021",
+        "rawFile": "ncm.listentogether_sync_list_command.ncm.listentogether_sync_list_command.none.002.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "failed_stable",
+  "blocker": "模块级异常（非网络）：Cannot read properties of undefined (reading 'split')",
+  "evidence": [
+    {
+      "caseId": "ncm.listentogether_sync_list_command.anon.001",
+      "sampleHash": "f49e2614146440708421b17b2986918baae27fb7ba18826abbe9290f7a1e2265",
+      "rawFile": "ncm.listentogether_sync_list_command.ncm.listentogether_sync_list_command.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_sync_list_command.inv.001",
+      "sampleHash": "bc5ced7b7ac5a109f0aaf328b372c60dd452d84f5340a0658162cff52b7e3ebe",
+      "rawFile": "ncm.listentogether_sync_list_command.ncm.listentogether_sync_list_command.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_sync_list_command.none.001",
+      "sampleHash": "6e146d9f8f93d2238fbcf9f4421af1f34278660568ad73f70e35873a45c7c47c",
+      "rawFile": "ncm.listentogether_sync_list_command.ncm.listentogether_sync_list_command.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_sync_list_command.none.002",
+      "sampleHash": "1695298a513edb400bb11e1da41340fa9413cea716b755351faa6e9991406021",
+      "rawFile": "ncm.listentogether_sync_list_command.ncm.listentogether_sync_list_command.none.002.raw.json"
+    }
+  ]
 }

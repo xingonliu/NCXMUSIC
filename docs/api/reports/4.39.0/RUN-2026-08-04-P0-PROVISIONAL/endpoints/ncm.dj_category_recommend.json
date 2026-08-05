@@ -27,15 +27,468 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.dj_category_recommend.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 286,
+        "error": null,
+        "sampleHash": "2ae69f00f733e66185674f79696753e978c1eb1a0fb24c3aefe427ffc62f992d",
+        "rawFile": "ncm.dj_category_recommend.ncm.dj_category_recommend.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_category_recommend.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 329,
+        "error": null,
+        "sampleHash": "196a0b6e7def7fd9b8541c3bede585b3d8fb8090085b704a37e0cc3c8cd920dc",
+        "rawFile": "ncm.dj_category_recommend.ncm.dj_category_recommend.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_category_recommend.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 431,
+        "error": null,
+        "sampleHash": "7d14b29c8d871c2924294dc41ba3778fa6e9e67606774dd86f8871e04472c414",
+        "rawFile": "ncm.dj_category_recommend.ncm.dj_category_recommend.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_category_recommend.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 281,
+        "error": null,
+        "sampleHash": "a4f5829eff9037a4d47982fee6310e08d67f7003b5e745e49568e8ab60738f31",
+        "rawFile": "ncm.dj_category_recommend.ncm.dj_category_recommend.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data[].categoryId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "3"
+    },
+    {
+      "jsonPath": "data[].categoryName",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "情感"
+    },
+    {
+      "jsonPath": "data[].radios[].alg",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "featured"
+    },
+    {
+      "jsonPath": "data[].radios[].discountPrice",
+      "rawType": "null",
+      "presence": 36,
+      "nulls": 36,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].radios[].feeScope",
+      "rawType": "number",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].radios[].icon",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].radios[].icon.borderColor",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].radios[].icon.color",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "#FF3A3A"
+    },
+    {
+      "jsonPath": "data[].radios[].icon.realBizType",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].radios[].icon.textColor",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].radios[].icon.type",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "text"
+    },
+    {
+      "jsonPath": "data[].radios[].icon.value",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "独家"
+    },
+    {
+      "jsonPath": "data[].radios[].id",
+      "rawType": "number",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "526564706"
+    },
+    {
+      "jsonPath": "data[].radios[].lastProgramName",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "想和你把生活过成一首诗"
+    },
+    {
+      "jsonPath": "data[].radios[].name",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "伴听FM"
+    },
+    {
+      "jsonPath": "data[].radios[].originalPrice",
+      "rawType": "null",
+      "presence": 36,
+      "nulls": 36,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].radios[].picUrl",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "https://p3.music.126.net/sSpZjsg1OB6xpWHTeuKD0g==/1099511631"
+    },
+    {
+      "jsonPath": "data[].radios[].playCount",
+      "rawType": "number",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "6547272"
+    },
+    {
+      "jsonPath": "data[].radios[].programCount",
+      "rawType": "number",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "18"
+    },
+    {
+      "jsonPath": "data[].radios[].radioFeeType",
+      "rawType": "number",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].radios[].rcmdText",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "用小半的我筑温暖的你"
+    },
+    {
+      "jsonPath": "data[].radios[].subCount",
+      "rawType": "number",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].radios[].subed",
+      "rawType": "boolean",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].radios[].traceId",
+      "rawType": "null",
+      "presence": 36,
+      "nulls": 36,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_category_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_category_recommend.none.002",
+      "example": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.dj_category_recommend.anon.001",
+      "sampleHash": "2ae69f00f733e66185674f79696753e978c1eb1a0fb24c3aefe427ffc62f992d",
+      "rawFile": "ncm.dj_category_recommend.ncm.dj_category_recommend.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_category_recommend.inv.001",
+      "sampleHash": "196a0b6e7def7fd9b8541c3bede585b3d8fb8090085b704a37e0cc3c8cd920dc",
+      "rawFile": "ncm.dj_category_recommend.ncm.dj_category_recommend.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_category_recommend.none.001",
+      "sampleHash": "7d14b29c8d871c2924294dc41ba3778fa6e9e67606774dd86f8871e04472c414",
+      "rawFile": "ncm.dj_category_recommend.ncm.dj_category_recommend.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_category_recommend.none.002",
+      "sampleHash": "a4f5829eff9037a4d47982fee6310e08d67f7003b5e745e49568e8ab60738f31",
+      "rawFile": "ncm.dj_category_recommend.ncm.dj_category_recommend.none.002.raw.json"
+    }
+  ]
 }

@@ -1,0 +1,2619 @@
+{
+  "note": "剩余域自动生成 spec（NONE/ANON/INVALID + 负向/分页/重复）",
+  "groups": [
+    {
+      "apiAuditId": "ncm.ad_get",
+      "moduleName": "ad_get",
+      "cases": [
+        {
+          "caseId": "ncm.ad_get.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.ad_get.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.ad_get.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.ad_get.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.ad_listening_rights",
+      "moduleName": "ad_listening_rights",
+      "cases": [
+        {
+          "caseId": "ncm.ad_listening_rights.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.ad_listening_rights.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.ad_listening_rights.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.ad_listening_rights.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.ad_listening_rights_gain",
+      "moduleName": "ad_listening_rights_gain",
+      "cases": [
+        {
+          "caseId": "ncm.ad_listening_rights_gain.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.ad_listening_rights_gain.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.ad_listening_rights_gain.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.ad_listening_rights_gain.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.aidj_content_rcmd",
+      "moduleName": "aidj_content_rcmd",
+      "cases": [
+        {
+          "caseId": "ncm.aidj_content_rcmd.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.aidj_content_rcmd.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.aidj_content_rcmd.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.aidj_content_rcmd.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.api",
+      "moduleName": "api",
+      "cases": [
+        {
+          "caseId": "ncm.api.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.api.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.api.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.api.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.audio_match",
+      "moduleName": "audio_match",
+      "cases": [
+        {
+          "caseId": "ncm.audio_match.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.audio_match.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.audio_match.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.audio_match.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.batch",
+      "moduleName": "batch",
+      "cases": [
+        {
+          "caseId": "ncm.batch.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.batch.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.batch.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.batch.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.broadcast_category_region_get",
+      "moduleName": "broadcast_category_region_get",
+      "cases": [
+        {
+          "caseId": "ncm.broadcast_category_region_get.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.broadcast_category_region_get.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.broadcast_category_region_get.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.broadcast_category_region_get.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.broadcast_channel_collect_list",
+      "moduleName": "broadcast_channel_collect_list",
+      "cases": [
+        {
+          "caseId": "ncm.broadcast_channel_collect_list.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.broadcast_channel_collect_list.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.broadcast_channel_collect_list.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.broadcast_channel_collect_list.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.broadcast_channel_currentinfo",
+      "moduleName": "broadcast_channel_currentinfo",
+      "cases": [
+        {
+          "caseId": "ncm.broadcast_channel_currentinfo.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.broadcast_channel_currentinfo.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.broadcast_channel_currentinfo.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.broadcast_channel_currentinfo.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.broadcast_channel_list",
+      "moduleName": "broadcast_channel_list",
+      "cases": [
+        {
+          "caseId": "ncm.broadcast_channel_list.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.broadcast_channel_list.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.broadcast_channel_list.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.broadcast_channel_list.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.calendar",
+      "moduleName": "calendar",
+      "cases": [
+        {
+          "caseId": "ncm.calendar.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.calendar.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.calendar.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.calendar.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.cloud",
+      "moduleName": "cloud",
+      "cases": [
+        {
+          "caseId": "ncm.cloud.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.cloud.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.cloud.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.cloud.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.comment_info_list",
+      "moduleName": "comment_info_list",
+      "cases": [
+        {
+          "caseId": "ncm.comment_info_list.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "0": "ids",
+            "1": "id",
+            "2": "type",
+            "id": "{{pool:commentId:0}}"
+          },
+          "expectedClass": "resource"
+        },
+        {
+          "caseId": "ncm.comment_info_list.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {
+            "0": "ids",
+            "1": "id",
+            "2": "type",
+            "id": "{{pool:commentId:0}}"
+          },
+          "expectedClass": "resource"
+        },
+        {
+          "caseId": "ncm.comment_info_list.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {
+            "0": "ids",
+            "1": "id",
+            "2": "type",
+            "id": "{{pool:commentId:0}}"
+          },
+          "expectedClass": "resource-or-fallback"
+        },
+        {
+          "caseId": "ncm.comment_info_list.id0.none.neg.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "0": "ids",
+            "1": "id",
+            "2": "type",
+            "id": "0"
+          },
+          "expectedClass": "negative-invalid-id"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.countries_code_list",
+      "moduleName": "countries_code_list",
+      "cases": [
+        {
+          "caseId": "ncm.countries_code_list.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.countries_code_list.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.countries_code_list.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.countries_code_list.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.creator_authinfo_get",
+      "moduleName": "creator_authinfo_get",
+      "cases": [
+        {
+          "caseId": "ncm.creator_authinfo_get.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.creator_authinfo_get.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.creator_authinfo_get.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.creator_authinfo_get.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.decrypt",
+      "moduleName": "decrypt",
+      "cases": [
+        {
+          "caseId": "ncm.decrypt.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.decrypt.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.decrypt.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.decrypt.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.digitalAlbum_detail",
+      "moduleName": "digitalAlbum_detail",
+      "cases": [
+        {
+          "caseId": "ncm.digitalAlbum_detail.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.digitalAlbum_detail.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.digitalAlbum_detail.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.digitalAlbum_detail.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.digitalAlbum_sales",
+      "moduleName": "digitalAlbum_sales",
+      "cases": [
+        {
+          "caseId": "ncm.digitalAlbum_sales.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.digitalAlbum_sales.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.digitalAlbum_sales.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.digitalAlbum_sales.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_category_excludehot",
+      "moduleName": "dj_category_excludehot",
+      "cases": [
+        {
+          "caseId": "ncm.dj_category_excludehot.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_category_excludehot.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.dj_category_excludehot.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_category_excludehot.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_category_recommend",
+      "moduleName": "dj_category_recommend",
+      "cases": [
+        {
+          "caseId": "ncm.dj_category_recommend.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_category_recommend.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.dj_category_recommend.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_category_recommend.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_detail",
+      "moduleName": "dj_detail",
+      "cases": [
+        {
+          "caseId": "ncm.dj_detail.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_detail.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.dj_detail.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_detail.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_difm_all_style_channel",
+      "moduleName": "dj_difm_all_style_channel",
+      "cases": [
+        {
+          "caseId": "ncm.dj_difm_all_style_channel.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_difm_all_style_channel.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.dj_difm_all_style_channel.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_difm_all_style_channel.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_difm_playing_tracks_list",
+      "moduleName": "dj_difm_playing_tracks_list",
+      "cases": [
+        {
+          "caseId": "ncm.dj_difm_playing_tracks_list.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_difm_playing_tracks_list.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.dj_difm_playing_tracks_list.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_difm_playing_tracks_list.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_personalize_recommend",
+      "moduleName": "dj_personalize_recommend",
+      "cases": [
+        {
+          "caseId": "ncm.dj_personalize_recommend.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_personalize_recommend.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.dj_personalize_recommend.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_personalize_recommend.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_program",
+      "moduleName": "dj_program",
+      "cases": [
+        {
+          "caseId": "ncm.dj_program.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_program.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.dj_program.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_program.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_program_detail",
+      "moduleName": "dj_program_detail",
+      "cases": [
+        {
+          "caseId": "ncm.dj_program_detail.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "0": "id",
+            "id": "{{pool:djId:0}}"
+          },
+          "expectedClass": "resource"
+        },
+        {
+          "caseId": "ncm.dj_program_detail.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {
+            "0": "id",
+            "id": "{{pool:djId:0}}"
+          },
+          "expectedClass": "resource"
+        },
+        {
+          "caseId": "ncm.dj_program_detail.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {
+            "0": "id",
+            "id": "{{pool:djId:0}}"
+          },
+          "expectedClass": "resource-or-fallback"
+        },
+        {
+          "caseId": "ncm.dj_program_detail.id0.none.neg.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "0": "id",
+            "id": "0"
+          },
+          "expectedClass": "negative-invalid-id"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_program_toplist",
+      "moduleName": "dj_program_toplist",
+      "cases": [
+        {
+          "caseId": "ncm.dj_program_toplist.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_program_toplist.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.dj_program_toplist.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_program_toplist.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_program_toplist_hours",
+      "moduleName": "dj_program_toplist_hours",
+      "cases": [
+        {
+          "caseId": "ncm.dj_program_toplist_hours.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_program_toplist_hours.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.dj_program_toplist_hours.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_program_toplist_hours.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_radio_hot",
+      "moduleName": "dj_radio_hot",
+      "cases": [
+        {
+          "caseId": "ncm.dj_radio_hot.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_radio_hot.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.dj_radio_hot.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_radio_hot.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_recommend",
+      "moduleName": "dj_recommend",
+      "cases": [
+        {
+          "caseId": "ncm.dj_recommend.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_recommend.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.dj_recommend.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_recommend.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_recommend_type",
+      "moduleName": "dj_recommend_type",
+      "cases": [
+        {
+          "caseId": "ncm.dj_recommend_type.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_recommend_type.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.dj_recommend_type.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_recommend_type.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_subscriber",
+      "moduleName": "dj_subscriber",
+      "cases": [
+        {
+          "caseId": "ncm.dj_subscriber.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "0": "time",
+            "1": "id",
+            "2": "limit",
+            "id": "{{pool:djId:0}}"
+          },
+          "expectedClass": "resource"
+        },
+        {
+          "caseId": "ncm.dj_subscriber.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {
+            "0": "time",
+            "1": "id",
+            "2": "limit",
+            "id": "{{pool:djId:0}}"
+          },
+          "expectedClass": "resource"
+        },
+        {
+          "caseId": "ncm.dj_subscriber.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {
+            "0": "time",
+            "1": "id",
+            "2": "limit",
+            "id": "{{pool:djId:0}}"
+          },
+          "expectedClass": "resource-or-fallback"
+        },
+        {
+          "caseId": "ncm.dj_subscriber.id0.none.neg.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "0": "time",
+            "1": "id",
+            "2": "limit",
+            "id": "0"
+          },
+          "expectedClass": "negative-invalid-id"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_today_perfered",
+      "moduleName": "dj_today_perfered",
+      "cases": [
+        {
+          "caseId": "ncm.dj_today_perfered.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_today_perfered.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.dj_today_perfered.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.dj_today_perfered.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_toplist",
+      "moduleName": "dj_toplist",
+      "cases": [
+        {
+          "caseId": "ncm.dj_toplist.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_toplist.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.dj_toplist.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_toplist.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_toplist_hours",
+      "moduleName": "dj_toplist_hours",
+      "cases": [
+        {
+          "caseId": "ncm.dj_toplist_hours.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_toplist_hours.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.dj_toplist_hours.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_toplist_hours.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_toplist_newcomer",
+      "moduleName": "dj_toplist_newcomer",
+      "cases": [
+        {
+          "caseId": "ncm.dj_toplist_newcomer.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_toplist_newcomer.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.dj_toplist_newcomer.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_toplist_newcomer.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_toplist_pay",
+      "moduleName": "dj_toplist_pay",
+      "cases": [
+        {
+          "caseId": "ncm.dj_toplist_pay.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_toplist_pay.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.dj_toplist_pay.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_toplist_pay.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.dj_toplist_popular",
+      "moduleName": "dj_toplist_popular",
+      "cases": [
+        {
+          "caseId": "ncm.dj_toplist_popular.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_toplist_popular.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.dj_toplist_popular.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.dj_toplist_popular.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.djRadio_top",
+      "moduleName": "djRadio_top",
+      "cases": [
+        {
+          "caseId": "ncm.djRadio_top.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.djRadio_top.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.djRadio_top.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.djRadio_top.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.eapi_decrypt",
+      "moduleName": "eapi_decrypt",
+      "cases": [
+        {
+          "caseId": "ncm.eapi_decrypt.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.eapi_decrypt.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.eapi_decrypt.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.eapi_decrypt.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.get_userids",
+      "moduleName": "get_userids",
+      "cases": [
+        {
+          "caseId": "ncm.get_userids.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.get_userids.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.get_userids.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.get_userids.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.homepage_dragon_ball",
+      "moduleName": "homepage_dragon_ball",
+      "cases": [
+        {
+          "caseId": "ncm.homepage_dragon_ball.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.homepage_dragon_ball.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.homepage_dragon_ball.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.homepage_dragon_ball.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.hot_topic",
+      "moduleName": "hot_topic",
+      "cases": [
+        {
+          "caseId": "ncm.hot_topic.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.hot_topic.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.hot_topic.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.hot_topic.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.listentogether_accept",
+      "moduleName": "listentogether_accept",
+      "cases": [
+        {
+          "caseId": "ncm.listentogether_accept.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_accept.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.listentogether_accept.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_accept.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.listentogether_end",
+      "moduleName": "listentogether_end",
+      "cases": [
+        {
+          "caseId": "ncm.listentogether_end.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_end.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.listentogether_end.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_end.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.listentogether_heatbeat",
+      "moduleName": "listentogether_heatbeat",
+      "cases": [
+        {
+          "caseId": "ncm.listentogether_heatbeat.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_heatbeat.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.listentogether_heatbeat.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_heatbeat.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.listentogether_play_command",
+      "moduleName": "listentogether_play_command",
+      "cases": [
+        {
+          "caseId": "ncm.listentogether_play_command.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_play_command.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.listentogether_play_command.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_play_command.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.listentogether_room_check",
+      "moduleName": "listentogether_room_check",
+      "cases": [
+        {
+          "caseId": "ncm.listentogether_room_check.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_room_check.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.listentogether_room_check.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_room_check.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.listentogether_room_create",
+      "moduleName": "listentogether_room_create",
+      "cases": [
+        {
+          "caseId": "ncm.listentogether_room_create.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_room_create.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.listentogether_room_create.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_room_create.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.listentogether_status",
+      "moduleName": "listentogether_status",
+      "cases": [
+        {
+          "caseId": "ncm.listentogether_status.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_status.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.listentogether_status.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_status.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.listentogether_sync_list_command",
+      "moduleName": "listentogether_sync_list_command",
+      "cases": [
+        {
+          "caseId": "ncm.listentogether_sync_list_command.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_sync_list_command.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.listentogether_sync_list_command.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_sync_list_command.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.listentogether_sync_playlist_get",
+      "moduleName": "listentogether_sync_playlist_get",
+      "cases": [
+        {
+          "caseId": "ncm.listentogether_sync_playlist_get.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_sync_playlist_get.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.listentogether_sync_playlist_get.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.listentogether_sync_playlist_get.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.login_qr_check",
+      "moduleName": "login_qr_check",
+      "cases": [
+        {
+          "caseId": "ncm.login_qr_check.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.login_qr_check.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.login_qr_check.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.login_qr_check.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.login_qr_create",
+      "moduleName": "login_qr_create",
+      "cases": [
+        {
+          "caseId": "ncm.login_qr_create.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.login_qr_create.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.login_qr_create.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.login_qr_create.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.login_refresh",
+      "moduleName": "login_refresh",
+      "cases": [
+        {
+          "caseId": "ncm.login_refresh.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.login_refresh.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.login_refresh.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.login_refresh.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.music_first_listen_info",
+      "moduleName": "music_first_listen_info",
+      "cases": [
+        {
+          "caseId": "ncm.music_first_listen_info.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.music_first_listen_info.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.music_first_listen_info.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.music_first_listen_info.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.nickname_check",
+      "moduleName": "nickname_check",
+      "cases": [
+        {
+          "caseId": "ncm.nickname_check.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.nickname_check.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.nickname_check.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.nickname_check.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.personal_fm",
+      "moduleName": "personal_fm",
+      "cases": [
+        {
+          "caseId": "ncm.personal_fm.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.personal_fm.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.personal_fm.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.personal_fm.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.personal_fm_mode",
+      "moduleName": "personal_fm_mode",
+      "cases": [
+        {
+          "caseId": "ncm.personal_fm_mode.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.personal_fm_mode.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.personal_fm_mode.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.personal_fm_mode.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.pl_count",
+      "moduleName": "pl_count",
+      "cases": [
+        {
+          "caseId": "ncm.pl_count.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.pl_count.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.pl_count.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.pl_count.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.playmode_intelligence_list",
+      "moduleName": "playmode_intelligence_list",
+      "cases": [
+        {
+          "caseId": "ncm.playmode_intelligence_list.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "0": "id",
+            "1": "pid",
+            "2": "sid",
+            "3": "count",
+            "pid": "{{pool:playlistId:0}}"
+          },
+          "expectedClass": "resource"
+        },
+        {
+          "caseId": "ncm.playmode_intelligence_list.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {
+            "0": "id",
+            "1": "pid",
+            "2": "sid",
+            "3": "count",
+            "pid": "{{pool:playlistId:0}}"
+          },
+          "expectedClass": "resource"
+        },
+        {
+          "caseId": "ncm.playmode_intelligence_list.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {
+            "0": "id",
+            "1": "pid",
+            "2": "sid",
+            "3": "count",
+            "pid": "{{pool:playlistId:0}}"
+          },
+          "expectedClass": "resource-or-fallback"
+        },
+        {
+          "caseId": "ncm.playmode_intelligence_list.id0.none.neg.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "0": "id",
+            "1": "pid",
+            "2": "sid",
+            "3": "count",
+            "pid": "0"
+          },
+          "expectedClass": "negative-invalid-id"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.playmode_song_vector",
+      "moduleName": "playmode_song_vector",
+      "cases": [
+        {
+          "caseId": "ncm.playmode_song_vector.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.playmode_song_vector.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.playmode_song_vector.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.playmode_song_vector.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.program_recommend",
+      "moduleName": "program_recommend",
+      "cases": [
+        {
+          "caseId": "ncm.program_recommend.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.program_recommend.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.program_recommend.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.program_recommend.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.radio_sport_get",
+      "moduleName": "radio_sport_get",
+      "cases": [
+        {
+          "caseId": "ncm.radio_sport_get.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.radio_sport_get.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.radio_sport_get.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.radio_sport_get.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.recommend_resource",
+      "moduleName": "recommend_resource",
+      "cases": [
+        {
+          "caseId": "ncm.recommend_resource.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.recommend_resource.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.recommend_resource.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.recommend_resource.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.recommend_songs",
+      "moduleName": "recommend_songs",
+      "cases": [
+        {
+          "caseId": "ncm.recommend_songs.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.recommend_songs.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.recommend_songs.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.recommend_songs.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.record_recent_album",
+      "moduleName": "record_recent_album",
+      "cases": [
+        {
+          "caseId": "ncm.record_recent_album.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_album.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.record_recent_album.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_album.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.record_recent_dj",
+      "moduleName": "record_recent_dj",
+      "cases": [
+        {
+          "caseId": "ncm.record_recent_dj.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_dj.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.record_recent_dj.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_dj.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.record_recent_playlist",
+      "moduleName": "record_recent_playlist",
+      "cases": [
+        {
+          "caseId": "ncm.record_recent_playlist.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_playlist.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.record_recent_playlist.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_playlist.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.record_recent_song",
+      "moduleName": "record_recent_song",
+      "cases": [
+        {
+          "caseId": "ncm.record_recent_song.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_song.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.record_recent_song.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_song.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.record_recent_video",
+      "moduleName": "record_recent_video",
+      "cases": [
+        {
+          "caseId": "ncm.record_recent_video.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_video.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.record_recent_video.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_video.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.record_recent_voice",
+      "moduleName": "record_recent_voice",
+      "cases": [
+        {
+          "caseId": "ncm.record_recent_voice.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_voice.page.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "limit": 5,
+            "offset": 10
+          },
+          "expectedClass": "list-midpage"
+        },
+        {
+          "caseId": "ncm.record_recent_voice.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "list"
+        },
+        {
+          "caseId": "ncm.record_recent_voice.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "list-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.search_match",
+      "moduleName": "search_match",
+      "cases": [
+        {
+          "caseId": "ncm.search_match.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.search_match.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.search_match.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.search_match.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.search_suggest_pc",
+      "moduleName": "search_suggest_pc",
+      "cases": [
+        {
+          "caseId": "ncm.search_suggest_pc.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.search_suggest_pc.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.search_suggest_pc.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.search_suggest_pc.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.setting",
+      "moduleName": "setting",
+      "cases": [
+        {
+          "caseId": "ncm.setting.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.setting.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.setting.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.setting.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.starpick_comments_summary",
+      "moduleName": "starpick_comments_summary",
+      "cases": [
+        {
+          "caseId": "ncm.starpick_comments_summary.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.starpick_comments_summary.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.starpick_comments_summary.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.starpick_comments_summary.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.threshold_detail_get",
+      "moduleName": "threshold_detail_get",
+      "cases": [
+        {
+          "caseId": "ncm.threshold_detail_get.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.threshold_detail_get.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.threshold_detail_get.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.threshold_detail_get.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.toplist_artist",
+      "moduleName": "toplist_artist",
+      "cases": [
+        {
+          "caseId": "ncm.toplist_artist.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.toplist_artist.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.toplist_artist.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.toplist_artist.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.toplist_detail",
+      "moduleName": "toplist_detail",
+      "cases": [
+        {
+          "caseId": "ncm.toplist_detail.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.toplist_detail.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.toplist_detail.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.toplist_detail.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.toplist_detail_v2",
+      "moduleName": "toplist_detail_v2",
+      "cases": [
+        {
+          "caseId": "ncm.toplist_detail_v2.none.001",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.toplist_detail_v2.none.002",
+          "auth": "AUTH_NONE",
+          "params": {},
+          "expectedClass": "read-repeat"
+        },
+        {
+          "caseId": "ncm.toplist_detail_v2.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {},
+          "expectedClass": "read"
+        },
+        {
+          "caseId": "ncm.toplist_detail_v2.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {},
+          "expectedClass": "read-or-fallback"
+        }
+      ]
+    },
+    {
+      "apiAuditId": "ncm.user_detail_new",
+      "moduleName": "user_detail_new",
+      "cases": [
+        {
+          "caseId": "ncm.user_detail_new.none.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "0": "uid",
+            "uid": "{{pool:userId:0}}"
+          },
+          "expectedClass": "resource"
+        },
+        {
+          "caseId": "ncm.user_detail_new.anon.001",
+          "auth": "AUTH_ANON",
+          "params": {
+            "0": "uid",
+            "uid": "{{pool:userId:0}}"
+          },
+          "expectedClass": "resource"
+        },
+        {
+          "caseId": "ncm.user_detail_new.inv.001",
+          "auth": "AUTH_INVALID_EXPIRED",
+          "params": {
+            "0": "uid",
+            "uid": "{{pool:userId:0}}"
+          },
+          "expectedClass": "resource-or-fallback"
+        },
+        {
+          "caseId": "ncm.user_detail_new.id0.none.neg.001",
+          "auth": "AUTH_NONE",
+          "params": {
+            "0": "uid",
+            "uid": "0"
+          },
+          "expectedClass": "negative-invalid-id"
+        }
+      ]
+    }
+  ]
+}

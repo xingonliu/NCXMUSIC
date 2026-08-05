@@ -1,0 +1,158 @@
+{
+  "meta": {
+    "caseId": "ncm.user_detail_new.anon.001",
+    "apiAuditId": "ncm.user_detail_new",
+    "auth": "AUTH_ANON",
+    "params": {
+      "0": "uid",
+      "uid": "281382"
+    },
+    "startedAt": "2026-08-05T03:26:01.360Z",
+    "endedAt": "2026-08-05T03:26:01.534Z",
+    "durationMs": 174,
+    "attempts": 1
+  },
+  "body": {
+    "identify": {
+      "imageUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8",
+      "imageDesc": "香港歌手",
+      "actionUrl": null
+    },
+    "level": 4,
+    "listenSongs": 158,
+    "userPoint": {
+      "userId": 281382,
+      "balance": 0,
+      "updateTime": 1785900341400,
+      "version": 10,
+      "status": 0,
+      "blockBalance": 0
+    },
+    "mobileSign": false,
+    "pcSign": false,
+    "profile": {
+      "privacyItemUnlimit": {
+        "area": true,
+        "college": true,
+        "user_page_profile": true,
+        "gender": true,
+        "age": true,
+        "villageAge": true
+      },
+      "avatarDetail": {
+        "userType": null,
+        "identityLevel": 1,
+        "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+      },
+      "province": 810000,
+      "city": 810100,
+      "birthday": -2209017600000,
+      "gender": 2,
+      "nickname": "GEM鄧紫棋",
+      "defaultAvatar": false,
+      "avatarUrl": "http://p4.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=2bdebdd4253f",
+      "backgroundImgId": 109951167773869000,
+      "backgroundUrl": "http://p1.music.126.net/nlH22cnwKf5SBO9Wpg_ziQ==/109951167773868994.jpg#hash=426c04076590",
+      "userType": 2,
+      "vipType": 0,
+      "detailDescription": "香港歌手",
+      "accountStatus": 0,
+      "remarkName": null,
+      "followed": false,
+      "mutual": false,
+      "djStatus": 10,
+      "avatarImgId": 109951167771736530,
+      "experts": {},
+      "authStatus": 1,
+      "expertTags": null,
+      "avatarImgIdStr": "109951167771736533",
+      "backgroundImgIdStr": "109951167773868994",
+      "createTime": 1365520082017,
+      "description": "香港歌手",
+      "userId": 281382,
+      "signature": "<REDACTED:signature>",
+      "authority": 3,
+      "allAuthTypes": [
+        {
+          "type": 2,
+          "desc": "香港歌手",
+          "tags": null
+        }
+      ],
+      "followeds": 14344461,
+      "follows": 0,
+      "blacklist": false,
+      "artistId": 7763,
+      "eventCount": 17,
+      "allSubscribedCount": 25898,
+      "playlistBeSubscribedCount": 25898,
+      "mainAuthType": {
+        "type": 2,
+        "desc": "香港歌手",
+        "tags": null
+      },
+      "avatarImgId_str": "109951167771736533",
+      "followTime": null,
+      "followMe": false,
+      "artistIdentity": [
+        3,
+        4
+      ],
+      "cCount": 2,
+      "inBlacklist": false,
+      "sDJPCount": 0,
+      "artistName": "G.E.M.邓紫棋",
+      "playlistCount": 2,
+      "sCount": 0,
+      "newFollows": 0
+    },
+    "peopleCanSeeMyPlayRecord": false,
+    "bindings": [
+      {
+        "expiresIn": 2147483647,
+        "refreshTime": 1594291626,
+        "bindingTime": 1594291626882,
+        "tokenJsonStr": null,
+        "url": "",
+        "expired": false,
+        "userId": 281382,
+        "id": 10660454763,
+        "type": 1
+      },
+      {
+        "expiresIn": 2638650,
+        "refreshTime": 1701669751,
+        "bindingTime": 1365520073460,
+        "tokenJsonStr": null,
+        "url": "http://weibo.com/u/1705586121#hash=f61f141d0233",
+        "expired": true,
+        "userId": 281382,
+        "id": 262317,
+        "type": 2
+      },
+      {
+        "expiresIn": 7776000,
+        "refreshTime": 1600836416,
+        "bindingTime": 1594290618205,
+        "tokenJsonStr": null,
+        "url": "",
+        "expired": true,
+        "userId": 281382,
+        "id": 10660453367,
+        "type": 5
+      }
+    ],
+    "adValid": true,
+    "code": 200,
+    "newUser": false,
+    "recallUser": true,
+    "createTime": 1365520082017,
+    "createDays": 4866,
+    "profileVillageInfo": {
+      "title": "领取村民证",
+      "imageUrl": null,
+      "targetUrl": "https://sg.music.163.com/g/cloud-card-3#hash=62357c5db2a4"
+    }
+  },
+  "error": null
+}

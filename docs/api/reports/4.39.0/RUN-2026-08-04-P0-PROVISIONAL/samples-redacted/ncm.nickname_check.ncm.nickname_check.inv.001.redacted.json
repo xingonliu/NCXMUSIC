@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.nickname_check.inv.001",
+    "apiAuditId": "ncm.nickname_check",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:25.731Z",
+    "endedAt": "2026-08-05T03:24:25.789Z",
+    "durationMs": 58,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "参数错误",
+    "code": 400,
+    "message": "参数错误"
+  },
+  "error": null
+}

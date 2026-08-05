@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.record_recent_video.inv.001",
+    "apiAuditId": "ncm.record_recent_video",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:25:04.577Z",
+    "endedAt": "2026-08-05T03:25:04.693Z",
+    "durationMs": 116,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "total": 0,
+      "list": []
+    },
+    "message": ""
+  },
+  "error": null
+}

@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.login_refresh.anon.001",
+    "apiAuditId": "ncm.login_refresh",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:19.801Z",
+    "endedAt": "2026-08-05T03:24:19.998Z",
+    "durationMs": 197,
+    "attempts": 1
+  },
+  "body": {
+    "msg": null,
+    "code": 302,
+    "message": null
+  },
+  "error": null
+}

@@ -37,7 +37,7 @@
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "blocked_by_prerequisite",
+  "blocker": "缺夹具：topicId 无生产者（池为空）",
   "evidence": []
 }

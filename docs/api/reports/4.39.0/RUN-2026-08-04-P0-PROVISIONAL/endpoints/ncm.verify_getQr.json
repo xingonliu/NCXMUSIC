@@ -50,7 +50,7 @@
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "blocked_by_prerequisite",
+  "blocker": "网易云盾验证码流程（需真实交互）",
   "evidence": []
 }

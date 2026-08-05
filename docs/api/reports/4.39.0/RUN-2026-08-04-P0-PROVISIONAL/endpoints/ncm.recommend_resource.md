@@ -89,3 +89,57 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 17. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.recommend_resource.anon.001 | AUTH_ANON | - | 200 | 184 |  |
+| ncm.recommend_resource.inv.001 | AUTH_INVALID_EXPIRED | err | 301 | - | code 301 |
+| ncm.recommend_resource.none.001 | AUTH_NONE | err | 301 | - | code 301 |
+| ncm.recommend_resource.none.002 | AUTH_NONE | err | 301 | - | code 301 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `featureFirst` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `haveRcmdSongs` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `recommend[].alg` | string | 3 | 0 | 0 | AUTH_ANON | `byNewUserGroup_combine` |
+| `recommend[].copywriter` | string | 3 | 0 | 0 | AUTH_ANON | `` |
+| `recommend[].createTime` | number | 3 | 0 | 0 | AUTH_ANON | `1753875728770` |
+| `recommend[].creator.accountStatus` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `recommend[].creator.authority` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `recommend[].creator.authStatus` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `recommend[].creator.avatarImgId` | number | 3 | 0 | 0 | AUTH_ANON | `109951167584339280` |
+| `recommend[].creator.avatarImgIdStr` | string | 3 | 0 | 0 | AUTH_ANON | `109951167584339278` |
+| `recommend[].creator.avatarUrl` | string | 3 | 0 | 0 | AUTH_ANON | `https://p4.music.126.net/i_cBHCXeSx60dgg` |
+| `recommend[].creator.backgroundImgId` | number | 3 | 0 | 0 | AUTH_ANON | `109951162868128400` |
+| `recommend[].creator.backgroundImgIdStr` | string | 3 | 0 | 0 | AUTH_ANON | `109951162868128395` |
+| `recommend[].creator.backgroundUrl` | string | 3 | 0 | 0 | AUTH_ANON | `http://p1.music.126.net/2zSNIqTcpHL2jIvU` |
+| `recommend[].creator.birthday` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `recommend[].creator.city` | number | 3 | 0 | 0 | AUTH_ANON | `330100` |
+| `recommend[].creator.defaultAvatar` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `recommend[].creator.description` | string | 3 | 0 | 0 | AUTH_ANON | `` |
+| `recommend[].creator.detailDescription` | string | 3 | 0 | 0 | AUTH_ANON | `` |
+| `recommend[].creator.djStatus` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `recommend[].creator.expertTags` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `recommend[].creator.followed` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `recommend[].creator.gender` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `recommend[].creator.mutual` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `recommend[].creator.nickname` | string | 3 | 0 | 0 | AUTH_ANON | `辅助做眼离奇失踪` |
+| `recommend[].creator.province` | number | 3 | 0 | 0 | AUTH_ANON | `330000` |
+| `recommend[].creator.remarkName` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `recommend[].creator.signature` | string | 3 | 0 | 0 | AUTH_ANON | `` |
+| `recommend[].creator.userId` | number | 3 | 0 | 0 | AUTH_ANON | `7883273021` |
+| `recommend[].creator.userType` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `recommend[].creator.vipType` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `recommend[].id` | number | 3 | 0 | 0 | AUTH_ANON | `14060893769` |
+| `recommend[].name` | string | 3 | 0 | 0 | AUTH_ANON | `循环百次的耐听歌曲推荐` |
+| `recommend[].picUrl` | string | 3 | 0 | 0 | AUTH_ANON | `https://p4.music.126.net/35Beaf6W2IYrG4J` |
+| `recommend[].playcount` | number | 3 | 0 | 0 | AUTH_ANON | `251372` |
+| `recommend[].trackCount` | number | 3 | 0 | 0 | AUTH_ANON | `299` |
+| `recommend[].type` | number | 3 | 0 | 0 | AUTH_ANON | `1` |
+| `recommend[].userId` | number | 3 | 0 | 0 | AUTH_ANON | `7883273021` |

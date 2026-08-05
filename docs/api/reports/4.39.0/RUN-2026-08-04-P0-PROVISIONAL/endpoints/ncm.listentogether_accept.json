@@ -30,15 +30,113 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.listentogether_accept.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "42616d9cf482dcd4d06bd7486784eaa17724523a1ddf77407c3243395640ebe4",
+        "rawFile": "ncm.listentogether_accept.ncm.listentogether_accept.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_accept.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "dccb8b0b6d8b12332e9579c277902ede46f4ebff8e01e1edd11d81ba1b43977b",
+        "rawFile": "ncm.listentogether_accept.ncm.listentogether_accept.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_accept.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "ed7a7a6dccc5a78af6dfd80f0a189d3948fc40c3ff8ddc7848bd21aeb87446e2",
+        "rawFile": "ncm.listentogether_accept.ncm.listentogether_accept.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_accept.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "4e2357484dd517ecf94b6826e03f422588c3a49cbe2f85a624e35b8a211ce838",
+        "rawFile": "ncm.listentogether_accept.ncm.listentogether_accept.none.002.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.listentogether_accept.anon.001",
+      "sampleHash": "42616d9cf482dcd4d06bd7486784eaa17724523a1ddf77407c3243395640ebe4",
+      "rawFile": "ncm.listentogether_accept.ncm.listentogether_accept.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_accept.inv.001",
+      "sampleHash": "dccb8b0b6d8b12332e9579c277902ede46f4ebff8e01e1edd11d81ba1b43977b",
+      "rawFile": "ncm.listentogether_accept.ncm.listentogether_accept.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_accept.none.001",
+      "sampleHash": "ed7a7a6dccc5a78af6dfd80f0a189d3948fc40c3ff8ddc7848bd21aeb87446e2",
+      "rawFile": "ncm.listentogether_accept.ncm.listentogether_accept.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_accept.none.002",
+      "sampleHash": "4e2357484dd517ecf94b6826e03f422588c3a49cbe2f85a624e35b8a211ce838",
+      "rawFile": "ncm.listentogether_accept.ncm.listentogether_accept.none.002.raw.json"
+    }
+  ]
 }

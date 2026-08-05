@@ -27,15 +27,101 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.cloud.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'name')"
+        },
+        "sampleHash": "d8e08380d0a97a4d8076744cae162de2a990d6f816f706e51634b8fca8f8a9b1",
+        "rawFile": "ncm.cloud.ncm.cloud.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.cloud.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'name')"
+        },
+        "sampleHash": "35a865e591396f751044e2973805cfa9ccaa03b147ea7df3d3162e953a778e76",
+        "rawFile": "ncm.cloud.ncm.cloud.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.cloud.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'name')"
+        },
+        "sampleHash": "4a743f53097b42b012960b890e60964eb60738f06e66531f9324eccdb19e4182",
+        "rawFile": "ncm.cloud.ncm.cloud.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.cloud.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'name')"
+        },
+        "sampleHash": "06356a27bde630127045d6ecce90e194e65990696f86fb2ba22732b5f1aeabaa",
+        "rawFile": "ncm.cloud.ncm.cloud.none.002.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "failed_stable",
+  "blocker": "模块级异常（非网络）：Cannot read properties of undefined (reading 'name')",
+  "evidence": [
+    {
+      "caseId": "ncm.cloud.anon.001",
+      "sampleHash": "d8e08380d0a97a4d8076744cae162de2a990d6f816f706e51634b8fca8f8a9b1",
+      "rawFile": "ncm.cloud.ncm.cloud.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.cloud.inv.001",
+      "sampleHash": "35a865e591396f751044e2973805cfa9ccaa03b147ea7df3d3162e953a778e76",
+      "rawFile": "ncm.cloud.ncm.cloud.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.cloud.none.001",
+      "sampleHash": "4a743f53097b42b012960b890e60964eb60738f06e66531f9324eccdb19e4182",
+      "rawFile": "ncm.cloud.ncm.cloud.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.cloud.none.002",
+      "sampleHash": "06356a27bde630127045d6ecce90e194e65990696f86fb2ba22732b5f1aeabaa",
+      "rawFile": "ncm.cloud.ncm.cloud.none.002.raw.json"
+    }
+  ]
 }

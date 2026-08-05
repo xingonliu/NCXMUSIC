@@ -43,6 +43,6 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "blocked_by_prerequisite",
-  "blocker": "unblock 匹配工具，依赖 enhanced 配置（B-003）",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
   "evidence": []
 }

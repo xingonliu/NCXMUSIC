@@ -31,15 +31,123 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.dj_detail.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 57,
+        "error": null,
+        "sampleHash": "eb9ddeee647b45fe2950d375aaf16a55b7c79c127da4cd6f55d74b17bfa544c3",
+        "rawFile": "ncm.dj_detail.ncm.dj_detail.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_detail.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 74,
+        "error": null,
+        "sampleHash": "1e88750cdfb6b75ab0b7e3ceeb647219b9df1cd90830b1b452963563811b7273",
+        "rawFile": "ncm.dj_detail.ncm.dj_detail.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_detail.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 58,
+        "error": null,
+        "sampleHash": "b50de47617cf073ba408885af9be174da3ba354a9727d16de42071cef3cdf2c0",
+        "rawFile": "ncm.dj_detail.ncm.dj_detail.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_detail.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 128,
+        "error": null,
+        "sampleHash": "2bd997c9f0e72f753e24ed66b98408f6cbf7a64055bb5781b79f324bb6637b1b",
+        "rawFile": "ncm.dj_detail.ncm.dj_detail.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_detail.anon.001",
+      "lastSeenCase": "ncm.dj_detail.none.002",
+      "example": "400"
+    },
+    {
+      "jsonPath": "data",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_detail.anon.001",
+      "lastSeenCase": "ncm.dj_detail.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_detail.anon.001",
+      "lastSeenCase": "ncm.dj_detail.none.002",
+      "example": "参数错误"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.dj_detail.anon.001",
+      "sampleHash": "eb9ddeee647b45fe2950d375aaf16a55b7c79c127da4cd6f55d74b17bfa544c3",
+      "rawFile": "ncm.dj_detail.ncm.dj_detail.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_detail.inv.001",
+      "sampleHash": "1e88750cdfb6b75ab0b7e3ceeb647219b9df1cd90830b1b452963563811b7273",
+      "rawFile": "ncm.dj_detail.ncm.dj_detail.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_detail.none.001",
+      "sampleHash": "b50de47617cf073ba408885af9be174da3ba354a9727d16de42071cef3cdf2c0",
+      "rawFile": "ncm.dj_detail.ncm.dj_detail.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_detail.none.002",
+      "sampleHash": "2bd997c9f0e72f753e24ed66b98408f6cbf7a64055bb5781b79f324bb6637b1b",
+      "rawFile": "ncm.dj_detail.ncm.dj_detail.none.002.raw.json"
+    }
+  ]
 }

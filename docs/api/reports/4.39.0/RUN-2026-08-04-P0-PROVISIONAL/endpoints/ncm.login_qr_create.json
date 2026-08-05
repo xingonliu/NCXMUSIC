@@ -39,15 +39,123 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.login_qr_create.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "30fe7537b86f2be20d944f857918437eee39449636767183e01554aab9d91ba7",
+        "rawFile": "ncm.login_qr_create.ncm.login_qr_create.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.login_qr_create.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "f6d85768b4bbf8627a5b7225111f024d9b92c7ce9ff6fc1a99f8a8218f2c2e9e",
+        "rawFile": "ncm.login_qr_create.ncm.login_qr_create.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.login_qr_create.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "7754077bbfdeb58bad5f6624c0dbc6094fafe9085869a66b635ca19f1728f989",
+        "rawFile": "ncm.login_qr_create.ncm.login_qr_create.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.login_qr_create.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "d75d2406706d7a4ef425ec7ca3cd427c23d73ee3a7b70d28d1743e4b1d18c648",
+        "rawFile": "ncm.login_qr_create.ncm.login_qr_create.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.login_qr_create.anon.001",
+      "lastSeenCase": "ncm.login_qr_create.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.qrimg",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.login_qr_create.anon.001",
+      "lastSeenCase": "ncm.login_qr_create.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.qrurl",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.login_qr_create.anon.001",
+      "lastSeenCase": "ncm.login_qr_create.none.002",
+      "example": "https://music.163.com/login#hash=e4cbcf565859"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.login_qr_create.anon.001",
+      "sampleHash": "30fe7537b86f2be20d944f857918437eee39449636767183e01554aab9d91ba7",
+      "rawFile": "ncm.login_qr_create.ncm.login_qr_create.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_qr_create.inv.001",
+      "sampleHash": "f6d85768b4bbf8627a5b7225111f024d9b92c7ce9ff6fc1a99f8a8218f2c2e9e",
+      "rawFile": "ncm.login_qr_create.ncm.login_qr_create.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_qr_create.none.001",
+      "sampleHash": "7754077bbfdeb58bad5f6624c0dbc6094fafe9085869a66b635ca19f1728f989",
+      "rawFile": "ncm.login_qr_create.ncm.login_qr_create.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_qr_create.none.002",
+      "sampleHash": "d75d2406706d7a4ef425ec7ca3cd427c23d73ee3a7b70d28d1743e4b1d18c648",
+      "rawFile": "ncm.login_qr_create.ncm.login_qr_create.none.002.raw.json"
+    }
+  ]
 }

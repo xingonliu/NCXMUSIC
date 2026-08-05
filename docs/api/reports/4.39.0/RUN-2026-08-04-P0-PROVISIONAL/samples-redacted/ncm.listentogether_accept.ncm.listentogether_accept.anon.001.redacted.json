@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.listentogether_accept.anon.001",
+    "apiAuditId": "ncm.listentogether_accept",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:52.209Z",
+    "endedAt": "2026-08-05T03:23:52.317Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 502,
+    "body": {
+      "code": 502,
+      "msg": "Request failed with status code 400"
+    },
+    "cookieCount": 0
+  }
+}

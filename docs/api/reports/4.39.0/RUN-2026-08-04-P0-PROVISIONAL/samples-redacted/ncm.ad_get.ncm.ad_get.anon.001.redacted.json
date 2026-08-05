@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.ad_get.anon.001",
+    "apiAuditId": "ncm.ad_get",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:19.188Z",
+    "endedAt": "2026-08-05T03:21:19.362Z",
+    "durationMs": 174,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "ads": {},
+    "message": "请稍后再试 (10031)",
+    "extra": {
+      "reqId": ""
+    }
+  },
+  "error": null
+}

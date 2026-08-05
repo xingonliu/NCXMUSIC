@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "caseId": "ncm.ad_listening_rights_gain.anon.001",
+    "apiAuditId": "ncm.ad_listening_rights_gain",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:24.689Z",
+    "endedAt": "2026-08-05T03:21:24.996Z",
+    "durationMs": 307,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "code": 200,
+      "message": "处理成功",
+      "data": {
+        "gainFlag": true,
+        "showContent": "恭喜获得30分VIP歌曲畅听权益",
+        "showElement": null,
+        "rightsUpperLimit": false,
+        "continueContent": "再看一个最高获得26分钟时长",
+        "canPlayContinuously": true,
+        "gainRightsDuration": 30,
+        "rightsDurationUnit": "分钟",
+        "vipButtonInfo": null,
+        "adButtonInfo": {
+          "buttonTitle": "立即获得",
+          "buttonReqUrl": "orpheus://nm/motivationAd/show?adPosition=400002&resourceId=0&isNeedGetRights=false&isShowEndToast=true&showRightsEndDialog=true&source=29"
+        },
+        "extraButtonInfo": {
+          "buttonTitle": "探索更多免费听歌权益",
+          "buttonReqUrl": "https://st.music.163.com/g/ad-music#hash=2b17ab3bf714"
+        },
+        "rightsEndDialogType": 1,
+        "rightsEndDialogBgUrl": "https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/31243524337/ed5b/c237/975e/a9452461f51811a44c5e74b2de821636.png#hash=d66b8b03aa95",
+        "rightsEndDialogTitle": "恭喜，获得免费听歌时长",
+        "rightsEndDialogSubTitle": "再看一段广告，至少再得30分钟免费听",
+        "adWatchRecords": null,
+        "adWatchStatus": false,
+        "needLink": true,
+        "linkPosition": null,
+        "activityEndDate": null,
+        "effectType": null
+      }
+    }
+  },
+  "error": null
+}

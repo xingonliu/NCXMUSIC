@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.record_recent_voice.none.001",
+    "apiAuditId": "ncm.record_recent_voice",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:25:05.307Z",
+    "endedAt": "2026-08-05T03:25:05.360Z",
+    "durationMs": 53,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "total": 0,
+      "list": []
+    },
+    "message": ""
+  },
+  "error": null
+}

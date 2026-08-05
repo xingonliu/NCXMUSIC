@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_info_list.anon.001",
+    "apiAuditId": "ncm.comment_info_list",
+    "auth": "AUTH_ANON",
+    "params": {
+      "0": "ids",
+      "1": "id",
+      "2": "type",
+      "id": "9563156604"
+    },
+    "startedAt": "2026-08-05T03:21:54.907Z",
+    "endedAt": "2026-08-05T03:21:54.974Z",
+    "durationMs": 67,
+    "attempts": 1
+  },
+  "body": {
+    "data": [
+      {
+        "latestLikedUsers": null,
+        "liked": false,
+        "comments": null,
+        "resourceType": 4,
+        "resourceId": 9563156604,
+        "commentUpgraded": false,
+        "musicianSaidCount": 0,
+        "commentCountDesc": "",
+        "likedCount": 0,
+        "shareCount": 0,
+        "commentCount": 0,
+        "threadId": "R_SO_4_9563156604"
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

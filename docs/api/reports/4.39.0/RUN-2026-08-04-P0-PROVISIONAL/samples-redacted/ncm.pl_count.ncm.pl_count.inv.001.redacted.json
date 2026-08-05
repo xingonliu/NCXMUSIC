@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "caseId": "ncm.pl_count.inv.001",
+    "apiAuditId": "ncm.pl_count",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:34.405Z",
+    "endedAt": "2026-08-05T03:24:34.464Z",
+    "durationMs": 59,
+    "attempts": 1
+  },
+  "body": "",
+  "error": null
+}

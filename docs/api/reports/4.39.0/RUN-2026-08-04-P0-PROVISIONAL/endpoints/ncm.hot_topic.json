@@ -32,15 +32,313 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.hot_topic.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 62,
+        "error": null,
+        "sampleHash": "1e3b06292475a12393b5bbed0e45fd7e9c9b7b497ffc85d54f406036d24ecc44",
+        "rawFile": "ncm.hot_topic.ncm.hot_topic.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.hot_topic.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "cd5cd22b8ae9ff06ae5092f3e5d4cb0d27c25c0b78197fad28a0b34ab727e31b",
+        "rawFile": "ncm.hot_topic.ncm.hot_topic.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.hot_topic.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "9df10dee3fc9a94a588e4fd3738ac5b0fb14ff012e185392787822adafd7beb4",
+        "rawFile": "ncm.hot_topic.ncm.hot_topic.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.hot_topic.page.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "85a6d39875b866392e972a04ad081533356c0cc9a2f16fb0faf882e49694d79b",
+        "rawFile": "ncm.hot_topic.ncm.hot_topic.page.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "hot[].actId",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": "115842105"
+    },
+    {
+      "jsonPath": "hot[].alg",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": "featured"
+    },
+    {
+      "jsonPath": "hot[].bizId",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hot[].bizType",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hot[].iconUrl",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hot[].isDefaultImg",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hot[].memberCount",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hot[].onlineNum",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hot[].participateCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": "8076"
+    },
+    {
+      "jsonPath": "hot[].readCnt",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hot[].reason",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "hot[].sharePicUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": "https://p3.music.126.net/wdKjMvO2A7XTbti5wDqtpg==/1099511667"
+    },
+    {
+      "jsonPath": "hot[].text[]",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": "欢迎来到水族馆，进入无边界海域的听觉之旅"
+    },
+    {
+      "jsonPath": "hot[].title",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": "最后的水族馆"
+    },
+    {
+      "jsonPath": "hot[].topicDisplayType",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.hot_topic.anon.001",
+      "lastSeenCase": "ncm.hot_topic.anon.001",
+      "example": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.hot_topic.anon.001",
+      "sampleHash": "1e3b06292475a12393b5bbed0e45fd7e9c9b7b497ffc85d54f406036d24ecc44",
+      "rawFile": "ncm.hot_topic.ncm.hot_topic.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.hot_topic.inv.001",
+      "sampleHash": "cd5cd22b8ae9ff06ae5092f3e5d4cb0d27c25c0b78197fad28a0b34ab727e31b",
+      "rawFile": "ncm.hot_topic.ncm.hot_topic.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.hot_topic.none.001",
+      "sampleHash": "9df10dee3fc9a94a588e4fd3738ac5b0fb14ff012e185392787822adafd7beb4",
+      "rawFile": "ncm.hot_topic.ncm.hot_topic.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.hot_topic.page.none.001",
+      "sampleHash": "85a6d39875b866392e972a04ad081533356c0cc9a2f16fb0faf882e49694d79b",
+      "rawFile": "ncm.hot_topic.ncm.hot_topic.page.none.001.raw.json"
+    }
+  ]
 }

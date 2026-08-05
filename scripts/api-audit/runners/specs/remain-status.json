@@ -1,0 +1,1252 @@
+{
+  "statuses": {
+    "ncm.user_binding": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_bindingcellphone": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_replacephone": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_update": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_cloud": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_cloud_detail": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_cloud_del": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_comment_history": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_medal": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_mutualfollow_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_social_status": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_social_status_edit": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_social_status_rcmd": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_social_status_support": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_subcount": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_level": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_audio": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_event": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_event_all": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_dj": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.user_playlist_create": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.likelist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.like": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_like": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_like_check": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_purchased": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_downlist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_monthdownlist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_singledownlist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_order_update": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_cloud_download": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_lyrics_mark": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_lyrics_mark_add": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_lyrics_mark_del": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_lyrics_mark_user_page": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_mylike": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_create": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_delete": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_update": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_name_update": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_desc_update": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_tags_update": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_order_update": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_privacy": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_cover_update": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_track_add": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_track_delete": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_update_playcount": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_subscribe": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_import_name_task_create": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.playlist_import_task_status": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.album_sub": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.album_sublist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.artist_sub": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.artist_sublist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.mv_sub": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.mv_sublist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.video_sub": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.comment_add": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.comment_delete": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.comment_like": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.comment_reply": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.comment_report": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.follow": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.event_del": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.event_forward": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.event_privacy": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.send_text": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.send_song": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.send_playlist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.send_album": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.share_resource": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.hug_comment": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.resource_like": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.recommend_songs_dislike": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.fm_trash": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.daily_signin": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.signin_progress": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.sign_happy_info": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.yunbei": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.yunbei_info": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.yunbei_sign": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.yunbei_expense": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.yunbei_receipt": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.yunbei_tasks": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.yunbei_tasks_todo": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.yunbei_task_finish": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.yunbei_rcmd_song": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.yunbei_rcmd_song_history": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.yunbei_today": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_info": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_info_v2": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_sign": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_sign_info": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_sign_detail": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_sign_history": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_growthpoint": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_growthpoint_details": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_growthpoint_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_growthpoint_getall": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_tasks": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_tasks_v1": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.vip_timemachine": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.musician_cloudbean": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.musician_cloudbean_obtain": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.musician_data_overview": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.musician_play_trend": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.musician_sign": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.musician_tasks": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.musician_tasks_new": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.musician_vip_tasks": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.listen_data_realtime_report": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.listen_data_report": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.listen_data_song_play_rank": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.listen_data_today_song": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.listen_data_total": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.listen_data_year_report": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.recent_listen_list": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.fanscenter_overview_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.fanscenter_trend_list": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.fanscenter_basicinfo_age_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.fanscenter_basicinfo_gender_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.fanscenter_basicinfo_province_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.device_list": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.device_kickoff": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.msg_comments": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.msg_forwards": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.msg_notices": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.msg_private": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.msg_private_history": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.msg_recentcontact": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.scrobble": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.scrobble_v1": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.weblog": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.relay_play_state_submit": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.middle_play_do_lottery": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.middle_play_lottery_remain_chance": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.summary_annual": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.avatar_upload": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.cloud_upload_token": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.cloud_upload_complete": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.cloud_import": {
+      "status": "blocked_by_safety",
+      "blocker": "支付/购买类：仅静态分析与负向探测，成功路径不执行（手册 §12.8）"
+    },
+    "ncm.cloud_match": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.cloud_lyric_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.voice_upload": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.voice_delete": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.voicelist_my_created": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.voicelist_trans": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.topic_sublist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.sati_resource_sub": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.sati_resource_sub_list": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.broadcast_sub": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.dj_sub": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.dj_sublist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.dj_difm_channel_subscribe": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.dj_difm_channel_unsubscribe": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.dj_difm_subscribe_channels_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rep_ugc_user_collect-vip": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rep_ugc_user_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rep_ugc_user_vip": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rep_ugc_user_sign": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rep_ugc_activity_collect": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rep_ugc_exam_start": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rep_ugc_exam_submit": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rep_ugc_exam_result_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rep_ugc_exam_info_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rep_ugc_exam_question_single_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rep_ugc_activity_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.thinktank_audit_resource_update": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.ugc_user_devote": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.history_recommend_songs": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.history_recommend_songs_detail": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.song_url_match": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.activate_init_profile": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.register_cellphone": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.register_checktoken_v2": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.register_checktoken_v3": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.login": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.login_cellphone": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.captcha_sent": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.captcha_sent_v1": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.captcha_safe_sent": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.captcha_verify": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.cellphone_existence_check": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.rebind": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.lbs_city_code": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.ugc_artist_search": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.ugc_artist_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.ugc_album_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.ugc_mv_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.ugc_song_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.ugc_detail": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.comment_video": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.digitalAlbum_purchased": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位"
+    },
+    "ncm.digitalAlbum_ordering": {
+      "status": "blocked_by_safety",
+      "blocker": "支付/购买类：仅静态分析与负向探测，成功路径不执行（手册 §12.8）"
+    },
+    "ncm.dj_paygift": {
+      "status": "blocked_by_safety",
+      "blocker": "支付/购买类：仅静态分析与负向探测，成功路径不执行（手册 §12.8）"
+    },
+    "ncm.chart_detail": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：chartId 无生产者（池为空）"
+    },
+    "ncm.chart_song_detail": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：chartId 无生产者（池为空）"
+    },
+    "ncm.comment_event": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：eventId 无生产者（池为空）"
+    },
+    "ncm.event": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：eventId 无生产者（池为空）"
+    },
+    "ncm.mlog_music_rcmd": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：mlogId 无生产者（池为空）"
+    },
+    "ncm.mlog_to_video": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：mlogId 无生产者（池为空）"
+    },
+    "ncm.mlog_url": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：mlogId 无生产者（池为空）"
+    },
+    "ncm.sati_resource_list": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：satiId 无生产者（池为空）"
+    },
+    "ncm.sati_resource_list_more": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：satiId 无生产者（池为空）"
+    },
+    "ncm.sati_tag_list": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：satiId 无生产者（池为空）"
+    },
+    "ncm.sati_timescene_resources_get": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：satiId 无生产者（池为空）"
+    },
+    "ncm.sheet_list": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：sheetId 无生产者（池为空）"
+    },
+    "ncm.sheet_preview": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：sheetId 无生产者（池为空）"
+    },
+    "ncm.style_album": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
+    },
+    "ncm.style_artist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
+    },
+    "ncm.style_detail": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
+    },
+    "ncm.style_playlist": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
+    },
+    "ncm.style_preference": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
+    },
+    "ncm.style_song": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：styleId 无生产者（池为空）"
+    },
+    "ncm.thinktank_audit_resource_detail": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：thinktankId 无生产者（池为空）"
+    },
+    "ncm.topic_detail": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：topicId 无生产者（池为空）"
+    },
+    "ncm.topic_detail_event_hot": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：topicId 无生产者（池为空）"
+    },
+    "ncm.voice_detail": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
+    },
+    "ncm.voice_lyric": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
+    },
+    "ncm.voicelist_detail": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
+    },
+    "ncm.voicelist_list": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
+    },
+    "ncm.voicelist_list_search": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
+    },
+    "ncm.voicelist_search": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "缺夹具：voiceId 无生产者（池为空）"
+    },
+    "ncm.comment_hotwall_list": {
+      "status": "not_exported",
+      "blocker": "interface.d.ts 声明存在但无模块文件"
+    },
+    "ncm.user_safe": {
+      "status": "not_exported",
+      "blocker": "interface.d.ts 声明存在但无模块文件"
+    },
+    "ncm.listen_together_status": {
+      "status": "not_exported",
+      "blocker": "interface.d.ts 声明存在但无模块文件（对应模块 listentogether_status）"
+    },
+    "ncm.verify_getQr": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "网易云盾验证码流程（需真实交互）"
+    },
+    "ncm.verify_qrcodestatus": {
+      "status": "blocked_by_prerequisite",
+      "blocker": "网易云盾验证码流程（需真实交互）"
+    },
+    "ncm.ad_get": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.ad_listening_rights": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.ad_listening_rights_gain": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.aidj_content_rcmd": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.api": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.audio_match": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.batch": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.broadcast_category_region_get": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.broadcast_channel_collect_list": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.broadcast_channel_currentinfo": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.broadcast_channel_list": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.calendar": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.cloud": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.comment_info_list": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.countries_code_list": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.creator_authinfo_get": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.decrypt": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.digitalAlbum_detail": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.digitalAlbum_sales": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_category_excludehot": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_category_recommend": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_detail": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_difm_all_style_channel": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_difm_playing_tracks_list": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_personalize_recommend": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_program": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_program_detail": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_program_toplist": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_program_toplist_hours": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_radio_hot": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_recommend": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_recommend_type": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_subscriber": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_today_perfered": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_toplist": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_toplist_hours": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_toplist_newcomer": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_toplist_pay": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.dj_toplist_popular": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.djRadio_top": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.eapi_decrypt": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.get_userids": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.homepage_dragon_ball": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.hot_topic": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.listentogether_accept": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.listentogether_end": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.listentogether_heatbeat": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.listentogether_play_command": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.listentogether_room_check": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.listentogether_room_create": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.listentogether_status": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.listentogether_sync_list_command": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.listentogether_sync_playlist_get": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.login_qr_check": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.login_qr_create": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.login_refresh": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.music_first_listen_info": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.nickname_check": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.personal_fm": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.personal_fm_mode": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.pl_count": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.playmode_intelligence_list": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.playmode_song_vector": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.program_recommend": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.radio_sport_get": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.recommend_resource": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.recommend_songs": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.record_recent_album": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.record_recent_dj": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.record_recent_playlist": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.record_recent_song": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.record_recent_video": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.record_recent_voice": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.search_match": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.search_suggest_pc": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.setting": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.starpick_comments_summary": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.threshold_detail_get": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.toplist_artist": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.toplist_detail": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.toplist_detail_v2": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    },
+    "ncm.user_detail_new": {
+      "status": "partial",
+      "blocker": "待运行结果确认"
+    }
+  },
+  "blockedCount": 229,
+  "testableCount": 82,
+  "groups": 82,
+  "cases": 328
+}

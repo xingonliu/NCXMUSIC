@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.listentogether_sync_playlist_get.none.002",
+    "apiAuditId": "ncm.listentogether_sync_playlist_get",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:11.391Z",
+    "endedAt": "2026-08-05T03:24:11.469Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 502,
+    "body": {
+      "code": 502,
+      "msg": "Request failed with status code 400"
+    },
+    "cookieCount": 0
+  }
+}

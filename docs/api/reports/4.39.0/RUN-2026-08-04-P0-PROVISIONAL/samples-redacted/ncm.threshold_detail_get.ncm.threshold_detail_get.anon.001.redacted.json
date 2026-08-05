@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "caseId": "ncm.threshold_detail_get.anon.001",
+    "apiAuditId": "ncm.threshold_detail_get",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:25:20.842Z",
+    "endedAt": "2026-08-05T03:25:20.961Z",
+    "durationMs": 119,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": [
+      {
+        "userId": 17788444306,
+        "userType": 1,
+        "status": false,
+        "level": 1,
+        "items": [
+          {
+            "itemId": 1,
+            "itemKey": "视频笔记影响力达到100",
+            "itemValue": "",
+            "status": false,
+            "extInfo": null,
+            "curCount": 0,
+            "totalCount": 100
+          },
+          {
+            "itemId": 2,
+            "itemKey": "原创内容数量≥3",
+            "itemValue": "笔记需要是公开可见/未删除状态哦~",
+            "status": false,
+            "extInfo": null,
+            "curCount": 0,
+            "totalCount": 3
+          },
+          {
+            "itemId": 3,
+            "itemKey": "粉丝数≥100",
+            "itemValue": "多多参与官方话题活动、积极与粉丝互动有利于涨粉哦~",
+            "status": false,
+            "extInfo": null,
+            "curCount": 0,
+            "totalCount": 100
+          }
+        ]
+      },
+      {
+        "userId": 17788444306,
+        "userType": 2,
+        "status": false,
+        "level": 1,
+        "items": [
+          {
+            "itemId": 0,
+            "itemKey": "歌单影响力达到100",
+            "itemValue": "当前歌单影响力：0（歌单影响力每周五刷新）",
+            "status": false,
+            "extInfo": {
+              "minInfluence": "100",
+              "curInfluence": "0"
+            },
+            "curCount": 0,
+            "totalCount": 100
+          },
+          {
+            "itemId": 1,
+            "itemKey": "至少创建10个完整歌单，且每个歌单都有真实的播放量和收藏量",
+            "itemValue": "当前已拥有0个完整歌单",
+            "status": false,
+            "extInfo": {
+              "total": "10",
+              "validCnt": "0"
+            },
+            "curCount": 0,
+            "totalCount": 10
+          },
+          {
+            "itemId": 2,
+            "itemKey": "某一个标签下至少创建5个完整歌单，且该标签下的歌单总收藏量满足诊断要求",
+            "itemValue": "当前没有满足要求的歌单",
+            "status": false,
+            "extInfo": {
+              "countOneTag": "5",
+              "topSubCountTag": [],
+              "plistBookThreshold": [
+                [
+                  "包含的标签",
+                  "需要达到的收藏数"
+                ],
+                [
+                  "流行、民谣、摇滚、华语、欧美",
+                  "1500"
+                ],
+                [
+                  "影视原声、ACG、小语种、日语",
+                  "1400"
+                ],
+                [
+                  "电子、说唱、轻音乐、R&B/Soul、乡村、英伦、爵士、韩语",
+                  "1300"
+                ],
+                [
+                  "金属、朋克、蓝调、古典、世界音乐、民族、拉丁、雷鬼、Bossa Nova、New Age、古风、另类/独立",
+                  "1200"
+                ]
+              ]
+            },
+            "curCount": 0,
+            "totalCount": 5
+          }
+        ]
+      },
+      {
+        "userId": 17788444306,
+        "userType": 3,
+        "status": false,
+        "level": 1,
+        "items": [
+          {
+            "itemId": 1,
+            "itemKey": "声音影响力≥100",
+            "itemValue": "当前声音影响力：0（声音影响力每周五刷新）",
+            "status": false,
+            "extInfo": {},
+            "curCount": 0,
+            "totalCount": 100
+          },
+          {
+            "itemId": 2,
+            "itemKey": "原创声音总数≥5",
+            "itemValue": "原创声音总数：0",
+            "status": false,
+            "extInfo": {},
+            "curCount": 0,
+            "totalCount": 5
+          },
+          {
+            "itemId": 3,
+            "itemKey": "近60天原创声音发布数≥1",
+            "itemValue": "近60天原创声音发布数：0（声音发布数隔日刷新）",
+            "status": false,
+            "extInfo": {},
+            "curCount": 0,
+            "totalCount": 1
+          },
+          {
+            "itemId": 4,
+            "itemKey": "原创声音累计播放数≥500",
+            "itemValue": "原创声音累计播放数：0（声音累计播放数隔日刷新）",
+            "status": false,
+            "extInfo": {},
+            "curCount": 0,
+            "totalCount": 500
+          }
+        ]
+      },
+      {
+        "userId": 17788444306,
+        "userType": 5,
+        "status": false,
+        "level": 1,
+        "items": [
+          {
+            "itemId": 1,
+            "itemKey": "图文笔记影响力达到100",
+            "itemValue": "",
+            "status": false,
+            "extInfo": null,
+            "curCount": 0,
+            "totalCount": 100
+          },
+          {
+            "itemId": 2,
+            "itemKey": "近30天原创图文笔记数≥3",
+            "itemValue": "笔记需要是公开可见/未删除状态哦~",
+            "status": false,
+            "extInfo": null,
+            "curCount": 0,
+            "totalCount": 3
+          },
+          {
+            "itemId": 3,
+            "itemKey": "粉丝数≥100",
+            "itemValue": "多多参与官方话题活动、积极与粉丝互动有利于涨粉哦~",
+            "status": false,
+            "extInfo": null,
+            "curCount": 0,
+            "totalCount": 100
+          }
+        ]
+      }
+    ],
+    "message": ""
+  },
+  "error": null
+}

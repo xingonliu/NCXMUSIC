@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.homepage_dragon_ball.none.002",
+    "apiAuditId": "ncm.homepage_dragon_ball",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:46.119Z",
+    "endedAt": "2026-08-05T03:23:46.197Z",
+    "durationMs": 78,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": [],
+    "message": ""
+  },
+  "error": null
+}

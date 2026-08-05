@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.nickname_check.none.001",
+    "apiAuditId": "ncm.nickname_check",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:23.938Z",
+    "endedAt": "2026-08-05T03:24:24.022Z",
+    "durationMs": 84,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "参数错误",
+    "code": 400,
+    "message": "参数错误"
+  },
+  "error": null
+}

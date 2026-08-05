@@ -41,7 +41,7 @@
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "blocked_by_safety",
+  "blocker": "支付/购买类：仅静态分析与负向探测，成功路径不执行（手册 §12.8）",
   "evidence": []
 }

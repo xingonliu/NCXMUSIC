@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_program_detail.id0.none.neg.001",
+    "apiAuditId": "ncm.dj_program_detail",
+    "auth": "AUTH_NONE",
+    "params": {
+      "0": "id",
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T03:23:00.951Z",
+    "endedAt": "2026-08-05T03:23:01.007Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 404,
+    "body": {
+      "code": 404
+    },
+    "cookieCount": 0
+  }
+}

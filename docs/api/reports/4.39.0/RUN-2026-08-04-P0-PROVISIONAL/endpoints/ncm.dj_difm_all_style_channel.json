@@ -31,15 +31,363 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.dj_difm_all_style_channel.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 153,
+        "error": null,
+        "sampleHash": "e7d13a6b3ca8b87f37a38b0b0e39cd020a605338dc71b123d9a7119c1667624e",
+        "rawFile": "ncm.dj_difm_all_style_channel.ncm.dj_difm_all_style_channel.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_difm_all_style_channel.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 106,
+        "error": null,
+        "sampleHash": "f5ef5714ce3c45e74e9c6c9c0d50cfd4edc856e2461e2fd804bb19700088ed4f",
+        "rawFile": "ncm.dj_difm_all_style_channel.ncm.dj_difm_all_style_channel.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_difm_all_style_channel.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 119,
+        "error": null,
+        "sampleHash": "8a51094e91932c62f8d3efd7a8c20fedfe67cd2976f7c7dedd154f01d84b7677",
+        "rawFile": "ncm.dj_difm_all_style_channel.ncm.dj_difm_all_style_channel.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_difm_all_style_channel.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 106,
+        "error": null,
+        "sampleHash": "b500ff753550a866e7ecb531e7f7b12d81ee3dfe8b84761af448192d8e57346f",
+        "rawFile": "ncm.dj_difm_all_style_channel.ncm.dj_difm_all_style_channel.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data[].source",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].styles[].channels[].blurCover",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "https://music.163.com/api/dj/img/blur/109951164812016852#has"
+    },
+    {
+      "jsonPath": "data[].styles[].channels[].chineseName",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data[].styles[].channels[].cover",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "https://p3.music.126.net/jxOG_002EpBSXhURz9PMNw==/1099511648"
+    },
+    {
+      "jsonPath": "data[].styles[].channels[].description",
+      "rawType": "union<null|string>",
+      "presence": 36,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "源于70年代艺术家们的一种实验性的电子合成音乐，是一种拥有开阔空间让创作者自由发挥的电子音乐，尤其关注声音材质、相对无规"
+    },
+    {
+      "jsonPath": "data[].styles[].channels[].id",
+      "rawType": "number",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "10505"
+    },
+    {
+      "jsonPath": "data[].styles[].channels[].name",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "Deep Progressive House"
+    },
+    {
+      "jsonPath": "data[].styles[].channels[].radar",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].styles[].channels[].radar[]",
+      "rawType": "number",
+      "presence": 72,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "3"
+    },
+    {
+      "jsonPath": "data[].styles[].channels[].source",
+      "rawType": "number",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].styles[].chineseName",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "最新电音"
+    },
+    {
+      "jsonPath": "data[].styles[].description",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data[].styles[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "1020"
+    },
+    {
+      "jsonPath": "data[].styles[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "New"
+    },
+    {
+      "jsonPath": "data[].styles[].radar",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data[].styles[].show",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "2"
+    },
+    {
+      "jsonPath": "data[].styles[].source",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_difm_all_style_channel.anon.001",
+      "lastSeenCase": "ncm.dj_difm_all_style_channel.none.002",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.dj_difm_all_style_channel.anon.001",
+      "sampleHash": "e7d13a6b3ca8b87f37a38b0b0e39cd020a605338dc71b123d9a7119c1667624e",
+      "rawFile": "ncm.dj_difm_all_style_channel.ncm.dj_difm_all_style_channel.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_difm_all_style_channel.inv.001",
+      "sampleHash": "f5ef5714ce3c45e74e9c6c9c0d50cfd4edc856e2461e2fd804bb19700088ed4f",
+      "rawFile": "ncm.dj_difm_all_style_channel.ncm.dj_difm_all_style_channel.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_difm_all_style_channel.none.001",
+      "sampleHash": "8a51094e91932c62f8d3efd7a8c20fedfe67cd2976f7c7dedd154f01d84b7677",
+      "rawFile": "ncm.dj_difm_all_style_channel.ncm.dj_difm_all_style_channel.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_difm_all_style_channel.none.002",
+      "sampleHash": "b500ff753550a866e7ecb531e7f7b12d81ee3dfe8b84761af448192d8e57346f",
+      "rawFile": "ncm.dj_difm_all_style_channel.ncm.dj_difm_all_style_channel.none.002.raw.json"
+    }
+  ]
 }

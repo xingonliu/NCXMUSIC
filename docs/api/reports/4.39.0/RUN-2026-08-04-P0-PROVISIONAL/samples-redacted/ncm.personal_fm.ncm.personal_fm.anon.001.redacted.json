@@ -1,0 +1,247 @@
+{
+  "meta": {
+    "caseId": "ncm.personal_fm.anon.001",
+    "apiAuditId": "ncm.personal_fm",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:27.684Z",
+    "endedAt": "2026-08-05T03:24:27.888Z",
+    "durationMs": 204,
+    "attempts": 1
+  },
+  "body": {
+    "popAdjust": false,
+    "data": [
+      {
+        "name": "Shower",
+        "id": 2673721054,
+        "position": 0,
+        "alias": [],
+        "status": 0,
+        "fee": 8,
+        "copyrightId": 0,
+        "disc": "01",
+        "no": 10,
+        "artists": [
+          {
+            "name": "Rapeter",
+            "id": 12563131,
+            "picId": 0,
+            "img1v1Id": 0,
+            "briefDesc": "",
+            "picUrl": "",
+            "img1v1Url": "http://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=7ebd2f7cc57d",
+            "albumSize": 0,
+            "alias": [],
+            "trans": "",
+            "musicSize": 0
+          }
+        ],
+        "album": {
+          "name": "IMGOOD别担心我",
+          "id": 263242113,
+          "type": "专辑",
+          "size": 12,
+          "picId": 109951170504642750,
+          "blurPicUrl": "http://p4.music.126.net/QpNRZsfMP5J4tOlziA8Pnw==/109951170504642760.jpg#hash=892a028fdb74",
+          "companyId": 0,
+          "pic": 109951170504642750,
+          "picUrl": "http://p4.music.126.net/QpNRZsfMP5J4tOlziA8Pnw==/109951170504642760.jpg#hash=892a028fdb74",
+          "publishTime": 1740153600000,
+          "description": "",
+          "tags": "",
+          "company": "",
+          "briefDesc": "",
+          "artist": {
+            "name": "",
+            "id": 0,
+            "picId": 0,
+            "img1v1Id": 0,
+            "briefDesc": "",
+            "picUrl": "",
+            "img1v1Url": "http://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=7ebd2f7cc57d",
+            "albumSize": 0,
+            "alias": [],
+            "trans": "",
+            "musicSize": 0
+          },
+          "songs": [],
+          "alias": [],
+          "status": 1,
+          "copyrightId": -1,
+          "commentThreadId": "R_AL_3_263242113",
+          "artists": [
+            {
+              "name": "Rapeter",
+              "id": 12563131,
+              "picId": 0,
+              "img1v1Id": 0,
+              "briefDesc": "",
+              "picUrl": "",
+              "img1v1Url": "http://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=7ebd2f7cc57d",
+              "albumSize": 0,
+              "alias": [],
+              "trans": "",
+              "musicSize": 0
+            }
+          ],
+          "subType": "录音室版",
+          "transName": null,
+          "picId_str": "109951170504642760"
+        },
+        "starred": false,
+        "popularity": 100,
+        "score": 100,
+        "starredNum": 0,
+        "duration": 211781,
+        "playedNum": 0,
+        "dayPlays": 0,
+        "hearTime": 0,
+        "ringtone": "",
+        "crbt": null,
+        "audition": null,
+        "copyFrom": "",
+        "commentThreadId": "R_SO_4_2673721054",
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "copyright": 0,
+        "transName": "小莴",
+        "sign": null,
+        "hMusic": {
+          "name": null,
+          "id": 12015055403,
+          "size": 8473965,
+          "extension": "mp3",
+          "sr": 48000,
+          "dfsId": 0,
+          "bitrate": 320000,
+          "playTime": 211781,
+          "volumeDelta": -45861
+        },
+        "mMusic": {
+          "name": null,
+          "id": 12015055407,
+          "size": 5084397,
+          "extension": "mp3",
+          "sr": 48000,
+          "dfsId": 0,
+          "bitrate": 192000,
+          "playTime": 211781,
+          "volumeDelta": -43293
+        },
+        "lMusic": {
+          "name": null,
+          "id": 12015055409,
+          "size": 3389613,
+          "extension": "mp3",
+          "sr": 48000,
+          "dfsId": 0,
+          "bitrate": 128000,
+          "playTime": 211781,
+          "volumeDelta": -41734
+        },
+        "bMusic": {
+          "name": null,
+          "id": 12015055409,
+          "size": 3389613,
+          "extension": "mp3",
+          "sr": 48000,
+          "dfsId": 0,
+          "bitrate": 128000,
+          "playTime": 211781,
+          "volumeDelta": -41734
+        },
+        "mp3Url": null,
+        "rtype": 0,
+        "rurl": null,
+        "mvid": 0,
+        "publishTime": 0,
+        "transNames": [
+          "小莴"
+        ],
+        "privilege": {
+          "id": 2673721054,
+          "fee": 8,
+          "payed": 0,
+          "realPayed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 0,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "pc": null,
+          "toast": false,
+          "flag": 1544196,
+          "paidBigBang": false,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "jymaster",
+          "playMaxBrLevel": "jymaster",
+          "downloadMaxBrLevel": "jymaster",
+          "plLevel": "exhigh",
+          "dlLevel": "none",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            },
+            {
+              "rate": 1999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        },
+        "alg": "fm_rand_ns-default"
+      }
+    ],
+    "tag": null,
+    "extTransMap": {},
+    "code": 200
+  },
+  "error": null
+}

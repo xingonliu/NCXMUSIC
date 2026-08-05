@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "caseId": "ncm.eapi_decrypt.inv.001",
+    "apiAuditId": "ncm.eapi_decrypt",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:42.150Z",
+    "endedAt": "2026-08-05T03:23:42.150Z",
+    "durationMs": 0,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "hex string is required"
+  },
+  "error": null
+}

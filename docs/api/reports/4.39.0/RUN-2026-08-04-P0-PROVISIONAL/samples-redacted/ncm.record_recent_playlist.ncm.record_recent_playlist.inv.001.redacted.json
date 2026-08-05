@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.record_recent_playlist.inv.001",
+    "apiAuditId": "ncm.record_recent_playlist",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:59.356Z",
+    "endedAt": "2026-08-05T03:24:59.407Z",
+    "durationMs": 51,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "total": 0,
+      "list": []
+    },
+    "message": ""
+  },
+  "error": null
+}

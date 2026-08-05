@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.homepage_dragon_ball.inv.001",
+    "apiAuditId": "ncm.homepage_dragon_ball",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:47.218Z",
+    "endedAt": "2026-08-05T03:23:47.299Z",
+    "durationMs": 81,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": [],
+    "message": ""
+  },
+  "error": null
+}

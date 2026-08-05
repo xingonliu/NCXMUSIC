@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "caseId": "ncm.setting.none.001",
+    "apiAuditId": "ncm.setting",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:25:13.385Z",
+    "endedAt": "2026-08-05T03:25:13.435Z",
+    "durationMs": 50,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "caseId": "ncm.creator_authinfo_get.anon.001",
+    "apiAuditId": "ncm.creator_authinfo_get",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:22:00.683Z",
+    "endedAt": "2026-08-05T03:22:00.791Z",
+    "durationMs": 108,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "msg": "查询成功"
+  },
+  "error": null
+}

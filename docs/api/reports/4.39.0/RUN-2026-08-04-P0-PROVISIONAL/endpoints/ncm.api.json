@@ -36,15 +36,101 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.api.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'indexOf')"
+        },
+        "sampleHash": "e0d6a9279ec3fdb4fac9e30d31b81da812c49bd0d30897ba0a29bb7bee95eadc",
+        "rawFile": "ncm.api.ncm.api.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.api.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'indexOf')"
+        },
+        "sampleHash": "a98da5462dbf7a6cd9cad82e2783b32f5db8c767244cf6a2f9aeae5c0a029019",
+        "rawFile": "ncm.api.ncm.api.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.api.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'indexOf')"
+        },
+        "sampleHash": "cd3dc35bf45fda6fdbd965d57492b60c2da2a79459c1c761a872f3408200c1e2",
+        "rawFile": "ncm.api.ncm.api.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.api.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'indexOf')"
+        },
+        "sampleHash": "3b33c6f72d23d98e6eb4b3f93bccaaa2eb4e43a34222a0fd7701d7d02439a392",
+        "rawFile": "ncm.api.ncm.api.none.002.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "failed_stable",
+  "blocker": "模块级异常（非网络）：Cannot read properties of undefined (reading 'indexOf')",
+  "evidence": [
+    {
+      "caseId": "ncm.api.anon.001",
+      "sampleHash": "e0d6a9279ec3fdb4fac9e30d31b81da812c49bd0d30897ba0a29bb7bee95eadc",
+      "rawFile": "ncm.api.ncm.api.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.api.inv.001",
+      "sampleHash": "a98da5462dbf7a6cd9cad82e2783b32f5db8c767244cf6a2f9aeae5c0a029019",
+      "rawFile": "ncm.api.ncm.api.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.api.none.001",
+      "sampleHash": "cd3dc35bf45fda6fdbd965d57492b60c2da2a79459c1c761a872f3408200c1e2",
+      "rawFile": "ncm.api.ncm.api.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.api.none.002",
+      "sampleHash": "3b33c6f72d23d98e6eb4b3f93bccaaa2eb4e43a34222a0fd7701d7d02439a392",
+      "rawFile": "ncm.api.ncm.api.none.002.raw.json"
+    }
+  ]
 }

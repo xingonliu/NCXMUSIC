@@ -89,3 +89,151 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 17. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.starpick_comments_summary.anon.001 | AUTH_ANON | - | 200 | 197 |  |
+| ncm.starpick_comments_summary.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 134 |  |
+| ncm.starpick_comments_summary.none.001 | AUTH_NONE | - | 200 | 121 |  |
+| ncm.starpick_comments_summary.none.002 | AUTH_NONE | - | 200 | 233 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `200` |
+| `data.blockCodeOrderList` | null | 4 | 4 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].action` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `orpheus://playlistCollection?referLog=HO` |
+| `data.blocks[].actionType` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `orpheus` |
+| `data.blocks[].blockCode` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `HOMEPAGE_BANNER` |
+| `data.blocks[].blockDemote` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].blockStyle` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `data.blocks[].canClose` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].canFeedback` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].creatives[].action` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `orpheus://nm/playlist/flow?source=HOMEPA` |
+| `data.blocks[].creatives[].actionType` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `orpheus` |
+| `data.blocks[].creatives[].alg` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `bysong_profile_ol` |
+| `data.blocks[].creatives[].creativeId` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `8254864957` |
+| `data.blocks[].creatives[].creativeType` | string | 16 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `DRAGON_BALL` |
+| `data.blocks[].creatives[].logInfo` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `{"deepScore":"0.0","cartScore":"0.0","sr` |
+| `data.blocks[].creatives[].position` | number | 16 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `data.blocks[].creatives[].resources[].action` | string | 32 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `orpheus://songrcmd` |
+| `data.blocks[].creatives[].resources[].actionType` | string | 32 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `orpheus` |
+| `data.blocks[].creatives[].resources[].alg` | union<null|string> | 32 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `bysong_profile_ol` |
+| `data.blocks[].creatives[].resources[].ctrp` | null | 32 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].creatives[].resources[].likedCount` | null | 32 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].creatives[].resources[].logInfo` | union<null|string> | 32 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `{"deepScore":"0.0","cartScore":"0.0","sr` |
+| `data.blocks[].creatives[].resources[].name` | null | 32 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].creatives[].resources[].playParams` | null | 32 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].creatives[].resources[].position` | null | 32 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].creatives[].resources[].replyCount` | null | 32 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].creatives[].resources[].resourceContentList` | null | 32 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].creatives[].resources[].resourceExtInfo` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].creatives[].resources[].resourceExtInfo.hasListened` | boolean | 20 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].creatives[].resources[].resourceExtInfo.highQuality` | boolean | 20 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].creatives[].resources[].resourceExtInfo.playCount` | number | 20 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `96907` |
+| `data.blocks[].creatives[].resources[].resourceExtInfo.specialType` | number | 20 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `data.blocks[].creatives[].resources[].resourceId` | string | 32 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `-1` |
+| `data.blocks[].creatives[].resources[].resourceState` | null | 32 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].creatives[].resources[].resourceType` | string | 32 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `dragon_ball` |
+| `data.blocks[].creatives[].resources[].resourceUrl` | null | 32 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].creatives[].resources[].uiElement.image.action` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `data.blocks[].creatives[].resources[].uiElement.image.imageUrl` | string | 32 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `http://p1.music.126.net/4DpSgAVpJny4Ewf-` |
+| `data.blocks[].creatives[].resources[].uiElement.image.imageUrl2` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p6.music.126.net/obj/wonDlsKUwrL` |
+| `data.blocks[].creatives[].resources[].uiElement.image.purePicture` | boolean | 32 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].creatives[].resources[].uiElement.image.title` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `data.blocks[].creatives[].resources[].uiElement.labelTexts` | array<unknown> | 4 | 0 | 4 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `undefined` |
+| `data.blocks[].creatives[].resources[].uiElement.labelTexts[]` | string | 44 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `华语` |
+| `data.blocks[].creatives[].resources[].uiElement.mainTitle.canShowTitleLogo` | boolean | 32 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].creatives[].resources[].uiElement.mainTitle.title` | string | 32 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `每日推荐` |
+| `data.blocks[].creatives[].resources[].uiElement.rcmdShowType` | string | 32 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `DEFAULT` |
+| `data.blocks[].creatives[].resources[].uiElement.subTitle.canShowTitleLogo` | boolean | 20 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].creatives[].resources[].uiElement.subTitle.title` | string | 20 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `data.blocks[].creatives[].resources[].valid` | boolean | 32 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `true` |
+| `data.blocks[].creatives[].uiElement.image.imageUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `http://p2.music.126.net/Ov6JJ85Z64nQpHzs` |
+| `data.blocks[].creatives[].uiElement.image.purePicture` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].creatives[].uiElement.labelTexts` | array<unknown> | 4 | 0 | 4 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `undefined` |
+| `data.blocks[].creatives[].uiElement.labelTexts[]` | string | 24 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `华语` |
+| `data.blocks[].creatives[].uiElement.mainTitle.canShowTitleLogo` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].creatives[].uiElement.mainTitle.title` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `[烟火里的尘埃]如果你也爱听华晨宇` |
+| `data.blocks[].creatives[].uiElement.rcmdShowType` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `DEFAULT` |
+| `data.blocks[].creatives[].uiElement.subTitle.canShowTitleLogo` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].creatives[].uiElement.subTitle.title` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `data.blocks[].crossPlatformConfig.containerType` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `rn` |
+| `data.blocks[].crossPlatformConfig.rnContent.component` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `rn-homepage-modules_dragonBall` |
+| `data.blocks[].crossPlatformConfig.rnContent.engineId` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `data.blocks[].crossPlatformConfig.rnContent.estimatedHeight` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `98` |
+| `data.blocks[].crossPlatformConfig.rnContent.estimatedRatio` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `data.blocks[].crossPlatformConfig.rnContent.moduleName` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `rn-homepage-modules` |
+| `data.blocks[].dislikeShowType` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `data.blocks[].extInfo.banners[].adDispatchJson` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].adid` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].adLocation` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].adSource` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].adurlV2` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].alg` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `banner-feature-1717750651205666` |
+| `data.blocks[].extInfo.banners[].bannerBizType` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `force_banner` |
+| `data.blocks[].extInfo.banners[].bannerId` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1717750651205666` |
+| `data.blocks[].extInfo.banners[].dynamicVideoData` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].encodeId` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `data.blocks[].extInfo.banners[].event` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].exclusive` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].extInfo.banners[].extMonitor` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].extMonitorInfo` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].logContext` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].mainTitle` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].monitorBlackList` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].monitorClick` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].monitorClickList` | array<unknown> | 12 | 0 | 12 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `undefined` |
+| `data.blocks[].extInfo.banners[].monitorImpress` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].monitorImpressList` | array<unknown> | 12 | 0 | 12 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `undefined` |
+| `data.blocks[].extInfo.banners[].monitorType` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].pic` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `http://p1.music.126.net/e8wtQuscq74yweCG` |
+| `data.blocks[].extInfo.banners[].pid` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].program` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].requestId` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `data.blocks[].extInfo.banners[].s_ctrp` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `syspf_resourceType_3000-syspf_resourceId` |
+| `data.blocks[].extInfo.banners[].scm` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1.music-homepage-home.homepage_banner_fo` |
+| `data.blocks[].extInfo.banners[].showAdTag` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `true` |
+| `data.blocks[].extInfo.banners[].showContext` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].song` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].extInfo.banners[].targetId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `data.blocks[].extInfo.banners[].targetType` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `3000` |
+| `data.blocks[].extInfo.banners[].titleColor` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `blue` |
+| `data.blocks[].extInfo.banners[].typeTitle` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `独家策划` |
+| `data.blocks[].extInfo.banners[].url` | union<string|null> | 12 | 8 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://y.music.163.com/g/yida/470cb610d` |
+| `data.blocks[].extInfo.banners[].video` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].showType` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `BANNER` |
+| `data.blocks[].sort` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `data.blocks[].uiElement.button.action` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `orpheus://playlistCollection?referLog=HO` |
+| `data.blocks[].uiElement.button.actionType` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `orpheus` |
+| `data.blocks[].uiElement.button.biData` | null | 4 | 4 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].uiElement.button.iconUrl` | null | 4 | 4 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.blocks[].uiElement.button.text` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `更多` |
+| `data.blocks[].uiElement.rcmdShowType` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `DEFAULT` |
+| `data.blocks[].uiElement.subTitle.canShowTitleLogo` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.blocks[].uiElement.subTitle.title` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `推荐歌单` |
+| `data.blockUUIDs` | null | 4 | 4 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.cursor` | null | 4 | 4 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.demote` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.exposedResource` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `{"song":["1492864083","3327048489","2755` |
+| `data.guideToast.hasGuideToast` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.guideToast.toastList` | array<unknown> | 4 | 0 | 4 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `undefined` |
+| `data.hasMore` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.internalTest` | null | 4 | 4 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.pageConfig.abtest[]` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `homepage-v7.3` |
+| `data.pageConfig.fullscreen` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `false` |
+| `data.pageConfig.homepageMode` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `PLAYLIST_MODE` |
+| `data.pageConfig.nodataToast` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `到底啦~` |
+| `data.pageConfig.orderInfo` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `PLAYLIST_MODE_2f354e31-a8f4-4fa5-a7b4-bd` |
+| `data.pageConfig.refreshInterval` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `600000` |
+| `data.pageConfig.refreshToast` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `data.pageConfig.showModeEntry` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `true` |
+| `data.pageConfig.songLabelMarkLimit` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1` |
+| `data.pageConfig.songLabelMarkPriority[]` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `vip` |
+| `data.pageConfig.title` | null | 4 | 4 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data.titles` | array<unknown> | 4 | 0 | 4 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `undefined` |
+| `message` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |

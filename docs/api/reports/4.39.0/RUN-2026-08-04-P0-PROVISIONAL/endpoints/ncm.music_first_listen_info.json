@@ -29,15 +29,113 @@
   },
   "matrix": {
     "planned": 5,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.music_first_listen_info.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "bc16a5e3233b35ad5edf53dccbb281fc28573fa352a67bb7dfbff434ca17a957",
+        "rawFile": "ncm.music_first_listen_info.ncm.music_first_listen_info.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.music_first_listen_info.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "8f0c5e2840bbb2b3106efe6ff5639f74a92d08ed54ed11061e60c68430986bcf",
+        "rawFile": "ncm.music_first_listen_info.ncm.music_first_listen_info.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.music_first_listen_info.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "a340b55da6e7b9acd4afffeac646450e974b80dd5b19066dc306d1954c29d90e",
+        "rawFile": "ncm.music_first_listen_info.ncm.music_first_listen_info.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.music_first_listen_info.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "87faa879a8183a4b2afc94c12b46437035723e95c55ad1247fef30510b9d009e",
+        "rawFile": "ncm.music_first_listen_info.ncm.music_first_listen_info.none.002.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.music_first_listen_info.anon.001",
+      "sampleHash": "bc16a5e3233b35ad5edf53dccbb281fc28573fa352a67bb7dfbff434ca17a957",
+      "rawFile": "ncm.music_first_listen_info.ncm.music_first_listen_info.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.music_first_listen_info.inv.001",
+      "sampleHash": "8f0c5e2840bbb2b3106efe6ff5639f74a92d08ed54ed11061e60c68430986bcf",
+      "rawFile": "ncm.music_first_listen_info.ncm.music_first_listen_info.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.music_first_listen_info.none.001",
+      "sampleHash": "a340b55da6e7b9acd4afffeac646450e974b80dd5b19066dc306d1954c29d90e",
+      "rawFile": "ncm.music_first_listen_info.ncm.music_first_listen_info.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.music_first_listen_info.none.002",
+      "sampleHash": "87faa879a8183a4b2afc94c12b46437035723e95c55ad1247fef30510b9d009e",
+      "rawFile": "ncm.music_first_listen_info.ncm.music_first_listen_info.none.002.raw.json"
+    }
+  ]
 }

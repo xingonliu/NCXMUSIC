@@ -33,15 +33,138 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.record_recent_voice.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 59,
+        "error": null,
+        "sampleHash": "7f50738b02fc33fc9a604f9d3ac34e49dc1dd930ade72cdf04e598143a767f54",
+        "rawFile": "ncm.record_recent_voice.ncm.record_recent_voice.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.record_recent_voice.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 62,
+        "error": null,
+        "sampleHash": "f896bb9a777e52fca216cfd378c987bc088246bb3ebdd9f2b4e87a8b0ea3f100",
+        "rawFile": "ncm.record_recent_voice.ncm.record_recent_voice.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.record_recent_voice.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 53,
+        "error": null,
+        "sampleHash": "4e757c21521f53983babdfe6b8f05bdae6d49db414334e7d6be205074d1dfdad",
+        "rawFile": "ncm.record_recent_voice.ncm.record_recent_voice.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.record_recent_voice.page.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 56,
+        "error": null,
+        "sampleHash": "aa41d7aadb5ae60e19eb0a748d69aa63439cd9efaffe4c90be9245f99f536b4b",
+        "rawFile": "ncm.record_recent_voice.ncm.record_recent_voice.page.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.record_recent_voice.anon.001",
+      "lastSeenCase": "ncm.record_recent_voice.page.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.list",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.record_recent_voice.anon.001",
+      "lastSeenCase": "ncm.record_recent_voice.page.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.total",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.record_recent_voice.anon.001",
+      "lastSeenCase": "ncm.record_recent_voice.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.record_recent_voice.anon.001",
+      "lastSeenCase": "ncm.record_recent_voice.page.none.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.record_recent_voice.anon.001",
+      "sampleHash": "7f50738b02fc33fc9a604f9d3ac34e49dc1dd930ade72cdf04e598143a767f54",
+      "rawFile": "ncm.record_recent_voice.ncm.record_recent_voice.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.record_recent_voice.inv.001",
+      "sampleHash": "f896bb9a777e52fca216cfd378c987bc088246bb3ebdd9f2b4e87a8b0ea3f100",
+      "rawFile": "ncm.record_recent_voice.ncm.record_recent_voice.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.record_recent_voice.none.001",
+      "sampleHash": "4e757c21521f53983babdfe6b8f05bdae6d49db414334e7d6be205074d1dfdad",
+      "rawFile": "ncm.record_recent_voice.ncm.record_recent_voice.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.record_recent_voice.page.none.001",
+      "sampleHash": "aa41d7aadb5ae60e19eb0a748d69aa63439cd9efaffe4c90be9245f99f536b4b",
+      "rawFile": "ncm.record_recent_voice.ncm.record_recent_voice.page.none.001.raw.json"
+    }
+  ]
 }

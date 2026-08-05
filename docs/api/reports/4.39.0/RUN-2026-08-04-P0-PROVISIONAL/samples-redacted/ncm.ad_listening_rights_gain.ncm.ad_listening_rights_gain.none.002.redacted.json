@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "caseId": "ncm.ad_listening_rights_gain.none.002",
+    "apiAuditId": "ncm.ad_listening_rights_gain",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:23.815Z",
+    "endedAt": "2026-08-05T03:21:23.960Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 400,
+    "body": {
+      "code": 2001,
+      "message": "暂时无法参加，请确保账号已登录~，状态码2001",
+      "data": {
+        "gainFlag": false,
+        "showContent": "暂时无法参加，请确保账号已登录~",
+        "showElement": null,
+        "rightsUpperLimit": true,
+        "continueContent": null,
+        "canPlayContinuously": false,
+        "gainRightsDuration": null,
+        "rightsDurationUnit": null,
+        "vipButtonInfo": null,
+        "adButtonInfo": null,
+        "extraButtonInfo": null,
+        "rightsEndDialogType": null,
+        "rightsEndDialogBgUrl": null,
+        "rightsEndDialogTitle": null,
+        "rightsEndDialogSubTitle": null,
+        "adWatchRecords": null,
+        "adWatchStatus": false,
+        "needLink": true,
+        "linkPosition": null,
+        "activityEndDate": null,
+        "effectType": null
+      }
+    },
+    "cookieCount": 0
+  }
+}

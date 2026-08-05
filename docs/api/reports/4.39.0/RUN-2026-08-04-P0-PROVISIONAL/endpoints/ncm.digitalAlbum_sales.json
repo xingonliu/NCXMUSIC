@@ -27,15 +27,123 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.digitalAlbum_sales.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 61,
+        "error": null,
+        "sampleHash": "846dd0898aeaebc4de54e7d3c37001a8f190b855b768109ac586d2501054f29c",
+        "rawFile": "ncm.digitalAlbum_sales.ncm.digitalAlbum_sales.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.digitalAlbum_sales.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 62,
+        "error": null,
+        "sampleHash": "edbd4d449425b87e5a2900e39fb9d62db1fa9ba79b76529bdc211796919c02ae",
+        "rawFile": "ncm.digitalAlbum_sales.ncm.digitalAlbum_sales.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.digitalAlbum_sales.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 51,
+        "error": null,
+        "sampleHash": "7df87cf710c67a291f64f9c989c4178b4099cecb2172cae6bcecd3c1b641150d",
+        "rawFile": "ncm.digitalAlbum_sales.ncm.digitalAlbum_sales.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.digitalAlbum_sales.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 55,
+        "error": null,
+        "sampleHash": "5b0c7ead60274f70dabe395de092f004911e2b6cb8f7b6b833c9de57d8864900",
+        "rawFile": "ncm.digitalAlbum_sales.ncm.digitalAlbum_sales.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.digitalAlbum_sales.anon.001",
+      "lastSeenCase": "ncm.digitalAlbum_sales.none.002",
+      "example": "400"
+    },
+    {
+      "jsonPath": "massage",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.digitalAlbum_sales.anon.001",
+      "lastSeenCase": "ncm.digitalAlbum_sales.none.002",
+      "example": "参数错误"
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.digitalAlbum_sales.anon.001",
+      "lastSeenCase": "ncm.digitalAlbum_sales.none.002",
+      "example": "参数错误"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.digitalAlbum_sales.anon.001",
+      "sampleHash": "846dd0898aeaebc4de54e7d3c37001a8f190b855b768109ac586d2501054f29c",
+      "rawFile": "ncm.digitalAlbum_sales.ncm.digitalAlbum_sales.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.digitalAlbum_sales.inv.001",
+      "sampleHash": "edbd4d449425b87e5a2900e39fb9d62db1fa9ba79b76529bdc211796919c02ae",
+      "rawFile": "ncm.digitalAlbum_sales.ncm.digitalAlbum_sales.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.digitalAlbum_sales.none.001",
+      "sampleHash": "7df87cf710c67a291f64f9c989c4178b4099cecb2172cae6bcecd3c1b641150d",
+      "rawFile": "ncm.digitalAlbum_sales.ncm.digitalAlbum_sales.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.digitalAlbum_sales.none.002",
+      "sampleHash": "5b0c7ead60274f70dabe395de092f004911e2b6cb8f7b6b833c9de57d8864900",
+      "rawFile": "ncm.digitalAlbum_sales.ncm.digitalAlbum_sales.none.002.raw.json"
+    }
+  ]
 }

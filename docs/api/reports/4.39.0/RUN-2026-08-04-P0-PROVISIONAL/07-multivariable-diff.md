@@ -55,3 +55,12 @@ Phase 0 无运行样本，无多变量差异可比。自 Phase 1 起每完成一
 | MV | 可播放性 | mv_url 返回 1080p mp4（r=1080，约 79MB，audio/video 200 HEAD，Range 支持），fee=0 | mv_url.none/anon.001 + probes |
 | video_url | 夹具缺口 | 无 videoId 夹具（视频域发现未完成），blocked_by_prerequisite | 03-fixture-pool.json |
 | enhanced 配置 | 网络分层 | unblock=true 未执行（B-003 enhanced 缺失）；canonical 样本单独统计 | 00-RUN-MANIFEST §10 |
+
+## 6. Phase 6 多变量差异（RUN-2026-08-04-P0-PROVISIONAL）
+
+| 接口 | 维度 | 结论 | 证据 |
+| --- | --- | --- | --- |
+| 登录门槛 | 剩余域 | personal_fm/personal_fm_mode/recommend_songs/recommend_resource/login_refresh/digitalAlbum_detail 等私有化接口在未登录层返回 301/需登录错误；AUTH_ANON 表现各异（运行时样本为准） | raw 样本 301 各 case |
+| 风控验证挑战 | 剩余域 | -462（verifyId 1007602）在部分剩余接口的 AUTH_INVALID 层触发 | raw 样本 *inv.* ERR-462 |
+| 模块级异常 | 剩余域 | 无 HTTP 状态的本地异常按 failed_stable 自动判定（终态由运行器证据推导） | remain-status.json 运行后细化 |
+| 本地工具 | 剩余域 | decrypt/eapi_decrypt/audio_match 为本地加密/指纹工具（无 request 调用），本域补测 | raw 样本 local.* |

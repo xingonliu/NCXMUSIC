@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.get_userids.inv.001",
+    "apiAuditId": "ncm.get_userids",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:44.846Z",
+    "endedAt": "2026-08-05T03:23:44.904Z",
+    "durationMs": 58,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "参数错误",
+    "code": 400,
+    "message": "参数错误"
+  },
+  "error": null
+}

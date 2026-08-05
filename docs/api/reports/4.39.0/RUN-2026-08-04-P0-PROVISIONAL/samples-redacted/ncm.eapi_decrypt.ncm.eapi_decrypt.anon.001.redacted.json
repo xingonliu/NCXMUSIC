@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "caseId": "ncm.eapi_decrypt.anon.001",
+    "apiAuditId": "ncm.eapi_decrypt",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:41.744Z",
+    "endedAt": "2026-08-05T03:23:41.745Z",
+    "durationMs": 1,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "hex string is required"
+  },
+  "error": null
+}

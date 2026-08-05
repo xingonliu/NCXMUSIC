@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.record_recent_album.anon.001",
+    "apiAuditId": "ncm.record_recent_album",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:53.422Z",
+    "endedAt": "2026-08-05T03:24:53.677Z",
+    "durationMs": 255,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "total": 0,
+      "list": []
+    },
+    "message": ""
+  },
+  "error": null
+}

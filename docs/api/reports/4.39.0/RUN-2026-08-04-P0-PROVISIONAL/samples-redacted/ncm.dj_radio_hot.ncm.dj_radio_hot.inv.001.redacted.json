@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_radio_hot.inv.001",
+    "apiAuditId": "ncm.dj_radio_hot",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:12.429Z",
+    "endedAt": "2026-08-05T03:23:12.487Z",
+    "durationMs": 58,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "msg": "参数错误",
+    "data": null
+  },
+  "error": null
+}

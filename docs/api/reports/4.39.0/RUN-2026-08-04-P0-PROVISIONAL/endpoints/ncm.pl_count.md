@@ -89,3 +89,43 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 17. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.pl_count.anon.001 | AUTH_ANON | - | 200 | 79 |  |
+| ncm.pl_count.inv.001 | AUTH_INVALID_EXPIRED | - | - | 59 |  |
+| ncm.pl_count.none.001 | AUTH_NONE | - | - | 64 |  |
+| ncm.pl_count.none.002 | AUTH_NONE | - | - | 62 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `battle.endTime` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `battle.nonStartIcon` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `battle.showQuizIcon` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `battle.startIcon` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `battle.startTime` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `comment` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `createDJRadioCount` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `event` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `follow` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `forward` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `friend.celebrityCount` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `friend.count` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `friend.snsCount` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `invitationVersion` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `lastPrivateMsg` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `msg` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `newProgramCount` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `newTheme` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `notice` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `pushMsg` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `sceneComments.musician_comments` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `sceneComments.social_comments` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `totalComment` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `ydAntiUrlConfigVersion` | number | 1 | 0 | 0 | AUTH_ANON | `1` |

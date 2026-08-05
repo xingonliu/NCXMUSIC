@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "caseId": "ncm.digitalAlbum_detail.anon.001",
+    "apiAuditId": "ncm.digitalAlbum_detail",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:22:05.940Z",
+    "endedAt": "2026-08-05T03:22:05.997Z",
+    "durationMs": 57,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "参数错误",
+    "code": 400
+  },
+  "error": null
+}

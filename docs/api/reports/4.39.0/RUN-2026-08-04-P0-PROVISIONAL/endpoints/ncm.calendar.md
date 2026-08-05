@@ -90,3 +90,24 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 17. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.calendar.anon.001 | AUTH_ANON | - | 200 | 108 |  |
+| ncm.calendar.inv.001 | AUTH_INVALID_EXPIRED | err | 301 | - | code 301 |
+| ncm.calendar.none.001 | AUTH_NONE | err | 301 | - | code 301 |
+| ncm.calendar.none.002 | AUTH_NONE | err | 301 | - | code 301 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `data.abtest` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.calendarConfig.button.targetUrl` | string | 1 | 0 | 0 | AUTH_ANON | `orpheus://miniProgram?appId=5fe1d3b78581` |
+| `data.calendarConfig.button.text` | string | 1 | 0 | 0 | AUTH_ANON | `每日运势` |
+| `data.calendarEvents` | array<unknown> | 1 | 0 | 1 | AUTH_ANON | `undefined` |
+| `message` | string | 1 | 0 | 0 | AUTH_ANON | `` |

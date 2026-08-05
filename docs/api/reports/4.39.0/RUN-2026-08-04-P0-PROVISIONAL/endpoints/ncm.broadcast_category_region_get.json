@@ -23,15 +23,168 @@
   },
   "matrix": {
     "planned": 5,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.broadcast_category_region_get.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 98,
+        "error": null,
+        "sampleHash": "e7e3e435607e6fe573d4a4a6f31e1aaed08b43345c04a2093ab9bbc56ba3c34a",
+        "rawFile": "ncm.broadcast_category_region_get.ncm.broadcast_category_region_get.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.broadcast_category_region_get.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 77,
+        "error": null,
+        "sampleHash": "4b4c216e1330a2b375516ada00257b77ca9e0c0859d6e90d5b7ccc6ce83e58c7",
+        "rawFile": "ncm.broadcast_category_region_get.ncm.broadcast_category_region_get.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.broadcast_category_region_get.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 83,
+        "error": null,
+        "sampleHash": "f4e085224032b98f9a9b2da8760f7efb3609d82934378f4c62cd6da36afcb0dc",
+        "rawFile": "ncm.broadcast_category_region_get.ncm.broadcast_category_region_get.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.broadcast_category_region_get.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 86,
+        "error": null,
+        "sampleHash": "34955dcba60dc3da5c2675e170f388b915b167c2ecf2774c86333aa8115ec678",
+        "rawFile": "ncm.broadcast_category_region_get.ncm.broadcast_category_region_get.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.broadcast_category_region_get.anon.001",
+      "lastSeenCase": "ncm.broadcast_category_region_get.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.categoryList[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.broadcast_category_region_get.anon.001",
+      "lastSeenCase": "ncm.broadcast_category_region_get.none.002",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.categoryList[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.broadcast_category_region_get.anon.001",
+      "lastSeenCase": "ncm.broadcast_category_region_get.none.002",
+      "example": "音乐台"
+    },
+    {
+      "jsonPath": "data.regionList[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.broadcast_category_region_get.anon.001",
+      "lastSeenCase": "ncm.broadcast_category_region_get.none.002",
+      "example": "217"
+    },
+    {
+      "jsonPath": "data.regionList[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.broadcast_category_region_get.anon.001",
+      "lastSeenCase": "ncm.broadcast_category_region_get.none.002",
+      "example": "广东"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.broadcast_category_region_get.anon.001",
+      "lastSeenCase": "ncm.broadcast_category_region_get.none.002",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.broadcast_category_region_get.anon.001",
+      "sampleHash": "e7e3e435607e6fe573d4a4a6f31e1aaed08b43345c04a2093ab9bbc56ba3c34a",
+      "rawFile": "ncm.broadcast_category_region_get.ncm.broadcast_category_region_get.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.broadcast_category_region_get.inv.001",
+      "sampleHash": "4b4c216e1330a2b375516ada00257b77ca9e0c0859d6e90d5b7ccc6ce83e58c7",
+      "rawFile": "ncm.broadcast_category_region_get.ncm.broadcast_category_region_get.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.broadcast_category_region_get.none.001",
+      "sampleHash": "f4e085224032b98f9a9b2da8760f7efb3609d82934378f4c62cd6da36afcb0dc",
+      "rawFile": "ncm.broadcast_category_region_get.ncm.broadcast_category_region_get.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.broadcast_category_region_get.none.002",
+      "sampleHash": "34955dcba60dc3da5c2675e170f388b915b167c2ecf2774c86333aa8115ec678",
+      "rawFile": "ncm.broadcast_category_region_get.ncm.broadcast_category_region_get.none.002.raw.json"
+    }
+  ]
 }

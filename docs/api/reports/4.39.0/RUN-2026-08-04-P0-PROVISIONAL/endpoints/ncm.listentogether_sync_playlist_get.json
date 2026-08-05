@@ -27,15 +27,113 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.listentogether_sync_playlist_get.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "11673de60b903453456cc07739e51e0db0889901cccf2209b97214bd5aede6a2",
+        "rawFile": "ncm.listentogether_sync_playlist_get.ncm.listentogether_sync_playlist_get.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_sync_playlist_get.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "ee553d4f443178c209232df6f83a1c3fb445228e6a38f9d2339d6b400af133c8",
+        "rawFile": "ncm.listentogether_sync_playlist_get.ncm.listentogether_sync_playlist_get.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_sync_playlist_get.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "065df98c3bb720d89e58cf55ebb134b7f83784d5d379296b215594bfbabea542",
+        "rawFile": "ncm.listentogether_sync_playlist_get.ncm.listentogether_sync_playlist_get.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_sync_playlist_get.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "2b0106fed45a58805554572c71071800e73cb94dba6edfebdd42f4291d4c4c84",
+        "rawFile": "ncm.listentogether_sync_playlist_get.ncm.listentogether_sync_playlist_get.none.002.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.listentogether_sync_playlist_get.anon.001",
+      "sampleHash": "11673de60b903453456cc07739e51e0db0889901cccf2209b97214bd5aede6a2",
+      "rawFile": "ncm.listentogether_sync_playlist_get.ncm.listentogether_sync_playlist_get.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_sync_playlist_get.inv.001",
+      "sampleHash": "ee553d4f443178c209232df6f83a1c3fb445228e6a38f9d2339d6b400af133c8",
+      "rawFile": "ncm.listentogether_sync_playlist_get.ncm.listentogether_sync_playlist_get.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_sync_playlist_get.none.001",
+      "sampleHash": "065df98c3bb720d89e58cf55ebb134b7f83784d5d379296b215594bfbabea542",
+      "rawFile": "ncm.listentogether_sync_playlist_get.ncm.listentogether_sync_playlist_get.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_sync_playlist_get.none.002",
+      "sampleHash": "2b0106fed45a58805554572c71071800e73cb94dba6edfebdd42f4291d4c4c84",
+      "rawFile": "ncm.listentogether_sync_playlist_get.ncm.listentogether_sync_playlist_get.none.002.raw.json"
+    }
+  ]
 }

@@ -23,15 +23,977 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.setting.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 115,
+        "error": null,
+        "sampleHash": "6fc7ead9e61ba909c66a80175f9e09e01cd7996ced75bd870899120d6a01adc8",
+        "rawFile": "ncm.setting.ncm.setting.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.setting.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 54,
+        "error": null,
+        "sampleHash": "541b25d5367001819d83859d360d0fc10fbfde49845b427b0f8854f8d5267f32",
+        "rawFile": "ncm.setting.ncm.setting.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.setting.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 50,
+        "error": null,
+        "sampleHash": "c027141ea01452c7910558753fa502ec2e75bc25fc726ad9403041250847c5ff",
+        "rawFile": "ncm.setting.ncm.setting.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.setting.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 55,
+        "error": null,
+        "sampleHash": "e0bd63f94dac5c135deadcbce764aad8ce8085c6ccf098f5d4c5aeeeaee690ac",
+        "rawFile": "ncm.setting.ncm.setting.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "setting.adRecommendSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.ageSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.allowCommentFavoriteNotify",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.allowDJProgramShareNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowDJProgramSubscriptionNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowDJRadioSubscriptionNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowFollowedCanSeeMyPlayRecord",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowImportDoubanPlaylist",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowImportXiamiPlaylist",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowKtvRoomNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowLikedNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowNewFollowerNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowNotePlaySongNotify",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.allowNoteRedSongNotify",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.allowOfflineCommentNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowOfflineCommentReplyNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowOfflineForwardNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowOfflineNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowOfflinePrivateMessageNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowPeopleCanSeeMyPlayRecord",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowPlaylistShareNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowSongRedSongNotify",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.allowSubscriptionNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.allowVideoSubscriptionNotify",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.areaSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.broadcastSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.collegeSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.commentLiveBroadcastSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.commentSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "setting.concertSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.double_flow_auto_play_switch",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.fansRequestUpdate",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.finishedFollowGuide",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.followSingerSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.importedDoubanPlaylist",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "setting.importedXiamiPlaylist",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "setting.inNoteBeta",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.messageRejectStatus",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.musicJarReceiveNotifySwitch",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.mutualFollowSeeOnline",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.needRcmdEvent",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.newSongDiskSetting",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "setting.peopleNearbyCanSeeMe",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "setting.personalizedAdRecommendSwitch",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.personalServiceSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.phoneFriendSetting",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "setting.playRecordSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.profileSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.reduceAdSwitch",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.sendMiuiMsg",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "setting.shareSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.showCityMusicStyleLabel",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.showedSharkBabyVinylEntry",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.showFMAtBottomTab",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.showFMAtBottomTabMagicOs",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.showMagentAtBottomTab",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.showMoreLocalsListenLabel",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.showNoteAtBottomTab",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.showSearchAtBottomTab",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.showSearchAtBottomTabMagicOs",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "setting.socialPlaylistSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.socialSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.topLayerNotifySetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.user_auto_play_switch",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "-1"
+    },
+    {
+      "jsonPath": "setting.userId",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "17788444306"
+    },
+    {
+      "jsonPath": "setting.video_bg_switch_key",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.villageAgeSetting",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "setting.voiceAutoPlay",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.setting.anon.001",
+      "lastSeenCase": "ncm.setting.anon.001",
+      "example": "1"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.setting.anon.001",
+      "sampleHash": "6fc7ead9e61ba909c66a80175f9e09e01cd7996ced75bd870899120d6a01adc8",
+      "rawFile": "ncm.setting.ncm.setting.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.setting.inv.001",
+      "sampleHash": "541b25d5367001819d83859d360d0fc10fbfde49845b427b0f8854f8d5267f32",
+      "rawFile": "ncm.setting.ncm.setting.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.setting.none.001",
+      "sampleHash": "c027141ea01452c7910558753fa502ec2e75bc25fc726ad9403041250847c5ff",
+      "rawFile": "ncm.setting.ncm.setting.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.setting.none.002",
+      "sampleHash": "e0bd63f94dac5c135deadcbce764aad8ce8085c6ccf098f5d4c5aeeeaee690ac",
+      "rawFile": "ncm.setting.ncm.setting.none.002.raw.json"
+    }
+  ]
 }

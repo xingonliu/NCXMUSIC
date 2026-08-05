@@ -30,15 +30,148 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.login_qr_check.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 109,
+        "error": null,
+        "sampleHash": "6d840b5603551e503ee8fcc3350e439880607e8801f2b8d70f8c451b6ad110fc",
+        "rawFile": "ncm.login_qr_check.ncm.login_qr_check.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.login_qr_check.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "result is not defined"
+        },
+        "sampleHash": "6c553bce4a6d4adb1273ab78b7bd33c93823e2137e2a8cbbff6a1b702a5d16b6",
+        "rawFile": "ncm.login_qr_check.ncm.login_qr_check.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.login_qr_check.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "result is not defined"
+        },
+        "sampleHash": "e8ade4480a190f677c3db724b931bee196e5a74550b44de980d0d43196687901",
+        "rawFile": "ncm.login_qr_check.ncm.login_qr_check.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.login_qr_check.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "result is not defined"
+        },
+        "sampleHash": "d7a2a6af2a52b15b9f18de30d88da65b41b204832092fb0679c278038a0326c1",
+        "rawFile": "ncm.login_qr_check.ncm.login_qr_check.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.login_qr_check.anon.001",
+      "lastSeenCase": "ncm.login_qr_check.anon.001",
+      "example": "400"
+    },
+    {
+      "jsonPath": "cookie",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.login_qr_check.anon.001",
+      "lastSeenCase": "ncm.login_qr_check.anon.001",
+      "example": "NMTID=00OQDTbNSXi2dw2O0YjmgX0UTf588UAAAGfz_NHtg; Max-Age=315"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.login_qr_check.anon.001",
+      "lastSeenCase": "ncm.login_qr_check.anon.001",
+      "example": "参数错误"
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.login_qr_check.anon.001",
+      "lastSeenCase": "ncm.login_qr_check.anon.001",
+      "example": "参数错误"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.login_qr_check.anon.001",
+      "sampleHash": "6d840b5603551e503ee8fcc3350e439880607e8801f2b8d70f8c451b6ad110fc",
+      "rawFile": "ncm.login_qr_check.ncm.login_qr_check.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_qr_check.inv.001",
+      "sampleHash": "6c553bce4a6d4adb1273ab78b7bd33c93823e2137e2a8cbbff6a1b702a5d16b6",
+      "rawFile": "ncm.login_qr_check.ncm.login_qr_check.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_qr_check.none.001",
+      "sampleHash": "e8ade4480a190f677c3db724b931bee196e5a74550b44de980d0d43196687901",
+      "rawFile": "ncm.login_qr_check.ncm.login_qr_check.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.login_qr_check.none.002",
+      "sampleHash": "d7a2a6af2a52b15b9f18de30d88da65b41b204832092fb0679c278038a0326c1",
+      "rawFile": "ncm.login_qr_check.ncm.login_qr_check.none.002.raw.json"
+    }
+  ]
 }

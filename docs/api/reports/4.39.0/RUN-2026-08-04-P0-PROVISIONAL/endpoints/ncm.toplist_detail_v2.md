@@ -89,3 +89,62 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 17. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.toplist_detail_v2.anon.001 | AUTH_ANON | - | 200 | 202 |  |
+| ncm.toplist_detail_v2.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 259 |  |
+| ncm.toplist_detail_v2.none.001 | AUTH_NONE | - | 200 | 186 |  |
+| ncm.toplist_detail_v2.none.002 | AUTH_NONE | - | 200 | 173 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `200` |
+| `data[].categoryCode` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `TOPPING` |
+| `data[].displayType` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `ONLY_COVER` |
+| `data[].frontDisplayType` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `ONLY_COVER_SMALL` |
+| `data[].list[].canPlay` | boolean | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `true` |
+| `data[].list[].category` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `FEATURE` |
+| `data[].list[].coverImgId` | number | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951170048519540` |
+| `data[].list[].coverType` | null | 36 | 36 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data[].list[].coverUrl` | union<string|null> | 36 | 4 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p3.music.126.net/_kSxOPqQ5J5etC5` |
+| `data[].list[].firstCoverHdUrl` | union<string|null> | 36 | 4 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p5.music.126.net/obj/wo3DlcOGw6D` |
+| `data[].list[].firstCoverUrl` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p5.music.126.net/obj/wonDlsKUwrL` |
+| `data[].list[].frontTargetUrl` | union<null|string> | 36 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://st.music.163.com/g/store/board#h` |
+| `data[].list[].id` | number | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `6723173524` |
+| `data[].list[].logName` | union<null|string> | 36 | 20 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `hot` |
+| `data[].list[].name` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `网络热歌榜` |
+| `data[].list[].nameShowStyle` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `singleRow` |
+| `data[].list[].newFirstCoverUrl` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p5.music.126.net/obj/wonDlsKUwrL` |
+| `data[].list[].newFirstTextCoverUrl` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p6.music.126.net/obj/wonDlsKUwrL` |
+| `data[].list[].positionInCategory` | number | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1294` |
+| `data[].list[].secondCoverUrl` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `data[].list[].songCoverImgUrl` | union<string|null> | 36 | 4 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://p3.music.126.net/y8ti3PoTDAh5ll6` |
+| `data[].list[].subDisplayType` | null | 36 | 36 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data[].list[].subscriptUrl` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `data[].list[].tagCode` | null | 36 | 36 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data[].list[].targetType` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `PLAYLIST` |
+| `data[].list[].targetUrl` | union<null|string> | 36 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `https://st.music.163.com/g/store/board#h` |
+| `data[].list[].toplistCode` | union<null|string> | 36 | 32 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `ALBUM_SELL_CHART##` |
+| `data[].list[].trackRankList` | null | 21 | 21 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data[].list[].trackRankList[].artistName` | string | 45 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `马也_Crabbit` |
+| `data[].list[].trackRankList[].coverImgUrl` | string | 45 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `http://p3.music.126.net/Enhy6dPn4gpyqrKh` |
+| `data[].list[].trackRankList[].itemId` | null | 45 | 45 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data[].list[].trackRankList[].itemName` | null | 45 | 45 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data[].list[].trackRankList[].lastRank` | number | 45 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1` |
+| `data[].list[].trackRankList[].rank` | number | 45 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1` |
+| `data[].list[].trackRankList[].songName` | string | 45 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `海屿你` |
+| `data[].list[].trackRankList[].trackId` | number | 45 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `1973665667` |
+| `data[].list[].tracks` | null | 21 | 21 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `data[].list[].tracks[].first` | string | 45 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `海屿你` |
+| `data[].list[].tracks[].second` | string | 45 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `马也_Crabbit` |
+| `data[].list[].updateFrequency` | string | 36 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `每周五更新` |
+| `data[].name` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `榜单推荐` |
+| `data[].targetUrl` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE |  |
+| `message` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |
+| `msg` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `` |

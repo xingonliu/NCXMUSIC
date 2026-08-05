@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.listentogether_end.inv.001",
+    "apiAuditId": "ncm.listentogether_end",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:55.419Z",
+    "endedAt": "2026-08-05T03:23:55.486Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 502,
+    "body": {
+      "code": 502,
+      "msg": "Request failed with status code 400"
+    },
+    "cookieCount": 0
+  }
+}

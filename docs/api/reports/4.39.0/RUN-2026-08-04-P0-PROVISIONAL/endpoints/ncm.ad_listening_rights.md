@@ -89,3 +89,60 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 17. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.ad_listening_rights.anon.001 | AUTH_ANON | - | 200 | 124 |  |
+| ncm.ad_listening_rights.inv.001 | AUTH_INVALID_EXPIRED | err | 2001 | - | code 2001 |
+| ncm.ad_listening_rights.none.001 | AUTH_NONE | err | 2001 | - | code 2001 |
+| ncm.ad_listening_rights.none.002 | AUTH_NONE | err | 2001 | - | code 2001 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `data.actionTitle` | string | 1 | 0 | 0 | AUTH_ANON | `领30分钟` |
+| `data.actionUrl` | string | 1 | 0 | 0 | AUTH_ANON | `orpheus://nm/motivationAd/show?adPositio` |
+| `data.assetCardStyle` | string | 1 | 0 | 0 | AUTH_ANON | `t1` |
+| `data.cardContent.actionTitle` | string | 1 | 0 | 0 | AUTH_ANON | `点击领取30分钟免费听` |
+| `data.cardContent.actionUrl` | string | 1 | 0 | 0 | AUTH_ANON | `orpheus://nm/motivationAd/show?adPositio` |
+| `data.cardContent.amount` | number | 1 | 0 | 0 | AUTH_ANON | `30` |
+| `data.cardContent.cardTopLeftTitle` | string | 1 | 0 | 0 | AUTH_ANON | `看视频 续时长` |
+| `data.cardContent.cardTopRightDesc` | string | 1 | 0 | 0 | AUTH_ANON | `浏览小视频，获取免费听时长` |
+| `data.cardContent.unit` | string | 1 | 0 | 0 | AUTH_ANON | `分钟` |
+| `data.cardType` | number | 1 | 0 | 0 | AUTH_ANON | `2` |
+| `data.rightsCoverToday` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data.rightsEndTime` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.rightsRemainingTime` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.rightsUpperLimit` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data.ruleTitle` | string | 1 | 0 | 0 | AUTH_ANON | `免费听歌活动规则` |
+| `data.ruleUrl` | string | 1 | 0 | 0 | AUTH_ANON | `https://y.music.163.com/g/yida/adfeaa597` |
+| `data.status` | string | 1 | 0 | 0 | AUTH_ANON | `INIT` |
+| `data.title` | string | 1 | 0 | 0 | AUTH_ANON | `看视频 免费听VIP歌曲` |
+| `data.vipInfoContent` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.vipInfoContentV2` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.yunbeiEntry` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.yunbeiEntryV2.adInfo.actionUrl` | string | 1 | 0 | 0 | AUTH_ANON | `orpheus://nm/motivationAd/show?adPositio` |
+| `data.yunbeiEntryV2.adInfo.amount` | number | 1 | 0 | 0 | AUTH_ANON | `268` |
+| `data.yunbeiEntryV2.adInfo.baseSource` | number | 1 | 0 | 0 | AUTH_ANON | `538` |
+| `data.yunbeiEntryV2.adInfo.behaviorSeqNo` | string | 1 | 0 | 0 | AUTH_ANON | `ad:mall:behavior:0e80d544554749eebca0e3c` |
+| `data.yunbeiEntryV2.adInfo.bonusSource` | number | 1 | 0 | 0 | AUTH_ANON | `539` |
+| `data.yunbeiEntryV2.adInfo.limit` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data.yunbeiEntryV2.entranceType` | string | 1 | 0 | 0 | AUTH_ANON | `FREE_LISTEN_VIP_EXCHANGE` |
+| `data.yunbeiEntryV2.esource` | string | 1 | 0 | 0 | AUTH_ANON | `free_listen_vip_exchange` |
+| `data.yunbeiEntryV2.exchangePrice` | number | 1 | 0 | 0 | AUTH_ANON | `6000` |
+| `data.yunbeiEntryV2.productImgUrl` | string | 1 | 0 | 0 | AUTH_ANON | `http://p1.music.126.net/Wssw1avnLUKJobKi` |
+| `data.yunbeiEntryV2.productName` | string | 1 | 0 | 0 | AUTH_ANON | `【每日可领】黑胶VIP天卡` |
+| `data.yunbeiEntryV2.productStatus` | number | 1 | 0 | 0 | AUTH_ANON | `3` |
+| `data.yunbeiEntryV2.productType` | number | 1 | 0 | 0 | AUTH_ANON | `2` |
+| `data.yunbeiEntryV2.showValueLabel` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data.yunbeiEntryV2.skuId` | number | 1 | 0 | 0 | AUTH_ANON | `866400807` |
+| `data.yunbeiEntryV2.withdrawAmount` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.yunbeiEntryV2.withdrawUrl` | string | 1 | 0 | 0 | AUTH_ANON | `https://st.music.163.com/g/ad-music/with` |
+| `data.yunbeiEntryV2.yunbeiAmount` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data.yunbeiEntryV2.yunbeiCenterUrl` | string | 1 | 0 | 0 | AUTH_ANON | `orpheus://rnpage?component=rn-cloudshell` |
+| `message` | null | 1 | 1 | 0 | AUTH_ANON |  |

@@ -11,6 +11,7 @@ const PHASE_SECTION = {
   2: '## 14. Phase 2 运行记录',
   3: '## 15. Phase 3 运行记录',
   4: '## 16. Phase 4 运行记录',
+  6: '## 17. Phase 6 运行记录',
 }
 
 function sha256File(file) {

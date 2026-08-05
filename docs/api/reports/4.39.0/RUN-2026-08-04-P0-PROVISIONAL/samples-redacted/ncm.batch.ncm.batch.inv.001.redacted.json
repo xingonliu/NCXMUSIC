@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.batch.inv.001",
+    "apiAuditId": "ncm.batch",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:36.691Z",
+    "endedAt": "2026-08-05T03:21:36.771Z",
+    "durationMs": 80,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "",
+    "code": 400,
+    "message": ""
+  },
+  "error": null
+}

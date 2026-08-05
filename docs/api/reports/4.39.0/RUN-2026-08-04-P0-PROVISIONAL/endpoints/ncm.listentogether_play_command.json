@@ -45,15 +45,113 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.listentogether_play_command.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "8438c0a13fa17b2e039ba28c3499c48254aa0d287543656fbf3ea2e4dfb1397a",
+        "rawFile": "ncm.listentogether_play_command.ncm.listentogether_play_command.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_play_command.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "a88542dc11e23987640abb47424fcdee5be51be9189cf64ff1cbeb16500b2d7b",
+        "rawFile": "ncm.listentogether_play_command.ncm.listentogether_play_command.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_play_command.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "0cb882bd4c064b4c10abd1d647930117dbb19336ce7f6d8947c55d69b52da70c",
+        "rawFile": "ncm.listentogether_play_command.ncm.listentogether_play_command.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.listentogether_play_command.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "81afe844508a24549da596fa87b2396bab0009c0020f4281ff8e7cacb3181718",
+        "rawFile": "ncm.listentogether_play_command.ncm.listentogether_play_command.none.002.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.listentogether_play_command.anon.001",
+      "sampleHash": "8438c0a13fa17b2e039ba28c3499c48254aa0d287543656fbf3ea2e4dfb1397a",
+      "rawFile": "ncm.listentogether_play_command.ncm.listentogether_play_command.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_play_command.inv.001",
+      "sampleHash": "a88542dc11e23987640abb47424fcdee5be51be9189cf64ff1cbeb16500b2d7b",
+      "rawFile": "ncm.listentogether_play_command.ncm.listentogether_play_command.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_play_command.none.001",
+      "sampleHash": "0cb882bd4c064b4c10abd1d647930117dbb19336ce7f6d8947c55d69b52da70c",
+      "rawFile": "ncm.listentogether_play_command.ncm.listentogether_play_command.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.listentogether_play_command.none.002",
+      "sampleHash": "81afe844508a24549da596fa87b2396bab0009c0020f4281ff8e7cacb3181718",
+      "rawFile": "ncm.listentogether_play_command.ncm.listentogether_play_command.none.002.raw.json"
+    }
+  ]
 }

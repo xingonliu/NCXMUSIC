@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.search_suggest_pc.inv.001",
+    "apiAuditId": "ncm.search_suggest_pc",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:25:12.545Z",
+    "endedAt": "2026-08-05T03:25:12.616Z",
+    "durationMs": 71,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "recTitle": null,
+      "suggests": [],
+      "recs": [],
+      "demote": false
+    },
+    "message": ""
+  },
+  "error": null
+}

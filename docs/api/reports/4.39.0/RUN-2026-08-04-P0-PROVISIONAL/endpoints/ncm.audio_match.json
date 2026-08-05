@@ -30,15 +30,93 @@
   },
   "matrix": {
     "planned": 5,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.audio_match.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 28,
+        "error": null,
+        "sampleHash": "7bd3904f4a9b4f892de49a1308bee5f8f4294c9e6dff8c414b5a695794fcd92e",
+        "rawFile": "ncm.audio_match.ncm.audio_match.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.audio_match.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 27,
+        "error": null,
+        "sampleHash": "bba90862b524eb11822ab448d6569ca0741e3e432947aeac583085d8d6d118d4",
+        "rawFile": "ncm.audio_match.ncm.audio_match.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.audio_match.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 79,
+        "error": null,
+        "sampleHash": "737252f01664c38768ba65028deb04134981382be22f365b030dbb9eb6b6323a",
+        "rawFile": "ncm.audio_match.ncm.audio_match.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.audio_match.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 27,
+        "error": null,
+        "sampleHash": "8e69a59e756d61a5d05281d48cacdd2dda908dfccf9b8a31faef092d8b6428f2",
+        "rawFile": "ncm.audio_match.ncm.audio_match.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.audio_match.anon.001",
+      "lastSeenCase": "ncm.audio_match.none.002",
+      "example": "200"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.audio_match.anon.001",
+      "sampleHash": "7bd3904f4a9b4f892de49a1308bee5f8f4294c9e6dff8c414b5a695794fcd92e",
+      "rawFile": "ncm.audio_match.ncm.audio_match.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.audio_match.inv.001",
+      "sampleHash": "bba90862b524eb11822ab448d6569ca0741e3e432947aeac583085d8d6d118d4",
+      "rawFile": "ncm.audio_match.ncm.audio_match.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.audio_match.none.001",
+      "sampleHash": "737252f01664c38768ba65028deb04134981382be22f365b030dbb9eb6b6323a",
+      "rawFile": "ncm.audio_match.ncm.audio_match.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.audio_match.none.002",
+      "sampleHash": "8e69a59e756d61a5d05281d48cacdd2dda908dfccf9b8a31faef092d8b6428f2",
+      "rawFile": "ncm.audio_match.ncm.audio_match.none.002.raw.json"
+    }
+  ]
 }

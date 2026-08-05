@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "caseId": "ncm.playmode_song_vector.anon.001",
+    "apiAuditId": "ncm.playmode_song_vector",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:39.086Z",
+    "endedAt": "2026-08-05T03:24:39.201Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 500,
+    "body": {
+      "success": false,
+      "code": 500,
+      "message": "",
+      "data": null,
+      "ignore": false,
+      "present": false,
+      "empty": false
+    },
+    "cookieCount": 1
+  }
+}

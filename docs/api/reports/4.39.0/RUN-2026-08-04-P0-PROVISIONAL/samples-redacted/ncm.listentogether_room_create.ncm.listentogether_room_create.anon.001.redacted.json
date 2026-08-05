@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "caseId": "ncm.listentogether_room_create.anon.001",
+    "apiAuditId": "ncm.listentogether_room_create",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:04.779Z",
+    "endedAt": "2026-08-05T03:24:05.018Z",
+    "durationMs": 239,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "type": "NEW_ROOM",
+      "roomInfo": {
+        "creatorId": 17788444306,
+        "roomId": "60a0ee8db931aac73a62b37e25e72f9b_1785900244",
+        "effectiveDurationMs": 1800000,
+        "waitMs": 120000,
+        "roomCreateTime": 1785900244869,
+        "chatRoomId": "15699202461",
+        "agoraChannelId": "817719179453579264",
+        "roomUsers": [],
+        "roomRTCType": null,
+        "roomType": "FRIEND",
+        "matchedReason": null,
+        "alg": null,
+        "unlockIdentityNeededMs": null,
+        "unlockedIdentity": null,
+        "unlockTextChatNeededMs": null,
+        "unlockChatNeededMs": null,
+        "ltType": 1,
+        "openHeartRcmd": false,
+        "roomVipAbGroup": {
+          "huiyuan_ListenTogether_TSpop": "c"
+        },
+        "listeningRefer": null
+      },
+      "inviteUserInfo": null,
+      "hintText": null,
+      "toastText": null,
+      "avatarPendantShow": true
+    },
+    "message": ""
+  },
+  "error": null
+}

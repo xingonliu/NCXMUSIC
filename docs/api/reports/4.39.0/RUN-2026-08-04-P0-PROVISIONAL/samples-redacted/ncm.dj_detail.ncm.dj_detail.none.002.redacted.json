@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_detail.none.002",
+    "apiAuditId": "ncm.dj_detail",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:22:16.363Z",
+    "endedAt": "2026-08-05T03:22:16.491Z",
+    "durationMs": 128,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "msg": "参数错误",
+    "data": null
+  },
+  "error": null
+}

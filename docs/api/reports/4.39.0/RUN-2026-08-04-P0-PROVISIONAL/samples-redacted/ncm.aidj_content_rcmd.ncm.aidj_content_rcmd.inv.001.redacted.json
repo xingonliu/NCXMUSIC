@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "caseId": "ncm.aidj_content_rcmd.inv.001",
+    "apiAuditId": "ncm.aidj_content_rcmd",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:28.460Z",
+    "endedAt": "2026-08-05T03:21:28.541Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 500,
+    "body": {
+      "code": 500,
+      "message": "获取推荐AIDJ数据失败",
+      "debugInfo": null,
+      "data": null,
+      "failData": null
+    },
+    "cookieCount": 1
+  }
+}

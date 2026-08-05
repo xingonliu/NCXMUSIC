@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "caseId": "ncm.listentogether_room_create.none.002",
+    "apiAuditId": "ncm.listentogether_room_create",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:04.175Z",
+    "endedAt": "2026-08-05T03:24:04.260Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 301,
+    "body": {
+      "code": 301,
+      "message": "系统错误",
+      "debugInfo": null,
+      "data": null,
+      "failData": null
+    },
+    "cookieCount": 1
+  }
+}

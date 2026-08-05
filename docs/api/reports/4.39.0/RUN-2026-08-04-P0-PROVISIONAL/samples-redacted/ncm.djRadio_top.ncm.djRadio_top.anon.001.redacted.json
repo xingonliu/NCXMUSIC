@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.djRadio_top.anon.001",
+    "apiAuditId": "ncm.djRadio_top",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:39.191Z",
+    "endedAt": "2026-08-05T03:23:39.296Z",
+    "durationMs": 105,
+    "attempts": 1
+  },
+  "body": {
+    "code": 302,
+    "message": "系统错误",
+    "debugInfo": null,
+    "data": null,
+    "failData": null
+  },
+  "error": null
+}

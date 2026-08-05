@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.homepage_dragon_ball.anon.001",
+    "apiAuditId": "ncm.homepage_dragon_ball",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:46.662Z",
+    "endedAt": "2026-08-05T03:23:46.756Z",
+    "durationMs": 94,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": [],
+    "message": ""
+  },
+  "error": null
+}

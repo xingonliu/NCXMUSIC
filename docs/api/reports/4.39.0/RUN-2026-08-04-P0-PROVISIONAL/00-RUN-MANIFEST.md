@@ -153,3 +153,16 @@ node scripts/api-audit/runners/self-check.js --reportDir ...（零遗漏与脱�
 - 媒体探测：39 个唯一 URL（含 33 个音频/视频 CDN URL），HEAD 全 200（探测在签发窗口后执行）
 - 风控：-462 验证挑战大面积覆盖媒体接口 NONE/INVALID 层（verifyId 1007602）；ANON 层多数成功
 - enhanced：未执行（B-003）；AUTH_VIP/PURCHASED：缺失（音质矩阵 VIP 行 blocked_by_prerequisite）
+
+## 15. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行 Agent：opencode (DeepSeek 审计 Agent)
+- 线上请求数：879（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
+- guest-01 游客会话：已建立（AUTH_ANON 层有效）
+- 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
+
+## 16. Phase 15 封板摘要（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 207/436 接口有运行样本；436/436 有终态；883 raw 样本全脱敏。
+- 终态分布：blocked_by_prerequisite=228；partial=195；failed_stable=5；blocked_by_safety=3；passed=1；rate_limited=1；not_exported=3
+- 遗留：账号（B-002）、夹具（videoId/threadId 等）、-462 风控窗口、enhanced（B-003）、支付安全边界（3 blocked_by_safety）。

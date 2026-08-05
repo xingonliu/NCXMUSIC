@@ -23,15 +23,2073 @@
   },
   "matrix": {
     "planned": 5,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.starpick_comments_summary.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 197,
+        "error": null,
+        "sampleHash": "951aa50c6be8aa844d41c521690dca0859cc8c35d38fadded2de398ff0ba9290",
+        "rawFile": "ncm.starpick_comments_summary.ncm.starpick_comments_summary.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.starpick_comments_summary.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 134,
+        "error": null,
+        "sampleHash": "afe5939849ddfc36610d371019c0a154700005a3dd2d179146b0f5b96b50bdfa",
+        "rawFile": "ncm.starpick_comments_summary.ncm.starpick_comments_summary.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.starpick_comments_summary.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 121,
+        "error": null,
+        "sampleHash": "d1b911a26f06039e6df1f434900ac6f78f484a0284f32c2e627636a849e3de4b",
+        "rawFile": "ncm.starpick_comments_summary.ncm.starpick_comments_summary.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.starpick_comments_summary.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 233,
+        "error": null,
+        "sampleHash": "20ac5e2904c867241d1f61c95471b1fed11c0743bc3a4c9910963d3a0c7ba695",
+        "rawFile": "ncm.starpick_comments_summary.ncm.starpick_comments_summary.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.blockCodeOrderList",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].action",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "orpheus://playlistCollection?referLog=HOMEPAGE_BLOCK_PLAYLIS"
+    },
+    {
+      "jsonPath": "data.blocks[].actionType",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "orpheus"
+    },
+    {
+      "jsonPath": "data.blocks[].blockCode",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "HOMEPAGE_BANNER"
+    },
+    {
+      "jsonPath": "data.blocks[].blockDemote",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].blockStyle",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].canClose",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].canFeedback",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].action",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "orpheus://nm/playlist/flow?source=HOMEPAGE_BLOCK_PLAYLIST_RC"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].actionType",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "orpheus"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].alg",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "bysong_profile_ol"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].creativeId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "8254864957"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].creativeType",
+      "rawType": "string",
+      "presence": 16,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "DRAGON_BALL"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].logInfo",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "{\"deepScore\":\"0.0\",\"cartScore\":\"0.0\",\"src\":\"2152956085\",\"cli"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].position",
+      "rawType": "number",
+      "presence": 16,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].action",
+      "rawType": "string",
+      "presence": 32,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "orpheus://songrcmd"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].actionType",
+      "rawType": "string",
+      "presence": 32,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "orpheus"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].alg",
+      "rawType": "union<null|string>",
+      "presence": 32,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "bysong_profile_ol"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].ctrp",
+      "rawType": "null",
+      "presence": 32,
+      "nulls": 32,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].likedCount",
+      "rawType": "null",
+      "presence": 32,
+      "nulls": 32,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].logInfo",
+      "rawType": "union<null|string>",
+      "presence": 32,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "{\"deepScore\":\"0.0\",\"cartScore\":\"0.0\",\"src\":\"2152956085\",\"cli"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].name",
+      "rawType": "null",
+      "presence": 32,
+      "nulls": 32,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].playParams",
+      "rawType": "null",
+      "presence": 32,
+      "nulls": 32,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].position",
+      "rawType": "null",
+      "presence": 32,
+      "nulls": 32,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].replyCount",
+      "rawType": "null",
+      "presence": 32,
+      "nulls": 32,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceContentList",
+      "rawType": "null",
+      "presence": 32,
+      "nulls": 32,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.hasListened",
+      "rawType": "boolean",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.highQuality",
+      "rawType": "boolean",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.playCount",
+      "rawType": "number",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "96907"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo.specialType",
+      "rawType": "number",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceId",
+      "rawType": "string",
+      "presence": 32,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "-1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceState",
+      "rawType": "null",
+      "presence": 32,
+      "nulls": 32,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceType",
+      "rawType": "string",
+      "presence": 32,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "dragon_ball"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceUrl",
+      "rawType": "null",
+      "presence": 32,
+      "nulls": 32,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.image.action",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.image.imageUrl",
+      "rawType": "string",
+      "presence": 32,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "http://p1.music.126.net/4DpSgAVpJny4Ewf-Xw_WQQ==/10995116398"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.image.imageUrl2",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/1507482884"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.image.purePicture",
+      "rawType": "boolean",
+      "presence": 32,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.image.title",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.labelTexts",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.labelTexts[]",
+      "rawType": "string",
+      "presence": 44,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "华语"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.mainTitle.canShowTitleLogo",
+      "rawType": "boolean",
+      "presence": 32,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.mainTitle.title",
+      "rawType": "string",
+      "presence": 32,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "每日推荐"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.rcmdShowType",
+      "rawType": "string",
+      "presence": 32,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "DEFAULT"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitle.canShowTitleLogo",
+      "rawType": "boolean",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitle.title",
+      "rawType": "string",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].valid",
+      "rawType": "boolean",
+      "presence": 32,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.image.imageUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "http://p2.music.126.net/Ov6JJ85Z64nQpHzsR8CF9Q==/10995117197"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.image.purePicture",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.labelTexts",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.labelTexts[]",
+      "rawType": "string",
+      "presence": 24,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "华语"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.mainTitle.canShowTitleLogo",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.mainTitle.title",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "[烟火里的尘埃]如果你也爱听华晨宇"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.rcmdShowType",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "DEFAULT"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.subTitle.canShowTitleLogo",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.subTitle.title",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.containerType",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "rn"
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.rnContent.component",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "rn-homepage-modules_dragonBall"
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.rnContent.engineId",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.rnContent.estimatedHeight",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "98"
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.rnContent.estimatedRatio",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig.rnContent.moduleName",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "rn-homepage-modules"
+    },
+    {
+      "jsonPath": "data.blocks[].dislikeShowType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].adDispatchJson",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].adid",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].adLocation",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].adSource",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].adurlV2",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].alg",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "banner-feature-1717750651205666"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].bannerBizType",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "force_banner"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].bannerId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "1717750651205666"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].dynamicVideoData",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].encodeId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].event",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].exclusive",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].extMonitor",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].extMonitorInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].logContext",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].mainTitle",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorBlackList",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorClick",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorClickList",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorImpress",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorImpressList",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].monitorType",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].pic",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "http://p1.music.126.net/e8wtQuscq74yweCGuhM8TA==/10995116966"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].pid",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].program",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].requestId",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].s_ctrp",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "syspf_resourceType_3000-syspf_resourceId_0"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].scm",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "1.music-homepage-home.homepage_banner_force.banner.9432966.-"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].showAdTag",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].showContext",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].song",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].targetId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].targetType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "3000"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].titleColor",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "blue"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].typeTitle",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "独家策划"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].url",
+      "rawType": "union<string|null>",
+      "presence": 12,
+      "nulls": 8,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "https://y.music.163.com/g/yida/470cb610d27249f09f9f6c3d595b9"
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo.banners[].video",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].showType",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "BANNER"
+    },
+    {
+      "jsonPath": "data.blocks[].sort",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.button.action",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "orpheus://playlistCollection?referLog=HOMEPAGE_BLOCK_PLAYLIS"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.button.actionType",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "orpheus"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.button.biData",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.button.iconUrl",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.button.text",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "更多"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.rcmdShowType",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "DEFAULT"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.subTitle.canShowTitleLogo",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.subTitle.title",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "推荐歌单"
+    },
+    {
+      "jsonPath": "data.blockUUIDs",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.cursor",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.demote",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.exposedResource",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "{\"song\":[\"1492864083\",\"3327048489\",\"2755667441\",\"1816242788\""
+    },
+    {
+      "jsonPath": "data.guideToast.hasGuideToast",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.guideToast.toastList",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.hasMore",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.internalTest",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.pageConfig.abtest[]",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "homepage-v7.3"
+    },
+    {
+      "jsonPath": "data.pageConfig.fullscreen",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.pageConfig.homepageMode",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "PLAYLIST_MODE"
+    },
+    {
+      "jsonPath": "data.pageConfig.nodataToast",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "到底啦~"
+    },
+    {
+      "jsonPath": "data.pageConfig.orderInfo",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "PLAYLIST_MODE_2f354e31-a8f4-4fa5-a7b4-bd0e35ec738d"
+    },
+    {
+      "jsonPath": "data.pageConfig.refreshInterval",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "600000"
+    },
+    {
+      "jsonPath": "data.pageConfig.refreshToast",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.pageConfig.showModeEntry",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.pageConfig.songLabelMarkLimit",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.pageConfig.songLabelMarkPriority[]",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "vip"
+    },
+    {
+      "jsonPath": "data.pageConfig.title",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.titles",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.starpick_comments_summary.anon.001",
+      "lastSeenCase": "ncm.starpick_comments_summary.none.002",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.starpick_comments_summary.anon.001",
+      "sampleHash": "951aa50c6be8aa844d41c521690dca0859cc8c35d38fadded2de398ff0ba9290",
+      "rawFile": "ncm.starpick_comments_summary.ncm.starpick_comments_summary.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.starpick_comments_summary.inv.001",
+      "sampleHash": "afe5939849ddfc36610d371019c0a154700005a3dd2d179146b0f5b96b50bdfa",
+      "rawFile": "ncm.starpick_comments_summary.ncm.starpick_comments_summary.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.starpick_comments_summary.none.001",
+      "sampleHash": "d1b911a26f06039e6df1f434900ac6f78f484a0284f32c2e627636a849e3de4b",
+      "rawFile": "ncm.starpick_comments_summary.ncm.starpick_comments_summary.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.starpick_comments_summary.none.002",
+      "sampleHash": "20ac5e2904c867241d1f61c95471b1fed11c0743bc3a4c9910963d3a0c7ba695",
+      "rawFile": "ncm.starpick_comments_summary.ncm.starpick_comments_summary.none.002.raw.json"
+    }
+  ]
 }

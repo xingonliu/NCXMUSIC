@@ -3102,6 +3102,36 @@
       "producerPath": "list[].userId"
     },
     {
+      "consumerCaseId": "ncm.comment_info_list.anon.001",
+      "apiAuditId": "ncm.comment_info_list",
+      "param": "id",
+      "entityType": "commentId",
+      "idHash": "dbfdcda81f35ec84",
+      "producerApi": "ncm.comment_album",
+      "producerCase": "ncm.comment_album.anon.001",
+      "producerPath": "comments[].commentId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_info_list.inv.001",
+      "apiAuditId": "ncm.comment_info_list",
+      "param": "id",
+      "entityType": "commentId",
+      "idHash": "dbfdcda81f35ec84",
+      "producerApi": "ncm.comment_album",
+      "producerCase": "ncm.comment_album.anon.001",
+      "producerPath": "comments[].commentId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_info_list.none.001",
+      "apiAuditId": "ncm.comment_info_list",
+      "param": "id",
+      "entityType": "commentId",
+      "idHash": "dbfdcda81f35ec84",
+      "producerApi": "ncm.comment_album",
+      "producerCase": "ncm.comment_album.anon.001",
+      "producerPath": "comments[].commentId"
+    },
+    {
       "consumerCaseId": "ncm.comment_music.anon.001",
       "apiAuditId": "ncm.comment_music",
       "param": "id",
@@ -3692,6 +3722,66 @@
       "producerPath": "songs[].id"
     },
     {
+      "consumerCaseId": "ncm.dj_program_detail.anon.001",
+      "apiAuditId": "ncm.dj_program_detail",
+      "param": "id",
+      "entityType": "djId",
+      "idHash": "f407de089b4c7b29",
+      "producerApi": "ncm.dj_hot",
+      "producerCase": "ncm.dj_hot.anon.001",
+      "producerPath": "djRadios[].id"
+    },
+    {
+      "consumerCaseId": "ncm.dj_program_detail.inv.001",
+      "apiAuditId": "ncm.dj_program_detail",
+      "param": "id",
+      "entityType": "djId",
+      "idHash": "f407de089b4c7b29",
+      "producerApi": "ncm.dj_hot",
+      "producerCase": "ncm.dj_hot.anon.001",
+      "producerPath": "djRadios[].id"
+    },
+    {
+      "consumerCaseId": "ncm.dj_program_detail.none.001",
+      "apiAuditId": "ncm.dj_program_detail",
+      "param": "id",
+      "entityType": "djId",
+      "idHash": "f407de089b4c7b29",
+      "producerApi": "ncm.dj_hot",
+      "producerCase": "ncm.dj_hot.anon.001",
+      "producerPath": "djRadios[].id"
+    },
+    {
+      "consumerCaseId": "ncm.dj_subscriber.anon.001",
+      "apiAuditId": "ncm.dj_subscriber",
+      "param": "id",
+      "entityType": "djId",
+      "idHash": "f407de089b4c7b29",
+      "producerApi": "ncm.dj_hot",
+      "producerCase": "ncm.dj_hot.anon.001",
+      "producerPath": "djRadios[].id"
+    },
+    {
+      "consumerCaseId": "ncm.dj_subscriber.inv.001",
+      "apiAuditId": "ncm.dj_subscriber",
+      "param": "id",
+      "entityType": "djId",
+      "idHash": "f407de089b4c7b29",
+      "producerApi": "ncm.dj_hot",
+      "producerCase": "ncm.dj_hot.anon.001",
+      "producerPath": "djRadios[].id"
+    },
+    {
+      "consumerCaseId": "ncm.dj_subscriber.none.001",
+      "apiAuditId": "ncm.dj_subscriber",
+      "param": "id",
+      "entityType": "djId",
+      "idHash": "f407de089b4c7b29",
+      "producerApi": "ncm.dj_hot",
+      "producerCase": "ncm.dj_hot.anon.001",
+      "producerPath": "djRadios[].id"
+    },
+    {
       "consumerCaseId": "ncm.mv_detail_info.anon.001",
       "apiAuditId": "ncm.mv_detail_info",
       "param": "mvid",
@@ -4054,6 +4144,36 @@
     {
       "consumerCaseId": "ncm.playlist_video_recent.none.001",
       "apiAuditId": "ncm.playlist_video_recent",
+      "param": "pid",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.playmode_intelligence_list.anon.001",
+      "apiAuditId": "ncm.playmode_intelligence_list",
+      "param": "pid",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.playmode_intelligence_list.inv.001",
+      "apiAuditId": "ncm.playmode_intelligence_list",
+      "param": "pid",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.playmode_intelligence_list.none.001",
+      "apiAuditId": "ncm.playmode_intelligence_list",
       "param": "pid",
       "entityType": "playlistId",
       "idHash": "b873bf9d8728a5a4",
@@ -5072,6 +5192,36 @@
       "producerPath": "list[].userId"
     },
     {
+      "consumerCaseId": "ncm.user_detail_new.anon.001",
+      "apiAuditId": "ncm.user_detail_new",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_detail_new.inv.001",
+      "apiAuditId": "ncm.user_detail_new",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_detail_new.none.001",
+      "apiAuditId": "ncm.user_detail_new",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
       "consumerCaseId": "ncm.user_follow_mixed.anon.001",
       "apiAuditId": "ncm.user_follow_mixed",
       "param": "uid",
@@ -5429,17 +5579,19 @@
       ]
     },
     "djId": {
-      "count": 97,
+      "count": 100,
       "producers": [
         "ncm.dj_hot",
         "ncm.homepage_block_page",
-        "ncm.personalized_djprogram"
+        "ncm.personalized_djprogram",
+        "ncm.dj_program_toplist"
       ]
     },
     "programId": {
-      "count": 12,
+      "count": 100,
       "producers": [
-        "ncm.personalized_djprogram"
+        "ncm.personalized_djprogram",
+        "ncm.dj_program_toplist"
       ]
     },
     "playlistId": {
@@ -5452,11 +5604,12 @@
       ]
     },
     "toplistId": {
-      "count": 85,
+      "count": 100,
       "producers": [
-        "ncm.toplist"
+        "ncm.toplist",
+        "ncm.dj_toplist"
       ]
     }
   },
-  "generatedAt": "2026-08-05T03:03:01.059Z"
+  "generatedAt": "2026-08-05T03:27:15.213Z"
 }

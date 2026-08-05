@@ -47,6 +47,6 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "blocked_by_prerequisite",
-  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
   "evidence": []
 }

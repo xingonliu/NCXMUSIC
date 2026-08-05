@@ -33,6 +33,6 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "not_exported",
-  "blocker": "interface.d.ts 声明存在但无模块文件（moduleMissing）",
+  "blocker": "interface.d.ts 声明存在但无模块文件",
   "evidence": []
 }

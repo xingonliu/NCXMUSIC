@@ -42,15 +42,147 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.dj_program.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 65,
+        "error": null,
+        "sampleHash": "33712968ffe2451d2dcd5aa5e202344e96840a877e4a4e9dfeaabd5fae3a8dc4",
+        "rawFile": "ncm.dj_program.ncm.dj_program.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_program.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792953555821305867",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=af4fa6eaf0db",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "f5ba07979dbb4b1051cf685b4a52fa8f8983df67757eaccf29e501271cab0c9d",
+        "rawFile": "ncm.dj_program.ncm.dj_program.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_program.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 68,
+        "error": null,
+        "sampleHash": "fea2900a2fe13711c743988fb5981232aade1d5e69cfbafcefcbc5d141b95864",
+        "rawFile": "ncm.dj_program.ncm.dj_program.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_program.page.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 55,
+        "error": null,
+        "sampleHash": "330e8d328b9befc73a62d002fa26841c6ef557298bc7ead4051a68db3eddfa60",
+        "rawFile": "ncm.dj_program.ncm.dj_program.page.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_program.anon.001",
+      "lastSeenCase": "ncm.dj_program.page.none.001",
+      "example": "400"
+    },
+    {
+      "jsonPath": "data",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_program.anon.001",
+      "lastSeenCase": "ncm.dj_program.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_program.anon.001",
+      "lastSeenCase": "ncm.dj_program.page.none.001",
+      "example": "参数错误"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.dj_program.anon.001",
+      "sampleHash": "33712968ffe2451d2dcd5aa5e202344e96840a877e4a4e9dfeaabd5fae3a8dc4",
+      "rawFile": "ncm.dj_program.ncm.dj_program.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_program.inv.001",
+      "sampleHash": "f5ba07979dbb4b1051cf685b4a52fa8f8983df67757eaccf29e501271cab0c9d",
+      "rawFile": "ncm.dj_program.ncm.dj_program.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_program.none.001",
+      "sampleHash": "fea2900a2fe13711c743988fb5981232aade1d5e69cfbafcefcbc5d141b95864",
+      "rawFile": "ncm.dj_program.ncm.dj_program.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_program.page.none.001",
+      "sampleHash": "330e8d328b9befc73a62d002fa26841c6ef557298bc7ead4051a68db3eddfa60",
+      "rawFile": "ncm.dj_program.ncm.dj_program.page.none.001.raw.json"
+    }
+  ]
 }

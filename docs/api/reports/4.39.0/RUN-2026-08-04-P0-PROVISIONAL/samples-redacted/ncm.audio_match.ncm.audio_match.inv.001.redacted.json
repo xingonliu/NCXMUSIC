@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "caseId": "ncm.audio_match.inv.001",
+    "apiAuditId": "ncm.audio_match",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:34.024Z",
+    "endedAt": "2026-08-05T03:21:34.051Z",
+    "durationMs": 27,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200
+  },
+  "error": null
+}

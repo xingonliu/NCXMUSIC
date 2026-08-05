@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.batch.anon.001",
+    "apiAuditId": "ncm.batch",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:35.955Z",
+    "endedAt": "2026-08-05T03:21:36.052Z",
+    "durationMs": 97,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "",
+    "code": 400,
+    "message": ""
+  },
+  "error": null
+}

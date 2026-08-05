@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.ad_get.none.002",
+    "apiAuditId": "ncm.ad_get",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:18.468Z",
+    "endedAt": "2026-08-05T03:21:18.544Z",
+    "durationMs": 76,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "ads": {},
+    "message": "请稍后再试 (20002)",
+    "extra": {
+      "reqId": ""
+    }
+  },
+  "error": null
+}

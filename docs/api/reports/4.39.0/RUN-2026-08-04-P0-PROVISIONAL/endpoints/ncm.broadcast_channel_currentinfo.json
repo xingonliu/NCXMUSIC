@@ -27,15 +27,113 @@
   },
   "matrix": {
     "planned": 5,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.broadcast_channel_currentinfo.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "2fd852c659e0eca5c23b803a15f8c1a70584911c23ce585922430d89d92d2cb2",
+        "rawFile": "ncm.broadcast_channel_currentinfo.ncm.broadcast_channel_currentinfo.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.broadcast_channel_currentinfo.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "2088e784185185fc30584396cfbcf1a3a291f34bcd38ae43dd4f30a0c8487ec8",
+        "rawFile": "ncm.broadcast_channel_currentinfo.ncm.broadcast_channel_currentinfo.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.broadcast_channel_currentinfo.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "42888500f66fe51c14b038f0f647086df8797e50d99b246fcf57507049d4e123",
+        "rawFile": "ncm.broadcast_channel_currentinfo.ncm.broadcast_channel_currentinfo.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.broadcast_channel_currentinfo.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 502,
+        "error": {
+          "class": "other",
+          "status": 502,
+          "code": 502,
+          "body": {
+            "code": 502,
+            "msg": "Request failed with status code 400"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "3d725cac58d31188ae96fd1a6699dc92286b6071ac7ed45732583f9b0cb39d5a",
+        "rawFile": "ncm.broadcast_channel_currentinfo.ncm.broadcast_channel_currentinfo.none.002.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.broadcast_channel_currentinfo.anon.001",
+      "sampleHash": "2fd852c659e0eca5c23b803a15f8c1a70584911c23ce585922430d89d92d2cb2",
+      "rawFile": "ncm.broadcast_channel_currentinfo.ncm.broadcast_channel_currentinfo.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.broadcast_channel_currentinfo.inv.001",
+      "sampleHash": "2088e784185185fc30584396cfbcf1a3a291f34bcd38ae43dd4f30a0c8487ec8",
+      "rawFile": "ncm.broadcast_channel_currentinfo.ncm.broadcast_channel_currentinfo.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.broadcast_channel_currentinfo.none.001",
+      "sampleHash": "42888500f66fe51c14b038f0f647086df8797e50d99b246fcf57507049d4e123",
+      "rawFile": "ncm.broadcast_channel_currentinfo.ncm.broadcast_channel_currentinfo.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.broadcast_channel_currentinfo.none.002",
+      "sampleHash": "3d725cac58d31188ae96fd1a6699dc92286b6071ac7ed45732583f9b0cb39d5a",
+      "rawFile": "ncm.broadcast_channel_currentinfo.ncm.broadcast_channel_currentinfo.none.002.raw.json"
+    }
+  ]
 }

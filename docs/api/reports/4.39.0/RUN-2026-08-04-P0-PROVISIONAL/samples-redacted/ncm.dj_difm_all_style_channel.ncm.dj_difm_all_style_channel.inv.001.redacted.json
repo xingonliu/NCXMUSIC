@@ -1,0 +1,3939 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_difm_all_style_channel.inv.001",
+    "apiAuditId": "ncm.dj_difm_all_style_channel",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:22:20.602Z",
+    "endedAt": "2026-08-05T03:22:20.708Z",
+    "durationMs": 106,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": [
+      {
+        "source": 0,
+        "styles": [
+          {
+            "id": 1020,
+            "name": "New",
+            "source": 0,
+            "chineseName": "最新电音",
+            "show": 2,
+            "description": "",
+            "radar": [],
+            "channels": [
+              {
+                "id": 10505,
+                "name": "Deep Progressive House",
+                "cover": "https://p3.music.126.net/jxOG_002EpBSXhURz9PMNw==/109951164812016852.jpg#hash=8543e50e40f1",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812016852#hash=f1d6baa51a42",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10504,
+                "name": "Chill EDM",
+                "cover": "https://p3.music.126.net/Lrba5Ja0K51vCeZ2tKXS7A==/109951164812017836.jpg#hash=3fd7bf33175b",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812017836#hash=db4afe93b9d7",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10494,
+                "name": "LoFi Lounge & Chill",
+                "cover": "https://p3.music.126.net/Xqzy6ioZZYsYrN7qHpBwEw==/109951164812015849.jpg#hash=03e057966c3f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812015849#hash=eb42fa317843",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10506,
+                "name": "Summer Chill House",
+                "cover": "https://p3.music.126.net/fiItjmpvnXGP_5vlSb5Dxw==/109951164812024069.jpg#hash=dcfebd6645ec",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812024069#hash=13c1e96fe038",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10509,
+                "name": "PsyDub",
+                "cover": "https://p4.music.126.net/8X4AB_OpB3HxkgutiY3PDw==/109951164812021692.jpg#hash=8abeef08f62f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812021692#hash=80a5136254c5",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              }
+            ]
+          },
+          {
+            "id": 1015,
+            "name": "Ambient",
+            "source": 0,
+            "chineseName": "氛围",
+            "show": 2,
+            "description": "Ambient 氛围电子乐，源于70年代艺术家们的一种实验性的电子合成音乐，是一种拥有开阔空间让创作者自由发挥的电子音乐，尤其关注声音材质、相对无规律，无歌词或谱曲。氛围音乐包含的元素有Electronic(基础电子)、Easy Listening(经典轻音乐)、Minimal Music(极简音乐)、Experimental Music(实验音乐)、Dub（回响）以及Rock（摇滚）式的稀疏沉重鼓点。这类音乐侧重音调的平稳性以及环境的渲染，节奏极其舒缓；同时一个明显的特征是习惯采样各种天然的音色，听感或飘渺空旷或幽暗神秘，因此我们称其为“氛围音乐”，由于以早期电子音色为根基，从而被视为电音中一个代表性流派。尤其重要的是，它对后来 Ambient House、Ambient Techno、Chill-out、Downtempo、Trance 等主流曲风的形成有着奠基级别的意义。\n代表人物有 Deuter、Fripp & Eno、Northcape、Lustmord等。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 1012,
+                "name": "Ambient",
+                "cover": "https://p3.music.126.net/2E8I_HGSNXPGJ7NVIh7r5w==/109951163622753609.jpg#hash=2d2b065c01ad",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753609#hash=f4ced09fbdfe",
+                "chineseName": "氛围音乐",
+                "description": "源于70年代艺术家们的一种实验性的电子合成音乐，是一种拥有开阔空间让创作者自由发挥的电子音乐，尤其关注声音材质、相对无规律，无歌词或谱曲。氛围音乐包含的元素有Electronic(基础电子)、Easy Listening(经典轻音乐)、Minimal Music(极简音乐)、Experimental Music(实验音乐)、Dub（回响）以及Rock（摇滚）式的稀疏沉重鼓点。这类音乐侧重音调的平稳性以及环境的渲染，节奏极其舒缓；同时一个明显的特征是习惯采样各种天然的音色，听感或飘渺空旷或幽暗神秘，因此我们称其为“氛围音乐”，由于以早期电子音色为根基，从而被视为电音中一个代表性流派。尤其重要的是，它对后来 Ambient House、Ambient Techno、Chill-out、Downtempo、Trance 等主流曲风的形成有着奠基级别的意义。\n代表性制作人： Deuter、Fripp & Eno、Northcape、Lustmord等。",
+                "source": 0,
+                "radar": [
+                  3,
+                  1,
+                  5,
+                  2,
+                  1
+                ]
+              },
+              {
+                "id": 1064,
+                "name": "Space Dreams",
+                "cover": "https://p3.music.126.net/QhSrFYSLR1SBJ2HUr3mR9g==/109951163622745825.jpg#hash=b7d708ecdc21",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622745825#hash=6083310880dc",
+                "chineseName": "宇宙梦幻",
+                "description": "在 Ambient富有感染力的基础上，增加充满未来感的旋律。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  5,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10285,
+                "name": "Psybient",
+                "cover": "https://p4.music.126.net/FYPqsBJ19DcBmt8kGpKmqg==/109951163622748269.jpg#hash=8e1efb30ca85",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748269#hash=4ca074fb4e43",
+                "chineseName": "迷幻氛围音乐",
+                "description": "在 Ambient平稳音调和舒缓节奏中重点表现迷幻特点的音乐。",
+                "source": 0,
+                "radar": [
+                  2,
+                  1,
+                  5,
+                  2,
+                  2
+                ]
+              },
+              {
+                "id": 1067,
+                "name": "PsyChill",
+                "cover": "https://p4.music.126.net/upZSVtEmxe_E7bpZr2cF_A==/109951163622746800.jpg#hash=0172f24a5d35",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746800#hash=57294bb5fb1d",
+                "chineseName": "迷幻驰放",
+                "description": "一种低速Psytrance流派，沿袭其致幻的回响节奏，极大程度融合了Chillout、Ambient元素。",
+                "source": 0,
+                "radar": [
+                  3,
+                  1,
+                  5,
+                  2,
+                  2
+                ]
+              },
+              {
+                "id": 10280,
+                "name": "Electronic Pioneers",
+                "cover": "https://p4.music.126.net/Bp879t3HqhuqA85JspzenA==/109951163622747290.jpg#hash=1efef08694e1",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747290#hash=a59a8cbe4406",
+                "chineseName": "电子先驱",
+                "description": "电音领域的早期开拓性和实验音乐的精选合集。",
+                "source": 0,
+                "radar": [
+                  1,
+                  2,
+                  4,
+                  1,
+                  2
+                ]
+              },
+              {
+                "id": 10509,
+                "name": "PsyDub",
+                "cover": "https://p4.music.126.net/8X4AB_OpB3HxkgutiY3PDw==/109951164812021692.jpg#hash=8abeef08f62f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812021692#hash=80a5136254c5",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10292,
+                "name": "Future Garage",
+                "cover": "https://p3.music.126.net/yVJMVHwICOsN5n-8VPmgmw==/109951163622750216.jpg#hash=7d3b8ed17dce",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750216#hash=f842a92b5177",
+                "chineseName": "未来车库",
+                "description": "在 UK Garage 的基础上加入了 2-Step Garage 的柔和，并加入了一些比如DarkSwing、Grime、PostDubstep、IDM、Ambient、Chillout、Drumstep、Trip Hop、Dub Techno 等元素之后发展为现在的样子。",
+                "source": 0,
+                "radar": [
+                  3,
+                  2,
+                  5,
+                  2,
+                  2
+                ]
+              },
+              {
+                "id": 1068,
+                "name": "Chillout Dreams",
+                "cover": "https://p4.music.126.net/munocVwnhqGTRrNM3eWW2A==/109951163622743930.jpg#hash=15cc630cc116",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743930#hash=169560734935",
+                "chineseName": "入梦驰放",
+                "description": "轻松、缓慢、令人放松的Chillout的基础上，点缀各种如催眠般的恍惚、朦胧声效。",
+                "source": 0,
+                "radar": [
+                  4,
+                  1,
+                  5,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 103,
+                "name": "Chillout",
+                "cover": "https://p4.music.126.net/krQltsoJSsHUiRB59uRI7w==/109951163622742975.jpg#hash=9ee959571bb6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742975#hash=9aae42eb9090",
+                "chineseName": "驰放音乐",
+                "description": "广义上讲，Chillout 驰放音乐主要是指一些电子化的轻音乐，舒缓、优美、闲适，注重情绪和意境，适宜于平日里聆听，也适合轻松的休闲场景。\nChill-out 音乐是20世纪90年代起源于欧陆的电子音乐重要流派。这种曲风以 Ambient（氛围乐）和 Classical Music（古典乐）为基础，融入一定的电子音色后形成，比 Ambient 更注重旋律。因其轻柔和舒缓的特点，富有意境，代入感强，Chill-out也自然成为了“轻（松）音乐”的代名词，钢琴、吉他、提琴等原声乐器的音色是其惯用的元素。",
+                "source": 0,
+                "radar": [
+                  4,
+                  1,
+                  5,
+                  3,
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "id": 1065,
+            "name": "Bass",
+            "source": 0,
+            "chineseName": "低音",
+            "show": 2,
+            "description": "Bass Music虽然可以译为“低音电子”，但并不是指它的bassline部分只有低音频段，更为准确的解释是它有着比其他大类曲风更凸显Bass部分的特征，并且随着主流元素和商业化的冲击，所谓的“低音”也不再只涵盖凸显低音bass的类型（比如Dubstep），而是更具侵略感（比如Brostep）。但不论如何，Bass Music注定坚守震撼的低音。速度一般在150~180BPM 左右。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 1013,
+                "name": "Drum and Bass",
+                "cover": "https://p3.music.126.net/OWX1xwxatl7L5JJQnZtbaQ==/109951163622756028.jpg#hash=39209c6b9e17",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622756028#hash=b5321c1deee0",
+                "chineseName": "鼓打贝斯",
+                "description": "以鼓和贝斯为主的电子舞曲，音色走低频震撼路，通常缩写为D&B或DnB。Drum and Bass起源于上世纪90年代中期的英国，属于更快节奏的一种Breakbeat子类音乐，特征为原始而厚重的 bassline，最大化由低音迸发而出的威力。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  3,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10105,
+                "name": "Liquid DnB",
+                "cover": "https://p4.music.126.net/rOzEZNhf47teEWl49DQMYw==/109951163622754598.jpg#hash=8ffbd3731d92",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754598#hash=1589a6f13f92",
+                "chineseName": "流体鼓打贝斯",
+                "description": "又名Liquidfunk，像溪流一般流畅和带着轻快节奏的 DnB（Drum & Bass 以鼓和贝斯为主的电子舞曲，音色走低频震撼路），给人一种轻松的感觉但又不失跃动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  4,
+                  4,
+                  3,
+                  3
+                ]
+              },
+              {
+                "id": 10424,
+                "name": "Future Bass",
+                "cover": "https://p3.music.126.net/3rUd6-6k9DVhvgQ2QV47ZQ==/109951163622755101.jpg#hash=32476e2b7e56",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755101#hash=987ccaac8f82",
+                "chineseName": "未来贝斯",
+                "description": "从Future Garage衍生而来，节奏舒缓轻快，给人一种清新舒爽的感觉，属于小清新一类的音乐。注重表现切片式的bass lead，强调旋律，总是能让你心醉神迷。Future Bass发展至今也展现出了各具特色的表现形式，例如Kawaii Bass、Future Beats、Futurestep、Future R&B、Future Trap、Melodic Trap等等音乐标签。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  5,
+                  3
+                ]
+              },
+              {
+                "id": 10293,
+                "name": "Jungle",
+                "cover": "https://p3.music.126.net/UuDAihBWrXuqf171wv-R5Q==/109951163622753611.jpg#hash=6923d2a6e078",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753611#hash=184d1e4ab58c",
+                "chineseName": "丛林",
+                "description": "非洲丛林打击与现代化电子合成器音效的混合体，其特点是副鼓点非常稠密，有少量的唱腔。Jungle 有别于其他跳舞音乐之处在于它可以使人在跳舞时有接近疯狂的感觉，被认为是DnB音乐的早期形态。",
+                "source": 0,
+                "radar": [
+                  3,
+                  5,
+                  1,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10275,
+                "name": "Chillstep",
+                "cover": "https://p4.music.126.net/3FhC_PM-jyK5-ZuU9MvRtw==/109951163622747786.jpg#hash=a828fdfedde2",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747786#hash=d23fe4591c62",
+                "chineseName": "驰放低音",
+                "description": "在Chillout的基础上结合注重环境营造和低音表现的英式Dubstep ，比纯粹的Chillout多了一些微妙的小躁动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  5,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10230,
+                "name": "Trap",
+                "cover": "https://p4.music.126.net/P7MVAZDn58NrYZGLqg36Ig==/109951163622750208.jpg#hash=b18593eb2e3a",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750208#hash=9e5836c741e5",
+                "chineseName": "陷阱舞曲",
+                "description": "最初源自美国南部的嘻哈音乐，以其叛逆性并具有侵略性的歌词和宽厚的808鼓机声音著称。BPM横跨70-170。Trap 音乐真正汇入主流是在2012年，在电子音乐大肆流行的环境之下，电音制作人们开始将 Trap 这种音乐元素融合到他们的作品中，这明显地加快了Trap在电子音乐爱好者中蔓延的速度。主要运用的元素有：\n1. 鼓点：808的底鼓(kick)+低音贝斯(subbass)+音色清脆明亮的军鼓(snare)/拍手(clap)+踩镲(hi hat)滚奏，制造节奏上的变化非常重要，因为trap本质上是跳舞的音乐，偶尔让底鼓密集出现再加上一些过门的音效会带来很酷的感觉。\n2. 音色：一般来说 Trap 表现的题材都和黑暗的内容有关。在初期的南部街区，说唱歌手一般在 Trap 中加入跟毒品、性、金钱、警察暴力相关的内容，而在 电音制作人们加入后，题材明显变宽，涉及到古老传说、可怕生物、邪教文化、民族风情、科技发展等等。常用的音色有迷幻的 Lead、尖利高亢的 Pluck 以及燥热的 Bass。人声的话经常会用40岁老男人的粗野“嘿”声来陪衬，在到 Drop 的过渡部分会用一些降调处理的人声。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  3,
+                  5,
+                  4
+                ]
+              },
+              {
+                "id": 1091,
+                "name": "Dubstep",
+                "cover": "https://p3.music.126.net/cIqvkPB0lIuXRqW_Knd-Fw==/109951163622744406.jpg#hash=d6e7201bb680",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744406#hash=8124a04c5a2a",
+                "chineseName": "回响音乐",
+                "description": "Dubstep 以其阴郁环境，稀疏的节奏和低音上的强调著称。1998年诞生于英国伦敦南部。dub 元素来自牙买加的 dub reggae，在英国的牙买加黑人给英国音乐文化带来很深的影响。而dubstep的 ‘step'指的是’2step' ，即底鼓和军鼓进行速度减少一倍，但力量增强几倍，并强调贝斯的加入，达到一锤定乾坤的效果。BPM为70左右，在音色方面，Dubstep会采用较多的wobble bass（震荡贝斯，表现摇晃的效果）、growl bass（咆哮贝斯，表现尖叫、怒吼的效果）、electro（电气化的音色）和glitch（机器失真、故障的音色）。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  3,
+                  4,
+                  4
+                ]
+              },
+              {
+                "id": 10177,
+                "name": "Club Dubstep",
+                "cover": "https://p3.music.126.net/sPU3AE6PNdxnfCqRNCgy3w==/109951163622755095.jpg#hash=8d5ad605d8ec",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755095#hash=001ebdc3e4e2",
+                "chineseName": "俱乐部回响贝斯",
+                "description": "在 Dubstep 稀疏节奏和低音的基础上，加以改编使其更适合俱乐部狂欢，这种现象反映的是传统的Dubstep为迎合特殊需要的自我演变。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  1,
+                  5,
+                  4
+                ]
+              },
+              {
+                "id": 10474,
+                "name": "EDM Hits",
+                "cover": "https://p4.music.126.net/wbaNrQnh6GS6VAd5guJnJg==/109951163745125740.jpg#hash=697272da35d6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163745125740#hash=d6c09915d122",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 1015,
+                "name": "Breaks",
+                "cover": "https://p4.music.126.net/hhkCNCZQq2iOYLMd9N7yyg==/109951163622750724.jpg#hash=8b800a560465",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750724#hash=6b8647f8b088",
+                "chineseName": "碎拍",
+                "description": "起源于英国，属于Breakbeat的主要表现形式。这种音乐风格打破了大部分常规舞曲的传统概念，不再是单一的鼓点和死板的音乐类型定位。Breaks 的 BPM 在126-136之间，速度可以说是符合了大众需求。其鼓点非常特别，破碎而不机械化，让人随意的去发挥和想象跳舞的空间。正因为鼓点的破碎使得本来格式化的 Bass 充满了饱和度，让人迸发出内心渴望舞动的快感。Breaks 可以说是所有音乐优点的结合体，从 Rap、 Trance 、 Jazz 、Rock、Funk 到 Old School 它都能涉及到。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  1,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10291,
+                "name": "Drumstep",
+                "cover": "https://p3.music.126.net/10JjM5e2q5yZbX9Yg-4N3g==/109951163622750737.jpg#hash=cd22bb7087f2",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750737#hash=e941e93beeaa",
+                "chineseName": "鼓点回响",
+                "description": "这个风格介于 Dubstep（稀疏的节奏和低音上的强调） 和 Drum & Bass（ 以鼓和贝斯为主的电子舞曲，音色走低频震撼路） 之间，bpm大概在170左右，鼓点比较像放慢1.5倍的 Drum & Bass。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  2,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10184,
+                "name": "Liquid Dubstep",
+                "cover": "https://p3.music.126.net/AUzsSdCDuJTdDyJJPTvqww==/109951163622753135.jpg#hash=9b840a546051",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753135#hash=267c3348fd16",
+                "chineseName": "流体回响贝斯",
+                "description": "在 Dubstep 的基础上，节奏更为舒缓和平滑，其中的人声是以一种流畅的律动呈现出来的。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  5,
+                  3
+                ]
+              },
+              {
+                "id": 10403,
+                "name": "Atmospheric Breaks",
+                "cover": "https://p4.music.126.net/d98CacAdAEJWrmn8sNIXwQ==/109951163622755576.jpg#hash=58703d5f69d4",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755576#hash=0cab42ec21e3",
+                "chineseName": "氛围碎拍",
+                "description": "参考Breaks式节拍的氛围电子乐，鼓点非常特别，破碎而不机械化。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  5,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 10181,
+                "name": "Dark DnB",
+                "cover": "https://p3.music.126.net/a1fCfYAUx9ueyx8SM7PkKA==/109951163622756022.jpg#hash=387cb53c24bb",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622756022#hash=69e667674a30",
+                "chineseName": "暗黑 DnB",
+                "description": "暗黑气氛的DnB（Drum & Bass 以鼓和贝斯为主的电子舞曲，音色走低频震撼路），同时充斥着邪恶和凶猛的元素，节拍也比常规的DnB更暴躁。",
+                "source": 0,
+                "radar": [
+                  2,
+                  4,
+                  4,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10352,
+                "name": "Liquid Trap",
+                "cover": "https://p4.music.126.net/YN2d068tXzzh885aEj-f0Q==/109951163622755575.jpg#hash=13f5807003ce",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755575#hash=b6540b8ac293",
+                "chineseName": "流体陷阱音乐",
+                "description": "突出 Trap 中较为柔和的部分，但任然充满了机械的律动和 Hip Hop精髓。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10348,
+                "name": "Dub",
+                "cover": "https://p3.music.126.net/AGbflwbWH5opqQl2ibY_GQ==/109951163622745832.jpg#hash=f0c3ade09508",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622745832#hash=afbbe1f11235",
+                "chineseName": "回响电音",
+                "description": "是将歌声抽离只剩下音乐的Reggae（雷鬼乐,一种很有节拍性强,唱腔特别的南美黑人音乐)，将bass和鼓声加重，并且加入大量的echo(回音)效果，以朦胧的鼓击和Bass低音让聆听者仿佛置身于一种迷幻压迫的空间感之中。Dub的特点是较慢的节奏、吉他或钢琴的弱拍、强调第三拍，以及由切分音组成，旋律性的低音线。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  3,
+                  3,
+                  3
+                ]
+              },
+              {
+                "id": 10325,
+                "name": "Big Beat",
+                "cover": "https://p3.music.126.net/1ZiszT-FmliSZWXcNEWgtw==/109951163622751643.jpg#hash=78e8d3b78f0f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751643#hash=5137ffbfc7ca",
+                "chineseName": "大节拍",
+                "description": "Big Beat 是自约1997年左右兴起的音乐形态，其基本概念，就是将摇滚乐和电子乐结合起来，即是将演奏取向的摇滚乐，以电子乐方式制作，变成舞曲的形式。有点类似摇滚乐的鼓点节奏，配以大量合成器，把Brit-Hop变得更快，节奏更重，更有摇滚的味道，可说是将 Brit-Hop 改良后，更成熟的一种曲风。Big Beat 不只受舞曲迷欢迎，更受摇滚迷喜爱。又由于Big Beat 实为摇滚乐建构在电子乐上，因此也有人称它为“Techno-Punk”。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  2,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10509,
+                "name": "PsyDub",
+                "cover": "https://p4.music.126.net/8X4AB_OpB3HxkgutiY3PDw==/109951164812021692.jpg#hash=8abeef08f62f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812021692#hash=80a5136254c5",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10198,
+                "name": "Glitch Hop",
+                "cover": "https://p4.music.126.net/fLEcuOxqpN_ShEnLAIez1g==/109951163622748275.jpg#hash=3bcd9b4c1c69",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748275#hash=beff75750d31",
+                "chineseName": "毛刺音乐",
+                "description": "毛刺音乐是2000后才出现的一种新式电子音乐风格，基于90~110BPM左右的嘻哈节拍，展现“故障美学”（Glitch：使用故障或受损的录音设备或数字化技术，典型的将噪音作为素材的实验电子音乐），同时结合了明显的bass music成分。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  2,
+                  4,
+                  4
+                ]
+              },
+              {
+                "id": 10210,
+                "name": "EDM Festival",
+                "cover": "https://p3.music.126.net/_aILrtaogd9lCbsQ0W4uMw==/109951163622742976.jpg#hash=f5eb20565e6a",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742976#hash=da0b3dd9c1ff",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10289,
+                "name": "Bassline",
+                "cover": "https://p4.music.126.net/1U1xnZ1mKvXvVErl1mtiPQ==/109951163622746799.jpg#hash=161d09ded2ca",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746799#hash=0555fdd8f264",
+                "chineseName": "贝斯声线",
+                "description": "2007年末开始在英国流行起来，由 UK Garage 演变而来的的一种副流派，将 House Music、Speed Garage 与 Techno 相结合，并且更强调 Bass音色 这一要素。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10290,
+                "name": "Bass & Jackin' House",
+                "cover": "https://p4.music.126.net/3uIPtzWx19IN5l6gp1m4wA==/109951163622750210.jpg#hash=7bb2429b3181",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750210#hash=b3323e0921d8",
+                "chineseName": "热舞浩室",
+                "description": "4/4拍的节奏带着最满的Grooves和最丰富的打击元素，高能释放，煽动人们进入舞池。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  2,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 10292,
+                "name": "Future Garage",
+                "cover": "https://p3.music.126.net/yVJMVHwICOsN5n-8VPmgmw==/109951163622750216.jpg#hash=7d3b8ed17dce",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750216#hash=f842a92b5177",
+                "chineseName": "未来车库",
+                "description": "在 UK Garage 的基础上加入了 2-Step Garage 的柔和，并加入了一些比如DarkSwing、Grime、PostDubstep、IDM、Ambient、Chillout、Drumstep、Trip Hop、Dub Techno 等元素之后发展为现在的样子。",
+                "source": 0,
+                "radar": [
+                  3,
+                  2,
+                  5,
+                  2,
+                  2
+                ]
+              }
+            ]
+          },
+          {
+            "id": 109,
+            "name": "Chillout",
+            "source": 0,
+            "chineseName": "弛放",
+            "show": 2,
+            "description": "广义上讲，Chillout 驰放音乐主要是指一些电子化的轻音乐，舒缓、优美、闲适，注重情绪和意境，适宜于平日里聆听，也适合轻松的度假场景。\nChill-out 音乐是20世纪90年代起源于欧陆的电子音乐重要流派。这种曲风以 Ambient（氛围乐）和 Classical Music（古典乐）为基础，融入一定的电子音色后形成，比 Ambient 更注重旋律。因其轻柔和舒缓的特点，富有意境，代入感强，Chill-out也自然成为了“轻（松）音乐”的代名词，钢琴、吉他、提琴等原声乐器的音色是其惯用的元素。\n代表人物有 Seven 24、York、Solarsoul、Blank & Jones等，而诸如ATB、BT、Aly & Fila、Above & Beyond、Andy Moor、SoundLift、Innersync等Trance制作人也在另一层面把Chillout的魅力展现。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 103,
+                "name": "Chillout",
+                "cover": "https://p3.music.126.net/krQltsoJSsHUiRB59uRI7w==/109951163622742975.jpg#hash=2a21106f57e1",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742975#hash=9aae42eb9090",
+                "chineseName": "驰放音乐",
+                "description": "广义上讲，Chillout 驰放音乐主要是指一些电子化的轻音乐，舒缓、优美、闲适，注重情绪和意境，适宜于平日里聆听，也适合轻松的休闲场景。\nChill-out 音乐是20世纪90年代起源于欧陆的电子音乐重要流派。这种曲风以 Ambient（氛围乐）和 Classical Music（古典乐）为基础，融入一定的电子音色后形成，比 Ambient 更注重旋律。因其轻柔和舒缓的特点，富有意境，代入感强，Chill-out也自然成为了“轻（松）音乐”的代名词，钢琴、吉他、提琴等原声乐器的音色是其惯用的元素。",
+                "source": 0,
+                "radar": [
+                  4,
+                  1,
+                  5,
+                  3,
+                  1
+                ]
+              },
+              {
+                "id": 1068,
+                "name": "Chillout Dreams",
+                "cover": "https://p3.music.126.net/munocVwnhqGTRrNM3eWW2A==/109951163622743930.jpg#hash=f3a02d6ee56c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743930#hash=169560734935",
+                "chineseName": "入梦驰放",
+                "description": "轻松、缓慢、令人放松的Chillout的基础上，点缀各种如催眠般的恍惚、朦胧声效。",
+                "source": 0,
+                "radar": [
+                  4,
+                  1,
+                  5,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10142,
+                "name": "Vocal Chillout",
+                "cover": "https://p4.music.126.net/l6sEde-NDFJO8vuQhfoDxw==/109951163622753607.jpg#hash=3ea3d6042d3f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753607#hash=5695b6df2cbf",
+                "chineseName": "人声驰放音乐",
+                "description": "拥有人声辅助表现的驰放电子，给予我们休闲放松的感觉。",
+                "source": 0,
+                "radar": [
+                  5,
+                  1,
+                  5,
+                  4,
+                  1
+                ]
+              },
+              {
+                "id": 10504,
+                "name": "Chill EDM",
+                "cover": "https://p4.music.126.net/Lrba5Ja0K51vCeZ2tKXS7A==/109951164812017836.jpg#hash=52aae1e809b5",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812017836#hash=db4afe93b9d7",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10400,
+                "name": "Chill & Tropical House",
+                "cover": "https://p4.music.126.net/GYZ_PV4Nf_CfT5F2PjOktg==/109951163622750209.jpg#hash=dc43d9ec7646",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750209#hash=7b3050e642fc",
+                "chineseName": "热带舒缓浩室",
+                "description": "发源于欧洲20世纪末，BPM在100-115左右，由来自澳大利亚的制作人Thomas Jack最先开创。它在house音乐的4/4拍的节奏加上合成器乐段的基础上，融入排笛、马林巴琴、钢鼓、铜管乐器的音色以及人声，给听众营造出一个整体慵懒、欢乐、度假般的 Chill 休闲氛围。这是一种让人放松，舒缓情绪的音乐曲风，具有热带沙滩风格，活泼音色，常加上律动的人声。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  5,
+                  2
+                ]
+              },
+              {
+                "id": 10275,
+                "name": "Chillstep",
+                "cover": "https://p3.music.126.net/3FhC_PM-jyK5-ZuU9MvRtw==/109951163622747786.jpg#hash=1596ffc09066",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747786#hash=d23fe4591c62",
+                "chineseName": "驰放低音",
+                "description": "在Chillout的基础上结合注重环境营造和低音表现的英式Dubstep ，比纯粹的Chillout多了一些微妙的小躁动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  5,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10224,
+                "name": "ChillHop",
+                "cover": "https://p4.music.126.net/76f4sZSMbhnduWvUDyMmZw==/109951163622751180.jpg#hash=297ae0feadfa",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751180#hash=7c2f336563bf",
+                "chineseName": "驰放嘻哈",
+                "description": "将 Hip hop、Trip hop、Downtempo beats 和 Jazz 融合在一起，并用一种柔和悠闲的风格将其呈现出来。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  4,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 1011,
+                "name": "Lounge",
+                "cover": "https://p3.music.126.net/ReEChsWY2Wa-IvffO5McRw==/109951163622755573.jpg#hash=1b30a895bd10",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755573#hash=698f98620088",
+                "chineseName": "沙发音乐",
+                "description": "Lounge 沙发音乐是近年来开始流行于欧洲的一类新式轻型电子乐，赖于Easy Listening的背景，使其善于营造一种于相对平静的音乐氛围，使人在舒适、放松中获得心情的愉悦；Lounge 可以是带有冷艳气质的电子音乐，也可以是随性浪漫的法国香颂或是热情奔放的拉丁曼波，所以它的迷人之处就在于多变的风格以及其营造的一种富有格调的生活态度。在电子音乐范畴，Lounge 与 Downtempo 、Chillout等都属于近似风格。\n代表人物有 Pink Martini、Koop、Richard Cheese、Jazzanova等。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  4,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10180,
+                "name": "Downtempo Lounge",
+                "cover": "https://p4.music.126.net/kzrTpUGfcNYdvB0RXGIJTQ==/109951163622754612.jpg#hash=9bbc730454f3",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754612#hash=37f2badc0197",
+                "chineseName": "缓拍 & 沙发",
+                "description": "以舒适的节奏、 清柔的歌声以及氛围感鲜明的背景音为特征，适宜享受闲适时光的同时欣赏，富有情调。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  4,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10494,
+                "name": "LoFi Lounge & Chill",
+                "cover": "https://p3.music.126.net/Xqzy6ioZZYsYrN7qHpBwEw==/109951164812015849.jpg#hash=03e057966c3f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812015849#hash=eb42fa317843",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10492,
+                "name": "LoFi Hip-Hop",
+                "cover": "https://p4.music.126.net/7v-4kBiY-h7y1hpZmIWV_g==/109951163745134541.jpg#hash=018c2f00813c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163745134541#hash=d07f4505df03",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10506,
+                "name": "Summer Chill House",
+                "cover": "https://p3.music.126.net/fiItjmpvnXGP_5vlSb5Dxw==/109951164812024069.jpg#hash=dcfebd6645ec",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812024069#hash=13c1e96fe038",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10402,
+                "name": "Melodic Progressive",
+                "cover": "https://p4.music.126.net/7pyPMicSx_IsXn8mH8z7VA==/109951163622746796.jpg#hash=13e193c43b6c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746796#hash=6d39239a8b11",
+                "chineseName": "旋律前卫",
+                "description": "更注重旋律的一类Progressive House ，歌曲特征常体现在明亮且欢愉的基调和氛围，有时相伴人声，但仍然不失渐进的整体脉络。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  5,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 1064,
+                "name": "Space Dreams",
+                "cover": "https://p4.music.126.net/QhSrFYSLR1SBJ2HUr3mR9g==/109951163622745825.jpg#hash=ae30902ebcf8",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622745825#hash=6083310880dc",
+                "chineseName": "宇宙梦幻",
+                "description": "在 Ambient富有感染力的基础上，增加充满未来感的旋律。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  5,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 1067,
+                "name": "PsyChill",
+                "cover": "https://p4.music.126.net/upZSVtEmxe_E7bpZr2cF_A==/109951163622746800.jpg#hash=0172f24a5d35",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746800#hash=57294bb5fb1d",
+                "chineseName": "迷幻驰放",
+                "description": "一种低速Psytrance流派，沿袭其致幻的回响节奏，极大程度融合了Chillout、Ambient元素。",
+                "source": 0,
+                "radar": [
+                  3,
+                  1,
+                  5,
+                  2,
+                  2
+                ]
+              },
+              {
+                "id": 10292,
+                "name": "Future Garage",
+                "cover": "https://p4.music.126.net/yVJMVHwICOsN5n-8VPmgmw==/109951163622750216.jpg#hash=71acbb34be7b",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750216#hash=f842a92b5177",
+                "chineseName": "未来车库",
+                "description": "在 UK Garage 的基础上加入了 2-Step Garage 的柔和，并加入了一些比如DarkSwing、Grime、PostDubstep、IDM、Ambient、Chillout、Drumstep、Trip Hop、Dub Techno 等元素之后发展为现在的样子。",
+                "source": 0,
+                "radar": [
+                  3,
+                  2,
+                  5,
+                  2,
+                  2
+                ]
+              },
+              {
+                "id": 10404,
+                "name": "Indie Beats",
+                "cover": "https://p4.music.126.net/_7S1RTQB-XfhTG0bsv9Znw==/109951163622748747.jpg#hash=178a3215abc6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748747#hash=4650f9ed76ab",
+                "chineseName": "独立节拍",
+                "description": "通常蕴藏着新奇的想法，舒适流畅、充满时尚的旋律让人能够尽情享受其中的节奏感。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  3,
+                  3,
+                  3
+                ]
+              },
+              {
+                "id": 10355,
+                "name": "Dub Techno",
+                "cover": "https://p3.music.126.net/-aqPKvN7MK0-WKSTNfls7Q==/109951163622749240.jpg#hash=af5cb6ec6ce0",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622749240#hash=cbb2880934ed",
+                "chineseName": "回响科技舞曲",
+                "description": "是由 Deep Techno 中最精彩的部分加以延迟反拍处理，融合强烈混响之后形成的冰冷曲风。",
+                "source": 0,
+                "radar": [
+                  2,
+                  3,
+                  5,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 1012,
+                "name": "Ambient",
+                "cover": "https://p3.music.126.net/2E8I_HGSNXPGJ7NVIh7r5w==/109951163622753609.jpg#hash=2d2b065c01ad",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753609#hash=f4ced09fbdfe",
+                "chineseName": "氛围音乐",
+                "description": "源于70年代艺术家们的一种实验性的电子合成音乐，是一种拥有开阔空间让创作者自由发挥的电子音乐，尤其关注声音材质、相对无规律，无歌词或谱曲。氛围音乐包含的元素有Electronic(基础电子)、Easy Listening(经典轻音乐)、Minimal Music(极简音乐)、Experimental Music(实验音乐)、Dub（回响）以及Rock（摇滚）式的稀疏沉重鼓点。这类音乐侧重音调的平稳性以及环境的渲染，节奏极其舒缓；同时一个明显的特征是习惯采样各种天然的音色，听感或飘渺空旷或幽暗神秘，因此我们称其为“氛围音乐”，由于以早期电子音色为根基，从而被视为电音中一个代表性流派。尤其重要的是，它对后来 Ambient House、Ambient Techno、Chill-out、Downtempo、Trance 等主流曲风的形成有着奠基级别的意义。\n代表性制作人： Deuter、Fripp & Eno、Northcape、Lustmord等。",
+                "source": 0,
+                "radar": [
+                  3,
+                  1,
+                  5,
+                  2,
+                  1
+                ]
+              },
+              {
+                "id": 10285,
+                "name": "Psybient",
+                "cover": "https://p4.music.126.net/FYPqsBJ19DcBmt8kGpKmqg==/109951163622748269.jpg#hash=8e1efb30ca85",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748269#hash=4ca074fb4e43",
+                "chineseName": "迷幻氛围音乐",
+                "description": "在 Ambient平稳音调和舒缓节奏中重点表现迷幻特点的音乐。",
+                "source": 0,
+                "radar": [
+                  2,
+                  1,
+                  5,
+                  2,
+                  2
+                ]
+              },
+              {
+                "id": 10174,
+                "name": "Deep House",
+                "cover": "https://p4.music.126.net/XEOzcSD4ekkIazFtZzNm-w==/109951163622748759.jpg#hash=071bda4e9139",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748759#hash=a6731ed83dc9",
+                "chineseName": "深邃浩室",
+                "description": "又叫“深宅”，采用了慢速（120 bpm左右），虽然很少达到高潮但激情不变的 House 音乐，有时也会有催眠的音调。相比较来说 Deep House 的音轨更加深入，并且更加柔滑，包含了悠闲的氛围，带有意味深长的歌词的深情的人声，以及围绕着稳定的4/4节拍循环的节奏。当然，还有一个低沉的低音。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10137,
+                "name": "Deep Nu-Disco",
+                "cover": "https://p4.music.126.net/JwivZlBOOdc7AXT-rNwAjw==/109951163622750735.jpg#hash=8c7015175294",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750735#hash=ce83a71e9bd4",
+                "chineseName": "深邃 Nu-Disco",
+                "description": "囊括了house，funk以及disco的元素，节拍以中速和灵魂乐元素为主，伴着轻柔的电子律动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10280,
+                "name": "Electronic Pioneers",
+                "cover": "https://p3.music.126.net/Bp879t3HqhuqA85JspzenA==/109951163622747290.jpg#hash=3deea79d8098",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747290#hash=a59a8cbe4406",
+                "chineseName": "电子先驱",
+                "description": "电音领域的早期开拓性和实验音乐的精选合集。",
+                "source": 0,
+                "radar": [
+                  1,
+                  2,
+                  4,
+                  1,
+                  2
+                ]
+              }
+            ]
+          },
+          {
+            "id": 1019,
+            "name": "Classic",
+            "source": 0,
+            "chineseName": "经典",
+            "show": 2,
+            "description": "不同电子音乐流派巅峰时期经典曲目精选合集。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 1090,
+                "name": "Classic Trance",
+                "cover": "https://p4.music.126.net/v73f4wYgtVk2GDcy7YVPAA==/109951163622742974.jpg#hash=08475b58e673",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742974#hash=e475f792b1a3",
+                "chineseName": "经典出神舞曲",
+                "description": "Trance 巅峰时期的经典样式，也注重宏大的气场，bassline常以酸性合成器调配(TB-303)，一起来重温史诗般的宏大的经典 Trance。",
+                "source": 0,
+                "radar": [
+                  4,
+                  4,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10125,
+                "name": "Classic Vocal Trance",
+                "cover": "https://p4.music.126.net/9H0KUKbaIr15kk59eWMZXg==/109951163622748273.jpg#hash=e34b16f057b7",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748273#hash=bf75064c4067",
+                "chineseName": "经典人声出神舞曲",
+                "description": "经典人声 Trance，惊艳人声搭配触动人心的舞曲，呈现优美旋律和无尽能量源泉。",
+                "source": 0,
+                "radar": [
+                  5,
+                  4,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 1069,
+                "name": "Classic EuroDance",
+                "cover": "https://p3.music.126.net/imdq9R0K5vr16EizYoUONA==/109951163622748272.jpg#hash=e9c3b898d70c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748272#hash=bb9c62e45292",
+                "chineseName": "经典欧洲舞曲",
+                "description": "流行于上世纪90年代，通常有着凸出的节奏和旋律的经典欧洲舞曲精选。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10183,
+                "name": "Classic EuroDisco",
+                "cover": "https://p3.music.126.net/GBYg02jyXbvovY2YrVTI1A==/109951163622754605.jpg#hash=86ce5ee30f56",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754605#hash=bd8026ba24d8",
+                "chineseName": "经典欧洲迪斯科",
+                "description": "流行于上世纪70年代的经典欧洲迪斯科舞曲精选。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 10324,
+                "name": "00s Club Hits",
+                "cover": "https://p4.music.126.net/UcSS-V3fsgqcxUK0mu-xqA==/109951163622749230.jpg#hash=bcec20e1b02f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622749230#hash=f769eb489c17",
+                "chineseName": "现代舞池热单",
+                "description": "2000年之后的流行舞曲汇总，熟悉的热单和各种舞曲合集。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 10104,
+                "name": "Oldschool House",
+                "cover": "https://p4.music.126.net/J4YGaIl2ZWfxcwpdG8Hm2w==/109951163622748749.jpg#hash=ce2aeb9010c4",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748749#hash=b48462908b7c",
+                "chineseName": "复古浩室",
+                "description": "House Music 里最为经典的一大分支流派，堪称浩室音乐世界里最宝贵的一份财富。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  2,
+                  3,
+                  3
+                ]
+              },
+              {
+                "id": 10296,
+                "name": "Oldschool Rave",
+                "cover": "https://p4.music.126.net/Oi-d4xCCkfzzebwDZSEzbw==/109951163622747782.jpg#hash=4714b0ce165d",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747782#hash=428fcd6c2f0e",
+                "chineseName": "复古锐舞",
+                "description": "通过精选经典，让旧时光的锐舞场景再现。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  3,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10280,
+                "name": "Electronic Pioneers",
+                "cover": "https://p4.music.126.net/Bp879t3HqhuqA85JspzenA==/109951163622747290.jpg#hash=1efef08694e1",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747290#hash=a59a8cbe4406",
+                "chineseName": "电子先驱",
+                "description": "电音领域的早期开拓性和实验音乐的精选合集。",
+                "source": 0,
+                "radar": [
+                  1,
+                  2,
+                  4,
+                  1,
+                  2
+                ]
+              },
+              {
+                "id": 1014,
+                "name": "Oldschool Techno & Trance ",
+                "cover": "https://p4.music.126.net/v0JXw5mDWyExwptZF9xsUQ==/109951163622744824.jpg#hash=96968c44137b",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744824#hash=3486fea286d9",
+                "chineseName": "复古科技 & 出神舞曲",
+                "description": "Techno 和 Trance 巅峰时期的经典歌曲精选，它们奠定了近十年舞曲文化的基础。",
+                "source": 0,
+                "radar": [
+                  2,
+                  4,
+                  3,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10124,
+                "name": "Oldschool Acid",
+                "cover": "https://p4.music.126.net/P_OoGLxREwP3Mju-ql53ZQ==/109951163622750725.jpg#hash=73516f69d86b",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750725#hash=0011367d14a4",
+                "chineseName": "复古迷幻",
+                "description": "将酸性acid音色（TB-303合成器的特征）与 House、Techno 和 Trance 模板相结合的一种曲风。",
+                "source": 0,
+                "radar": [
+                  1,
+                  4,
+                  2,
+                  2,
+                  5
+                ]
+              },
+              {
+                "id": 10353,
+                "name": "Detroit House & Techno",
+                "cover": "https://p4.music.126.net/oYWmCfHCq8-w86PjsqsW5g==/109951163622749724.jpg#hash=fc492bd29ca3",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622749724#hash=20acfd14f190",
+                "chineseName": "底特律浩室 & 科技舞曲",
+                "description": "来自科技舞曲发源地、浩室舞曲进化地的 Techno 与 House 音乐。",
+                "source": 0,
+                "radar": [
+                  1,
+                  5,
+                  2,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10293,
+                "name": "Jungle",
+                "cover": "https://p4.music.126.net/UuDAihBWrXuqf171wv-R5Q==/109951163622753611.jpg#hash=be82d7c76242",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753611#hash=184d1e4ab58c",
+                "chineseName": "丛林",
+                "description": "非洲丛林打击与现代化电子合成器音效的混合体，其特点是副鼓点非常稠密，有少量的唱腔。Jungle 有别于其他跳舞音乐之处在于它可以使人在跳舞时有接近疯狂的感觉，被认为是DnB音乐的早期形态。",
+                "source": 0,
+                "radar": [
+                  3,
+                  5,
+                  1,
+                  3,
+                  4
+                ]
+              }
+            ]
+          },
+          {
+            "id": 107,
+            "name": "Dance",
+            "source": 0,
+            "chineseName": "舞曲",
+            "show": 2,
+            "description": "这里的舞曲主要指电子舞曲，起源于20世纪70年代末期，是一个广泛的舞曲流派的统称，主要用于俱乐部场景、电音节播放。它的分类包括 Disco、Italo Dance、House Music、Techno Music、Trance Music、Bass Music (UK/US)、Hard Dance Music、EDM、Dance Pop等大类以及它们各自的子分类。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 1070,
+                "name": "Club Sounds",
+                "cover": "https://p3.music.126.net/Gv_lXHqrIVcygKM_zxMD6w==/109951163622751182.jpg#hash=f9ccac8c92e7",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751182#hash=222d2c6d0f60",
+                "chineseName": "夜店舞曲",
+                "description": "火遍全球的经典热门夜店和俱乐部舞曲精选。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 10210,
+                "name": "EDM Festival",
+                "cover": "https://p4.music.126.net/_aILrtaogd9lCbsQ0W4uMw==/109951163622742976.jpg#hash=2285ab96cb12",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742976#hash=da0b3dd9c1ff",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10474,
+                "name": "EDM Hits",
+                "cover": "https://p4.music.126.net/wbaNrQnh6GS6VAd5guJnJg==/109951163745125740.jpg#hash=697272da35d6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163745125740#hash=d6c09915d122",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10209,
+                "name": "Big Room House",
+                "cover": "https://p3.music.126.net/t4jwAdTh4pi9EffrUUlPSQ==/109951163622744826.jpg#hash=e690567d382a",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744826#hash=57bcb5367526",
+                "chineseName": "大空间浩室",
+                "description": "一种极其现代化的商业浩室曲风，基于电气浩室但以更为简单的方式表现和凸出鼓点和bass声效，往往带有宽广的混响效果，是一种较为简单粗放的派对舞曲。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  3,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 10351,
+                "name": "Indie Dance",
+                "cover": "https://p3.music.126.net/jMv3c8Olg0G8Hi-OUjcFAw==/109951163622750207.jpg#hash=d39f5f4760ba",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750207#hash=a97a3a9b2d61",
+                "chineseName": "独立舞曲",
+                "description": "将独立摇滚的精髓与电音相结合，也是 Club 文化和 Live Music 融合而成的一种曲风。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  3,
+                  2,
+                  2
+                ]
+              },
+              {
+                "id": 106,
+                "name": "EuroDance",
+                "cover": "https://p3.music.126.net/F6CXZ7nWT_jwbrYoUcwHpw==/109951163622742981.jpg#hash=ad697ff8780d",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742981#hash=b4de54df336d",
+                "chineseName": "欧洲舞曲",
+                "description": "曾被大多数欧洲人追随的主流舞曲。在 DISCO 的基础上又注入了许多新的元素，如 HOUSE、RAP及更加流畅的旋律。在80年代至90年代初，大多数的舞曲专家皆追随其脚步，出现了一大批脍炙人口的好歌。EURODANCE 的BPM一般在120～130BPM之间。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 10324,
+                "name": "00s Club Hits",
+                "cover": "https://p4.music.126.net/UcSS-V3fsgqcxUK0mu-xqA==/109951163622749230.jpg#hash=bcec20e1b02f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622749230#hash=f769eb489c17",
+                "chineseName": "现代舞池热单",
+                "description": "2000年之后的流行舞曲汇总，熟悉的热单和各种舞曲合集。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 10176,
+                "name": "Hands Up",
+                "cover": "https://p4.music.126.net/z-AxgpVoftZ6BJZoJNFU4Q==/109951163622750214.jpg#hash=ddf3b5ec33df",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750214#hash=d4ecfa9c81ee",
+                "chineseName": "举起你的双手",
+                "description": "接受来自 Hard Dance、Trance 、 Happy hardcore 等多种类型的冲击，让我们举起开双臂一起在澎湃的舞曲中释放能量。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 10294,
+                "name": "Nightcore",
+                "cover": "https://p3.music.126.net/GKQEVsHCJjLodBNX4wPxBg==/109951163622743923.jpg#hash=950dd0afa5b8",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743923#hash=35a91d85ae88",
+                "chineseName": "倍速夜核",
+                "description": "将欧陆舞曲、Trance 和 Techno 歌曲加速25%至每分钟160-180拍，达到硬核的节奏 ，以强而急速的低音鼓和拍子制造出强烈的节奏感。加速的过程中也伴随着曲调相应提高。例如 Nightcore 名作 Dam Dadi Doo 原由 Fantasy Project 所作并由 N.D.A. 以低沈的男声演唱 ，在 Nightcore 演绎就成了女孩般的声线。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  3,
+                  2,
+                  5
+                ]
+              },
+              {
+                "id": 10213,
+                "name": "Russian Club Hits",
+                "cover": "https://p3.music.126.net/C9nCV0gX1X0Elq7zpUuZWQ==/109951163622744825.jpg#hash=2c4c13ee8314",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744825#hash=59533cb6f78e",
+                "chineseName": "俄罗斯夜店热单",
+                "description": "俄罗斯最热门的夜店舞曲精选。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 10295,
+                "name": "Nu Disco",
+                "cover": "https://p3.music.126.net/3d3ukfNVlPMvchYIAskaDQ==/109951163622754602.jpg#hash=87c5b41afac5",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754602#hash=82a72d8b22ca",
+                "chineseName": "新迪斯科",
+                "description": "堪称七八十年代所流行的迪斯科音乐的一场再生运动，Nu Disco兼具复古与现代，在Disco 旧时尚概念的基础上结合了更多前卫和流行化的元素，非常耐听和有趣的新流派。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  2,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 101,
+                "name": "Trance",
+                "cover": "https://p4.music.126.net/NWj-dzI3PEomd4BuqgZJCA==/109951163622748751.jpg#hash=0cef5c45c423",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748751#hash=24ad6445c398",
+                "chineseName": "出神舞曲",
+                "description": "Trance最准确的意译为“出神舞曲”，特别的音轨层次让你有“出神”的感觉，但还是保有舞曲的动感，很注重 Bassline 与Synth的配合，由此产生梦幻的感觉。\nTrance 由 Techno 演变而来，90年代早期从传入德国的科技舞曲（Techno）和电子硬核音乐（Hardcore）中分离出来，强调简洁且高亢的合成器乐句在全曲中的不断反复，只有很少的一些节奏上的变化和偶尔的合成器干扰可以将这些反复区分开来——这样做的目的是为了有效地将听众带入一种接近宗教本源的“出神”状态。鼓点方面讲究非常轻柔的 Clap，轻到几乎听不见，再配上紧凑的 Bassline 作铺垫。\n代表人物有 Paul Oakenfold、Paul van Dyk、Armin van Buuren、Ferry Corsten等。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 102,
+                "name": "Vocal Trance",
+                "cover": "https://p4.music.126.net/04PgLHbbeQsLeEwJueZTCg==/109951163622742973.jpg#hash=f153cba09f24",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742973#hash=b31d790dd57e",
+                "chineseName": "人声出神舞曲",
+                "description": "惊艳人声搭配触动人心的Trance音轨，呈现优美旋律和无尽能量源泉。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  4,
+                  4
+                ]
+              },
+              {
+                "id": 10400,
+                "name": "Chill & Tropical House",
+                "cover": "https://p4.music.126.net/GYZ_PV4Nf_CfT5F2PjOktg==/109951163622750209.jpg#hash=dc43d9ec7646",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750209#hash=7b3050e642fc",
+                "chineseName": "热带舒缓浩室",
+                "description": "发源于欧洲20世纪末，BPM在100-115左右，由来自澳大利亚的制作人Thomas Jack最先开创。它在house音乐的4/4拍的节奏加上合成器乐段的基础上，融入排笛、马林巴琴、钢鼓、铜管乐器的音色以及人声，给听众营造出一个整体慵懒、欢乐、度假般的 Chill 休闲氛围。这是一种让人放松，舒缓情绪的音乐曲风，具有热带沙滩风格，活泼音色，常加上律动的人声。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  5,
+                  2
+                ]
+              },
+              {
+                "id": 10504,
+                "name": "Chill EDM",
+                "cover": "https://p4.music.126.net/Lrba5Ja0K51vCeZ2tKXS7A==/109951164812017836.jpg#hash=52aae1e809b5",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812017836#hash=db4afe93b9d7",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10286,
+                "name": "Electropop",
+                "cover": "https://p3.music.126.net/ilBumfqzgyBVzHx1BEn3yg==/109951163622743936.jpg#hash=89f2933e628f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743936#hash=69b41709bf16",
+                "chineseName": "流行电音",
+                "description": "倾向于借助一些老式合成器和一些电子乐器打造电子化的独特流行音乐，与Synthpop有直接关联。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  4,
+                  4
+                ]
+              },
+              {
+                "id": 10175,
+                "name": "Epic Trance",
+                "cover": "https://p4.music.126.net/_rn43eq-tIPR0x51xhuTnQ==/109951163622753617.jpg#hash=eb6b7c6e5e34",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753617#hash=85978b50fda5",
+                "chineseName": "史诗出神舞曲",
+                "description": "保留Trance的基本要素，常借助交响乐创造宏大的史诗场面，搭配以庄重旋律和高昂能量，震撼人心。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  5,
+                  3,
+                  5
+                ]
+              },
+              {
+                "id": 1069,
+                "name": "Classic EuroDance",
+                "cover": "https://p3.music.126.net/imdq9R0K5vr16EizYoUONA==/109951163622748272.jpg#hash=e9c3b898d70c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748272#hash=bb9c62e45292",
+                "chineseName": "经典欧洲舞曲",
+                "description": "流行于上世纪90年代，通常有着凸出的节奏和旋律的经典欧洲舞曲精选。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10506,
+                "name": "Summer Chill House",
+                "cover": "https://p4.music.126.net/fiItjmpvnXGP_5vlSb5Dxw==/109951164812024069.jpg#hash=c8d93bd8bddd",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812024069#hash=13c1e96fe038",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10183,
+                "name": "Classic EuroDisco",
+                "cover": "https://p4.music.126.net/GBYg02jyXbvovY2YrVTI1A==/109951163622754605.jpg#hash=27a83252e6aa",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754605#hash=bd8026ba24d8",
+                "chineseName": "经典欧洲迪斯科",
+                "description": "流行于上世纪70年代的经典欧洲迪斯科舞曲精选。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 10125,
+                "name": "Classic Vocal Trance",
+                "cover": "https://p3.music.126.net/9H0KUKbaIr15kk59eWMZXg==/109951163622748273.jpg#hash=a1e311562c44",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748273#hash=bf75064c4067",
+                "chineseName": "经典人声出神舞曲",
+                "description": "经典人声 Trance，惊艳人声搭配触动人心的舞曲，呈现优美旋律和无尽能量源泉。",
+                "source": 0,
+                "radar": [
+                  5,
+                  4,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10290,
+                "name": "Bass & Jackin' House",
+                "cover": "https://p3.music.126.net/3uIPtzWx19IN5l6gp1m4wA==/109951163622750210.jpg#hash=ae84db5f2f1a",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750210#hash=b3323e0921d8",
+                "chineseName": "热舞浩室",
+                "description": "4/4拍的节奏带着最满的Grooves和最丰富的打击元素，高能释放，煽动人们进入舞池。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  2,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 1010,
+                "name": "DJ Mixes",
+                "cover": "https://p3.music.126.net/fqUE8RfiYohVBADa2JTWkQ==/109951163622755580.jpg#hash=ce9d317a7d67",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755580#hash=4cc24bb67fb5",
+                "chineseName": "DJ接歌混音作品",
+                "description": "Techno、Deep house、Progressive 和 Trance 等多种不同风格的长时长完整DJ接歌混音作品。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 1056,
+                "name": "Electro House",
+                "cover": "https://p3.music.126.net/jS8M6Wgl6DkcTOhbGWSbdw==/109951163622743935.jpg#hash=c06b306c486f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743935#hash=eb74e9088035",
+                "chineseName": "电气浩室",
+                "description": "Electro House 最初是 Funk 和早期的嘻哈音乐和纽约的 Boogie 组合形成，慢慢的开始与20世纪90年代末的 House 融合在一起。Electro house 有时包含科技浩室（Tech house）的元素，如突出Bass，短而高亢的即兴演奏，并带有小至中量的打击乐。但是不像科技浩室，它可以包括摩擦音效，电子合成器音效（Synth）和人声（Vocal）或乐器采样，节拍通常约为 128〜130BPM，中高频音色清晰分明，给人感觉节奏比较快，一般音阶跨度比较大，常常会配有 Wobble Bass 做主要音色之一。此风格感情色彩比较激昂，分段之间差别不是很鲜明，全曲都比较激烈。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  2,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 1092,
+                "name": "Disco House",
+                "cover": "https://p4.music.126.net/wejVucWDAeJxD2uU1jN8fg==/109951163622753142.jpg#hash=801360bf2332",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753142#hash=36f8b3797f33",
+                "chineseName": "迪斯科浩室",
+                "description": "一种严重依赖于对 Disco 样本采集的 House 音乐，是结合了70年代的 Disco 和 Modern House Music 鼓点节奏的一种电音流派。迪斯科这个词是 Discotheque 的简称，原意为播放唱片供人跳舞的舞厅，60年代初源于法国。由于设备的不断更新，每家舞厅只要拥一套播放机和一名唱片播放员就足以替代整个乐队，而且还可得到各种不同的音乐，既省钱又实用。因此，各大舞厅都采用这种方法。于是人们把这种由唱片播放出来的跳舞音乐也叫做迪斯科。60年代中期，迪斯科传入美国，70年代初在全国各地扩散开来。迪斯科舞曲具有强劲有力的节拍，一般为4/4 拍，每一拍都是强拍，从头到尾不变；速度大约为每分钟120拍；它的曲调短小，歌词简单，不断重复。其实，任何一首曲子，只要调整一下速度，改成强弱不分的节拍，都可以变成迪斯科。",
+                "source": 0,
+                "radar": [
+                  5,
+                  4,
+                  2,
+                  4,
+                  2
+                ]
+              },
+              {
+                "id": 105,
+                "name": "Hard Dance",
+                "cover": "https://p4.music.126.net/Cp5usK1XrKpJnYhGy7UV0Q==/109951163622752631.jpg#hash=3c82d638804b",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622752631#hash=1446e441e2a5",
+                "chineseName": "硬舞",
+                "description": "Hard Dance是电子舞曲（尤其是Hard系舞曲）的一种细分流派，由 House、Breakbeat 和 Hardcore 演变而来。典型的Hard Dance歌曲具有又深沉又重的鼓声、强烈的淡出或重低音回响，配上合成的旋律。节奏比普遍的电子音乐快，通常在140到150 bpm之间。注意但说Hard Dance并非指所有Hard类曲风的统称，它是特定具体的流派。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  3,
+                  2,
+                  5
+                ]
+              }
+            ]
+          },
+          {
+            "id": 1088,
+            "name": "Deep",
+            "source": 0,
+            "chineseName": "深邃",
+            "show": 2,
+            "description": "音轨更加深入，并且更加柔滑，包含了悠闲的氛围的风格电台集合。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 10174,
+                "name": "Deep House",
+                "cover": "https://p4.music.126.net/XEOzcSD4ekkIazFtZzNm-w==/109951163622748759.jpg#hash=071bda4e9139",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748759#hash=a6731ed83dc9",
+                "chineseName": "深邃浩室",
+                "description": "又叫“深宅”，采用了慢速（120 bpm左右），虽然很少达到高潮但激情不变的 House 音乐，有时也会有催眠的音调。相比较来说 Deep House 的音轨更加深入，并且更加柔滑，包含了悠闲的氛围，带有意味深长的歌词的深情的人声，以及围绕着稳定的4/4节拍循环的节奏。当然，还有一个低沉的低音。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10505,
+                "name": "Deep Progressive House",
+                "cover": "https://p4.music.126.net/jxOG_002EpBSXhURz9PMNw==/109951164812016852.jpg#hash=ad6a573befbd",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812016852#hash=f1d6baa51a42",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10182,
+                "name": "Deep Tech",
+                "cover": "https://p3.music.126.net/ACHBR5WH4ExdJKFF7QnImw==/109951163622743927.jpg#hash=25371ba5a6e3",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743927#hash=235e85694981",
+                "chineseName": "深邃科技",
+                "description": "将deep house，techno，tech house融合在了一起，属于极简科技音乐的一种现代化表现形式，并夹杂着充满趣味性的的节奏和间隔性的声音呈现。",
+                "source": 0,
+                "radar": [
+                  2,
+                  4,
+                  4,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 10137,
+                "name": "Deep Nu-Disco",
+                "cover": "https://p3.music.126.net/JwivZlBOOdc7AXT-rNwAjw==/109951163622750735.jpg#hash=3564a98b5dd6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750735#hash=ce83a71e9bd4",
+                "chineseName": "深邃 Nu-Disco",
+                "description": "囊括了house，funk以及disco的元素，节拍以中速和灵魂乐元素为主，伴着轻柔的电子律动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10348,
+                "name": "Dub",
+                "cover": "https://p4.music.126.net/AGbflwbWH5opqQl2ibY_GQ==/109951163622745832.jpg#hash=f4e5120349c5",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622745832#hash=afbbe1f11235",
+                "chineseName": "回响电音",
+                "description": "是将歌声抽离只剩下音乐的Reggae（雷鬼乐,一种很有节拍性强,唱腔特别的南美黑人音乐)，将bass和鼓声加重，并且加入大量的echo(回音)效果，以朦胧的鼓击和Bass低音让聆听者仿佛置身于一种迷幻压迫的空间感之中。Dub的特点是较慢的节奏、吉他或钢琴的弱拍、强调第三拍，以及由切分音组成，旋律性的低音线。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  3,
+                  3,
+                  3
+                ]
+              },
+              {
+                "id": 10355,
+                "name": "Dub Techno",
+                "cover": "https://p4.music.126.net/-aqPKvN7MK0-WKSTNfls7Q==/109951163622749240.jpg#hash=1ea9979d63ed",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622749240#hash=cbb2880934ed",
+                "chineseName": "回响科技舞曲",
+                "description": "是由 Deep Techno 中最精彩的部分加以延迟反拍处理，融合强烈混响之后形成的冰冷曲风。",
+                "source": 0,
+                "radar": [
+                  2,
+                  3,
+                  5,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 10494,
+                "name": "LoFi Lounge & Chill",
+                "cover": "https://p4.music.126.net/Xqzy6ioZZYsYrN7qHpBwEw==/109951164812015849.jpg#hash=4b413c2459be",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812015849#hash=eb42fa317843",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              }
+            ]
+          },
+          {
+            "id": 10118,
+            "name": "EDM",
+            "source": 0,
+            "chineseName": "电子舞曲",
+            "show": 2,
+            "description": "“电子舞曲 - Electronic Dance Music”的缩写，包含流行于各大夜店、锐舞派对和音乐节上的各类电子音乐，在千禧年初从北美与澳大利亚开始逐渐在全球流行起来。2010年前后，美国音乐产业开始频繁是有 Electronic Dance Music 和缩写 EDM来指代热门流行的电音，试图将其打造为一个全新的消费音乐流派，来重塑美国锐舞文化。但很显然乐迷对此并不十分买账，时至今日，人们普遍还是把 EDM 当做是 house、techno、trance、drum and bass 和 dubstep 等主要电音流派及其子流派的总称。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 10474,
+                "name": "EDM Hits",
+                "cover": "https://p4.music.126.net/wbaNrQnh6GS6VAd5guJnJg==/109951163745125740.jpg#hash=697272da35d6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163745125740#hash=d6c09915d122",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10210,
+                "name": "EDM Festival",
+                "cover": "https://p3.music.126.net/_aILrtaogd9lCbsQ0W4uMw==/109951163622742976.jpg#hash=f5eb20565e6a",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742976#hash=da0b3dd9c1ff",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 1056,
+                "name": "Electro House",
+                "cover": "https://p4.music.126.net/jS8M6Wgl6DkcTOhbGWSbdw==/109951163622743935.jpg#hash=1c50c2cc4df8",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743935#hash=eb74e9088035",
+                "chineseName": "电气浩室",
+                "description": "Electro House 最初是 Funk 和早期的嘻哈音乐和纽约的 Boogie 组合形成，慢慢的开始与20世纪90年代末的 House 融合在一起。Electro house 有时包含科技浩室（Tech house）的元素，如突出Bass，短而高亢的即兴演奏，并带有小至中量的打击乐。但是不像科技浩室，它可以包括摩擦音效，电子合成器音效（Synth）和人声（Vocal）或乐器采样，节拍通常约为 128〜130BPM，中高频音色清晰分明，给人感觉节奏比较快，一般音阶跨度比较大，常常会配有 Wobble Bass 做主要音色之一。此风格感情色彩比较激昂，分段之间差别不是很鲜明，全曲都比较激烈。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  2,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 10209,
+                "name": "Big Room House",
+                "cover": "https://p3.music.126.net/t4jwAdTh4pi9EffrUUlPSQ==/109951163622744826.jpg#hash=e690567d382a",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744826#hash=57bcb5367526",
+                "chineseName": "大空间浩室",
+                "description": "一种极其现代化的商业浩室曲风，基于电气浩室但以更为简单的方式表现和凸出鼓点和bass声效，往往带有宽广的混响效果，是一种较为简单粗放的派对舞曲。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  3,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 1070,
+                "name": "Club Sounds",
+                "cover": "https://p4.music.126.net/Gv_lXHqrIVcygKM_zxMD6w==/109951163622751182.jpg#hash=011a4ad76340",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751182#hash=222d2c6d0f60",
+                "chineseName": "夜店舞曲",
+                "description": "火遍全球的经典热门夜店和俱乐部舞曲精选。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 10400,
+                "name": "Chill & Tropical House",
+                "cover": "https://p4.music.126.net/GYZ_PV4Nf_CfT5F2PjOktg==/109951163622750209.jpg#hash=dc43d9ec7646",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750209#hash=7b3050e642fc",
+                "chineseName": "热带舒缓浩室",
+                "description": "发源于欧洲20世纪末，BPM在100-115左右，由来自澳大利亚的制作人Thomas Jack最先开创。它在house音乐的4/4拍的节奏加上合成器乐段的基础上，融入排笛、马林巴琴、钢鼓、铜管乐器的音色以及人声，给听众营造出一个整体慵懒、欢乐、度假般的 Chill 休闲氛围。这是一种让人放松，舒缓情绪的音乐曲风，具有热带沙滩风格，活泼音色，常加上律动的人声。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  5,
+                  2
+                ]
+              },
+              {
+                "id": 10230,
+                "name": "Trap",
+                "cover": "https://p4.music.126.net/P7MVAZDn58NrYZGLqg36Ig==/109951163622750208.jpg#hash=b18593eb2e3a",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750208#hash=9e5836c741e5",
+                "chineseName": "陷阱舞曲",
+                "description": "最初源自美国南部的嘻哈音乐，以其叛逆性并具有侵略性的歌词和宽厚的808鼓机声音著称。BPM横跨70-170。Trap 音乐真正汇入主流是在2012年，在电子音乐大肆流行的环境之下，电音制作人们开始将 Trap 这种音乐元素融合到他们的作品中，这明显地加快了Trap在电子音乐爱好者中蔓延的速度。主要运用的元素有：\n1. 鼓点：808的底鼓(kick)+低音贝斯(subbass)+音色清脆明亮的军鼓(snare)/拍手(clap)+踩镲(hi hat)滚奏，制造节奏上的变化非常重要，因为trap本质上是跳舞的音乐，偶尔让底鼓密集出现再加上一些过门的音效会带来很酷的感觉。\n2. 音色：一般来说 Trap 表现的题材都和黑暗的内容有关。在初期的南部街区，说唱歌手一般在 Trap 中加入跟毒品、性、金钱、警察暴力相关的内容，而在 电音制作人们加入后，题材明显变宽，涉及到古老传说、可怕生物、邪教文化、民族风情、科技发展等等。常用的音色有迷幻的 Lead、尖利高亢的 Pluck 以及燥热的 Bass。人声的话经常会用40岁老男人的粗野“嘿”声来陪衬，在到 Drop 的过渡部分会用一些降调处理的人声。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  3,
+                  5,
+                  4
+                ]
+              },
+              {
+                "id": 10424,
+                "name": "Future Bass",
+                "cover": "https://p3.music.126.net/3rUd6-6k9DVhvgQ2QV47ZQ==/109951163622755101.jpg#hash=32476e2b7e56",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755101#hash=987ccaac8f82",
+                "chineseName": "未来贝斯",
+                "description": "从Future Garage衍生而来，节奏舒缓轻快，给人一种清新舒爽的感觉，属于小清新一类的音乐。注重表现切片式的bass lead，强调旋律，总是能让你心醉神迷。Future Bass发展至今也展现出了各具特色的表现形式，例如Kawaii Bass、Future Beats、Futurestep、Future R&B、Future Trap、Melodic Trap等等音乐标签。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  5,
+                  3
+                ]
+              },
+              {
+                "id": 10215,
+                "name": "UMF Radio",
+                "cover": "https://p3.music.126.net/ajWJccl_a0O_B19D_SeJwQ==/109951163622754599.jpg#hash=ee8985db6503",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754599#hash=5d5666749d6a",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10351,
+                "name": "Indie Dance",
+                "cover": "https://p4.music.126.net/jMv3c8Olg0G8Hi-OUjcFAw==/109951163622750207.jpg#hash=e051318b1b89",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750207#hash=a97a3a9b2d61",
+                "chineseName": "独立舞曲",
+                "description": "将独立摇滚的精髓与电音相结合，也是 Club 文化和 Live Music 融合而成的一种曲风。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  3,
+                  2,
+                  2
+                ]
+              },
+              {
+                "id": 10177,
+                "name": "Club Dubstep",
+                "cover": "https://p3.music.126.net/sPU3AE6PNdxnfCqRNCgy3w==/109951163622755095.jpg#hash=8d5ad605d8ec",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755095#hash=001ebdc3e4e2",
+                "chineseName": "俱乐部回响贝斯",
+                "description": "在 Dubstep 稀疏节奏和低音的基础上，加以改编使其更适合俱乐部狂欢，这种现象反映的是传统的Dubstep为迎合特殊需要的自我演变。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  1,
+                  5,
+                  4
+                ]
+              },
+              {
+                "id": 10286,
+                "name": "Electropop",
+                "cover": "https://p4.music.126.net/ilBumfqzgyBVzHx1BEn3yg==/109951163622743936.jpg#hash=38ed3cc63f94",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743936#hash=69b41709bf16",
+                "chineseName": "流行电音",
+                "description": "倾向于借助一些老式合成器和一些电子乐器打造电子化的独特流行音乐，与Synthpop有直接关联。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  4,
+                  4
+                ]
+              },
+              {
+                "id": 10275,
+                "name": "Chillstep",
+                "cover": "https://p4.music.126.net/3FhC_PM-jyK5-ZuU9MvRtw==/109951163622747786.jpg#hash=a828fdfedde2",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747786#hash=d23fe4591c62",
+                "chineseName": "驰放低音",
+                "description": "在Chillout的基础上结合注重环境营造和低音表现的英式Dubstep ，比纯粹的Chillout多了一些微妙的小躁动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  5,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 101,
+                "name": "Trance",
+                "cover": "https://p4.music.126.net/NWj-dzI3PEomd4BuqgZJCA==/109951163622748751.jpg#hash=0cef5c45c423",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748751#hash=24ad6445c398",
+                "chineseName": "出神舞曲",
+                "description": "Trance最准确的意译为“出神舞曲”，特别的音轨层次让你有“出神”的感觉，但还是保有舞曲的动感，很注重 Bassline 与Synth的配合，由此产生梦幻的感觉。\nTrance 由 Techno 演变而来，90年代早期从传入德国的科技舞曲（Techno）和电子硬核音乐（Hardcore）中分离出来，强调简洁且高亢的合成器乐句在全曲中的不断反复，只有很少的一些节奏上的变化和偶尔的合成器干扰可以将这些反复区分开来——这样做的目的是为了有效地将听众带入一种接近宗教本源的“出神”状态。鼓点方面讲究非常轻柔的 Clap，轻到几乎听不见，再配上紧凑的 Bassline 作铺垫。\n代表人物有 Paul Oakenfold、Paul van Dyk、Armin van Buuren、Ferry Corsten等。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10175,
+                "name": "Epic Trance",
+                "cover": "https://p3.music.126.net/_rn43eq-tIPR0x51xhuTnQ==/109951163622753617.jpg#hash=00b10cb1426c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753617#hash=85978b50fda5",
+                "chineseName": "史诗出神舞曲",
+                "description": "保留Trance的基本要素，常借助交响乐创造宏大的史诗场面，搭配以庄重旋律和高昂能量，震撼人心。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  5,
+                  3,
+                  5
+                ]
+              },
+              {
+                "id": 102,
+                "name": "Vocal Trance",
+                "cover": "https://p4.music.126.net/04PgLHbbeQsLeEwJueZTCg==/109951163622742973.jpg#hash=f153cba09f24",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742973#hash=b31d790dd57e",
+                "chineseName": "人声出神舞曲",
+                "description": "惊艳人声搭配触动人心的Trance音轨，呈现优美旋律和无尽能量源泉。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  4,
+                  4
+                ]
+              }
+            ]
+          },
+          {
+            "id": 1012,
+            "name": "Hard",
+            "source": 0,
+            "chineseName": "硬派",
+            "show": 2,
+            "description": "从Hardcore到Drumstep、EBM等一系列硬派，重型，富有冲击力的电音风格电台集合。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 109,
+                "name": "Hardcore",
+                "cover": "https://p3.music.126.net/7OGe7XXW6AiryqzW4vFxIQ==/109951163622751185.jpg#hash=ce20eb1338cb",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751185#hash=e4d6d448f7cd",
+                "chineseName": "硬核",
+                "description": "上世纪90年代起源于荷兰，最初用来形容那种玩脱了的Rave派对，后演变成一种相对硬派与极端的电音风格，音乐从Techno变种而来，但更重视速度和节奏性，BPM高达160〜200 ，同时鼓点的强度和低音，节奏，还有歌曲要表达的内容都更相对强烈乃至极端。",
+                "source": 0,
+                "radar": [
+                  2,
+                  3,
+                  2,
+                  2,
+                  5
+                ]
+              },
+              {
+                "id": 10294,
+                "name": "Nightcore",
+                "cover": "https://p3.music.126.net/GKQEVsHCJjLodBNX4wPxBg==/109951163622743923.jpg#hash=950dd0afa5b8",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743923#hash=35a91d85ae88",
+                "chineseName": "倍速夜核",
+                "description": "将欧陆舞曲、Trance 和 Techno 歌曲加速25%至每分钟160-180拍，达到硬核的节奏 ，以强而急速的低音鼓和拍子制造出强烈的节奏感。加速的过程中也伴随着曲调相应提高。例如 Nightcore 名作 Dam Dadi Doo 原由 Fantasy Project 所作并由 N.D.A. 以低沈的男声演唱 ，在 Nightcore 演绎就成了女孩般的声线。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  3,
+                  2,
+                  5
+                ]
+              },
+              {
+                "id": 1060,
+                "name": "Hardstyle",
+                "cover": "https://p4.music.126.net/hQC8CfAq4MfQgoOG1732sQ==/109951163622742984.jpg#hash=a50972f33e91",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742984#hash=0c09f00f1b5a",
+                "chineseName": "硬舞",
+                "description": "起源于荷兰，直接由Hardcore（硬核电子）演变而来，以富有活力的打击感和极具冲击力的鼓点为特点。4/4拍，速度控制为140~160BPM。旋律为主，人声为辅。鼓点比较特殊，由一个具有打击感的音头加一个明朗失真的贝斯构成，所以鼓点具有音高。它比 Hardcore 更有旋律性，失真效果较低。",
+                "source": 0,
+                "radar": [
+                  3,
+                  2,
+                  2,
+                  3,
+                  5
+                ]
+              },
+              {
+                "id": 105,
+                "name": "Hard Dance",
+                "cover": "https://p4.music.126.net/Cp5usK1XrKpJnYhGy7UV0Q==/109951163622752631.jpg#hash=3c82d638804b",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622752631#hash=1446e441e2a5",
+                "chineseName": "硬舞",
+                "description": "Hard Dance是电子舞曲（尤其是Hard系舞曲）的一种细分流派，由 House、Breakbeat 和 Hardcore 演变而来。典型的Hard Dance歌曲具有又深沉又重的鼓声、强烈的淡出或重低音回响，配上合成的旋律。节奏比普遍的电子音乐快，通常在140到150 bpm之间。注意但说Hard Dance并非指所有Hard类曲风的统称，它是特定具体的流派。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  3,
+                  2,
+                  5
+                ]
+              },
+              {
+                "id": 1016,
+                "name": "Gabber",
+                "cover": "https://p3.music.126.net/IXma8IfgKwInCWnPuFE3nw==/109951163622746338.jpg#hash=8c46a4c1c8be",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746338#hash=e8e417c6324a",
+                "chineseName": "鹿特丹Techno",
+                "description": "最起源于鹿特丹，被称为最硬派的Techno，由早期旅居荷兰的一干老牌底特律Techno制作人所创。Gabber一词也指代Hardcore舞曲、Happy Hardcore 等重型电音风格的的狂热粉丝。",
+                "source": 0,
+                "radar": [
+                  2,
+                  3,
+                  1,
+                  1,
+                  5
+                ]
+              },
+              {
+                "id": 10276,
+                "name": "Hard Techno",
+                "cover": "https://p4.music.126.net/MZgELb_RrDRZsNRjv_tojQ==/109951163622750215.jpg#hash=37a14ff91d9b",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750215#hash=27a0db97c8fd",
+                "chineseName": "硬核科技舞曲",
+                "description": "重工业仓库般的冷峻和威严，甚至暗藏阴险，是重型Techno的代表，硬核主义的底鼓是最鲜明的特征。",
+                "source": 0,
+                "radar": [
+                  1,
+                  4,
+                  3,
+                  1,
+                  5
+                ]
+              },
+              {
+                "id": 1036,
+                "name": "Techno",
+                "cover": "https://p3.music.126.net/aTEVVGZlEc-FTs-c6zZNAg==/109951163622745822.jpg#hash=ad3f6644a657",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622745822#hash=91d529c0d6e8",
+                "chineseName": "科技舞曲",
+                "description": "Techno准确翻译为科技舞曲，从80年代中期的底特律开始走向世界，它由循环往复的旋律和配器构成，给人的感觉就像反复涌动的机械声浪，带有显著的工业感冰冷气息。这种特质很大程度上反映着当时人们所处的工业时代，科技的日新月异以音乐的形态得以记录。Techno制作人往往希望借助这种音乐表达一种超前的概念。\n科技舞曲的节拍也是最常规的4/4拍，配器与 House 也大致相同，但速率较 House 更快（尽管如今现代化的Techno和House已然没有速率上的显著对比），看似重复的机械化行进实则暗藏着多变的细节，因此适应它需要过程。Techno 不像 House 那般讲究热情而欢愉的气氛，而是相当内敛，甚至让人感到高冷，会使用很多氛围合成器以同样的旋律贯穿整曲。\n代表人物有Jeff Mills、Derrick May、Sven Vath、Carl Cox等。",
+                "source": 0,
+                "radar": [
+                  1,
+                  4,
+                  3,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 1091,
+                "name": "Dubstep",
+                "cover": "https://p4.music.126.net/cIqvkPB0lIuXRqW_Knd-Fw==/109951163622744406.jpg#hash=1cf490a3ef63",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744406#hash=8124a04c5a2a",
+                "chineseName": "回响音乐",
+                "description": "Dubstep 以其阴郁环境，稀疏的节奏和低音上的强调著称。1998年诞生于英国伦敦南部。dub 元素来自牙买加的 dub reggae，在英国的牙买加黑人给英国音乐文化带来很深的影响。而dubstep的 ‘step'指的是’2step' ，即底鼓和军鼓进行速度减少一倍，但力量增强几倍，并强调贝斯的加入，达到一锤定乾坤的效果。BPM为70左右，在音色方面，Dubstep会采用较多的wobble bass（震荡贝斯，表现摇晃的效果）、growl bass（咆哮贝斯，表现尖叫、怒吼的效果）、electro（电气化的音色）和glitch（机器失真、故障的音色）。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  3,
+                  4,
+                  4
+                ]
+              },
+              {
+                "id": 10177,
+                "name": "Club Dubstep",
+                "cover": "https://p3.music.126.net/sPU3AE6PNdxnfCqRNCgy3w==/109951163622755095.jpg#hash=8d5ad605d8ec",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755095#hash=001ebdc3e4e2",
+                "chineseName": "俱乐部回响贝斯",
+                "description": "在 Dubstep 稀疏节奏和低音的基础上，加以改编使其更适合俱乐部狂欢，这种现象反映的是传统的Dubstep为迎合特殊需要的自我演变。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  1,
+                  5,
+                  4
+                ]
+              },
+              {
+                "id": 10181,
+                "name": "Dark DnB",
+                "cover": "https://p4.music.126.net/a1fCfYAUx9ueyx8SM7PkKA==/109951163622756022.jpg#hash=da2088c27512",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622756022#hash=69e667674a30",
+                "chineseName": "暗黑 DnB",
+                "description": "暗黑气氛的DnB（Drum & Bass 以鼓和贝斯为主的电子舞曲，音色走低频震撼路），同时充斥着邪恶和凶猛的元素，节拍也比常规的DnB更暴躁。",
+                "source": 0,
+                "radar": [
+                  2,
+                  4,
+                  4,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10124,
+                "name": "Oldschool Acid",
+                "cover": "https://p3.music.126.net/P_OoGLxREwP3Mju-ql53ZQ==/109951163622750725.jpg#hash=fb0cc43fa985",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750725#hash=0011367d14a4",
+                "chineseName": "复古迷幻",
+                "description": "将酸性acid音色（TB-303合成器的特征）与 House、Techno 和 Trance 模板相结合的一种曲风。",
+                "source": 0,
+                "radar": [
+                  1,
+                  4,
+                  2,
+                  2,
+                  5
+                ]
+              },
+              {
+                "id": 10296,
+                "name": "Oldschool Rave",
+                "cover": "https://p3.music.126.net/Oi-d4xCCkfzzebwDZSEzbw==/109951163622747782.jpg#hash=f76e4002e79f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747782#hash=428fcd6c2f0e",
+                "chineseName": "复古锐舞",
+                "description": "通过精选经典，让旧时光的锐舞场景再现。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  3,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10474,
+                "name": "EDM Hits",
+                "cover": "https://p4.music.126.net/wbaNrQnh6GS6VAd5guJnJg==/109951163745125740.jpg#hash=697272da35d6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163745125740#hash=d6c09915d122",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10346,
+                "name": "Dark PsyTrance",
+                "cover": "https://p4.music.126.net/FRF-ynfCWfTpP1kU_yYdJg==/109951163622753143.jpg#hash=598282c405eb",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753143#hash=0fb83e081207",
+                "chineseName": "暗黑回转出神",
+                "description": "黑化的Psy Trance，复杂的音层，诡异的声响，以及更令人惊异的节奏行进，加之更高的拍率共同制造出一个混沌的幻觉时空。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  5,
+                  2,
+                  5
+                ]
+              },
+              {
+                "id": 108,
+                "name": "Goa-Psy Trance",
+                "cover": "https://p3.music.126.net/BWNhQ2CiioL2KUaVAADAdg==/109951163622751650.jpg#hash=bcbb713d66c6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751650#hash=41a6a40d8148",
+                "chineseName": "迷幻出神舞曲",
+                "description": "在90年代早期从 Goa trance 发展而来，并逐步进入主流音乐的范围。音乐的速度通常较快，一般在135到150 BPM，具有特征性的三连音bassline，以及催生人脑幻觉的synth，强调通过音乐层次创造一种独特的氛围，而给人带来独特的精神体验。在制作上，通常较多地使用软件采样器，VST插件，软件音序器等。[Goa trance 以“印度果阿”命名，但它其实是在以色列、伊比萨、伦敦等地兴起的致幻舞曲。相较于Psy-Trance，它的声音质感更加有机化，也更加依赖于节拍与音色的连贯性，足以带来彻头彻尾的致幻体验。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  5,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10293,
+                "name": "Jungle",
+                "cover": "https://p3.music.126.net/UuDAihBWrXuqf171wv-R5Q==/109951163622753611.jpg#hash=6923d2a6e078",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753611#hash=184d1e4ab58c",
+                "chineseName": "丛林",
+                "description": "非洲丛林打击与现代化电子合成器音效的混合体，其特点是副鼓点非常稠密，有少量的唱腔。Jungle 有别于其他跳舞音乐之处在于它可以使人在跳舞时有接近疯狂的感觉，被认为是DnB音乐的早期形态。",
+                "source": 0,
+                "radar": [
+                  3,
+                  5,
+                  1,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10230,
+                "name": "Trap",
+                "cover": "https://p3.music.126.net/P7MVAZDn58NrYZGLqg36Ig==/109951163622750208.jpg#hash=d47891cdb153",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750208#hash=9e5836c741e5",
+                "chineseName": "陷阱舞曲",
+                "description": "最初源自美国南部的嘻哈音乐，以其叛逆性并具有侵略性的歌词和宽厚的808鼓机声音著称。BPM横跨70-170。Trap 音乐真正汇入主流是在2012年，在电子音乐大肆流行的环境之下，电音制作人们开始将 Trap 这种音乐元素融合到他们的作品中，这明显地加快了Trap在电子音乐爱好者中蔓延的速度。主要运用的元素有：\n1. 鼓点：808的底鼓(kick)+低音贝斯(subbass)+音色清脆明亮的军鼓(snare)/拍手(clap)+踩镲(hi hat)滚奏，制造节奏上的变化非常重要，因为trap本质上是跳舞的音乐，偶尔让底鼓密集出现再加上一些过门的音效会带来很酷的感觉。\n2. 音色：一般来说 Trap 表现的题材都和黑暗的内容有关。在初期的南部街区，说唱歌手一般在 Trap 中加入跟毒品、性、金钱、警察暴力相关的内容，而在 电音制作人们加入后，题材明显变宽，涉及到古老传说、可怕生物、邪教文化、民族风情、科技发展等等。常用的音色有迷幻的 Lead、尖利高亢的 Pluck 以及燥热的 Bass。人声的话经常会用40岁老男人的粗野“嘿”声来陪衬，在到 Drop 的过渡部分会用一些降调处理的人声。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  3,
+                  5,
+                  4
+                ]
+              },
+              {
+                "id": 10209,
+                "name": "Big Room House",
+                "cover": "https://p4.music.126.net/t4jwAdTh4pi9EffrUUlPSQ==/109951163622744826.jpg#hash=04b3599d9504",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744826#hash=57bcb5367526",
+                "chineseName": "大空间浩室",
+                "description": "一种极其现代化的商业浩室曲风，基于电气浩室但以更为简单的方式表现和凸出鼓点和bass声效，往往带有宽广的混响效果，是一种较为简单粗放的派对舞曲。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  3,
+                  5,
+                  5
+                ]
+              }
+            ]
+          },
+          {
+            "id": 106,
+            "name": "House",
+            "source": 0,
+            "chineseName": "浩室舞曲",
+            "show": 2,
+            "description": "House 浩室舞曲近乎是电子音乐宇宙中最庞大和最经典的星系，最早的浩室舞曲源于美国芝加哥1980年代初期到中期，由Disco衍生形成。House 的节奏型非常简单，俗语是“咚次嗒次”，4/4拍的节奏，一拍一个鼓声，伴随着厚实的低音声线（Bassline）。\n代表人物有Frankie Knuckles、Roger Sanchez、Ron Hardy、Larry Heard等。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 10174,
+                "name": "Deep House",
+                "cover": "https://p3.music.126.net/XEOzcSD4ekkIazFtZzNm-w==/109951163622748759.jpg#hash=6ea9db940d1f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748759#hash=a6731ed83dc9",
+                "chineseName": "深邃浩室",
+                "description": "又叫“深宅”，采用了慢速（120 bpm左右），虽然很少达到高潮但激情不变的 House 音乐，有时也会有催眠的音调。相比较来说 Deep House 的音轨更加深入，并且更加柔滑，包含了悠闲的氛围，带有意味深长的歌词的深情的人声，以及围绕着稳定的4/4节拍循环的节奏。当然，还有一个低沉的低音。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 104,
+                "name": "House",
+                "cover": "https://p3.music.126.net/J-FIZx-BWh_VauqbM1orQg==/109951163622743924.jpg#hash=a5a858ae742f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743924#hash=cc20ed7c973c",
+                "chineseName": "浩室舞曲",
+                "description": "浩室舞曲近乎是电子音乐宇宙中最庞大和最经典的星系，最早的浩室舞曲源于美国芝加哥1980年代初期到中期，由Disco衍生形成。House 的节奏型非常简单，俗语是“咚次嗒次”，4/4拍的节奏，一拍一个鼓声，伴随着厚实的低音声线（Bassline）。\n代表人物有Frankie Knuckles、Roger Sanchez、Ron Hardy、Larry Heard等。",
+                "source": 0,
+                "radar": [
+                  4,
+                  4,
+                  3,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10505,
+                "name": "Deep Progressive House",
+                "cover": "https://p3.music.126.net/jxOG_002EpBSXhURz9PMNw==/109951164812016852.jpg#hash=8543e50e40f1",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812016852#hash=f1d6baa51a42",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10445,
+                "name": "Vocal House",
+                "cover": "https://p4.music.126.net/8LFagfdsLJFHfmDczBGMaA==/109951163622754600.jpg#hash=b23620455723",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754600#hash=cb27bfb46109",
+                "chineseName": "人声浩室",
+                "description": "4/4拍与人声的完美配对，能呈现出一种深情，性感的美丽嗓音。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  5,
+                  3
+                ]
+              },
+              {
+                "id": 10506,
+                "name": "Summer Chill House",
+                "cover": "https://p4.music.126.net/fiItjmpvnXGP_5vlSb5Dxw==/109951164812024069.jpg#hash=c8d93bd8bddd",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812024069#hash=13c1e96fe038",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 1047,
+                "name": "Soulful House",
+                "cover": "https://p4.music.126.net/VO9_gra7kAeEvXBP-bQwKw==/109951163622743925.jpg#hash=487328fbc81c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743925#hash=05517abf1d29",
+                "chineseName": "灵魂浩室",
+                "description": "开始于90年代中期的美国和英国，与 Funky House 有相似之处，但是相对 Funk 和 Soul Music 来说，相对少了一些活泼的要素，有着更加触动人心的旋律和人声，节奏一般为4/4拍。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10295,
+                "name": "Nu Disco",
+                "cover": "https://p4.music.126.net/3d3ukfNVlPMvchYIAskaDQ==/109951163622754602.jpg#hash=26dfb21d9c33",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754602#hash=82a72d8b22ca",
+                "chineseName": "新迪斯科",
+                "description": "堪称七八十年代所流行的迪斯科音乐的一场再生运动，Nu Disco兼具复古与现代，在Disco 旧时尚概念的基础上结合了更多前卫和流行化的元素，非常耐听和有趣的新流派。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  2,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 1066,
+                "name": "Tech House",
+                "cover": "https://p4.music.126.net/tjw4aZN8Mv7VneBn32xrHQ==/109951163622751644.jpg#hash=335d118fec08",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751644#hash=c9364408d48f",
+                "chineseName": "科技浩室舞曲",
+                "description": "一种在音序排练和合成器（Synth）中结合 Techno 原理的 House 音乐，典型的节拍系曲风，融合了 House Music 的温暖和 Techno 的冰冷。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  3,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 1056,
+                "name": "Electro House",
+                "cover": "https://p4.music.126.net/jS8M6Wgl6DkcTOhbGWSbdw==/109951163622743935.jpg#hash=1c50c2cc4df8",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743935#hash=eb74e9088035",
+                "chineseName": "电气浩室",
+                "description": "Electro House 最初是 Funk 和早期的嘻哈音乐和纽约的 Boogie 组合形成，慢慢的开始与20世纪90年代末的 House 融合在一起。Electro house 有时包含科技浩室（Tech house）的元素，如突出Bass，短而高亢的即兴演奏，并带有小至中量的打击乐。但是不像科技浩室，它可以包括摩擦音效，电子合成器音效（Synth）和人声（Vocal）或乐器采样，节拍通常约为 128〜130BPM，中高频音色清晰分明，给人感觉节奏比较快，一般音阶跨度比较大，常常会配有 Wobble Bass 做主要音色之一。此风格感情色彩比较激昂，分段之间差别不是很鲜明，全曲都比较激烈。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  2,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 10474,
+                "name": "EDM Hits",
+                "cover": "https://p3.music.126.net/wbaNrQnh6GS6VAd5guJnJg==/109951163745125740.jpg#hash=5db3c503a3fa",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163745125740#hash=d6c09915d122",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10209,
+                "name": "Big Room House",
+                "cover": "https://p4.music.126.net/t4jwAdTh4pi9EffrUUlPSQ==/109951163622744826.jpg#hash=04b3599d9504",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744826#hash=57bcb5367526",
+                "chineseName": "大空间浩室",
+                "description": "一种极其现代化的商业浩室曲风，基于电气浩室但以更为简单的方式表现和凸出鼓点和bass声效，往往带有宽广的混响效果，是一种较为简单粗放的派对舞曲。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  3,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 10290,
+                "name": "Bass & Jackin' House",
+                "cover": "https://p4.music.126.net/3uIPtzWx19IN5l6gp1m4wA==/109951163622750210.jpg#hash=7bb2429b3181",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750210#hash=b3323e0921d8",
+                "chineseName": "热舞浩室",
+                "description": "4/4拍的节奏带着最满的Grooves和最丰富的打击元素，高能释放，煽动人们进入舞池。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  2,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 10289,
+                "name": "Bassline",
+                "cover": "https://p4.music.126.net/1U1xnZ1mKvXvVErl1mtiPQ==/109951163622746799.jpg#hash=161d09ded2ca",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746799#hash=0555fdd8f264",
+                "chineseName": "贝斯声线",
+                "description": "2007年末开始在英国流行起来，由 UK Garage 演变而来的的一种副流派，将 House Music、Speed Garage 与 Techno 相结合，并且更强调 Bass音色 这一要素。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10324,
+                "name": "00s Club Hits",
+                "cover": "https://p3.music.126.net/UcSS-V3fsgqcxUK0mu-xqA==/109951163622749230.jpg#hash=aecff5dd2713",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622749230#hash=f769eb489c17",
+                "chineseName": "现代舞池热单",
+                "description": "2000年之后的流行舞曲汇总，熟悉的热单和各种舞曲合集。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 1092,
+                "name": "Disco House",
+                "cover": "https://p4.music.126.net/wejVucWDAeJxD2uU1jN8fg==/109951163622753142.jpg#hash=801360bf2332",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753142#hash=36f8b3797f33",
+                "chineseName": "迪斯科浩室",
+                "description": "一种严重依赖于对 Disco 样本采集的 House 音乐，是结合了70年代的 Disco 和 Modern House Music 鼓点节奏的一种电音流派。迪斯科这个词是 Discotheque 的简称，原意为播放唱片供人跳舞的舞厅，60年代初源于法国。由于设备的不断更新，每家舞厅只要拥一套播放机和一名唱片播放员就足以替代整个乐队，而且还可得到各种不同的音乐，既省钱又实用。因此，各大舞厅都采用这种方法。于是人们把这种由唱片播放出来的跳舞音乐也叫做迪斯科。60年代中期，迪斯科传入美国，70年代初在全国各地扩散开来。迪斯科舞曲具有强劲有力的节拍，一般为4/4 拍，每一拍都是强拍，从头到尾不变；速度大约为每分钟120拍；它的曲调短小，歌词简单，不断重复。其实，任何一首曲子，只要调整一下速度，改成强弱不分的节拍，都可以变成迪斯科。",
+                "source": 0,
+                "radar": [
+                  5,
+                  4,
+                  2,
+                  4,
+                  2
+                ]
+              },
+              {
+                "id": 10349,
+                "name": "Jazz House",
+                "cover": "https://p3.music.126.net/b-Y5pjGtoxDvaAzewEIAdQ==/109951163622744401.jpg#hash=c27ad2966eed",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744401#hash=bbb525205a94",
+                "chineseName": "爵士浩室",
+                "description": "也称为 Nu Jazz，是将 Jazz 演奏通过电子手法表现出的一种音乐，通常包含萨克斯和小号长号等爵士管乐。",
+                "source": 0,
+                "radar": [
+                  5,
+                  4,
+                  2,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10104,
+                "name": "Oldschool House",
+                "cover": "https://p3.music.126.net/J4YGaIl2ZWfxcwpdG8Hm2w==/109951163622748749.jpg#hash=339528b7da2e",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748749#hash=b48462908b7c",
+                "chineseName": "复古浩室",
+                "description": "House Music 里最为经典的一大分支流派，堪称浩室音乐世界里最宝贵的一份财富。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  2,
+                  3,
+                  3
+                ]
+              },
+              {
+                "id": 10327,
+                "name": "Electro Swing",
+                "cover": "https://p4.music.126.net/D3qxrht9v45QEaOHyyFeZw==/109951163622747289.jpg#hash=1d4a6b1afa77",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747289#hash=4b71ce4619f9",
+                "chineseName": "电子摇摆",
+                "description": "结合了20世纪20年代到40年代至今的 Jazz 和 Swing Music，将 Big band horns 与现代电气 electro 相融合而形成的一种流派。",
+                "source": 0,
+                "radar": [
+                  5,
+                  4,
+                  3,
+                  3,
+                  3
+                ]
+              },
+              {
+                "id": 1058,
+                "name": "Funky House",
+                "cover": "https://p4.music.126.net/7blnoe8aV382xZyr3paRBA==/109951163622744832.jpg#hash=fc4e4d619fa6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744832#hash=97610f7c63c9",
+                "chineseName": "时髦浩室",
+                "description": "大约90年代初兴起，受到了许多重要音乐基元的影响，比如传统的 House、Funk、Disco等。节奏较为轻快，相对注重旋律，习惯于采样经典的人声或旋律，平稳4/4节拍，但不失丰富的节奏感(groove)，还有着许多吉他与其他精巧的音色采样。",
+                "source": 0,
+                "radar": [
+                  4,
+                  4,
+                  2,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10353,
+                "name": "Detroit House & Techno",
+                "cover": "https://p4.music.126.net/oYWmCfHCq8-w86PjsqsW5g==/109951163622749724.jpg#hash=fc492bd29ca3",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622749724#hash=20acfd14f190",
+                "chineseName": "底特律浩室 & 科技舞曲",
+                "description": "来自科技舞曲发源地、浩室舞曲进化地的 Techno 与 House 音乐。",
+                "source": 0,
+                "radar": [
+                  1,
+                  5,
+                  2,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10117,
+                "name": "Latin House",
+                "cover": "https://p4.music.126.net/zHngSAIrukuiVwo6e65r1Q==/109951163622746333.jpg#hash=aff7b2c1d649",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746333#hash=8edf0cf3f61f",
+                "chineseName": "拉丁浩室",
+                "description": "一种结合 Salsa、巴西节拍、拉丁爵士乐和现代东海岸舞曲的音乐风格。",
+                "source": 0,
+                "radar": [
+                  5,
+                  4,
+                  1,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 1057,
+                "name": "Tribal House",
+                "cover": "https://p4.music.126.net/5mvZX5EhX4wgS0JuyPtM5Q==/109951163622748750.jpg#hash=6763e86fb490",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748750#hash=0919b743cd88",
+                "chineseName": "部落浩室",
+                "description": "带有非洲原始风貌或是印地安人的鼓奏的 House，除了有一般 House 稳定的节奏外,在每拍之间,会加入一些带有原始风貌的打击乐器。现在常被认为是Tech House的子类型。",
+                "source": 0,
+                "radar": [
+                  3,
+                  5,
+                  3,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 107,
+                "name": "Progressive",
+                "cover": "https://p4.music.126.net/ssQdHgBnhpycM-qCAFshUA==/109951163622746334.jpg#hash=a36ca3e5047d",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746334#hash=1e2882963151",
+                "chineseName": "前卫舞曲",
+                "description": "极具前卫感，注重渐进结构的出神舞曲，bassline听感流畅连贯，鼓点稳定，是传播范围最广的Trance分支之一。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10210,
+                "name": "EDM Festival",
+                "cover": "https://p4.music.126.net/_aILrtaogd9lCbsQ0W4uMw==/109951163622742976.jpg#hash=2285ab96cb12",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742976#hash=da0b3dd9c1ff",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10402,
+                "name": "Melodic Progressive",
+                "cover": "https://p3.music.126.net/7pyPMicSx_IsXn8mH8z7VA==/109951163622746796.jpg#hash=7ed3e5471cc3",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746796#hash=6d39239a8b11",
+                "chineseName": "旋律前卫",
+                "description": "更注重旋律的一类Progressive House ，歌曲特征常体现在明亮且欢愉的基调和氛围，有时相伴人声，但仍然不失渐进的整体脉络。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  5,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10286,
+                "name": "Electropop",
+                "cover": "https://p3.music.126.net/ilBumfqzgyBVzHx1BEn3yg==/109951163622743936.jpg#hash=89f2933e628f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743936#hash=69b41709bf16",
+                "chineseName": "流行电音",
+                "description": "倾向于借助一些老式合成器和一些电子乐器打造电子化的独特流行音乐，与Synthpop有直接关联。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  4,
+                  4
+                ]
+              },
+              {
+                "id": 10137,
+                "name": "Deep Nu-Disco",
+                "cover": "https://p4.music.126.net/JwivZlBOOdc7AXT-rNwAjw==/109951163622750735.jpg#hash=8c7015175294",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750735#hash=ce83a71e9bd4",
+                "chineseName": "深邃 Nu-Disco",
+                "description": "囊括了house，funk以及disco的元素，节拍以中速和灵魂乐元素为主，伴着轻柔的电子律动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10182,
+                "name": "Deep Tech",
+                "cover": "https://p4.music.126.net/ACHBR5WH4ExdJKFF7QnImw==/109951163622743927.jpg#hash=61c947d78939",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743927#hash=235e85694981",
+                "chineseName": "深邃科技",
+                "description": "将deep house，techno，tech house融合在了一起，属于极简科技音乐的一种现代化表现形式，并夹杂着充满趣味性的的节奏和间隔性的声音呈现。",
+                "source": 0,
+                "radar": [
+                  2,
+                  4,
+                  4,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 10180,
+                "name": "Downtempo Lounge",
+                "cover": "https://p3.music.126.net/kzrTpUGfcNYdvB0RXGIJTQ==/109951163622754612.jpg#hash=5b479af0fc53",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754612#hash=37f2badc0197",
+                "chineseName": "缓拍 & 沙发",
+                "description": "以舒适的节奏、 清柔的歌声以及氛围感鲜明的背景音为特征，适宜享受闲适时光的同时欣赏，富有情调。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  4,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10400,
+                "name": "Chill & Tropical House",
+                "cover": "https://p4.music.126.net/GYZ_PV4Nf_CfT5F2PjOktg==/109951163622750209.jpg#hash=dc43d9ec7646",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750209#hash=7b3050e642fc",
+                "chineseName": "热带舒缓浩室",
+                "description": "发源于欧洲20世纪末，BPM在100-115左右，由来自澳大利亚的制作人Thomas Jack最先开创。它在house音乐的4/4拍的节奏加上合成器乐段的基础上，融入排笛、马林巴琴、钢鼓、铜管乐器的音色以及人声，给听众营造出一个整体慵懒、欢乐、度假般的 Chill 休闲氛围。这是一种让人放松，舒缓情绪的音乐曲风，具有热带沙滩风格，活泼音色，常加上律动的人声。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  5,
+                  2
+                ]
+              },
+              {
+                "id": 1010,
+                "name": "DJ Mixes",
+                "cover": "https://p3.music.126.net/fqUE8RfiYohVBADa2JTWkQ==/109951163622755580.jpg#hash=ce9d317a7d67",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755580#hash=4cc24bb67fb5",
+                "chineseName": "DJ接歌混音作品",
+                "description": "Techno、Deep house、Progressive 和 Trance 等多种不同风格的长时长完整DJ接歌混音作品。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 10124,
+                "name": "Oldschool Acid",
+                "cover": "https://p3.music.126.net/P_OoGLxREwP3Mju-ql53ZQ==/109951163622750725.jpg#hash=fb0cc43fa985",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750725#hash=0011367d14a4",
+                "chineseName": "复古迷幻",
+                "description": "将酸性acid音色（TB-303合成器的特征）与 House、Techno 和 Trance 模板相结合的一种曲风。",
+                "source": 0,
+                "radar": [
+                  1,
+                  4,
+                  2,
+                  2,
+                  5
+                ]
+              }
+            ]
+          },
+          {
+            "id": 1016,
+            "name": "Lounge",
+            "source": 0,
+            "chineseName": "沙发",
+            "show": 2,
+            "description": "Lounge 沙发音乐是近年来开始流行于欧洲的一类新式轻型电子乐，赖于Easy Listening的背景，使其善于营造一种于相对平静的音乐氛围，使人在舒适、放松中获得心情的愉悦；Lounge 可以是带有冷艳气质的电子音乐，也可以是随性浪漫的法国香颂或是热情奔放的拉丁曼波，所以它的迷人之处就在于多变的风格以及其营造的一种富有格调的生活态度。在电子音乐范畴，Lounge 与 Downtempo 、Chillout等都属于近似风格。\n代表人物有 Pink Martini、Koop、Richard Cheese、Jazzanova等。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 1011,
+                "name": "Lounge",
+                "cover": "https://p4.music.126.net/ReEChsWY2Wa-IvffO5McRw==/109951163622755573.jpg#hash=243afab85ef5",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755573#hash=698f98620088",
+                "chineseName": "沙发音乐",
+                "description": "Lounge 沙发音乐是近年来开始流行于欧洲的一类新式轻型电子乐，赖于Easy Listening的背景，使其善于营造一种于相对平静的音乐氛围，使人在舒适、放松中获得心情的愉悦；Lounge 可以是带有冷艳气质的电子音乐，也可以是随性浪漫的法国香颂或是热情奔放的拉丁曼波，所以它的迷人之处就在于多变的风格以及其营造的一种富有格调的生活态度。在电子音乐范畴，Lounge 与 Downtempo 、Chillout等都属于近似风格。\n代表人物有 Pink Martini、Koop、Richard Cheese、Jazzanova等。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  4,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10180,
+                "name": "Downtempo Lounge",
+                "cover": "https://p3.music.126.net/kzrTpUGfcNYdvB0RXGIJTQ==/109951163622754612.jpg#hash=5b479af0fc53",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754612#hash=37f2badc0197",
+                "chineseName": "缓拍 & 沙发",
+                "description": "以舒适的节奏、 清柔的歌声以及氛围感鲜明的背景音为特征，适宜享受闲适时光的同时欣赏，富有情调。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  4,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10278,
+                "name": "Vocal Lounge",
+                "cover": "https://p3.music.126.net/omzm81I8UhikJubQfVch7g==/109951163622750727.jpg#hash=b55205a92ced",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750727#hash=867f93b97867",
+                "chineseName": "人声沙发",
+                "description": "带有舒缓人声的Lounge音乐，耳部音乐按摩的首选。",
+                "source": 0,
+                "radar": [
+                  5,
+                  2,
+                  4,
+                  4,
+                  2
+                ]
+              },
+              {
+                "id": 10400,
+                "name": "Chill & Tropical House",
+                "cover": "https://p4.music.126.net/GYZ_PV4Nf_CfT5F2PjOktg==/109951163622750209.jpg#hash=dc43d9ec7646",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750209#hash=7b3050e642fc",
+                "chineseName": "热带舒缓浩室",
+                "description": "发源于欧洲20世纪末，BPM在100-115左右，由来自澳大利亚的制作人Thomas Jack最先开创。它在house音乐的4/4拍的节奏加上合成器乐段的基础上，融入排笛、马林巴琴、钢鼓、铜管乐器的音色以及人声，给听众营造出一个整体慵懒、欢乐、度假般的 Chill 休闲氛围。这是一种让人放松，舒缓情绪的音乐曲风，具有热带沙滩风格，活泼音色，常加上律动的人声。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  5,
+                  2
+                ]
+              },
+              {
+                "id": 10292,
+                "name": "Future Garage",
+                "cover": "https://p3.music.126.net/yVJMVHwICOsN5n-8VPmgmw==/109951163622750216.jpg#hash=7d3b8ed17dce",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750216#hash=f842a92b5177",
+                "chineseName": "未来车库",
+                "description": "在 UK Garage 的基础上加入了 2-Step Garage 的柔和，并加入了一些比如DarkSwing、Grime、PostDubstep、IDM、Ambient、Chillout、Drumstep、Trip Hop、Dub Techno 等元素之后发展为现在的样子。",
+                "source": 0,
+                "radar": [
+                  3,
+                  2,
+                  5,
+                  2,
+                  2
+                ]
+              },
+              {
+                "id": 1047,
+                "name": "Soulful House",
+                "cover": "https://p4.music.126.net/VO9_gra7kAeEvXBP-bQwKw==/109951163622743925.jpg#hash=487328fbc81c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743925#hash=05517abf1d29",
+                "chineseName": "灵魂浩室",
+                "description": "开始于90年代中期的美国和英国，与 Funky House 有相似之处，但是相对 Funk 和 Soul Music 来说，相对少了一些活泼的要素，有着更加触动人心的旋律和人声，节奏一般为4/4拍。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10275,
+                "name": "Chillstep",
+                "cover": "https://p3.music.126.net/3FhC_PM-jyK5-ZuU9MvRtw==/109951163622747786.jpg#hash=1596ffc09066",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747786#hash=d23fe4591c62",
+                "chineseName": "驰放低音",
+                "description": "在Chillout的基础上结合注重环境营造和低音表现的英式Dubstep ，比纯粹的Chillout多了一些微妙的小躁动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  5,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10224,
+                "name": "ChillHop",
+                "cover": "https://p4.music.126.net/76f4sZSMbhnduWvUDyMmZw==/109951163622751180.jpg#hash=297ae0feadfa",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751180#hash=7c2f336563bf",
+                "chineseName": "驰放嘻哈",
+                "description": "将 Hip hop、Trip hop、Downtempo beats 和 Jazz 融合在一起，并用一种柔和悠闲的风格将其呈现出来。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  4,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10174,
+                "name": "Deep House",
+                "cover": "https://p4.music.126.net/XEOzcSD4ekkIazFtZzNm-w==/109951163622748759.jpg#hash=071bda4e9139",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748759#hash=a6731ed83dc9",
+                "chineseName": "深邃浩室",
+                "description": "又叫“深宅”，采用了慢速（120 bpm左右），虽然很少达到高潮但激情不变的 House 音乐，有时也会有催眠的音调。相比较来说 Deep House 的音轨更加深入，并且更加柔滑，包含了悠闲的氛围，带有意味深长的歌词的深情的人声，以及围绕着稳定的4/4节拍循环的节奏。当然，还有一个低沉的低音。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10504,
+                "name": "Chill EDM",
+                "cover": "https://p3.music.126.net/Lrba5Ja0K51vCeZ2tKXS7A==/109951164812017836.jpg#hash=3fd7bf33175b",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812017836#hash=db4afe93b9d7",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 1058,
+                "name": "Funky House",
+                "cover": "https://p3.music.126.net/7blnoe8aV382xZyr3paRBA==/109951163622744832.jpg#hash=ed37ea748c0e",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744832#hash=97610f7c63c9",
+                "chineseName": "时髦浩室",
+                "description": "大约90年代初兴起，受到了许多重要音乐基元的影响，比如传统的 House、Funk、Disco等。节奏较为轻快，相对注重旋律，习惯于采样经典的人声或旋律，平稳4/4节拍，但不失丰富的节奏感(groove)，还有着许多吉他与其他精巧的音色采样。",
+                "source": 0,
+                "radar": [
+                  4,
+                  4,
+                  2,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10349,
+                "name": "Jazz House",
+                "cover": "https://p4.music.126.net/b-Y5pjGtoxDvaAzewEIAdQ==/109951163622744401.jpg#hash=d1f50896f99e",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744401#hash=bbb525205a94",
+                "chineseName": "爵士浩室",
+                "description": "也称为 Nu Jazz，是将 Jazz 演奏通过电子手法表现出的一种音乐，通常包含萨克斯和小号长号等爵士管乐。",
+                "source": 0,
+                "radar": [
+                  5,
+                  4,
+                  2,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10494,
+                "name": "LoFi Lounge & Chill",
+                "cover": "https://p3.music.126.net/Xqzy6ioZZYsYrN7qHpBwEw==/109951164812015849.jpg#hash=03e057966c3f",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812015849#hash=eb42fa317843",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10492,
+                "name": "LoFi Hip-Hop",
+                "cover": "https://p4.music.126.net/7v-4kBiY-h7y1hpZmIWV_g==/109951163745134541.jpg#hash=018c2f00813c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163745134541#hash=d07f4505df03",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10137,
+                "name": "Deep Nu-Disco",
+                "cover": "https://p3.music.126.net/JwivZlBOOdc7AXT-rNwAjw==/109951163622750735.jpg#hash=3564a98b5dd6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750735#hash=ce83a71e9bd4",
+                "chineseName": "深邃 Nu-Disco",
+                "description": "囊括了house，funk以及disco的元素，节拍以中速和灵魂乐元素为主，伴着轻柔的电子律动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10295,
+                "name": "Nu Disco",
+                "cover": "https://p4.music.126.net/3d3ukfNVlPMvchYIAskaDQ==/109951163622754602.jpg#hash=26dfb21d9c33",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754602#hash=82a72d8b22ca",
+                "chineseName": "新迪斯科",
+                "description": "堪称七八十年代所流行的迪斯科音乐的一场再生运动，Nu Disco兼具复古与现代，在Disco 旧时尚概念的基础上结合了更多前卫和流行化的元素，非常耐听和有趣的新流派。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  2,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10105,
+                "name": "Liquid DnB",
+                "cover": "https://p4.music.126.net/rOzEZNhf47teEWl49DQMYw==/109951163622754598.jpg#hash=8ffbd3731d92",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754598#hash=1589a6f13f92",
+                "chineseName": "流体鼓打贝斯",
+                "description": "又名Liquidfunk，像溪流一般流畅和带着轻快节奏的 DnB（Drum & Bass 以鼓和贝斯为主的电子舞曲，音色走低频震撼路），给人一种轻松的感觉但又不失跃动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  4,
+                  4,
+                  3,
+                  3
+                ]
+              },
+              {
+                "id": 10505,
+                "name": "Deep Progressive House",
+                "cover": "https://p3.music.126.net/jxOG_002EpBSXhURz9PMNw==/109951164812016852.jpg#hash=8543e50e40f1",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951164812016852#hash=f1d6baa51a42",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10351,
+                "name": "Indie Dance",
+                "cover": "https://p3.music.126.net/jMv3c8Olg0G8Hi-OUjcFAw==/109951163622750207.jpg#hash=d39f5f4760ba",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750207#hash=a97a3a9b2d61",
+                "chineseName": "独立舞曲",
+                "description": "将独立摇滚的精髓与电音相结合，也是 Club 文化和 Live Music 融合而成的一种曲风。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  3,
+                  2,
+                  2
+                ]
+              },
+              {
+                "id": 103,
+                "name": "Chillout",
+                "cover": "https://p3.music.126.net/krQltsoJSsHUiRB59uRI7w==/109951163622742975.jpg#hash=2a21106f57e1",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742975#hash=9aae42eb9090",
+                "chineseName": "驰放音乐",
+                "description": "广义上讲，Chillout 驰放音乐主要是指一些电子化的轻音乐，舒缓、优美、闲适，注重情绪和意境，适宜于平日里聆听，也适合轻松的休闲场景。\nChill-out 音乐是20世纪90年代起源于欧陆的电子音乐重要流派。这种曲风以 Ambient（氛围乐）和 Classical Music（古典乐）为基础，融入一定的电子音色后形成，比 Ambient 更注重旋律。因其轻柔和舒缓的特点，富有意境，代入感强，Chill-out也自然成为了“轻（松）音乐”的代名词，钢琴、吉他、提琴等原声乐器的音色是其惯用的元素。",
+                "source": 0,
+                "radar": [
+                  4,
+                  1,
+                  5,
+                  3,
+                  1
+                ]
+              },
+              {
+                "id": 1068,
+                "name": "Chillout Dreams",
+                "cover": "https://p4.music.126.net/munocVwnhqGTRrNM3eWW2A==/109951163622743930.jpg#hash=15cc630cc116",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743930#hash=169560734935",
+                "chineseName": "入梦驰放",
+                "description": "轻松、缓慢、令人放松的Chillout的基础上，点缀各种如催眠般的恍惚、朦胧声效。",
+                "source": 0,
+                "radar": [
+                  4,
+                  1,
+                  5,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10402,
+                "name": "Melodic Progressive",
+                "cover": "https://p3.music.126.net/7pyPMicSx_IsXn8mH8z7VA==/109951163622746796.jpg#hash=7ed3e5471cc3",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746796#hash=6d39239a8b11",
+                "chineseName": "旋律前卫",
+                "description": "更注重旋律的一类Progressive House ，歌曲特征常体现在明亮且欢愉的基调和氛围，有时相伴人声，但仍然不失渐进的整体脉络。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  5,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10352,
+                "name": "Liquid Trap",
+                "cover": "https://p4.music.126.net/YN2d068tXzzh885aEj-f0Q==/109951163622755575.jpg#hash=13f5807003ce",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755575#hash=b6540b8ac293",
+                "chineseName": "流体陷阱音乐",
+                "description": "突出 Trap 中较为柔和的部分，但任然充满了机械的律动和 Hip Hop精髓。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10424,
+                "name": "Future Bass",
+                "cover": "https://p3.music.126.net/3rUd6-6k9DVhvgQ2QV47ZQ==/109951163622755101.jpg#hash=32476e2b7e56",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755101#hash=987ccaac8f82",
+                "chineseName": "未来贝斯",
+                "description": "从Future Garage衍生而来，节奏舒缓轻快，给人一种清新舒爽的感觉，属于小清新一类的音乐。注重表现切片式的bass lead，强调旋律，总是能让你心醉神迷。Future Bass发展至今也展现出了各具特色的表现形式，例如Kawaii Bass、Future Beats、Futurestep、Future R&B、Future Trap、Melodic Trap等等音乐标签。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  5,
+                  3
+                ]
+              },
+              {
+                "id": 10184,
+                "name": "Liquid Dubstep",
+                "cover": "https://p4.music.126.net/AUzsSdCDuJTdDyJJPTvqww==/109951163622753135.jpg#hash=1763f960a630",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753135#hash=267c3348fd16",
+                "chineseName": "流体回响贝斯",
+                "description": "在 Dubstep 的基础上，节奏更为舒缓和平滑，其中的人声是以一种流畅的律动呈现出来的。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  5,
+                  3
+                ]
+              }
+            ]
+          },
+          {
+            "id": 1069,
+            "name": "Synth",
+            "source": 0,
+            "chineseName": "合成器",
+            "show": 2,
+            "description": "Synth 合成器是一种发出电信号，通过放大器、扬声器或耳机转化为声音的电子乐器，合成器既可以模拟现存的所有声音（如乐器、人声、自然声音等），也可以生成新的电子音色，大部分合成器以键盘为操控界面。\n代表人物有 Depeche Mode、Soft Cell、Human League 等。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 10438,
+                "name": "Synthwave",
+                "cover": "https://p3.music.126.net/EbTjv80NuK5gM9QHCu5RIw==/109951163622743928.jpg#hash=b1f7d3800148",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743928#hash=3738cc0cff1e",
+                "chineseName": "合成器浪潮",
+                "description": "继承Disco的衣钵，于八十年代初期开始盛行，灵感极大来自于当时的影视、动漫、游戏，时常被用作原声带。Synthpop拥有独立的鼓点，空旷的合成器，高亢而简单的旋律，以及整体营造出上世纪80年代对未来世界的画像。\n代表人物有 Robert Parker、Mitch Murder、Miami Nights 1984 等。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  3,
+                  3
+                ]
+              },
+              {
+                "id": 1053,
+                "name": "Future Synthpop",
+                "cover": "https://p3.music.126.net/eJDV_wDLICnJNUqEZUeneQ==/109951163622747791.jpg#hash=1ede2025624c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747791#hash=fcbf3c52bcb0",
+                "chineseName": "合成器流行",
+                "description": "Synth-Pop 于八十年代初期开始流行，是由电子合成器制作出的流行乐，科技感很强。Synth Pop中的 “ Synth”，即 Synthesizer，顾名思义， Synth Pop 就是“由 合成器炮制出来的流行乐”，当然除  Synthesizers 外还会用上其他电子乐器如电脑及鼓机等等。\n代表人物有：Depeche Mode、 Human League、 Duran Duran、 OMD、 Gary Numan 等。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  3,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10280,
+                "name": "Electronic Pioneers",
+                "cover": "https://p4.music.126.net/Bp879t3HqhuqA85JspzenA==/109951163622747290.jpg#hash=1efef08694e1",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747290#hash=a59a8cbe4406",
+                "chineseName": "电子先驱",
+                "description": "电音领域的早期开拓性和实验音乐的精选合集。",
+                "source": 0,
+                "radar": [
+                  1,
+                  2,
+                  4,
+                  1,
+                  2
+                ]
+              },
+              {
+                "id": 10351,
+                "name": "Indie Dance",
+                "cover": "https://p3.music.126.net/jMv3c8Olg0G8Hi-OUjcFAw==/109951163622750207.jpg#hash=d39f5f4760ba",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750207#hash=a97a3a9b2d61",
+                "chineseName": "独立舞曲",
+                "description": "将独立摇滚的精髓与电音相结合，也是 Club 文化和 Live Music 融合而成的一种曲风。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  3,
+                  2,
+                  2
+                ]
+              }
+            ]
+          },
+          {
+            "id": 108,
+            "name": "Techno",
+            "source": 0,
+            "chineseName": "科技舞曲",
+            "show": 2,
+            "description": "Techno准确翻译为科技舞曲，从80年代中期的底特律开始走向世界，它由循环往复的旋律和配器构成，给人的感觉就像反复涌动的机械声浪，带有显著的工业感冰冷气息。这种特质很大程度上反映着当时人们所处的工业时代，科技的日新月异以音乐的形态得以记录。Techno制作人往往希望借助这种音乐表达一种超前的概念。\n科技舞曲的节拍也是最常规的4/4拍，配器与 House 也大致相同，但速率较 House 更快（尽管如今现代化的Techno和House已然没有速率上的显著对比），看似重复的机械化行进实则暗藏着多变的细节，因此适应它需要过程。Techno 不像 House 那般讲究热情而欢愉的气氛，而是相当内敛，甚至让人感到高冷，会使用很多氛围合成器以同样的旋律贯穿整曲。\n代表人物有Jeff Mills、Derrick May、Sven Vath、Carl Cox等。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 1036,
+                "name": "Techno",
+                "cover": "https://p4.music.126.net/aTEVVGZlEc-FTs-c6zZNAg==/109951163622745822.jpg#hash=5d9eb81e5ba3",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622745822#hash=91d529c0d6e8",
+                "chineseName": "科技舞曲",
+                "description": "Techno准确翻译为科技舞曲，从80年代中期的底特律开始走向世界，它由循环往复的旋律和配器构成，给人的感觉就像反复涌动的机械声浪，带有显著的工业感冰冷气息。这种特质很大程度上反映着当时人们所处的工业时代，科技的日新月异以音乐的形态得以记录。Techno制作人往往希望借助这种音乐表达一种超前的概念。\n科技舞曲的节拍也是最常规的4/4拍，配器与 House 也大致相同，但速率较 House 更快（尽管如今现代化的Techno和House已然没有速率上的显著对比），看似重复的机械化行进实则暗藏着多变的细节，因此适应它需要过程。Techno 不像 House 那般讲究热情而欢愉的气氛，而是相当内敛，甚至让人感到高冷，会使用很多氛围合成器以同样的旋律贯穿整曲。\n代表人物有Jeff Mills、Derrick May、Sven Vath、Carl Cox等。",
+                "source": 0,
+                "radar": [
+                  1,
+                  4,
+                  3,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10288,
+                "name": "Underground Techno",
+                "cover": "https://p4.music.126.net/GRXg3Q02iLrPkdJ7jg1baQ==/109951163622745303.jpg#hash=1ba2826126aa",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622745303#hash=185f02c39569",
+                "chineseName": "地下科技舞曲",
+                "description": "地下领域相对更纯正的Techno流派，流行于柏林的街头和布鲁克林的 Techno 音乐。",
+                "source": 0,
+                "radar": [
+                  1,
+                  4,
+                  4,
+                  1,
+                  4
+                ]
+              },
+              {
+                "id": 1059,
+                "name": "Minimal",
+                "cover": "https://p4.music.126.net/ioxjKb3uTwEEAXHrBwYXeg==/109951163622747780.jpg#hash=602cb2f29164",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747780#hash=1f32d798efcc",
+                "chineseName": "极简科技舞曲",
+                "description": "围绕极简理念编曲，将 House, Techno 和 Electronica的核心Beats巧妙结合，强调不同风格之间的变化和差异。",
+                "source": 0,
+                "radar": [
+                  1,
+                  5,
+                  2,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 10276,
+                "name": "Hard Techno",
+                "cover": "https://p4.music.126.net/MZgELb_RrDRZsNRjv_tojQ==/109951163622750215.jpg#hash=37a14ff91d9b",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750215#hash=27a0db97c8fd",
+                "chineseName": "硬核科技舞曲",
+                "description": "重工业仓库般的冷峻和威严，甚至暗藏阴险，是重型Techno的代表，硬核主义的底鼓是最鲜明的特征。",
+                "source": 0,
+                "radar": [
+                  1,
+                  4,
+                  3,
+                  1,
+                  5
+                ]
+              },
+              {
+                "id": 10355,
+                "name": "Dub Techno",
+                "cover": "https://p4.music.126.net/-aqPKvN7MK0-WKSTNfls7Q==/109951163622749240.jpg#hash=1ea9979d63ed",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622749240#hash=cbb2880934ed",
+                "chineseName": "回响科技舞曲",
+                "description": "是由 Deep Techno 中最精彩的部分加以延迟反拍处理，融合强烈混响之后形成的冰冷曲风。",
+                "source": 0,
+                "radar": [
+                  2,
+                  3,
+                  5,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 10182,
+                "name": "Deep Tech",
+                "cover": "https://p4.music.126.net/ACHBR5WH4ExdJKFF7QnImw==/109951163622743927.jpg#hash=61c947d78939",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743927#hash=235e85694981",
+                "chineseName": "深邃科技",
+                "description": "将deep house，techno，tech house融合在了一起，属于极简科技音乐的一种现代化表现形式，并夹杂着充满趣味性的的节奏和间隔性的声音呈现。",
+                "source": 0,
+                "radar": [
+                  2,
+                  4,
+                  4,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 1066,
+                "name": "Tech House",
+                "cover": "https://p3.music.126.net/tjw4aZN8Mv7VneBn32xrHQ==/109951163622751644.jpg#hash=5f3a3dfb487e",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751644#hash=c9364408d48f",
+                "chineseName": "科技浩室舞曲",
+                "description": "一种在音序排练和合成器（Synth）中结合 Techno 原理的 House 音乐，典型的节拍系曲风，融合了 House Music 的温暖和 Techno 的冰冷。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  3,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10353,
+                "name": "Detroit House & Techno",
+                "cover": "https://p3.music.126.net/oYWmCfHCq8-w86PjsqsW5g==/109951163622749724.jpg#hash=030852baf868",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622749724#hash=20acfd14f190",
+                "chineseName": "底特律浩室 & 科技舞曲",
+                "description": "来自科技舞曲发源地、浩室舞曲进化地的 Techno 与 House 音乐。",
+                "source": 0,
+                "radar": [
+                  1,
+                  5,
+                  2,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 1014,
+                "name": "Oldschool Techno & Trance ",
+                "cover": "https://p3.music.126.net/v0JXw5mDWyExwptZF9xsUQ==/109951163622744824.jpg#hash=a2cf95144ff5",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744824#hash=3486fea286d9",
+                "chineseName": "复古科技 & 出神舞曲",
+                "description": "Techno 和 Trance 巅峰时期的经典歌曲精选，它们奠定了近十年舞曲文化的基础。",
+                "source": 0,
+                "radar": [
+                  2,
+                  4,
+                  3,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10124,
+                "name": "Oldschool Acid",
+                "cover": "https://p3.music.126.net/P_OoGLxREwP3Mju-ql53ZQ==/109951163622750725.jpg#hash=fb0cc43fa985",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750725#hash=0011367d14a4",
+                "chineseName": "复古迷幻",
+                "description": "将酸性acid音色（TB-303合成器的特征）与 House、Techno 和 Trance 模板相结合的一种曲风。",
+                "source": 0,
+                "radar": [
+                  1,
+                  4,
+                  2,
+                  2,
+                  5
+                ]
+              },
+              {
+                "id": 10289,
+                "name": "Bassline",
+                "cover": "https://p3.music.126.net/1U1xnZ1mKvXvVErl1mtiPQ==/109951163622746799.jpg#hash=f61f9fd919c0",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746799#hash=0555fdd8f264",
+                "chineseName": "贝斯声线",
+                "description": "2007年末开始在英国流行起来，由 UK Garage 演变而来的的一种副流派，将 House Music、Speed Garage 与 Techno 相结合，并且更强调 Bass音色 这一要素。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10280,
+                "name": "Electronic Pioneers",
+                "cover": "https://p3.music.126.net/Bp879t3HqhuqA85JspzenA==/109951163622747290.jpg#hash=3deea79d8098",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747290#hash=a59a8cbe4406",
+                "chineseName": "电子先驱",
+                "description": "电音领域的早期开拓性和实验音乐的精选合集。",
+                "source": 0,
+                "radar": [
+                  1,
+                  2,
+                  4,
+                  1,
+                  2
+                ]
+              }
+            ]
+          },
+          {
+            "id": 105,
+            "name": "Trance",
+            "source": 0,
+            "chineseName": "出神舞曲",
+            "show": 2,
+            "description": "Trance最准确的意译为“出神舞曲”，特别的音轨层次让你有“出神”的感觉，但还是保有舞曲的动感，很注重 Bassline 与Synth的配合，由此产生梦幻的感觉。\nTrance 由 Techno 演变而来，90年代早期从传入德国的科技舞曲（Techno）和电子硬核音乐（Hardcore）中分离出来，强调简洁且高亢的合成器乐句在全曲中的不断反复，只有很少的一些节奏上的变化和偶尔的合成器干扰可以将这些反复区分开来——这样做的目的是为了有效地将听众带入一种接近宗教本源的“出神”状态。鼓点方面讲究非常轻柔的 Clap，轻到几乎听不见，再配上紧凑的 Bassline 作铺垫。\n代表人物有 Paul Oakenfold、Paul van Dyk、Armin van Buuren、Ferry Corsten等。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 101,
+                "name": "Trance",
+                "cover": "https://p3.music.126.net/NWj-dzI3PEomd4BuqgZJCA==/109951163622748751.jpg#hash=cdbae5b00874",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748751#hash=24ad6445c398",
+                "chineseName": "出神舞曲",
+                "description": "Trance最准确的意译为“出神舞曲”，特别的音轨层次让你有“出神”的感觉，但还是保有舞曲的动感，很注重 Bassline 与Synth的配合，由此产生梦幻的感觉。\nTrance 由 Techno 演变而来，90年代早期从传入德国的科技舞曲（Techno）和电子硬核音乐（Hardcore）中分离出来，强调简洁且高亢的合成器乐句在全曲中的不断反复，只有很少的一些节奏上的变化和偶尔的合成器干扰可以将这些反复区分开来——这样做的目的是为了有效地将听众带入一种接近宗教本源的“出神”状态。鼓点方面讲究非常轻柔的 Clap，轻到几乎听不见，再配上紧凑的 Bassline 作铺垫。\n代表人物有 Paul Oakenfold、Paul van Dyk、Armin van Buuren、Ferry Corsten等。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 102,
+                "name": "Vocal Trance",
+                "cover": "https://p4.music.126.net/04PgLHbbeQsLeEwJueZTCg==/109951163622742973.jpg#hash=f153cba09f24",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742973#hash=b31d790dd57e",
+                "chineseName": "人声出神舞曲",
+                "description": "惊艳人声搭配触动人心的Trance音轨，呈现优美旋律和无尽能量源泉。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  4,
+                  4
+                ]
+              },
+              {
+                "id": 10175,
+                "name": "Epic Trance",
+                "cover": "https://p3.music.126.net/_rn43eq-tIPR0x51xhuTnQ==/109951163622753617.jpg#hash=00b10cb1426c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753617#hash=85978b50fda5",
+                "chineseName": "史诗出神舞曲",
+                "description": "保留Trance的基本要素，常借助交响乐创造宏大的史诗场面，搭配以庄重旋律和高昂能量，震撼人心。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  5,
+                  3,
+                  5
+                ]
+              },
+              {
+                "id": 1090,
+                "name": "Classic Trance",
+                "cover": "https://p4.music.126.net/v73f4wYgtVk2GDcy7YVPAA==/109951163622742974.jpg#hash=08475b58e673",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742974#hash=e475f792b1a3",
+                "chineseName": "经典出神舞曲",
+                "description": "Trance 巅峰时期的经典样式，也注重宏大的气场，bassline常以酸性合成器调配(TB-303)，一起来重温史诗般的宏大的经典 Trance。",
+                "source": 0,
+                "radar": [
+                  4,
+                  4,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 108,
+                "name": "Goa-Psy Trance",
+                "cover": "https://p4.music.126.net/BWNhQ2CiioL2KUaVAADAdg==/109951163622751650.jpg#hash=bd4071f09c94",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751650#hash=41a6a40d8148",
+                "chineseName": "迷幻出神舞曲",
+                "description": "在90年代早期从 Goa trance 发展而来，并逐步进入主流音乐的范围。音乐的速度通常较快，一般在135到150 BPM，具有特征性的三连音bassline，以及催生人脑幻觉的synth，强调通过音乐层次创造一种独特的氛围，而给人带来独特的精神体验。在制作上，通常较多地使用软件采样器，VST插件，软件音序器等。[Goa trance 以“印度果阿”命名，但它其实是在以色列、伊比萨、伦敦等地兴起的致幻舞曲。相较于Psy-Trance，它的声音质感更加有机化，也更加依赖于节拍与音色的连贯性，足以带来彻头彻尾的致幻体验。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  5,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10125,
+                "name": "Classic Vocal Trance",
+                "cover": "https://p3.music.126.net/9H0KUKbaIr15kk59eWMZXg==/109951163622748273.jpg#hash=a1e311562c44",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748273#hash=bf75064c4067",
+                "chineseName": "经典人声出神舞曲",
+                "description": "经典人声 Trance，惊艳人声搭配触动人心的舞曲，呈现优美旋律和无尽能量源泉。",
+                "source": 0,
+                "radar": [
+                  5,
+                  4,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10402,
+                "name": "Melodic Progressive",
+                "cover": "https://p3.music.126.net/7pyPMicSx_IsXn8mH8z7VA==/109951163622746796.jpg#hash=7ed3e5471cc3",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746796#hash=6d39239a8b11",
+                "chineseName": "旋律前卫",
+                "description": "更注重旋律的一类Progressive House ，歌曲特征常体现在明亮且欢愉的基调和氛围，有时相伴人声，但仍然不失渐进的整体脉络。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  5,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 107,
+                "name": "Progressive",
+                "cover": "https://p3.music.126.net/ssQdHgBnhpycM-qCAFshUA==/109951163622746334.jpg#hash=9981acf57f01",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622746334#hash=1e2882963151",
+                "chineseName": "前卫舞曲",
+                "description": "极具前卫感，注重渐进结构的出神舞曲，bassline听感流畅连贯，鼓点稳定，是传播范围最广的Trance分支之一。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 1010,
+                "name": "DJ Mixes",
+                "cover": "https://p4.music.126.net/fqUE8RfiYohVBADa2JTWkQ==/109951163622755580.jpg#hash=88a57be42dca",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755580#hash=4cc24bb67fb5",
+                "chineseName": "DJ接歌混音作品",
+                "description": "Techno、Deep house、Progressive 和 Trance 等多种不同风格的长时长完整DJ接歌混音作品。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 10178,
+                "name": "Progressive Psy",
+                "cover": "https://p3.music.126.net/PqFF7DuQ1whcFDO6VBMIIg==/109951163622747781.jpg#hash=895f2a47227b",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747781#hash=331c0ab43e44",
+                "chineseName": "渐进迷幻出神舞曲",
+                "description": "与Progressive Trance高度结合的一类Psytrance，不再强调疾速的节拍和饱和的音层，反而更加侧重氛围营造，以拉长入幻过程的方式(渐进式)来彰显Psychedelic的魅力。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  5,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 10346,
+                "name": "Dark PsyTrance",
+                "cover": "https://p3.music.126.net/FRF-ynfCWfTpP1kU_yYdJg==/109951163622753143.jpg#hash=758d62aea3af",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753143#hash=0fb83e081207",
+                "chineseName": "暗黑回转出神",
+                "description": "黑化的Psy Trance，复杂的音层，诡异的声响，以及更令人惊异的节奏行进，加之更高的拍率共同制造出一个混沌的幻觉时空。",
+                "source": 0,
+                "radar": [
+                  3,
+                  4,
+                  5,
+                  2,
+                  5
+                ]
+              },
+              {
+                "id": 10176,
+                "name": "Hands Up",
+                "cover": "https://p3.music.126.net/z-AxgpVoftZ6BJZoJNFU4Q==/109951163622750214.jpg#hash=859222026634",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750214#hash=d4ecfa9c81ee",
+                "chineseName": "举起你的双手",
+                "description": "接受来自 Hard Dance、Trance 、 Happy hardcore 等多种类型的冲击，让我们举起开双臂一起在澎湃的舞曲中释放能量。",
+                "source": 0,
+                "radar": []
+              }
+            ]
+          },
+          {
+            "id": 1011,
+            "name": "Vocal",
+            "source": 0,
+            "chineseName": "人声",
+            "show": 2,
+            "description": "注重人声Vocal表现的电音，常与流行元素相结合，众多曲风类型都适合添加人声。在电音的制作过程中，人声也可被视为一种编曲配器，可以对其进行多样化处理、剪辑、添加特效。精妙的人声使用甚至还可起到强化节奏、加深听众记忆的奇效。",
+            "radar": [],
+            "channels": [
+              {
+                "id": 102,
+                "name": "Vocal Trance",
+                "cover": "https://p4.music.126.net/04PgLHbbeQsLeEwJueZTCg==/109951163622742973.jpg#hash=f153cba09f24",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742973#hash=b31d790dd57e",
+                "chineseName": "人声出神舞曲",
+                "description": "惊艳人声搭配触动人心的Trance音轨，呈现优美旋律和无尽能量源泉。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  4,
+                  4
+                ]
+              },
+              {
+                "id": 10125,
+                "name": "Classic Vocal Trance",
+                "cover": "https://p4.music.126.net/9H0KUKbaIr15kk59eWMZXg==/109951163622748273.jpg#hash=e34b16f057b7",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748273#hash=bf75064c4067",
+                "chineseName": "经典人声出神舞曲",
+                "description": "经典人声 Trance，惊艳人声搭配触动人心的舞曲，呈现优美旋律和无尽能量源泉。",
+                "source": 0,
+                "radar": [
+                  5,
+                  4,
+                  4,
+                  3,
+                  4
+                ]
+              },
+              {
+                "id": 106,
+                "name": "EuroDance",
+                "cover": "https://p4.music.126.net/F6CXZ7nWT_jwbrYoUcwHpw==/109951163622742981.jpg#hash=28759be7cab1",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742981#hash=b4de54df336d",
+                "chineseName": "欧洲舞曲",
+                "description": "曾被大多数欧洲人追随的主流舞曲。在 DISCO 的基础上又注入了许多新的元素，如 HOUSE、RAP及更加流畅的旋律。在80年代至90年代初，大多数的舞曲专家皆追随其脚步，出现了一大批脍炙人口的好歌。EURODANCE 的BPM一般在120～130BPM之间。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 10474,
+                "name": "EDM Hits",
+                "cover": "https://p4.music.126.net/wbaNrQnh6GS6VAd5guJnJg==/109951163745125740.jpg#hash=697272da35d6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163745125740#hash=d6c09915d122",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 10142,
+                "name": "Vocal Chillout",
+                "cover": "https://p3.music.126.net/l6sEde-NDFJO8vuQhfoDxw==/109951163622753607.jpg#hash=f75d828fb9e9",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753607#hash=5695b6df2cbf",
+                "chineseName": "人声驰放音乐",
+                "description": "拥有人声辅助表现的驰放电子，给予我们休闲放松的感觉。",
+                "source": 0,
+                "radar": [
+                  5,
+                  1,
+                  5,
+                  4,
+                  1
+                ]
+              },
+              {
+                "id": 10278,
+                "name": "Vocal Lounge",
+                "cover": "https://p3.music.126.net/omzm81I8UhikJubQfVch7g==/109951163622750727.jpg#hash=b55205a92ced",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750727#hash=867f93b97867",
+                "chineseName": "人声沙发",
+                "description": "带有舒缓人声的Lounge音乐，耳部音乐按摩的首选。",
+                "source": 0,
+                "radar": [
+                  5,
+                  2,
+                  4,
+                  4,
+                  2
+                ]
+              },
+              {
+                "id": 1069,
+                "name": "Classic EuroDance",
+                "cover": "https://p3.music.126.net/imdq9R0K5vr16EizYoUONA==/109951163622748272.jpg#hash=e9c3b898d70c",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748272#hash=bb9c62e45292",
+                "chineseName": "经典欧洲舞曲",
+                "description": "流行于上世纪90年代，通常有着凸出的节奏和旋律的经典欧洲舞曲精选。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  2,
+                  4
+                ]
+              },
+              {
+                "id": 10400,
+                "name": "Chill & Tropical House",
+                "cover": "https://p4.music.126.net/GYZ_PV4Nf_CfT5F2PjOktg==/109951163622750209.jpg#hash=dc43d9ec7646",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750209#hash=7b3050e642fc",
+                "chineseName": "热带舒缓浩室",
+                "description": "发源于欧洲20世纪末，BPM在100-115左右，由来自澳大利亚的制作人Thomas Jack最先开创。它在house音乐的4/4拍的节奏加上合成器乐段的基础上，融入排笛、马林巴琴、钢鼓、铜管乐器的音色以及人声，给听众营造出一个整体慵懒、欢乐、度假般的 Chill 休闲氛围。这是一种让人放松，舒缓情绪的音乐曲风，具有热带沙滩风格，活泼音色，常加上律动的人声。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  5,
+                  2
+                ]
+              },
+              {
+                "id": 10183,
+                "name": "Classic EuroDisco",
+                "cover": "https://p3.music.126.net/GBYg02jyXbvovY2YrVTI1A==/109951163622754605.jpg#hash=86ce5ee30f56",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754605#hash=bd8026ba24d8",
+                "chineseName": "经典欧洲迪斯科",
+                "description": "流行于上世纪70年代的经典欧洲迪斯科舞曲精选。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 10404,
+                "name": "Indie Beats",
+                "cover": "https://p4.music.126.net/_7S1RTQB-XfhTG0bsv9Znw==/109951163622748747.jpg#hash=178a3215abc6",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622748747#hash=4650f9ed76ab",
+                "chineseName": "独立节拍",
+                "description": "通常蕴藏着新奇的想法，舒适流畅、充满时尚的旋律让人能够尽情享受其中的节奏感。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  3,
+                  3,
+                  3
+                ]
+              },
+              {
+                "id": 10175,
+                "name": "Epic Trance",
+                "cover": "https://p4.music.126.net/_rn43eq-tIPR0x51xhuTnQ==/109951163622753617.jpg#hash=eb6b7c6e5e34",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753617#hash=85978b50fda5",
+                "chineseName": "史诗出神舞曲",
+                "description": "保留Trance的基本要素，常借助交响乐创造宏大的史诗场面，搭配以庄重旋律和高昂能量，震撼人心。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  5,
+                  3,
+                  5
+                ]
+              },
+              {
+                "id": 1070,
+                "name": "Club Sounds",
+                "cover": "https://p3.music.126.net/Gv_lXHqrIVcygKM_zxMD6w==/109951163622751182.jpg#hash=f9ccac8c92e7",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751182#hash=222d2c6d0f60",
+                "chineseName": "夜店舞曲",
+                "description": "火遍全球的经典热门夜店和俱乐部舞曲精选。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 10213,
+                "name": "Russian Club Hits",
+                "cover": "https://p3.music.126.net/C9nCV0gX1X0Elq7zpUuZWQ==/109951163622744825.jpg#hash=2c4c13ee8314",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744825#hash=59533cb6f78e",
+                "chineseName": "俄罗斯夜店热单",
+                "description": "俄罗斯最热门的夜店舞曲精选。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 10351,
+                "name": "Indie Dance",
+                "cover": "https://p4.music.126.net/jMv3c8Olg0G8Hi-OUjcFAw==/109951163622750207.jpg#hash=e051318b1b89",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750207#hash=a97a3a9b2d61",
+                "chineseName": "独立舞曲",
+                "description": "将独立摇滚的精髓与电音相结合，也是 Club 文化和 Live Music 融合而成的一种曲风。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  3,
+                  2,
+                  2
+                ]
+              },
+              {
+                "id": 10209,
+                "name": "Big Room House",
+                "cover": "https://p3.music.126.net/t4jwAdTh4pi9EffrUUlPSQ==/109951163622744826.jpg#hash=e690567d382a",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744826#hash=57bcb5367526",
+                "chineseName": "大空间浩室",
+                "description": "一种极其现代化的商业浩室曲风，基于电气浩室但以更为简单的方式表现和凸出鼓点和bass声效，往往带有宽广的混响效果，是一种较为简单粗放的派对舞曲。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  3,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 10294,
+                "name": "Nightcore",
+                "cover": "https://p3.music.126.net/GKQEVsHCJjLodBNX4wPxBg==/109951163622743923.jpg#hash=950dd0afa5b8",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743923#hash=35a91d85ae88",
+                "chineseName": "倍速夜核",
+                "description": "将欧陆舞曲、Trance 和 Techno 歌曲加速25%至每分钟160-180拍，达到硬核的节奏 ，以强而急速的低音鼓和拍子制造出强烈的节奏感。加速的过程中也伴随着曲调相应提高。例如 Nightcore 名作 Dam Dadi Doo 原由 Fantasy Project 所作并由 N.D.A. 以低沈的男声演唱 ，在 Nightcore 演绎就成了女孩般的声线。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  3,
+                  2,
+                  5
+                ]
+              },
+              {
+                "id": 10176,
+                "name": "Hands Up",
+                "cover": "https://p3.music.126.net/z-AxgpVoftZ6BJZoJNFU4Q==/109951163622750214.jpg#hash=859222026634",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750214#hash=d4ecfa9c81ee",
+                "chineseName": "举起你的双手",
+                "description": "接受来自 Hard Dance、Trance 、 Happy hardcore 等多种类型的冲击，让我们举起开双臂一起在澎湃的舞曲中释放能量。",
+                "source": 0,
+                "radar": []
+              },
+              {
+                "id": 10275,
+                "name": "Chillstep",
+                "cover": "https://p4.music.126.net/3FhC_PM-jyK5-ZuU9MvRtw==/109951163622747786.jpg#hash=a828fdfedde2",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622747786#hash=d23fe4591c62",
+                "chineseName": "驰放低音",
+                "description": "在Chillout的基础上结合注重环境营造和低音表现的英式Dubstep ，比纯粹的Chillout多了一些微妙的小躁动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  5,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10180,
+                "name": "Downtempo Lounge",
+                "cover": "https://p3.music.126.net/kzrTpUGfcNYdvB0RXGIJTQ==/109951163622754612.jpg#hash=5b479af0fc53",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754612#hash=37f2badc0197",
+                "chineseName": "缓拍 & 沙发",
+                "description": "以舒适的节奏、 清柔的歌声以及氛围感鲜明的背景音为特征，适宜享受闲适时光的同时欣赏，富有情调。",
+                "source": 0,
+                "radar": [
+                  4,
+                  2,
+                  4,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10210,
+                "name": "EDM Festival",
+                "cover": "https://p4.music.126.net/_aILrtaogd9lCbsQ0W4uMw==/109951163622742976.jpg#hash=2285ab96cb12",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622742976#hash=da0b3dd9c1ff",
+                "chineseName": "",
+                "description": null,
+                "source": 0,
+                "radar": null
+              },
+              {
+                "id": 1047,
+                "name": "Soulful House",
+                "cover": "https://p3.music.126.net/VO9_gra7kAeEvXBP-bQwKw==/109951163622743925.jpg#hash=431bc7fa4efd",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622743925#hash=05517abf1d29",
+                "chineseName": "灵魂浩室",
+                "description": "开始于90年代中期的美国和英国，与 Funky House 有相似之处，但是相对 Funk 和 Soul Music 来说，相对少了一些活泼的要素，有着更加触动人心的旋律和人声，节奏一般为4/4拍。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  3,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 1058,
+                "name": "Funky House",
+                "cover": "https://p3.music.126.net/7blnoe8aV382xZyr3paRBA==/109951163622744832.jpg#hash=ed37ea748c0e",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622744832#hash=97610f7c63c9",
+                "chineseName": "时髦浩室",
+                "description": "大约90年代初兴起，受到了许多重要音乐基元的影响，比如传统的 House、Funk、Disco等。节奏较为轻快，相对注重旋律，习惯于采样经典的人声或旋律，平稳4/4节拍，但不失丰富的节奏感(groove)，还有着许多吉他与其他精巧的音色采样。",
+                "source": 0,
+                "radar": [
+                  4,
+                  4,
+                  2,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 1092,
+                "name": "Disco House",
+                "cover": "https://p3.music.126.net/wejVucWDAeJxD2uU1jN8fg==/109951163622753142.jpg#hash=fdd40ac1db16",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753142#hash=36f8b3797f33",
+                "chineseName": "迪斯科浩室",
+                "description": "一种严重依赖于对 Disco 样本采集的 House 音乐，是结合了70年代的 Disco 和 Modern House Music 鼓点节奏的一种电音流派。迪斯科这个词是 Discotheque 的简称，原意为播放唱片供人跳舞的舞厅，60年代初源于法国。由于设备的不断更新，每家舞厅只要拥一套播放机和一名唱片播放员就足以替代整个乐队，而且还可得到各种不同的音乐，既省钱又实用。因此，各大舞厅都采用这种方法。于是人们把这种由唱片播放出来的跳舞音乐也叫做迪斯科。60年代中期，迪斯科传入美国，70年代初在全国各地扩散开来。迪斯科舞曲具有强劲有力的节拍，一般为4/4 拍，每一拍都是强拍，从头到尾不变；速度大约为每分钟120拍；它的曲调短小，歌词简单，不断重复。其实，任何一首曲子，只要调整一下速度，改成强弱不分的节拍，都可以变成迪斯科。",
+                "source": 0,
+                "radar": [
+                  5,
+                  4,
+                  2,
+                  4,
+                  2
+                ]
+              },
+              {
+                "id": 10295,
+                "name": "Nu Disco",
+                "cover": "https://p3.music.126.net/3d3ukfNVlPMvchYIAskaDQ==/109951163622754602.jpg#hash=87c5b41afac5",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622754602#hash=82a72d8b22ca",
+                "chineseName": "新迪斯科",
+                "description": "堪称七八十年代所流行的迪斯科音乐的一场再生运动，Nu Disco兼具复古与现代，在Disco 旧时尚概念的基础上结合了更多前卫和流行化的元素，非常耐听和有趣的新流派。",
+                "source": 0,
+                "radar": [
+                  5,
+                  3,
+                  2,
+                  3,
+                  2
+                ]
+              },
+              {
+                "id": 10137,
+                "name": "Deep Nu-Disco",
+                "cover": "https://p4.music.126.net/JwivZlBOOdc7AXT-rNwAjw==/109951163622750735.jpg#hash=8c7015175294",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622750735#hash=ce83a71e9bd4",
+                "chineseName": "深邃 Nu-Disco",
+                "description": "囊括了house，funk以及disco的元素，节拍以中速和灵魂乐元素为主，伴着轻柔的电子律动。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  4,
+                  3
+                ]
+              },
+              {
+                "id": 10177,
+                "name": "Club Dubstep",
+                "cover": "https://p3.music.126.net/sPU3AE6PNdxnfCqRNCgy3w==/109951163622755095.jpg#hash=8d5ad605d8ec",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622755095#hash=001ebdc3e4e2",
+                "chineseName": "俱乐部回响贝斯",
+                "description": "在 Dubstep 稀疏节奏和低音的基础上，加以改编使其更适合俱乐部狂欢，这种现象反映的是传统的Dubstep为迎合特殊需要的自我演变。",
+                "source": 0,
+                "radar": [
+                  3,
+                  3,
+                  1,
+                  5,
+                  4
+                ]
+              },
+              {
+                "id": 10184,
+                "name": "Liquid Dubstep",
+                "cover": "https://p3.music.126.net/AUzsSdCDuJTdDyJJPTvqww==/109951163622753135.jpg#hash=9b840a546051",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622753135#hash=267c3348fd16",
+                "chineseName": "流体回响贝斯",
+                "description": "在 Dubstep 的基础上，节奏更为舒缓和平滑，其中的人声是以一种流畅的律动呈现出来的。",
+                "source": 0,
+                "radar": [
+                  4,
+                  3,
+                  4,
+                  5,
+                  3
+                ]
+              },
+              {
+                "id": 109,
+                "name": "Hardcore",
+                "cover": "https://p3.music.126.net/7OGe7XXW6AiryqzW4vFxIQ==/109951163622751185.jpg#hash=ce20eb1338cb",
+                "blurCover": "https://music.163.com/api/dj/img/blur/109951163622751185#hash=e4d6d448f7cd",
+                "chineseName": "硬核",
+                "description": "上世纪90年代起源于荷兰，最初用来形容那种玩脱了的Rave派对，后演变成一种相对硬派与极端的电音风格，音乐从Techno变种而来，但更重视速度和节奏性，BPM高达160〜200 ，同时鼓点的强度和低音，节奏，还有歌曲要表达的内容都更相对强烈乃至极端。",
+                "source": 0,
+                "radar": [
+                  2,
+                  3,
+                  2,
+                  2,
+                  5
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "message": ""
+  },
+  "error": null
+}

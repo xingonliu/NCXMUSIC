@@ -50,7 +50,7 @@
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": "partial",
-  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "terminalStatus": "blocked_by_prerequisite",
+  "blocker": "缺夹具：eventId 无生产者（池为空）",
   "evidence": []
 }

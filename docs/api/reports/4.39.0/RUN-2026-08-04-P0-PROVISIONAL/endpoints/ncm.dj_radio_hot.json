@@ -39,15 +39,123 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.dj_radio_hot.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 59,
+        "error": null,
+        "sampleHash": "7119a986a81078eed56e8be9d7d46f1a03f98fff431157ac2b53797debc0bb76",
+        "rawFile": "ncm.dj_radio_hot.ncm.dj_radio_hot.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_radio_hot.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 58,
+        "error": null,
+        "sampleHash": "34168c373b3db101e766ca98030a96ca32956254246e2a4289b59595b772cae3",
+        "rawFile": "ncm.dj_radio_hot.ncm.dj_radio_hot.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_radio_hot.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 59,
+        "error": null,
+        "sampleHash": "f1ac843bcf2e867afc9c0a0c91fdab2d3faaef570d552235a8cf47aa46c3dc08",
+        "rawFile": "ncm.dj_radio_hot.ncm.dj_radio_hot.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_radio_hot.page.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 52,
+        "error": null,
+        "sampleHash": "73e173368e2f40f41612c075eb70abd60f8f88658af4cd62ade3c72d79e67869",
+        "rawFile": "ncm.dj_radio_hot.ncm.dj_radio_hot.page.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_radio_hot.anon.001",
+      "lastSeenCase": "ncm.dj_radio_hot.page.none.001",
+      "example": "400"
+    },
+    {
+      "jsonPath": "data",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_radio_hot.anon.001",
+      "lastSeenCase": "ncm.dj_radio_hot.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_radio_hot.anon.001",
+      "lastSeenCase": "ncm.dj_radio_hot.page.none.001",
+      "example": "参数错误"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.dj_radio_hot.anon.001",
+      "sampleHash": "7119a986a81078eed56e8be9d7d46f1a03f98fff431157ac2b53797debc0bb76",
+      "rawFile": "ncm.dj_radio_hot.ncm.dj_radio_hot.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_radio_hot.inv.001",
+      "sampleHash": "34168c373b3db101e766ca98030a96ca32956254246e2a4289b59595b772cae3",
+      "rawFile": "ncm.dj_radio_hot.ncm.dj_radio_hot.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_radio_hot.none.001",
+      "sampleHash": "f1ac843bcf2e867afc9c0a0c91fdab2d3faaef570d552235a8cf47aa46c3dc08",
+      "rawFile": "ncm.dj_radio_hot.ncm.dj_radio_hot.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_radio_hot.page.none.001",
+      "sampleHash": "73e173368e2f40f41612c075eb70abd60f8f88658af4cd62ade3c72d79e67869",
+      "rawFile": "ncm.dj_radio_hot.ncm.dj_radio_hot.page.none.001.raw.json"
+    }
+  ]
 }

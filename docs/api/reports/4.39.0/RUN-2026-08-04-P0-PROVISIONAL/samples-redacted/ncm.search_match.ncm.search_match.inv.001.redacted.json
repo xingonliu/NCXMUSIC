@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.search_match.inv.001",
+    "apiAuditId": "ncm.search_match",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:25:09.955Z",
+    "endedAt": "2026-08-05T03:25:10.046Z",
+    "durationMs": 91,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "songs": [],
+      "ids": []
+    },
+    "code": 200
+  },
+  "error": null
+}

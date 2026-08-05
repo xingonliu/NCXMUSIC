@@ -89,3 +89,13 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 17. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.playmode_song_vector.anon.001 | AUTH_ANON | err | 500 | - | code 500 |
+| ncm.playmode_song_vector.inv.001 | AUTH_INVALID_EXPIRED | err | 500 | - | code 500 |
+| ncm.playmode_song_vector.none.001 | AUTH_NONE | err | 500 | - | code 500 |
+| ncm.playmode_song_vector.none.002 | AUTH_NONE | err | 500 | - | code 500 |

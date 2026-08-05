@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_toplist_popular.page.none.001",
+    "apiAuditId": "ncm.dj_toplist_popular",
+    "auth": "AUTH_NONE",
+    "params": {
+      "limit": 5,
+      "offset": 10
+    },
+    "startedAt": "2026-08-05T03:23:36.055Z",
+    "endedAt": "2026-08-05T03:23:36.178Z",
+    "durationMs": 123,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "msg": null,
+    "data": {
+      "total": 5,
+      "updateTime": 1785900216149,
+      "list": [
+        {
+          "id": 9201370188,
+          "rank": 1,
+          "lastRank": 1,
+          "score": 3562939,
+          "nickName": "应萤",
+          "avatarUrl": "https://p3.music.126.net/ebpba3eTDR_0-jeGNaWdnw==/109951173390629690.jpg#hash=59b31d256a9d",
+          "userType": 0,
+          "userFollowedCount": 864,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": null,
+          "roomNo": 0
+        },
+        {
+          "id": 13166563693,
+          "rank": 2,
+          "lastRank": 4,
+          "score": 3097703,
+          "nickName": "东海小学广播站",
+          "avatarUrl": "https://p3.music.126.net/Sd_XFXPkJkjiXA8hsUMHuQ==/109951170504324328.jpg#hash=89c1e3402d87",
+          "userType": 0,
+          "userFollowedCount": 3454,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": null,
+          "roomNo": 0
+        },
+        {
+          "id": 5145176140,
+          "rank": 3,
+          "lastRank": 2,
+          "score": 2892610,
+          "nickName": "小约翰可汗官方",
+          "avatarUrl": "https://p4.music.126.net/oU7d7B9fpqzuFb9HHmWdxA==/109951166296817078.jpg#hash=df61c6428ff9",
+          "userType": 205,
+          "userFollowedCount": 67088,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": {
+            "userType": 205,
+            "identityLevel": 4,
+            "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340194/0903/b735/7c7a/0dddcdf78047d397d24125840e54ab5b.png#hash=de2abfedf945"
+          },
+          "roomNo": 0
+        },
+        {
+          "id": 97137413,
+          "rank": 4,
+          "lastRank": 3,
+          "score": 2532282,
+          "nickName": "薛之谦",
+          "avatarUrl": "https://p4.music.126.net/PLrMsE0bTG2p1lL6QfKC9g==/109951172414278510.jpg#hash=4864e72cadaa",
+          "userType": 2,
+          "userFollowedCount": 21038150,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": {
+            "userType": 2,
+            "identityLevel": 1,
+            "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+          },
+          "roomNo": 0
+        },
+        {
+          "id": 74949745,
+          "rank": 5,
+          "lastRank": 12,
+          "score": 1880661,
+          "nickName": "Linch2014",
+          "avatarUrl": "https://p4.music.126.net/bd4SeiBvGdGMOBjtuutejQ==/109951170356622322.jpg#hash=23526f2ac1fb",
+          "userType": 0,
+          "userFollowedCount": 2303,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": null,
+          "roomNo": 0
+        }
+      ]
+    }
+  },
+  "error": null
+}

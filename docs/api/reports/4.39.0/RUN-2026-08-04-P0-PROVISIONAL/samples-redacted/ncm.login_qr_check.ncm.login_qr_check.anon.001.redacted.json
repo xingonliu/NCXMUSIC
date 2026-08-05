@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "caseId": "ncm.login_qr_check.anon.001",
+    "apiAuditId": "ncm.login_qr_check",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:15.073Z",
+    "endedAt": "2026-08-05T03:24:15.182Z",
+    "durationMs": 109,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "参数错误",
+    "code": 400,
+    "message": "参数错误",
+    "cookie": "<REDACTED:cookie>"
+  },
+  "error": null
+}

@@ -30,15 +30,108 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.eapi_decrypt.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 1,
+        "error": null,
+        "sampleHash": "e3156d031fcbc837a1f1213734773e74ec6fbece82d1ea8bcee6a93a85b668f6",
+        "rawFile": "ncm.eapi_decrypt.ncm.eapi_decrypt.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.eapi_decrypt.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "4384d9d306754116744a3ad4d71449b2ec92bef3448e8e6fbb0e7c76a9378470",
+        "rawFile": "ncm.eapi_decrypt.ncm.eapi_decrypt.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.eapi_decrypt.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "ac07fec89ba62615e061229bc9d319db0d62b11fc33073f138e2a54fe58c9cfd",
+        "rawFile": "ncm.eapi_decrypt.ncm.eapi_decrypt.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.eapi_decrypt.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "f06371050d7038f0e5a20398318545bd95ddd9802a79f6c4fd3a208f9a8179bb",
+        "rawFile": "ncm.eapi_decrypt.ncm.eapi_decrypt.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.eapi_decrypt.anon.001",
+      "lastSeenCase": "ncm.eapi_decrypt.none.002",
+      "example": "400"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.eapi_decrypt.anon.001",
+      "lastSeenCase": "ncm.eapi_decrypt.none.002",
+      "example": "hex string is required"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.eapi_decrypt.anon.001",
+      "sampleHash": "e3156d031fcbc837a1f1213734773e74ec6fbece82d1ea8bcee6a93a85b668f6",
+      "rawFile": "ncm.eapi_decrypt.ncm.eapi_decrypt.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.eapi_decrypt.inv.001",
+      "sampleHash": "4384d9d306754116744a3ad4d71449b2ec92bef3448e8e6fbb0e7c76a9378470",
+      "rawFile": "ncm.eapi_decrypt.ncm.eapi_decrypt.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.eapi_decrypt.none.001",
+      "sampleHash": "ac07fec89ba62615e061229bc9d319db0d62b11fc33073f138e2a54fe58c9cfd",
+      "rawFile": "ncm.eapi_decrypt.ncm.eapi_decrypt.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.eapi_decrypt.none.002",
+      "sampleHash": "f06371050d7038f0e5a20398318545bd95ddd9802a79f6c4fd3a208f9a8179bb",
+      "rawFile": "ncm.eapi_decrypt.ncm.eapi_decrypt.none.002.raw.json"
+    }
+  ]
 }

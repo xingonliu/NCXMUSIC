@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_subscriber.id0.none.neg.001",
+    "apiAuditId": "ncm.dj_subscriber",
+    "auth": "AUTH_NONE",
+    "params": {
+      "0": "time",
+      "1": "id",
+      "2": "limit",
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T03:23:20.107Z",
+    "endedAt": "2026-08-05T03:23:20.163Z",
+    "durationMs": 56,
+    "attempts": 1
+  },
+  "body": {
+    "subscribers": [],
+    "code": 200
+  },
+  "error": null
+}

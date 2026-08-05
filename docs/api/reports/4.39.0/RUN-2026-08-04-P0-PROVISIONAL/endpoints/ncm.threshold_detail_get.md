@@ -89,3 +89,38 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 17. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.threshold_detail_get.anon.001 | AUTH_ANON | - | 200 | 119 |  |
+| ncm.threshold_detail_get.inv.001 | AUTH_INVALID_EXPIRED | err | 301 | - | code 301 |
+| ncm.threshold_detail_get.none.001 | AUTH_NONE | err | 301 | - | code 301 |
+| ncm.threshold_detail_get.none.002 | AUTH_NONE | err | 301 | - | code 301 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `data[].items[].curCount` | number | 9 | 0 | 0 | AUTH_ANON | `0` |
+| `data[].items[].extInfo` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `data[].items[].extInfo.countOneTag` | string | 1 | 0 | 0 | AUTH_ANON | `5` |
+| `data[].items[].extInfo.curInfluence` | string | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data[].items[].extInfo.minInfluence` | string | 1 | 0 | 0 | AUTH_ANON | `100` |
+| `data[].items[].extInfo.plistBookThreshold[][]` | string | 6 | 0 | 0 | AUTH_ANON | `包含的标签` |
+| `data[].items[].extInfo.topSubCountTag` | array<unknown> | 1 | 0 | 1 | AUTH_ANON | `undefined` |
+| `data[].items[].extInfo.total` | string | 1 | 0 | 0 | AUTH_ANON | `10` |
+| `data[].items[].extInfo.validCnt` | string | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `data[].items[].itemId` | number | 9 | 0 | 0 | AUTH_ANON | `1` |
+| `data[].items[].itemKey` | string | 9 | 0 | 0 | AUTH_ANON | `视频笔记影响力达到100` |
+| `data[].items[].itemValue` | string | 9 | 0 | 0 | AUTH_ANON | `` |
+| `data[].items[].status` | boolean | 9 | 0 | 0 | AUTH_ANON | `false` |
+| `data[].items[].totalCount` | number | 9 | 0 | 0 | AUTH_ANON | `100` |
+| `data[].level` | number | 3 | 0 | 0 | AUTH_ANON | `1` |
+| `data[].status` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `data[].userId` | number | 3 | 0 | 0 | AUTH_ANON | `17788444306` |
+| `data[].userType` | number | 3 | 0 | 0 | AUTH_ANON | `1` |
+| `message` | string | 1 | 0 | 0 | AUTH_ANON | `` |

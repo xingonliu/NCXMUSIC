@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.record_recent_video.none.001",
+    "apiAuditId": "ncm.record_recent_video",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:25:02.464Z",
+    "endedAt": "2026-08-05T03:25:02.516Z",
+    "durationMs": 52,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "total": 0,
+      "list": []
+    },
+    "message": ""
+  },
+  "error": null
+}

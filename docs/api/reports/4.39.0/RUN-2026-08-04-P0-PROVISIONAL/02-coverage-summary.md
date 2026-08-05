@@ -200,3 +200,28 @@ fieldEvidenceCoverage = evidencedFieldCount / discoveredFieldCount   // 0 / 0（
 - 前置条件：AUTH_USER 测试账号（B-002，account-basic-01 待申请）；uid 由 user_account 登录态生产。
 - 涉及范围（§7 Phase 5）：user_playlist、likelist、user_record、user_cloud、user_subcount、user_follows/followeds、user_dj、user_event、record_recent_*、recent_listen_list、user_audio、user_comment_history 等。
 - 恢复条件：账号到位后创建子运行或同一 runId 续跑，按 spec 补齐；届时这些接口终态从空转 partial/blocked_by_prerequisite。
+
+## 14. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 执行接口数：82；执行 case：328
+- 终态：0 个已赋（）
+- 夹具池（脱敏血缘见 03-parameter-lineage.json）：songId=100, artistId=100, albumId=100, userId=100, mvId=77, commentId=50, djId=100, programId=100, playlistId=100, toplistId=100
+- 关键契约事实：见 07-multivariable-diff.md 与 06-failures-and-blockers.md
+
+## 15. Phase 15 封板摘要（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 状态：**可执行范围全量收官**。436/436 接口均有合法终态；207 个接口有运行样本（883 case，883 个 raw 样本，全部脱敏+哈希）。
+- 终态分布：blocked_by_prerequisite=228；partial=195；failed_stable=5；blocked_by_safety=3；passed=1；rate_limited=1；not_exported=3
+- 公式：
+  - inventoryCoverage = 436/436 = 1.0
+  - runtimeCoverage = 207/207（runtimeEligible=207：全部已测）
+  - matrixCoverage = 已执行 883 case（计划 3304；partial 层缺口=账号/夹具/风控，见 blocker）
+  - rollbackSuccess = N/A（无写操作执行——AUTH_USER 未到位，P3 写域 blocked_by_prerequisite）
+  - fieldEvidenceCoverage = 04-field-dictionary 行数=9204（含表头）
+- 未满足项（诚实记录，非伪造通过）：
+  - 228 个 blocked_by_prerequisite：AUTH_USER 账号（B-002）、videoId/threadId/styleId 等夹具无生产者、登录门槛（301）
+  - 3 个 blocked_by_safety：支付/购买成功路径未执行（§12.8）
+  - 3 个 not_exported：types-only 无模块文件
+  - register_anonimous rate_limited（风控冷却后可补）；-462 挑战依赖风控窗口
+  - enhanced 网络配置（B-003）未执行
+- 补测条件：账号到位（B-002）→ 写操作与私有域；视频/云盘/风格域生产者恢复 → 对应 blocked 解封

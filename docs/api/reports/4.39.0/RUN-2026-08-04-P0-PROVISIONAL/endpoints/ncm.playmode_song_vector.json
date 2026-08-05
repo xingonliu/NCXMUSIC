@@ -27,15 +27,133 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.playmode_song_vector.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "status": "error",
+        "code": 500,
+        "error": {
+          "class": "other",
+          "status": 500,
+          "code": 500,
+          "body": {
+            "success": false,
+            "code": 500,
+            "message": "",
+            "data": null,
+            "ignore": false,
+            "present": false,
+            "empty": false
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "94bf96abc854847f06da0b7d4568ef03ab308cbd8376c3b637f6d63147f2e2be",
+        "rawFile": "ncm.playmode_song_vector.ncm.playmode_song_vector.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.playmode_song_vector.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 500,
+        "error": {
+          "class": "other",
+          "status": 500,
+          "code": 500,
+          "body": {
+            "success": false,
+            "code": 500,
+            "message": "",
+            "data": null,
+            "ignore": false,
+            "present": false,
+            "empty": false
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "a8f460e0e443a0335c295f63379211d850d1a818ea23f097797499e449586b13",
+        "rawFile": "ncm.playmode_song_vector.ncm.playmode_song_vector.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.playmode_song_vector.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 500,
+        "error": {
+          "class": "other",
+          "status": 500,
+          "code": 500,
+          "body": {
+            "success": false,
+            "code": 500,
+            "message": "",
+            "data": null,
+            "ignore": false,
+            "present": false,
+            "empty": false
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "23f803e833cd0303ee586bd40027b4bd2d4f07946f980fc64422d138ee507931",
+        "rawFile": "ncm.playmode_song_vector.ncm.playmode_song_vector.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.playmode_song_vector.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 500,
+        "error": {
+          "class": "other",
+          "status": 500,
+          "code": 500,
+          "body": {
+            "success": false,
+            "code": 500,
+            "message": "",
+            "data": null,
+            "ignore": false,
+            "present": false,
+            "empty": false
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "e935be00bc6eeffa0a3f09a91d56c628898df210259f0329dafeec845583cd4e",
+        "rawFile": "ncm.playmode_song_vector.ncm.playmode_song_vector.none.002.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.playmode_song_vector.anon.001",
+      "sampleHash": "94bf96abc854847f06da0b7d4568ef03ab308cbd8376c3b637f6d63147f2e2be",
+      "rawFile": "ncm.playmode_song_vector.ncm.playmode_song_vector.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playmode_song_vector.inv.001",
+      "sampleHash": "a8f460e0e443a0335c295f63379211d850d1a818ea23f097797499e449586b13",
+      "rawFile": "ncm.playmode_song_vector.ncm.playmode_song_vector.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playmode_song_vector.none.001",
+      "sampleHash": "23f803e833cd0303ee586bd40027b4bd2d4f07946f980fc64422d138ee507931",
+      "rawFile": "ncm.playmode_song_vector.ncm.playmode_song_vector.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playmode_song_vector.none.002",
+      "sampleHash": "e935be00bc6eeffa0a3f09a91d56c628898df210259f0329dafeec845583cd4e",
+      "rawFile": "ncm.playmode_song_vector.ncm.playmode_song_vector.none.002.raw.json"
+    }
+  ]
 }

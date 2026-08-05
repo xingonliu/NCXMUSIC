@@ -36,15 +36,108 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.decrypt.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 1,
+        "error": null,
+        "sampleHash": "a44965981d44a93a4c831f6f28a2244a01b929cfbc2221a022bedffd5b95ccf1",
+        "rawFile": "ncm.decrypt.ncm.decrypt.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.decrypt.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "908204355b97f88bd44ef5bbac6e1386620fc876d1c1e97471696690938dcd5e",
+        "rawFile": "ncm.decrypt.ncm.decrypt.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.decrypt.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "aefb5f0f15594ec9e06a262a116d040564051d444a4cc9254b404b45df4c55ee",
+        "rawFile": "ncm.decrypt.ncm.decrypt.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.decrypt.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "697fae4c1219f54e744e8dc17da251cf863c582b4aa84f914aa36a21a959f65d",
+        "rawFile": "ncm.decrypt.ncm.decrypt.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.decrypt.anon.001",
+      "lastSeenCase": "ncm.decrypt.none.002",
+      "example": "400"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.decrypt.anon.001",
+      "lastSeenCase": "ncm.decrypt.none.002",
+      "example": "data is required"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.decrypt.anon.001",
+      "sampleHash": "a44965981d44a93a4c831f6f28a2244a01b929cfbc2221a022bedffd5b95ccf1",
+      "rawFile": "ncm.decrypt.ncm.decrypt.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.decrypt.inv.001",
+      "sampleHash": "908204355b97f88bd44ef5bbac6e1386620fc876d1c1e97471696690938dcd5e",
+      "rawFile": "ncm.decrypt.ncm.decrypt.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.decrypt.none.001",
+      "sampleHash": "aefb5f0f15594ec9e06a262a116d040564051d444a4cc9254b404b45df4c55ee",
+      "rawFile": "ncm.decrypt.ncm.decrypt.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.decrypt.none.002",
+      "sampleHash": "697fae4c1219f54e744e8dc17da251cf863c582b4aa84f914aa36a21a959f65d",
+      "rawFile": "ncm.decrypt.ncm.decrypt.none.002.raw.json"
+    }
+  ]
 }

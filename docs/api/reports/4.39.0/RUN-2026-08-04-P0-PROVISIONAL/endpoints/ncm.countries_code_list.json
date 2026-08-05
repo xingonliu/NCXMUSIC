@@ -23,15 +23,183 @@
   },
   "matrix": {
     "planned": 5,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.countries_code_list.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 102,
+        "error": null,
+        "sampleHash": "9310db64767633363204b16302c64369338d0518d30adf43105237f1e42881fd",
+        "rawFile": "ncm.countries_code_list.ncm.countries_code_list.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.countries_code_list.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 72,
+        "error": null,
+        "sampleHash": "0c5f9b3dcf27deaa60d0dfbe4b706e70390f0b5b134ac6d2d82550ee95ab09fe",
+        "rawFile": "ncm.countries_code_list.ncm.countries_code_list.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.countries_code_list.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 80,
+        "error": null,
+        "sampleHash": "9773a4c8b29774096c10fa7f1f4ee84bea8c707bfce1f57154dfdb99648319e7",
+        "rawFile": "ncm.countries_code_list.ncm.countries_code_list.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.countries_code_list.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 74,
+        "error": null,
+        "sampleHash": "c4b93b5a3f0bc3cdf2bf7493ab086533d3998d704520350b684aa5234f8c6eda",
+        "rawFile": "ncm.countries_code_list.ncm.countries_code_list.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.countries_code_list.anon.001",
+      "lastSeenCase": "ncm.countries_code_list.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data[].countryList[].code",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.countries_code_list.anon.001",
+      "lastSeenCase": "ncm.countries_code_list.none.002",
+      "example": "86"
+    },
+    {
+      "jsonPath": "data[].countryList[].en",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.countries_code_list.anon.001",
+      "lastSeenCase": "ncm.countries_code_list.none.002",
+      "example": "China"
+    },
+    {
+      "jsonPath": "data[].countryList[].locale",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.countries_code_list.anon.001",
+      "lastSeenCase": "ncm.countries_code_list.none.002",
+      "example": "CN"
+    },
+    {
+      "jsonPath": "data[].countryList[].zh",
+      "rawType": "string",
+      "presence": 36,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.countries_code_list.anon.001",
+      "lastSeenCase": "ncm.countries_code_list.none.002",
+      "example": "中国"
+    },
+    {
+      "jsonPath": "data[].label",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.countries_code_list.anon.001",
+      "lastSeenCase": "ncm.countries_code_list.none.002",
+      "example": "常用"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.countries_code_list.anon.001",
+      "lastSeenCase": "ncm.countries_code_list.none.002",
+      "example": "success"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.countries_code_list.anon.001",
+      "sampleHash": "9310db64767633363204b16302c64369338d0518d30adf43105237f1e42881fd",
+      "rawFile": "ncm.countries_code_list.ncm.countries_code_list.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.countries_code_list.inv.001",
+      "sampleHash": "0c5f9b3dcf27deaa60d0dfbe4b706e70390f0b5b134ac6d2d82550ee95ab09fe",
+      "rawFile": "ncm.countries_code_list.ncm.countries_code_list.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.countries_code_list.none.001",
+      "sampleHash": "9773a4c8b29774096c10fa7f1f4ee84bea8c707bfce1f57154dfdb99648319e7",
+      "rawFile": "ncm.countries_code_list.ncm.countries_code_list.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.countries_code_list.none.002",
+      "sampleHash": "c4b93b5a3f0bc3cdf2bf7493ab086533d3998d704520350b684aa5234f8c6eda",
+      "rawFile": "ncm.countries_code_list.ncm.countries_code_list.none.002.raw.json"
+    }
+  ]
 }

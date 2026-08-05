@@ -52,6 +52,6 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "blocked_by_prerequisite",
-  "blocker": "缺夹具：videoId/threadId/style 无生产者（search type=1002/1014 被 -462 阻断）",
+  "blocker": "缺夹具：styleId 无生产者（池为空）",
   "evidence": []
 }

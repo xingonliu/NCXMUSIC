@@ -40,15 +40,179 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.djRadio_top.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 302,
+        "durationMs": 105,
+        "error": null,
+        "sampleHash": "512f0bbb25c633b407cc34a1465240d779decbc48911e9e55e877e1cb101fa26",
+        "rawFile": "ncm.djRadio_top.ncm.djRadio_top.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.djRadio_top.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "1fdb283cfd7461698d9190df32bc8259edd5b79fe45a067013bcd9a0302773b3",
+        "rawFile": "ncm.djRadio_top.ncm.djRadio_top.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.djRadio_top.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "a65a494f48b9daf9037d4287f91d9cf52e325612f2e59db5307a0f9a7736a85a",
+        "rawFile": "ncm.djRadio_top.ncm.djRadio_top.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.djRadio_top.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "4d284f3cd218002794b7ae171cc7fe433f0240a113a66eeb1c22fac02c8b4bdb",
+        "rawFile": "ncm.djRadio_top.ncm.djRadio_top.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.djRadio_top.anon.001",
+      "lastSeenCase": "ncm.djRadio_top.anon.001",
+      "example": "302"
+    },
+    {
+      "jsonPath": "data",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.djRadio_top.anon.001",
+      "lastSeenCase": "ncm.djRadio_top.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "debugInfo",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.djRadio_top.anon.001",
+      "lastSeenCase": "ncm.djRadio_top.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "failData",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.djRadio_top.anon.001",
+      "lastSeenCase": "ncm.djRadio_top.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.djRadio_top.anon.001",
+      "lastSeenCase": "ncm.djRadio_top.anon.001",
+      "example": "系统错误"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.djRadio_top.anon.001",
+      "sampleHash": "512f0bbb25c633b407cc34a1465240d779decbc48911e9e55e877e1cb101fa26",
+      "rawFile": "ncm.djRadio_top.ncm.djRadio_top.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.djRadio_top.inv.001",
+      "sampleHash": "1fdb283cfd7461698d9190df32bc8259edd5b79fe45a067013bcd9a0302773b3",
+      "rawFile": "ncm.djRadio_top.ncm.djRadio_top.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.djRadio_top.none.001",
+      "sampleHash": "a65a494f48b9daf9037d4287f91d9cf52e325612f2e59db5307a0f9a7736a85a",
+      "rawFile": "ncm.djRadio_top.ncm.djRadio_top.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.djRadio_top.none.002",
+      "sampleHash": "4d284f3cd218002794b7ae171cc7fe433f0240a113a66eeb1c22fac02c8b4bdb",
+      "rawFile": "ncm.djRadio_top.ncm.djRadio_top.none.002.raw.json"
+    }
+  ]
 }

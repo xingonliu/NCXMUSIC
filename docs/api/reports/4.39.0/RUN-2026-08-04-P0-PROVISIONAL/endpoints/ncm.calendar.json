@@ -30,15 +30,192 @@
   },
   "matrix": {
     "planned": 5,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.calendar.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 108,
+        "error": null,
+        "sampleHash": "c643252b40e6e7cfa9e8ef5cc2671056c9d6fe2c00eca9a6835b247565602968",
+        "rawFile": "ncm.calendar.ncm.calendar.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.calendar.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "c2aa020097c82063893985bb7119ee07ec470b74af755db3b67d8ba71dd450be",
+        "rawFile": "ncm.calendar.ncm.calendar.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.calendar.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "322abc7824e401b6d1195c1b076abacb120a55c8d319925f8ffa70c843792334",
+        "rawFile": "ncm.calendar.ncm.calendar.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.calendar.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "4da8630423a9b7cefad8eab20956bd818806bd05d2f10c372f006baff270a247",
+        "rawFile": "ncm.calendar.ncm.calendar.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.calendar.anon.001",
+      "lastSeenCase": "ncm.calendar.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.abtest",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.calendar.anon.001",
+      "lastSeenCase": "ncm.calendar.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.calendarConfig.button.targetUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.calendar.anon.001",
+      "lastSeenCase": "ncm.calendar.anon.001",
+      "example": "orpheus://miniProgram?appId=5fe1d3b78581f79050924831&pageId="
+    },
+    {
+      "jsonPath": "data.calendarConfig.button.text",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.calendar.anon.001",
+      "lastSeenCase": "ncm.calendar.anon.001",
+      "example": "每日运势"
+    },
+    {
+      "jsonPath": "data.calendarEvents",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.calendar.anon.001",
+      "lastSeenCase": "ncm.calendar.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.calendar.anon.001",
+      "lastSeenCase": "ncm.calendar.anon.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.calendar.anon.001",
+      "sampleHash": "c643252b40e6e7cfa9e8ef5cc2671056c9d6fe2c00eca9a6835b247565602968",
+      "rawFile": "ncm.calendar.ncm.calendar.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.calendar.inv.001",
+      "sampleHash": "c2aa020097c82063893985bb7119ee07ec470b74af755db3b67d8ba71dd450be",
+      "rawFile": "ncm.calendar.ncm.calendar.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.calendar.none.001",
+      "sampleHash": "322abc7824e401b6d1195c1b076abacb120a55c8d319925f8ffa70c843792334",
+      "rawFile": "ncm.calendar.ncm.calendar.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.calendar.none.002",
+      "sampleHash": "4da8630423a9b7cefad8eab20956bd818806bd05d2f10c372f006baff270a247",
+      "rawFile": "ncm.calendar.ncm.calendar.none.002.raw.json"
+    }
+  ]
 }

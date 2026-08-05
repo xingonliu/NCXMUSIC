@@ -23,15 +23,403 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.pl_count.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 79,
+        "error": null,
+        "sampleHash": "3da688bdf3eb1ce9929159c5d90d3f7e10ec685336291a8fc4cee123e32acace",
+        "rawFile": "ncm.pl_count.ncm.pl_count.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.pl_count.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": null,
+        "durationMs": 59,
+        "error": null,
+        "sampleHash": "9e56a25ca4f255e1f306b172416d4c8463f6421dedd0a9a9b8b8c8713a2e19cd",
+        "rawFile": "ncm.pl_count.ncm.pl_count.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.pl_count.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": null,
+        "durationMs": 64,
+        "error": null,
+        "sampleHash": "48fc9e9fa310fc01b9145bbe0efbc3a0fa66be535ed040a2e2d5e820e9a2b34e",
+        "rawFile": "ncm.pl_count.ncm.pl_count.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.pl_count.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": null,
+        "durationMs": 62,
+        "error": null,
+        "sampleHash": "8d9eba17d43e65ce0f6b55cbe1a334c8eb253995404581c7cdaa6400c816e54b",
+        "rawFile": "ncm.pl_count.ncm.pl_count.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "battle.endTime",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "battle.nonStartIcon",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "battle.showQuizIcon",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "battle.startIcon",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "battle.startTime",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "comment",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "createDJRadioCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "event",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "follow",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "forward",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "friend.celebrityCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "friend.count",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "friend.snsCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "invitationVersion",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "lastPrivateMsg",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "newProgramCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "newTheme",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "notice",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "pushMsg",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "sceneComments.musician_comments",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "sceneComments.social_comments",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "totalComment",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "ydAntiUrlConfigVersion",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.pl_count.anon.001",
+      "lastSeenCase": "ncm.pl_count.anon.001",
+      "example": "1"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.pl_count.anon.001",
+      "sampleHash": "3da688bdf3eb1ce9929159c5d90d3f7e10ec685336291a8fc4cee123e32acace",
+      "rawFile": "ncm.pl_count.ncm.pl_count.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.pl_count.inv.001",
+      "sampleHash": "9e56a25ca4f255e1f306b172416d4c8463f6421dedd0a9a9b8b8c8713a2e19cd",
+      "rawFile": "ncm.pl_count.ncm.pl_count.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.pl_count.none.001",
+      "sampleHash": "48fc9e9fa310fc01b9145bbe0efbc3a0fa66be535ed040a2e2d5e820e9a2b34e",
+      "rawFile": "ncm.pl_count.ncm.pl_count.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.pl_count.none.002",
+      "sampleHash": "8d9eba17d43e65ce0f6b55cbe1a334c8eb253995404581c7cdaa6400c816e54b",
+      "rawFile": "ncm.pl_count.ncm.pl_count.none.002.raw.json"
+    }
+  ]
 }

@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.ad_get.inv.001",
+    "apiAuditId": "ncm.ad_get",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:19.877Z",
+    "endedAt": "2026-08-05T03:21:19.984Z",
+    "durationMs": 107,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "ads": {},
+    "message": "请稍后再试 (20002)",
+    "extra": {
+      "reqId": ""
+    }
+  },
+  "error": null
+}

@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "caseId": "ncm.radio_sport_get.none.001",
+    "apiAuditId": "ncm.radio_sport_get",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:24:43.726Z",
+    "endedAt": "2026-08-05T03:24:43.817Z",
+    "durationMs": 91,
+    "attempts": 1
+  },
+  "body": {
+    "data": [
+      {
+        "name": "拼接乌托邦",
+        "id": 3379996850,
+        "pst": 0,
+        "t": 0,
+        "ar": [
+          {
+            "id": 12304040,
+            "name": "Ciyo",
+            "tns": [],
+            "alias": []
+          },
+          {
+            "id": 122322084,
+            "name": "见过夏天P",
+            "tns": [],
+            "alias": []
+          },
+          {
+            "id": 96237339,
+            "name": "乌托邦P",
+            "tns": [],
+            "alias": []
+          }
+        ],
+        "alia": [
+          "反乌托邦拼接版"
+        ],
+        "pop": 100,
+        "st": 0,
+        "rt": "",
+        "fee": 8,
+        "v": 43,
+        "crbt": null,
+        "cf": "",
+        "al": {
+          "id": 375379540,
+          "name": "反乌托邦·拼接版",
+          "picUrl": "http://p4.music.126.net/1ZerYYDkvYpaBz4HeRUqRw==/109951173194079293.jpg#hash=7d3d884b087c",
+          "tns": [],
+          "pic_str": "109951173194079293",
+          "pic": 109951173194079300
+        },
+        "dt": 114928,
+        "h": {
+          "br": 320000,
+          "fid": 0,
+          "size": 4599405,
+          "vd": -69467
+        },
+        "m": {
+          "br": 192000,
+          "fid": 0,
+          "size": 2759661,
+          "vd": -66867
+        },
+        "l": {
+          "br": 128000,
+          "fid": 0,
+          "size": 1839789,
+          "vd": -65181
+        },
+        "a": null,
+        "cd": "01",
+        "no": 1,
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "djId": 0,
+        "copyright": 0,
+        "s_id": 0,
+        "rtype": 0,
+        "rurl": null,
+        "mst": 9,
+        "cp": 0,
+        "mv": 0,
+        "publishTime": 0,
+        "tns": [
+          "只因为你那渴望自由的心脏"
+        ],
+        "privilege": {
+          "id": 3379996850,
+          "fee": 8,
+          "payed": 0,
+          "realPayed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 0,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "pc": null,
+          "toast": false,
+          "flag": 1544196,
+          "paidBigBang": false,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "jymaster",
+          "playMaxBrLevel": "jymaster",
+          "downloadMaxBrLevel": "jymaster",
+          "plLevel": "exhigh",
+          "dlLevel": "none",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            },
+            {
+              "rate": 1999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        },
+        "alg": "itembased",
+        "bpm": "110"
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

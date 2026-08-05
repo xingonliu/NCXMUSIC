@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_toplist_newcomer.page.none.001",
+    "apiAuditId": "ncm.dj_toplist_newcomer",
+    "auth": "AUTH_NONE",
+    "params": {
+      "limit": 5,
+      "offset": 10
+    },
+    "startedAt": "2026-08-05T03:23:30.890Z",
+    "endedAt": "2026-08-05T03:23:30.999Z",
+    "durationMs": 109,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "msg": null,
+    "data": {
+      "total": 5,
+      "updateTime": 1785900210969,
+      "list": [
+        {
+          "id": 1699590802,
+          "rank": 1,
+          "lastRank": 1,
+          "score": 842876,
+          "nickName": "topminmin",
+          "avatarUrl": "https://p4.music.126.net/HBexZwOYlT1FmSRfl4T7_w==/109951173570209589.jpg#hash=f74bffdc5982",
+          "userType": 0,
+          "userFollowedCount": 5,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": null,
+          "roomNo": 0
+        },
+        {
+          "id": 438960490,
+          "rank": 2,
+          "lastRank": 2,
+          "score": 174133,
+          "nickName": "Zoya_zy",
+          "avatarUrl": "https://p3.music.126.net/iRRSA-xgNoEPtLww-Uywhg==/109951173641560415.jpg#hash=b27952f91d1b",
+          "userType": 101,
+          "userFollowedCount": 7,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": {
+            "userType": 101,
+            "identityLevel": 1,
+            "identityIconUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/59679338493/06e3/631a/4c59/7e34d8deb3c3401f32d1f9579a8f1e0a.png#hash=51ea124a6fb4"
+          },
+          "roomNo": 0
+        },
+        {
+          "id": 17740683174,
+          "rank": 3,
+          "lastRank": 40,
+          "score": 94772,
+          "nickName": "张诗婷的树洞",
+          "avatarUrl": "https://p4.music.126.net/K4uyMQAXU_pmK3zgt_zPzw==/109951173597708409.jpg#hash=b1d77963a23e",
+          "userType": 0,
+          "userFollowedCount": 171,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": null,
+          "roomNo": 0
+        },
+        {
+          "id": 17786025631,
+          "rank": 4,
+          "lastRank": -1,
+          "score": 77219,
+          "nickName": "体育馆纯情绿豆饼",
+          "avatarUrl": "https://p3.music.126.net/SUeqMM8HOIpHv9Nhl9qt9w==/109951165647004069.jpg#hash=ee6a8e0162a6",
+          "userType": 0,
+          "userFollowedCount": 0,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": null,
+          "roomNo": 0
+        },
+        {
+          "id": 1471077902,
+          "rank": 5,
+          "lastRank": 8,
+          "score": 75302,
+          "nickName": "lifeisshit_",
+          "avatarUrl": "https://p4.music.126.net/zeZy7hLPT_bLJLD7TkHZPw==/109951173634355575.jpg#hash=742d68f62555",
+          "userType": 0,
+          "userFollowedCount": 13,
+          "mainAuthDesc": "",
+          "liveStatus": -1,
+          "liveType": 0,
+          "liveId": 0,
+          "avatarDetail": null,
+          "roomNo": 0
+        }
+      ]
+    }
+  },
+  "error": null
+}

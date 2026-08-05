@@ -27,15 +27,794 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.dj_recommend.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 83,
+        "error": null,
+        "sampleHash": "da68f8a8deae17eb6b1390e890b30142911f1ac7e54b36734f3bfe045f75a41d",
+        "rawFile": "ncm.dj_recommend.ncm.dj_recommend.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_recommend.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 117,
+        "error": null,
+        "sampleHash": "a5dfc5fdc902731224908a2c0081cf2dadc895161357c8250efa777b2e00949a",
+        "rawFile": "ncm.dj_recommend.ncm.dj_recommend.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_recommend.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 72,
+        "error": null,
+        "sampleHash": "a3caee2dec01a3be96a7db23fc417313f28e183e014ebc78f1ce9cab5873d0cc",
+        "rawFile": "ncm.dj_recommend.ncm.dj_recommend.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_recommend.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 75,
+        "error": null,
+        "sampleHash": "8c40ff12a161351acf6c6e3df5c269aff8d56f07fd885ffaf6badf66fa306d41",
+        "rawFile": "ncm.dj_recommend.ncm.dj_recommend.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "djRadios[].buyed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "djRadios[].category",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "情感"
+    },
+    {
+      "jsonPath": "djRadios[].categoryId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "3"
+    },
+    {
+      "jsonPath": "djRadios[].copywriter",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "李静的播客"
+    },
+    {
+      "jsonPath": "djRadios[].createTime",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "1756895475866"
+    },
+    {
+      "jsonPath": "djRadios[].dj.accountStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "djRadios[].dj.anchor",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "djRadios[].dj.authenticationTypes",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "20482"
+    },
+    {
+      "jsonPath": "djRadios[].dj.authority",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "djRadios[].dj.authStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "1"
+    },
+    {
+      "jsonPath": "djRadios[].dj.avatarDetail",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "djRadios[].dj.avatarImgId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "109951171968522370"
+    },
+    {
+      "jsonPath": "djRadios[].dj.avatarImgId_str",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "109951171968522367"
+    },
+    {
+      "jsonPath": "djRadios[].dj.avatarImgIdStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "109951171968522367"
+    },
+    {
+      "jsonPath": "djRadios[].dj.avatarUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "http://p1.music.126.net/Vi2rmfpV4daxUEMZppwFWQ==/10995117196"
+    },
+    {
+      "jsonPath": "djRadios[].dj.backgroundImgId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "109951162868126480"
+    },
+    {
+      "jsonPath": "djRadios[].dj.backgroundImgIdStr",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "109951162868126486"
+    },
+    {
+      "jsonPath": "djRadios[].dj.backgroundUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "http://p1.music.126.net/_f8R60U9mZ42sSNvdPn2sQ==/10995116286"
+    },
+    {
+      "jsonPath": "djRadios[].dj.birthday",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "-2209017600000"
+    },
+    {
+      "jsonPath": "djRadios[].dj.city",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "110101"
+    },
+    {
+      "jsonPath": "djRadios[].dj.defaultAvatar",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "djRadios[].dj.description",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "主持人 东方风行传媒创始人"
+    },
+    {
+      "jsonPath": "djRadios[].dj.detailDescription",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "主持人 东方风行传媒创始人"
+    },
+    {
+      "jsonPath": "djRadios[].dj.djStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "10"
+    },
+    {
+      "jsonPath": "djRadios[].dj.experts",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "djRadios[].dj.expertTags",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "djRadios[].dj.followed",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "djRadios[].dj.gender",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "djRadios[].dj.mutual",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "djRadios[].dj.nickname",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "李静-LIJING"
+    },
+    {
+      "jsonPath": "djRadios[].dj.province",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "110000"
+    },
+    {
+      "jsonPath": "djRadios[].dj.remarkName",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "djRadios[].dj.signature",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "djRadios[].dj.userId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "13994083929"
+    },
+    {
+      "jsonPath": "djRadios[].dj.userType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "2"
+    },
+    {
+      "jsonPath": "djRadios[].dj.vipType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "djRadios[].feeScope",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "djRadios[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "1230174483"
+    },
+    {
+      "jsonPath": "djRadios[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "你，静不下来"
+    },
+    {
+      "jsonPath": "djRadios[].picUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "https://p3.music.126.net/5ksbx7AU5M_2XyseTKCGmg==/1099511719"
+    },
+    {
+      "jsonPath": "djRadios[].playCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "1458133"
+    },
+    {
+      "jsonPath": "djRadios[].programCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "68"
+    },
+    {
+      "jsonPath": "djRadios[].radioFeeType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "djRadios[].rcmdtext",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "李静的播客"
+    },
+    {
+      "jsonPath": "djRadios[].subCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "10239"
+    },
+    {
+      "jsonPath": "djRadios[].subed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "name",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_recommend.anon.001",
+      "lastSeenCase": "ncm.dj_recommend.none.002",
+      "example": "精选电台 - 谈情说爱"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.dj_recommend.anon.001",
+      "sampleHash": "da68f8a8deae17eb6b1390e890b30142911f1ac7e54b36734f3bfe045f75a41d",
+      "rawFile": "ncm.dj_recommend.ncm.dj_recommend.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_recommend.inv.001",
+      "sampleHash": "a5dfc5fdc902731224908a2c0081cf2dadc895161357c8250efa777b2e00949a",
+      "rawFile": "ncm.dj_recommend.ncm.dj_recommend.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_recommend.none.001",
+      "sampleHash": "a3caee2dec01a3be96a7db23fc417313f28e183e014ebc78f1ce9cab5873d0cc",
+      "rawFile": "ncm.dj_recommend.ncm.dj_recommend.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_recommend.none.002",
+      "sampleHash": "8c40ff12a161351acf6c6e3df5c269aff8d56f07fd885ffaf6badf66fa306d41",
+      "rawFile": "ncm.dj_recommend.ncm.dj_recommend.none.002.raw.json"
+    }
+  ]
 }

@@ -27,15 +27,123 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.nickname_check.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 62,
+        "error": null,
+        "sampleHash": "c18e58f9359c53e81d6c5a09592c795d14f7cb8375ba142bb989457fd89c5a16",
+        "rawFile": "ncm.nickname_check.ncm.nickname_check.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.nickname_check.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 58,
+        "error": null,
+        "sampleHash": "b8edff3c8bd4961980dbd6e2eee1940ae2ffa6598940682c38602a77eebebc79",
+        "rawFile": "ncm.nickname_check.ncm.nickname_check.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.nickname_check.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 84,
+        "error": null,
+        "sampleHash": "4cd41e466b4f95fb877d7199316424ea64f4017d2c8ceac9d5f9dfa2e4c3eaba",
+        "rawFile": "ncm.nickname_check.ncm.nickname_check.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.nickname_check.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 400,
+        "durationMs": 58,
+        "error": null,
+        "sampleHash": "7ac99d1a6f63c44ceab3648baf0169a703966fdefde4f8309a892dc3b5832492",
+        "rawFile": "ncm.nickname_check.ncm.nickname_check.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.nickname_check.anon.001",
+      "lastSeenCase": "ncm.nickname_check.none.002",
+      "example": "400"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.nickname_check.anon.001",
+      "lastSeenCase": "ncm.nickname_check.none.002",
+      "example": "参数错误"
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.nickname_check.anon.001",
+      "lastSeenCase": "ncm.nickname_check.none.002",
+      "example": "参数错误"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.nickname_check.anon.001",
+      "sampleHash": "c18e58f9359c53e81d6c5a09592c795d14f7cb8375ba142bb989457fd89c5a16",
+      "rawFile": "ncm.nickname_check.ncm.nickname_check.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.nickname_check.inv.001",
+      "sampleHash": "b8edff3c8bd4961980dbd6e2eee1940ae2ffa6598940682c38602a77eebebc79",
+      "rawFile": "ncm.nickname_check.ncm.nickname_check.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.nickname_check.none.001",
+      "sampleHash": "4cd41e466b4f95fb877d7199316424ea64f4017d2c8ceac9d5f9dfa2e4c3eaba",
+      "rawFile": "ncm.nickname_check.ncm.nickname_check.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.nickname_check.none.002",
+      "sampleHash": "7ac99d1a6f63c44ceab3648baf0169a703966fdefde4f8309a892dc3b5832492",
+      "rawFile": "ncm.nickname_check.ncm.nickname_check.none.002.raw.json"
+    }
+  ]
 }

@@ -23,15 +23,374 @@
   },
   "matrix": {
     "planned": 5,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.threshold_detail_get.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 119,
+        "error": null,
+        "sampleHash": "8394758f0f66f743171a40769e58f43bdf901560d3e46829bca4a2a52ed47bbd",
+        "rawFile": "ncm.threshold_detail_get.ncm.threshold_detail_get.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.threshold_detail_get.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "0df0b31613e3b0c48780390765e572f373cb11b6f2b2b91dc3cfd5dca68f8fb0",
+        "rawFile": "ncm.threshold_detail_get.ncm.threshold_detail_get.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.threshold_detail_get.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "413793c2b58f4a99e3278ce65bee0a60ff406c31c34679a3e322506ae29ae656",
+        "rawFile": "ncm.threshold_detail_get.ncm.threshold_detail_get.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.threshold_detail_get.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "11c81587424db31b3e12adca84c0685c4bcdd6d30c963e7dc56c97da9eb69a50",
+        "rawFile": "ncm.threshold_detail_get.ncm.threshold_detail_get.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data[].items[].curCount",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].items[].extInfo",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].items[].extInfo.countOneTag",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "5"
+    },
+    {
+      "jsonPath": "data[].items[].extInfo.curInfluence",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].items[].extInfo.minInfluence",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "100"
+    },
+    {
+      "jsonPath": "data[].items[].extInfo.plistBookThreshold[][]",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "包含的标签"
+    },
+    {
+      "jsonPath": "data[].items[].extInfo.topSubCountTag",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data[].items[].extInfo.total",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "10"
+    },
+    {
+      "jsonPath": "data[].items[].extInfo.validCnt",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].items[].itemId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data[].items[].itemKey",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "视频笔记影响力达到100"
+    },
+    {
+      "jsonPath": "data[].items[].itemValue",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data[].items[].status",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].items[].totalCount",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "100"
+    },
+    {
+      "jsonPath": "data[].level",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data[].status",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "17788444306"
+    },
+    {
+      "jsonPath": "data[].userType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.threshold_detail_get.anon.001",
+      "lastSeenCase": "ncm.threshold_detail_get.anon.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.threshold_detail_get.anon.001",
+      "sampleHash": "8394758f0f66f743171a40769e58f43bdf901560d3e46829bca4a2a52ed47bbd",
+      "rawFile": "ncm.threshold_detail_get.ncm.threshold_detail_get.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.threshold_detail_get.inv.001",
+      "sampleHash": "0df0b31613e3b0c48780390765e572f373cb11b6f2b2b91dc3cfd5dca68f8fb0",
+      "rawFile": "ncm.threshold_detail_get.ncm.threshold_detail_get.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.threshold_detail_get.none.001",
+      "sampleHash": "413793c2b58f4a99e3278ce65bee0a60ff406c31c34679a3e322506ae29ae656",
+      "rawFile": "ncm.threshold_detail_get.ncm.threshold_detail_get.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.threshold_detail_get.none.002",
+      "sampleHash": "11c81587424db31b3e12adca84c0685c4bcdd6d30c963e7dc56c97da9eb69a50",
+      "rawFile": "ncm.threshold_detail_get.ncm.threshold_detail_get.none.002.raw.json"
+    }
+  ]
 }

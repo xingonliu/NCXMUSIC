@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.cloud.inv.001",
+    "apiAuditId": "ncm.cloud",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:53.338Z",
+    "endedAt": "2026-08-05T03:21:53.338Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "Cannot read properties of undefined (reading 'name')",
+    "status": null,
+    "body": null,
+    "cookieCount": null
+  }
+}

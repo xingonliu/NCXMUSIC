@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_toplist_pay.page.none.001",
+    "apiAuditId": "ncm.dj_toplist_pay",
+    "auth": "AUTH_NONE",
+    "params": {
+      "limit": 5,
+      "offset": 10
+    },
+    "startedAt": "2026-08-05T03:23:33.386Z",
+    "endedAt": "2026-08-05T03:23:33.451Z",
+    "durationMs": 65,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "msg": null,
+    "data": {
+      "total": 5,
+      "updateTime": 1785900213419,
+      "list": [
+        {
+          "id": 1490425014,
+          "rank": 1,
+          "lastRank": 1,
+          "score": 24983977,
+          "name": "猫平安逆袭传奇",
+          "picUrl": "https://p3.music.126.net/1MWpSltvOmn2JhLtHCzVng==/109951173692301307.jpg#hash=656f82e25351",
+          "creatorName": "小盟盟听书"
+        },
+        {
+          "id": 1495267030,
+          "rank": 2,
+          "lastRank": 2,
+          "score": 16927414,
+          "name": "神探奶龙",
+          "picUrl": "https://p3.music.126.net/J8pi34z7XgyWYGSAba7aIw==/109951173553823739.jpg#hash=0dccdd194c18",
+          "creatorName": "奶龙-官方账号"
+        },
+        {
+          "id": 988499285,
+          "rank": 3,
+          "lastRank": 3,
+          "score": 12483528,
+          "name": "猫小九历险记 | 大型奇幻冒险剧",
+          "picUrl": "https://p3.music.126.net/ZhlCMYZhQ5m8vlIzq00lgw==/109951168571659676.jpg#hash=9d13157e9207",
+          "creatorName": "奇喵君故事"
+        },
+        {
+          "id": 997227319,
+          "rank": 4,
+          "lastRank": 4,
+          "score": 8990295,
+          "name": "神奇背包 | 我的世界益智故事·北少侠",
+          "picUrl": "https://p3.music.126.net/IdOthTOEb1n0qTX_l28WQA==/109951169102800415.jpg#hash=def92727a676",
+          "creatorName": "六云文化"
+        },
+        {
+          "id": 1217168509,
+          "rank": 5,
+          "lastRank": 5,
+          "score": 8345920,
+          "name": "米小圈上学记一二三年级",
+          "picUrl": "https://p4.music.126.net/aOWe7VDXVQ-n6lS3__f0TQ==/109951171012328019.jpg#hash=3ca014218d1c",
+          "creatorName": "米小圈频道"
+        }
+      ]
+    }
+  },
+  "error": null
+}

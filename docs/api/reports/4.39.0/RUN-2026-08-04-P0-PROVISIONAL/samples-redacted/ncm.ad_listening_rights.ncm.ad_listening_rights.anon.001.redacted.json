@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "caseId": "ncm.ad_listening_rights.anon.001",
+    "apiAuditId": "ncm.ad_listening_rights",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:21.772Z",
+    "endedAt": "2026-08-05T03:21:21.896Z",
+    "durationMs": 124,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "message": null,
+    "data": {
+      "title": "看视频 免费听VIP歌曲",
+      "rightsRemainingTime": 0,
+      "actionTitle": "领30分钟",
+      "actionUrl": "orpheus://nm/motivationAd/show?adPosition=400002&source=130&resourceId=0&showRightsEndDialog=true&isNeedGetRights=false&isShowEndToast=true&isNeedResume=true&ext={\"preExtraInfo\":\"{\\\"commonExt\\\":\\\"{\\\\\\\"entranceType\\\\\\\":\\\\\\\"FREE_LISTEN_RN\\\\\\\"}\\\"}\"}",
+      "status": "INIT",
+      "rightsCoverToday": false,
+      "rightsEndTime": 0,
+      "rightsUpperLimit": false,
+      "ruleTitle": "免费听歌活动规则",
+      "ruleUrl": "https://y.music.163.com/g/yida/adfeaa5979f940d2bf37539e04224b9d#hash=e0d044755f7a",
+      "cardType": 2,
+      "yunbeiEntry": null,
+      "vipInfoContent": null,
+      "assetCardStyle": "t1",
+      "yunbeiEntryV2": {
+        "yunbeiAmount": 0,
+        "withdrawAmount": 0,
+        "showValueLabel": false,
+        "withdrawUrl": "https://st.music.163.com/g/ad-music/withdrawal/index.html#hash=946abac16e4e",
+        "productStatus": 3,
+        "exchangePrice": 6000,
+        "productName": "【每日可领】黑胶VIP天卡",
+        "productImgUrl": "http://p1.music.126.net/Wssw1avnLUKJobKiI1rVXg==/109951173671181679.jpg#hash=af0f5d598c39",
+        "skuId": 866400807,
+        "productType": 2,
+        "entranceType": "FREE_LISTEN_VIP_EXCHANGE",
+        "adInfo": {
+          "limit": false,
+          "baseSource": 538,
+          "bonusSource": 539,
+          "amount": 268,
+          "actionUrl": "orpheus://nm/motivationAd/show?adPosition=400002&source=538&resourceId=0&showRightsEndDialog=false&isNeedGetRights=false&isShowEndToast=false&isNeedResume=false&ext={\"preExtraInfo\":\"{\\\"algExt\\\":\\\"{\\\\\\\"preECPM\\\\\\\":6077}\\\",\\\"behaviorSeqNo\\\":\\\"ad:mall:behavior:0e80d544554749eebca0e3cb2e80e7b6:LAi\\\",\\\"preRights\\\":{\\\"genTime\\\":1785900081858,\\\"resource\\\":{\\\"time\\\":0,\\\"worth\\\":268},\\\"rightType\\\":6,\\\"source\\\":538}}\"}",
+          "behaviorSeqNo": "ad:mall:behavior:0e80d544554749eebca0e3cb2e80e7b6:LAi"
+        },
+        "yunbeiCenterUrl": "orpheus://rnpage?component=rn-cloudshell-center",
+        "esource": "free_listen_vip_exchange"
+      },
+      "vipInfoContentV2": null,
+      "cardContent": {
+        "cardTopLeftTitle": "看视频 续时长",
+        "cardTopRightDesc": "浏览小视频，获取免费听时长",
+        "unit": "分钟",
+        "amount": 30,
+        "actionTitle": "点击领取30分钟免费听",
+        "actionUrl": "orpheus://nm/motivationAd/show?adPosition=400002&resourceId=0&isNeedGetRights=false&isShowEndToast=true&showRightsEndDialog=true&source=130"
+      }
+    }
+  },
+  "error": null
+}

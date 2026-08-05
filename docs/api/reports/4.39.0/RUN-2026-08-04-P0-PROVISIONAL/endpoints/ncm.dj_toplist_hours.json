@@ -33,15 +33,378 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.dj_toplist_hours.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 56,
+        "error": null,
+        "sampleHash": "9c0f462986a16447538d67d7f9a5a34519b29f568fa286105262df320a8cf9d2",
+        "rawFile": "ncm.dj_toplist_hours.ncm.dj_toplist_hours.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_toplist_hours.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 51,
+        "error": null,
+        "sampleHash": "315f78d0933c63e70cd292c1cb7bcd4fe87e07424daf733c93785727351336f8",
+        "rawFile": "ncm.dj_toplist_hours.ncm.dj_toplist_hours.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_toplist_hours.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 474,
+        "error": null,
+        "sampleHash": "cf521fc1b9f65e4a77eab21ae67493bdd58201171baee064e25c482e2a7a28e7",
+        "rawFile": "ncm.dj_toplist_hours.ncm.dj_toplist_hours.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_toplist_hours.page.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 162,
+        "error": null,
+        "sampleHash": "f028d7755a68bd44e7ee2b9fd7eff195b6549988b565f34fb6cc71ccdd682c45",
+        "rawFile": "ncm.dj_toplist_hours.ncm.dj_toplist_hours.page.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.list[].avatarDetail.identityIconUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/5967933849"
+    },
+    {
+      "jsonPath": "data.list[].avatarDetail.identityLevel",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.list[].avatarDetail.userType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "101"
+    },
+    {
+      "jsonPath": "data.list[].avatarUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "https://p4.music.126.net/hQmYHt9yCfh5hHctuuQbqQ==/1099511714"
+    },
+    {
+      "jsonPath": "data.list[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "5144656665"
+    },
+    {
+      "jsonPath": "data.list[].lastRank",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "data.list[].liveId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.list[].liveStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "-1"
+    },
+    {
+      "jsonPath": "data.list[].liveType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.list[].mainAuthDesc",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.list[].nickName",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "路灯下的癞皮狗"
+    },
+    {
+      "jsonPath": "data.list[].rank",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.list[].roomNo",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.list[].score",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "984431"
+    },
+    {
+      "jsonPath": "data.list[].userFollowedCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "561"
+    },
+    {
+      "jsonPath": "data.list[].userType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "101"
+    },
+    {
+      "jsonPath": "data.total",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "100"
+    },
+    {
+      "jsonPath": "data.updateTime",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": "1785900206564"
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_hours.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_hours.page.none.001",
+      "example": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.dj_toplist_hours.anon.001",
+      "sampleHash": "9c0f462986a16447538d67d7f9a5a34519b29f568fa286105262df320a8cf9d2",
+      "rawFile": "ncm.dj_toplist_hours.ncm.dj_toplist_hours.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_toplist_hours.inv.001",
+      "sampleHash": "315f78d0933c63e70cd292c1cb7bcd4fe87e07424daf733c93785727351336f8",
+      "rawFile": "ncm.dj_toplist_hours.ncm.dj_toplist_hours.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_toplist_hours.none.001",
+      "sampleHash": "cf521fc1b9f65e4a77eab21ae67493bdd58201171baee064e25c482e2a7a28e7",
+      "rawFile": "ncm.dj_toplist_hours.ncm.dj_toplist_hours.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_toplist_hours.page.none.001",
+      "sampleHash": "f028d7755a68bd44e7ee2b9fd7eff195b6549988b565f34fb6cc71ccdd682c45",
+      "rawFile": "ncm.dj_toplist_hours.ncm.dj_toplist_hours.page.none.001.raw.json"
+    }
+  ]
 }

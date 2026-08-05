@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.dj_recommend_type.anon.001",
+    "apiAuditId": "ncm.dj_recommend_type",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:16.856Z",
+    "endedAt": "2026-08-05T03:23:16.919Z",
+    "durationMs": 63,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "msg": "参数错误",
+    "data": null
+  },
+  "error": null
+}

@@ -1,0 +1,260 @@
+{
+  "meta": {
+    "caseId": "ncm.personal_fm_mode.page.none.001",
+    "apiAuditId": "ncm.personal_fm_mode",
+    "auth": "AUTH_NONE",
+    "params": {
+      "limit": 5,
+      "offset": 10
+    },
+    "startedAt": "2026-08-05T03:24:29.787Z",
+    "endedAt": "2026-08-05T03:24:29.892Z",
+    "durationMs": 105,
+    "attempts": 1
+  },
+  "body": {
+    "popAdjust": false,
+    "data": [
+      {
+        "name": "锈 (Live版)",
+        "id": 3414335451,
+        "position": 0,
+        "alias": [],
+        "status": 0,
+        "fee": 8,
+        "copyrightId": 7392435,
+        "disc": "01",
+        "no": 4,
+        "artists": [
+          {
+            "name": "黄霄雲",
+            "id": 14077324,
+            "picId": 0,
+            "img1v1Id": 0,
+            "briefDesc": "",
+            "picUrl": "",
+            "img1v1Url": "http://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=94e96ec4beba",
+            "albumSize": 0,
+            "alias": [],
+            "trans": "",
+            "musicSize": 0
+          },
+          {
+            "name": "张子墨z!mooo",
+            "id": 35066933,
+            "picId": 0,
+            "img1v1Id": 0,
+            "briefDesc": "",
+            "picUrl": "",
+            "img1v1Url": "http://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=94e96ec4beba",
+            "albumSize": 0,
+            "alias": [],
+            "trans": "",
+            "musicSize": 0
+          }
+        ],
+        "album": {
+          "name": "天赐的声音第七季 第8期",
+          "id": 390051596,
+          "type": "专辑",
+          "size": 14,
+          "picId": 109951173670153100,
+          "blurPicUrl": "http://p3.music.126.net/vWxt6LLiss7aFgjoyscfJw==/109951173670153106.jpg#hash=02892793e19e",
+          "companyId": 0,
+          "pic": 109951173670153100,
+          "picUrl": "http://p3.music.126.net/vWxt6LLiss7aFgjoyscfJw==/109951173670153106.jpg#hash=02892793e19e",
+          "publishTime": 1785427200000,
+          "description": "",
+          "tags": "",
+          "company": "浙江卫视",
+          "briefDesc": "",
+          "artist": {
+            "name": "",
+            "id": 0,
+            "picId": 0,
+            "img1v1Id": 0,
+            "briefDesc": "",
+            "picUrl": "",
+            "img1v1Url": "http://p4.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=94e96ec4beba",
+            "albumSize": 0,
+            "alias": [],
+            "trans": "",
+            "musicSize": 0
+          },
+          "songs": [],
+          "alias": [],
+          "status": 1,
+          "copyrightId": 7392435,
+          "commentThreadId": "R_AL_3_390051596",
+          "artists": [
+            {
+              "name": "天赐的声音",
+              "id": 34485896,
+              "picId": 0,
+              "img1v1Id": 0,
+              "briefDesc": "",
+              "picUrl": "",
+              "img1v1Url": "http://p3.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg#hash=7ebd2f7cc57d",
+              "albumSize": 0,
+              "alias": [],
+              "trans": "",
+              "musicSize": 0
+            }
+          ],
+          "subType": "现场版",
+          "transName": null,
+          "picId_str": "109951173670153106"
+        },
+        "starred": false,
+        "popularity": 100,
+        "score": 100,
+        "starredNum": 0,
+        "duration": 229714,
+        "playedNum": 0,
+        "dayPlays": 0,
+        "hearTime": 0,
+        "ringtone": "",
+        "crbt": null,
+        "audition": null,
+        "copyFrom": "",
+        "commentThreadId": "R_SO_4_3414335451",
+        "rtUrl": null,
+        "ftype": 0,
+        "rtUrls": [],
+        "copyright": 0,
+        "transName": null,
+        "sign": null,
+        "mvid": 0,
+        "hMusic": {
+          "name": null,
+          "id": 16993458928,
+          "size": 9191085,
+          "extension": "mp3",
+          "sr": 48000,
+          "dfsId": 0,
+          "bitrate": 320000,
+          "playTime": 229714,
+          "volumeDelta": -63470
+        },
+        "mMusic": {
+          "name": null,
+          "id": 16993458931,
+          "size": 5514669,
+          "extension": "mp3",
+          "sr": 48000,
+          "dfsId": 0,
+          "bitrate": 192000,
+          "playTime": 229714,
+          "volumeDelta": -60929
+        },
+        "lMusic": {
+          "name": null,
+          "id": 16993458935,
+          "size": 3676461,
+          "extension": "mp3",
+          "sr": 48000,
+          "dfsId": 0,
+          "bitrate": 128000,
+          "playTime": 229714,
+          "volumeDelta": -59455
+        },
+        "bMusic": {
+          "name": null,
+          "id": 16993458935,
+          "size": 3676461,
+          "extension": "mp3",
+          "sr": 48000,
+          "dfsId": 0,
+          "bitrate": 128000,
+          "playTime": 229714,
+          "volumeDelta": -59455
+        },
+        "mp3Url": null,
+        "rtype": 0,
+        "rurl": null,
+        "publishTime": 0,
+        "privilege": {
+          "id": 3414335451,
+          "fee": 8,
+          "payed": 0,
+          "realPayed": 0,
+          "st": 0,
+          "pl": 320000,
+          "dl": 0,
+          "sp": 7,
+          "cp": 1,
+          "subp": 1,
+          "cs": false,
+          "maxbr": 999000,
+          "fl": 320000,
+          "pc": null,
+          "toast": false,
+          "flag": 1544196,
+          "paidBigBang": false,
+          "preSell": false,
+          "playMaxbr": 999000,
+          "downloadMaxbr": 999000,
+          "maxBrLevel": "jymaster",
+          "playMaxBrLevel": "jymaster",
+          "downloadMaxBrLevel": "jymaster",
+          "plLevel": "exhigh",
+          "dlLevel": "none",
+          "flLevel": "exhigh",
+          "rscl": null,
+          "freeTrialPrivilege": {
+            "resConsumable": false,
+            "userConsumable": false,
+            "listenType": null,
+            "cannotListenReason": null,
+            "playReason": null,
+            "freeLimitTagType": null
+          },
+          "rightSource": 0,
+          "chargeInfoList": [
+            {
+              "rate": 128000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 192000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 320000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 0
+            },
+            {
+              "rate": 999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            },
+            {
+              "rate": 1999000,
+              "chargeUrl": null,
+              "chargeMessage": null,
+              "chargeType": 1
+            }
+          ],
+          "code": 0,
+          "message": null,
+          "plLevels": null,
+          "dlLevels": null,
+          "ignoreCache": null,
+          "bd": null
+        },
+        "alg": "random"
+      }
+    ],
+    "tag": null,
+    "extTransMap": null,
+    "code": 200
+  },
+  "error": null
+}

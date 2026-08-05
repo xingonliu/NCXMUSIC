@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.search_match.none.001",
+    "apiAuditId": "ncm.search_match",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:25:07.788Z",
+    "endedAt": "2026-08-05T03:25:07.870Z",
+    "durationMs": 82,
+    "attempts": 1
+  },
+  "body": {
+    "result": {
+      "songs": [],
+      "ids": []
+    },
+    "code": 200
+  },
+  "error": null
+}

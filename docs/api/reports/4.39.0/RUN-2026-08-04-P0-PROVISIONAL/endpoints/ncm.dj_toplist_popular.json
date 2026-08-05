@@ -33,15 +33,393 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.dj_toplist_popular.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 60,
+        "error": null,
+        "sampleHash": "a7d78c6672772f2d22ec91886fb5c0e5579712130aea85411f687fc7ff813c44",
+        "rawFile": "ncm.dj_toplist_popular.ncm.dj_toplist_popular.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_toplist_popular.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 60,
+        "error": null,
+        "sampleHash": "29403755cab100c04fcb46efc9ca40a9decd421cba8d131bc27d3d1603a0ed2c",
+        "rawFile": "ncm.dj_toplist_popular.ncm.dj_toplist_popular.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_toplist_popular.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 313,
+        "error": null,
+        "sampleHash": "9dea074e37fe637b3ecdcd44005e5e55d08dc196f81008d1843cb9306e4e28c9",
+        "rawFile": "ncm.dj_toplist_popular.ncm.dj_toplist_popular.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.dj_toplist_popular.page.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 6,
+        "code": 200,
+        "durationMs": 123,
+        "error": null,
+        "sampleHash": "799cbfd161b9a74e51c174779d34342ded1a187a2573097b32a08eb6384f33ba",
+        "rawFile": "ncm.dj_toplist_popular.ncm.dj_toplist_popular.page.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.list[].avatarDetail",
+      "rawType": "null",
+      "presence": 8,
+      "nulls": 8,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.list[].avatarDetail.identityIconUrl",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340194"
+    },
+    {
+      "jsonPath": "data.list[].avatarDetail.identityLevel",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "data.list[].avatarDetail.userType",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "205"
+    },
+    {
+      "jsonPath": "data.list[].avatarUrl",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "https://p3.music.126.net/ebpba3eTDR_0-jeGNaWdnw==/1099511733"
+    },
+    {
+      "jsonPath": "data.list[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "9201370188"
+    },
+    {
+      "jsonPath": "data.list[].lastRank",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.list[].liveId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.list[].liveStatus",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "-1"
+    },
+    {
+      "jsonPath": "data.list[].liveType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.list[].mainAuthDesc",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.list[].nickName",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "应萤"
+    },
+    {
+      "jsonPath": "data.list[].rank",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.list[].roomNo",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.list[].score",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "3562939"
+    },
+    {
+      "jsonPath": "data.list[].userFollowedCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "864"
+    },
+    {
+      "jsonPath": "data.list[].userType",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.total",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "78"
+    },
+    {
+      "jsonPath": "data.updateTime",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": "1785900215323"
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.dj_toplist_popular.anon.001",
+      "lastSeenCase": "ncm.dj_toplist_popular.page.none.001",
+      "example": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位",
+  "evidence": [
+    {
+      "caseId": "ncm.dj_toplist_popular.anon.001",
+      "sampleHash": "a7d78c6672772f2d22ec91886fb5c0e5579712130aea85411f687fc7ff813c44",
+      "rawFile": "ncm.dj_toplist_popular.ncm.dj_toplist_popular.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_toplist_popular.inv.001",
+      "sampleHash": "29403755cab100c04fcb46efc9ca40a9decd421cba8d131bc27d3d1603a0ed2c",
+      "rawFile": "ncm.dj_toplist_popular.ncm.dj_toplist_popular.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_toplist_popular.none.001",
+      "sampleHash": "9dea074e37fe637b3ecdcd44005e5e55d08dc196f81008d1843cb9306e4e28c9",
+      "rawFile": "ncm.dj_toplist_popular.ncm.dj_toplist_popular.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.dj_toplist_popular.page.none.001",
+      "sampleHash": "799cbfd161b9a74e51c174779d34342ded1a187a2573097b32a08eb6384f33ba",
+      "rawFile": "ncm.dj_toplist_popular.ncm.dj_toplist_popular.page.none.001.raw.json"
+    }
+  ]
 }

@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.broadcast_channel_collect_list.anon.001",
+    "apiAuditId": "ncm.broadcast_channel_collect_list",
+    "auth": "AUTH_ANON",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:41.941Z",
+    "endedAt": "2026-08-05T03:21:42.063Z",
+    "durationMs": 122,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": [],
+    "message": ""
+  },
+  "error": null
+}

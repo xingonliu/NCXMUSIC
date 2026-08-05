@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.batch.none.002",
+    "apiAuditId": "ncm.batch",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:35.375Z",
+    "endedAt": "2026-08-05T03:21:35.446Z",
+    "durationMs": 71,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "",
+    "code": 400,
+    "message": ""
+  },
+  "error": null
+}

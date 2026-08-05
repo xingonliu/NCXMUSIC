@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.get_userids.none.001",
+    "apiAuditId": "ncm.get_userids",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:23:42.865Z",
+    "endedAt": "2026-08-05T03:23:42.996Z",
+    "durationMs": 131,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "参数错误",
+    "code": 400,
+    "message": "参数错误"
+  },
+  "error": null
+}

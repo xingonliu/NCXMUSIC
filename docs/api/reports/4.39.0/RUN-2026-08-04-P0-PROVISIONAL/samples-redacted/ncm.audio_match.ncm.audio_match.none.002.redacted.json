@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "caseId": "ncm.audio_match.none.002",
+    "apiAuditId": "ncm.audio_match",
+    "auth": "AUTH_NONE",
+    "params": {},
+    "startedAt": "2026-08-05T03:21:32.540Z",
+    "endedAt": "2026-08-05T03:21:32.567Z",
+    "durationMs": 27,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200
+  },
+  "error": null
+}

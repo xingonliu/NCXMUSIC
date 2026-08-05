@@ -102,3 +102,44 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 17. Phase 6 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 账号缺失（B-002）；写操作/私有域已预授权但账号未到位）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.ad_listening_rights_gain.anon.001 | AUTH_ANON | - | 200 | 307 |  |
+| ncm.ad_listening_rights_gain.inv.001 | AUTH_INVALID_EXPIRED | err | 2001 | - | code 2001 |
+| ncm.ad_listening_rights_gain.none.001 | AUTH_NONE | err | 2001 | - | code 2001 |
+| ncm.ad_listening_rights_gain.none.002 | AUTH_NONE | err | 2001 | - | code 2001 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `data.code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `data.data.activityEndDate` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.data.adButtonInfo.buttonReqUrl` | string | 1 | 0 | 0 | AUTH_ANON | `orpheus://nm/motivationAd/show?adPositio` |
+| `data.data.adButtonInfo.buttonTitle` | string | 1 | 0 | 0 | AUTH_ANON | `立即获得` |
+| `data.data.adWatchRecords` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.data.adWatchStatus` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data.data.canPlayContinuously` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `data.data.continueContent` | string | 1 | 0 | 0 | AUTH_ANON | `再看一个最高获得26分钟时长` |
+| `data.data.effectType` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.data.extraButtonInfo.buttonReqUrl` | string | 1 | 0 | 0 | AUTH_ANON | `https://st.music.163.com/g/ad-music#hash` |
+| `data.data.extraButtonInfo.buttonTitle` | string | 1 | 0 | 0 | AUTH_ANON | `探索更多免费听歌权益` |
+| `data.data.gainFlag` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `data.data.gainRightsDuration` | number | 1 | 0 | 0 | AUTH_ANON | `30` |
+| `data.data.linkPosition` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.data.needLink` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `data.data.rightsDurationUnit` | string | 1 | 0 | 0 | AUTH_ANON | `分钟` |
+| `data.data.rightsEndDialogBgUrl` | string | 1 | 0 | 0 | AUTH_ANON | `https://p6.music.126.net/obj/wonDlsKUwrL` |
+| `data.data.rightsEndDialogSubTitle` | string | 1 | 0 | 0 | AUTH_ANON | `再看一段广告，至少再得30分钟免费听` |
+| `data.data.rightsEndDialogTitle` | string | 1 | 0 | 0 | AUTH_ANON | `恭喜，获得免费听歌时长` |
+| `data.data.rightsEndDialogType` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `data.data.rightsUpperLimit` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `data.data.showContent` | string | 1 | 0 | 0 | AUTH_ANON | `恭喜获得30分VIP歌曲畅听权益` |
+| `data.data.showElement` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.data.vipButtonInfo` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `data.message` | string | 1 | 0 | 0 | AUTH_ANON | `处理成功` |
