@@ -35,6 +35,8 @@ Design Tokens
 
 领域组件可以组合通用组件，但不能复制通用组件的内部样式或绕过 Token。
 
+首版通用图标使用当前官方 Vue 包 `@lucide/vue`，只允许命名导入并统一通过 NcxMusic `Icon`/`IconRegistry` 包装尺寸、Stroke 和可访问性。页面不得直接引入第二套图标库；Lucide 缺失的播放模式、音质或音乐权益图标由自有 Registry 提供，并遵守同一圆角线性风格。
+
 ### 2.1 Headless Primitive 基础
 
 首版采用 Reka UI 承担无样式交互 Primitive。它负责焦点管理、键盘导航、Portal、受控状态和 WAI-ARIA 行为；NcxMusic 负责组件命名、Props、Emits、文案、视觉、动画、Token 和产品使用边界。
@@ -410,7 +412,7 @@ src/renderer/features/
 
 首版同时提供亮色与暗色主题，默认跟随操作系统并允许用户手动固定。产品级视觉方向已经确认，只剩以下工程依赖需要在初始化阶段通过 UI Lab 冻结：
 
-1. 承载圆角线性风格的具体开源图标包，以及缺失的音乐业务专用图标绘制清单。
+1. `@lucide/vue` 缺失的音乐业务专用图标绘制清单。
 2. Windows/macOS 在不同 GPU、系统透明度与高对比度设置下的 Liquid Glass 降级参数。
 3. Windows 自绘窗口按钮和 macOS 原生交通灯在 100%～200% 缩放及全屏切换下的精确尺寸、命中区与对齐值。
 

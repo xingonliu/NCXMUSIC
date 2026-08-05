@@ -1,6 +1,6 @@
 # NcxMusic 系统架构基线
 
-> 文档状态：Draft 0.1（架构访谈进行中）
+> 文档状态：Baseline 0.2（首版架构边界已冻结，技术 Spike 按门禁执行）
 > 建立日期：2026-08-04
 > 最后更新：2026-08-05
 > 用途：记录跨进程拓扑、源码组织、依赖方向和架构决策；具体业务行为以 PRD 和各领域文档为准
@@ -15,8 +15,12 @@
 | A-004 | Main 作为 ConnectionBroker 建立 Renderer/Preload 与 Utility Process 的版本化 MessagePort 数据通道；消息使用 Zod 严格 Schema、幂等命令和快照式重连。 | 已确认 |
 | A-005 | 持久数据写入应用 `userData` 子目录并按网易云用户 ID 隔离；画像、记忆和聊天使用普通 SQLite/JSON，不做应用级整库加密；登录 Cookie 与 API Key 继续使用系统凭据保护。 | 已确认 |
 | A-006 | Agent Runtime 完全手写并以 Turn/Tool 状态机运行；单会话同时只有一个 Active Turn，只读工具最多并行 4 个，有副作用工具串行；单 Turn 最多 12 轮工具循环和 24 个 Tool Call。 | 已确认 |
+| A-007 | Policy Engine 使用正向能力注册和确定性纯函数分类；审批/选择通过状态机挂起和快照恢复，LLM 不参与权限判断。 | 已确认 |
 | A-008 | Dynamic Skill 使用独立 Skill Host 子进程；MCP 使用官方 SDK 稳定 v1.x 的 `stdio` 与 Streamable HTTP，扩展经统一命名、审批、进程监督、原子更新与回滚管理。 | 已确认 |
 | A-009 | 账户存储、SQLite FTS5 记忆检索、画像快照、基础资料、保留与删除边界由统一 Storage Architecture 管理。 | 已确认 |
+| A-010 | 全局按住说话使用独立 InputHookHost 候选实现；Electron `globalShortcut` 只承担可用的组合键注册，不能替代 keyup。失败平台回退应用内麦克风按钮。 | 产品边界确认，Phase 0 验证 |
+| A-011 | Shell 使用独立安全等级、授权工作区、保守语法分类、最小环境、输出上限和完整进程树监督；详细契约见 Shell Execution Baseline。 | 架构确认，Phase 0 验证 |
+| A-012 | 播放器使用根层唯一 AudioHost、领域命令、generation 和播放快照；直接 HTTPS 与受控媒体代理、系统媒体中心集成进入 Phase 0 对比。 | 架构确认，Phase 0 验证 |
 
 ## 2. 运行时拓扑
 
@@ -137,9 +141,13 @@ pnpm release      # 仅供受保护 CI 发布，不作为本地常规命令
 
 代码行数、目录数量或“看起来更专业”不是拆包理由。
 
-## 8. 待续架构决策
+## 8. 剩余技术验证
 
-1. A-007：Policy Engine、审批挂起/恢复和安全动作分类。
-2. A-010：各 Provider 的 ASR 调用适配、快捷键原生能力与平台权限验证。
-3. A-011：Shell 白名单、授权工作区、危险参数、路径边界与执行进程监督。
-4. A-012：播放 URL、媒体键、系统媒体中心与双平台音频生命周期验证。
+这里不再包含需要继续访谈的架构取舍，只包含以代码和双平台产物验证的实现风险：
+
+1. A-010：各 Provider 的 ASR 调用适配、InputHookHost、原生模块打包与平台权限。
+2. A-011：PowerShell AST、zsh 保守分类、路径边界和完整进程树回收。
+3. A-012：播放 URL、Range/Seek、媒体键、系统媒体中心与双平台音频生命周期。
+4. electron-vite 多入口、Utility Process 打包路径和依赖精确版本。
+
+验证步骤、通过条件和回退路径统一以 `docs/development/NcxMusic-Technical-Spike-Plan.md` 为准，不在本文件继续引入产品待确认项。

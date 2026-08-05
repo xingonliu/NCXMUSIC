@@ -1,10 +1,10 @@
 # NcxMusic 播放域设计（音频状态与播放队列）
 
-> 文档状态：Draft 0.2（技术方案待验证，未定稿）
-> 最后更新：2026-08-04
-> 文档用途：约束播放器音频状态、播放队列和恢复行为；技术验证通过并完成产品决策后才能作为实现基线
+> 文档状态：Candidate Baseline 0.3（产品行为已冻结，媒体链路待 Phase 0 验证）
+> 最后更新：2026-08-05
+> 文档用途：约束播放器音频状态、播放队列和恢复行为；媒体链路技术验证通过后升级为实现基线
 > 范围：播放状态机、队列、全局唯一内容音频、音频焦点和持久化。Agent、权限和 IPC 是外部输入源，不在本领域内作决策。
-> 访谈状态：2026-08-04 重新开启播放架构讨论；目前确认 Vue SPA、根层唯一 AudioHost、按路由显示/隐藏 PlayerBar、队列入口语义、上一首直接切歌、暂停式启动恢复、三种播放模式、可见队列洗牌式随机播放、不可播放自动切歌、队列删除行为和首版无撤销，其余技术结构和行为规则仍是讨论底稿。
+> 当前状态：Vue SPA、根层唯一 AudioHost、PlayerBar 路由可见性、队列入口、上一首、暂停式恢复、三种播放模式、可见队列洗牌、不可播放跳歌、队列删除、无撤销及快照写入规则均已确认；直接 HTTPS/受控媒体代理、格式与系统媒体中心仍按 Phase 0 Spike 验证。
 
 ## 1. 技术讨论约束
 
@@ -52,7 +52,7 @@ PlayerCommandBridge（Renderer 根层常驻）→ PlaybackCoordinator
 - 命令信封至少包含 `protocolVersion`、`commandId`、`issuedBy`、`expectedRevision`、`type` 和经 Schema 验证的 `payload`。
 - 命令结果以 `commandId` 关联，区分 `succeeded`、`rejected`、`stale`、`failed`、`unavailable` 和 `timeout`，并携带最新 snapshot 或裁剪后错误。
 - Tool 必须等到命令回执或超时才返回模型，不得将“已发送”当作播放成功。Renderer 重载、MessagePort 中断或 AudioHost 不可用时，所有未决命令显式失败并在重新握手后才接收新命令。
-- `PlayerCommandBridge` 不放在 `AgentChat.vue`、路由页面或侧边栏中。Pinia 只订阅快照和分发命令，不通过 DOM ID 持有 `<audio>`、不手工猜测播放成功状态。
+- `PlayerCommandBridge` 不放在 `AgentPage.vue` 或任何路由页面中。Pinia 只订阅快照和分发命令，不通过 DOM ID 持有 `<audio>`、不手工猜测播放成功状态。
 - Vue 页面调用类型化 Music Gateway，通过 Preload 进入 Utility Process 中的 Music Service；Agent Tool 在 Utility Process 内复用同一 Service。Renderer 不直连 NeteaseCloudMusicApiEnhanced。
 
 ## 3. PlaybackEngine
@@ -375,7 +375,7 @@ interface PlaybackResumeSnapshot {
 - 启动恢复始终以 `autoplay=false` 装载。`loadedmetadata` 后执行 seek，状态保持 `ready/paused`；只有新的用户或 Agent 播放命令才能出声。
 - 快照按账户隔离、带 Schema 版本并原子写入。队列项保存稳定 ID 和必要展示摘要，不能只依赖可能失效的 `sourceRef` 重建。
 - 当前歌曲已不可播放时保留队列现场并展示原因，不在应用启动阶段静默跳歌。
-- 写入触发点、节流间隔、快照过期和异常恢复属于技术设计项，不能改变“恢复但不自动播放”的产品规则。
+- 队列、当前项、模式、音量和静音等语义变化后短防抖原子写入；播放进度每 5 秒节流，并在 pause、seek 完成、窗口最小化和退出前刷新。快照不按时间过期，Schema 不兼容或账户 generation 不匹配时丢弃。
 
 ## 10. Vue SPA 集成
 
@@ -443,4 +443,4 @@ AppShell（应用生命周期）
 5. `ncxaudio://` 与直接 HTTPS 两种链路的安全、性能和取消行为对比。
 6. Windows/macOS 关闭按钮映射 `minimize`/`quit`、后台播放与明确退出的生命周期验证。
 
-验证结果写入独立 ADR；本文件在相关产品项确认前保持 Draft。
+验证结果写入独立 ADR；T-03 与 T-07 通过或采用已记录的 fallback 后，本文件升级为 Baseline。

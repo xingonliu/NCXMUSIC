@@ -142,6 +142,7 @@ lastKnownTools
 
 - Secret 只保存为 Credential Vault 引用，不写入配置、Prompt、卡片或日志。
 - `stdio` 环境变量使用显式 allowlist 构造，不继承完整进程环境。
+- 设置页支持兼容常见 `.mcp.json` 结构的导入，并在写入前转换为上述内部 Schema、展示差异和缺失凭据。导出使用带 `schemaVersion` 的 NcxMusic 配置，不包含 Secret、凭据值或可逆 Credential Reference。
 - 小云发起安装时必须展示 Server 来源、Transport、命令或 URL、参数、工作目录、环境变量名称、声明能力和可能启动的进程；批准前零写入、零启动、零连接。
 - 安装批准只授权保存并按这份不可变配置启动 Server。命令、参数、URL、工作目录、凭据引用或已启用工具范围变化后必须重新批准。
 - 用户在设置页直接新增配置时使用普通确认；这不绕过后续 MCP Tool Call 审批。
