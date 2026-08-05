@@ -44,15 +44,192 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.artist_new_song_mv_list_v2.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 115,
+        "error": null,
+        "sampleHash": "21c9be9df51243025d7b491e8985350b6b6989ad3d886652b77b69016e97f695",
+        "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_new_song_mv_list_v2.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "fa1632d5b74ff3848bb1b7e807a89923832a941d1e3aff54a0c46ed20035bb15",
+        "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_new_song_mv_list_v2.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "e04ce141dcba431011bd6909263ac0e940c192ce2ffe83cf75cb09ed05ee1d69",
+        "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_new_song_mv_list_v2.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "5427a56be61b7ea049bc44fc1782df46bedb053a763694efef95937b5d8e90a7",
+        "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "lastSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.hasMore",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "lastSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.latestVisitTime",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "lastSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.newSongCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "lastSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.newWorks",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "lastSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "lastSeenCase": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "未登录层 301 系统错误（接口需会话）；AUTH_ANON（游客 cookie）可满足（200）；AUTH_USER 层待补",
+  "evidence": [
+    {
+      "caseId": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "sampleHash": "21c9be9df51243025d7b491e8985350b6b6989ad3d886652b77b69016e97f695",
+      "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_mv_list_v2.id0.none.neg.001",
+      "sampleHash": "fa1632d5b74ff3848bb1b7e807a89923832a941d1e3aff54a0c46ed20035bb15",
+      "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_mv_list_v2.inv.001",
+      "sampleHash": "e04ce141dcba431011bd6909263ac0e940c192ce2ffe83cf75cb09ed05ee1d69",
+      "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_mv_list_v2.none.001",
+      "sampleHash": "5427a56be61b7ea049bc44fc1782df46bedb053a763694efef95937b5d8e90a7",
+      "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.none.001.raw.json"
+    }
+  ]
 }

@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "caseId": "ncm.playlist_detail_rcmd_get.inv.001",
+    "apiAuditId": "ncm.playlist_detail_rcmd_get",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "id": "2936255937"
+    },
+    "startedAt": "2026-08-05T02:42:59.388Z",
+    "endedAt": "2026-08-05T02:42:59.523Z",
+    "durationMs": 135,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "message": "success",
+    "data": {
+      "rcmdTitle": "喜欢这个歌单的用户也听了",
+      "jumpUrl": "orpheus://playlistCollection",
+      "recPlaylist": [
+        {
+          "playlist": {
+            "id": 2390539027,
+            "name": "【欧美】那些让耳朵怀孕的英文歌曲～",
+            "coverImgId": 109951167837899820,
+            "coverImgUrl": "http://p1.music.126.net/o6GJySiTRkXDXKO4NCqYhw==/109951167837899826.jpg#hash=9d77ed5697d4",
+            "playCount": 53501492,
+            "specialType": 0,
+            "action": "orpheus://playlist/2390539027?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 126947268,
+            "name": "【高燃】游戏视频精彩集锦常用BGM",
+            "coverImgId": 3405187513632803,
+            "coverImgUrl": "http://p1.music.126.net/xeXfy5TyRHxaHIecOuUcHg==/3405187513632803.jpg#hash=1b41226c8df3",
+            "playCount": 38636692,
+            "specialType": 0,
+            "action": "orpheus://playlist/126947268?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 645384312,
+            "name": "不得了！这些英文歌的热评信息量好大……",
+            "coverImgId": 19155691579189684,
+            "coverImgUrl": "http://p1.music.126.net/Izq2rrMzKPNaxmgg0O0KNA==/19155691579189685.jpg#hash=b33a5f90397b",
+            "playCount": 33822292,
+            "specialType": 0,
+            "action": "orpheus://playlist/645384312?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 74477909,
+            "name": "你要的激烈驾驶感！高强节奏【车载音乐】",
+            "coverImgId": 7806532558346031,
+            "coverImgUrl": "http://p1.music.126.net/RpPXH90uNvqTw2Qis2z2Mw==/7806532558346031.jpg#hash=7f4b7b345271",
+            "playCount": 34878428,
+            "specialType": 0,
+            "action": "orpheus://playlist/74477909?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 2364146680,
+            "name": "提神醒脑 疯狂抖腿魔性摇头.GIF",
+            "coverImgId": 109951163460068980,
+            "coverImgUrl": "http://p1.music.126.net/kzYYqG0uJ8JKz34iBSRdMw==/109951163460068973.jpg#hash=29809a24ace2",
+            "playCount": 53587144,
+            "specialType": 0,
+            "action": "orpheus://playlist/2364146680?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 824754853,
+            "name": "『开口脆』迷幻嗓音极致瞬间❤️",
+            "coverImgId": 109951165832675600,
+            "coverImgUrl": "http://p1.music.126.net/aJxCPkxj3j_w_1iyeXHacQ==/109951165832675605.jpg#hash=f563e9b61290",
+            "playCount": 51569156,
+            "specialType": 0,
+            "action": "orpheus://playlist/824754853?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        }
+      ]
+    }
+  },
+  "error": null
+}

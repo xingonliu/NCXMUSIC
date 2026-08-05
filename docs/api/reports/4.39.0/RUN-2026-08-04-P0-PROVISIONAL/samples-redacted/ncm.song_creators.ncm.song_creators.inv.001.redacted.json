@@ -1,0 +1,104 @@
+{
+  "meta": {
+    "caseId": "ncm.song_creators.inv.001",
+    "apiAuditId": "ncm.song_creators",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "id": "449818741"
+    },
+    "startedAt": "2026-08-05T02:38:12.139Z",
+    "endedAt": "2026-08-05T02:38:12.309Z",
+    "durationMs": 170,
+    "attempts": 1
+  },
+  "body": {
+    "data": {
+      "titleName": "创作者",
+      "songCreatorsRoleVos": [
+        {
+          "roleName": "作词",
+          "creatorMetaVOS": [
+            {
+              "artistId": 7763,
+              "artistName": "G.E.M.邓紫棋",
+              "artistPic": "http://p1.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=ab417f8fbc53",
+              "isSub": false,
+              "identityMessage": {
+                "showName": "香港歌手",
+                "iconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8",
+                "iconLinkUrl": null
+              },
+              "artistMessage": [
+                "粉丝数: 1434万",
+                "代表作: 「唯一」"
+              ],
+              "jumpUrl": "orpheus://nm/artist/home?id=7763",
+              "canFollowed": true
+            }
+          ]
+        },
+        {
+          "roleName": "作曲",
+          "creatorMetaVOS": [
+            {
+              "artistId": 7763,
+              "artistName": "G.E.M.邓紫棋",
+              "artistPic": "http://p1.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=ab417f8fbc53",
+              "isSub": false,
+              "identityMessage": {
+                "showName": "香港歌手",
+                "iconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8",
+                "iconLinkUrl": null
+              },
+              "artistMessage": [
+                "粉丝数: 1434万",
+                "代表作: 「唯一」"
+              ],
+              "jumpUrl": "orpheus://nm/artist/home?id=7763",
+              "canFollowed": true
+            }
+          ]
+        },
+        {
+          "roleName": "编曲",
+          "creatorMetaVOS": [
+            {
+              "artistId": 29271225,
+              "artistName": "Lupo Groinig",
+              "artistPic": "http://p1.music.126.net/t4LmN5MVB0F_WD0XCGoETg==/109951167135173538.jpg#hash=445572b0bc00",
+              "isSub": false,
+              "identityMessage": null,
+              "artistMessage": [
+                "粉丝数: 6616",
+                "代表作: 「多远都要在一起」"
+              ],
+              "jumpUrl": "orpheus://nm/artist/home?id=29271225",
+              "canFollowed": true
+            }
+          ]
+        },
+        {
+          "roleName": "制作人",
+          "creatorMetaVOS": [
+            {
+              "artistId": 29271225,
+              "artistName": "Lupo Groinig",
+              "artistPic": "http://p1.music.126.net/t4LmN5MVB0F_WD0XCGoETg==/109951167135173538.jpg#hash=445572b0bc00",
+              "isSub": false,
+              "identityMessage": null,
+              "artistMessage": [
+                "粉丝数: 6616",
+                "代表作: 「多远都要在一起」"
+              ],
+              "jumpUrl": "orpheus://nm/artist/home?id=29271225",
+              "canFollowed": true
+            }
+          ]
+        }
+      ]
+    },
+    "code": 200,
+    "message": "请求成功"
+  },
+  "error": null
+}

@@ -96,7 +96,7 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "未完成扫码流程与更多登录层；unikey 一次性凭据仅本地保留",
+  "blocker": "未完成扫码流程",
   "evidence": [
     {
       "caseId": "ncm.login_qr_key.none.min.001",

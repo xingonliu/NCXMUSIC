@@ -70,7 +70,7 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "rate_limited",
-  "blocker": "匿名注册风控：成功路径已验证 1 次后被连续 code 400，退避后仍失败",
+  "blocker": "匿名注册风控：成功路径已验证后被连续 code 400",
   "evidence": [
     {
       "caseId": "ncm.register_anonimous.none.min.001",

@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.mv_first.inv.001",
+    "apiAuditId": "ncm.mv_first",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "limit": 10,
+      "area": "全部",
+      "order": "上升最快"
+    },
+    "startedAt": "2026-08-05T02:45:36.533Z",
+    "endedAt": "2026-08-05T02:45:36.618Z",
+    "durationMs": 85,
+    "attempts": 1
+  },
+  "body": {
+    "data": [],
+    "code": 200
+  },
+  "error": null
+}

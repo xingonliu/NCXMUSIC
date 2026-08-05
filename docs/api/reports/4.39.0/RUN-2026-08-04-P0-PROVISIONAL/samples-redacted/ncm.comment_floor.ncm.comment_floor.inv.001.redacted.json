@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_floor.inv.001",
+    "apiAuditId": "ncm.comment_floor",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "parentCommentId": "9563156604",
+      "id": "449818741",
+      "type": "1",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:57:25.607Z",
+    "endedAt": "2026-08-05T02:57:25.672Z",
+    "durationMs": 65,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "参数错误",
+    "data": null
+  },
+  "error": null
+}

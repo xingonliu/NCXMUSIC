@@ -294,7 +294,7 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "INVALID 层被 -462 阻断；VIP/已购层缺失",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
   "evidence": [
     {
       "caseId": "ncm.mv_url.anon.001",

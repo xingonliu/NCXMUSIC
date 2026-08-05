@@ -1,0 +1,218 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_list.none.002",
+    "apiAuditId": "ncm.artist_list",
+    "auth": "AUTH_NONE",
+    "params": {
+      "type": "1",
+      "area": "-1",
+      "initial": "C",
+      "limit": 10,
+      "offset": 0
+    },
+    "startedAt": "2026-08-05T02:43:17.334Z",
+    "endedAt": "2026-08-05T02:43:17.397Z",
+    "durationMs": 63,
+    "attempts": 1
+  },
+  "body": {
+    "artists": [
+      {
+        "albumSize": 133,
+        "alias": [
+          "Eason Chan"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 2116,
+        "img1v1Id": 109951173289562420,
+        "img1v1Id_str": "109951173289562420",
+        "img1v1Url": "http://p3.music.126.net/jj0EasWfUZpf1LW2SFeN-A==/109951173289562420.jpg#hash=0133bad05935",
+        "musicSize": 1856,
+        "name": "陈奕迅",
+        "picId": 109951173289563400,
+        "picId_str": "109951173289563385",
+        "picUrl": "http://p3.music.126.net/5KJI2mq0G0OQHQaAfAJfwg==/109951173289563385.jpg#hash=cfd90a3810b2",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 1946698380,
+        "albumSize": 109,
+        "alias": [
+          "断眉"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 90331,
+        "img1v1Id": 109951173206832290,
+        "img1v1Id_str": "109951173206832289",
+        "img1v1Url": "http://p4.music.126.net/zNaNqAjK37HsYWw7ZLmq6A==/109951173206832289.jpg#hash=455ff205a6f5",
+        "musicSize": 423,
+        "name": "Charlie Puth",
+        "picId": 109951167257756930,
+        "picId_str": "109951167257756923",
+        "picUrl": "http://p4.music.126.net/y4BW_MFIZrx4BWd6TsbNCw==/109951167257756923.jpg#hash=ca0d10d2b778",
+        "topicPerson": 0,
+        "trans": "查理·普斯",
+        "transNames": [
+          "查理·普斯"
+        ]
+      },
+      {
+        "accountId": 3251866517,
+        "albumSize": 28,
+        "alias": [
+          "Gary Chaw",
+          "曹佰豪"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 2110,
+        "img1v1Id": 113249697679230,
+        "img1v1Url": "http://p4.music.126.net/uTlPq6hGB0b9VYkO-uybpQ==/113249697679230.jpg#hash=c31251af3b2f",
+        "musicSize": 297,
+        "name": "曹格",
+        "picId": 41781441872687,
+        "picUrl": "http://p3.music.126.net/8Q_hsKIlUE3QdkksPqI6fg==/41781441872687.jpg#hash=0418f0c41652",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "albumSize": 421,
+        "alias": [],
+        "briefDesc": "",
+        "followed": false,
+        "id": 122345919,
+        "img1v1Id": 109951173628553630,
+        "img1v1Id_str": "109951173628553625",
+        "img1v1Url": "http://p4.music.126.net/aDajDw0EOatfS_F5i68Egw==/109951173628553625.jpg#hash=eb4d1a185971",
+        "musicSize": 468,
+        "name": "陈与默",
+        "picId": 109951172548019420,
+        "picId_str": "109951172548019427",
+        "picUrl": "http://p4.music.126.net/08QfqSlodC-a58yn_iMYfA==/109951172548019427.jpg#hash=196453ee3f4d",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 300806208,
+        "albumSize": 21,
+        "alias": [],
+        "briefDesc": "",
+        "followed": false,
+        "id": 12193174,
+        "img1v1Id": 109951172402665730,
+        "img1v1Id_str": "109951172402665734",
+        "img1v1Url": "http://p4.music.126.net/jO2Eb9wSdS6hbc2UQK1Y8w==/109951172402665734.jpg#hash=9af0eca4d629",
+        "musicSize": 198,
+        "name": "Capper",
+        "picId": 109951172402664780,
+        "picId_str": "109951172402664782",
+        "picUrl": "http://p3.music.126.net/BgfelryTIGqHFbpbAyu0Kw==/109951172402664782.jpg#hash=4a8f02d91305",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 120121152,
+        "albumSize": 23,
+        "alias": [
+          "KUN"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 12932368,
+        "img1v1Id": 109951172633386240,
+        "img1v1Id_str": "109951172633386235",
+        "img1v1Url": "http://p4.music.126.net/qZeeUfTkKg8UrdfKoNKx9Q==/109951172633386235.jpg#hash=73727df8fd18",
+        "musicSize": 70,
+        "name": "蔡徐坤",
+        "picId": 109951172281217580,
+        "picId_str": "109951172281217579",
+        "picUrl": "http://p3.music.126.net/ptsquP6jiVdbGYUq62RYqA==/109951172281217579.jpg#hash=8e37a97465b9",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 1816157734,
+        "albumSize": 168,
+        "alias": [],
+        "briefDesc": "",
+        "followed": false,
+        "id": 94751641,
+        "img1v1Id": 109951172909478900,
+        "img1v1Id_str": "109951172909478897",
+        "img1v1Url": "http://p4.music.126.net/vwWzyVVALPLm6gt2SqeWgQ==/109951172909478897.jpg#hash=d428f9bf3ecd",
+        "musicSize": 217,
+        "name": "陈默之",
+        "picId": 109951169897625660,
+        "picId_str": "109951169897625672",
+        "picUrl": "http://p3.music.126.net/b_FS05BFs4aS6Y9GpyblQw==/109951169897625672.jpg#hash=39e630dc2410",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 39002,
+        "albumSize": 58,
+        "alias": [],
+        "briefDesc": "",
+        "followed": false,
+        "id": 2124,
+        "img1v1Id": 109951170540755840,
+        "img1v1Id_str": "109951170540755845",
+        "img1v1Url": "http://p3.music.126.net/HXs1MIcM7n9V7qFDTuW71A==/109951170540755845.jpg#hash=39f9e3cf2ba8",
+        "musicSize": 453,
+        "name": "陈楚生",
+        "picId": 109951164172869490,
+        "picId_str": "109951164172869486",
+        "picUrl": "http://p4.music.126.net/w7gjxVVrinDtnwrY25dRhQ==/109951164172869486.jpg#hash=286fadf89607",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 12585875864,
+        "albumSize": 42,
+        "alias": [
+          "Jordan Chan"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 2112,
+        "img1v1Id": 109951169164936480,
+        "img1v1Id_str": "109951169164936483",
+        "img1v1Url": "http://p3.music.126.net/_Y01WkC1R9Qnxyw-Tlaj5w==/109951169164936483.jpg#hash=f445c78aec23",
+        "musicSize": 628,
+        "name": "陈小春",
+        "picId": 109951169164945700,
+        "picId_str": "109951169164945697",
+        "picUrl": "http://p4.music.126.net/MyK0_930LX6q0fD2Bcp_vg==/109951169164945697.jpg#hash=e0f12ef6c263",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "albumSize": 91,
+        "alias": [
+          "Jason Chan",
+          "陈广伟",
+          "Ivan Chan"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 2127,
+        "img1v1Id": 109951171813198380,
+        "img1v1Id_str": "109951171813198385",
+        "img1v1Url": "http://p3.music.126.net/afa1A_NhOCyajlYHfgCPUw==/109951171813198385.jpg#hash=308e50c20094",
+        "musicSize": 471,
+        "name": "陈柏宇",
+        "picId": 109951171813202510,
+        "picId_str": "109951171813202506",
+        "picUrl": "http://p3.music.126.net/15r-Rxty1CkcU1fgBttM5w==/109951171813202506.jpg#hash=152346695a29",
+        "topicPerson": 0,
+        "trans": ""
+      }
+    ],
+    "more": true,
+    "code": 200
+  },
+  "error": null
+}

@@ -40,15 +40,149 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.simi_user.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 74,
+        "error": null,
+        "sampleHash": "f82baa459af1e904e18471e3b85955d67db695e1c5a375e1a99bf424f0e975dd",
+        "rawFile": "ncm.simi_user.ncm.simi_user.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.simi_user.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "678e1fb0f2cde7eced91275c2e26ebc3d91d28ed2c84b7daec6595e84166e221",
+        "rawFile": "ncm.simi_user.ncm.simi_user.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.simi_user.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792947899004989448",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=322745489082",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "c73bbc16716a06c24c8e8b925901c9227e435441640cdabce662311bc954f39e",
+        "rawFile": "ncm.simi_user.ncm.simi_user.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.simi_user.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "c3edf507dc0f43287d2faaaa1ab97c6511c6be06206df39cf976305859e7042f",
+        "rawFile": "ncm.simi_user.ncm.simi_user.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_user.anon.001",
+      "lastSeenCase": "ncm.simi_user.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "userprofiles",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.simi_user.anon.001",
+      "lastSeenCase": "ncm.simi_user.anon.001",
+      "example": "undefined"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "未登录层 301 系统错误（接口需会话）；AUTH_ANON（游客 cookie）可满足（200）；AUTH_USER 层待补",
+  "evidence": [
+    {
+      "caseId": "ncm.simi_user.anon.001",
+      "sampleHash": "f82baa459af1e904e18471e3b85955d67db695e1c5a375e1a99bf424f0e975dd",
+      "rawFile": "ncm.simi_user.ncm.simi_user.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_user.id0.none.neg.001",
+      "sampleHash": "678e1fb0f2cde7eced91275c2e26ebc3d91d28ed2c84b7daec6595e84166e221",
+      "rawFile": "ncm.simi_user.ncm.simi_user.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_user.inv.001",
+      "sampleHash": "c73bbc16716a06c24c8e8b925901c9227e435441640cdabce662311bc954f39e",
+      "rawFile": "ncm.simi_user.ncm.simi_user.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_user.none.001",
+      "sampleHash": "c3edf507dc0f43287d2faaaa1ab97c6511c6be06206df39cf976305859e7042f",
+      "rawFile": "ncm.simi_user.ncm.simi_user.none.001.raw.json"
+    }
+  ]
 }

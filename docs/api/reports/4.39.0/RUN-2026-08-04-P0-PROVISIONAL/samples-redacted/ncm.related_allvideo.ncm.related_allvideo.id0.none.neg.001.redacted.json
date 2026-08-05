@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.related_allvideo.id0.none.neg.001",
+    "apiAuditId": "ncm.related_allvideo",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T02:46:07.763Z",
+    "endedAt": "2026-08-05T02:46:07.822Z",
+    "durationMs": 59,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "非法视频ID",
+    "data": null
+  },
+  "error": null
+}

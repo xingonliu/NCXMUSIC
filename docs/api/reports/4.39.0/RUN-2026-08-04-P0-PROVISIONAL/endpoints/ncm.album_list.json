@@ -41,15 +41,348 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 5,
+    "cases": [
+      {
+        "caseId": "ncm.album_list.bad.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 75,
+        "error": null,
+        "sampleHash": "70c34d709c050a813be699bb483979660ec7a364cf7f0bcf34d966da8714808a",
+        "rawFile": "ncm.album_list.ncm.album_list.bad.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.album_list.hot.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 84,
+        "error": null,
+        "sampleHash": "9398524bb04bea79e9618a69015dcdf29d66dff9dfe9381902f5fa91cda87992",
+        "rawFile": "ncm.album_list.ncm.album_list.hot.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.album_list.new.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 58,
+        "error": null,
+        "sampleHash": "0242213e87c3c47bd98df3135341162045352a8717ea39110c9bffedd34d77be",
+        "rawFile": "ncm.album_list.ncm.album_list.new.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.album_list.new.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 52,
+        "error": null,
+        "sampleHash": "836aff25817ed45c4b29843022efe9b2b5997ee2a57cdbfeb254e99ec65d70ee",
+        "rawFile": "ncm.album_list.ncm.album_list.new.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.album_list.new.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 64,
+        "error": null,
+        "sampleHash": "ad669dc7da129441dc885b7b4d3b3830926539e215fc9f94354e88ca70e96e96",
+        "rawFile": "ncm.album_list.ncm.album_list.new.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "products[].albumId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "387975057"
+    },
+    {
+      "jsonPath": "products[].albumName",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "光与盐 (下)"
+    },
+    {
+      "jsonPath": "products[].albumType",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "products[].area",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "7"
+    },
+    {
+      "jsonPath": "products[].artistName",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "周峻炜"
+    },
+    {
+      "jsonPath": "products[].artistType",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "products[].coverUrl",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "http://p4.music.126.net/5uRvQ8NIMDgIEygBKnZBEQ==/10995117359"
+    },
+    {
+      "jsonPath": "products[].customPriceConfig",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "products[].newAlbum",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "products[].price",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "20"
+    },
+    {
+      "jsonPath": "products[].productId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "products[].pubTime",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "1785208560790"
+    },
+    {
+      "jsonPath": "products[].saleNum",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "4198"
+    },
+    {
+      "jsonPath": "products[].saleType",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "products[].status",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "products[].topfans",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.album_list.bad.none.neg.001",
+      "lastSeenCase": "ncm.album_list.new.none.001",
+      "example": null
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.album_list.bad.none.neg.001",
+      "sampleHash": "70c34d709c050a813be699bb483979660ec7a364cf7f0bcf34d966da8714808a",
+      "rawFile": "ncm.album_list.ncm.album_list.bad.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_list.hot.none.001",
+      "sampleHash": "9398524bb04bea79e9618a69015dcdf29d66dff9dfe9381902f5fa91cda87992",
+      "rawFile": "ncm.album_list.ncm.album_list.hot.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_list.new.anon.001",
+      "sampleHash": "0242213e87c3c47bd98df3135341162045352a8717ea39110c9bffedd34d77be",
+      "rawFile": "ncm.album_list.ncm.album_list.new.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_list.new.inv.001",
+      "sampleHash": "836aff25817ed45c4b29843022efe9b2b5997ee2a57cdbfeb254e99ec65d70ee",
+      "rawFile": "ncm.album_list.ncm.album_list.new.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_list.new.none.001",
+      "sampleHash": "ad669dc7da129441dc885b7b4d3b3830926539e215fc9f94354e88ca70e96e96",
+      "rawFile": "ncm.album_list.ncm.album_list.new.none.001.raw.json"
+    }
+  ]
 }

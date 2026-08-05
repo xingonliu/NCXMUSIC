@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_video.id0.none.neg.001",
+    "apiAuditId": "ncm.artist_video",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T02:44:39.715Z",
+    "endedAt": "2026-08-05T02:44:39.765Z",
+    "durationMs": 50,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "参数错误",
+    "data": null
+  },
+  "error": null
+}

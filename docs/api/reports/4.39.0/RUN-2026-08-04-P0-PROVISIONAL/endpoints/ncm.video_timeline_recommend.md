@@ -89,3 +89,154 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: 未登录层 301 系统错误（接口需会话）；AUTH_ANON（游客 cookie）可满足（200）；AUTH_USER 层待补）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.video_timeline_recommend.anon.001 | AUTH_ANON | - | 200 | 173 |  |
+| ncm.video_timeline_recommend.inv.001 | AUTH_INVALID_EXPIRED | err | 301 | - | code 301 |
+| ncm.video_timeline_recommend.none.001 | AUTH_NONE | err | 301 | - | code 301 |
+| ncm.video_timeline_recommend.none.002 | AUTH_NONE | err | 301 | - | code 301 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `datas[].alg` | string | 3 | 0 | 0 | AUTH_ANON | `special_first_page_rcmd` |
+| `datas[].data.alg` | string | 3 | 0 | 0 | AUTH_ANON | `special_first_page_rcmd` |
+| `datas[].data.commentCount` | number | 3 | 0 | 0 | AUTH_ANON | `64` |
+| `datas[].data.coverUrl` | string | 3 | 0 | 0 | AUTH_ANON | `https://p4.music.126.net/EV2eQMgpQLq5zc9` |
+| `datas[].data.creator.accountStatus` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.creator.authority` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.creator.authStatus` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.creator.avatarImgId` | number | 3 | 0 | 0 | AUTH_ANON | `109951163942312050` |
+| `datas[].data.creator.avatarImgIdStr` | string | 3 | 0 | 0 | AUTH_ANON | `109951163942312054` |
+| `datas[].data.creator.avatarUrl` | string | 3 | 0 | 0 | AUTH_ANON | `http://p4.music.126.net/35PXSTHTHrr8kB0g` |
+| `datas[].data.creator.backgroundImgId` | number | 3 | 0 | 0 | AUTH_ANON | `109951163311468640` |
+| `datas[].data.creator.backgroundImgIdStr` | string | 3 | 0 | 0 | AUTH_ANON | `109951163311468647` |
+| `datas[].data.creator.backgroundUrl` | string | 3 | 0 | 0 | AUTH_ANON | `http://p3.music.126.net/2H7rKG3MgjASUQVc` |
+| `datas[].data.creator.birthday` | number | 3 | 0 | 0 | AUTH_ANON | `937843200000` |
+| `datas[].data.creator.city` | number | 3 | 0 | 0 | AUTH_ANON | `500101` |
+| `datas[].data.creator.defaultAvatar` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `datas[].data.creator.description` | string | 3 | 0 | 0 | AUTH_ANON | `` |
+| `datas[].data.creator.detailDescription` | string | 3 | 0 | 0 | AUTH_ANON | `` |
+| `datas[].data.creator.djStatus` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.creator.experts` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `datas[].data.creator.experts.1` | string | 2 | 0 | 0 | AUTH_ANON | `音乐视频达人` |
+| `datas[].data.creator.experts.2` | string | 1 | 0 | 0 | AUTH_ANON | `音乐|生活图文达人` |
+| `datas[].data.creator.expertTags` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `datas[].data.creator.followed` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `datas[].data.creator.gender` | number | 3 | 0 | 0 | AUTH_ANON | `2` |
+| `datas[].data.creator.mutual` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `datas[].data.creator.nickname` | string | 3 | 0 | 0 | AUTH_ANON | `Baby俊崽崽` |
+| `datas[].data.creator.province` | number | 3 | 0 | 0 | AUTH_ANON | `500000` |
+| `datas[].data.creator.remarkName` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `datas[].data.creator.signature` | string | 3 | 0 | 0 | AUTH_ANON | `B站/微博：Baby俊崽崽` |
+| `datas[].data.creator.userId` | number | 3 | 0 | 0 | AUTH_ANON | `1464604408` |
+| `datas[].data.creator.userType` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.creator.vipType` | number | 3 | 0 | 0 | AUTH_ANON | `11` |
+| `datas[].data.description` | union<null|string> | 3 | 1 | 0 | AUTH_ANON | `【王俊凯】你的目光所及，会越来越美` |
+| `datas[].data.durationms` | number | 3 | 0 | 0 | AUTH_ANON | `112000` |
+| `datas[].data.hasRelatedGameAd` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `datas[].data.height` | number | 3 | 0 | 0 | AUTH_ANON | `720` |
+| `datas[].data.markTypes` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `datas[].data.playTime` | number | 3 | 0 | 0 | AUTH_ANON | `187829` |
+| `datas[].data.praised` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `datas[].data.praisedCount` | number | 3 | 0 | 0 | AUTH_ANON | `820` |
+| `datas[].data.previewDurationms` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.previewUrl` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `datas[].data.relatedInfo` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `datas[].data.relateSong` | array<unknown> | 2 | 0 | 2 | AUTH_ANON | `undefined` |
+| `datas[].data.relateSong[].a` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `datas[].data.relateSong[].al.id` | number | 1 | 0 | 0 | AUTH_ANON | `34808177` |
+| `datas[].data.relateSong[].al.name` | string | 1 | 0 | 0 | AUTH_ANON | `爱，教会我们的事` |
+| `datas[].data.relateSong[].al.pic` | number | 1 | 0 | 0 | AUTH_ANON | `109951167056418000` |
+| `datas[].data.relateSong[].al.pic_str` | string | 1 | 0 | 0 | AUTH_ANON | `109951167056417996` |
+| `datas[].data.relateSong[].al.picUrl` | string | 1 | 0 | 0 | AUTH_ANON | `http://p4.music.126.net/g-s49MkIbrY2tilB` |
+| `datas[].data.relateSong[].al.tns` | array<unknown> | 1 | 0 | 1 | AUTH_ANON | `undefined` |
+| `datas[].data.relateSong[].alia[]` | string | 1 | 0 | 0 | AUTH_ANON | `电视剧《遗憾拼图》片尾曲` |
+| `datas[].data.relateSong[].ar[].alias` | array<unknown> | 1 | 0 | 1 | AUTH_ANON | `undefined` |
+| `datas[].data.relateSong[].ar[].id` | number | 1 | 0 | 0 | AUTH_ANON | `980025` |
+| `datas[].data.relateSong[].ar[].name` | string | 1 | 0 | 0 | AUTH_ANON | `周兴哲` |
+| `datas[].data.relateSong[].ar[].tns` | array<unknown> | 1 | 0 | 1 | AUTH_ANON | `undefined` |
+| `datas[].data.relateSong[].cd` | string | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `datas[].data.relateSong[].cf` | string | 1 | 0 | 0 | AUTH_ANON | `` |
+| `datas[].data.relateSong[].copyright` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `datas[].data.relateSong[].cp` | number | 1 | 0 | 0 | AUTH_ANON | `7001` |
+| `datas[].data.relateSong[].crbt` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `datas[].data.relateSong[].djId` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].dt` | number | 1 | 0 | 0 | AUTH_ANON | `287306` |
+| `datas[].data.relateSong[].fee` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `datas[].data.relateSong[].ftype` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].h.br` | number | 1 | 0 | 0 | AUTH_ANON | `320000` |
+| `datas[].data.relateSong[].h.fid` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].h.size` | number | 1 | 0 | 0 | AUTH_ANON | `11494966` |
+| `datas[].data.relateSong[].h.vd` | number | 1 | 0 | 0 | AUTH_ANON | `-57977` |
+| `datas[].data.relateSong[].id` | number | 1 | 0 | 0 | AUTH_ANON | `424264505` |
+| `datas[].data.relateSong[].l.br` | number | 1 | 0 | 0 | AUTH_ANON | `128000` |
+| `datas[].data.relateSong[].l.fid` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].l.size` | number | 1 | 0 | 0 | AUTH_ANON | `4598013` |
+| `datas[].data.relateSong[].l.vd` | number | 1 | 0 | 0 | AUTH_ANON | `-53643` |
+| `datas[].data.relateSong[].m.br` | number | 1 | 0 | 0 | AUTH_ANON | `192000` |
+| `datas[].data.relateSong[].m.fid` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].m.size` | number | 1 | 0 | 0 | AUTH_ANON | `6896997` |
+| `datas[].data.relateSong[].m.vd` | number | 1 | 0 | 0 | AUTH_ANON | `-55369` |
+| `datas[].data.relateSong[].mst` | number | 1 | 0 | 0 | AUTH_ANON | `9` |
+| `datas[].data.relateSong[].mv` | number | 1 | 0 | 0 | AUTH_ANON | `5359061` |
+| `datas[].data.relateSong[].name` | string | 1 | 0 | 0 | AUTH_ANON | `你，好不好？` |
+| `datas[].data.relateSong[].no` | number | 1 | 0 | 0 | AUTH_ANON | `4` |
+| `datas[].data.relateSong[].pop` | number | 1 | 0 | 0 | AUTH_ANON | `100` |
+| `datas[].data.relateSong[].privilege.cp` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `datas[].data.relateSong[].privilege.cs` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `datas[].data.relateSong[].privilege.dl` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].privilege.fee` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `datas[].data.relateSong[].privilege.fl` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].privilege.flag` | number | 1 | 0 | 0 | AUTH_ANON | `1541380` |
+| `datas[].data.relateSong[].privilege.id` | number | 1 | 0 | 0 | AUTH_ANON | `424264505` |
+| `datas[].data.relateSong[].privilege.maxbr` | number | 1 | 0 | 0 | AUTH_ANON | `999000` |
+| `datas[].data.relateSong[].privilege.payed` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].privilege.pl` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].privilege.preSell` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `datas[].data.relateSong[].privilege.sp` | number | 1 | 0 | 0 | AUTH_ANON | `7` |
+| `datas[].data.relateSong[].privilege.st` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].privilege.subp` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `datas[].data.relateSong[].privilege.toast` | boolean | 1 | 0 | 0 | AUTH_ANON | `false` |
+| `datas[].data.relateSong[].pst` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].publishTime` | number | 1 | 0 | 0 | AUTH_ANON | `1470326400000` |
+| `datas[].data.relateSong[].rt` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `datas[].data.relateSong[].rtUrl` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `datas[].data.relateSong[].rtUrls` | array<unknown> | 1 | 0 | 1 | AUTH_ANON | `undefined` |
+| `datas[].data.relateSong[].rtype` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].rurl` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `datas[].data.relateSong[].s_id` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].st` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].t` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `datas[].data.relateSong[].v` | number | 1 | 0 | 0 | AUTH_ANON | `137` |
+| `datas[].data.resolutions[].resolution` | number | 9 | 0 | 0 | AUTH_ANON | `240` |
+| `datas[].data.resolutions[].size` | number | 9 | 0 | 0 | AUTH_ANON | `6437731` |
+| `datas[].data.scm` | string | 3 | 0 | 0 | AUTH_ANON | `1.music-video-timeline.video_timeline.vi` |
+| `datas[].data.shareCount` | number | 3 | 0 | 0 | AUTH_ANON | `59` |
+| `datas[].data.subscribed` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `datas[].data.threadId` | string | 3 | 0 | 0 | AUTH_ANON | `R_VI_62_F55C7BE57381AE01C7AF02920787900D` |
+| `datas[].data.title` | string | 3 | 0 | 0 | AUTH_ANON | `都会好的~` |
+| `datas[].data.urlInfo.id` | string | 3 | 0 | 0 | AUTH_ANON | `F55C7BE57381AE01C7AF02920787900D` |
+| `datas[].data.urlInfo.needPay` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `datas[].data.urlInfo.payInfo` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `datas[].data.urlInfo.r` | number | 3 | 0 | 0 | AUTH_ANON | `480` |
+| `datas[].data.urlInfo.size` | number | 3 | 0 | 0 | AUTH_ANON | `10368735` |
+| `datas[].data.urlInfo.url` | string | 3 | 0 | 0 | AUTH_ANON | `http://vodkgeyttp9.vod.126.net/cloudmusi` |
+| `datas[].data.urlInfo.validityTime` | number | 3 | 0 | 0 | AUTH_ANON | `1200` |
+| `datas[].data.vid` | string | 3 | 0 | 0 | AUTH_ANON | `F55C7BE57381AE01C7AF02920787900D` |
+| `datas[].data.videoGroup[].alg` | null | 9 | 9 | 0 | AUTH_ANON |  |
+| `datas[].data.videoGroup[].id` | number | 9 | 0 | 0 | AUTH_ANON | `11137` |
+| `datas[].data.videoGroup[].name` | string | 9 | 0 | 0 | AUTH_ANON | `TFBOYS` |
+| `datas[].data.videoUserLiveInfo` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `datas[].data.width` | number | 3 | 0 | 0 | AUTH_ANON | `1280` |
+| `datas[].displayed` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `datas[].extAlg` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `datas[].type` | number | 3 | 0 | 0 | AUTH_ANON | `1` |
+| `hasmore` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `msg` | string | 1 | 0 | 0 | AUTH_ANON | `发现了更多新内容` |

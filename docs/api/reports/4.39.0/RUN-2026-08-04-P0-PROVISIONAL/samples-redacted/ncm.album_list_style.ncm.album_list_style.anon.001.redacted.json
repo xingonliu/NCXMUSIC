@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "caseId": "ncm.album_list_style.anon.001",
+    "apiAuditId": "ncm.album_list_style",
+    "auth": "AUTH_ANON",
+    "params": {
+      "area": "Z_H",
+      "limit": 10,
+      "offset": 0
+    },
+    "startedAt": "2026-08-05T02:43:06.217Z",
+    "endedAt": "2026-08-05T02:43:06.273Z",
+    "durationMs": 56,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "hasNextPage": true,
+    "albumProducts": [
+      {
+        "albumId": 387975057,
+        "albumName": "光与盐 (下)",
+        "artistName": "周峻炜",
+        "artistNames": [
+          "周峻炜"
+        ],
+        "price": 20,
+        "customPriceConfig": null,
+        "coverUrl": "https://p4.music.126.net/5uRvQ8NIMDgIEygBKnZBEQ==/109951173596931236.jpg#hash=84ac936b6e49",
+        "sales": 4198,
+        "type": 0,
+        "bought": false,
+        "saleDisplayType": 0
+      },
+      {
+        "albumId": 387017486,
+        "albumName": "小小的我",
+        "artistName": "罗云熙",
+        "artistNames": [
+          "罗云熙"
+        ],
+        "price": 40,
+        "customPriceConfig": null,
+        "coverUrl": "https://p4.music.126.net/RvS-fcJ3Kq5IlZ0gtPXyvA==/109951173558628333.jpg#hash=dc2f43ad9d3f",
+        "sales": 4650,
+        "type": 0,
+        "bought": false,
+        "saleDisplayType": 0
+      },
+      {
+        "albumId": 387169747,
+        "albumName": "小海子村儿",
+        "artistName": "窦唯",
+        "artistNames": [
+          "窦唯",
+          "朝简"
+        ],
+        "price": 100,
+        "customPriceConfig": null,
+        "coverUrl": "https://p4.music.126.net/ZGespswWqIlDQGrjvSr3Yg==/109951173563447584.jpg#hash=9ecdc021be66",
+        "sales": 101,
+        "type": 1,
+        "bought": false,
+        "saleDisplayType": 0
+      },
+      {
+        "albumId": 385703181,
+        "albumName": "Falling 4 U",
+        "artistName": "Mr.岑",
+        "artistNames": [
+          "Mr.岑"
+        ],
+        "price": 20,
+        "customPriceConfig": null,
+        "coverUrl": "https://p4.music.126.net/eRu-JVcSoQcqWGR7F3rdug==/109951173519884753.jpg#hash=4aefe65c12d5",
+        "sales": 6846,
+        "type": 0,
+        "bought": false,
+        "saleDisplayType": 0
+      },
+      {
+        "albumId": 385696494,
+        "albumName": "四重奏",
+        "artistName": "洛天依Official",
+        "artistNames": [
+          "洛天依Official"
+        ],
+        "price": 20,
+        "customPriceConfig": null,
+        "coverUrl": "https://p4.music.126.net/RJgpOGa6inOecPXRSQi-lA==/109951173519594458.jpg#hash=872fe1f4ce36",
+        "sales": 19998,
+        "type": 0,
+        "bought": false,
+        "saleDisplayType": 0
+      },
+      {
+        "albumId": 381340029,
+        "albumName": "论贵粟疏",
+        "artistName": "窦唯",
+        "artistNames": [
+          "窦唯",
+          "朝简"
+        ],
+        "price": 100,
+        "customPriceConfig": null,
+        "coverUrl": "https://p3.music.126.net/cZ10UkfzmPh6zKWMv8O7sA==/109951173372294917.jpg#hash=1b5f2a3c80f1",
+        "sales": 79,
+        "type": 0,
+        "bought": false,
+        "saleDisplayType": 0
+      },
+      {
+        "albumId": 376288696,
+        "albumName": "STOLEN Dance Tunnel 26' Long Mix (live)",
+        "artistName": "STOLEN秘密行动",
+        "artistNames": [
+          "STOLEN秘密行动"
+        ],
+        "price": 8.8,
+        "customPriceConfig": null,
+        "coverUrl": "https://p3.music.126.net/mIDFRTqJifwiV-CvBDK_hQ==/109951173218104146.jpg#hash=c22d2e96c093",
+        "sales": 1247,
+        "type": 0,
+        "bought": false,
+        "saleDisplayType": 0
+      },
+      {
+        "albumId": 372005603,
+        "albumName": "报任安书",
+        "artistName": "窦唯",
+        "artistNames": [
+          "窦唯",
+          "朝简"
+        ],
+        "price": 100,
+        "customPriceConfig": null,
+        "coverUrl": "https://p3.music.126.net/7evYXtrQUzjHZx0sho3LQw==/109951173093138336.jpg#hash=0a1eb303c94a",
+        "sales": 124,
+        "type": 0,
+        "bought": false,
+        "saleDisplayType": 0
+      },
+      {
+        "albumId": 370978217,
+        "albumName": "Bar xatteƣem, Bar ⱪayƣem 一切欢乐，一切悲伤（All the Joys, All the Pains）",
+        "artistName": "马木尔Mamer",
+        "artistNames": [
+          "马木尔Mamer"
+        ],
+        "price": 20,
+        "customPriceConfig": null,
+        "coverUrl": "https://p3.music.126.net/Z03agu23BToQqoSCGFwvyQ==/109951173048280803.jpg#hash=3532bb42d276",
+        "sales": 777,
+        "type": 0,
+        "bought": false,
+        "saleDisplayType": 0
+      },
+      {
+        "albumId": 368864298,
+        "albumName": "上岸II·朋友",
+        "artistName": "爽子",
+        "artistNames": [
+          "爽子"
+        ],
+        "price": 36,
+        "customPriceConfig": null,
+        "coverUrl": "https://p3.music.126.net/nprWLF37Abc9jSOZjZWH7Q==/109951172977658095.jpg#hash=297e099d5aee",
+        "sales": 1809,
+        "type": 0,
+        "bought": false,
+        "saleDisplayType": 0
+      }
+    ]
+  },
+  "error": null
+}

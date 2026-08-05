@@ -42,15 +42,2090 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.comment_album.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 104,
+        "error": null,
+        "sampleHash": "b8c1c20647cd069a85e513bfecdc11cc9ea53b4b7f24e0f885e487671e2f4837",
+        "rawFile": "ncm.comment_album.ncm.comment_album.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_album.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 70,
+        "error": null,
+        "sampleHash": "d097b168a36149f39d18ea1e7a8754d69dbe05e58b04071060b76a53c66791c1",
+        "rawFile": "ncm.comment_album.ncm.comment_album.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_album.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792946862865637379",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=1b4bf6548b08",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "c76b235d78867960fc98aadb0fcc8aa7cc317abe7c33f2a0775767c95f67a008",
+        "rawFile": "ncm.comment_album.ncm.comment_album.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_album.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 436,
+        "error": null,
+        "sampleHash": "26713235210d006fa64785cff38605bdd7a0c0c8fdf0cfc3465a7f8c2b8fcbb9",
+        "rawFile": "ncm.comment_album.ncm.comment_album.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "cnum",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "commentBanner",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.id0.none.neg.001",
+      "lastSeenCase": "ncm.comment_album.id0.none.neg.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "comments[].aiCommentLabel",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied",
+      "rawType": "array<unknown>",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 6,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "comments[].commentId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "9563156604"
+    },
+    {
+      "jsonPath": "comments[].commentLocationType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].content",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "处听时还在高中"
+    },
+    {
+      "jsonPath": "comments[].contentResource",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].contentStickerExt",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].expressionUrl",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].favorited",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].grade",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].ipLocation.ip",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].ipLocation.location",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "广东"
+    },
+    {
+      "jsonPath": "comments[].ipLocation.userId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "1539358978"
+    },
+    {
+      "jsonPath": "comments[].liked",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].likedCount",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].medal",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].needDisplayTime",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "comments[].owner",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].parentCommentId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].pendantData",
+      "rawType": "null",
+      "presence": 2,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].pendantData.id",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "7018571"
+    },
+    {
+      "jsonPath": "comments[].pendantData.imageUrl",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "http://p1.music.126.net/acUvvq1SQhoNbn2LSQOWWw==/10995117331"
+    },
+    {
+      "jsonPath": "comments[].repliedMark",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].richContent",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "处听时还在高中"
+    },
+    {
+      "jsonPath": "comments[].showFloorComment",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].status",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].time",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "1782203051635"
+    },
+    {
+      "jsonPath": "comments[].timeStr",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "06-23"
+    },
+    {
+      "jsonPath": "comments[].user.anonym",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].user.authStatus",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "comments[].user.avatarDetail",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.avatarDetail.identityIconUrl",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4874132307"
+    },
+    {
+      "jsonPath": "comments[].user.avatarDetail.identityLevel",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "comments[].user.avatarDetail.userType",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "comments[].user.avatarUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "http://p3.music.126.net/bZh5lMc1QEM57GUmvzZp0w==/10995116992"
+    },
+    {
+      "jsonPath": "comments[].user.commonIdentity",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.experts",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.expertTags",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.followed",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].user.highlight",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].user.liveInfo",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.locationInfo",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.mutual",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].user.nickname",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "Bace__"
+    },
+    {
+      "jsonPath": "comments[].user.remarkName",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.socialUserId",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.target",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.thanked",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.userId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "1539358978"
+    },
+    {
+      "jsonPath": "comments[].user.userType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.associator.iconUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/3258218719"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.associator.rights",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.associator.vipCode",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "100"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.extInfo",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.memberLogo",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.musicPackage.iconUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/2189287434"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.musicPackage.rights",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.musicPackage.vipCode",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "220"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.redplus",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.redVipAnnualCount",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.redVipLevel",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.relationType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].user.vipType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "11"
+    },
+    {
+      "jsonPath": "comments[].userBizLevels",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.id0.none.neg.001",
+      "lastSeenCase": "ncm.comment_album.id0.none.neg.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "hotComments[].aiCommentLabel",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].beReplied",
+      "rawType": "array<unknown>",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 6,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "hotComments[].commentId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "276121683"
+    },
+    {
+      "jsonPath": "hotComments[].commentLocationType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].content",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "一次访谈，主持人问邓紫棋:“西方有泰勒，蕾哈娜等歌手，并且西方市场趋于饱和，至今只有李小龙真正进入过欧美市场，面对这种情"
+    },
+    {
+      "jsonPath": "hotComments[].contentResource",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].contentStickerExt",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].decoration",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].expressionUrl",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].favorited",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].grade",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].ipLocation.ip",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].ipLocation.location",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "hotComments[].ipLocation.userId",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].liked",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].likedCount",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "1608"
+    },
+    {
+      "jsonPath": "hotComments[].medal",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].needDisplayTime",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "hotComments[].owner",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].parentCommentId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].pendantData",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].repliedMark",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].richContent",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "一次访谈，主持人问邓紫棋:“西方有泰勒，蕾哈娜等歌手，并且西方市场趋于饱和，至今只有李小龙真正进入过欧美市场，面对这种情"
+    },
+    {
+      "jsonPath": "hotComments[].showFloorComment",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].status",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].time",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "1483070806865"
+    },
+    {
+      "jsonPath": "hotComments[].timeStr",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "2016-12-30"
+    },
+    {
+      "jsonPath": "hotComments[].user.anonym",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].user.authStatus",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].user.avatarDetail",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.avatarDetail.identityIconUrl",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340168"
+    },
+    {
+      "jsonPath": "hotComments[].user.avatarDetail.identityLevel",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "3"
+    },
+    {
+      "jsonPath": "hotComments[].user.avatarDetail.userType",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "207"
+    },
+    {
+      "jsonPath": "hotComments[].user.avatarUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "http://p4.music.126.net/ra2xMcmVyzJ9KDPasCUdlQ==/10995116995"
+    },
+    {
+      "jsonPath": "hotComments[].user.commonIdentity",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.experts",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.experts.1",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "音乐视频达人"
+    },
+    {
+      "jsonPath": "hotComments[].user.experts.2",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "音乐图文达人"
+    },
+    {
+      "jsonPath": "hotComments[].user.expertTags",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.followed",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].user.highlight",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].user.liveInfo",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.locationInfo",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.mutual",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].user.nickname",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "Gloria楽"
+    },
+    {
+      "jsonPath": "hotComments[].user.remarkName",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.socialUserId",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.target",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.thanked",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.userId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "76978040"
+    },
+    {
+      "jsonPath": "hotComments[].user.userType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "207"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.associator",
+      "rawType": "null",
+      "presence": 2,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.associator.iconUrl",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/3258218719"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.associator.rights",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.associator.vipCode",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "100"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.extInfo",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.memberLogo",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.musicPackage",
+      "rawType": "null",
+      "presence": 2,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.musicPackage.iconUrl",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/2189287434"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.musicPackage.rights",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.musicPackage.vipCode",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "220"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.redplus",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.redVipAnnualCount",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "-1"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.redVipLevel",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "6"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.relationType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipType",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "11"
+    },
+    {
+      "jsonPath": "hotComments[].userBizLevels",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "isMusician",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "more",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "moreHot",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "topComments",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "total",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "811"
+    },
+    {
+      "jsonPath": "userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_album.anon.001",
+      "lastSeenCase": "ncm.comment_album.none.001",
+      "example": "17788444306"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.comment_album.anon.001",
+      "sampleHash": "b8c1c20647cd069a85e513bfecdc11cc9ea53b4b7f24e0f885e487671e2f4837",
+      "rawFile": "ncm.comment_album.ncm.comment_album.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_album.id0.none.neg.001",
+      "sampleHash": "d097b168a36149f39d18ea1e7a8754d69dbe05e58b04071060b76a53c66791c1",
+      "rawFile": "ncm.comment_album.ncm.comment_album.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_album.inv.001",
+      "sampleHash": "c76b235d78867960fc98aadb0fcc8aa7cc317abe7c33f2a0775767c95f67a008",
+      "rawFile": "ncm.comment_album.ncm.comment_album.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_album.none.001",
+      "sampleHash": "26713235210d006fa64785cff38605bdd7a0c0c8fdf0cfc3465a7f8c2b8fcbb9",
+      "rawFile": "ncm.comment_album.ncm.comment_album.none.001.raw.json"
+    }
+  ]
 }

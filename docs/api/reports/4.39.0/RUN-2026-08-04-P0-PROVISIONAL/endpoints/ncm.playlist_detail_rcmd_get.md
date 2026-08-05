@@ -89,3 +89,32 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 缺失（B-002，写操作已预授权但账号未到位））
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.playlist_detail_rcmd_get.anon.001 | AUTH_ANON | - | 200 | 147 |  |
+| ncm.playlist_detail_rcmd_get.id0.none.neg.001 | AUTH_NONE | - | 200 | 79 |  |
+| ncm.playlist_detail_rcmd_get.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 135 |  |
+| ncm.playlist_detail_rcmd_get.none.001 | AUTH_NONE | - | 200 | 127 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `200` |
+| `data` | null | 1 | 1 | 0 | AUTH_NONE |  |
+| `data.jumpUrl` | string | 3 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `orpheus://playlistCollection` |
+| `data.rcmdTitle` | string | 3 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `喜欢这个歌单的用户也听了` |
+| `data.recPlaylist[].alg` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `alg_similar_tag` |
+| `data.recPlaylist[].playlist.action` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `orpheus://playlist/134839472?type=0&uiPl` |
+| `data.recPlaylist[].playlist.coverImgId` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `109951167307403870` |
+| `data.recPlaylist[].playlist.coverImgUrl` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `http://p1.music.126.net/8u788_Kz5Hndj6bo` |
+| `data.recPlaylist[].playlist.id` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `134839472` |
+| `data.recPlaylist[].playlist.name` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `车载奢靡享受G/Deep House深度灵魂慢摇` |
+| `data.recPlaylist[].playlist.playCount` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `51285188` |
+| `data.recPlaylist[].playlist.specialType` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `doesNotCache` | boolean | 1 | 0 | 0 | AUTH_NONE | `true` |
+| `message` | string | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `success` |

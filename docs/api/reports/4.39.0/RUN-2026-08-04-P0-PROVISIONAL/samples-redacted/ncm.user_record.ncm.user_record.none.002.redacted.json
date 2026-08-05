@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "caseId": "ncm.user_record.none.002",
+    "apiAuditId": "ncm.user_record",
+    "auth": "AUTH_NONE",
+    "params": {
+      "uid": "281382",
+      "type": "0"
+    },
+    "startedAt": "2026-08-05T02:59:17.072Z",
+    "endedAt": "2026-08-05T02:59:17.136Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 400,
+    "body": {
+      "code": -2,
+      "msg": "无权限访问"
+    },
+    "cookieCount": 0
+  }
+}

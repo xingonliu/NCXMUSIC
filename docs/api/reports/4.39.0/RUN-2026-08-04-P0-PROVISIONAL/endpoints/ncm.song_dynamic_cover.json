@@ -31,15 +31,140 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.song_dynamic_cover.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 107,
+        "error": null,
+        "sampleHash": "f0f3403735932f97bda5066f2bf8c03e2d735ecb7e6bf8bb56043364ee697fcb",
+        "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_dynamic_cover.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "5a1121b71f163611134f581adbfee6d7c98bd00b5d9b566605db0a991da975e9",
+        "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_dynamic_cover.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "e9cc0a56fa2ac0840d991bf2b575c5f2c49f6a14fff605da1aab07521ec08845",
+        "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_dynamic_cover.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "0ec26f981535aa8203875380de50407483fb66e39ee5f1d76a44cceb1c726b70",
+        "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_dynamic_cover.anon.001",
+      "lastSeenCase": "ncm.song_dynamic_cover.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_dynamic_cover.anon.001",
+      "lastSeenCase": "ncm.song_dynamic_cover.anon.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "未登录层 301 系统错误（接口需会话）；AUTH_ANON（游客 cookie）可满足（200）；AUTH_USER 层待补",
+  "evidence": [
+    {
+      "caseId": "ncm.song_dynamic_cover.anon.001",
+      "sampleHash": "f0f3403735932f97bda5066f2bf8c03e2d735ecb7e6bf8bb56043364ee697fcb",
+      "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_dynamic_cover.id0.none.neg.001",
+      "sampleHash": "5a1121b71f163611134f581adbfee6d7c98bd00b5d9b566605db0a991da975e9",
+      "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_dynamic_cover.inv.001",
+      "sampleHash": "e9cc0a56fa2ac0840d991bf2b575c5f2c49f6a14fff605da1aab07521ec08845",
+      "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_dynamic_cover.none.001",
+      "sampleHash": "0ec26f981535aa8203875380de50407483fb66e39ee5f1d76a44cceb1c726b70",
+      "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.none.001.raw.json"
+    }
+  ]
 }

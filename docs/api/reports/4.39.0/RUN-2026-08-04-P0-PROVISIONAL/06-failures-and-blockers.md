@@ -44,12 +44,15 @@ runId：`RUN-2026-08-04-P0-PROVISIONAL`
 
 ## 4. Phase 1 运行发现（RUN-2026-08-04-P0-PROVISIONAL）
 
-- **register_xeapikey / XEAPI-001**（契约冲突）：服务器解密负载 {publicKey,version,nextUpdateTime} 无 sk，模块 100% 抛错；sk=xeapiSignKey 静态常量回退引导实测可用（inferred）（register_xeapikey.none.min.00{1,2,3}）
-- **register_anonimous**（风控）：多次注册触发上游风控 code 400（无消息），退避 45s 仍失败；冷却后恢复（register_anonimous.none.*）
-- **login_status / user_account**（无效 Cookie）：AUTH_INVALID（截断/过期）与 AUTH_NONE 响应完全一致：{"code":200,"account":null,"profile":null}，无失效错误，静默回退未登录（login_status.inv.* / user_account.inv.*）
-- **logout**（未登录）：无会话也返回 code 200（不报错）（logout.none.neg.001）
-- **user_detail**（缺失必填）：缺 uid → {"code":400,"message":"参数错误"}（user_detail.none.neg.missing-uid.001）
-- **login_qr_key**（轮换）：unikey 每次调用轮换（UUID）；unikey 已入脱敏名单（login_qr_key.none.min.00{1,2}）
+- **登录门槛**（301 系统错误）：artist_new_mv/artist_new_song/artist_new_song_mv_list_v2/artist_new_song_playall/song_dynamic_cover/user_followeds/simi_user/video_category_list/video_timeline_all/video_timeline_recommend 在未登录下发 301 系统错误（需会话；video_* 的 ANON 层 200，说明游客 cookie 可满足）（raw 样本 301 各 case）
+- **user_record**（权限）：播放记录接口对公开 uid 也返回 code -2 无权限访问（未登录）（user_record.none.001）
+- **playlist_tracks**（模块缺陷）：旧版歌单歌曲接口模块本地崩溃（query.s 未定义时 split 报错），4/4 可复现 failed_stable（playlist_tracks.*）
+- **风控验证挑战**（无效 Cookie 层）：AUTH_INVALID 层在 comment_*/user_playlist/user_record/artist_fans/artist_follow_count/song_red_count/search(1002/1014) 广泛触发 -462（verifyId 1007602）（raw 样本 *inv.* ERR-462）
+- **search type=1002/1014**（生产者阻断）：用户/视频搜索生产者在未登录层全部被 -462 阻断；userId 改由评论响应 user.userId 生产（100 条），videoId 仍缺（03-fixture-pool.json）
+- **评论夹具**（生产）：comment_music/comment_album 等响应生产 commentId=50 条（含 parentCommentId），comment_floor 可测；threadId 无生产者（03-fixture-pool.json）
+- **comment_floor**（依赖）：parentCommentId 取自评论响应（血缘记录），测试成功（comment_floor.none.001）
+- **song_url_ncmget**（本地工具）：无网络调用（本地返回），三种调用形态一致（song_url_ncmget.local.*）
+- **album/artist 列表**（非法枚举）：album_list type=bogus/area=XX 与 album_songsaleboard type=bogus → 404；artist_list type=99 静默容忍（*.bad.none.neg.001）
 
 ## 5. Phase 2 运行发现（RUN-2026-08-04-P0-PROVISIONAL）
 

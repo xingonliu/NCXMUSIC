@@ -840,7 +840,7 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "同上；多数 NONE/INVALID 样本被 -462 阻断",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
   "evidence": [
     {
       "caseId": "ncm.song_url.A.br128.inv.001",

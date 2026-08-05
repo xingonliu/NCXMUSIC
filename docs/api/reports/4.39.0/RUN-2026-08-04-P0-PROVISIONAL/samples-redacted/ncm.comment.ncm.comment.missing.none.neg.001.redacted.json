@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "caseId": "ncm.comment.missing.none.neg.001",
+    "apiAuditId": "ncm.comment",
+    "auth": "AUTH_NONE",
+    "params": {
+      "t": "1",
+      "type": "1"
+    },
+    "startedAt": "2026-08-05T02:42:47.663Z",
+    "endedAt": "2026-08-05T02:42:47.759Z",
+    "durationMs": 96,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "参数错误",
+    "debugInfo": null,
+    "data": null,
+    "failData": null,
+    "msg": "参数错误"
+  },
+  "error": null
+}

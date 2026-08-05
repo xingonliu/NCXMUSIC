@@ -92,7 +92,7 @@
 
 ## 16. Phase 4 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: 同上；多数 NONE/INVALID 样本被 -462 阻断）
+- 终态：**partial**（blocker: AUTH_USER 缺失（B-002，写操作已预授权但账号未到位））
 
 | caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |

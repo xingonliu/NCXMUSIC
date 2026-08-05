@@ -20,11 +20,17 @@ function idHash(id) {
 }
 
 function runPhaseReport(opts) {
-  const { phase, specPath, statusMap, findings, sectionNumbers, rawDir, poolPath, runId, reportDir, packageVersion, sessionDir, agentName, coverageExtra, manifestExtra } = opts
+  const { phase, specPath, extraSpecPaths, statusMap, findings, sectionNumbers, rawDir, poolPath, runId, reportDir, packageVersion, sessionDir, agentName, coverageExtra, manifestExtra } = opts
   const spec = JSON.parse(fs.readFileSync(specPath, 'utf8'))
+  const groups = [...spec.groups]
+  for (const p of extraSpecPaths || []) {
+    const extra = JSON.parse(fs.readFileSync(p, 'utf8'))
+    groups.push(...extra.groups)
+  }
+  const mergedSpec = { ...spec, groups }
   const byApi = loadRawByApi(rawDir)
-  const apiIds = spec.groups.map((g) => g.apiAuditId)
-  const caseIds = new Set(spec.groups.flatMap((g) => g.cases.map((c) => c.caseId)))
+  const apiIds = mergedSpec.groups.map((g) => g.apiAuditId)
+  const caseIds = new Set(mergedSpec.groups.flatMap((g) => g.cases.map((c) => c.caseId)))
   const endpointsDir = path.join(reportDir, 'endpoints')
   const samplesDir = path.join(reportDir, 'samples-redacted')
 
@@ -97,6 +103,7 @@ function runPhaseReport(opts) {
     const redactedFile = path.join(samplesDir, f.replace(/\.raw\.json$/, '.redacted.json'))
     fs.writeFileSync(redactedFile, JSON.stringify(redact(r), null, 2))
   }
+  const specCaseIds = caseIds
   const sampleManifest = allRawFiles.map((f) => {
     const full = path.join(rawDir, f)
     const r = JSON.parse(fs.readFileSync(full, 'utf8'))

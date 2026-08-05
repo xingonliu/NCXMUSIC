@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.album_list_style.bad.none.neg.001",
+    "apiAuditId": "ncm.album_list_style",
+    "auth": "AUTH_NONE",
+    "params": {
+      "area": "XX"
+    },
+    "startedAt": "2026-08-05T02:57:30.341Z",
+    "endedAt": "2026-08-05T02:57:30.396Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 404,
+    "body": {
+      "code": 404,
+      "message": "没有数据"
+    },
+    "cookieCount": 0
+  }
+}

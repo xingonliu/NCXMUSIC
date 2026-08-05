@@ -39,15 +39,138 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.user_follows.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 72,
+        "error": null,
+        "sampleHash": "0b0587a0a9d61e67accd81d0091b82b6147d522939f28e4f839b1a1e574f44c0",
+        "rawFile": "ncm.user_follows.ncm.user_follows.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.user_follows.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 71,
+        "error": null,
+        "sampleHash": "31d9b40191104bafedea7ad1c8b6dd7832d3a4b810c7ef63c41f9bf091f36bbc",
+        "rawFile": "ncm.user_follows.ncm.user_follows.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.user_follows.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 65,
+        "error": null,
+        "sampleHash": "afdeb0d3bb7f514c618ecfd8cfffe6f3b28bba68000799f0f9ed8be4442236fc",
+        "rawFile": "ncm.user_follows.ncm.user_follows.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.user_follows.uid0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 58,
+        "error": null,
+        "sampleHash": "054d61aa7027e65b2716d8bf2c529a37a444b7e6a64ad051f9a1d42c4a1a2b6e",
+        "rawFile": "ncm.user_follows.ncm.user_follows.uid0.none.neg.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.user_follows.anon.001",
+      "lastSeenCase": "ncm.user_follows.uid0.none.neg.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "follow",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.user_follows.anon.001",
+      "lastSeenCase": "ncm.user_follows.uid0.none.neg.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "more",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.user_follows.anon.001",
+      "lastSeenCase": "ncm.user_follows.uid0.none.neg.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "touchCount",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.user_follows.anon.001",
+      "lastSeenCase": "ncm.user_follows.uid0.none.neg.001",
+      "example": "0"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.user_follows.anon.001",
+      "sampleHash": "0b0587a0a9d61e67accd81d0091b82b6147d522939f28e4f839b1a1e574f44c0",
+      "rawFile": "ncm.user_follows.ncm.user_follows.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_follows.inv.001",
+      "sampleHash": "31d9b40191104bafedea7ad1c8b6dd7832d3a4b810c7ef63c41f9bf091f36bbc",
+      "rawFile": "ncm.user_follows.ncm.user_follows.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_follows.none.001",
+      "sampleHash": "afdeb0d3bb7f514c618ecfd8cfffe6f3b28bba68000799f0f9ed8be4442236fc",
+      "rawFile": "ncm.user_follows.ncm.user_follows.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_follows.uid0.none.neg.001",
+      "sampleHash": "054d61aa7027e65b2716d8bf2c529a37a444b7e6a64ad051f9a1d42c4a1a2b6e",
+      "rawFile": "ncm.user_follows.ncm.user_follows.uid0.none.neg.001.raw.json"
+    }
+  ]
 }

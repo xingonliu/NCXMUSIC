@@ -51,15 +51,438 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 5,
+    "cases": [
+      {
+        "caseId": "ncm.comment_new.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 139,
+        "error": null,
+        "sampleHash": "0265401c70e75706bb59bb99c800607e124a5582b287636f0d2d2879bb184f75",
+        "rawFile": "ncm.comment_new.ncm.comment_new.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_new.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 101,
+        "error": null,
+        "sampleHash": "bde6f4abe4598e75b0200a617b1e202e2f5f06facb51f2799537a2ed1640cfb6",
+        "rawFile": "ncm.comment_new.ncm.comment_new.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_new.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 124,
+        "error": null,
+        "sampleHash": "520e5f7fadcc5bf712cec62f569975f7e825ff5db08743fc03a801325ea0bf1c",
+        "rawFile": "ncm.comment_new.ncm.comment_new.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_new.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 86,
+        "error": null,
+        "sampleHash": "a2be5e55880199e23f4d1495cfdddf5e3450a0f1d5c26a13c07a3dbcd4194713",
+        "rawFile": "ncm.comment_new.ncm.comment_new.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_new.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 94,
+        "error": null,
+        "sampleHash": "feae1102a2af40c9fe8e8d1ae866e50110274193fe12b89f524027f71f69f8dc",
+        "rawFile": "ncm.comment_new.ncm.comment_new.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.bottomAction",
+      "rawType": "null",
+      "presence": 5,
+      "nulls": 5,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.comments",
+      "rawType": "array<unknown>",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 5,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.commentsTitle",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "全部评论"
+    },
+    {
+      "jsonPath": "data.currentComment",
+      "rawType": "null",
+      "presence": 5,
+      "nulls": 5,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.currentCommentTitle",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "当前评论"
+    },
+    {
+      "jsonPath": "data.cursor",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.expandCount",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "3"
+    },
+    {
+      "jsonPath": "data.hasMore",
+      "rawType": "boolean",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.likeAnimation.animationConfigMap.COMMENT_AREA",
+      "rawType": "array<unknown>",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 5,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.likeAnimation.animationConfigMap.EVENT_FEED",
+      "rawType": "array<unknown>",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 5,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.likeAnimation.animationConfigMap.INPUT",
+      "rawType": "array<unknown>",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 5,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.likeAnimation.animationConfigMap.MOMENT",
+      "rawType": "array<unknown>",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 5,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.likeAnimation.version",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "1785827058266"
+    },
+    {
+      "jsonPath": "data.lottery",
+      "rawType": "null",
+      "presence": 5,
+      "nulls": 5,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data.newReplyExpGroupName",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "c"
+    },
+    {
+      "jsonPath": "data.sortType",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "99"
+    },
+    {
+      "jsonPath": "data.sortTypeList[].sortType",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "99"
+    },
+    {
+      "jsonPath": "data.sortTypeList[].sortTypeName",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "按推荐排序"
+    },
+    {
+      "jsonPath": "data.sortTypeList[].target",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "order_by_alg"
+    },
+    {
+      "jsonPath": "data.style",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "DEFAULT"
+    },
+    {
+      "jsonPath": "data.totalCount",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.comment_new.anon.001",
+      "lastSeenCase": "ncm.comment_new.none.002",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.comment_new.anon.001",
+      "sampleHash": "0265401c70e75706bb59bb99c800607e124a5582b287636f0d2d2879bb184f75",
+      "rawFile": "ncm.comment_new.ncm.comment_new.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_new.id0.none.neg.001",
+      "sampleHash": "bde6f4abe4598e75b0200a617b1e202e2f5f06facb51f2799537a2ed1640cfb6",
+      "rawFile": "ncm.comment_new.ncm.comment_new.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_new.inv.001",
+      "sampleHash": "520e5f7fadcc5bf712cec62f569975f7e825ff5db08743fc03a801325ea0bf1c",
+      "rawFile": "ncm.comment_new.ncm.comment_new.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_new.none.001",
+      "sampleHash": "a2be5e55880199e23f4d1495cfdddf5e3450a0f1d5c26a13c07a3dbcd4194713",
+      "rawFile": "ncm.comment_new.ncm.comment_new.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_new.none.002",
+      "sampleHash": "feae1102a2af40c9fe8e8d1ae866e50110274193fe12b89f524027f71f69f8dc",
+      "rawFile": "ncm.comment_new.ncm.comment_new.none.002.raw.json"
+    }
+  ]
 }

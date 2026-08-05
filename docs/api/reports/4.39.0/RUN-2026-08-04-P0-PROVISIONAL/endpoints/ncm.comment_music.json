@@ -42,15 +42,2579 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 5,
+    "cases": [
+      {
+        "caseId": "ncm.comment_music.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 187,
+        "error": null,
+        "sampleHash": "0f1747eb0c7433321ef96ce775ffd411bf45e095dbbfe3a1655b9e35ca76bf85",
+        "rawFile": "ncm.comment_music.ncm.comment_music.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_music.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 71,
+        "error": null,
+        "sampleHash": "bb7e2c46d7bdfa21b5f587877c7d9d18f7a1402d2a83cd1bcdcfbbd2740cf862",
+        "rawFile": "ncm.comment_music.ncm.comment_music.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_music.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792946606249226242",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=1daf2d1d4ce7",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "f3f21e354bba99b2c04febd821d3989c4e7bf5dcc6b30ac1cf752c92d6f04193",
+        "rawFile": "ncm.comment_music.ncm.comment_music.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_music.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 145,
+        "error": null,
+        "sampleHash": "96acb5e970d9887ad325d7945e87af6fac548802f29fc11db25d81dd38c554cf",
+        "rawFile": "ncm.comment_music.ncm.comment_music.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_music.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 150,
+        "error": null,
+        "sampleHash": "9d2715fc2bd3e703ecb1ce5002e11f22c6f23d13888478679226aec2f08bed29",
+        "rawFile": "ncm.comment_music.ncm.comment_music.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "cnum",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "commentBanner",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.id0.none.neg.001",
+      "lastSeenCase": "ncm.comment_music.id0.none.neg.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "comments[].aiCommentLabel",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied",
+      "rawType": "array<unknown>",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 6,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].beRepliedCommentId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "7560109612"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].content",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "哈哈哈哈！初中谈到现在 今年是第八个年头了 明天终于可以娶到她了！"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].contentStickerExt",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].expressionUrl",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].ipLocation.ip",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].ipLocation.location",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "江苏"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].ipLocation.userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "4895625818"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].richContent",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "哈哈哈哈！初中谈到现在 今年是第八个年头了 明天终于可以娶到她了！"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].status",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.anonym",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.authStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.avatarDetail",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.avatarUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "http://p4.music.126.net/rZaX_BD_6x6Egrj4a9XsKA==/10995116680"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.commonIdentity",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.experts",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.expertTags",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.followed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.highlight",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.liveInfo",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.locationInfo",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.mutual",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.nickname",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "三之有七"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.remarkName",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.socialUserId",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.target",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.thanked",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "4895625818"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.userType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.vipRights",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].beReplied[].user.vipType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "11"
+    },
+    {
+      "jsonPath": "comments[].commentId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "9599666109"
+    },
+    {
+      "jsonPath": "comments[].commentLocationType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].content",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "幸福"
+    },
+    {
+      "jsonPath": "comments[].contentResource",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].contentStickerExt",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].expressionUrl",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].favorited",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].grade",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].ipLocation.ip",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].ipLocation.location",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "河南"
+    },
+    {
+      "jsonPath": "comments[].ipLocation.userId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "12647117182"
+    },
+    {
+      "jsonPath": "comments[].liked",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].likedCount",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].medal",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].needDisplayTime",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "comments[].owner",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].parentCommentId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "7560109612"
+    },
+    {
+      "jsonPath": "comments[].pendantData",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].pendantData.id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "6956572"
+    },
+    {
+      "jsonPath": "comments[].pendantData.imageUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "http://p1.music.126.net/P_5dD1KUaQYdFB2VQS1RlQ==/10995117245"
+    },
+    {
+      "jsonPath": "comments[].repliedMark",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].richContent",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "幸福"
+    },
+    {
+      "jsonPath": "comments[].showFloorComment",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].status",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].time",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "1785868028770"
+    },
+    {
+      "jsonPath": "comments[].timeStr",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "02:27"
+    },
+    {
+      "jsonPath": "comments[].user.anonym",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].user.authStatus",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].user.avatarDetail",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.avatarUrl",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "http://p4.music.126.net/V_dnNV9gsZtJef17z1roaw==/10995117369"
+    },
+    {
+      "jsonPath": "comments[].user.commonIdentity",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.experts",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.expertTags",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.followed",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].user.highlight",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].user.liveInfo",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.locationInfo",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.mutual",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "comments[].user.nickname",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "念念以萌为名"
+    },
+    {
+      "jsonPath": "comments[].user.remarkName",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.socialUserId",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.target",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.thanked",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.userId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "12647117182"
+    },
+    {
+      "jsonPath": "comments[].user.userType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.associator",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.associator.iconUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/3258218648"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.associator.rights",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.associator.vipCode",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "100"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.extInfo",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.memberLogo",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.musicPackage",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.musicPackage.iconUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/2189287434"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.musicPackage.rights",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.musicPackage.vipCode",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "220"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.redplus",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.redplus.iconUrl",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.001",
+      "example": "https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/3258230608"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.redplus.rights",
+      "rawType": "boolean",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.redplus.vipCode",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.001",
+      "example": "300"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.redVipAnnualCount",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "-1"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.redVipLevel",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].user.vipRights.relationType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].user.vipType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "comments[].userBizLevels",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.id0.none.neg.001",
+      "lastSeenCase": "ncm.comment_music.id0.none.neg.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "hotComments[].aiCommentLabel",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].beReplied",
+      "rawType": "array<unknown>",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 9,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "hotComments[].commentId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "276010092"
+    },
+    {
+      "jsonPath": "hotComments[].commentLocationType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].content",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "我不吸烟不喝酒，不泡酒吧夜店，没有不良嗜好。他们只能说我耍大牌，为这是不需要图片为证大家都会相信的事。——邓紫棋[爱心]"
+    },
+    {
+      "jsonPath": "hotComments[].contentResource",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].contentStickerExt",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].decoration",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].expressionUrl",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].favorited",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].grade",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].ipLocation.ip",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].ipLocation.location",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "hotComments[].ipLocation.userId",
+      "rawType": "union<null|number>",
+      "presence": 9,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "1815135547"
+    },
+    {
+      "jsonPath": "hotComments[].liked",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].likedCount",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "408342"
+    },
+    {
+      "jsonPath": "hotComments[].medal",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].needDisplayTime",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "hotComments[].owner",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].parentCommentId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].pendantData",
+      "rawType": "null",
+      "presence": 8,
+      "nulls": 8,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].pendantData.id",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.none.002",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "4209047"
+    },
+    {
+      "jsonPath": "hotComments[].pendantData.imageUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.none.002",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "http://p1.music.126.net/YxMDXdwDJUQBSQTmC2gi1Q==/10995117041"
+    },
+    {
+      "jsonPath": "hotComments[].repliedMark",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].richContent",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "我不吸烟不喝酒，不泡酒吧夜店，没有不良嗜好。他们只能说我耍大牌，为这是不需要图片为证大家都会相信的事。——邓紫棋[爱心]"
+    },
+    {
+      "jsonPath": "hotComments[].showFloorComment",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].status",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].time",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "1483027783245"
+    },
+    {
+      "jsonPath": "hotComments[].timeStr",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "2016-12-30"
+    },
+    {
+      "jsonPath": "hotComments[].user.anonym",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].user.authStatus",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].user.avatarDetail",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.avatarDetail.identityIconUrl",
+      "rawType": "string",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340168"
+    },
+    {
+      "jsonPath": "hotComments[].user.avatarDetail.identityLevel",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "3"
+    },
+    {
+      "jsonPath": "hotComments[].user.avatarDetail.userType",
+      "rawType": "number",
+      "presence": 5,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "207"
+    },
+    {
+      "jsonPath": "hotComments[].user.avatarUrl",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "http://p4.music.126.net/ra2xMcmVyzJ9KDPasCUdlQ==/10995116995"
+    },
+    {
+      "jsonPath": "hotComments[].user.commonIdentity",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.experts",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.experts.1",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.001",
+      "example": "音乐视频达人"
+    },
+    {
+      "jsonPath": "hotComments[].user.experts.2",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.001",
+      "example": "音乐图文达人"
+    },
+    {
+      "jsonPath": "hotComments[].user.expertTags",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.followed",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].user.highlight",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].user.liveInfo",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.locationInfo",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.mutual",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hotComments[].user.nickname",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "Gloria楽"
+    },
+    {
+      "jsonPath": "hotComments[].user.remarkName",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.socialUserId",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.target",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.thanked",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.userId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "76978040"
+    },
+    {
+      "jsonPath": "hotComments[].user.userType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "207"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.associator",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.associator.iconUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/3258218719"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.associator.rights",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.associator.vipCode",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "100"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.extInfo",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.memberLogo",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.musicPackage",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.musicPackage.iconUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/2189287434"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.musicPackage.rights",
+      "rawType": "boolean",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.musicPackage.vipCode",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "220"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.redplus",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.redVipAnnualCount",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "-1"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.redVipLevel",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "6"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipRights.relationType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "0"
+    },
+    {
+      "jsonPath": "hotComments[].user.vipType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "11"
+    },
+    {
+      "jsonPath": "hotComments[].userBizLevels",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "isMusician",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "more",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "moreHot",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "true"
+    },
+    {
+      "jsonPath": "topComments",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "total",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "157211"
+    },
+    {
+      "jsonPath": "userId",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_music.anon.001",
+      "lastSeenCase": "ncm.comment_music.none.002",
+      "example": "17788444306"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.comment_music.anon.001",
+      "sampleHash": "0f1747eb0c7433321ef96ce775ffd411bf45e095dbbfe3a1655b9e35ca76bf85",
+      "rawFile": "ncm.comment_music.ncm.comment_music.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_music.id0.none.neg.001",
+      "sampleHash": "bb7e2c46d7bdfa21b5f587877c7d9d18f7a1402d2a83cd1bcdcfbbd2740cf862",
+      "rawFile": "ncm.comment_music.ncm.comment_music.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_music.inv.001",
+      "sampleHash": "f3f21e354bba99b2c04febd821d3989c4e7bf5dcc6b30ac1cf752c92d6f04193",
+      "rawFile": "ncm.comment_music.ncm.comment_music.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_music.none.001",
+      "sampleHash": "96acb5e970d9887ad325d7945e87af6fac548802f29fc11db25d81dd38c554cf",
+      "rawFile": "ncm.comment_music.ncm.comment_music.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_music.none.002",
+      "sampleHash": "9d2715fc2bd3e703ecb1ce5002e11f22c6f23d13888478679226aec2f08bed29",
+      "rawFile": "ncm.comment_music.ncm.comment_music.none.002.raw.json"
+    }
+  ]
 }

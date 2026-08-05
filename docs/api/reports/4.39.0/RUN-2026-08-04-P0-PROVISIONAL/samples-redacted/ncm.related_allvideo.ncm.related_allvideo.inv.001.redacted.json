@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.related_allvideo.inv.001",
+    "apiAuditId": "ncm.related_allvideo",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "id": "449818741"
+    },
+    "startedAt": "2026-08-05T02:46:06.913Z",
+    "endedAt": "2026-08-05T02:46:06.976Z",
+    "durationMs": 63,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "message": "success",
+    "data": []
+  },
+  "error": null
+}

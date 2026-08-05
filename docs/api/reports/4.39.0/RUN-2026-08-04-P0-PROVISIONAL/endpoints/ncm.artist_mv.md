@@ -91,3 +91,44 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 缺失（B-002，写操作已预授权但账号未到位））
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.artist_mv.anon.001 | AUTH_ANON | - | 200 | 86 |  |
+| ncm.artist_mv.id0.none.neg.001 | AUTH_NONE | - | 200 | 84 |  |
+| ncm.artist_mv.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 72 |  |
+| ncm.artist_mv.none.001 | AUTH_NONE | - | 200 | 72 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `200` |
+| `hasMore` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `true` |
+| `mvs[].artist.albumSize` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `mvs[].artist.alias` | array<unknown> | 12 | 0 | 12 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `undefined` |
+| `mvs[].artist.briefDesc` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `mvs[].artist.id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `7763` |
+| `mvs[].artist.img1v1Id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `18686200114669624` |
+| `mvs[].artist.img1v1Id_str` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `18686200114669622` |
+| `mvs[].artist.img1v1Url` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `http://p3.music.126.net/VnZiScyynLG7atLI` |
+| `mvs[].artist.musicSize` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `mvs[].artist.name` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `G.E.M.邓紫棋` |
+| `mvs[].artist.picId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `mvs[].artist.picUrl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `mvs[].artist.topicPerson` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `mvs[].artist.trans` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `` |
+| `mvs[].artistName` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `G.E.M.邓紫棋` |
+| `mvs[].duration` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `14000` |
+| `mvs[].id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `34724956` |
+| `mvs[].imgurl` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `http://p3.music.126.net/jJrv-_D3U9VI_ZFR` |
+| `mvs[].imgurl16v9` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `http://p4.music.126.net/2SLY7ajwbrpJjzpN` |
+| `mvs[].name` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `G.E.M.邓紫棋为大家送来了2026马年祝福` |
+| `mvs[].playCount` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `125627` |
+| `mvs[].publishTime` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `2026-02-16` |
+| `mvs[].status` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `mvs[].subed` | boolean | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `false` |
+| `time` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `1663603208458` |

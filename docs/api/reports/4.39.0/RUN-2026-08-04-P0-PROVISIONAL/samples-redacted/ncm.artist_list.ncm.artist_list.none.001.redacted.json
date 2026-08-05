@@ -1,0 +1,223 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_list.none.001",
+    "apiAuditId": "ncm.artist_list",
+    "auth": "AUTH_NONE",
+    "params": {
+      "type": "1",
+      "area": "-1",
+      "initial": "-1",
+      "limit": 10,
+      "offset": 0
+    },
+    "startedAt": "2026-08-05T02:43:16.508Z",
+    "endedAt": "2026-08-05T02:43:16.569Z",
+    "durationMs": 61,
+    "attempts": 1
+  },
+  "body": {
+    "artists": [
+      {
+        "albumSize": 73,
+        "alias": [
+          "JJ Lin",
+          "Wayne Lim"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 3684,
+        "img1v1Id": 109951168529049970,
+        "img1v1Id_str": "109951168529049969",
+        "img1v1Url": "http://p3.music.126.net/r6W-zCnV-aduVn_PLZYuYg==/109951168529049969.jpg#hash=a58a46704c8b",
+        "musicSize": 598,
+        "name": "林俊杰",
+        "picId": 109951168529051970,
+        "picId_str": "109951168529051968",
+        "picUrl": "http://p4.music.126.net/78q0jUUJ0h08GxAs2G-tCA==/109951168529051968.jpg#hash=f656712525cf",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 97137413,
+        "albumSize": 26,
+        "alias": [
+          "Joker Xue",
+          "Jacky Xue"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 5781,
+        "img1v1Id": 109951172414278510,
+        "img1v1Id_str": "109951172414278510",
+        "img1v1Url": "http://p3.music.126.net/PLrMsE0bTG2p1lL6QfKC9g==/109951172414278510.jpg#hash=3442b09b0870",
+        "musicSize": 310,
+        "name": "薛之谦",
+        "picId": 109951172414270320,
+        "picId_str": "109951172414270313",
+        "picUrl": "http://p3.music.126.net/Z2x6knGRr7eRrZeOlgCngA==/109951172414270313.jpg#hash=e2e85c08d755",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "albumSize": 133,
+        "alias": [
+          "Eason Chan"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 2116,
+        "img1v1Id": 109951173289562420,
+        "img1v1Id_str": "109951173289562420",
+        "img1v1Url": "http://p3.music.126.net/jj0EasWfUZpf1LW2SFeN-A==/109951173289562420.jpg#hash=0133bad05935",
+        "musicSize": 1856,
+        "name": "陈奕迅",
+        "picId": 109951173289563400,
+        "picId_str": "109951173289563385",
+        "picUrl": "http://p4.music.126.net/5KJI2mq0G0OQHQaAfAJfwg==/109951173289563385.jpg#hash=d595f8505408",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 542203503,
+        "albumSize": 44,
+        "alias": [],
+        "briefDesc": "",
+        "followed": false,
+        "id": 29051613,
+        "img1v1Id": 109951172491651230,
+        "img1v1Id_str": "109951172491651226",
+        "img1v1Url": "http://p3.music.126.net/fPtxD0LtLYnil_H7nXmjmQ==/109951172491651226.jpg#hash=269d934370d1",
+        "musicSize": 188,
+        "name": "郑润泽",
+        "picId": 109951164458656130,
+        "picId_str": "109951164458656122",
+        "picUrl": "http://p3.music.126.net/BtXjoRNLCZjoSV-3Ag3M0Q==/109951164458656122.jpg#hash=68420956a6b7",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 18378979,
+        "albumSize": 108,
+        "alias": [
+          "Silence Wang"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 5538,
+        "img1v1Id": 109951172494698800,
+        "img1v1Id_str": "109951172494698800",
+        "img1v1Url": "http://p3.music.126.net/rr0okZOQwSxTlVeLj8bKcQ==/109951172494698800.jpg#hash=a1ade14b7d8b",
+        "musicSize": 724,
+        "name": "汪苏泷",
+        "picId": 109951172494696850,
+        "picId_str": "109951172494696852",
+        "picUrl": "http://p3.music.126.net/YrjCHWk_OQhjlc5ycLpY3A==/109951172494696852.jpg#hash=e13da04157ee",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 1750344369,
+        "albumSize": 54,
+        "alias": [
+          "Ele Yan"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 31376161,
+        "img1v1Id": 109951165122695490,
+        "img1v1Id_str": "109951165122695489",
+        "img1v1Url": "http://p3.music.126.net/ei0o1W2N_SX1vpkXr2DDtA==/109951165122695489.jpg#hash=e7119ce86b99",
+        "musicSize": 228,
+        "name": "颜人中",
+        "picId": 109951165122696430,
+        "picId_str": "109951165122696427",
+        "picUrl": "http://p4.music.126.net/M9GvSuKJQyfPKprZaLKt7A==/109951165122696427.jpg#hash=2cd9cf1aa35a",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 90467349,
+        "albumSize": 35,
+        "alias": [
+          "刘清云"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 12631485,
+        "img1v1Id": 109951173567335660,
+        "img1v1Id_str": "109951173567335666",
+        "img1v1Url": "http://p4.music.126.net/C6a_fSOFG_w4_NDxcWFBig==/109951173567335666.jpg#hash=7653ca2e1124",
+        "musicSize": 118,
+        "name": "h3R3",
+        "picId": 109951169603683120,
+        "picId_str": "109951169603683118",
+        "picUrl": "http://p3.music.126.net/in8eeZ0f5r0-iYvfI7c-WQ==/109951169603683118.jpg#hash=b42e139ac30e",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 6228671,
+        "albumSize": 33,
+        "alias": [
+          "Ronghao Li"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 4292,
+        "img1v1Id": 109951170316912580,
+        "img1v1Id_str": "109951170316912578",
+        "img1v1Url": "http://p4.music.126.net/YSeeLcOZcHKaL42XcpLyPg==/109951170316912578.jpg#hash=8a781bf58ac7",
+        "musicSize": 243,
+        "name": "李荣浩",
+        "picId": 109951170316908670,
+        "picId_str": "109951170316908673",
+        "picUrl": "http://p3.music.126.net/FlL7wkN6VBoGTj3Df7s2_w==/109951170316908673.jpg#hash=30bfd354ddcc",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 31265745,
+        "albumSize": 58,
+        "alias": [
+          "Vae"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 5771,
+        "img1v1Id": 109951169440820670,
+        "img1v1Id_str": "109951169440820668",
+        "img1v1Url": "http://p4.music.126.net/GzUNS4BEQXP6ElMqLmLfow==/109951169440820668.jpg#hash=54b29c108f64",
+        "musicSize": 233,
+        "name": "许嵩",
+        "picId": 109951169440811460,
+        "picId_str": "109951169440811453",
+        "picUrl": "http://p4.music.126.net/FLHG9Ou-sIq9F6dPe7SuNw==/109951169440811453.jpg#hash=ef8f9c185103",
+        "topicPerson": 0,
+        "trans": ""
+      },
+      {
+        "accountId": 77799052,
+        "albumSize": 48,
+        "alias": [
+          "Khalil Fong"
+        ],
+        "briefDesc": "",
+        "followed": false,
+        "id": 2738,
+        "img1v1Id": 109951169896933400,
+        "img1v1Id_str": "109951169896933411",
+        "img1v1Url": "http://p3.music.126.net/GH7Vj5kiwCOzJvPxFoIsnw==/109951169896933411.jpg#hash=433b79b0f9e4",
+        "musicSize": 470,
+        "name": "方大同",
+        "picId": 109951169897875870,
+        "picId_str": "109951169897875877",
+        "picUrl": "http://p3.music.126.net/EO_mrK1Hft9DpC5fr9ROIw==/109951169897875877.jpg#hash=d28211615a12",
+        "topicPerson": 0,
+        "trans": ""
+      }
+    ],
+    "more": true,
+    "code": 200
+  },
+  "error": null
+}

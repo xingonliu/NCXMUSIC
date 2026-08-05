@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_list.bad.none.neg.001",
+    "apiAuditId": "ncm.artist_list",
+    "auth": "AUTH_NONE",
+    "params": {
+      "type": "99",
+      "area": "-1",
+      "initial": "-1"
+    },
+    "startedAt": "2026-08-05T02:43:19.262Z",
+    "endedAt": "2026-08-05T02:43:19.318Z",
+    "durationMs": 56,
+    "attempts": 1
+  },
+  "body": {
+    "artists": [],
+    "more": false,
+    "code": 200
+  },
+  "error": null
+}

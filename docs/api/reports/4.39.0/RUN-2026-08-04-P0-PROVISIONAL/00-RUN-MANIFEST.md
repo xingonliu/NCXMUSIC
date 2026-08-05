@@ -128,7 +128,7 @@ node scripts/api-audit/runners/self-check.js --reportDir ...（零遗漏与脱�
 ## 11. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
 - 执行 Agent：opencode (DeepSeek 审计 Agent)
-- 线上请求数：327（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
+- 线上请求数：551（并发 1，抖动 350–800ms；含失败重跑取证，错误响应体完整落盘）
 - guest-01 游客会话：已建立（AUTH_ANON 层有效）
 - 风控状态：Phase 3/4 出现 code -462 验证挑战（verifyType 40），运行器对 -462 退避 30s
 

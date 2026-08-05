@@ -43,15 +43,378 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.mv_all.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 180,
+        "error": null,
+        "sampleHash": "4c77e58b223dc3126e31c0adc0f5e5d3873210d444eb0546f2fc9df343380ac9",
+        "rawFile": "ncm.mv_all.ncm.mv_all.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.mv_all.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 157,
+        "error": null,
+        "sampleHash": "08ec4447ec1314c66f9b55a0546c1a7d70bad6d9512264479e10ef4aa6716dc0",
+        "rawFile": "ncm.mv_all.ncm.mv_all.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.mv_all.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 152,
+        "error": null,
+        "sampleHash": "f74a1832d08af1f9671076aec36c7279e8af66bcf8c38b63ea9c1b97abc1cdde",
+        "rawFile": "ncm.mv_all.ncm.mv_all.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.mv_all.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 400,
+        "durationMs": 80,
+        "error": null,
+        "sampleHash": "1dc1245702d8105e0c8812ff9d842e238174000124c405324067fbaf2520c861",
+        "rawFile": "ncm.mv_all.ncm.mv_all.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "count",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "5000"
+    },
+    {
+      "jsonPath": "data[].artistId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "12062254"
+    },
+    {
+      "jsonPath": "data[].artistName",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "LISA"
+    },
+    {
+      "jsonPath": "data[].artists[].alias",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data[].artists[].alias[]",
+      "rawType": "string",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "Lalisa Manoban"
+    },
+    {
+      "jsonPath": "data[].artists[].id",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "12062254"
+    },
+    {
+      "jsonPath": "data[].artists[].name",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "LISA"
+    },
+    {
+      "jsonPath": "data[].artists[].transNames",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].artists[].transNames[]",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "毕拉力.艾尼瓦尔"
+    },
+    {
+      "jsonPath": "data[].briefDesc",
+      "rawType": "union<null|string>",
+      "presence": 9,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "吴青峰热单《起风了》MV公开！"
+    },
+    {
+      "jsonPath": "data[].cover",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "http://p4.music.126.net/Hdija7_6iDSPqttS32s5vA==/10995116492"
+    },
+    {
+      "jsonPath": "data[].desc",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].duration",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "90000"
+    },
+    {
+      "jsonPath": "data[].id",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "10929636"
+    },
+    {
+      "jsonPath": "data[].mark",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data[].name",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "LILI's FILM #3 - LISA Dance Performance Video"
+    },
+    {
+      "jsonPath": "data[].playCount",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "1596629"
+    },
+    {
+      "jsonPath": "data[].subed",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "hasMore",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.mv_all.anon.001",
+      "lastSeenCase": "ncm.mv_all.none.001",
+      "example": "true"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.mv_all.anon.001",
+      "sampleHash": "4c77e58b223dc3126e31c0adc0f5e5d3873210d444eb0546f2fc9df343380ac9",
+      "rawFile": "ncm.mv_all.ncm.mv_all.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.mv_all.inv.001",
+      "sampleHash": "08ec4447ec1314c66f9b55a0546c1a7d70bad6d9512264479e10ef4aa6716dc0",
+      "rawFile": "ncm.mv_all.ncm.mv_all.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.mv_all.none.001",
+      "sampleHash": "f74a1832d08af1f9671076aec36c7279e8af66bcf8c38b63ea9c1b97abc1cdde",
+      "rawFile": "ncm.mv_all.ncm.mv_all.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.mv_all.none.002",
+      "sampleHash": "1dc1245702d8105e0c8812ff9d842e238174000124c405324067fbaf2520c861",
+      "rawFile": "ncm.mv_all.ncm.mv_all.none.002.raw.json"
+    }
+  ]
 }

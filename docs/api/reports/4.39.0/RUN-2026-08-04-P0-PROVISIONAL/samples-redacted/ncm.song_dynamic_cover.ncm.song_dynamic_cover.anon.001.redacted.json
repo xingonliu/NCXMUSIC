@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.song_dynamic_cover.anon.001",
+    "apiAuditId": "ncm.song_dynamic_cover",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "449818741"
+    },
+    "startedAt": "2026-08-05T02:38:14.338Z",
+    "endedAt": "2026-08-05T02:38:14.445Z",
+    "durationMs": 107,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {},
+    "message": ""
+  },
+  "error": null
+}

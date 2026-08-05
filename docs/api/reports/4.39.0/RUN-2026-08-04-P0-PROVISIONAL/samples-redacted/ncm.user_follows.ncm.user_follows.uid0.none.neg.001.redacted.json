@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.user_follows.uid0.none.neg.001",
+    "apiAuditId": "ncm.user_follows",
+    "auth": "AUTH_NONE",
+    "params": {
+      "uid": "0"
+    },
+    "startedAt": "2026-08-05T02:44:48.034Z",
+    "endedAt": "2026-08-05T02:44:48.092Z",
+    "durationMs": 58,
+    "attempts": 1
+  },
+  "body": {
+    "follow": [],
+    "touchCount": 0,
+    "more": false,
+    "code": 200
+  },
+  "error": null
+}

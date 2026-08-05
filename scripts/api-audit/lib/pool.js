@@ -30,6 +30,17 @@ const ENTITY_BY_PARENT = {
   userprofiles: 'userId',
   event: 'eventId',
   events: 'eventId',
+  comment: 'commentId',
+  comments: 'commentId',
+  thread: 'threadId',
+  threads: 'threadId',
+  beComment: 'commentId',
+}
+
+const ID_KEY_ENTITY = {
+  commentId: 'commentId',
+  threadId: 'threadId',
+  userId: 'userId',
 }
 
 function parentOf(context) {
@@ -37,7 +48,7 @@ function parentOf(context) {
   return seg || ''
 }
 
-const EXCLUDE_KEY = /trackIds|alias|albumName|artistName|songName|playlistName|transNames|tags|genre|desc|comment/i
+const EXCLUDE_KEY = /trackIds|alias|albumName|artistName|songName|playlistName|transNames|tags|genre|desc|commentCount|commentBanner/i
 
 function collect(node, base, out) {
   if (Array.isArray(node)) {
@@ -47,8 +58,12 @@ function collect(node, base, out) {
   if (node && typeof node === 'object') {
     for (const [k, v] of Object.entries(node)) {
       if (EXCLUDE_KEY.test(k)) continue
-      if (k === 'id' && (typeof v === 'number' || /^\d+$/.test(String(v)))) {
+      if (k === 'id' && typeof v === 'number' && v > 0) {
         out.push({ entityType: null, id: String(v), jsonPath: base + '.id', context: base })
+        continue
+      }
+      if (ID_KEY_ENTITY[k] && typeof v === 'number' && v > 0) {
+        out.push({ entityType: ID_KEY_ENTITY[k], id: String(v), jsonPath: base + '.' + k, context: base })
         continue
       }
       collect(v, base ? base + '.' + k : k, out)

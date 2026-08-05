@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_floor.missing.none.neg.001",
+    "apiAuditId": "ncm.comment_floor",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "449818741",
+      "type": "1"
+    },
+    "startedAt": "2026-08-05T02:42:50.674Z",
+    "endedAt": "2026-08-05T02:42:50.739Z",
+    "durationMs": 65,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "参数错误",
+    "code": 400
+  },
+  "error": null
+}

@@ -92,7 +92,7 @@
 
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**failed_stable**（blocker: XEAPI-001：模块要求解密负载含 sk，服务器返回 publicKey/version/nextUpdateTime；xeapiSignKey 静态密钥回退引导可用）
+- 终态：**failed_stable**（blocker: XEAPI-001：模块要求 sk，服务器返回 publicKey/version/nextUpdateTime；xeapiSignKey 回退可用）
 
 | caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |

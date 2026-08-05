@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_follow_count.none.001",
+    "apiAuditId": "ncm.artist_follow_count",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "7763"
+    },
+    "startedAt": "2026-08-05T02:43:52.533Z",
+    "endedAt": "2026-08-05T02:43:52.600Z",
+    "durationMs": 67,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "message": "success",
+    "data": {
+      "isFollow": false,
+      "fansCnt": 14348424,
+      "followCnt": 0,
+      "followDay": "已关注",
+      "followDayCnt": 0,
+      "follow": false
+    }
+  },
+  "error": null
+}

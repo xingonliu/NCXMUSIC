@@ -91,7 +91,7 @@
 
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**rate_limited**（blocker: 匿名注册风控：成功路径已验证 1 次后被连续 code 400，退避后仍失败）
+- 终态：**rate_limited**（blocker: 匿名注册风控：成功路径已验证后被连续 code 400）
 
 | caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |

@@ -35,15 +35,155 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 5,
+    "cases": [
+      {
+        "caseId": "ncm.user_record.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "status": "error",
+        "code": -2,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -2,
+          "body": {
+            "code": -2,
+            "msg": "无权限访问"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "5e44614de73f9dd32f951498055d2fc6e8f08ee3bb39dfe34ec15e198086850a",
+        "rawFile": "ncm.user_record.ncm.user_record.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.user_record.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792947727285735449",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=1e0117cc3659",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "2ee052d7b5603fa831145f5b6ec6bbad731dd8fd280237ea2ceebf9534dc09d2",
+        "rawFile": "ncm.user_record.ncm.user_record.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.user_record.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": -2,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -2,
+          "body": {
+            "code": -2,
+            "msg": "无权限访问"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "ed5af30f58ccb9a17ae91c039e85ed8f094d219104f174899994e8741e46fc59",
+        "rawFile": "ncm.user_record.ncm.user_record.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.user_record.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": -2,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -2,
+          "body": {
+            "code": -2,
+            "msg": "无权限访问"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "c0bf5d25158baf4f4a1bcc7f925ddd0ca020d03ec2facc84545a9b856aa8cd3b",
+        "rawFile": "ncm.user_record.ncm.user_record.none.002.raw.json"
+      },
+      {
+        "caseId": "ncm.user_record.uid0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": -2,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -2,
+          "body": {
+            "code": -2,
+            "msg": "无权限访问"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "4152000d1049b34a7f7b7fb88ba04fc287e09263ff562305c6fb72c7257b02a4",
+        "rawFile": "ncm.user_record.ncm.user_record.uid0.none.neg.001.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "blocked_by_prerequisite",
+  "blocker": "code -2 无权限访问（播放记录需登录，即使公开 uid）",
+  "evidence": [
+    {
+      "caseId": "ncm.user_record.anon.001",
+      "sampleHash": "5e44614de73f9dd32f951498055d2fc6e8f08ee3bb39dfe34ec15e198086850a",
+      "rawFile": "ncm.user_record.ncm.user_record.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_record.inv.001",
+      "sampleHash": "2ee052d7b5603fa831145f5b6ec6bbad731dd8fd280237ea2ceebf9534dc09d2",
+      "rawFile": "ncm.user_record.ncm.user_record.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_record.none.001",
+      "sampleHash": "ed5af30f58ccb9a17ae91c039e85ed8f094d219104f174899994e8741e46fc59",
+      "rawFile": "ncm.user_record.ncm.user_record.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_record.none.002",
+      "sampleHash": "c0bf5d25158baf4f4a1bcc7f925ddd0ca020d03ec2facc84545a9b856aa8cd3b",
+      "rawFile": "ncm.user_record.ncm.user_record.none.002.raw.json"
+    },
+    {
+      "caseId": "ncm.user_record.uid0.none.neg.001",
+      "sampleHash": "4152000d1049b34a7f7b7fb88ba04fc287e09263ff562305c6fb72c7257b02a4",
+      "rawFile": "ncm.user_record.ncm.user_record.uid0.none.neg.001.raw.json"
+    }
+  ]
 }

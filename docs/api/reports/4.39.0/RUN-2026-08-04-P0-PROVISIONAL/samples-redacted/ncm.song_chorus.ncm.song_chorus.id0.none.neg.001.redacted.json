@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "caseId": "ncm.song_chorus.id0.none.neg.001",
+    "apiAuditId": "ncm.song_chorus",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T02:38:07.092Z",
+    "endedAt": "2026-08-05T02:38:07.163Z",
+    "durationMs": 71,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "chorus": [],
+    "data": []
+  },
+  "error": null
+}

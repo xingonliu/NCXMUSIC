@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "caseId": "ncm.comment.inv.001",
+    "apiAuditId": "ncm.comment",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "t": "1",
+      "type": "1",
+      "id": "449818741",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:42:46.974Z",
+    "endedAt": "2026-08-05T02:42:47.080Z",
+    "durationMs": 106,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "参数错误",
+    "debugInfo": null,
+    "data": null,
+    "failData": null,
+    "msg": "参数错误"
+  },
+  "error": null
+}

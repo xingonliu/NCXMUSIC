@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.playlist_video_recent.inv.001",
+    "apiAuditId": "ncm.playlist_video_recent",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "pid": "2936255937"
+    },
+    "startedAt": "2026-08-05T02:43:01.737Z",
+    "endedAt": "2026-08-05T02:43:01.795Z",
+    "durationMs": 58,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "videos": []
+    },
+    "message": ""
+  },
+  "error": null
+}

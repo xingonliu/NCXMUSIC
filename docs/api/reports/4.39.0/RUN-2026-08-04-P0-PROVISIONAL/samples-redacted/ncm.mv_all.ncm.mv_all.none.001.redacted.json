@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "caseId": "ncm.mv_all.none.001",
+    "apiAuditId": "ncm.mv_all",
+    "auth": "AUTH_NONE",
+    "params": {
+      "area": "全部",
+      "type": "全部",
+      "order": "上升最快",
+      "limit": 10,
+      "offset": 0
+    },
+    "startedAt": "2026-08-05T02:45:37.377Z",
+    "endedAt": "2026-08-05T02:45:37.529Z",
+    "durationMs": 152,
+    "attempts": 1
+  },
+  "body": {
+    "count": 5000,
+    "hasMore": true,
+    "data": [
+      {
+        "id": 10929636,
+        "cover": "http://p3.music.126.net/Hdija7_6iDSPqttS32s5vA==/109951164922703421.jpg#hash=3f6b127806b0",
+        "name": "LILI's FILM #3 - LISA Dance Performance Video",
+        "playCount": 1596629,
+        "briefDesc": null,
+        "desc": null,
+        "artistName": "LISA",
+        "artistId": 12062254,
+        "duration": 90000,
+        "mark": 0,
+        "subed": false,
+        "artists": [
+          {
+            "id": 12062254,
+            "name": "LISA",
+            "alias": [
+              "Lalisa Manoban",
+              "ลลิสา มโนบาล",
+              "리사 Of BLACKPINK",
+              "辣lisa",
+              "辣梨",
+              "墨4"
+            ],
+            "transNames": null
+          }
+        ]
+      },
+      {
+        "id": 10928981,
+        "cover": "http://p4.music.126.net/Sacm9rVUjFIagBJ3KLfVHw==/109951164920088043.jpg#hash=df1f58b7c3e6",
+        "name": "BilalTallanma",
+        "playCount": 196868,
+        "briefDesc": null,
+        "desc": null,
+        "artistName": "Bilal Enwer",
+        "artistId": 1039011,
+        "duration": 1455000,
+        "mark": 0,
+        "subed": false,
+        "artists": [
+          {
+            "id": 1039011,
+            "name": "Bilal Enwer",
+            "alias": [],
+            "transNames": [
+              "毕拉力.艾尼瓦尔"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 10880673,
+        "cover": "http://p4.music.126.net/jvHGykRirEXz1hzqNEnPCA==/109951164240795974.jpg#hash=6c087705b9b5",
+        "name": "起风了",
+        "playCount": 7674516,
+        "briefDesc": "吴青峰热单《起风了》MV公开！",
+        "desc": null,
+        "artistName": "吴青峰",
+        "artistId": 187229,
+        "duration": 303000,
+        "mark": 0,
+        "subed": false,
+        "artists": [
+          {
+            "id": 187229,
+            "name": "吴青峰",
+            "alias": [
+              "可人儿",
+              "吴啾咪",
+              "Greeny"
+            ],
+            "transNames": null
+          }
+        ]
+      },
+      {
+        "id": 10892044,
+        "cover": "http://p3.music.126.net/ARcMO0KpyHGgGNjp3K8_fw==/109951164358772666.jpg#hash=bb8021903050",
+        "name": "风的颜色",
+        "playCount": 5849360,
+        "briefDesc": null,
+        "desc": null,
+        "artistName": "NINEONE#",
+        "artistId": 12276375,
+        "duration": 188000,
+        "mark": 0,
+        "subed": false,
+        "artists": [
+          {
+            "id": 12276375,
+            "name": "NINEONE#乃万",
+            "alias": [
+              "乃万",
+              "青春有你",
+              "青春有你2",
+              "91",
+              "奶万",
+              "赵馨玥",
+              "nineone",
+              "NINEONE#"
+            ],
+            "transNames": null
+          }
+        ]
+      },
+      {
+        "id": 10929594,
+        "cover": "http://p4.music.126.net/BUeVxTGwTbxl1B5M00DhXA==/109951164921921925.jpg#hash=9876ff64aef5",
+        "name": "Diamonds",
+        "playCount": 51745,
+        "briefDesc": null,
+        "desc": null,
+        "artistName": "Timmy Trumpet",
+        "artistId": 858362,
+        "duration": 261000,
+        "mark": 0,
+        "subed": false,
+        "artists": [
+          {
+            "id": 858362,
+            "name": "Timmy Trumpet",
+            "alias": [],
+            "transNames": [
+              "蒂米·特朗普"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 10929585,
+        "cover": "http://p4.music.126.net/T45T34bim24uReIuxjsvcQ==/109951164921858570.jpg#hash=62f18cde6dcd",
+        "name": "DADDY! DADDY! DO! (动画映像)",
+        "playCount": 278405,
+        "briefDesc": null,
+        "desc": null,
+        "artistName": "鈴木雅之",
+        "artistId": 160376,
+        "duration": 90000,
+        "mark": 0,
+        "subed": false,
+        "artists": [
+          {
+            "id": 160376,
+            "name": "鈴木雅之",
+            "alias": [
+              "铃木雅之",
+              "すずきまさゆき",
+              "Suzuki Masayuki",
+              "鈴木　雅之"
+            ],
+            "transNames": [
+              "铃木雅之"
+            ]
+          },
+          {
+            "id": 14101050,
+            "name": "鈴木愛理",
+            "alias": [
+              "すずき あいり",
+              "Airi Suzuki"
+            ],
+            "transNames": [
+              "铃木爱理"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 5331198,
+        "cover": "http://p3.music.126.net/uiM6OjdwPBIz6iPhOQx-Xw==/3435973839792755.jpg#hash=744f6e16631b",
+        "name": "有点甜",
+        "playCount": 7826457,
+        "briefDesc": null,
+        "desc": null,
+        "artistName": "汪苏泷",
+        "artistId": 5538,
+        "duration": 228900,
+        "mark": 0,
+        "subed": false,
+        "artists": [
+          {
+            "id": 5538,
+            "name": "汪苏泷",
+            "alias": [
+              "Silence",
+              "\tSilence Wang"
+            ],
+            "transNames": null
+          },
+          {
+            "id": 11097,
+            "name": "By2",
+            "alias": [
+              "白纬芬",
+              "白纬玲"
+            ],
+            "transNames": null
+          }
+        ]
+      },
+      {
+        "id": 10930039,
+        "cover": "http://p4.music.126.net/jy1BtkFM2urM20Sx069hRA==/109951164922166904.jpg#hash=a628b98f71e0",
+        "name": "All Night",
+        "playCount": 76575,
+        "briefDesc": null,
+        "desc": null,
+        "artistName": "Afrojack",
+        "artistId": 28745,
+        "duration": 168000,
+        "mark": 0,
+        "subed": false,
+        "artists": [
+          {
+            "id": 28745,
+            "name": "Afrojack",
+            "alias": [
+              "Nick van de Wall"
+            ],
+            "transNames": [
+              "艾佛杰克"
+            ]
+          },
+          {
+            "id": 13080504,
+            "name": "Ally Brooke",
+            "alias": [],
+            "transNames": null
+          }
+        ]
+      },
+      {
+        "id": 10728209,
+        "cover": "http://p4.music.126.net/mwoBe7XgzMSCocht1_eCbw==/109951164071565111.jpg#hash=1e682a1b55c7",
+        "name": "Crush",
+        "playCount": 1113190,
+        "briefDesc": null,
+        "desc": null,
+        "artistName": "Tessa Violet",
+        "artistId": 897075,
+        "duration": 257000,
+        "mark": 0,
+        "subed": false,
+        "artists": [
+          {
+            "id": 897075,
+            "name": "Tessa Violet",
+            "alias": [],
+            "transNames": [
+              "泰莎·维奥莱特"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 10882451,
+        "cover": "http://p4.music.126.net/Pq5dyQLtDempZKg4_2st1g==/109951164267822787.jpg#hash=155d7216ea01",
+        "name": "Ah Konglum",
+        "playCount": 388532,
+        "briefDesc": null,
+        "desc": null,
+        "artistName": "Gulbahar-Anwar",
+        "artistId": 30292411,
+        "duration": 357000,
+        "mark": 0,
+        "subed": false,
+        "artists": [
+          {
+            "id": 30292411,
+            "name": "Gulbahar Anwar",
+            "alias": null,
+            "transNames": null
+          }
+        ]
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

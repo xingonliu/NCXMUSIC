@@ -42,15 +42,258 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.comment_dj.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 69,
+        "error": null,
+        "sampleHash": "e4606d8f2c428e5e71680364a09ce48c7f47c6f340b610553998b0cc42f548c1",
+        "rawFile": "ncm.comment_dj.ncm.comment_dj.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_dj.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 79,
+        "error": null,
+        "sampleHash": "5960563330cd82d6e2d6b811d18c3ed9153632f75809ba0e597787150dd3ae3c",
+        "rawFile": "ncm.comment_dj.ncm.comment_dj.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_dj.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792946991152189469",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=90edc7be24bf",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "9addc456f13edd92ae24ab913ee27603a232045747fb8d7852f25f64d4c471a4",
+        "rawFile": "ncm.comment_dj.ncm.comment_dj.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_dj.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 70,
+        "error": null,
+        "sampleHash": "046ffa0270999562fb68346106c934b4744d7a11101f9da83c7744fcf840f825",
+        "rawFile": "ncm.comment_dj.ncm.comment_dj.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "cnum",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.comment_dj.anon.001",
+      "lastSeenCase": "ncm.comment_dj.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_dj.anon.001",
+      "lastSeenCase": "ncm.comment_dj.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "commentBanner",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_dj.anon.001",
+      "lastSeenCase": "ncm.comment_dj.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "comments",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_dj.anon.001",
+      "lastSeenCase": "ncm.comment_dj.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "hotComments",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_dj.anon.001",
+      "lastSeenCase": "ncm.comment_dj.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "isMusician",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_dj.anon.001",
+      "lastSeenCase": "ncm.comment_dj.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "more",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_dj.anon.001",
+      "lastSeenCase": "ncm.comment_dj.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "moreHot",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_dj.anon.001",
+      "lastSeenCase": "ncm.comment_dj.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "topComments",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_dj.anon.001",
+      "lastSeenCase": "ncm.comment_dj.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "total",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_dj.anon.001",
+      "lastSeenCase": "ncm.comment_dj.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_dj.anon.001",
+      "lastSeenCase": "ncm.comment_dj.none.001",
+      "example": "17788444306"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.comment_dj.anon.001",
+      "sampleHash": "e4606d8f2c428e5e71680364a09ce48c7f47c6f340b610553998b0cc42f548c1",
+      "rawFile": "ncm.comment_dj.ncm.comment_dj.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_dj.id0.none.neg.001",
+      "sampleHash": "5960563330cd82d6e2d6b811d18c3ed9153632f75809ba0e597787150dd3ae3c",
+      "rawFile": "ncm.comment_dj.ncm.comment_dj.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_dj.inv.001",
+      "sampleHash": "9addc456f13edd92ae24ab913ee27603a232045747fb8d7852f25f64d4c471a4",
+      "rawFile": "ncm.comment_dj.ncm.comment_dj.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_dj.none.001",
+      "sampleHash": "046ffa0270999562fb68346106c934b4744d7a11101f9da83c7744fcf840f825",
+      "rawFile": "ncm.comment_dj.ncm.comment_dj.none.001.raw.json"
+    }
+  ]
 }

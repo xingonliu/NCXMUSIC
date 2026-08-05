@@ -12,6 +12,7 @@ const args = require('../lib/args.js')({
   maxNetworkCases: { type: 'int', default: 40 },
   filter: { type: 'string' },
   onlyErrored: { type: 'bool', default: false },
+  skipExisting: { type: 'bool', default: false },
 })
 
 const { SessionStore, cookieForLayer } = require('../lib/session.js')
@@ -195,7 +196,10 @@ async function main() {
   let local = 0
   let skipped = 0
   for (const group of spec.groups) {
-    if (args.filter && group.apiAuditId !== args.filter) continue
+    if (args.filter) {
+      const ids = args.filter.split(',').map((s) => s.trim())
+      if (!ids.includes(group.apiAuditId)) continue
+    }
     const moduleFn = api[group.moduleName]
     if (!moduleFn) {
       console.log('SKIP (no export):', group.apiAuditId)
@@ -218,6 +222,11 @@ async function main() {
           console.log('case:', c.caseId, '| SKIP (not errored previously)')
           continue
         }
+      }
+      if (args.skipExisting && fs.existsSync(existingRaw)) {
+        skipped++
+        console.log('case:', c.caseId, '| SKIP (already executed)')
+        continue
       }
       if (c.auth === 'AUTH_ANON' && !store.load('guest-01')) {
         skippedLog.push({ caseId: c.caseId, apiAuditId: group.apiAuditId, auth: c.auth, reason: 'guest-01 session unavailable' })

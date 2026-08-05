@@ -91,7 +91,7 @@
 
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: 未完成扫码流程与更多登录层；unikey 一次性凭据仅本地保留）
+- 终态：**partial**（blocker: 未完成扫码流程）
 
 | caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |

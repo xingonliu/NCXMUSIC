@@ -1852,26 +1852,6 @@
       "producerPath": "album.id"
     },
     {
-      "consumerCaseId": "ncm.album_detail_dynamic.id0.none.neg.001",
-      "apiAuditId": "ncm.album_detail_dynamic",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.album_detail_dynamic.id0.none.neg.001",
-      "apiAuditId": "ncm.album_detail_dynamic",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.album_detail_dynamic.inv.001",
       "apiAuditId": "ncm.album_detail_dynamic",
       "param": "id",
@@ -1900,26 +1880,6 @@
       "producerApi": "ncm.album",
       "producerCase": "ncm.album.anon.001",
       "producerPath": "album.id"
-    },
-    {
-      "consumerCaseId": "ncm.album_detail.id0.none.neg.001",
-      "apiAuditId": "ncm.album_detail",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.album_detail.id0.none.neg.001",
-      "apiAuditId": "ncm.album_detail",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.album_detail.inv.001",
@@ -1952,26 +1912,6 @@
       "producerPath": "album.id"
     },
     {
-      "consumerCaseId": "ncm.album_privilege.id0.none.neg.001",
-      "apiAuditId": "ncm.album_privilege",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.album_privilege.id0.none.neg.001",
-      "apiAuditId": "ncm.album_privilege",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.album_privilege.inv.001",
       "apiAuditId": "ncm.album_privilege",
       "param": "id",
@@ -2000,26 +1940,6 @@
       "producerApi": "ncm.album",
       "producerCase": "ncm.album.anon.001",
       "producerPath": "album.id"
-    },
-    {
-      "consumerCaseId": "ncm.album.id0.none.neg.001",
-      "apiAuditId": "ncm.album",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.album.id0.none.neg.001",
-      "apiAuditId": "ncm.album",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.album.inv.001",
@@ -2052,66 +1972,6 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.artist_album.anon.001",
-      "apiAuditId": "ncm.artist_album",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_album.anon.001",
-      "apiAuditId": "ncm.artist_album",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_album.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_album",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_album.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_album",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_album.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_album",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_album.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_album",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.artist_album.inv.001",
       "apiAuditId": "ncm.artist_album",
       "param": "id",
@@ -2122,26 +1982,6 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.artist_album.inv.001",
-      "apiAuditId": "ncm.artist_album",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_album.inv.001",
-      "apiAuditId": "ncm.artist_album",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.artist_album.none.001",
       "apiAuditId": "ncm.artist_album",
       "param": "id",
@@ -2150,26 +1990,6 @@
       "producerApi": "ncm.album",
       "producerCase": "ncm.album.anon.001",
       "producerPath": "album.artists[].id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_album.none.001",
-      "apiAuditId": "ncm.artist_album",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_album.none.001",
-      "apiAuditId": "ncm.artist_album",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.artist_album.page.none.001",
@@ -2190,26 +2010,6 @@
       "producerApi": "ncm.album",
       "producerCase": "ncm.album.anon.001",
       "producerPath": "album.artists[].id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_desc.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_desc",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_desc.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_desc",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.artist_desc.inv.001",
@@ -2242,26 +2042,6 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.artist_detail_dynamic.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_detail_dynamic",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_detail_dynamic.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_detail_dynamic",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.artist_detail_dynamic.inv.001",
       "apiAuditId": "ncm.artist_detail_dynamic",
       "param": "id",
@@ -2292,26 +2072,6 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.artist_detail.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_detail",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_detail.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_detail",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.artist_detail.inv.001",
       "apiAuditId": "ncm.artist_detail",
       "param": "id",
@@ -2332,8 +2092,288 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.artist_songs.anon.001",
-      "apiAuditId": "ncm.artist_songs",
+      "consumerCaseId": "ncm.artist_fans.anon.001",
+      "apiAuditId": "ncm.artist_fans",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_fans.inv.001",
+      "apiAuditId": "ncm.artist_fans",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_fans.none.001",
+      "apiAuditId": "ncm.artist_fans",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_follow_count.anon.001",
+      "apiAuditId": "ncm.artist_follow_count",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_follow_count.inv.001",
+      "apiAuditId": "ncm.artist_follow_count",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_follow_count.none.001",
+      "apiAuditId": "ncm.artist_follow_count",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_list.anon.001",
+      "apiAuditId": "ncm.artist_list",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.artist_list.anon.001",
+      "apiAuditId": "ncm.artist_list",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.artist_list.inv.001",
+      "apiAuditId": "ncm.artist_list",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.artist_list.inv.001",
+      "apiAuditId": "ncm.artist_list",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.artist_list.none.001",
+      "apiAuditId": "ncm.artist_list",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.artist_list.none.001",
+      "apiAuditId": "ncm.artist_list",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.artist_list.none.002",
+      "apiAuditId": "ncm.artist_list",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.artist_list.none.002",
+      "apiAuditId": "ncm.artist_list",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.artist_mv.anon.001",
+      "apiAuditId": "ncm.artist_mv",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_mv.inv.001",
+      "apiAuditId": "ncm.artist_mv",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_mv.none.001",
+      "apiAuditId": "ncm.artist_mv",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_mv.anon.001",
+      "apiAuditId": "ncm.artist_new_mv",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_mv.inv.001",
+      "apiAuditId": "ncm.artist_new_mv",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_mv.none.001",
+      "apiAuditId": "ncm.artist_new_mv",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "apiAuditId": "ncm.artist_new_song_mv_list_v2",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_song_mv_list_v2.inv.001",
+      "apiAuditId": "ncm.artist_new_song_mv_list_v2",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_song_mv_list_v2.none.001",
+      "apiAuditId": "ncm.artist_new_song_mv_list_v2",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_song_playall.anon.001",
+      "apiAuditId": "ncm.artist_new_song_playall",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_song_playall.inv.001",
+      "apiAuditId": "ncm.artist_new_song_playall",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_song_playall.none.001",
+      "apiAuditId": "ncm.artist_new_song_playall",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_song.anon.001",
+      "apiAuditId": "ncm.artist_new_song",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_song.inv.001",
+      "apiAuditId": "ncm.artist_new_song",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_new_song.none.001",
+      "apiAuditId": "ncm.artist_new_song",
       "param": "id",
       "entityType": "artistId",
       "idHash": "78666b445906576c",
@@ -2344,22 +2384,12 @@
     {
       "consumerCaseId": "ncm.artist_songs.anon.001",
       "apiAuditId": "ncm.artist_songs",
-      "param": "offset",
+      "param": "id",
       "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_songs.anon.001",
-      "apiAuditId": "ncm.artist_songs",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
     },
     {
       "consumerCaseId": "ncm.artist_songs.hot.none.001",
@@ -2372,66 +2402,6 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.artist_songs.hot.none.001",
-      "apiAuditId": "ncm.artist_songs",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_songs.hot.none.001",
-      "apiAuditId": "ncm.artist_songs",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_songs.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_songs",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_songs.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_songs",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_songs.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_songs",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_songs.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_songs",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.artist_songs.inv.001",
       "apiAuditId": "ncm.artist_songs",
       "param": "id",
@@ -2440,26 +2410,6 @@
       "producerApi": "ncm.album",
       "producerCase": "ncm.album.anon.001",
       "producerPath": "album.artists[].id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_songs.inv.001",
-      "apiAuditId": "ncm.artist_songs",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_songs.inv.001",
-      "apiAuditId": "ncm.artist_songs",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.artist_songs.page.none.001",
@@ -2482,26 +2432,6 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.artist_songs.time.none.001",
-      "apiAuditId": "ncm.artist_songs",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_songs.time.none.001",
-      "apiAuditId": "ncm.artist_songs",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.artist_top_song.anon.001",
       "apiAuditId": "ncm.artist_top_song",
       "param": "id",
@@ -2510,26 +2440,6 @@
       "producerApi": "ncm.album",
       "producerCase": "ncm.album.anon.001",
       "producerPath": "album.artists[].id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_top_song.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_top_song",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artist_top_song.id0.none.neg.001",
-      "apiAuditId": "ncm.artist_top_song",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.artist_top_song.inv.001",
@@ -2552,8 +2462,8 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.artists.anon.001",
-      "apiAuditId": "ncm.artists",
+      "consumerCaseId": "ncm.artist_video.anon.001",
+      "apiAuditId": "ncm.artist_video",
       "param": "id",
       "entityType": "artistId",
       "idHash": "78666b445906576c",
@@ -2562,24 +2472,34 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.artists.id0.none.neg.001",
+      "consumerCaseId": "ncm.artist_video.inv.001",
+      "apiAuditId": "ncm.artist_video",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artist_video.none.001",
+      "apiAuditId": "ncm.artist_video",
+      "param": "id",
+      "entityType": "artistId",
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.artists.anon.001",
       "apiAuditId": "ncm.artists",
       "param": "id",
       "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.artists.id0.none.neg.001",
-      "apiAuditId": "ncm.artists",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "idHash": "78666b445906576c",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.artists[].id"
     },
     {
       "consumerCaseId": "ncm.artists.inv.001",
@@ -2602,106 +2522,6 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.banner.type0.anon.001",
-      "apiAuditId": "ncm.banner",
-      "param": "type",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.banner.type0.anon.001",
-      "apiAuditId": "ncm.banner",
-      "param": "type",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.banner.type0.inv.001",
-      "apiAuditId": "ncm.banner",
-      "param": "type",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.banner.type0.inv.001",
-      "apiAuditId": "ncm.banner",
-      "param": "type",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.banner.type0.none.001",
-      "apiAuditId": "ncm.banner",
-      "param": "type",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.banner.type0.none.001",
-      "apiAuditId": "ncm.banner",
-      "param": "type",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.check_music.anon.001",
-      "apiAuditId": "ncm.check_music",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.check_music.anon.001",
-      "apiAuditId": "ncm.check_music",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.check_music.br320.none.001",
-      "apiAuditId": "ncm.check_music",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.check_music.br320.none.001",
-      "apiAuditId": "ncm.check_music",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.check_music.br999.none.001",
       "apiAuditId": "ncm.check_music",
       "param": "id",
@@ -2712,244 +2532,1224 @@
       "producerPath": "album.id"
     },
     {
-      "consumerCaseId": "ncm.check_music.id0.none.neg.001",
-      "apiAuditId": "ncm.check_music",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "consumerCaseId": "ncm.cloudsearch.empty.none.neg.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
     },
     {
-      "consumerCaseId": "ncm.check_music.id0.none.neg.001",
-      "apiAuditId": "ncm.check_music",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "consumerCaseId": "ncm.cloudsearch.empty.none.neg.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
     },
     {
-      "consumerCaseId": "ncm.check_music.inv.001",
-      "apiAuditId": "ncm.check_music",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "consumerCaseId": "ncm.cloudsearch.kw1.anon.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
     },
     {
-      "consumerCaseId": "ncm.check_music.inv.001",
-      "apiAuditId": "ncm.check_music",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "consumerCaseId": "ncm.cloudsearch.kw1.anon.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.cloudsearch.kw1.inv.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.cloudsearch.kw1.inv.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
     },
     {
       "consumerCaseId": "ncm.cloudsearch.kw1.none.001",
       "apiAuditId": "ncm.cloudsearch",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
     },
     {
       "consumerCaseId": "ncm.cloudsearch.kw1.none.001",
       "apiAuditId": "ncm.cloudsearch",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.cloudsearch.kw2.none.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.cloudsearch.kw2.none.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
     },
     {
       "consumerCaseId": "ncm.cloudsearch.page.boundary.001",
       "apiAuditId": "ncm.cloudsearch",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
     },
     {
       "consumerCaseId": "ncm.cloudsearch.page.boundary.001",
       "apiAuditId": "ncm.cloudsearch",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
     },
     {
-      "consumerCaseId": "ncm.lyric_new.anon.001",
-      "apiAuditId": "ncm.lyric_new",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "consumerCaseId": "ncm.cloudsearch.page.boundary.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "limit",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
     },
     {
-      "consumerCaseId": "ncm.lyric_new.anon.001",
-      "apiAuditId": "ncm.lyric_new",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "consumerCaseId": "ncm.cloudsearch.page.boundary.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "limit",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
     },
     {
-      "consumerCaseId": "ncm.lyric_new.id0.none.neg.001",
-      "apiAuditId": "ncm.lyric_new",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "consumerCaseId": "ncm.cloudsearch.page.mid.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
     },
     {
-      "consumerCaseId": "ncm.lyric_new.id0.none.neg.001",
-      "apiAuditId": "ncm.lyric_new",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "consumerCaseId": "ncm.cloudsearch.page.mid.001",
+      "apiAuditId": "ncm.cloudsearch",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
     },
     {
-      "consumerCaseId": "ncm.lyric_new.inv.001",
-      "apiAuditId": "ncm.lyric_new",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.lyric_new.inv.001",
-      "apiAuditId": "ncm.lyric_new",
+      "consumerCaseId": "ncm.comment_album.anon.001",
+      "apiAuditId": "ncm.comment_album",
       "param": "id",
       "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "idHash": "cf3c0587874e9f94",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.id"
     },
     {
-      "consumerCaseId": "ncm.lyric_new.none.001",
-      "apiAuditId": "ncm.lyric_new",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.lyric_new.none.001",
-      "apiAuditId": "ncm.lyric_new",
+      "consumerCaseId": "ncm.comment_album.inv.001",
+      "apiAuditId": "ncm.comment_album",
       "param": "id",
       "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "idHash": "cf3c0587874e9f94",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.id"
     },
     {
-      "consumerCaseId": "ncm.lyric.anon.001",
-      "apiAuditId": "ncm.lyric",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.lyric.anon.001",
-      "apiAuditId": "ncm.lyric",
+      "consumerCaseId": "ncm.comment_album.none.001",
+      "apiAuditId": "ncm.comment_album",
       "param": "id",
       "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "idHash": "cf3c0587874e9f94",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "album.id"
     },
     {
-      "consumerCaseId": "ncm.lyric.id0.none.neg.001",
-      "apiAuditId": "ncm.lyric",
+      "consumerCaseId": "ncm.comment_dj.anon.001",
+      "apiAuditId": "ncm.comment_dj",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "djId",
+      "idHash": "f407de089b4c7b29",
+      "producerApi": "ncm.dj_hot",
+      "producerCase": "ncm.dj_hot.anon.001",
+      "producerPath": "djRadios[].id"
     },
     {
-      "consumerCaseId": "ncm.lyric.id0.none.neg.001",
-      "apiAuditId": "ncm.lyric",
+      "consumerCaseId": "ncm.comment_dj.inv.001",
+      "apiAuditId": "ncm.comment_dj",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "djId",
+      "idHash": "f407de089b4c7b29",
+      "producerApi": "ncm.dj_hot",
+      "producerCase": "ncm.dj_hot.anon.001",
+      "producerPath": "djRadios[].id"
     },
     {
-      "consumerCaseId": "ncm.lyric.inv.001",
-      "apiAuditId": "ncm.lyric",
+      "consumerCaseId": "ncm.comment_dj.none.001",
+      "apiAuditId": "ncm.comment_dj",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "djId",
+      "idHash": "f407de089b4c7b29",
+      "producerApi": "ncm.dj_hot",
+      "producerCase": "ncm.dj_hot.anon.001",
+      "producerPath": "djRadios[].id"
     },
     {
-      "consumerCaseId": "ncm.lyric.inv.001",
-      "apiAuditId": "ncm.lyric",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "consumerCaseId": "ncm.comment_floor.anon.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "parentCommentId",
+      "entityType": "commentId",
+      "idHash": "dbfdcda81f35ec84",
+      "producerApi": "ncm.comment_album",
+      "producerCase": "ncm.comment_album.anon.001",
+      "producerPath": "comments[].commentId"
     },
     {
-      "consumerCaseId": "ncm.lyric.none.001",
-      "apiAuditId": "ncm.lyric",
+      "consumerCaseId": "ncm.comment_floor.anon.001",
+      "apiAuditId": "ncm.comment_floor",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.lyric.none.001",
-      "apiAuditId": "ncm.lyric",
+      "consumerCaseId": "ncm.comment_floor.anon.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.anon.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.inv.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "parentCommentId",
+      "entityType": "commentId",
+      "idHash": "dbfdcda81f35ec84",
+      "producerApi": "ncm.comment_album",
+      "producerCase": "ncm.comment_album.anon.001",
+      "producerPath": "comments[].commentId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.inv.001",
+      "apiAuditId": "ncm.comment_floor",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.inv.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.inv.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.missing.none.neg.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.missing.none.neg.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.missing.none.neg.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.none.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "parentCommentId",
+      "entityType": "commentId",
+      "idHash": "dbfdcda81f35ec84",
+      "producerApi": "ncm.comment_album",
+      "producerCase": "ncm.comment_album.anon.001",
+      "producerPath": "comments[].commentId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.none.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.none.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_floor.none.001",
+      "apiAuditId": "ncm.comment_floor",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hot.anon.001",
+      "apiAuditId": "ncm.comment_hot",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hot.anon.001",
+      "apiAuditId": "ncm.comment_hot",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hot.anon.001",
+      "apiAuditId": "ncm.comment_hot",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hot.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_hot",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hot.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_hot",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hot.inv.001",
+      "apiAuditId": "ncm.comment_hot",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hot.inv.001",
+      "apiAuditId": "ncm.comment_hot",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hot.inv.001",
+      "apiAuditId": "ncm.comment_hot",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hot.none.001",
+      "apiAuditId": "ncm.comment_hot",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hot.none.001",
+      "apiAuditId": "ncm.comment_hot",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hot.none.001",
+      "apiAuditId": "ncm.comment_hot",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hug_list.anon.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hug_list.anon.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hug_list.anon.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hug_list.inv.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hug_list.inv.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hug_list.inv.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hug_list.none.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hug_list.none.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_hug_list.none.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.anon.001",
+      "apiAuditId": "ncm.comment_music",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.anon.001",
+      "apiAuditId": "ncm.comment_music",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.anon.001",
+      "apiAuditId": "ncm.comment_music",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_music",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_music",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.inv.001",
+      "apiAuditId": "ncm.comment_music",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.inv.001",
+      "apiAuditId": "ncm.comment_music",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.inv.001",
+      "apiAuditId": "ncm.comment_music",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.none.001",
+      "apiAuditId": "ncm.comment_music",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.none.001",
+      "apiAuditId": "ncm.comment_music",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.none.001",
+      "apiAuditId": "ncm.comment_music",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.none.002",
+      "apiAuditId": "ncm.comment_music",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "c807b033019045e9",
+      "producerApi": "ncm.artist_songs",
+      "producerCase": "ncm.artist_songs.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.none.002",
+      "apiAuditId": "ncm.comment_music",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_music.none.002",
+      "apiAuditId": "ncm.comment_music",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_mv.anon.001",
+      "apiAuditId": "ncm.comment_mv",
+      "param": "id",
+      "entityType": "mvId",
+      "idHash": "855974725f7c36cd",
+      "producerApi": "ncm.search",
+      "producerCase": "ncm.search.kw1.type1004.none.001",
+      "producerPath": "result.mvs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_mv.inv.001",
+      "apiAuditId": "ncm.comment_mv",
+      "param": "id",
+      "entityType": "mvId",
+      "idHash": "3664818d6d4e6434",
+      "producerApi": "ncm.artist_mv",
+      "producerCase": "ncm.artist_mv.anon.001",
+      "producerPath": "mvs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_mv.none.001",
+      "apiAuditId": "ncm.comment_mv",
+      "param": "id",
+      "entityType": "mvId",
+      "idHash": "855974725f7c36cd",
+      "producerApi": "ncm.search",
+      "producerCase": "ncm.search.kw1.type1004.none.001",
+      "producerPath": "result.mvs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.anon.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.anon.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.anon.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.anon.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "sortType",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.anon.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "sortType",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.inv.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.inv.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.inv.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.inv.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "sortType",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.inv.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "sortType",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.none.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.none.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.none.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.none.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "sortType",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.none.001",
+      "apiAuditId": "ncm.comment_new",
+      "param": "sortType",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.none.002",
+      "apiAuditId": "ncm.comment_new",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.none.002",
+      "apiAuditId": "ncm.comment_new",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_new.none.002",
+      "apiAuditId": "ncm.comment_new",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment_playlist.anon.001",
+      "apiAuditId": "ncm.comment_playlist",
+      "param": "id",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_playlist.inv.001",
+      "apiAuditId": "ncm.comment_playlist",
+      "param": "id",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment_playlist.none.001",
+      "apiAuditId": "ncm.comment_playlist",
+      "param": "id",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment.anon.001",
+      "apiAuditId": "ncm.comment",
+      "param": "t",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.anon.001",
+      "apiAuditId": "ncm.comment",
+      "param": "t",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.anon.001",
+      "apiAuditId": "ncm.comment",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.anon.001",
+      "apiAuditId": "ncm.comment",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.anon.001",
+      "apiAuditId": "ncm.comment",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment.inv.001",
+      "apiAuditId": "ncm.comment",
+      "param": "t",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.inv.001",
+      "apiAuditId": "ncm.comment",
+      "param": "t",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.inv.001",
+      "apiAuditId": "ncm.comment",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.inv.001",
+      "apiAuditId": "ncm.comment",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.inv.001",
+      "apiAuditId": "ncm.comment",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.comment.missing.none.neg.001",
+      "apiAuditId": "ncm.comment",
+      "param": "t",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.missing.none.neg.001",
+      "apiAuditId": "ncm.comment",
+      "param": "t",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.missing.none.neg.001",
+      "apiAuditId": "ncm.comment",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.missing.none.neg.001",
+      "apiAuditId": "ncm.comment",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.none.001",
+      "apiAuditId": "ncm.comment",
+      "param": "t",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.none.001",
+      "apiAuditId": "ncm.comment",
+      "param": "t",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.none.001",
+      "apiAuditId": "ncm.comment",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.none.001",
+      "apiAuditId": "ncm.comment",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.comment.none.001",
+      "apiAuditId": "ncm.comment",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.mv_detail_info.anon.001",
+      "apiAuditId": "ncm.mv_detail_info",
+      "param": "mvid",
+      "entityType": "mvId",
+      "idHash": "855974725f7c36cd",
+      "producerApi": "ncm.search",
+      "producerCase": "ncm.search.kw1.type1004.none.001",
+      "producerPath": "result.mvs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.mv_detail_info.inv.001",
+      "apiAuditId": "ncm.mv_detail_info",
+      "param": "mvid",
+      "entityType": "mvId",
+      "idHash": "855974725f7c36cd",
+      "producerApi": "ncm.search",
+      "producerCase": "ncm.search.kw1.type1004.none.001",
+      "producerPath": "result.mvs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.mv_detail_info.none.001",
+      "apiAuditId": "ncm.mv_detail_info",
+      "param": "mvid",
+      "entityType": "mvId",
+      "idHash": "855974725f7c36cd",
+      "producerApi": "ncm.search",
+      "producerCase": "ncm.search.kw1.type1004.none.001",
+      "producerPath": "result.mvs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.mv_detail.anon.001",
+      "apiAuditId": "ncm.mv_detail",
+      "param": "mvid",
+      "entityType": "mvId",
+      "idHash": "855974725f7c36cd",
+      "producerApi": "ncm.search",
+      "producerCase": "ncm.search.kw1.type1004.none.001",
+      "producerPath": "result.mvs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.mv_detail.inv.001",
+      "apiAuditId": "ncm.mv_detail",
+      "param": "mvid",
+      "entityType": "mvId",
+      "idHash": "855974725f7c36cd",
+      "producerApi": "ncm.search",
+      "producerCase": "ncm.search.kw1.type1004.none.001",
+      "producerPath": "result.mvs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.mv_detail.none.001",
+      "apiAuditId": "ncm.mv_detail",
+      "param": "mvid",
+      "entityType": "mvId",
+      "idHash": "855974725f7c36cd",
+      "producerApi": "ncm.search",
+      "producerCase": "ncm.search.kw1.type1004.none.001",
+      "producerPath": "result.mvs[].id"
     },
     {
       "consumerCaseId": "ncm.mv_url.anon.001",
@@ -2960,26 +3760,6 @@
       "producerApi": "ncm.search",
       "producerCase": "ncm.search.kw1.type1004.none.001",
       "producerPath": "result.mvs[].id"
-    },
-    {
-      "consumerCaseId": "ncm.mv_url.id0.none.neg.001",
-      "apiAuditId": "ncm.mv_url",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.mv_url.id0.none.neg.001",
-      "apiAuditId": "ncm.mv_url",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.mv_url.inv.001",
@@ -3002,26 +3782,6 @@
       "producerPath": "result.mvs[].id"
     },
     {
-      "consumerCaseId": "ncm.personalized.limit0.none.neg.001",
-      "apiAuditId": "ncm.personalized",
-      "param": "limit",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.personalized.limit0.none.neg.001",
-      "apiAuditId": "ncm.personalized",
-      "param": "limit",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.playlist_detail_dynamic.anon.001",
       "apiAuditId": "ncm.playlist_detail_dynamic",
       "param": "id",
@@ -3030,26 +3790,6 @@
       "producerApi": "ncm.playlist_detail",
       "producerCase": "ncm.playlist_detail.pl.anon.001",
       "producerPath": "playlist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_detail_dynamic.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_detail_dynamic",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_detail_dynamic.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_detail_dynamic",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.playlist_detail_dynamic.inv.001",
@@ -3072,24 +3812,34 @@
       "producerPath": "playlist.id"
     },
     {
-      "consumerCaseId": "ncm.playlist_detail.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_detail",
+      "consumerCaseId": "ncm.playlist_detail_rcmd_get.anon.001",
+      "apiAuditId": "ncm.playlist_detail_rcmd_get",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
     },
     {
-      "consumerCaseId": "ncm.playlist_detail.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_detail",
+      "consumerCaseId": "ncm.playlist_detail_rcmd_get.inv.001",
+      "apiAuditId": "ncm.playlist_detail_rcmd_get",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.playlist_detail_rcmd_get.none.001",
+      "apiAuditId": "ncm.playlist_detail_rcmd_get",
+      "param": "id",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
     },
     {
       "consumerCaseId": "ncm.playlist_detail.pl.anon.001",
@@ -3152,66 +3902,6 @@
       "producerPath": "playlist.id"
     },
     {
-      "consumerCaseId": "ncm.playlist_subscribers.anon.001",
-      "apiAuditId": "ncm.playlist_subscribers",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_subscribers.anon.001",
-      "apiAuditId": "ncm.playlist_subscribers",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_subscribers.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_subscribers",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_subscribers.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_subscribers",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_subscribers.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_subscribers",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_subscribers.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_subscribers",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.playlist_subscribers.inv.001",
       "apiAuditId": "ncm.playlist_subscribers",
       "param": "id",
@@ -3222,26 +3912,6 @@
       "producerPath": "playlist.id"
     },
     {
-      "consumerCaseId": "ncm.playlist_subscribers.inv.001",
-      "apiAuditId": "ncm.playlist_subscribers",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_subscribers.inv.001",
-      "apiAuditId": "ncm.playlist_subscribers",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.playlist_subscribers.none.001",
       "apiAuditId": "ncm.playlist_subscribers",
       "param": "id",
@@ -3250,26 +3920,6 @@
       "producerApi": "ncm.playlist_detail",
       "producerCase": "ncm.playlist_detail.pl.anon.001",
       "producerPath": "playlist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_subscribers.none.001",
-      "apiAuditId": "ncm.playlist_subscribers",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_subscribers.none.001",
-      "apiAuditId": "ncm.playlist_subscribers",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.playlist_subscribers.page.none.001",
@@ -3292,26 +3942,6 @@
       "producerPath": "playlist.id"
     },
     {
-      "consumerCaseId": "ncm.playlist_track_all.anon.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.anon.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.playlist_track_all.first.none.001",
       "apiAuditId": "ncm.playlist_track_all",
       "param": "id",
@@ -3320,66 +3950,6 @@
       "producerApi": "ncm.playlist_detail",
       "producerCase": "ncm.playlist_detail.pl.anon.001",
       "producerPath": "playlist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.first.none.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.first.none.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.id0.none.neg.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.playlist_track_all.inv.001",
@@ -3392,26 +3962,6 @@
       "producerPath": "playlist.id"
     },
     {
-      "consumerCaseId": "ncm.playlist_track_all.inv.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.inv.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.playlist_track_all.limit0.none.bnd.001",
       "apiAuditId": "ncm.playlist_track_all",
       "param": "id",
@@ -3420,46 +3970,6 @@
       "producerApi": "ncm.playlist_detail",
       "producerCase": "ncm.playlist_detail.pl.anon.001",
       "producerPath": "playlist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.limit0.none.bnd.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "limit",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.limit0.none.bnd.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "limit",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.limit0.none.bnd.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.playlist_track_all.limit0.none.bnd.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.playlist_track_all.mid.none.001",
@@ -3492,84 +4002,214 @@
       "producerPath": "list[].id"
     },
     {
-      "consumerCaseId": "ncm.playlist_track_all.toplist.none.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "consumerCaseId": "ncm.playlist_tracks.anon.001",
+      "apiAuditId": "ncm.playlist_tracks",
+      "param": "pid",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
     },
     {
-      "consumerCaseId": "ncm.playlist_track_all.toplist.none.001",
-      "apiAuditId": "ncm.playlist_track_all",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "consumerCaseId": "ncm.playlist_tracks.inv.001",
+      "apiAuditId": "ncm.playlist_tracks",
+      "param": "pid",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
     },
     {
-      "consumerCaseId": "ncm.related_playlist.id0.none.neg.001",
-      "apiAuditId": "ncm.related_playlist",
+      "consumerCaseId": "ncm.playlist_tracks.none.001",
+      "apiAuditId": "ncm.playlist_tracks",
+      "param": "pid",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.playlist_video_recent.anon.001",
+      "apiAuditId": "ncm.playlist_video_recent",
+      "param": "pid",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.playlist_video_recent.inv.001",
+      "apiAuditId": "ncm.playlist_video_recent",
+      "param": "pid",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.playlist_video_recent.none.001",
+      "apiAuditId": "ncm.playlist_video_recent",
+      "param": "pid",
+      "entityType": "playlistId",
+      "idHash": "b873bf9d8728a5a4",
+      "producerApi": "ncm.playlist_category_list",
+      "producerCase": "ncm.playlist_category_list.anon.001",
+      "producerPath": "playlists[].id"
+    },
+    {
+      "consumerCaseId": "ncm.related_allvideo.anon.001",
+      "apiAuditId": "ncm.related_allvideo",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.related_playlist.id0.none.neg.001",
-      "apiAuditId": "ncm.related_playlist",
+      "consumerCaseId": "ncm.related_allvideo.inv.001",
+      "apiAuditId": "ncm.related_allvideo",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.related_playlist.none.001",
-      "apiAuditId": "ncm.related_playlist",
+      "consumerCaseId": "ncm.related_allvideo.none.001",
+      "apiAuditId": "ncm.related_allvideo",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.related_playlist.none.001",
-      "apiAuditId": "ncm.related_playlist",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "consumerCaseId": "ncm.search.empty.none.neg.001",
+      "apiAuditId": "ncm.search",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.search.empty.none.neg.001",
+      "apiAuditId": "ncm.search",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.search.kw1.type1.anon.001",
+      "apiAuditId": "ncm.search",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.search.kw1.type1.anon.001",
+      "apiAuditId": "ncm.search",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.search.kw1.type1.inv.001",
+      "apiAuditId": "ncm.search",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.search.kw1.type1.inv.001",
+      "apiAuditId": "ncm.search",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
     },
     {
       "consumerCaseId": "ncm.search.kw1.type1.none.001",
       "apiAuditId": "ncm.search",
-      "param": "offset",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
     },
     {
       "consumerCaseId": "ncm.search.kw1.type1.none.001",
       "apiAuditId": "ncm.search",
-      "param": "offset",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.search.kw1.type1.none.002",
+      "apiAuditId": "ncm.search",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.search.kw1.type1.none.002",
+      "apiAuditId": "ncm.search",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.search.kw2.type1.none.001",
+      "apiAuditId": "ncm.search",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.search.kw2.type1.none.001",
+      "apiAuditId": "ncm.search",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
     },
     {
       "consumerCaseId": "ncm.simi_artist.anon.001",
@@ -3580,26 +4220,6 @@
       "producerApi": "ncm.album",
       "producerCase": "ncm.album.anon.001",
       "producerPath": "album.artists[].id"
-    },
-    {
-      "consumerCaseId": "ncm.simi_artist.id0.none.neg.001",
-      "apiAuditId": "ncm.simi_artist",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.simi_artist.id0.none.neg.001",
-      "apiAuditId": "ncm.simi_artist",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.simi_artist.inv.001",
@@ -3622,164 +4242,154 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_playlist.anon.001",
-      "apiAuditId": "ncm.simi_playlist",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "consumerCaseId": "ncm.simi_mv.anon.001",
+      "apiAuditId": "ncm.simi_mv",
+      "param": "mvid",
+      "entityType": "mvId",
+      "idHash": "855974725f7c36cd",
+      "producerApi": "ncm.search",
+      "producerCase": "ncm.search.kw1.type1004.none.001",
+      "producerPath": "result.mvs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_playlist.anon.001",
-      "apiAuditId": "ncm.simi_playlist",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "consumerCaseId": "ncm.simi_mv.inv.001",
+      "apiAuditId": "ncm.simi_mv",
+      "param": "mvid",
+      "entityType": "mvId",
+      "idHash": "855974725f7c36cd",
+      "producerApi": "ncm.search",
+      "producerCase": "ncm.search.kw1.type1004.none.001",
+      "producerPath": "result.mvs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_playlist.id0.none.neg.001",
-      "apiAuditId": "ncm.simi_playlist",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "consumerCaseId": "ncm.simi_mv.none.001",
+      "apiAuditId": "ncm.simi_mv",
+      "param": "mvid",
+      "entityType": "mvId",
+      "idHash": "855974725f7c36cd",
+      "producerApi": "ncm.search",
+      "producerCase": "ncm.search.kw1.type1004.none.001",
+      "producerPath": "result.mvs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_playlist.id0.none.neg.001",
-      "apiAuditId": "ncm.simi_playlist",
+      "consumerCaseId": "ncm.simi_user.anon.001",
+      "apiAuditId": "ncm.simi_user",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_playlist.inv.001",
-      "apiAuditId": "ncm.simi_playlist",
+      "consumerCaseId": "ncm.simi_user.inv.001",
+      "apiAuditId": "ncm.simi_user",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_playlist.inv.001",
-      "apiAuditId": "ncm.simi_playlist",
+      "consumerCaseId": "ncm.simi_user.none.001",
+      "apiAuditId": "ncm.simi_user",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_playlist.none.001",
-      "apiAuditId": "ncm.simi_playlist",
+      "consumerCaseId": "ncm.song_chorus.anon.001",
+      "apiAuditId": "ncm.song_chorus",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_playlist.none.001",
-      "apiAuditId": "ncm.simi_playlist",
+      "consumerCaseId": "ncm.song_chorus.inv.001",
+      "apiAuditId": "ncm.song_chorus",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_song.anon.001",
-      "apiAuditId": "ncm.simi_song",
+      "consumerCaseId": "ncm.song_chorus.none.001",
+      "apiAuditId": "ncm.song_chorus",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_song.anon.001",
-      "apiAuditId": "ncm.simi_song",
+      "consumerCaseId": "ncm.song_copyright_rcmd.anon.001",
+      "apiAuditId": "ncm.song_copyright_rcmd",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_song.id0.none.neg.001",
-      "apiAuditId": "ncm.simi_song",
+      "consumerCaseId": "ncm.song_copyright_rcmd.inv.001",
+      "apiAuditId": "ncm.song_copyright_rcmd",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_song.id0.none.neg.001",
-      "apiAuditId": "ncm.simi_song",
+      "consumerCaseId": "ncm.song_copyright_rcmd.none.001",
+      "apiAuditId": "ncm.song_copyright_rcmd",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_song.inv.001",
-      "apiAuditId": "ncm.simi_song",
+      "consumerCaseId": "ncm.song_creators.anon.001",
+      "apiAuditId": "ncm.song_creators",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_song.inv.001",
-      "apiAuditId": "ncm.simi_song",
+      "consumerCaseId": "ncm.song_creators.inv.001",
+      "apiAuditId": "ncm.song_creators",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.simi_song.none.001",
-      "apiAuditId": "ncm.simi_song",
+      "consumerCaseId": "ncm.song_creators.none.001",
+      "apiAuditId": "ncm.song_creators",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.simi_song.none.001",
-      "apiAuditId": "ncm.simi_song",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
       "consumerCaseId": "ncm.song_detail.media-fixture.songA.001",
@@ -3815,26 +4425,6 @@
       "consumerCaseId": "ncm.song_detail.multi.none.001",
       "apiAuditId": "ncm.song_detail",
       "param": "ids",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.song_detail.multi.none.001",
-      "apiAuditId": "ncm.song_detail",
-      "param": "ids",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.song_detail.multi.none.001",
-      "apiAuditId": "ncm.song_detail",
-      "param": "ids",
       "entityType": "albumId",
       "idHash": "cf3c0587874e9f94",
       "producerApi": "ncm.album",
@@ -3852,66 +4442,6 @@
       "producerPath": "album.artists[].id"
     },
     {
-      "consumerCaseId": "ncm.song_detail.single.anon.001",
-      "apiAuditId": "ncm.song_detail",
-      "param": "ids",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.song_detail.single.anon.001",
-      "apiAuditId": "ncm.song_detail",
-      "param": "ids",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.song_detail.single.inv.001",
-      "apiAuditId": "ncm.song_detail",
-      "param": "ids",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.song_detail.single.inv.001",
-      "apiAuditId": "ncm.song_detail",
-      "param": "ids",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
-      "consumerCaseId": "ncm.song_detail.single.none.001",
-      "apiAuditId": "ncm.song_detail",
-      "param": "ids",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.song_detail.single.none.001",
-      "apiAuditId": "ncm.song_detail",
-      "param": "ids",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.song_download_url_v1.A.anon.001",
       "apiAuditId": "ncm.song_download_url_v1",
       "param": "id",
@@ -3920,26 +4450,6 @@
       "producerApi": "ncm.album",
       "producerCase": "ncm.album.anon.001",
       "producerPath": "songs[].id"
-    },
-    {
-      "consumerCaseId": "ncm.song_download_url_v1.A.id0.none.neg.001",
-      "apiAuditId": "ncm.song_download_url_v1",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.song_download_url_v1.A.id0.none.neg.001",
-      "apiAuditId": "ncm.song_download_url_v1",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
     },
     {
       "consumerCaseId": "ncm.song_download_url_v1.A.none.001",
@@ -3972,26 +4482,6 @@
       "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.song_download_url.A.id0.none.neg.001",
-      "apiAuditId": "ncm.song_download_url",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.song_download_url.A.id0.none.neg.001",
-      "apiAuditId": "ncm.song_download_url",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.song_download_url.A.none.001",
       "apiAuditId": "ncm.song_download_url",
       "param": "id",
@@ -4012,84 +4502,94 @@
       "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.song_music_detail.anon.001",
-      "apiAuditId": "ncm.song_music_detail",
+      "consumerCaseId": "ncm.song_dynamic_cover.anon.001",
+      "apiAuditId": "ncm.song_dynamic_cover",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.song_music_detail.anon.001",
-      "apiAuditId": "ncm.song_music_detail",
+      "consumerCaseId": "ncm.song_dynamic_cover.inv.001",
+      "apiAuditId": "ncm.song_dynamic_cover",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.song_music_detail.id0.none.neg.001",
-      "apiAuditId": "ncm.song_music_detail",
+      "consumerCaseId": "ncm.song_dynamic_cover.none.001",
+      "apiAuditId": "ncm.song_dynamic_cover",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.song_music_detail.id0.none.neg.001",
-      "apiAuditId": "ncm.song_music_detail",
+      "consumerCaseId": "ncm.song_red_count.anon.001",
+      "apiAuditId": "ncm.song_red_count",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.song_music_detail.inv.001",
-      "apiAuditId": "ncm.song_music_detail",
+      "consumerCaseId": "ncm.song_red_count.inv.001",
+      "apiAuditId": "ncm.song_red_count",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.song_music_detail.inv.001",
-      "apiAuditId": "ncm.song_music_detail",
+      "consumerCaseId": "ncm.song_red_count.none.001",
+      "apiAuditId": "ncm.song_red_count",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.song_music_detail.none.001",
-      "apiAuditId": "ncm.song_music_detail",
+      "consumerCaseId": "ncm.song_url_ncmget.local.001",
+      "apiAuditId": "ncm.song_url_ncmget",
       "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.song_music_detail.none.001",
-      "apiAuditId": "ncm.song_music_detail",
+      "consumerCaseId": "ncm.song_url_ncmget.local.002",
+      "apiAuditId": "ncm.song_url_ncmget",
       "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "songId",
+      "idHash": "c807b033019045e9",
+      "producerApi": "ncm.artist_songs",
+      "producerCase": "ncm.artist_songs.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.song_url_ncmget.local.003",
+      "apiAuditId": "ncm.song_url_ncmget",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
     },
     {
       "consumerCaseId": "ncm.song_url_v1_302.A.lossless.none.001",
@@ -4332,26 +4832,6 @@
       "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.song_url_v1.A.standard.id0.none.neg.001",
-      "apiAuditId": "ncm.song_url_v1",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.song_url_v1.A.standard.id0.none.neg.001",
-      "apiAuditId": "ncm.song_url_v1",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.song_url_v1.A.standard.inv.001",
       "apiAuditId": "ncm.song_url_v1",
       "param": "id",
@@ -4492,26 +4972,6 @@
       "producerPath": "songs[].id"
     },
     {
-      "consumerCaseId": "ncm.song_url.A.id0.none.neg.001",
-      "apiAuditId": "ncm.song_url",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
-    },
-    {
-      "consumerCaseId": "ncm.song_url.A.id0.none.neg.001",
-      "apiAuditId": "ncm.song_url",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
-    },
-    {
       "consumerCaseId": "ncm.song_url.B.br999.none.001",
       "apiAuditId": "ncm.song_url",
       "param": "id",
@@ -4519,6 +4979,36 @@
       "idHash": "aaa219294edf2357",
       "producerApi": "ncm.artist_songs",
       "producerCase": "ncm.artist_songs.inv.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.song_wiki_summary.anon.001",
+      "apiAuditId": "ncm.song_wiki_summary",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.song_wiki_summary.inv.001",
+      "apiAuditId": "ncm.song_wiki_summary",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
+      "producerPath": "songs[].id"
+    },
+    {
+      "consumerCaseId": "ncm.song_wiki_summary.none.001",
+      "apiAuditId": "ncm.song_wiki_summary",
+      "param": "id",
+      "entityType": "songId",
+      "idHash": "eb7c06293360f559",
+      "producerApi": "ncm.album",
+      "producerCase": "ncm.album.anon.001",
       "producerPath": "songs[].id"
     },
     {
@@ -4562,84 +5052,314 @@
       "producerPath": "result.playlists[].id"
     },
     {
-      "consumerCaseId": "ncm.top_list.id0.none.neg.001",
+      "consumerCaseId": "ncm.top_list.idx.none.neg.001",
       "apiAuditId": "ncm.top_list",
-      "param": "id",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "param": "idx",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
     },
     {
-      "consumerCaseId": "ncm.top_list.id0.none.neg.001",
+      "consumerCaseId": "ncm.top_list.idx.none.neg.001",
       "apiAuditId": "ncm.top_list",
-      "param": "id",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "param": "idx",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
     },
     {
-      "consumerCaseId": "ncm.top_song.anon.001",
-      "apiAuditId": "ncm.top_song",
-      "param": "type",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "consumerCaseId": "ncm.user_follow_mixed.anon.001",
+      "apiAuditId": "ncm.user_follow_mixed",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
     },
     {
-      "consumerCaseId": "ncm.top_song.anon.001",
-      "apiAuditId": "ncm.top_song",
-      "param": "type",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "consumerCaseId": "ncm.user_follow_mixed.inv.001",
+      "apiAuditId": "ncm.user_follow_mixed",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
     },
     {
-      "consumerCaseId": "ncm.top_song.inv.001",
-      "apiAuditId": "ncm.top_song",
-      "param": "type",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "consumerCaseId": "ncm.user_follow_mixed.none.001",
+      "apiAuditId": "ncm.user_follow_mixed",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
     },
     {
-      "consumerCaseId": "ncm.top_song.inv.001",
-      "apiAuditId": "ncm.top_song",
-      "param": "type",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "consumerCaseId": "ncm.user_followeds.anon.001",
+      "apiAuditId": "ncm.user_followeds",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
     },
     {
-      "consumerCaseId": "ncm.top_song.type0.none.001",
-      "apiAuditId": "ncm.top_song",
-      "param": "type",
-      "entityType": "artistId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.anon.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.songData.album.artist.id"
+      "consumerCaseId": "ncm.user_followeds.inv.001",
+      "apiAuditId": "ncm.user_followeds",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
     },
     {
-      "consumerCaseId": "ncm.top_song.type0.none.001",
-      "apiAuditId": "ncm.top_song",
+      "consumerCaseId": "ncm.user_followeds.none.001",
+      "apiAuditId": "ncm.user_followeds",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_follows.anon.001",
+      "apiAuditId": "ncm.user_follows",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_follows.inv.001",
+      "apiAuditId": "ncm.user_follows",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_follows.none.001",
+      "apiAuditId": "ncm.user_follows",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_playlist_collect.anon.001",
+      "apiAuditId": "ncm.user_playlist_collect",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_playlist_collect.inv.001",
+      "apiAuditId": "ncm.user_playlist_collect",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_playlist_collect.none.001",
+      "apiAuditId": "ncm.user_playlist_collect",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_playlist.anon.001",
+      "apiAuditId": "ncm.user_playlist",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_playlist.inv.001",
+      "apiAuditId": "ncm.user_playlist",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_playlist.none.001",
+      "apiAuditId": "ncm.user_playlist",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_playlist.none.002",
+      "apiAuditId": "ncm.user_playlist",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "dcc2c302f06cb6da",
+      "producerApi": "ncm.comment_album",
+      "producerCase": "ncm.comment_album.anon.001",
+      "producerPath": "hotComments[].user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_playlist.page.none.001",
+      "apiAuditId": "ncm.user_playlist",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.anon.001",
+      "apiAuditId": "ncm.user_record",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.anon.001",
+      "apiAuditId": "ncm.user_record",
       "param": "type",
-      "entityType": "albumId",
-      "idHash": "5feceb66ffc86f38",
-      "producerApi": "ncm.homepage_block_page",
-      "producerCase": "ncm.homepage_block_page.inv.001",
-      "producerPath": "data.blocks[].creatives[].resources[].resourceExtInfo.djProgram.mainSong.album.id"
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.anon.001",
+      "apiAuditId": "ncm.user_record",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.inv.001",
+      "apiAuditId": "ncm.user_record",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.inv.001",
+      "apiAuditId": "ncm.user_record",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.inv.001",
+      "apiAuditId": "ncm.user_record",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.none.001",
+      "apiAuditId": "ncm.user_record",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.none.001",
+      "apiAuditId": "ncm.user_record",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.none.001",
+      "apiAuditId": "ncm.user_record",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.none.002",
+      "apiAuditId": "ncm.user_record",
+      "param": "uid",
+      "entityType": "userId",
+      "idHash": "0fced6cf2b5984cc",
+      "producerApi": "ncm.artist_detail",
+      "producerCase": "ncm.artist_detail.anon.001",
+      "producerPath": "data.user.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.uid0.none.neg.001",
+      "apiAuditId": "ncm.user_record",
+      "param": "type",
+      "entityType": "playlistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.playlist_detail",
+      "producerCase": "ncm.playlist_detail.toplist.none.001",
+      "producerPath": "playlist.userId"
+    },
+    {
+      "consumerCaseId": "ncm.user_record.uid0.none.neg.001",
+      "apiAuditId": "ncm.user_record",
+      "param": "type",
+      "entityType": "toplistId",
+      "idHash": "6b86b273ff34fce1",
+      "producerApi": "ncm.toplist",
+      "producerCase": "ncm.toplist.anon.001",
+      "producerPath": "list[].userId"
     }
   ],
   "poolSummary": {
@@ -4649,6 +5369,7 @@
         "ncm.album",
         "ncm.artist_songs",
         "ncm.artist_top_song",
+        "ncm.artist_video",
         "ncm.banner",
         "ncm.cloudsearch"
       ]
@@ -4657,32 +5378,66 @@
       "count": 100,
       "producers": [
         "ncm.album",
+        "ncm.album_new",
+        "ncm.album_newest",
         "ncm.artist_album",
+        "ncm.artist_list",
+        "ncm.artist_mv",
         "ncm.artist_top_song",
+        "ncm.artist_video",
         "ncm.banner",
         "ncm.cloudsearch",
-        "ncm.homepage_block_page",
-        "ncm.personalized_mv",
-        "ncm.personalized_newsong"
+        "ncm.homepage_block_page"
       ]
     },
     "albumId": {
       "count": 100,
       "producers": [
         "ncm.album",
+        "ncm.album_new",
+        "ncm.album_newest",
         "ncm.homepage_block_page",
         "ncm.personalized_newsong",
         "ncm.search"
       ]
     },
-    "djId": {
-      "count": 40,
+    "userId": {
+      "count": 100,
       "producers": [
-        "ncm.dj_hot"
+        "ncm.artist_detail",
+        "ncm.comment_album",
+        "ncm.comment_music",
+        "ncm.comment_mv"
+      ]
+    },
+    "mvId": {
+      "count": 77,
+      "producers": [
+        "ncm.artist_mv",
+        "ncm.search",
+        "ncm.simi_mv",
+        "ncm.top_mv"
+      ]
+    },
+    "commentId": {
+      "count": 50,
+      "producers": [
+        "ncm.comment_album",
+        "ncm.comment_music",
+        "ncm.comment_mv",
+        "ncm.comment_playlist"
+      ]
+    },
+    "djId": {
+      "count": 97,
+      "producers": [
+        "ncm.dj_hot",
+        "ncm.homepage_block_page",
+        "ncm.personalized_djprogram"
       ]
     },
     "programId": {
-      "count": 6,
+      "count": 12,
       "producers": [
         "ncm.personalized_djprogram"
       ]
@@ -4692,23 +5447,16 @@
       "producers": [
         "ncm.playlist_category_list",
         "ncm.playlist_detail",
-        "ncm.search",
-        "ncm.top_playlist"
-      ]
-    },
-    "mvId": {
-      "count": 52,
-      "producers": [
-        "ncm.search",
-        "ncm.top_mv"
+        "ncm.playlist_detail_rcmd_get",
+        "ncm.search"
       ]
     },
     "toplistId": {
-      "count": 63,
+      "count": 85,
       "producers": [
         "ncm.toplist"
       ]
     }
   },
-  "generatedAt": "2026-08-04T11:30:20.627Z"
+  "generatedAt": "2026-08-05T03:03:01.059Z"
 }

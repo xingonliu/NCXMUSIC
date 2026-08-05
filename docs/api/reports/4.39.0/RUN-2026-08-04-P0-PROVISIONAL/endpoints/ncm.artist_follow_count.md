@@ -89,3 +89,26 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 缺失（B-002，写操作已预授权但账号未到位））
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.artist_follow_count.anon.001 | AUTH_ANON | - | 200 | 101 |  |
+| ncm.artist_follow_count.id0.none.neg.001 | AUTH_NONE | err | 404 | - | code 404 |
+| ncm.artist_follow_count.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.artist_follow_count.none.001 | AUTH_NONE | - | 200 | 67 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `200` |
+| `data.fansCnt` | number | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `14348424` |
+| `data.follow` | boolean | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `data.followCnt` | number | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data.followDay` | string | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `已关注` |
+| `data.followDayCnt` | number | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `data.isFollow` | boolean | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `message` | string | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `success` |

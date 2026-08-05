@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "caseId": "ncm.song_wiki_summary.id0.none.neg.001",
+    "apiAuditId": "ncm.song_wiki_summary",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T02:39:51.798Z",
+    "endedAt": "2026-08-05T02:39:51.912Z",
+    "durationMs": 114,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "cursor": "{\"SONG_PLAY_ABOUT_TAB_SIM_CHANNEL\":\"{\\\"blockCodes\\\":[\\\"SONG_PLAY_ABOUT_MUSIC_SONG_GRADE\\\",\\\"SONG_PLAY_ABOUT_MUSIC_MEMORY\\\",\\\"SONG_PLAY_ABOUT_SIMILAR_SONG\\\",\\\"SONG_PLAY_ABOUT_RELATED_PLAYLIST\\\"],\\\"offset\\\":4}\",\"SONG_PLAY_ABOUT_TAB_BASIC_CHANNEL\":\"{\\\"blockCodes\\\":[\\\"SONG_PLAY_ABOUT_SONG_BASIC\\\"],\\\"offset\\\":1}\"}",
+      "blocks": [
+        {
+          "showType": "PLAYLIST_MULTI_THREE_GRID",
+          "alg": "",
+          "scm": "",
+          "id": "380eec5a36e64ac29d3b84ab11f7ea9b",
+          "adInfo": null,
+          "extInfo": null,
+          "position": "30",
+          "md5": null,
+          "channel": "SONG_PLAY_ABOUT_TAB_SIM_CHANNEL",
+          "uiElement": {
+            "mainTitle": {
+              "title": "相关歌单",
+              "titleImgId": null,
+              "titleImgUrl": null,
+              "action": null
+            },
+            "subTitles": null,
+            "images": null,
+            "labels": null,
+            "textLinks": null,
+            "descriptions": null,
+            "icons": null,
+            "buttons": null,
+            "videos": null,
+            "superscript": null,
+            "type": null,
+            "coverTagVO": null,
+            "colorList": null
+          },
+          "code": "SONG_PLAY_ABOUT_RELATED_PLAYLIST",
+          "creatives": [],
+          "canRefresh": false,
+          "visibleStatus": null,
+          "blockConfig": null,
+          "blockCursor": null,
+          "hasMore": false,
+          "blockParam": null,
+          "crossPlatformConfig": null,
+          "hideTitle": false,
+          "opRcmd": 0
+        }
+      ],
+      "hasMore": false,
+      "pageConfig": null,
+      "pageCodeContext": null
+    },
+    "message": ""
+  },
+  "error": null
+}

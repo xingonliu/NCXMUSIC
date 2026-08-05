@@ -89,3 +89,35 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 缺失（B-002，写操作已预授权但账号未到位））
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.simi_mv.anon.001 | AUTH_ANON | - | 200 | 67 |  |
+| ncm.simi_mv.id0.none.neg.001 | AUTH_NONE | - | 200 | 103 |  |
+| ncm.simi_mv.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 67 |  |
+| ncm.simi_mv.none.001 | AUTH_NONE | - | 200 | 62 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `200` |
+| `mvs[].alg` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `rt` |
+| `mvs[].artistId` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `5196` |
+| `mvs[].artistName` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `陶喆` |
+| `mvs[].artists[].alias` | array<unknown> | 12 | 0 | 12 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `undefined` |
+| `mvs[].artists[].alias[]` | string | 20 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `David Tao` |
+| `mvs[].artists[].id` | number | 24 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `5196` |
+| `mvs[].artists[].name` | string | 24 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `陶喆` |
+| `mvs[].artists[].transNames` | null | 24 | 24 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `mvs[].briefDesc` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `mvs[].cover` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `http://p3.music.126.net/_lF0atFA17veynfM` |
+| `mvs[].desc` | null | 12 | 12 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED |  |
+| `mvs[].duration` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `539000` |
+| `mvs[].id` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `142002` |
+| `mvs[].mark` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `0` |
+| `mvs[].name` | string | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `超级面对面 第29期 陶喆：温情的我依然有姿态` |
+| `mvs[].playCount` | number | 12 | 0 | 0 | AUTH_ANON,AUTH_NONE,AUTH_INVALID_EXPIRED | `498747` |

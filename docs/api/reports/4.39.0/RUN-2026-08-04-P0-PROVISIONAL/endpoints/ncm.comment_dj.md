@@ -92,3 +92,29 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 缺失（B-002，写操作已预授权但账号未到位））
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.comment_dj.anon.001 | AUTH_ANON | - | 200 | 69 |  |
+| ncm.comment_dj.id0.none.neg.001 | AUTH_NONE | - | 200 | 79 |  |
+| ncm.comment_dj.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.comment_dj.none.001 | AUTH_NONE | - | 200 | 70 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `cnum` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `code` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `200` |
+| `commentBanner` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments` | array<unknown> | 3 | 0 | 3 | AUTH_ANON,AUTH_NONE | `undefined` |
+| `hotComments` | array<unknown> | 3 | 0 | 3 | AUTH_ANON,AUTH_NONE | `undefined` |
+| `isMusician` | boolean | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `more` | boolean | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `moreHot` | boolean | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `topComments` | array<unknown> | 3 | 0 | 3 | AUTH_ANON,AUTH_NONE | `undefined` |
+| `total` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `userId` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `17788444306` |

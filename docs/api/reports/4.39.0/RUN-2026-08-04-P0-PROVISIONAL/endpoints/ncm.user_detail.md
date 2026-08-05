@@ -91,7 +91,7 @@
 
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: 缺 uid（需 AUTH_USER）；仅缺失必填负向）
+- 终态：**partial**（blocker: 缺 uid 正样本（搜索 1002 被 -462 阻断））
 
 | caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |

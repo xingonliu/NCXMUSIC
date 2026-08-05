@@ -1859,7 +1859,7 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（B-002）；Phase 4 增补 3 个媒体夹具标签样本",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
   "evidence": [
     {
       "caseId": "ncm.song_detail.empty.none.neg.001",

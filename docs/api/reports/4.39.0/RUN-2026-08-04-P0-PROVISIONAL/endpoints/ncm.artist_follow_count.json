@@ -32,15 +32,227 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.artist_follow_count.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 101,
+        "error": null,
+        "sampleHash": "1c95e00d0afc71fdf53eb977ebd943e63d21e8e03d5ccfc92c193270d05dcc3e",
+        "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_follow_count.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 404,
+        "error": {
+          "class": "other",
+          "status": 404,
+          "code": 404,
+          "body": {
+            "code": 404,
+            "message": "资源未找到",
+            "data": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "4b39922486c5d597d482276cc46276e86010a5e8d1e8ea76dcced9666184d9dd",
+        "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_follow_count.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792947413036683271",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=d72b6e7da2a7",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "7d1433c159ad79d0e94a8ef6ce24d2e638dd13089b4a54699185f69a4fab114b",
+        "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_follow_count.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 67,
+        "error": null,
+        "sampleHash": "d2f246500390fbbf46cbfa8334df27eb360cdb3c650488d6f2d32a20cd888854",
+        "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_follow_count.anon.001",
+      "lastSeenCase": "ncm.artist_follow_count.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.fansCnt",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_follow_count.anon.001",
+      "lastSeenCase": "ncm.artist_follow_count.none.001",
+      "example": "14348424"
+    },
+    {
+      "jsonPath": "data.follow",
+      "rawType": "boolean",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_follow_count.anon.001",
+      "lastSeenCase": "ncm.artist_follow_count.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.followCnt",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_follow_count.anon.001",
+      "lastSeenCase": "ncm.artist_follow_count.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.followDay",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_follow_count.anon.001",
+      "lastSeenCase": "ncm.artist_follow_count.none.001",
+      "example": "已关注"
+    },
+    {
+      "jsonPath": "data.followDayCnt",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_follow_count.anon.001",
+      "lastSeenCase": "ncm.artist_follow_count.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.isFollow",
+      "rawType": "boolean",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_follow_count.anon.001",
+      "lastSeenCase": "ncm.artist_follow_count.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_follow_count.anon.001",
+      "lastSeenCase": "ncm.artist_follow_count.none.001",
+      "example": "success"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.artist_follow_count.anon.001",
+      "sampleHash": "1c95e00d0afc71fdf53eb977ebd943e63d21e8e03d5ccfc92c193270d05dcc3e",
+      "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_follow_count.id0.none.neg.001",
+      "sampleHash": "4b39922486c5d597d482276cc46276e86010a5e8d1e8ea76dcced9666184d9dd",
+      "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_follow_count.inv.001",
+      "sampleHash": "7d1433c159ad79d0e94a8ef6ce24d2e638dd13089b4a54699185f69a4fab114b",
+      "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_follow_count.none.001",
+      "sampleHash": "d2f246500390fbbf46cbfa8334df27eb360cdb3c650488d6f2d32a20cd888854",
+      "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.none.001.raw.json"
+    }
+  ]
 }

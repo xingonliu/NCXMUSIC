@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "caseId": "ncm.user_playlist_collect.none.001",
+    "apiAuditId": "ncm.user_playlist_collect",
+    "auth": "AUTH_NONE",
+    "params": {
+      "uid": "281382",
+      "limit": 20,
+      "offset": 0
+    },
+    "startedAt": "2026-08-05T02:59:56.819Z",
+    "endedAt": "2026-08-05T02:59:56.903Z",
+    "durationMs": 84,
+    "attempts": 1
+  },
+  "body": {
+    "data": {
+      "playlist": [],
+      "more": false,
+      "count": 0
+    },
+    "code": 200
+  },
+  "error": null
+}

@@ -25,15 +25,198 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.video_group_list.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 67,
+        "error": null,
+        "sampleHash": "217eee28dd24cb383a0db9af83584f6d2308901819d070560e6626e9fec04bbc",
+        "rawFile": "ncm.video_group_list.ncm.video_group_list.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.video_group_list.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 67,
+        "error": null,
+        "sampleHash": "52bd87c170e80222a56a86c5a7fb03b2cb8bce33479f8021b048834f1095acbc",
+        "rawFile": "ncm.video_group_list.ncm.video_group_list.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.video_group_list.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 60,
+        "error": null,
+        "sampleHash": "7992efbaaca9113f52b1d759c15c519c8bb6c3c8f5c94864b3b31641d845cea5",
+        "rawFile": "ncm.video_group_list.ncm.video_group_list.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.video_group_list.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 56,
+        "error": null,
+        "sampleHash": "8fd584e0379f52f585461273893180c679fff3e44dde3f4988a9af6b10e752df",
+        "rawFile": "ncm.video_group_list.ncm.video_group_list.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.video_group_list.anon.001",
+      "lastSeenCase": "ncm.video_group_list.none.002",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data[].abExtInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.video_group_list.anon.001",
+      "lastSeenCase": "ncm.video_group_list.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.video_group_list.anon.001",
+      "lastSeenCase": "ncm.video_group_list.none.002",
+      "example": "58100"
+    },
+    {
+      "jsonPath": "data[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.video_group_list.anon.001",
+      "lastSeenCase": "ncm.video_group_list.none.002",
+      "example": "现场"
+    },
+    {
+      "jsonPath": "data[].relatedVideoType",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.video_group_list.anon.001",
+      "lastSeenCase": "ncm.video_group_list.none.002",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].selectTab",
+      "rawType": "boolean",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.video_group_list.anon.001",
+      "lastSeenCase": "ncm.video_group_list.none.002",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].url",
+      "rawType": "union<null|string>",
+      "presence": 12,
+      "nulls": 8,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.video_group_list.anon.001",
+      "lastSeenCase": "ncm.video_group_list.none.002",
+      "example": ""
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.video_group_list.anon.001",
+      "lastSeenCase": "ncm.video_group_list.none.002",
+      "example": "success"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.video_group_list.anon.001",
+      "sampleHash": "217eee28dd24cb383a0db9af83584f6d2308901819d070560e6626e9fec04bbc",
+      "rawFile": "ncm.video_group_list.ncm.video_group_list.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.video_group_list.inv.001",
+      "sampleHash": "52bd87c170e80222a56a86c5a7fb03b2cb8bce33479f8021b048834f1095acbc",
+      "rawFile": "ncm.video_group_list.ncm.video_group_list.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.video_group_list.none.001",
+      "sampleHash": "7992efbaaca9113f52b1d759c15c519c8bb6c3c8f5c94864b3b31641d845cea5",
+      "rawFile": "ncm.video_group_list.ncm.video_group_list.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.video_group_list.none.002",
+      "sampleHash": "8fd584e0379f52f585461273893180c679fff3e44dde3f4988a9af6b10e752df",
+      "rawFile": "ncm.video_group_list.ncm.video_group_list.none.002.raw.json"
+    }
+  ]
 }

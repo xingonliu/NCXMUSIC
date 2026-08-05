@@ -118,7 +118,7 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "全部样本被 -462 验证挑战阻断，无成功样本；需风控冷却后补测",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
   "evidence": [
     {
       "caseId": "ncm.song_url_v1_302.A.lossless.none.001",

@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_hug_list.none.001",
+    "apiAuditId": "ncm.comment_hug_list",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "449818741",
+      "type": "1",
+      "page": 0,
+      "cursor": ""
+    },
+    "startedAt": "2026-08-05T02:42:53.120Z",
+    "endedAt": "2026-08-05T02:42:53.194Z",
+    "durationMs": 74,
+    "attempts": 1
+  },
+  "body": {
+    "msg": "java.lang.Exception: illegal resourceId!",
+    "code": 400
+  },
+  "error": null
+}

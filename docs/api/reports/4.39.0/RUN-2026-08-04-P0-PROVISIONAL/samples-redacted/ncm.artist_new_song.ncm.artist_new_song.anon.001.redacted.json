@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_new_song.anon.001",
+    "apiAuditId": "ncm.artist_new_song",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "7763",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:44:30.728Z",
+    "endedAt": "2026-08-05T02:44:30.791Z",
+    "durationMs": 63,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "hasMore": false,
+      "newSongCount": 0,
+      "newWorks": []
+    },
+    "message": ""
+  },
+  "error": null
+}

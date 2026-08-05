@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_new_song_playall.anon.001",
+    "apiAuditId": "ncm.artist_new_song_playall",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "7763"
+    },
+    "startedAt": "2026-08-05T02:44:36.097Z",
+    "endedAt": "2026-08-05T02:44:36.190Z",
+    "durationMs": 93,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "count": 0,
+      "songList": []
+    },
+    "message": ""
+  },
+  "error": null
+}

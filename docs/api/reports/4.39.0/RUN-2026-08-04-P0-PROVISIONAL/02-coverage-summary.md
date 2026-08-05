@@ -126,9 +126,9 @@ fieldEvidenceCoverage = evidencedFieldCount / discoveredFieldCount   // 0 / 0（
 - 详细阻断见 06-failures-and-blockers.md
 ## 10. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 执行接口数：8；执行 case：30
-- 终态：8 个已赋（failed_stable/passed/rate_limited/partial）
-- 夹具池（脱敏血缘见 03-parameter-lineage.json）：songId=100, artistId=100, albumId=100, djId=40, programId=6, playlistId=100, mvId=52, toplistId=63
+- 执行接口数：67；执行 case：270
+- 终态：25 个已赋（failed_stable/passed/rate_limited/partial/blocked_by_prerequisite）
+- 夹具池（脱敏血缘见 03-parameter-lineage.json）：songId=100, artistId=100, albumId=100, userId=100, mvId=77, commentId=50, djId=97, programId=12, playlistId=100, toplistId=85
 - 关键契约事实：见 07-multivariable-diff.md 与 06-failures-and-blockers.md
 
 ## 11. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）

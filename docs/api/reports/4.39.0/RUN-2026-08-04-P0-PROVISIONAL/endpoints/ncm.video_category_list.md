@@ -90,3 +90,26 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: 未登录层 301 系统错误（接口需会话）；AUTH_ANON（游客 cookie）可满足（200）；AUTH_USER 层待补）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.video_category_list.anon.001 | AUTH_ANON | - | 200 | 71 |  |
+| ncm.video_category_list.inv.001 | AUTH_INVALID_EXPIRED | err | 301 | - | code 301 |
+| ncm.video_category_list.none.001 | AUTH_NONE | err | 301 | - | code 301 |
+| ncm.video_category_list.none.002 | AUTH_NONE | err | 301 | - | code 301 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `data[].abExtInfo` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `data[].id` | number | 3 | 0 | 0 | AUTH_ANON | `58100` |
+| `data[].name` | string | 3 | 0 | 0 | AUTH_ANON | `现场` |
+| `data[].relatedVideoType` | string | 3 | 0 | 0 | AUTH_ANON | `TRANSVERSE` |
+| `data[].selectTab` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `data[].url` | union<null|string> | 3 | 2 | 0 | AUTH_ANON | `` |
+| `message` | string | 1 | 0 | 0 | AUTH_ANON | `success` |

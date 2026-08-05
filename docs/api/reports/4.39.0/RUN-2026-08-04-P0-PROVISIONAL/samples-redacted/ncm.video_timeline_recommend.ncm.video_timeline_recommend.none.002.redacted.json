@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.video_timeline_recommend.none.002",
+    "apiAuditId": "ncm.video_timeline_recommend",
+    "auth": "AUTH_NONE",
+    "params": {
+      "offset": 10
+    },
+    "startedAt": "2026-08-05T03:00:36.865Z",
+    "endedAt": "2026-08-05T03:00:36.929Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 301,
+    "body": {
+      "msg": null,
+      "code": 301
+    },
+    "cookieCount": 0
+  }
+}

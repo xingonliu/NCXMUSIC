@@ -1,0 +1,104 @@
+{
+  "meta": {
+    "caseId": "ncm.mv_detail.anon.001",
+    "apiAuditId": "ncm.mv_detail",
+    "auth": "AUTH_ANON",
+    "params": {
+      "mvid": "5404646"
+    },
+    "startedAt": "2026-08-05T02:45:29.536Z",
+    "endedAt": "2026-08-05T02:45:29.633Z",
+    "durationMs": 97,
+    "attempts": 1
+  },
+  "body": {
+    "loadingPic": "",
+    "bufferPic": "",
+    "loadingPicFS": "",
+    "bufferPicFS": "",
+    "subed": false,
+    "mp": {
+      "id": 5404646,
+      "fee": 0,
+      "mvFee": 0,
+      "payed": 0,
+      "pl": 1080,
+      "dl": 1080,
+      "cp": 1,
+      "sid": 0,
+      "st": 0,
+      "normal": false,
+      "unauthorized": false,
+      "msg": null
+    },
+    "data": {
+      "id": 5404646,
+      "name": "光年之外",
+      "artistId": 7763,
+      "artistName": "G.E.M.邓紫棋",
+      "briefDesc": " 邓紫棋深情献唱演绎史诗爱情",
+      "desc": "年度科幻冒险巨制《太空旅客》将于2017年1月13日正式登陆内地大银幕。新生代天后邓紫棋创作并演唱电影中国区主题曲《光年之外》。邓紫棋深情献唱，吟咏着史诗级太空之旅的浪漫和真挚，道尽两位太空旅客之间令人动容的纯粹爱恋。",
+      "cover": "http://p3.music.126.net/T5u6tvoe6_AJkbOBP6jsIQ==/18635622580858178.jpg#hash=ab7f48664e15",
+      "coverId_str": "18635622580858178",
+      "coverId": 18635622580858176,
+      "playCount": 25140930,
+      "subCount": 215353,
+      "shareCount": 25741,
+      "commentCount": 8077,
+      "duration": 235590,
+      "nType": 0,
+      "publishTime": "2016-12-30",
+      "price": null,
+      "brs": [
+        {
+          "size": 11355198,
+          "br": 240,
+          "point": 0
+        },
+        {
+          "size": 20992192,
+          "br": 480,
+          "point": 0
+        },
+        {
+          "size": 37559728,
+          "br": 720,
+          "point": 0
+        },
+        {
+          "size": 82829920,
+          "br": 1080,
+          "point": 0
+        }
+      ],
+      "artists": [
+        {
+          "id": 7763,
+          "name": "G.E.M.邓紫棋",
+          "img1v1Url": "http://p3.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=0e610c6450cf",
+          "followed": false
+        }
+      ],
+      "commentThreadId": "R_MV_5_5404646",
+      "videoGroup": [
+        {
+          "id": 12100,
+          "name": "流行",
+          "type": 0
+        },
+        {
+          "id": 5100,
+          "name": "音乐",
+          "type": 0
+        },
+        {
+          "id": 8100,
+          "name": "Showtime",
+          "type": 0
+        }
+      ]
+    },
+    "code": 200
+  },
+  "error": null
+}

@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "caseId": "ncm.mv_first.anon.001",
+    "apiAuditId": "ncm.mv_first",
+    "auth": "AUTH_ANON",
+    "params": {
+      "limit": 10,
+      "area": "全部",
+      "order": "上升最快"
+    },
+    "startedAt": "2026-08-05T02:45:35.815Z",
+    "endedAt": "2026-08-05T02:45:35.933Z",
+    "durationMs": 118,
+    "attempts": 1
+  },
+  "body": {
+    "data": [],
+    "code": 200
+  },
+  "error": null
+}

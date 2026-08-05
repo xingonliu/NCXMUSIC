@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_floor.none.001",
+    "apiAuditId": "ncm.comment_floor",
+    "auth": "AUTH_NONE",
+    "params": {
+      "parentCommentId": "9563156604",
+      "id": "449818741",
+      "type": "1",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:57:24.445Z",
+    "endedAt": "2026-08-05T02:57:24.507Z",
+    "durationMs": 62,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "参数错误",
+    "data": null
+  },
+  "error": null
+}

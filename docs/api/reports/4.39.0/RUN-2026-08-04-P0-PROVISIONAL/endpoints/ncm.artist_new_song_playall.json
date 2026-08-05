@@ -26,15 +26,166 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.artist_new_song_playall.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 93,
+        "error": null,
+        "sampleHash": "b6205465a9476daa0f719c730b7c0edca10e69a0b65d570490efa83f5d17c185",
+        "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_new_song_playall.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "12ae74a0de430daff06b703f5934973f9b2a9a5fea414b7c58577abbf912f8b7",
+        "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_new_song_playall.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "d94e77b3a23c1cabb7e121e620d5336db5296673a92c6eec963c62564d1875ef",
+        "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_new_song_playall.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "21147837986cc3379375c5f857caad706cd3aeb390a5de8ec0b837a918630093",
+        "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_song_playall.anon.001",
+      "lastSeenCase": "ncm.artist_new_song_playall.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.count",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_song_playall.anon.001",
+      "lastSeenCase": "ncm.artist_new_song_playall.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.songList",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_song_playall.anon.001",
+      "lastSeenCase": "ncm.artist_new_song_playall.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_song_playall.anon.001",
+      "lastSeenCase": "ncm.artist_new_song_playall.anon.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "未登录层 301 系统错误（接口需会话）；AUTH_ANON（游客 cookie）可满足（200）；AUTH_USER 层待补",
+  "evidence": [
+    {
+      "caseId": "ncm.artist_new_song_playall.anon.001",
+      "sampleHash": "b6205465a9476daa0f719c730b7c0edca10e69a0b65d570490efa83f5d17c185",
+      "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_playall.id0.none.neg.001",
+      "sampleHash": "12ae74a0de430daff06b703f5934973f9b2a9a5fea414b7c58577abbf912f8b7",
+      "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_playall.inv.001",
+      "sampleHash": "d94e77b3a23c1cabb7e121e620d5336db5296673a92c6eec963c62564d1875ef",
+      "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_playall.none.001",
+      "sampleHash": "21147837986cc3379375c5f857caad706cd3aeb390a5de8ec0b837a918630093",
+      "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.none.001.raw.json"
+    }
+  ]
 }

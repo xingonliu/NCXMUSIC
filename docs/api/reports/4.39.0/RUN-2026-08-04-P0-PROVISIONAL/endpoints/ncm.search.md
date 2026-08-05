@@ -92,9 +92,20 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
-## 14. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成）
+- 终态：**partial**（blocker: 待补充说明）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.search.kw1.type1002.anon.001 | AUTH_ANON | - | 200 | 173 |  |
+| ncm.search.kw1.type1002.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.search.kw1.type1002.none.001 | AUTH_NONE | err | -462 | - | code -462 |
+| ncm.search.kw1.type1014.none.001 | AUTH_NONE | err | -462 | - | code -462 |
+| ncm.search.kw2.type1002.none.001 | AUTH_NONE | err | -462 | - | code -462 |
+| ncm.search.kw3.type1014.none.001 | AUTH_NONE | err | -462 | - | code -462 |
+
+## 14. Phase 2 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
 | caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |
@@ -107,7 +118,6 @@
 | ncm.search.kw1.type100.none.001 | AUTH_NONE | - | 200 | 137 |  |
 | ncm.search.kw1.type1000.none.001 | AUTH_NONE | - | 200 | 205 |  |
 | ncm.search.kw1.type1004.none.001 | AUTH_NONE | - | 200 | 155 |  |
-| ncm.search.kw1.type1014.none.001 | AUTH_NONE | - | 200 | 143 |  |
 | ncm.search.kw2.type1.none.001 | AUTH_NONE | - | 200 | 177 |  |
 | ncm.search.type999.none.neg.001 | AUTH_NONE | - | 200 | 80 |  |
 
@@ -197,7 +207,7 @@
 | `result.artists[].trans` | null | 3 | 3 | 0 | AUTH_NONE |  |
 | `result.hasMore` | boolean | 8 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `true` |
 | `result.hlWords` | null | 1 | 1 | 0 | AUTH_NONE |  |
-| `result.hlWords[]` | string | 4 | 0 | 0 | AUTH_NONE | `光年之外` |
+| `result.hlWords[]` | string | 4 | 0 | 0 | AUTH_NONE,AUTH_ANON | `光年之外` |
 | `result.mvCount` | number | 1 | 0 | 0 | AUTH_NONE | `31` |
 | `result.mvs[].alg` | string | 3 | 0 | 0 | AUTH_NONE | `alg_search_precision_mv_tab_basic` |
 | `result.mvs[].alias` | null | 3 | 3 | 0 | AUTH_NONE |  |
@@ -285,6 +295,42 @@
 | `result.songs[].name` | string | 15 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `光年之外` |
 | `result.songs[].rtype` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
 | `result.songs[].status` | number | 15 | 0 | 0 | AUTH_ANON,AUTH_INVALID_EXPIRED,AUTH_NONE | `0` |
+| `result.userprofileCount` | number | 1 | 0 | 0 | AUTH_ANON | `300` |
+| `result.userprofiles[].accountStatus` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `result.userprofiles[].alg` | string | 3 | 0 | 0 | AUTH_ANON | `alg_user_basic_nsearch` |
+| `result.userprofiles[].anchor` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `result.userprofiles[].authenticationTypes` | number | 3 | 0 | 0 | AUTH_ANON | `8` |
+| `result.userprofiles[].authority` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `result.userprofiles[].authStatus` | number | 3 | 0 | 0 | AUTH_ANON | `1` |
+| `result.userprofiles[].avatarDetail` | null | 2 | 2 | 0 | AUTH_ANON |  |
+| `result.userprofiles[].avatarDetail.identityIconUrl` | string | 1 | 0 | 0 | AUTH_ANON | `https://p5.music.126.net/obj/wo3DlcOGw6D` |
+| `result.userprofiles[].avatarDetail.identityLevel` | number | 1 | 0 | 0 | AUTH_ANON | `1` |
+| `result.userprofiles[].avatarDetail.userType` | number | 1 | 0 | 0 | AUTH_ANON | `4` |
+| `result.userprofiles[].avatarImgId` | number | 3 | 0 | 0 | AUTH_ANON | `109951169629226610` |
+| `result.userprofiles[].avatarImgId_str` | string | 3 | 0 | 0 | AUTH_ANON | `109951169629226613` |
+| `result.userprofiles[].avatarImgIdStr` | string | 3 | 0 | 0 | AUTH_ANON | `109951169629226613` |
+| `result.userprofiles[].avatarUrl` | string | 3 | 0 | 0 | AUTH_ANON | `http://p4.music.126.net/6PWHnQs38KZ_PsoO` |
+| `result.userprofiles[].backgroundImgId` | number | 3 | 0 | 0 | AUTH_ANON | `109951162868126480` |
+| `result.userprofiles[].backgroundImgIdStr` | string | 3 | 0 | 0 | AUTH_ANON | `109951162868126486` |
+| `result.userprofiles[].backgroundUrl` | string | 3 | 0 | 0 | AUTH_ANON | `http://p3.music.126.net/_f8R60U9mZ42sSNv` |
+| `result.userprofiles[].birthday` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `result.userprofiles[].city` | number | 3 | 0 | 0 | AUTH_ANON | `330700` |
+| `result.userprofiles[].defaultAvatar` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `result.userprofiles[].description` | string | 3 | 0 | 0 | AUTH_ANON | `` |
+| `result.userprofiles[].detailDescription` | string | 3 | 0 | 0 | AUTH_ANON | `` |
+| `result.userprofiles[].djStatus` | number | 3 | 0 | 0 | AUTH_ANON | `10` |
+| `result.userprofiles[].experts` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `result.userprofiles[].expertTags` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `result.userprofiles[].followed` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `result.userprofiles[].gender` | number | 3 | 0 | 0 | AUTH_ANON | `1` |
+| `result.userprofiles[].mutual` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `result.userprofiles[].nickname` | string | 3 | 0 | 0 | AUTH_ANON | `光年之外的恒星` |
+| `result.userprofiles[].province` | number | 3 | 0 | 0 | AUTH_ANON | `330000` |
+| `result.userprofiles[].remarkName` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `result.userprofiles[].signature` | string | 3 | 0 | 0 | AUTH_ANON | `` |
+| `result.userprofiles[].userId` | number | 3 | 0 | 0 | AUTH_ANON | `1955081855` |
+| `result.userprofiles[].userType` | number | 3 | 0 | 0 | AUTH_ANON | `4` |
+| `result.userprofiles[].vipType` | number | 3 | 0 | 0 | AUTH_ANON | `11` |
 | `result.videoCount` | number | 1 | 0 | 0 | AUTH_NONE | `22` |
 | `result.videos[].alg` | string | 3 | 0 | 0 | AUTH_NONE | `alg_search_precision_video_tab_basic` |
 | `result.videos[].aliaName` | null | 3 | 3 | 0 | AUTH_NONE |  |

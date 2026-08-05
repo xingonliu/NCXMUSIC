@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.user_follow_mixed.anon.001",
+    "apiAuditId": "ncm.user_follow_mixed",
+    "auth": "AUTH_ANON",
+    "params": {
+      "uid": "281382",
+      "limit": 20
+    },
+    "startedAt": "2026-08-05T02:59:55.144Z",
+    "endedAt": "2026-08-05T02:59:55.285Z",
+    "durationMs": 141,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "not login",
+    "debugInfo": null,
+    "data": null,
+    "failData": null
+  },
+  "error": null
+}

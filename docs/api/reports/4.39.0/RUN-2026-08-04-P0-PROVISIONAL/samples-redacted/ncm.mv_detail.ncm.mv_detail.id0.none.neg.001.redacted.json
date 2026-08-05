@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.mv_detail.id0.none.neg.001",
+    "apiAuditId": "ncm.mv_detail",
+    "auth": "AUTH_NONE",
+    "params": {
+      "mvid": "0"
+    },
+    "startedAt": "2026-08-05T03:00:30.845Z",
+    "endedAt": "2026-08-05T03:00:30.941Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 404,
+    "body": {
+      "code": 404
+    },
+    "cookieCount": 0
+  }
+}

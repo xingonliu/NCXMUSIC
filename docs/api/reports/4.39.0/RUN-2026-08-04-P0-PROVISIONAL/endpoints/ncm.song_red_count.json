@@ -31,15 +31,198 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.song_red_count.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 103,
+        "error": null,
+        "sampleHash": "bebe725c163471e43e53b95fa8a756da27a4c4a2d037ead3e0a4674f9792bfb7",
+        "rawFile": "ncm.song_red_count.ncm.song_red_count.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_red_count.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792946478294069251",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=8ed87c7c27a5",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "d1b77a5f1ad56ac033136cd81ee19abf86e4a829d65067e800a2354b1beba880",
+        "rawFile": "ncm.song_red_count.ncm.song_red_count.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_red_count.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792946349029183490",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=6e58a7a9aa00",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "a1a5e2db46243e43060b22b1454655364d0bcfcfe7617121d13a4d6c8f50856b",
+        "rawFile": "ncm.song_red_count.ncm.song_red_count.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_red_count.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792946220205629445",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=57c98323c9f9",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "b16b680fe5214d6636040fb09cc60776ad6606adbf8e723a070b49190a5c2d62",
+        "rawFile": "ncm.song_red_count.ncm.song_red_count.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_red_count.anon.001",
+      "lastSeenCase": "ncm.song_red_count.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.count",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_red_count.anon.001",
+      "lastSeenCase": "ncm.song_red_count.anon.001",
+      "example": "30529634"
+    },
+    {
+      "jsonPath": "data.countDesc",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_red_count.anon.001",
+      "lastSeenCase": "ncm.song_red_count.anon.001",
+      "example": "100w+"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.song_red_count.anon.001",
+      "sampleHash": "bebe725c163471e43e53b95fa8a756da27a4c4a2d037ead3e0a4674f9792bfb7",
+      "rawFile": "ncm.song_red_count.ncm.song_red_count.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_red_count.id0.none.neg.001",
+      "sampleHash": "d1b77a5f1ad56ac033136cd81ee19abf86e4a829d65067e800a2354b1beba880",
+      "rawFile": "ncm.song_red_count.ncm.song_red_count.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_red_count.inv.001",
+      "sampleHash": "a1a5e2db46243e43060b22b1454655364d0bcfcfe7617121d13a4d6c8f50856b",
+      "rawFile": "ncm.song_red_count.ncm.song_red_count.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_red_count.none.001",
+      "sampleHash": "b16b680fe5214d6636040fb09cc60776ad6606adbf8e723a070b49190a5c2d62",
+      "rawFile": "ncm.song_red_count.ncm.song_red_count.none.001.raw.json"
+    }
+  ]
 }

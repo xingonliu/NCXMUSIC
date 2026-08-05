@@ -721,7 +721,7 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
   "evidence": [
     {
       "caseId": "ncm.album_privilege.anon.001",

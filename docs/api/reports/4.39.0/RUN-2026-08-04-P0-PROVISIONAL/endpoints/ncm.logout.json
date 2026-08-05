@@ -71,7 +71,7 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 缺失；仅未登录/无效 Cookie 负向",
+  "blocker": "AUTH_USER 缺失",
   "evidence": [
     {
       "caseId": "ncm.logout.inv.truncated.001",

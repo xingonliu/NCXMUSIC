@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_mv.inv.001",
+    "apiAuditId": "ncm.comment_mv",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "id": "34724956",
+      "type": "6",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:56:53.670Z",
+    "endedAt": "2026-08-05T02:56:53.729Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 400,
+    "body": {
+      "code": -462,
+      "data": {
+        "actionCode": null,
+        "verifyType": 40,
+        "verifyId": 1007602,
+        "verifyUrl": "<REDACTED:verifyUrl>",
+        "blockText": "验证成功后，可进行下一步操作哦~",
+        "verifyToken": "<REDACTED:verifyToken>",
+        "btnText": "",
+        "orpheusUrl": "",
+        "frontRuleIds": null,
+        "params": {
+          "event_id": "00792947120190050309",
+          "sign": "<REDACTED:sign>"
+        },
+        "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=9c4a0f0aa918",
+        "urlAutoOpen": 0,
+        "orpheusUrlParamAppend": null
+      },
+      "message": "请完成验证操作"
+    },
+    "cookieCount": 0
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "caseId": "ncm.simi_user.anon.001",
+    "apiAuditId": "ncm.simi_user",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "449818741"
+    },
+    "startedAt": "2026-08-05T02:44:56.376Z",
+    "endedAt": "2026-08-05T02:44:56.450Z",
+    "durationMs": 74,
+    "attempts": 1
+  },
+  "body": {
+    "userprofiles": [],
+    "code": 200
+  },
+  "error": null
+}

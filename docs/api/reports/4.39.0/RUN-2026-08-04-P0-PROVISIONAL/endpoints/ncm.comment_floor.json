@@ -45,15 +45,136 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.comment_floor.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 400,
+        "durationMs": 69,
+        "error": null,
+        "sampleHash": "c0a98ee0787e7847d129e5c3ab42703bb93668ae0c666c455b0758dc60511787",
+        "rawFile": "ncm.comment_floor.ncm.comment_floor.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_floor.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 400,
+        "durationMs": 65,
+        "error": null,
+        "sampleHash": "b4d426170667374db7102bb8bbc20f25d047f955d41741f56f124941f334a3fa",
+        "rawFile": "ncm.comment_floor.ncm.comment_floor.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_floor.missing.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 400,
+        "durationMs": 65,
+        "error": null,
+        "sampleHash": "61c5b228e59c0167deb7c6957db7d73c155c13210378404b6caf82bc9691371d",
+        "rawFile": "ncm.comment_floor.ncm.comment_floor.missing.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_floor.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 400,
+        "durationMs": 62,
+        "error": null,
+        "sampleHash": "753fcb4307a12e792e8ab146a3941ca7cd0b1fe0320e563576ec07b1d13827fd",
+        "rawFile": "ncm.comment_floor.ncm.comment_floor.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_floor.anon.001",
+      "lastSeenCase": "ncm.comment_floor.none.001",
+      "example": "400"
+    },
+    {
+      "jsonPath": "data",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_floor.anon.001",
+      "lastSeenCase": "ncm.comment_floor.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_floor.anon.001",
+      "lastSeenCase": "ncm.comment_floor.none.001",
+      "example": "参数错误"
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_floor.missing.none.neg.001",
+      "lastSeenCase": "ncm.comment_floor.missing.none.neg.001",
+      "example": "参数错误"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.comment_floor.anon.001",
+      "sampleHash": "c0a98ee0787e7847d129e5c3ab42703bb93668ae0c666c455b0758dc60511787",
+      "rawFile": "ncm.comment_floor.ncm.comment_floor.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_floor.inv.001",
+      "sampleHash": "b4d426170667374db7102bb8bbc20f25d047f955d41741f56f124941f334a3fa",
+      "rawFile": "ncm.comment_floor.ncm.comment_floor.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_floor.missing.none.neg.001",
+      "sampleHash": "61c5b228e59c0167deb7c6957db7d73c155c13210378404b6caf82bc9691371d",
+      "rawFile": "ncm.comment_floor.ncm.comment_floor.missing.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_floor.none.001",
+      "sampleHash": "753fcb4307a12e792e8ab146a3941ca7cd0b1fe0320e563576ec07b1d13827fd",
+      "rawFile": "ncm.comment_floor.ncm.comment_floor.none.001.raw.json"
+    }
+  ]
 }

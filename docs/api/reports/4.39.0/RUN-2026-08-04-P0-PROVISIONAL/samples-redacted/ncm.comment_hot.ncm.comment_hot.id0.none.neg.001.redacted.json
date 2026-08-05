@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_hot.id0.none.neg.001",
+    "apiAuditId": "ncm.comment_hot",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0",
+      "type": "1"
+    },
+    "startedAt": "2026-08-05T02:42:41.308Z",
+    "endedAt": "2026-08-05T02:42:41.371Z",
+    "durationMs": 63,
+    "attempts": 1
+  },
+  "body": {
+    "topComments": [],
+    "hasMore": false,
+    "hotComments": [],
+    "total": 0,
+    "code": 200
+  },
+  "error": null
+}

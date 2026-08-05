@@ -30,15 +30,123 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.related_allvideo.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 86,
+        "error": null,
+        "sampleHash": "3410e9029648353fa8c4eaebbb1359e508f16f744c75a08e68e05388db2c2600",
+        "rawFile": "ncm.related_allvideo.ncm.related_allvideo.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.related_allvideo.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 400,
+        "durationMs": 59,
+        "error": null,
+        "sampleHash": "f012298106ac084f83d98571b666830f9f81e5be0e4bc1dc91fdcc052f104a82",
+        "rawFile": "ncm.related_allvideo.ncm.related_allvideo.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.related_allvideo.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 63,
+        "error": null,
+        "sampleHash": "ba2b7bfd3773968760027de415fb6220f1d6bf5d17d23b8e83a9b81ae804205d",
+        "rawFile": "ncm.related_allvideo.ncm.related_allvideo.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.related_allvideo.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 57,
+        "error": null,
+        "sampleHash": "21ab019258e48d5ff082014d04595fc31adec8f979ac5554f1a16a2573885bd7",
+        "rawFile": "ncm.related_allvideo.ncm.related_allvideo.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.related_allvideo.anon.001",
+      "lastSeenCase": "ncm.related_allvideo.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data",
+      "rawType": "union<array<unknown>|null>",
+      "presence": 4,
+      "nulls": 1,
+      "empties": 3,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.related_allvideo.anon.001",
+      "lastSeenCase": "ncm.related_allvideo.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.related_allvideo.anon.001",
+      "lastSeenCase": "ncm.related_allvideo.none.001",
+      "example": "success"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.related_allvideo.anon.001",
+      "sampleHash": "3410e9029648353fa8c4eaebbb1359e508f16f744c75a08e68e05388db2c2600",
+      "rawFile": "ncm.related_allvideo.ncm.related_allvideo.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.related_allvideo.id0.none.neg.001",
+      "sampleHash": "f012298106ac084f83d98571b666830f9f81e5be0e4bc1dc91fdcc052f104a82",
+      "rawFile": "ncm.related_allvideo.ncm.related_allvideo.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.related_allvideo.inv.001",
+      "sampleHash": "ba2b7bfd3773968760027de415fb6220f1d6bf5d17d23b8e83a9b81ae804205d",
+      "rawFile": "ncm.related_allvideo.ncm.related_allvideo.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.related_allvideo.none.001",
+      "sampleHash": "21ab019258e48d5ff082014d04595fc31adec8f979ac5554f1a16a2573885bd7",
+      "rawFile": "ncm.related_allvideo.ncm.related_allvideo.none.001.raw.json"
+    }
+  ]
 }

@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.mv_detail_info.none.001",
+    "apiAuditId": "ncm.mv_detail_info",
+    "auth": "AUTH_NONE",
+    "params": {
+      "mvid": "5404646"
+    },
+    "startedAt": "2026-08-05T02:45:31.876Z",
+    "endedAt": "2026-08-05T02:45:31.928Z",
+    "durationMs": 52,
+    "attempts": 1
+  },
+  "body": {
+    "likedCount": 297632,
+    "shareCount": 25741,
+    "commentCount": 8077,
+    "liked": false,
+    "code": 200
+  },
+  "error": null
+}

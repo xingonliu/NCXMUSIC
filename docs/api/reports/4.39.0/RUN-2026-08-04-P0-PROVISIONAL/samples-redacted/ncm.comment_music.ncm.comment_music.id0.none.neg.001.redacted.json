@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_music.id0.none.neg.001",
+    "apiAuditId": "ncm.comment_music",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0",
+      "type": "1"
+    },
+    "startedAt": "2026-08-05T02:40:27.794Z",
+    "endedAt": "2026-08-05T02:40:27.865Z",
+    "durationMs": 71,
+    "attempts": 1
+  },
+  "body": {
+    "isMusician": false,
+    "userId": -1,
+    "topComments": [],
+    "moreHot": false,
+    "hotComments": [],
+    "commentBanner": null,
+    "code": 200,
+    "comments": [],
+    "total": 0,
+    "more": false
+  },
+  "error": null
+}

@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_new.inv.001",
+    "apiAuditId": "ncm.comment_new",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "id": "449818741",
+      "type": "1",
+      "sortType": 1,
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:42:43.952Z",
+    "endedAt": "2026-08-05T02:42:44.076Z",
+    "durationMs": 124,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "commentsTitle": "全部评论",
+      "comments": [],
+      "currentCommentTitle": "当前评论",
+      "currentComment": null,
+      "lottery": null,
+      "totalCount": 0,
+      "hasMore": false,
+      "cursor": "0",
+      "sortType": 99,
+      "sortTypeList": [
+        {
+          "sortType": 99,
+          "sortTypeName": "按推荐排序",
+          "target": "order_by_alg"
+        },
+        {
+          "sortType": 2,
+          "sortTypeName": "按热度排序",
+          "target": "order_by_hot"
+        },
+        {
+          "sortType": 3,
+          "sortTypeName": "按时间排序",
+          "target": "order_by_time"
+        }
+      ],
+      "style": "DEFAULT",
+      "bottomAction": null,
+      "likeAnimation": {
+        "animationConfigMap": {
+          "EVENT_FEED": [],
+          "MOMENT": [],
+          "INPUT": [],
+          "COMMENT_AREA": []
+        },
+        "version": 1785825187356
+      },
+      "newReplyExpGroupName": "c",
+      "expandCount": 3
+    },
+    "message": ""
+  },
+  "error": null
+}

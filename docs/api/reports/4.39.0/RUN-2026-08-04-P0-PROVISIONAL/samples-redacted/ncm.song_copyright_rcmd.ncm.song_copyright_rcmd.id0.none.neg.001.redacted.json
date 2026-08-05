@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "caseId": "ncm.song_copyright_rcmd.id0.none.neg.001",
+    "apiAuditId": "ncm.song_copyright_rcmd",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T02:38:09.710Z",
+    "endedAt": "2026-08-05T02:38:09.780Z",
+    "durationMs": 70,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400
+  },
+  "error": null
+}

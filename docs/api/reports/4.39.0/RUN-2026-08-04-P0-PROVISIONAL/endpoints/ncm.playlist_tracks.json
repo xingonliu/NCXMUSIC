@@ -38,15 +38,101 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.playlist_tracks.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'split')"
+        },
+        "sampleHash": "b577185e303aa0617bfd95014842e94c8ed25536ebbb6c483d8afe424b2063d2",
+        "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.playlist_tracks.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'split')"
+        },
+        "sampleHash": "029ac04a3483a6d214d33750daedeb10f0aabd3f03ad49b394a35cafc92ed800",
+        "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.playlist_tracks.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'split')"
+        },
+        "sampleHash": "52c8a0542a923ed7a54d3d08181ec844f64d18e54aab5d0161e0e6c6a1a0f5b2",
+        "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.playlist_tracks.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": null,
+        "error": {
+          "class": "other",
+          "status": null,
+          "code": null,
+          "body": null,
+          "message": "Cannot read properties of undefined (reading 'split')"
+        },
+        "sampleHash": "50e9793720d94713cfa8805f2596efcd35814d71c9924ce81f96b730052e516c",
+        "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.none.001.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "failed_stable",
+  "blocker": "模块级崩溃：Cannot read properties of undefined (reading split)，4/4 可复现（本地异常，非网络）",
+  "evidence": [
+    {
+      "caseId": "ncm.playlist_tracks.anon.001",
+      "sampleHash": "b577185e303aa0617bfd95014842e94c8ed25536ebbb6c483d8afe424b2063d2",
+      "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playlist_tracks.id0.none.neg.001",
+      "sampleHash": "029ac04a3483a6d214d33750daedeb10f0aabd3f03ad49b394a35cafc92ed800",
+      "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playlist_tracks.inv.001",
+      "sampleHash": "52c8a0542a923ed7a54d3d08181ec844f64d18e54aab5d0161e0e6c6a1a0f5b2",
+      "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playlist_tracks.none.001",
+      "sampleHash": "50e9793720d94713cfa8805f2596efcd35814d71c9924ce81f96b730052e516c",
+      "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.none.001.raw.json"
+    }
+  ]
 }

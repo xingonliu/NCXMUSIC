@@ -38,15 +38,282 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.album_list_style.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 56,
+        "error": null,
+        "sampleHash": "f841a46aff04d0903a6da240ded270996bab17c29f7247b48bb114f3531ecd6c",
+        "rawFile": "ncm.album_list_style.ncm.album_list_style.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.album_list_style.bad.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 404,
+        "error": {
+          "class": "other",
+          "status": 404,
+          "code": 404,
+          "body": {
+            "code": 404,
+            "message": "没有数据"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "c05493fbd23309d480baca1f69c9013e9d08ca55d11213b365197f95d909b8cc",
+        "rawFile": "ncm.album_list_style.ncm.album_list_style.bad.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.album_list_style.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 55,
+        "error": null,
+        "sampleHash": "db9702fae52b66df239456dba30de9bc7b1618fd6bb8421812ba0d923c46f17a",
+        "rawFile": "ncm.album_list_style.ncm.album_list_style.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.album_list_style.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 72,
+        "error": null,
+        "sampleHash": "04a87b6994598a55f32d2b9243b7372a9e680bbcdf1f7761498b6ba6d36dfd38",
+        "rawFile": "ncm.album_list_style.ncm.album_list_style.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "albumProducts[].albumId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "387975057"
+    },
+    {
+      "jsonPath": "albumProducts[].albumName",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "光与盐 (下)"
+    },
+    {
+      "jsonPath": "albumProducts[].artistName",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "周峻炜"
+    },
+    {
+      "jsonPath": "albumProducts[].artistNames[]",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "周峻炜"
+    },
+    {
+      "jsonPath": "albumProducts[].bought",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "albumProducts[].coverUrl",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "https://p4.music.126.net/5uRvQ8NIMDgIEygBKnZBEQ==/1099511735"
+    },
+    {
+      "jsonPath": "albumProducts[].customPriceConfig",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "albumProducts[].price",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "20"
+    },
+    {
+      "jsonPath": "albumProducts[].saleDisplayType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "albumProducts[].sales",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "4198"
+    },
+    {
+      "jsonPath": "albumProducts[].type",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "hasNextPage",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_list_style.anon.001",
+      "lastSeenCase": "ncm.album_list_style.none.001",
+      "example": "true"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.album_list_style.anon.001",
+      "sampleHash": "f841a46aff04d0903a6da240ded270996bab17c29f7247b48bb114f3531ecd6c",
+      "rawFile": "ncm.album_list_style.ncm.album_list_style.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_list_style.bad.none.neg.001",
+      "sampleHash": "c05493fbd23309d480baca1f69c9013e9d08ca55d11213b365197f95d909b8cc",
+      "rawFile": "ncm.album_list_style.ncm.album_list_style.bad.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_list_style.inv.001",
+      "sampleHash": "db9702fae52b66df239456dba30de9bc7b1618fd6bb8421812ba0d923c46f17a",
+      "rawFile": "ncm.album_list_style.ncm.album_list_style.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_list_style.none.001",
+      "sampleHash": "04a87b6994598a55f32d2b9243b7372a9e680bbcdf1f7761498b6ba6d36dfd38",
+      "rawFile": "ncm.album_list_style.ncm.album_list_style.none.001.raw.json"
+    }
+  ]
 }

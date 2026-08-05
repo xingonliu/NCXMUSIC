@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.mv_all.none.002",
+    "apiAuditId": "ncm.mv_all",
+    "auth": "AUTH_NONE",
+    "params": {
+      "area": "华语",
+      "type": "内地",
+      "order": "最新",
+      "limit": 10,
+      "offset": 0
+    },
+    "startedAt": "2026-08-05T02:45:38.281Z",
+    "endedAt": "2026-08-05T02:45:38.361Z",
+    "durationMs": 80,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400
+  },
+  "error": null
+}

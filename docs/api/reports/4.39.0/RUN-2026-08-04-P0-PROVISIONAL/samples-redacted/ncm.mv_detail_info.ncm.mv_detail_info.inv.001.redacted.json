@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.mv_detail_info.inv.001",
+    "apiAuditId": "ncm.mv_detail_info",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "mvid": "5404646"
+    },
+    "startedAt": "2026-08-05T02:45:32.842Z",
+    "endedAt": "2026-08-05T02:45:32.901Z",
+    "durationMs": 59,
+    "attempts": 1
+  },
+  "body": {
+    "likedCount": 297632,
+    "shareCount": 25741,
+    "commentCount": 8077,
+    "liked": false,
+    "code": 200
+  },
+  "error": null
+}

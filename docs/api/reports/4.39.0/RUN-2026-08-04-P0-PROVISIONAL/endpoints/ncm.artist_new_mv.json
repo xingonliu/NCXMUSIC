@@ -35,15 +35,166 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.artist_new_mv.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 97,
+        "error": null,
+        "sampleHash": "12c077535a86a86f81c33087acd1465cfd8372b6ae1f262c9286815cbc8afdec",
+        "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_new_mv.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "eba84ea0909770dc0c93fb7ab691c80beb479412ba991795bb23d55012ec20ab",
+        "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_new_mv.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "b6586fe4f91dc67582daca7ec585b3f7895efff045e5ca94428575f61d665f49",
+        "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_new_mv.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "1a072dc37466beab81802b033168a93a7194d792ea8bd9ca28289ef97e1ee48d",
+        "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_mv.anon.001",
+      "lastSeenCase": "ncm.artist_new_mv.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.hasMore",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_mv.anon.001",
+      "lastSeenCase": "ncm.artist_new_mv.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.newWorks",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_mv.anon.001",
+      "lastSeenCase": "ncm.artist_new_mv.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.artist_new_mv.anon.001",
+      "lastSeenCase": "ncm.artist_new_mv.anon.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "未登录层 301 系统错误（接口需会话）；AUTH_ANON（游客 cookie）可满足（200）；AUTH_USER 层待补",
+  "evidence": [
+    {
+      "caseId": "ncm.artist_new_mv.anon.001",
+      "sampleHash": "12c077535a86a86f81c33087acd1465cfd8372b6ae1f262c9286815cbc8afdec",
+      "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_new_mv.id0.none.neg.001",
+      "sampleHash": "eba84ea0909770dc0c93fb7ab691c80beb479412ba991795bb23d55012ec20ab",
+      "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_new_mv.inv.001",
+      "sampleHash": "b6586fe4f91dc67582daca7ec585b3f7895efff045e5ca94428575f61d665f49",
+      "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_new_mv.none.001",
+      "sampleHash": "1a072dc37466beab81802b033168a93a7194d792ea8bd9ca28289ef97e1ee48d",
+      "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.none.001.raw.json"
+    }
+  ]
 }

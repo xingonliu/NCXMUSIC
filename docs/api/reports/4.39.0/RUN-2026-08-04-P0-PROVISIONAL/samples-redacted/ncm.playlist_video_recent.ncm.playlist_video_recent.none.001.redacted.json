@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.playlist_video_recent.none.001",
+    "apiAuditId": "ncm.playlist_video_recent",
+    "auth": "AUTH_NONE",
+    "params": {
+      "pid": "2936255937"
+    },
+    "startedAt": "2026-08-05T02:43:00.463Z",
+    "endedAt": "2026-08-05T02:43:00.515Z",
+    "durationMs": 52,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "videos": []
+    },
+    "message": ""
+  },
+  "error": null
+}

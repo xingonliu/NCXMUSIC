@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_new_mv.anon.001",
+    "apiAuditId": "ncm.artist_new_mv",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "7763",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:44:27.966Z",
+    "endedAt": "2026-08-05T02:44:28.063Z",
+    "durationMs": 97,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "hasMore": false,
+      "newWorks": []
+    },
+    "message": ""
+  },
+  "error": null
+}

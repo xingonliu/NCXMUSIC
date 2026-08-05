@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_hot.inv.001",
+    "apiAuditId": "ncm.comment_hot",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "id": "449818741",
+      "type": "1",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:42:40.771Z",
+    "endedAt": "2026-08-05T02:42:40.830Z",
+    "durationMs": 59,
+    "attempts": 1
+  },
+  "body": {
+    "topComments": [],
+    "hasMore": false,
+    "hotComments": [],
+    "total": 0,
+    "code": 200
+  },
+  "error": null
+}

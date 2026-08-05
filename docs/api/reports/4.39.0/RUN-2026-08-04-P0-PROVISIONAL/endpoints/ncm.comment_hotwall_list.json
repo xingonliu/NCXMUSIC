@@ -32,7 +32,7 @@
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "not_exported",
+  "blocker": "interface.d.ts 声明存在但无模块文件（moduleMissing）",
   "evidence": []
 }

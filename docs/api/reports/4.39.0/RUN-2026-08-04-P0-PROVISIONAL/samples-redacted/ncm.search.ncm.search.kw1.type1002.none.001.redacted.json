@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "caseId": "ncm.search.kw1.type1002.none.001",
+    "apiAuditId": "ncm.search",
+    "auth": "AUTH_NONE",
+    "params": {
+      "keywords": "光年之外",
+      "type": "1002",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:50:43.750Z",
+    "endedAt": "2026-08-05T02:50:43.846Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 400,
+    "body": {
+      "code": -462,
+      "data": {
+        "actionCode": null,
+        "verifyType": 40,
+        "verifyId": 1007602,
+        "verifyUrl": "<REDACTED:verifyUrl>",
+        "blockText": "验证成功后，可进行下一步操作哦~",
+        "verifyToken": "<REDACTED:verifyToken>",
+        "btnText": "",
+        "orpheusUrl": "",
+        "frontRuleIds": null,
+        "params": {
+          "event_id": "00792945568758460426",
+          "sign": "<REDACTED:sign>"
+        },
+        "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=97537b4a60f2",
+        "urlAutoOpen": 0,
+        "orpheusUrlParamAppend": null
+      },
+      "message": "请完成验证操作"
+    },
+    "cookieCount": 1
+  }
+}

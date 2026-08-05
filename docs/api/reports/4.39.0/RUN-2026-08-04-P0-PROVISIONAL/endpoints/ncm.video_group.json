@@ -35,15 +35,41 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 1,
+    "cases": [
+      {
+        "caseId": "ncm.video_group.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "40e48e14a03a2128b9d0649815699cdccaa95cec85b49919f745db974d9e5b3b",
+        "rawFile": "ncm.video_group.ncm.video_group.id0.none.neg.001.raw.json"
+      }
+    ]
   },
   "fields": [],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "blocked_by_prerequisite",
+  "blocker": "缺夹具：videoId/threadId/style 无生产者（search type=1002/1014 被 -462 阻断）",
+  "evidence": [
+    {
+      "caseId": "ncm.video_group.id0.none.neg.001",
+      "sampleHash": "40e48e14a03a2128b9d0649815699cdccaa95cec85b49919f745db974d9e5b3b",
+      "rawFile": "ncm.video_group.ncm.video_group.id0.none.neg.001.raw.json"
+    }
+  ]
 }

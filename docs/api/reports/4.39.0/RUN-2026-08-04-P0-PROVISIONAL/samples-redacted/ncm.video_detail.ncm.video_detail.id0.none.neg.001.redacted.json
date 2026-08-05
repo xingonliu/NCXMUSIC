@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.video_detail.id0.none.neg.001",
+    "apiAuditId": "ncm.video_detail",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T02:46:00.349Z",
+    "endedAt": "2026-08-05T02:46:00.442Z",
+    "durationMs": 93,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "参数错误",
+    "debugInfo": null,
+    "data": null,
+    "failData": null
+  },
+  "error": null
+}

@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "caseId": "ncm.video_url.id0.none.neg.001",
+    "apiAuditId": "ncm.video_url",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T02:46:04.928Z",
+    "endedAt": "2026-08-05T02:46:04.987Z",
+    "durationMs": 59,
+    "attempts": 1
+  },
+  "body": {
+    "urls": [],
+    "code": 200
+  },
+  "error": null
+}

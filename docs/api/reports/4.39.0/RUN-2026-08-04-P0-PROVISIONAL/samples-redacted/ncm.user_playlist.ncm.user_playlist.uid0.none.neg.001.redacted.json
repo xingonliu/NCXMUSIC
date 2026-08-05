@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "caseId": "ncm.user_playlist.uid0.none.neg.001",
+    "apiAuditId": "ncm.user_playlist",
+    "auth": "AUTH_NONE",
+    "params": {
+      "uid": "0"
+    },
+    "startedAt": "2026-08-05T02:44:42.923Z",
+    "endedAt": "2026-08-05T02:44:43.000Z",
+    "durationMs": 77,
+    "attempts": 1
+  },
+  "body": {
+    "more": false,
+    "playlist": [
+      {
+        "subscribers": [],
+        "subscribed": null,
+        "creator": null,
+        "artists": null,
+        "tracks": null,
+        "top": false,
+        "updateFrequency": null,
+        "backgroundCoverId": 0,
+        "backgroundCoverUrl": null,
+        "titleImage": 0,
+        "titleImageUrl": null,
+        "englishTitle": null,
+        "opRecommend": false,
+        "recommendInfo": null,
+        "subscribedCount": 5,
+        "cloudTrackCount": 0,
+        "userId": 0,
+        "totalDuration": 0,
+        "coverImgId": 109951165434984510,
+        "privacy": 0,
+        "trackUpdateTime": 1737094547708,
+        "trackCount": 0,
+        "updateTime": 1737094547551,
+        "commentThreadId": "A_PL_0_13154700100",
+        "coverImgUrl": "http://p1.music.126.net/9-rm4PUkKuL-lD1Rgg6SDw==/109951165434984508.jpg#hash=8b2fad933ce4",
+        "specialType": 5,
+        "anonimous": false,
+        "createTime": 1737094547551,
+        "highQuality": false,
+        "newImported": false,
+        "trackNumberUpdateTime": 0,
+        "playCount": 7819,
+        "adType": 0,
+        "description": null,
+        "tags": [],
+        "ordered": false,
+        "status": 0,
+        "name": "我喜欢的音乐",
+        "id": 13154700100,
+        "coverImgId_str": "109951165434984508",
+        "sharedUsers": null,
+        "shareStatus": null,
+        "copied": false,
+        "mix": false,
+        "containsTracks": false
+      }
+    ],
+    "code": 200
+  },
+  "error": null
+}

@@ -42,7 +42,7 @@
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
+  "terminalStatus": "blocked_by_prerequisite",
+  "blocker": "unblock 匹配工具，依赖 enhanced 配置（B-003）",
   "evidence": []
 }

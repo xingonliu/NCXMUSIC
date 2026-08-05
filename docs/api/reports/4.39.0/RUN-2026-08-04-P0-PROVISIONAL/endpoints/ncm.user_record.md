@@ -90,3 +90,14 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**blocked_by_prerequisite**（blocker: code -2 无权限访问（播放记录需登录，即使公开 uid））
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.user_record.anon.001 | AUTH_ANON | err | -2 | - | code -2 |
+| ncm.user_record.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.user_record.none.001 | AUTH_NONE | err | -2 | - | code -2 |
+| ncm.user_record.none.002 | AUTH_NONE | err | -2 | - | code -2 |
+| ncm.user_record.uid0.none.neg.001 | AUTH_NONE | err | -2 | - | code -2 |

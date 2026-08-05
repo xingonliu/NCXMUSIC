@@ -79,7 +79,7 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "缺 uid（需 AUTH_USER）；仅缺失必填负向",
+  "blocker": "缺 uid 正样本（搜索 1002 被 -462 阻断）",
   "evidence": [
     {
       "caseId": "ncm.user_detail.none.neg.missing-uid.001",

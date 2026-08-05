@@ -54,15 +54,93 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 3,
+    "cases": [
+      {
+        "caseId": "ncm.comment_hug_list.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 400,
+        "durationMs": 133,
+        "error": null,
+        "sampleHash": "98855ae9d9d067cc400c6aae868874281d62c8a98be3df1985ed725d4c10c499",
+        "rawFile": "ncm.comment_hug_list.ncm.comment_hug_list.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_hug_list.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 400,
+        "durationMs": 75,
+        "error": null,
+        "sampleHash": "d72260bf96de8a82aa379585d1ff5c44484a9d68cb2df44d0cf09fe85d2856c1",
+        "rawFile": "ncm.comment_hug_list.ncm.comment_hug_list.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.comment_hug_list.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 400,
+        "durationMs": 74,
+        "error": null,
+        "sampleHash": "d6a508a384c4a3cb7546567731f3d7e9ff22bdcd4f3a1db57849fff341dd68ed",
+        "rawFile": "ncm.comment_hug_list.ncm.comment_hug_list.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_hug_list.anon.001",
+      "lastSeenCase": "ncm.comment_hug_list.none.001",
+      "example": "400"
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.comment_hug_list.anon.001",
+      "lastSeenCase": "ncm.comment_hug_list.none.001",
+      "example": "java.lang.Exception: illegal resourceId!"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.comment_hug_list.anon.001",
+      "sampleHash": "98855ae9d9d067cc400c6aae868874281d62c8a98be3df1985ed725d4c10c499",
+      "rawFile": "ncm.comment_hug_list.ncm.comment_hug_list.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_hug_list.inv.001",
+      "sampleHash": "d72260bf96de8a82aa379585d1ff5c44484a9d68cb2df44d0cf09fe85d2856c1",
+      "rawFile": "ncm.comment_hug_list.ncm.comment_hug_list.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.comment_hug_list.none.001",
+      "sampleHash": "d6a508a384c4a3cb7546567731f3d7e9ff22bdcd4f3a1db57849fff341dd68ed",
+      "rawFile": "ncm.comment_hug_list.ncm.comment_hug_list.none.001.raw.json"
+    }
+  ]
 }

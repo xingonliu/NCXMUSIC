@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.song_creators.id0.none.neg.001",
+    "apiAuditId": "ncm.song_creators",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T02:38:12.968Z",
+    "endedAt": "2026-08-05T02:38:13.047Z",
+    "durationMs": 79,
+    "attempts": 1
+  },
+  "body": {
+    "data": {
+      "titleName": "创作者",
+      "songCreatorsRoleVos": null
+    },
+    "code": 200,
+    "message": "请求成功"
+  },
+  "error": null
+}

@@ -46,7 +46,7 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 12,
+    "executed": 17,
     "cases": [
       {
         "caseId": "ncm.search.empty.none.neg.001",
@@ -129,6 +129,90 @@
         "rawFile": "ncm.search.ncm.search.kw1.type1000.none.001.raw.json"
       },
       {
+        "caseId": "ncm.search.kw1.type1002.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 173,
+        "error": null,
+        "sampleHash": "3e8aceda6bf08b8f40e1a23cbbdd033dd087bd10dcdf0ea48d2afd22dda05149",
+        "rawFile": "ncm.search.ncm.search.kw1.type1002.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.search.kw1.type1002.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792945697360461827",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=00ba77aba17c",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "c6363bafe00060106b0bc8565c711925631d73440c36f4b725b775f4b899a7c7",
+        "rawFile": "ncm.search.ncm.search.kw1.type1002.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.search.kw1.type1002.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792945568758460426",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=97537b4a60f2",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "c867670565593ca96ba9807c8c0a931f2e35d6fb3097b24d958eb64e88949469",
+        "rawFile": "ncm.search.ncm.search.kw1.type1002.none.001.raw.json"
+      },
+      {
         "caseId": "ncm.search.kw1.type1004.none.001",
         "auth": "AUTH_NONE",
         "phase": 2,
@@ -141,11 +225,38 @@
       {
         "caseId": "ncm.search.kw1.type1014.none.001",
         "auth": "AUTH_NONE",
-        "phase": 2,
-        "code": 200,
-        "durationMs": 143,
-        "error": null,
-        "sampleHash": "e737d9c9eb0c060d2bfe4693819bd1f5e33675f936f510a5d9a827a558d60b4d",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792945954580389900",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=dc2e4c9ffc5d",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "d0b5c5de495705ebc59a703428b49e7358c4bff7bf88428d95976cc09b6b9952",
         "rawFile": "ncm.search.ncm.search.kw1.type1014.none.001.raw.json"
       },
       {
@@ -157,6 +268,80 @@
         "error": null,
         "sampleHash": "d3283f62877c862c0ee6de24d974e0c8ee48af984a7d9d60baec26d4dff36c16",
         "rawFile": "ncm.search.ncm.search.kw2.type1.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.search.kw2.type1002.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792945825400123402",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=9243295ca330",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "93889476e8ebdf7d3cc1478983f86964df413bfa3f42115391a2836b0845e60d",
+        "rawFile": "ncm.search.ncm.search.kw2.type1002.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.search.kw3.type1014.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": -462,
+        "error": {
+          "class": "other",
+          "status": 400,
+          "code": -462,
+          "body": {
+            "code": -462,
+            "data": {
+              "actionCode": null,
+              "verifyType": 40,
+              "verifyId": 1007602,
+              "verifyUrl": "<REDACTED:verifyUrl>",
+              "blockText": "验证成功后，可进行下一步操作哦~",
+              "verifyToken": "<REDACTED:verifyToken>",
+              "btnText": "",
+              "orpheusUrl": "",
+              "frontRuleIds": null,
+              "params": {
+                "event_id": "00792946082862837770",
+                "sign": "<REDACTED:sign>"
+              },
+              "url": "https://st.music.163.com/encrypt-pages?params=%3CREDACTED%3E&verifyType=%3CREDACTED%3E&verifyId=%3CREDACTED%3E&verifyToken=%3CREDACTED%3E#hash=86a963d72e3b",
+              "urlAutoOpen": 0,
+              "orpheusUrlParamAppend": null
+            },
+            "message": "请完成验证操作"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "28b9f2cf08e6f824fdf8b71881319d058e0566e4b67a0b83acba123f0e885fbb",
+        "rawFile": "ncm.search.ncm.search.kw3.type1014.none.001.raw.json"
       },
       {
         "caseId": "ncm.search.type999.none.neg.001",
@@ -1248,10 +1433,11 @@
       "nulls": 0,
       "empties": 0,
       "auths": [
-        "AUTH_NONE"
+        "AUTH_NONE",
+        "AUTH_ANON"
       ],
       "firstSeenCase": "ncm.search.kw1.type10.none.001",
-      "lastSeenCase": "ncm.search.kw1.type1014.none.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
       "example": "光年之外"
     },
     {
@@ -2462,6 +2648,474 @@
       "example": "0"
     },
     {
+      "jsonPath": "result.userprofileCount",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "300"
+    },
+    {
+      "jsonPath": "result.userprofiles[].accountStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.userprofiles[].alg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "alg_user_basic_nsearch"
+    },
+    {
+      "jsonPath": "result.userprofiles[].anchor",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result.userprofiles[].authenticationTypes",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "8"
+    },
+    {
+      "jsonPath": "result.userprofiles[].authority",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.userprofiles[].authStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "result.userprofiles[].avatarDetail",
+      "rawType": "null",
+      "presence": 2,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.userprofiles[].avatarDetail.identityIconUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4874132307"
+    },
+    {
+      "jsonPath": "result.userprofiles[].avatarDetail.identityLevel",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "result.userprofiles[].avatarDetail.userType",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "result.userprofiles[].avatarImgId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "109951169629226610"
+    },
+    {
+      "jsonPath": "result.userprofiles[].avatarImgId_str",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "109951169629226613"
+    },
+    {
+      "jsonPath": "result.userprofiles[].avatarImgIdStr",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "109951169629226613"
+    },
+    {
+      "jsonPath": "result.userprofiles[].avatarUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "http://p4.music.126.net/6PWHnQs38KZ_PsoOm55OJw==/10995116962"
+    },
+    {
+      "jsonPath": "result.userprofiles[].backgroundImgId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "109951162868126480"
+    },
+    {
+      "jsonPath": "result.userprofiles[].backgroundImgIdStr",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "109951162868126486"
+    },
+    {
+      "jsonPath": "result.userprofiles[].backgroundUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "http://p3.music.126.net/_f8R60U9mZ42sSNvdPn2sQ==/10995116286"
+    },
+    {
+      "jsonPath": "result.userprofiles[].birthday",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "result.userprofiles[].city",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "330700"
+    },
+    {
+      "jsonPath": "result.userprofiles[].defaultAvatar",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result.userprofiles[].description",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.userprofiles[].detailDescription",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.userprofiles[].djStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "10"
+    },
+    {
+      "jsonPath": "result.userprofiles[].experts",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.userprofiles[].expertTags",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.userprofiles[].followed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result.userprofiles[].gender",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "result.userprofiles[].mutual",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "result.userprofiles[].nickname",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "光年之外的恒星"
+    },
+    {
+      "jsonPath": "result.userprofiles[].province",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "330000"
+    },
+    {
+      "jsonPath": "result.userprofiles[].remarkName",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "result.userprofiles[].signature",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "result.userprofiles[].userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "1955081855"
+    },
+    {
+      "jsonPath": "result.userprofiles[].userType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "result.userprofiles[].vipType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "lastSeenCase": "ncm.search.kw1.type1002.anon.001",
+      "example": "11"
+    },
+    {
       "jsonPath": "result.videoCount",
       "rawType": "number",
       "presence": 1,
@@ -2651,7 +3305,7 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "AUTH_USER 登录层缺失（账号待申请，见 B-002）；三态对比未完成",
+  "blocker": "待补充说明",
   "evidence": [
     {
       "caseId": "ncm.search.empty.none.neg.001",
@@ -2694,19 +3348,44 @@
       "rawFile": "ncm.search.ncm.search.kw1.type1000.none.001.raw.json"
     },
     {
+      "caseId": "ncm.search.kw1.type1002.anon.001",
+      "sampleHash": "3e8aceda6bf08b8f40e1a23cbbdd033dd087bd10dcdf0ea48d2afd22dda05149",
+      "rawFile": "ncm.search.ncm.search.kw1.type1002.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type1002.inv.001",
+      "sampleHash": "c6363bafe00060106b0bc8565c711925631d73440c36f4b725b775f4b899a7c7",
+      "rawFile": "ncm.search.ncm.search.kw1.type1002.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type1002.none.001",
+      "sampleHash": "c867670565593ca96ba9807c8c0a931f2e35d6fb3097b24d958eb64e88949469",
+      "rawFile": "ncm.search.ncm.search.kw1.type1002.none.001.raw.json"
+    },
+    {
       "caseId": "ncm.search.kw1.type1004.none.001",
       "sampleHash": "34fbac49c3987ecf4586c74e6df81ab75d7b05dceb2dfa5119d8a8ad7d112ce7",
       "rawFile": "ncm.search.ncm.search.kw1.type1004.none.001.raw.json"
     },
     {
       "caseId": "ncm.search.kw1.type1014.none.001",
-      "sampleHash": "e737d9c9eb0c060d2bfe4693819bd1f5e33675f936f510a5d9a827a558d60b4d",
+      "sampleHash": "d0b5c5de495705ebc59a703428b49e7358c4bff7bf88428d95976cc09b6b9952",
       "rawFile": "ncm.search.ncm.search.kw1.type1014.none.001.raw.json"
     },
     {
       "caseId": "ncm.search.kw2.type1.none.001",
       "sampleHash": "d3283f62877c862c0ee6de24d974e0c8ee48af984a7d9d60baec26d4dff36c16",
       "rawFile": "ncm.search.ncm.search.kw2.type1.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw2.type1002.none.001",
+      "sampleHash": "93889476e8ebdf7d3cc1478983f86964df413bfa3f42115391a2836b0845e60d",
+      "rawFile": "ncm.search.ncm.search.kw2.type1002.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.search.kw3.type1014.none.001",
+      "sampleHash": "28b9f2cf08e6f824fdf8b71881319d058e0566e4b67a0b83acba123f0e885fbb",
+      "rawFile": "ncm.search.ncm.search.kw3.type1014.none.001.raw.json"
     },
     {
       "caseId": "ncm.search.type999.none.neg.001",

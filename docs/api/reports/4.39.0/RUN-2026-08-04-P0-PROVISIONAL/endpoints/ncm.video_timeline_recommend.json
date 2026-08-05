@@ -31,15 +31,1873 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.video_timeline_recommend.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 173,
+        "error": null,
+        "sampleHash": "934f62f6b9bf84129cd1a57544b07b99296b0a1d99e0692d73f49805578d60ad",
+        "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.video_timeline_recommend.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "ae6b729255554185e94f940a8f25bc86e86f111b6c9f98716afd6881ada85694",
+        "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.video_timeline_recommend.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "fb716be8bbcb4225ba4d41693fed8e3834833da5d2aceee1cd2671c26c805556",
+        "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.video_timeline_recommend.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "msg": null,
+            "code": 301
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "411b204b2858061636cbb003c612a5b37c94dbad2f9e4afa9af05a84052d8e97",
+        "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "datas[].alg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "special_first_page_rcmd"
+    },
+    {
+      "jsonPath": "datas[].data.alg",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "special_first_page_rcmd"
+    },
+    {
+      "jsonPath": "datas[].data.commentCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "64"
+    },
+    {
+      "jsonPath": "datas[].data.coverUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "https://p4.music.126.net/EV2eQMgpQLq5zc9YhWCdQQ==/1099511643"
+    },
+    {
+      "jsonPath": "datas[].data.creator.accountStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.creator.authority",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.creator.authStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.creator.avatarImgId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "109951163942312050"
+    },
+    {
+      "jsonPath": "datas[].data.creator.avatarImgIdStr",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "109951163942312054"
+    },
+    {
+      "jsonPath": "datas[].data.creator.avatarUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "http://p4.music.126.net/35PXSTHTHrr8kB0gXhphug==/10995116394"
+    },
+    {
+      "jsonPath": "datas[].data.creator.backgroundImgId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "109951163311468640"
+    },
+    {
+      "jsonPath": "datas[].data.creator.backgroundImgIdStr",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "109951163311468647"
+    },
+    {
+      "jsonPath": "datas[].data.creator.backgroundUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "http://p3.music.126.net/2H7rKG3MgjASUQVczWfSGg==/10995116331"
+    },
+    {
+      "jsonPath": "datas[].data.creator.birthday",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "937843200000"
+    },
+    {
+      "jsonPath": "datas[].data.creator.city",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "500101"
+    },
+    {
+      "jsonPath": "datas[].data.creator.defaultAvatar",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "datas[].data.creator.description",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "datas[].data.creator.detailDescription",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "datas[].data.creator.djStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.creator.experts",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.creator.experts.1",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "音乐视频达人"
+    },
+    {
+      "jsonPath": "datas[].data.creator.experts.2",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "音乐|生活图文达人"
+    },
+    {
+      "jsonPath": "datas[].data.creator.expertTags",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.creator.followed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "datas[].data.creator.gender",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "datas[].data.creator.mutual",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "datas[].data.creator.nickname",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "Baby俊崽崽"
+    },
+    {
+      "jsonPath": "datas[].data.creator.province",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "500000"
+    },
+    {
+      "jsonPath": "datas[].data.creator.remarkName",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.creator.signature",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "B站/微博：Baby俊崽崽"
+    },
+    {
+      "jsonPath": "datas[].data.creator.userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1464604408"
+    },
+    {
+      "jsonPath": "datas[].data.creator.userType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.creator.vipType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "11"
+    },
+    {
+      "jsonPath": "datas[].data.description",
+      "rawType": "union<null|string>",
+      "presence": 3,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "【王俊凯】你的目光所及，会越来越美"
+    },
+    {
+      "jsonPath": "datas[].data.durationms",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "112000"
+    },
+    {
+      "jsonPath": "datas[].data.hasRelatedGameAd",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "datas[].data.height",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "720"
+    },
+    {
+      "jsonPath": "datas[].data.markTypes",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.playTime",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "187829"
+    },
+    {
+      "jsonPath": "datas[].data.praised",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "datas[].data.praisedCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "820"
+    },
+    {
+      "jsonPath": "datas[].data.previewDurationms",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.previewUrl",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.relatedInfo",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.relateSong",
+      "rawType": "array<unknown>",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 2,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].a",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].al.id",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "34808177"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].al.name",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "爱，教会我们的事"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].al.pic",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "109951167056418000"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].al.pic_str",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "109951167056417996"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].al.picUrl",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "http://p4.music.126.net/g-s49MkIbrY2tilBGHMqGg==/10995116705"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].al.tns",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].alia[]",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "电视剧《遗憾拼图》片尾曲"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].ar[].alias",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].ar[].id",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "980025"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].ar[].name",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "周兴哲"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].ar[].tns",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].cd",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].cf",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].copyright",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].cp",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "7001"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].crbt",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].djId",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].dt",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "287306"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].fee",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].ftype",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].h.br",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "320000"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].h.fid",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].h.size",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "11494966"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].h.vd",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "-57977"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].id",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "424264505"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].l.br",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "128000"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].l.fid",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].l.size",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "4598013"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].l.vd",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "-53643"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].m.br",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "192000"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].m.fid",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].m.size",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "6896997"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].m.vd",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "-55369"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].mst",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "9"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].mv",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "5359061"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].name",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "你，好不好？"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].no",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].pop",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "100"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.cp",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.cs",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.dl",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.fee",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.fl",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.flag",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1541380"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.id",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "424264505"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.maxbr",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "999000"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.payed",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.pl",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.preSell",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.sp",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "7"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.st",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.subp",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].privilege.toast",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].pst",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].publishTime",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1470326400000"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].rt",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].rtUrl",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].rtUrls",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].rtype",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].rurl",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].s_id",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].st",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].t",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "datas[].data.relateSong[].v",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "137"
+    },
+    {
+      "jsonPath": "datas[].data.resolutions[].resolution",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "240"
+    },
+    {
+      "jsonPath": "datas[].data.resolutions[].size",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "6437731"
+    },
+    {
+      "jsonPath": "datas[].data.scm",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1.music-video-timeline.video_timeline.video.181017.-29504360"
+    },
+    {
+      "jsonPath": "datas[].data.shareCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "59"
+    },
+    {
+      "jsonPath": "datas[].data.subscribed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "datas[].data.threadId",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "R_VI_62_F55C7BE57381AE01C7AF02920787900D"
+    },
+    {
+      "jsonPath": "datas[].data.title",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "都会好的~"
+    },
+    {
+      "jsonPath": "datas[].data.urlInfo.id",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "F55C7BE57381AE01C7AF02920787900D"
+    },
+    {
+      "jsonPath": "datas[].data.urlInfo.needPay",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "datas[].data.urlInfo.payInfo",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.urlInfo.r",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "480"
+    },
+    {
+      "jsonPath": "datas[].data.urlInfo.size",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "10368735"
+    },
+    {
+      "jsonPath": "datas[].data.urlInfo.url",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "http://vodkgeyttp9.vod.126.net/cloudmusic/AaCf6oq5_268521282"
+    },
+    {
+      "jsonPath": "datas[].data.urlInfo.validityTime",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1200"
+    },
+    {
+      "jsonPath": "datas[].data.vid",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "F55C7BE57381AE01C7AF02920787900D"
+    },
+    {
+      "jsonPath": "datas[].data.videoGroup[].alg",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.videoGroup[].id",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "11137"
+    },
+    {
+      "jsonPath": "datas[].data.videoGroup[].name",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "TFBOYS"
+    },
+    {
+      "jsonPath": "datas[].data.videoUserLiveInfo",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].data.width",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1280"
+    },
+    {
+      "jsonPath": "datas[].displayed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "datas[].extAlg",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "datas[].type",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "hasmore",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "msg",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "lastSeenCase": "ncm.video_timeline_recommend.anon.001",
+      "example": "发现了更多新内容"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "未登录层 301 系统错误（接口需会话）；AUTH_ANON（游客 cookie）可满足（200）；AUTH_USER 层待补",
+  "evidence": [
+    {
+      "caseId": "ncm.video_timeline_recommend.anon.001",
+      "sampleHash": "934f62f6b9bf84129cd1a57544b07b99296b0a1d99e0692d73f49805578d60ad",
+      "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.video_timeline_recommend.inv.001",
+      "sampleHash": "ae6b729255554185e94f940a8f25bc86e86f111b6c9f98716afd6881ada85694",
+      "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.video_timeline_recommend.none.001",
+      "sampleHash": "fb716be8bbcb4225ba4d41693fed8e3834833da5d2aceee1cd2671c26c805556",
+      "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.video_timeline_recommend.none.002",
+      "sampleHash": "411b204b2858061636cbb003c612a5b37c94dbad2f9e4afa9af05a84052d8e97",
+      "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.none.002.raw.json"
+    }
+  ]
 }

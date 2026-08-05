@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "caseId": "ncm.song_chorus.anon.001",
+    "apiAuditId": "ncm.song_chorus",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "449818741"
+    },
+    "startedAt": "2026-08-05T02:38:05.965Z",
+    "endedAt": "2026-08-05T02:38:06.088Z",
+    "durationMs": 123,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "chorus": [
+      {
+        "id": 449818741,
+        "startTime": 120930,
+        "endTime": 164319,
+        "ugcLocked": 1
+      }
+    ],
+    "data": [
+      {
+        "id": 449818741,
+        "startTime": 120930,
+        "endTime": 164319,
+        "ugcLocked": 1
+      }
+    ]
+  },
+  "error": null
+}

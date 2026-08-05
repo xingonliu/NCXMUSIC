@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_fans.id0.none.neg.001",
+    "apiAuditId": "ncm.artist_fans",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "0"
+    },
+    "startedAt": "2026-08-05T02:58:02.622Z",
+    "endedAt": "2026-08-05T02:58:02.684Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 404,
+    "body": {
+      "code": 404,
+      "message": "无相关艺人",
+      "data": null
+    },
+    "cookieCount": 0
+  }
+}

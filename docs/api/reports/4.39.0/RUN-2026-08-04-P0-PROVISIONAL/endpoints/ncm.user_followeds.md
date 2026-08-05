@@ -91,3 +91,62 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: 未登录层 301 系统错误（接口需会话）；AUTH_ANON（游客 cookie）可满足（200）；AUTH_USER 层待补）
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.user_followeds.anon.001 | AUTH_ANON | - | 200 | 183 |  |
+| ncm.user_followeds.inv.001 | AUTH_INVALID_EXPIRED | err | 301 | - | code 301 |
+| ncm.user_followeds.none.001 | AUTH_NONE | err | 301 | - | code 301 |
+| ncm.user_followeds.uid0.none.neg.001 | AUTH_NONE | err | 301 | - | code 301 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `followeds[].accountStatus` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `followeds[].authStatus` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `followeds[].avatarDetail` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `followeds[].avatarUrl` | string | 3 | 0 | 0 | AUTH_ANON | `http://p3.music.126.net/SUeqMM8HOIpHv9Nh` |
+| `followeds[].eventCount` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `followeds[].experts` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `followeds[].expertTags` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `followeds[].followed` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `followeds[].followeds` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `followeds[].follows` | number | 3 | 0 | 0 | AUTH_ANON | `6` |
+| `followeds[].gender` | number | 3 | 0 | 0 | AUTH_ANON | `2` |
+| `followeds[].mutual` | boolean | 3 | 0 | 0 | AUTH_ANON | `false` |
+| `followeds[].nickname` | string | 3 | 0 | 0 | AUTH_ANON | `用户07-2711` |
+| `followeds[].playlistCount` | number | 3 | 0 | 0 | AUTH_ANON | `4` |
+| `followeds[].py` | string | 3 | 0 | 0 | AUTH_ANON | `yh07-2711` |
+| `followeds[].remarkName` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `followeds[].signature` | union<string|null> | 3 | 2 | 0 | AUTH_ANON | `橹穆常相见` |
+| `followeds[].time` | number | 3 | 0 | 0 | AUTH_ANON | `1785898786542` |
+| `followeds[].userId` | number | 3 | 0 | 0 | AUTH_ANON | `17130968191` |
+| `followeds[].userType` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `followeds[].vipRights.associator` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `followeds[].vipRights.associator.iconUrl` | string | 2 | 0 | 0 | AUTH_ANON | `https://p6.music.126.net/obj/wonDlsKUwrL` |
+| `followeds[].vipRights.associator.rights` | boolean | 2 | 0 | 0 | AUTH_ANON | `true` |
+| `followeds[].vipRights.associator.vipCode` | number | 2 | 0 | 0 | AUTH_ANON | `100` |
+| `followeds[].vipRights.extInfo.logo.logoDto.actionUrl` | string | 2 | 0 | 0 | AUTH_ANON | `orpheus://rnpage?component=rn-vip-center` |
+| `followeds[].vipRights.extInfo.logo.logoDto.height` | number | 2 | 0 | 0 | AUTH_ANON | `48` |
+| `followeds[].vipRights.extInfo.logo.logoDto.interestId` | number | 2 | 0 | 0 | AUTH_ANON | `-100` |
+| `followeds[].vipRights.extInfo.logo.logoDto.logoType` | number | 2 | 0 | 0 | AUTH_ANON | `2` |
+| `followeds[].vipRights.extInfo.logo.logoDto.url` | string | 2 | 0 | 0 | AUTH_ANON | `https://p6.music.126.net/obj/wonDlsKUwrL` |
+| `followeds[].vipRights.extInfo.logo.logoDto.width` | number | 2 | 0 | 0 | AUTH_ANON | `144` |
+| `followeds[].vipRights.extInfo.logo.vipType` | number | 2 | 0 | 0 | AUTH_ANON | `100` |
+| `followeds[].vipRights.memberLogo` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `followeds[].vipRights.musicPackage` | null | 1 | 1 | 0 | AUTH_ANON |  |
+| `followeds[].vipRights.musicPackage.iconUrl` | string | 2 | 0 | 0 | AUTH_ANON | `https://p5.music.126.net/obj/wonDlsKUwrL` |
+| `followeds[].vipRights.musicPackage.rights` | boolean | 2 | 0 | 0 | AUTH_ANON | `true` |
+| `followeds[].vipRights.musicPackage.vipCode` | number | 2 | 0 | 0 | AUTH_ANON | `220` |
+| `followeds[].vipRights.redplus` | null | 3 | 3 | 0 | AUTH_ANON |  |
+| `followeds[].vipRights.redVipAnnualCount` | number | 3 | 0 | 0 | AUTH_ANON | `-1` |
+| `followeds[].vipRights.redVipLevel` | number | 3 | 0 | 0 | AUTH_ANON | `1` |
+| `followeds[].vipRights.relationType` | number | 3 | 0 | 0 | AUTH_ANON | `0` |
+| `followeds[].vipType` | number | 3 | 0 | 0 | AUTH_ANON | `11` |
+| `more` | boolean | 1 | 0 | 0 | AUTH_ANON | `true` |
+| `size` | number | 1 | 0 | 0 | AUTH_ANON | `14344393` |

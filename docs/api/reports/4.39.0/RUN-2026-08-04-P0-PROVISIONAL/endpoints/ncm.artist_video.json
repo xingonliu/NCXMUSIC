@@ -42,15 +42,1561 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.artist_video.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 115,
+        "error": null,
+        "sampleHash": "c5c812c6eb0198d5e5fb3f54985c9e00c4b86e35d47161423c77cd85eb1085f0",
+        "rawFile": "ncm.artist_video.ncm.artist_video.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_video.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 400,
+        "durationMs": 50,
+        "error": null,
+        "sampleHash": "c2e654f7909a359e4b1b2defaaeb2c44e7ea1762f3d23fa4b592c4951e6e9f0b",
+        "rawFile": "ncm.artist_video.ncm.artist_video.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_video.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 105,
+        "error": null,
+        "sampleHash": "a845f616734c762dd1f9ff45214f68489405fb3267388cee5a203fdb9ed25e02",
+        "rawFile": "ncm.artist_video.ncm.artist_video.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.artist_video.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 110,
+        "error": null,
+        "sampleHash": "e512d205dd09a9fae15923146a7a269ea30ff2f4f383c2eda770cc76fc567266",
+        "rawFile": "ncm.artist_video.ncm.artist_video.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.id0.none.neg.001",
+      "lastSeenCase": "ncm.artist_video.id0.none.neg.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.page.cursor",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "10"
+    },
+    {
+      "jsonPath": "data.page.more",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.page.size",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "10"
+    },
+    {
+      "jsonPath": "data.records[].actionTime",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].alg",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].followedShowReason",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].id",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "34724956"
+    },
+    {
+      "jsonPath": "data.records[].logInfo",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].matchField",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.records[].matchFieldContent",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].position",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].priorShowLive",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].reason",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].reasonType",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.audioDTO",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.coverColor",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "-1118482"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.coverDetail",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.coverDynamicUrl",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.coverHeight",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "240"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.coverPicKey",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "109951172654633627"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.coverUrl",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "http://p4.music.126.net/2SLY7ajwbrpJjzpNDFJtGQ==/10995117265"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.coverWidth",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "426"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.desc",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.duration",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "14000"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.graphic",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.greatCover",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.id",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "34724956"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.interveneText",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.mixInfo",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.originalTitle",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.pubTime",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "1771171201447"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.relatedPubUsers",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.talk",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.text",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "G.E.M.邓紫棋为大家送来了2026马年祝福"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.threadId",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "R_MV_5_34724956"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.type",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "3"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.userId",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.video",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].check",
+      "rawType": "boolean",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].container",
+      "rawType": "string",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "m3u8"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].duration",
+      "rawType": "number",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "14000"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].height",
+      "rawType": "number",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "240"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].md5",
+      "rawType": "string",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].size",
+      "rawType": "number",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "938884"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].tag",
+      "rawType": "string",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "TS_240P"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].tagSign.br",
+      "rawType": "number",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "240"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].tagSign.tagSign",
+      "rawType": "string",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "TS_240P"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].tagSign.type",
+      "rawType": "string",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "TS"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].url",
+      "rawType": "string",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "cloudmusic/obj/core/78053871187/271463f602bbfcaca12db4a8df20"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogBaseData.videos[].width",
+      "rawType": "number",
+      "presence": 27,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "426"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.algSong",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artistName",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "G.E.M.邓紫棋"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].followed",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].id",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "7763"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].img1v1Url",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "http://p3.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/10995116777"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].mlogUser.avatarDetail.identityIconUrl",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].mlogUser.avatarDetail.identityLevel",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].mlogUser.avatarDetail.userType",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].mlogUser.avatarUrl",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "http://p4.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/10995116777"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].mlogUser.followed",
+      "rawType": "boolean",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].mlogUser.nickname",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "GEM鄧紫棋"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].mlogUser.userId",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "281382"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].mlogUser.userType",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.artists[].name",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "G.E.M.邓紫棋"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.canCollect",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.channelTag",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.collectReason",
+      "rawType": "union<null|string>",
+      "presence": 9,
+      "nulls": 8,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "该视频没有配乐，不可添加到视频歌单"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.commentCount",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "1707"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.liked",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.likedCount",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "13764"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.playCount",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "125627"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.shareCount",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "1147"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.albumName",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "Sacrifice"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.artists[].artistId",
+      "rawType": "number",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "1047337"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.artists[].artistName",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "英雄联盟"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.coverUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "http://p3.music.126.net/zthIUEzkMAb4xKe-Y0fwDw==/10995117213"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.duration",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "249306"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.endTime",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "2754115754"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.isLiked",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "Sacrifice"
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.playedNum",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.privilege",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.song.startTime",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.specialTag",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogExtVO.videoStartPlayTime",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.mlogPlaylists",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.relatedPubUsers",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.shareUrl",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "https://music.163.com/mv/34724956/#hash=955344761f23"
+    },
+    {
+      "jsonPath": "data.records[].resource.source",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].resource.status",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.records[].resource.userProfile",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].sameCity",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.records[].srcId",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.records[].type",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.artist_video.anon.001",
+      "lastSeenCase": "ncm.artist_video.none.001",
+      "example": "ok"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.artist_video.anon.001",
+      "sampleHash": "c5c812c6eb0198d5e5fb3f54985c9e00c4b86e35d47161423c77cd85eb1085f0",
+      "rawFile": "ncm.artist_video.ncm.artist_video.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_video.id0.none.neg.001",
+      "sampleHash": "c2e654f7909a359e4b1b2defaaeb2c44e7ea1762f3d23fa4b592c4951e6e9f0b",
+      "rawFile": "ncm.artist_video.ncm.artist_video.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_video.inv.001",
+      "sampleHash": "a845f616734c762dd1f9ff45214f68489405fb3267388cee5a203fdb9ed25e02",
+      "rawFile": "ncm.artist_video.ncm.artist_video.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.artist_video.none.001",
+      "sampleHash": "e512d205dd09a9fae15923146a7a269ea30ff2f4f383c2eda770cc76fc567266",
+      "rawFile": "ncm.artist_video.ncm.artist_video.none.001.raw.json"
+    }
+  ]
 }

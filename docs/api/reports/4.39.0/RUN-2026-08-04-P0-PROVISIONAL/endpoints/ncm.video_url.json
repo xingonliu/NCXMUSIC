@@ -34,15 +34,59 @@
   },
   "matrix": {
     "planned": 54,
-    "executed": 0,
-    "cases": []
+    "executed": 1,
+    "cases": [
+      {
+        "caseId": "ncm.video_url.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 59,
+        "error": null,
+        "sampleHash": "baf728135c6dbecd128774273ae8ce875817357e199cc6737eaebe853d2e9dc7",
+        "rawFile": "ncm.video_url.ncm.video_url.id0.none.neg.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.video_url.id0.none.neg.001",
+      "lastSeenCase": "ncm.video_url.id0.none.neg.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "urls",
+      "rawType": "array<unknown>",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 1,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.video_url.id0.none.neg.001",
+      "lastSeenCase": "ncm.video_url.id0.none.neg.001",
+      "example": "undefined"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "blocked_by_prerequisite",
-  "blocker": "无 videoId 夹具（Phase 2 视频搜索未产出；待视频域发现后补测）",
-  "evidence": []
+  "blocker": "缺夹具：videoId/threadId/style 无生产者（search type=1002/1014 被 -462 阻断）",
+  "evidence": [
+    {
+      "caseId": "ncm.video_url.id0.none.neg.001",
+      "sampleHash": "baf728135c6dbecd128774273ae8ce875817357e199cc6737eaebe853d2e9dc7",
+      "rawFile": "ncm.video_url.ncm.video_url.id0.none.neg.001.raw.json"
+    }
+  ]
 }

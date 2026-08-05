@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "caseId": "ncm.comment.anon.001",
+    "apiAuditId": "ncm.comment",
+    "auth": "AUTH_ANON",
+    "params": {
+      "t": "1",
+      "type": "1",
+      "id": "449818741",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:42:46.070Z",
+    "endedAt": "2026-08-05T02:42:46.202Z",
+    "durationMs": 132,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "参数错误",
+    "debugInfo": null,
+    "data": null,
+    "failData": null,
+    "msg": "参数错误"
+  },
+  "error": null
+}

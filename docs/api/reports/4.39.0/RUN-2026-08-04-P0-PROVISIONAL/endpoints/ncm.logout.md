@@ -91,7 +91,7 @@
 
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: AUTH_USER 缺失；仅未登录/无效 Cookie 负向）
+- 终态：**partial**（blocker: AUTH_USER 缺失）
 
 | caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |

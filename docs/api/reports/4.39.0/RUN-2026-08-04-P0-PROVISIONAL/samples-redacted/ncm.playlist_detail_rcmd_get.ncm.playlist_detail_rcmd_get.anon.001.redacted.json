@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "caseId": "ncm.playlist_detail_rcmd_get.anon.001",
+    "apiAuditId": "ncm.playlist_detail_rcmd_get",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "2936255937"
+    },
+    "startedAt": "2026-08-05T02:42:58.544Z",
+    "endedAt": "2026-08-05T02:42:58.691Z",
+    "durationMs": 147,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "message": "success",
+    "data": {
+      "rcmdTitle": "喜欢这个歌单的用户也听了",
+      "jumpUrl": "orpheus://playlistCollection",
+      "recPlaylist": [
+        {
+          "playlist": {
+            "id": 134839472,
+            "name": "车载奢靡享受G/Deep House深度灵魂慢摇",
+            "coverImgId": 109951167307403870,
+            "coverImgUrl": "http://p1.music.126.net/8u788_Kz5Hndj6boRON7OA==/109951167307403867.jpg#hash=3a9d50bce3e4",
+            "playCount": 51285188,
+            "specialType": 0,
+            "action": "orpheus://playlist/134839472?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 5381381410,
+            "name": "欧美高燃踩点丨荷尔蒙爆炸般的暴力美学",
+            "coverImgId": 109951165551317420,
+            "coverImgUrl": "http://p1.music.126.net/kiZ1A-FJmnlzsZIcrO-IjQ==/109951165551317421.jpg#hash=271570f79db6",
+            "playCount": 26834220,
+            "specialType": 0,
+            "action": "orpheus://playlist/5381381410?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 2145434166,
+            "name": "「嗨爆」在宿舍御用的蹦迪歌曲",
+            "coverImgId": 109951164573695520,
+            "coverImgUrl": "http://p1.music.126.net/Pz2sDgWC-m7733Jp2ATBZA==/109951164573695512.jpg#hash=99ff8df9fdfb",
+            "playCount": 62642424,
+            "specialType": 0,
+            "action": "orpheus://playlist/2145434166?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 645384312,
+            "name": "不得了！这些英文歌的热评信息量好大……",
+            "coverImgId": 19155691579189684,
+            "coverImgUrl": "http://p1.music.126.net/Izq2rrMzKPNaxmgg0O0KNA==/19155691579189685.jpg#hash=b33a5f90397b",
+            "playCount": 33822292,
+            "specialType": 0,
+            "action": "orpheus://playlist/645384312?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 406007748,
+            "name": "【看球听歌】NBA篮球宣传单曲大全",
+            "coverImgId": 18645518184839948,
+            "coverImgUrl": "http://p1.music.126.net/-peL-5AzEaIUJh_vCSS2dA==/18645518184839947.jpg#hash=b43b229759b3",
+            "playCount": 29476272,
+            "specialType": 0,
+            "action": "orpheus://playlist/406007748?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 74477909,
+            "name": "你要的激烈驾驶感！高强节奏【车载音乐】",
+            "coverImgId": 7806532558346031,
+            "coverImgUrl": "http://p1.music.126.net/RpPXH90uNvqTw2Qis2z2Mw==/7806532558346031.jpg#hash=7f4b7b345271",
+            "playCount": 34878428,
+            "specialType": 0,
+            "action": "orpheus://playlist/74477909?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        }
+      ]
+    }
+  },
+  "error": null
+}

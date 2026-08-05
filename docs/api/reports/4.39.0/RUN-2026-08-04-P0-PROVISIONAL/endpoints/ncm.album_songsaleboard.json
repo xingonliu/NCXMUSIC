@@ -36,15 +36,342 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.album_songsaleboard.bad.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 404,
+        "error": {
+          "class": "other",
+          "status": 404,
+          "code": 404,
+          "body": {
+            "code": 404,
+            "message": "接口未找到！"
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "518727ce147abaae93f32678a272d0c34d2878865c70186661ee679ded8f3fc2",
+        "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.bad.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.album_songsaleboard.daily.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 58,
+        "error": null,
+        "sampleHash": "9ab6c2ffe90f1e7e99d845b71e7c2c840335ec07a3dbc7a739781914e9491c76",
+        "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.album_songsaleboard.daily.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 52,
+        "error": null,
+        "sampleHash": "611e63257ac888327d17fed61c28e1b984f9a29cd36d66a669a6e5c822e41707",
+        "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.album_songsaleboard.daily.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 60,
+        "error": null,
+        "sampleHash": "bc2c777ea610442ea527d04d0f787d8da663cd04180880b96f0ae83efd84ba42",
+        "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "products[].albumId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "258512180"
+    },
+    {
+      "jsonPath": "products[].albumName",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "量变临界点"
+    },
+    {
+      "jsonPath": "products[].albumType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "products[].artistName",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "华晨宇"
+    },
+    {
+      "jsonPath": "products[].bundling",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "products[].coverUrl",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "http://p3.music.126.net/Dz-vO_8bpeb-58AUtQON0Q==/10995117034"
+    },
+    {
+      "jsonPath": "products[].newAlbum",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "products[].newest",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "products[].period",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "products[].price",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "27"
+    },
+    {
+      "jsonPath": "products[].rank",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "products[].rankIncr",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "products[].saleNum",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "256"
+    },
+    {
+      "jsonPath": "products[].salesCertificationSystemLevelCode",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "collectionDiamond"
+    },
+    {
+      "jsonPath": "products[].saleType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "products[].status",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.album_songsaleboard.daily.anon.001",
+      "lastSeenCase": "ncm.album_songsaleboard.daily.none.001",
+      "example": "0"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.album_songsaleboard.bad.none.neg.001",
+      "sampleHash": "518727ce147abaae93f32678a272d0c34d2878865c70186661ee679ded8f3fc2",
+      "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.bad.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_songsaleboard.daily.anon.001",
+      "sampleHash": "9ab6c2ffe90f1e7e99d845b71e7c2c840335ec07a3dbc7a739781914e9491c76",
+      "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_songsaleboard.daily.inv.001",
+      "sampleHash": "611e63257ac888327d17fed61c28e1b984f9a29cd36d66a669a6e5c822e41707",
+      "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.album_songsaleboard.daily.none.001",
+      "sampleHash": "bc2c777ea610442ea527d04d0f787d8da663cd04180880b96f0ae83efd84ba42",
+      "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.none.001.raw.json"
+    }
+  ]
 }

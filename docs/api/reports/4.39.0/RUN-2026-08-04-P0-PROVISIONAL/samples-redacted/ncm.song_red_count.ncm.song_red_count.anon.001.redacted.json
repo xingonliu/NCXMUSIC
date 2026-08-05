@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "caseId": "ncm.song_red_count.anon.001",
+    "apiAuditId": "ncm.song_red_count",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "449818741"
+    },
+    "startedAt": "2026-08-05T02:38:47.240Z",
+    "endedAt": "2026-08-05T02:38:47.343Z",
+    "durationMs": 103,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "data": {
+      "count": 30529634,
+      "countDesc": "100w+"
+    }
+  },
+  "error": null
+}

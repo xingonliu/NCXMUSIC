@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "caseId": "ncm.user_playlist_collect.inv.001",
+    "apiAuditId": "ncm.user_playlist_collect",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "uid": "281382",
+      "limit": 20,
+      "offset": 0
+    },
+    "startedAt": "2026-08-05T02:59:58.022Z",
+    "endedAt": "2026-08-05T02:59:58.097Z",
+    "durationMs": 75,
+    "attempts": 1
+  },
+  "body": {
+    "data": {
+      "playlist": [],
+      "more": false,
+      "count": 0
+    },
+    "code": 200
+  },
+  "error": null
+}

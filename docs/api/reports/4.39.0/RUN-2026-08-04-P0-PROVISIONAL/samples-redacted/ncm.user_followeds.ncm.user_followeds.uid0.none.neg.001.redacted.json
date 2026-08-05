@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "caseId": "ncm.user_followeds.uid0.none.neg.001",
+    "apiAuditId": "ncm.user_followeds",
+    "auth": "AUTH_NONE",
+    "params": {
+      "uid": "0"
+    },
+    "startedAt": "2026-08-05T02:59:54.023Z",
+    "endedAt": "2026-08-05T02:59:54.109Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 301,
+    "body": {
+      "code": 301,
+      "message": "系统错误",
+      "debugInfo": null,
+      "data": null,
+      "failData": null
+    },
+    "cookieCount": 1
+  }
+}

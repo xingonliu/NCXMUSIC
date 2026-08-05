@@ -92,3 +92,36 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 缺失（B-002，写操作已预授权但账号未到位））
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.album_list.bad.none.neg.001 | AUTH_NONE | - | 200 | 75 |  |
+| ncm.album_list.hot.none.001 | AUTH_NONE | - | 200 | 84 |  |
+| ncm.album_list.new.anon.001 | AUTH_ANON | - | 200 | 58 |  |
+| ncm.album_list.new.inv.001 | AUTH_INVALID_EXPIRED | - | 200 | 52 |  |
+| ncm.album_list.new.none.001 | AUTH_NONE | - | 200 | 64 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 5 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `200` |
+| `products[].albumId` | number | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `387975057` |
+| `products[].albumName` | string | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `光与盐 (下)` |
+| `products[].albumType` | number | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `0` |
+| `products[].area` | number | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `7` |
+| `products[].artistName` | string | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `周峻炜` |
+| `products[].artistType` | number | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `0` |
+| `products[].coverUrl` | string | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `http://p4.music.126.net/5uRvQ8NIMDgIEygB` |
+| `products[].customPriceConfig` | null | 15 | 15 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED |  |
+| `products[].newAlbum` | boolean | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `true` |
+| `products[].price` | number | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `20` |
+| `products[].productId` | number | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `0` |
+| `products[].pubTime` | number | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `1785208560790` |
+| `products[].saleNum` | number | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `4198` |
+| `products[].saleType` | number | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `0` |
+| `products[].status` | number | 15 | 0 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED | `0` |
+| `products[].topfans` | null | 15 | 15 | 0 | AUTH_NONE,AUTH_ANON,AUTH_INVALID_EXPIRED |  |

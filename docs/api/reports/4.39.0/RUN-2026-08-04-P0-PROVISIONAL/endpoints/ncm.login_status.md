@@ -91,7 +91,7 @@
 
 ## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
 
-- 终态：**partial**（blocker: AUTH_ANON/USER 层缺样本；无参数接口无法满足每层 3 个有差异样本）
+- 终态：**partial**（blocker: AUTH_ANON/USER 层缺样本）
 
 | caseId | auth | status | code | durationMs | error |
 | --- | --- | --- | --- | --- | --- |

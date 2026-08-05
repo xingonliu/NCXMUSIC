@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_hot.anon.001",
+    "apiAuditId": "ncm.comment_hot",
+    "auth": "AUTH_ANON",
+    "params": {
+      "id": "449818741",
+      "type": "1",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:42:40.295Z",
+    "endedAt": "2026-08-05T02:42:40.359Z",
+    "durationMs": 64,
+    "attempts": 1
+  },
+  "body": {
+    "topComments": [],
+    "hasMore": false,
+    "hotComments": [],
+    "total": 0,
+    "code": 200
+  },
+  "error": null
+}

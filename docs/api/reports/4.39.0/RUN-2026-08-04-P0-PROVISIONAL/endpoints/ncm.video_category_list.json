@@ -34,15 +34,218 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.video_category_list.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 71,
+        "error": null,
+        "sampleHash": "fa1616f676a9a0a8311574b549ab5b92d904c20f2721daccac36d75d49184396",
+        "rawFile": "ncm.video_category_list.ncm.video_category_list.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.video_category_list.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "a0be7c7c05b54bc623bc0341bd90e34e68a022d01ec75d02b4b914175b7fdf49",
+        "rawFile": "ncm.video_category_list.ncm.video_category_list.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.video_category_list.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "60fb729159e91b6d5fdc40a6b0959ac6f1bb92c87b58a0acfd8b026b9863bfa3",
+        "rawFile": "ncm.video_category_list.ncm.video_category_list.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.video_category_list.none.002",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "6d32e0936cee85bf9115f35c9712acde614572982e7e0305b9337132f521959d",
+        "rawFile": "ncm.video_category_list.ncm.video_category_list.none.002.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_category_list.anon.001",
+      "lastSeenCase": "ncm.video_category_list.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data[].abExtInfo",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_category_list.anon.001",
+      "lastSeenCase": "ncm.video_category_list.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data[].id",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_category_list.anon.001",
+      "lastSeenCase": "ncm.video_category_list.anon.001",
+      "example": "58100"
+    },
+    {
+      "jsonPath": "data[].name",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_category_list.anon.001",
+      "lastSeenCase": "ncm.video_category_list.anon.001",
+      "example": "现场"
+    },
+    {
+      "jsonPath": "data[].relatedVideoType",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_category_list.anon.001",
+      "lastSeenCase": "ncm.video_category_list.anon.001",
+      "example": "TRANSVERSE"
+    },
+    {
+      "jsonPath": "data[].selectTab",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_category_list.anon.001",
+      "lastSeenCase": "ncm.video_category_list.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data[].url",
+      "rawType": "union<null|string>",
+      "presence": 3,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_category_list.anon.001",
+      "lastSeenCase": "ncm.video_category_list.anon.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.video_category_list.anon.001",
+      "lastSeenCase": "ncm.video_category_list.anon.001",
+      "example": "success"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "未登录层 301 系统错误（接口需会话）；AUTH_ANON（游客 cookie）可满足（200）；AUTH_USER 层待补",
+  "evidence": [
+    {
+      "caseId": "ncm.video_category_list.anon.001",
+      "sampleHash": "fa1616f676a9a0a8311574b549ab5b92d904c20f2721daccac36d75d49184396",
+      "rawFile": "ncm.video_category_list.ncm.video_category_list.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.video_category_list.inv.001",
+      "sampleHash": "a0be7c7c05b54bc623bc0341bd90e34e68a022d01ec75d02b4b914175b7fdf49",
+      "rawFile": "ncm.video_category_list.ncm.video_category_list.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.video_category_list.none.001",
+      "sampleHash": "60fb729159e91b6d5fdc40a6b0959ac6f1bb92c87b58a0acfd8b026b9863bfa3",
+      "rawFile": "ncm.video_category_list.ncm.video_category_list.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.video_category_list.none.002",
+      "sampleHash": "6d32e0936cee85bf9115f35c9712acde614572982e7e0305b9337132f521959d",
+      "rawFile": "ncm.video_category_list.ncm.video_category_list.none.002.raw.json"
+    }
+  ]
 }

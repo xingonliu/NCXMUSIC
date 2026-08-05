@@ -91,3 +91,13 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**failed_stable**（blocker: 模块级崩溃：Cannot read properties of undefined (reading split)，4/4 可复现（本地异常，非网络））
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.playlist_tracks.anon.001 | AUTH_ANON | err | - | - | other |
+| ncm.playlist_tracks.id0.none.neg.001 | AUTH_NONE | err | - | - | other |
+| ncm.playlist_tracks.inv.001 | AUTH_INVALID_EXPIRED | err | - | - | other |
+| ncm.playlist_tracks.none.001 | AUTH_NONE | err | - | - | other |

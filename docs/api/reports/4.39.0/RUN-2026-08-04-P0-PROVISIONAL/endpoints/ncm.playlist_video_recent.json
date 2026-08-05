@@ -26,15 +26,108 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 3,
+    "cases": [
+      {
+        "caseId": "ncm.playlist_video_recent.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 85,
+        "error": null,
+        "sampleHash": "cf62313feb59acbd11277d2935df1373a0ddf8ce2f954334b8905e823bc0b903",
+        "rawFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.playlist_video_recent.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 58,
+        "error": null,
+        "sampleHash": "9c2dbba9b7d12d7f1b058fb61ee77139443308eaa1a854c9d2c96644977d43ef",
+        "rawFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.playlist_video_recent.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 52,
+        "error": null,
+        "sampleHash": "4e02d8ebd6a18d754e38b886ec7a84910af6328b86a60ae0e8f095b65ca3bc47",
+        "rawFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_video_recent.anon.001",
+      "lastSeenCase": "ncm.playlist_video_recent.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.videos",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_video_recent.anon.001",
+      "lastSeenCase": "ncm.playlist_video_recent.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.playlist_video_recent.anon.001",
+      "lastSeenCase": "ncm.playlist_video_recent.none.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.playlist_video_recent.anon.001",
+      "sampleHash": "cf62313feb59acbd11277d2935df1373a0ddf8ce2f954334b8905e823bc0b903",
+      "rawFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playlist_video_recent.inv.001",
+      "sampleHash": "9c2dbba9b7d12d7f1b058fb61ee77139443308eaa1a854c9d2c96644977d43ef",
+      "rawFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.playlist_video_recent.none.001",
+      "sampleHash": "4e02d8ebd6a18d754e38b886ec7a84910af6328b86a60ae0e8f095b65ca3bc47",
+      "rawFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.none.001.raw.json"
+    }
+  ]
 }

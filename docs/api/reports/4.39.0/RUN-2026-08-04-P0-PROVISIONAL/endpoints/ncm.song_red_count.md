@@ -89,3 +89,21 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 缺失（B-002，写操作已预授权但账号未到位））
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.song_red_count.anon.001 | AUTH_ANON | - | 200 | 103 |  |
+| ncm.song_red_count.id0.none.neg.001 | AUTH_NONE | err | -462 | - | code -462 |
+| ncm.song_red_count.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.song_red_count.none.001 | AUTH_NONE | err | -462 | - | code -462 |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `code` | number | 1 | 0 | 0 | AUTH_ANON | `200` |
+| `data.count` | number | 1 | 0 | 0 | AUTH_ANON | `30529634` |
+| `data.countDesc` | string | 1 | 0 | 0 | AUTH_ANON | `100w+` |

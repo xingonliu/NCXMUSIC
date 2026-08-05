@@ -751,7 +751,7 @@
   "unknownFieldIds": [],
   "conflictIds": [],
   "terminalStatus": "partial",
-  "blocker": "ANON 成功样本仅证明未购付费歌 → code -105；AUTH_VIP/PURCHASED 缺失",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
   "evidence": [
     {
       "caseId": "ncm.song_download_url.A.anon.001",

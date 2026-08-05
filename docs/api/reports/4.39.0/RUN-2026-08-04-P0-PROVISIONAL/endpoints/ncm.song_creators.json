@@ -31,15 +31,316 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.song_creators.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 184,
+        "error": null,
+        "sampleHash": "ad0604a3375b1843d4e8642f73c35cebd200c1cdad91f5ce900bc111eeab3538",
+        "rawFile": "ncm.song_creators.ncm.song_creators.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_creators.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 79,
+        "error": null,
+        "sampleHash": "6b14377259189cca0a587d876b9a3be437249dbbd15679ccaf6d7ff382dfa06c",
+        "rawFile": "ncm.song_creators.ncm.song_creators.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_creators.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 170,
+        "error": null,
+        "sampleHash": "f9824d5bab1c8731dac79dc833cdbc6b526ac6737026ebf4cb2b3b510f07c7ce",
+        "rawFile": "ncm.song_creators.ncm.song_creators.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_creators.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 141,
+        "error": null,
+        "sampleHash": "c79b1833aa4e593c384f2a53d983edd4d248ce8686ed9d34bd269d1dd948bedd",
+        "rawFile": "ncm.song_creators.ncm.song_creators.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.id0.none.neg.001",
+      "lastSeenCase": "ncm.song_creators.id0.none.neg.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].creatorMetaVOS[].artistId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "7763"
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].creatorMetaVOS[].artistMessage[]",
+      "rawType": "string",
+      "presence": 18,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "粉丝数: 1434万"
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].creatorMetaVOS[].artistName",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "G.E.M.邓紫棋"
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].creatorMetaVOS[].artistPic",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "http://p1.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/10995116777"
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].creatorMetaVOS[].canFollowed",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].creatorMetaVOS[].identityMessage",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].creatorMetaVOS[].identityMessage.iconLinkUrl",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].creatorMetaVOS[].identityMessage.iconUrl",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880"
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].creatorMetaVOS[].identityMessage.showName",
+      "rawType": "string",
+      "presence": 6,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "香港歌手"
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].creatorMetaVOS[].isSub",
+      "rawType": "boolean",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].creatorMetaVOS[].jumpUrl",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "orpheus://nm/artist/home?id=7763"
+    },
+    {
+      "jsonPath": "data.songCreatorsRoleVos[].roleName",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "作词"
+    },
+    {
+      "jsonPath": "data.titleName",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "创作者"
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_creators.anon.001",
+      "lastSeenCase": "ncm.song_creators.none.001",
+      "example": "请求成功"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.song_creators.anon.001",
+      "sampleHash": "ad0604a3375b1843d4e8642f73c35cebd200c1cdad91f5ce900bc111eeab3538",
+      "rawFile": "ncm.song_creators.ncm.song_creators.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_creators.id0.none.neg.001",
+      "sampleHash": "6b14377259189cca0a587d876b9a3be437249dbbd15679ccaf6d7ff382dfa06c",
+      "rawFile": "ncm.song_creators.ncm.song_creators.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_creators.inv.001",
+      "sampleHash": "f9824d5bab1c8731dac79dc833cdbc6b526ac6737026ebf4cb2b3b510f07c7ce",
+      "rawFile": "ncm.song_creators.ncm.song_creators.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_creators.none.001",
+      "sampleHash": "c79b1833aa4e593c384f2a53d983edd4d248ce8686ed9d34bd269d1dd948bedd",
+      "rawFile": "ncm.song_creators.ncm.song_creators.none.001.raw.json"
+    }
+  ]
 }

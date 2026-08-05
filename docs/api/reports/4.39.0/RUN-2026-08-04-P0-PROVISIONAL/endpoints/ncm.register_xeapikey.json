@@ -90,7 +90,7 @@
     "XEAPI-001"
   ],
   "terminalStatus": "failed_stable",
-  "blocker": "XEAPI-001：模块要求解密负载含 sk，服务器返回 publicKey/version/nextUpdateTime；xeapiSignKey 静态密钥回退引导可用",
+  "blocker": "XEAPI-001：模块要求 sk，服务器返回 publicKey/version/nextUpdateTime；xeapiSignKey 回退可用",
   "evidence": [
     {
       "caseId": "ncm.register_xeapikey.none.min.001",

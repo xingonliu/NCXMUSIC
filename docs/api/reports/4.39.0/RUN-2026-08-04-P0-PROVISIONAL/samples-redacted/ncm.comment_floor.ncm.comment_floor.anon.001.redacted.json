@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "caseId": "ncm.comment_floor.anon.001",
+    "apiAuditId": "ncm.comment_floor",
+    "auth": "AUTH_ANON",
+    "params": {
+      "parentCommentId": "9563156604",
+      "id": "449818741",
+      "type": "1",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:57:25.137Z",
+    "endedAt": "2026-08-05T02:57:25.206Z",
+    "durationMs": 69,
+    "attempts": 1
+  },
+  "body": {
+    "code": 400,
+    "message": "参数错误",
+    "data": null
+  },
+  "error": null
+}

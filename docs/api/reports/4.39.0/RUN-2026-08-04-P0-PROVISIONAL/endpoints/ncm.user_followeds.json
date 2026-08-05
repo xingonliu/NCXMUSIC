@@ -39,15 +39,686 @@
   },
   "matrix": {
     "planned": 10,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.user_followeds.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 183,
+        "error": null,
+        "sampleHash": "89c92e4b7d4fef3780f9d6d8cf9cfdf570bd23f8293d3af2762728059f35caa6",
+        "rawFile": "ncm.user_followeds.ncm.user_followeds.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.user_followeds.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "be17edae3f74ba46084eea2972e8c1060f24cd095e7adf85b383deca2633166d",
+        "rawFile": "ncm.user_followeds.ncm.user_followeds.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.user_followeds.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "3362a6a5a837f9cff6d36702297e64ed55aa32246593a6e96dabd194860aa512",
+        "rawFile": "ncm.user_followeds.ncm.user_followeds.none.001.raw.json"
+      },
+      {
+        "caseId": "ncm.user_followeds.uid0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "status": "error",
+        "code": 301,
+        "error": {
+          "class": "other",
+          "status": 301,
+          "code": 301,
+          "body": {
+            "code": 301,
+            "message": "系统错误",
+            "debugInfo": null,
+            "data": null,
+            "failData": null
+          },
+          "message": "[object Object]"
+        },
+        "sampleHash": "ea7dc30994ea8a9a87a89706f9ade57f45aff49ba65fa95e0ee3d82a4d6c6fdf",
+        "rawFile": "ncm.user_followeds.ncm.user_followeds.uid0.none.neg.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "followeds[].accountStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "followeds[].authStatus",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "followeds[].avatarDetail",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "followeds[].avatarUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "http://p3.music.126.net/SUeqMM8HOIpHv9Nhl9qt9w==/10995116564"
+    },
+    {
+      "jsonPath": "followeds[].eventCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "followeds[].experts",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "followeds[].expertTags",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "followeds[].followed",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "followeds[].followeds",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "followeds[].follows",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "6"
+    },
+    {
+      "jsonPath": "followeds[].gender",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "followeds[].mutual",
+      "rawType": "boolean",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "followeds[].nickname",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "用户07-2711"
+    },
+    {
+      "jsonPath": "followeds[].playlistCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "4"
+    },
+    {
+      "jsonPath": "followeds[].py",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "yh07-2711"
+    },
+    {
+      "jsonPath": "followeds[].remarkName",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "followeds[].signature",
+      "rawType": "union<string|null>",
+      "presence": 3,
+      "nulls": 2,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "橹穆常相见"
+    },
+    {
+      "jsonPath": "followeds[].time",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "1785898786542"
+    },
+    {
+      "jsonPath": "followeds[].userId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "17130968191"
+    },
+    {
+      "jsonPath": "followeds[].userType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.associator",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "followeds[].vipRights.associator.iconUrl",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/3258218648"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.associator.rights",
+      "rawType": "boolean",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.associator.vipCode",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "100"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.extInfo.logo.logoDto.actionUrl",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "orpheus://rnpage?component=rn-vip-center&mainProcessCompat=1"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.extInfo.logo.logoDto.height",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "48"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.extInfo.logo.logoDto.interestId",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "-100"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.extInfo.logo.logoDto.logoType",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "2"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.extInfo.logo.logoDto.url",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/3258218648"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.extInfo.logo.logoDto.width",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "144"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.extInfo.logo.vipType",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "100"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.memberLogo",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "followeds[].vipRights.musicPackage",
+      "rawType": "null",
+      "presence": 1,
+      "nulls": 1,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "followeds[].vipRights.musicPackage.iconUrl",
+      "rawType": "string",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/2189287434"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.musicPackage.rights",
+      "rawType": "boolean",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.musicPackage.vipCode",
+      "rawType": "number",
+      "presence": 2,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "220"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.redplus",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": null
+    },
+    {
+      "jsonPath": "followeds[].vipRights.redVipAnnualCount",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "-1"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.redVipLevel",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "followeds[].vipRights.relationType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "followeds[].vipType",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "11"
+    },
+    {
+      "jsonPath": "more",
+      "rawType": "boolean",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "size",
+      "rawType": "number",
+      "presence": 1,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.user_followeds.anon.001",
+      "lastSeenCase": "ncm.user_followeds.anon.001",
+      "example": "14344393"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "未登录层 301 系统错误（接口需会话）；AUTH_ANON（游客 cookie）可满足（200）；AUTH_USER 层待补",
+  "evidence": [
+    {
+      "caseId": "ncm.user_followeds.anon.001",
+      "sampleHash": "89c92e4b7d4fef3780f9d6d8cf9cfdf570bd23f8293d3af2762728059f35caa6",
+      "rawFile": "ncm.user_followeds.ncm.user_followeds.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_followeds.inv.001",
+      "sampleHash": "be17edae3f74ba46084eea2972e8c1060f24cd095e7adf85b383deca2633166d",
+      "rawFile": "ncm.user_followeds.ncm.user_followeds.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_followeds.none.001",
+      "sampleHash": "3362a6a5a837f9cff6d36702297e64ed55aa32246593a6e96dabd194860aa512",
+      "rawFile": "ncm.user_followeds.ncm.user_followeds.none.001.raw.json"
+    },
+    {
+      "caseId": "ncm.user_followeds.uid0.none.neg.001",
+      "sampleHash": "ea7dc30994ea8a9a87a89706f9ade57f45aff49ba65fa95e0ee3d82a4d6c6fdf",
+      "rawFile": "ncm.user_followeds.ncm.user_followeds.uid0.none.neg.001.raw.json"
+    }
+  ]
 }

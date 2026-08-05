@@ -66,6 +66,142 @@
       "redactedFile": "ncm.album_detail.ncm.album_detail.none.001.redacted.json"
     },
     {
+      "caseId": "ncm.album_list_style.anon.001",
+      "apiAuditId": "ncm.album_list_style",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.album_list_style.ncm.album_list_style.anon.001.raw.json",
+      "rawSha256": "f841a46aff04d0903a6da240ded270996bab17c29f7247b48bb114f3531ecd6c",
+      "redactedFile": "ncm.album_list_style.ncm.album_list_style.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_list_style.bad.none.neg.001",
+      "apiAuditId": "ncm.album_list_style",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.album_list_style.ncm.album_list_style.bad.none.neg.001.raw.json",
+      "rawSha256": "c05493fbd23309d480baca1f69c9013e9d08ca55d11213b365197f95d909b8cc",
+      "redactedFile": "ncm.album_list_style.ncm.album_list_style.bad.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_list_style.inv.001",
+      "apiAuditId": "ncm.album_list_style",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.album_list_style.ncm.album_list_style.inv.001.raw.json",
+      "rawSha256": "db9702fae52b66df239456dba30de9bc7b1618fd6bb8421812ba0d923c46f17a",
+      "redactedFile": "ncm.album_list_style.ncm.album_list_style.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_list_style.none.001",
+      "apiAuditId": "ncm.album_list_style",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.album_list_style.ncm.album_list_style.none.001.raw.json",
+      "rawSha256": "04a87b6994598a55f32d2b9243b7372a9e680bbcdf1f7761498b6ba6d36dfd38",
+      "redactedFile": "ncm.album_list_style.ncm.album_list_style.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_list.bad.none.neg.001",
+      "apiAuditId": "ncm.album_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.album_list.ncm.album_list.bad.none.neg.001.raw.json",
+      "rawSha256": "70c34d709c050a813be699bb483979660ec7a364cf7f0bcf34d966da8714808a",
+      "redactedFile": "ncm.album_list.ncm.album_list.bad.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_list.hot.none.001",
+      "apiAuditId": "ncm.album_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.album_list.ncm.album_list.hot.none.001.raw.json",
+      "rawSha256": "9398524bb04bea79e9618a69015dcdf29d66dff9dfe9381902f5fa91cda87992",
+      "redactedFile": "ncm.album_list.ncm.album_list.hot.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_list.new.anon.001",
+      "apiAuditId": "ncm.album_list",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.album_list.ncm.album_list.new.anon.001.raw.json",
+      "rawSha256": "0242213e87c3c47bd98df3135341162045352a8717ea39110c9bffedd34d77be",
+      "redactedFile": "ncm.album_list.ncm.album_list.new.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_list.new.inv.001",
+      "apiAuditId": "ncm.album_list",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.album_list.ncm.album_list.new.inv.001.raw.json",
+      "rawSha256": "836aff25817ed45c4b29843022efe9b2b5997ee2a57cdbfeb254e99ec65d70ee",
+      "redactedFile": "ncm.album_list.ncm.album_list.new.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_list.new.none.001",
+      "apiAuditId": "ncm.album_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.album_list.ncm.album_list.new.none.001.raw.json",
+      "rawSha256": "ad669dc7da129441dc885b7b4d3b3830926539e215fc9f94354e88ca70e96e96",
+      "redactedFile": "ncm.album_list.ncm.album_list.new.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_new.anon.001",
+      "apiAuditId": "ncm.album_new",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.album_new.ncm.album_new.anon.001.raw.json",
+      "rawSha256": "e24e51ec566c8183b14122255e25e723dda3837b55afe50cddd528e018330c39",
+      "redactedFile": "ncm.album_new.ncm.album_new.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_new.inv.001",
+      "apiAuditId": "ncm.album_new",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.album_new.ncm.album_new.inv.001.raw.json",
+      "rawSha256": "314ee59caa6a44e92338c7ec5b772e2ea5f8828e6c4d458a98dd66156b8b59b4",
+      "redactedFile": "ncm.album_new.ncm.album_new.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_new.none.001",
+      "apiAuditId": "ncm.album_new",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.album_new.ncm.album_new.none.001.raw.json",
+      "rawSha256": "54adf278d16026bc21dca98147130ff2a5b032746bf46138725d508aaf4d8564",
+      "redactedFile": "ncm.album_new.ncm.album_new.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_new.zh.none.001",
+      "apiAuditId": "ncm.album_new",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.album_new.ncm.album_new.zh.none.001.raw.json",
+      "rawSha256": "0bc3d77135af004ff50cbfc86fdd2e0fa3a368c11ca288fdb1c5ff3787978249",
+      "redactedFile": "ncm.album_new.ncm.album_new.zh.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_newest.anon.001",
+      "apiAuditId": "ncm.album_newest",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.album_newest.ncm.album_newest.anon.001.raw.json",
+      "rawSha256": "803cd027a2706dcce6a64d69f6ebaef338f56af6286af92a68a648d73a509280",
+      "redactedFile": "ncm.album_newest.ncm.album_newest.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_newest.inv.001",
+      "apiAuditId": "ncm.album_newest",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.album_newest.ncm.album_newest.inv.001.raw.json",
+      "rawSha256": "94cac11699d9638da152cb9e3ed772946369642758bdbbde7ab1c5f3aac63973",
+      "redactedFile": "ncm.album_newest.ncm.album_newest.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_newest.none.001",
+      "apiAuditId": "ncm.album_newest",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.album_newest.ncm.album_newest.none.001.raw.json",
+      "rawSha256": "c09131b89e0138bdee916ba41a5e057b919eec2cd4427261ff8166ae020396c6",
+      "redactedFile": "ncm.album_newest.ncm.album_newest.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_newest.none.002",
+      "apiAuditId": "ncm.album_newest",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.album_newest.ncm.album_newest.none.002.raw.json",
+      "rawSha256": "dae40a829bb5c10fe770f600249695b9a93aa03d926bc4627a6c6388d6d59ec5",
+      "redactedFile": "ncm.album_newest.ncm.album_newest.none.002.redacted.json"
+    },
+    {
       "caseId": "ncm.album_privilege.anon.001",
       "apiAuditId": "ncm.album_privilege",
       "auth": "AUTH_ANON",
@@ -96,6 +232,38 @@
       "rawFile": "ncm.album_privilege.ncm.album_privilege.none.001.raw.json",
       "rawSha256": "555504c49e40f9b47adb9a5d5924c66c6c50e91755e4df76dd61257f24ae55f3",
       "redactedFile": "ncm.album_privilege.ncm.album_privilege.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_songsaleboard.bad.none.neg.001",
+      "apiAuditId": "ncm.album_songsaleboard",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.bad.none.neg.001.raw.json",
+      "rawSha256": "518727ce147abaae93f32678a272d0c34d2878865c70186661ee679ded8f3fc2",
+      "redactedFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.bad.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_songsaleboard.daily.anon.001",
+      "apiAuditId": "ncm.album_songsaleboard",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.anon.001.raw.json",
+      "rawSha256": "9ab6c2ffe90f1e7e99d845b71e7c2c840335ec07a3dbc7a739781914e9491c76",
+      "redactedFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_songsaleboard.daily.inv.001",
+      "apiAuditId": "ncm.album_songsaleboard",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.inv.001.raw.json",
+      "rawSha256": "611e63257ac888327d17fed61c28e1b984f9a29cd36d66a669a6e5c822e41707",
+      "redactedFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.album_songsaleboard.daily.none.001",
+      "apiAuditId": "ncm.album_songsaleboard",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.none.001.raw.json",
+      "rawSha256": "bc2c777ea610442ea527d04d0f787d8da663cd04180880b96f0ae83efd84ba42",
+      "redactedFile": "ncm.album_songsaleboard.ncm.album_songsaleboard.daily.none.001.redacted.json"
     },
     {
       "caseId": "ncm.album.anon.001",
@@ -266,6 +434,270 @@
       "redactedFile": "ncm.artist_detail.ncm.artist_detail.none.001.redacted.json"
     },
     {
+      "caseId": "ncm.artist_fans.anon.001",
+      "apiAuditId": "ncm.artist_fans",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.artist_fans.ncm.artist_fans.anon.001.raw.json",
+      "rawSha256": "98509e28bb1ca0de4296d4f173faa63d68fb6fa4fcbb4c0dca4e905b1a847477",
+      "redactedFile": "ncm.artist_fans.ncm.artist_fans.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_fans.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_fans",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_fans.ncm.artist_fans.id0.none.neg.001.raw.json",
+      "rawSha256": "57f7aad9b9d5f7c554ffb0301c6e0bf261e088221286ef153aa9907cdb605e6a",
+      "redactedFile": "ncm.artist_fans.ncm.artist_fans.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_fans.inv.001",
+      "apiAuditId": "ncm.artist_fans",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.artist_fans.ncm.artist_fans.inv.001.raw.json",
+      "rawSha256": "02573b50c3f64d78fe37685b4d4d31c19cc1fd4221bc1b3aa001c5ef4aae04ef",
+      "redactedFile": "ncm.artist_fans.ncm.artist_fans.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_fans.none.001",
+      "apiAuditId": "ncm.artist_fans",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_fans.ncm.artist_fans.none.001.raw.json",
+      "rawSha256": "1c04cb688583dbc37574d949ab4a51a4060f8670a65ba96e1ffe64cadc436534",
+      "redactedFile": "ncm.artist_fans.ncm.artist_fans.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_follow_count.anon.001",
+      "apiAuditId": "ncm.artist_follow_count",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.anon.001.raw.json",
+      "rawSha256": "1c95e00d0afc71fdf53eb977ebd943e63d21e8e03d5ccfc92c193270d05dcc3e",
+      "redactedFile": "ncm.artist_follow_count.ncm.artist_follow_count.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_follow_count.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_follow_count",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.id0.none.neg.001.raw.json",
+      "rawSha256": "4b39922486c5d597d482276cc46276e86010a5e8d1e8ea76dcced9666184d9dd",
+      "redactedFile": "ncm.artist_follow_count.ncm.artist_follow_count.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_follow_count.inv.001",
+      "apiAuditId": "ncm.artist_follow_count",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.inv.001.raw.json",
+      "rawSha256": "7d1433c159ad79d0e94a8ef6ce24d2e638dd13089b4a54699185f69a4fab114b",
+      "redactedFile": "ncm.artist_follow_count.ncm.artist_follow_count.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_follow_count.none.001",
+      "apiAuditId": "ncm.artist_follow_count",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_follow_count.ncm.artist_follow_count.none.001.raw.json",
+      "rawSha256": "d2f246500390fbbf46cbfa8334df27eb360cdb3c650488d6f2d32a20cd888854",
+      "redactedFile": "ncm.artist_follow_count.ncm.artist_follow_count.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_list.anon.001",
+      "apiAuditId": "ncm.artist_list",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.artist_list.ncm.artist_list.anon.001.raw.json",
+      "rawSha256": "be7af6ce2d111af5e95a0c5bb4e194ab6f23ee7a4405b3f553aadf3a3556c40c",
+      "redactedFile": "ncm.artist_list.ncm.artist_list.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_list.bad.none.neg.001",
+      "apiAuditId": "ncm.artist_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_list.ncm.artist_list.bad.none.neg.001.raw.json",
+      "rawSha256": "3d2baddeebca9304441c9d08b02be7ea4c06f20c7368ea25fa7ae3a55eaeb6dc",
+      "redactedFile": "ncm.artist_list.ncm.artist_list.bad.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_list.inv.001",
+      "apiAuditId": "ncm.artist_list",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.artist_list.ncm.artist_list.inv.001.raw.json",
+      "rawSha256": "7ecce11cb6ce102655a4323b6881e6d8dd94326fc7b3c73bc629bf7067ae8855",
+      "redactedFile": "ncm.artist_list.ncm.artist_list.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_list.none.001",
+      "apiAuditId": "ncm.artist_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_list.ncm.artist_list.none.001.raw.json",
+      "rawSha256": "6348dd9e2f76ee00e8780c356e450fc51d82a5874070cd35a68e87fc0d0c81d6",
+      "redactedFile": "ncm.artist_list.ncm.artist_list.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_list.none.002",
+      "apiAuditId": "ncm.artist_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_list.ncm.artist_list.none.002.raw.json",
+      "rawSha256": "0b88cc035b656b6ce69894ea5b27bc3d47ab30c46954081dece2dfdd30115599",
+      "redactedFile": "ncm.artist_list.ncm.artist_list.none.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_mv.anon.001",
+      "apiAuditId": "ncm.artist_mv",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.artist_mv.ncm.artist_mv.anon.001.raw.json",
+      "rawSha256": "18c94d99e83420ebf464371031049a49d1f5e3b5d79c1e8e4762438ad4eee248",
+      "redactedFile": "ncm.artist_mv.ncm.artist_mv.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_mv.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_mv",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_mv.ncm.artist_mv.id0.none.neg.001.raw.json",
+      "rawSha256": "a984aa9d5efdc51a9c13aa1bd4ab85b1d4ba16c0ed8331368cdd33422bffd34e",
+      "redactedFile": "ncm.artist_mv.ncm.artist_mv.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_mv.inv.001",
+      "apiAuditId": "ncm.artist_mv",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.artist_mv.ncm.artist_mv.inv.001.raw.json",
+      "rawSha256": "18c28e814069214e159a9e8013a3e27419f064469446a188153dd9f89d58672a",
+      "redactedFile": "ncm.artist_mv.ncm.artist_mv.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_mv.none.001",
+      "apiAuditId": "ncm.artist_mv",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_mv.ncm.artist_mv.none.001.raw.json",
+      "rawSha256": "53a9c0e48c79777a36b33cdda006c807fd66b4d248019f73b55d7fd3e0fdb997",
+      "redactedFile": "ncm.artist_mv.ncm.artist_mv.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_mv.anon.001",
+      "apiAuditId": "ncm.artist_new_mv",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.anon.001.raw.json",
+      "rawSha256": "12c077535a86a86f81c33087acd1465cfd8372b6ae1f262c9286815cbc8afdec",
+      "redactedFile": "ncm.artist_new_mv.ncm.artist_new_mv.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_mv.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_new_mv",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.id0.none.neg.001.raw.json",
+      "rawSha256": "eba84ea0909770dc0c93fb7ab691c80beb479412ba991795bb23d55012ec20ab",
+      "redactedFile": "ncm.artist_new_mv.ncm.artist_new_mv.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_mv.inv.001",
+      "apiAuditId": "ncm.artist_new_mv",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.inv.001.raw.json",
+      "rawSha256": "b6586fe4f91dc67582daca7ec585b3f7895efff045e5ca94428575f61d665f49",
+      "redactedFile": "ncm.artist_new_mv.ncm.artist_new_mv.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_mv.none.001",
+      "apiAuditId": "ncm.artist_new_mv",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_new_mv.ncm.artist_new_mv.none.001.raw.json",
+      "rawSha256": "1a072dc37466beab81802b033168a93a7194d792ea8bd9ca28289ef97e1ee48d",
+      "redactedFile": "ncm.artist_new_mv.ncm.artist_new_mv.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_mv_list_v2.anon.001",
+      "apiAuditId": "ncm.artist_new_song_mv_list_v2",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.anon.001.raw.json",
+      "rawSha256": "21c9be9df51243025d7b491e8985350b6b6989ad3d886652b77b69016e97f695",
+      "redactedFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_mv_list_v2.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_new_song_mv_list_v2",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.id0.none.neg.001.raw.json",
+      "rawSha256": "fa1632d5b74ff3848bb1b7e807a89923832a941d1e3aff54a0c46ed20035bb15",
+      "redactedFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_mv_list_v2.inv.001",
+      "apiAuditId": "ncm.artist_new_song_mv_list_v2",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.inv.001.raw.json",
+      "rawSha256": "e04ce141dcba431011bd6909263ac0e940c192ce2ffe83cf75cb09ed05ee1d69",
+      "redactedFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_mv_list_v2.none.001",
+      "apiAuditId": "ncm.artist_new_song_mv_list_v2",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.none.001.raw.json",
+      "rawSha256": "5427a56be61b7ea049bc44fc1782df46bedb053a763694efef95937b5d8e90a7",
+      "redactedFile": "ncm.artist_new_song_mv_list_v2.ncm.artist_new_song_mv_list_v2.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_playall.anon.001",
+      "apiAuditId": "ncm.artist_new_song_playall",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.anon.001.raw.json",
+      "rawSha256": "b6205465a9476daa0f719c730b7c0edca10e69a0b65d570490efa83f5d17c185",
+      "redactedFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_playall.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_new_song_playall",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.id0.none.neg.001.raw.json",
+      "rawSha256": "12ae74a0de430daff06b703f5934973f9b2a9a5fea414b7c58577abbf912f8b7",
+      "redactedFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_playall.inv.001",
+      "apiAuditId": "ncm.artist_new_song_playall",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.inv.001.raw.json",
+      "rawSha256": "d94e77b3a23c1cabb7e121e620d5336db5296673a92c6eec963c62564d1875ef",
+      "redactedFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song_playall.none.001",
+      "apiAuditId": "ncm.artist_new_song_playall",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.none.001.raw.json",
+      "rawSha256": "21147837986cc3379375c5f857caad706cd3aeb390a5de8ec0b837a918630093",
+      "redactedFile": "ncm.artist_new_song_playall.ncm.artist_new_song_playall.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song.anon.001",
+      "apiAuditId": "ncm.artist_new_song",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.artist_new_song.ncm.artist_new_song.anon.001.raw.json",
+      "rawSha256": "bc62d8961d543454b245febf5b9eb7a726225adf05c4270a7253f330a5bf7823",
+      "redactedFile": "ncm.artist_new_song.ncm.artist_new_song.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_new_song",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_new_song.ncm.artist_new_song.id0.none.neg.001.raw.json",
+      "rawSha256": "02785e929c4742751921abeaf3b94bbf57a51cd78418bb7073f5739bbb0be23e",
+      "redactedFile": "ncm.artist_new_song.ncm.artist_new_song.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song.inv.001",
+      "apiAuditId": "ncm.artist_new_song",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.artist_new_song.ncm.artist_new_song.inv.001.raw.json",
+      "rawSha256": "18e4fa07ca3a3fc363a5b81c7976c4127683343a9c8ea6f249323794ad12987a",
+      "redactedFile": "ncm.artist_new_song.ncm.artist_new_song.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_new_song.none.001",
+      "apiAuditId": "ncm.artist_new_song",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_new_song.ncm.artist_new_song.none.001.raw.json",
+      "rawSha256": "83f6e8939a8d4ec3bb67bfde826def4229b80ebc44a6ac318e6ebd1cb96f0633",
+      "redactedFile": "ncm.artist_new_song.ncm.artist_new_song.none.001.redacted.json"
+    },
+    {
       "caseId": "ncm.artist_songs.anon.001",
       "apiAuditId": "ncm.artist_songs",
       "auth": "AUTH_ANON",
@@ -344,6 +776,38 @@
       "rawFile": "ncm.artist_top_song.ncm.artist_top_song.none.001.raw.json",
       "rawSha256": "c1737352debc57a544738899f10dd74138c94fdfb9e2a781a8234b2f510d5c8b",
       "redactedFile": "ncm.artist_top_song.ncm.artist_top_song.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_video.anon.001",
+      "apiAuditId": "ncm.artist_video",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.artist_video.ncm.artist_video.anon.001.raw.json",
+      "rawSha256": "c5c812c6eb0198d5e5fb3f54985c9e00c4b86e35d47161423c77cd85eb1085f0",
+      "redactedFile": "ncm.artist_video.ncm.artist_video.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_video.id0.none.neg.001",
+      "apiAuditId": "ncm.artist_video",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_video.ncm.artist_video.id0.none.neg.001.raw.json",
+      "rawSha256": "c2e654f7909a359e4b1b2defaaeb2c44e7ea1762f3d23fa4b592c4951e6e9f0b",
+      "redactedFile": "ncm.artist_video.ncm.artist_video.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_video.inv.001",
+      "apiAuditId": "ncm.artist_video",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.artist_video.ncm.artist_video.inv.001.raw.json",
+      "rawSha256": "a845f616734c762dd1f9ff45214f68489405fb3267388cee5a203fdb9ed25e02",
+      "redactedFile": "ncm.artist_video.ncm.artist_video.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.artist_video.none.001",
+      "apiAuditId": "ncm.artist_video",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.artist_video.ncm.artist_video.none.001.raw.json",
+      "rawSha256": "e512d205dd09a9fae15923146a7a269ea30ff2f4f383c2eda770cc76fc567266",
+      "redactedFile": "ncm.artist_video.ncm.artist_video.none.001.redacted.json"
     },
     {
       "caseId": "ncm.artists.anon.001",
@@ -528,6 +992,334 @@
       "rawFile": "ncm.cloudsearch.ncm.cloudsearch.type999.none.neg.001.raw.json",
       "rawSha256": "1460ca002e8350cdf3c023f2a8115276ef7fbf67e017732b462a0247c11071c0",
       "redactedFile": "ncm.cloudsearch.ncm.cloudsearch.type999.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_album.anon.001",
+      "apiAuditId": "ncm.comment_album",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.comment_album.ncm.comment_album.anon.001.raw.json",
+      "rawSha256": "b8c1c20647cd069a85e513bfecdc11cc9ea53b4b7f24e0f885e487671e2f4837",
+      "redactedFile": "ncm.comment_album.ncm.comment_album.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_album.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_album",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_album.ncm.comment_album.id0.none.neg.001.raw.json",
+      "rawSha256": "d097b168a36149f39d18ea1e7a8754d69dbe05e58b04071060b76a53c66791c1",
+      "redactedFile": "ncm.comment_album.ncm.comment_album.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_album.inv.001",
+      "apiAuditId": "ncm.comment_album",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.comment_album.ncm.comment_album.inv.001.raw.json",
+      "rawSha256": "c76b235d78867960fc98aadb0fcc8aa7cc317abe7c33f2a0775767c95f67a008",
+      "redactedFile": "ncm.comment_album.ncm.comment_album.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_album.none.001",
+      "apiAuditId": "ncm.comment_album",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_album.ncm.comment_album.none.001.raw.json",
+      "rawSha256": "26713235210d006fa64785cff38605bdd7a0c0c8fdf0cfc3465a7f8c2b8fcbb9",
+      "redactedFile": "ncm.comment_album.ncm.comment_album.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_dj.anon.001",
+      "apiAuditId": "ncm.comment_dj",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.comment_dj.ncm.comment_dj.anon.001.raw.json",
+      "rawSha256": "e4606d8f2c428e5e71680364a09ce48c7f47c6f340b610553998b0cc42f548c1",
+      "redactedFile": "ncm.comment_dj.ncm.comment_dj.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_dj.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_dj",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_dj.ncm.comment_dj.id0.none.neg.001.raw.json",
+      "rawSha256": "5960563330cd82d6e2d6b811d18c3ed9153632f75809ba0e597787150dd3ae3c",
+      "redactedFile": "ncm.comment_dj.ncm.comment_dj.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_dj.inv.001",
+      "apiAuditId": "ncm.comment_dj",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.comment_dj.ncm.comment_dj.inv.001.raw.json",
+      "rawSha256": "9addc456f13edd92ae24ab913ee27603a232045747fb8d7852f25f64d4c471a4",
+      "redactedFile": "ncm.comment_dj.ncm.comment_dj.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_dj.none.001",
+      "apiAuditId": "ncm.comment_dj",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_dj.ncm.comment_dj.none.001.raw.json",
+      "rawSha256": "046ffa0270999562fb68346106c934b4744d7a11101f9da83c7744fcf840f825",
+      "redactedFile": "ncm.comment_dj.ncm.comment_dj.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_floor.anon.001",
+      "apiAuditId": "ncm.comment_floor",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.comment_floor.ncm.comment_floor.anon.001.raw.json",
+      "rawSha256": "c0a98ee0787e7847d129e5c3ab42703bb93668ae0c666c455b0758dc60511787",
+      "redactedFile": "ncm.comment_floor.ncm.comment_floor.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_floor.inv.001",
+      "apiAuditId": "ncm.comment_floor",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.comment_floor.ncm.comment_floor.inv.001.raw.json",
+      "rawSha256": "b4d426170667374db7102bb8bbc20f25d047f955d41741f56f124941f334a3fa",
+      "redactedFile": "ncm.comment_floor.ncm.comment_floor.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_floor.missing.none.neg.001",
+      "apiAuditId": "ncm.comment_floor",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_floor.ncm.comment_floor.missing.none.neg.001.raw.json",
+      "rawSha256": "61c5b228e59c0167deb7c6957db7d73c155c13210378404b6caf82bc9691371d",
+      "redactedFile": "ncm.comment_floor.ncm.comment_floor.missing.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_floor.none.001",
+      "apiAuditId": "ncm.comment_floor",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_floor.ncm.comment_floor.none.001.raw.json",
+      "rawSha256": "753fcb4307a12e792e8ab146a3941ca7cd0b1fe0320e563576ec07b1d13827fd",
+      "redactedFile": "ncm.comment_floor.ncm.comment_floor.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_hot.anon.001",
+      "apiAuditId": "ncm.comment_hot",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.comment_hot.ncm.comment_hot.anon.001.raw.json",
+      "rawSha256": "cd3e12c96dbfb5fddff557ca719b1153cc652d9b16085922579c3619005f859d",
+      "redactedFile": "ncm.comment_hot.ncm.comment_hot.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_hot.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_hot",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_hot.ncm.comment_hot.id0.none.neg.001.raw.json",
+      "rawSha256": "0247c94ee4ee2e7312b567652d61cfa268ce452d982608f8f0dd002f18034334",
+      "redactedFile": "ncm.comment_hot.ncm.comment_hot.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_hot.inv.001",
+      "apiAuditId": "ncm.comment_hot",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.comment_hot.ncm.comment_hot.inv.001.raw.json",
+      "rawSha256": "59584770d28d93cf96f610ba958fade9b7192bf20f59b1a7515ca970e7870769",
+      "redactedFile": "ncm.comment_hot.ncm.comment_hot.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_hot.none.001",
+      "apiAuditId": "ncm.comment_hot",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_hot.ncm.comment_hot.none.001.raw.json",
+      "rawSha256": "f2e33ee14b52c3014c3dadf9687a760616258a9de51af6d2a965e033bf858800",
+      "redactedFile": "ncm.comment_hot.ncm.comment_hot.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_hug_list.anon.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.comment_hug_list.ncm.comment_hug_list.anon.001.raw.json",
+      "rawSha256": "98855ae9d9d067cc400c6aae868874281d62c8a98be3df1985ed725d4c10c499",
+      "redactedFile": "ncm.comment_hug_list.ncm.comment_hug_list.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_hug_list.inv.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.comment_hug_list.ncm.comment_hug_list.inv.001.raw.json",
+      "rawSha256": "d72260bf96de8a82aa379585d1ff5c44484a9d68cb2df44d0cf09fe85d2856c1",
+      "redactedFile": "ncm.comment_hug_list.ncm.comment_hug_list.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_hug_list.none.001",
+      "apiAuditId": "ncm.comment_hug_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_hug_list.ncm.comment_hug_list.none.001.raw.json",
+      "rawSha256": "d6a508a384c4a3cb7546567731f3d7e9ff22bdcd4f3a1db57849fff341dd68ed",
+      "redactedFile": "ncm.comment_hug_list.ncm.comment_hug_list.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_music.anon.001",
+      "apiAuditId": "ncm.comment_music",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.comment_music.ncm.comment_music.anon.001.raw.json",
+      "rawSha256": "0f1747eb0c7433321ef96ce775ffd411bf45e095dbbfe3a1655b9e35ca76bf85",
+      "redactedFile": "ncm.comment_music.ncm.comment_music.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_music.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_music",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_music.ncm.comment_music.id0.none.neg.001.raw.json",
+      "rawSha256": "bb7e2c46d7bdfa21b5f587877c7d9d18f7a1402d2a83cd1bcdcfbbd2740cf862",
+      "redactedFile": "ncm.comment_music.ncm.comment_music.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_music.inv.001",
+      "apiAuditId": "ncm.comment_music",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.comment_music.ncm.comment_music.inv.001.raw.json",
+      "rawSha256": "f3f21e354bba99b2c04febd821d3989c4e7bf5dcc6b30ac1cf752c92d6f04193",
+      "redactedFile": "ncm.comment_music.ncm.comment_music.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_music.none.001",
+      "apiAuditId": "ncm.comment_music",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_music.ncm.comment_music.none.001.raw.json",
+      "rawSha256": "96acb5e970d9887ad325d7945e87af6fac548802f29fc11db25d81dd38c554cf",
+      "redactedFile": "ncm.comment_music.ncm.comment_music.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_music.none.002",
+      "apiAuditId": "ncm.comment_music",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_music.ncm.comment_music.none.002.raw.json",
+      "rawSha256": "9d2715fc2bd3e703ecb1ce5002e11f22c6f23d13888478679226aec2f08bed29",
+      "redactedFile": "ncm.comment_music.ncm.comment_music.none.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_mv.anon.001",
+      "apiAuditId": "ncm.comment_mv",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.comment_mv.ncm.comment_mv.anon.001.raw.json",
+      "rawSha256": "2011a44d99c5e8d551bc4762b925d22c429833770baa13d9f4ea30defbef962b",
+      "redactedFile": "ncm.comment_mv.ncm.comment_mv.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_mv.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_mv",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_mv.ncm.comment_mv.id0.none.neg.001.raw.json",
+      "rawSha256": "cbfb95016f1e55f25280c6ca8167fa9c87355962d86527afe48db332e9bf2d03",
+      "redactedFile": "ncm.comment_mv.ncm.comment_mv.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_mv.inv.001",
+      "apiAuditId": "ncm.comment_mv",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.comment_mv.ncm.comment_mv.inv.001.raw.json",
+      "rawSha256": "b873cb3ccd127177af2ac5dbe97e75898666f35a9955cd523d52086393ce3651",
+      "redactedFile": "ncm.comment_mv.ncm.comment_mv.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_mv.none.001",
+      "apiAuditId": "ncm.comment_mv",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_mv.ncm.comment_mv.none.001.raw.json",
+      "rawSha256": "cdbdc403207202e9a8269b72ed4d742961b6e8e86103c6b43cc6bef56eac4f32",
+      "redactedFile": "ncm.comment_mv.ncm.comment_mv.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_new.anon.001",
+      "apiAuditId": "ncm.comment_new",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.comment_new.ncm.comment_new.anon.001.raw.json",
+      "rawSha256": "0265401c70e75706bb59bb99c800607e124a5582b287636f0d2d2879bb184f75",
+      "redactedFile": "ncm.comment_new.ncm.comment_new.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_new.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_new",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_new.ncm.comment_new.id0.none.neg.001.raw.json",
+      "rawSha256": "bde6f4abe4598e75b0200a617b1e202e2f5f06facb51f2799537a2ed1640cfb6",
+      "redactedFile": "ncm.comment_new.ncm.comment_new.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_new.inv.001",
+      "apiAuditId": "ncm.comment_new",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.comment_new.ncm.comment_new.inv.001.raw.json",
+      "rawSha256": "520e5f7fadcc5bf712cec62f569975f7e825ff5db08743fc03a801325ea0bf1c",
+      "redactedFile": "ncm.comment_new.ncm.comment_new.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_new.none.001",
+      "apiAuditId": "ncm.comment_new",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_new.ncm.comment_new.none.001.raw.json",
+      "rawSha256": "a2be5e55880199e23f4d1495cfdddf5e3450a0f1d5c26a13c07a3dbcd4194713",
+      "redactedFile": "ncm.comment_new.ncm.comment_new.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_new.none.002",
+      "apiAuditId": "ncm.comment_new",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_new.ncm.comment_new.none.002.raw.json",
+      "rawSha256": "feae1102a2af40c9fe8e8d1ae866e50110274193fe12b89f524027f71f69f8dc",
+      "redactedFile": "ncm.comment_new.ncm.comment_new.none.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_playlist.anon.001",
+      "apiAuditId": "ncm.comment_playlist",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.comment_playlist.ncm.comment_playlist.anon.001.raw.json",
+      "rawSha256": "f7b4f89d8c066d54ceccc529e3e6fa2e42a54cf2050256eb1250490759ea495d",
+      "redactedFile": "ncm.comment_playlist.ncm.comment_playlist.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_playlist.id0.none.neg.001",
+      "apiAuditId": "ncm.comment_playlist",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_playlist.ncm.comment_playlist.id0.none.neg.001.raw.json",
+      "rawSha256": "4b48f04792cbb50bff6cd0caa74bbaf14a8f86af68d947449678a828e03662a8",
+      "redactedFile": "ncm.comment_playlist.ncm.comment_playlist.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_playlist.inv.001",
+      "apiAuditId": "ncm.comment_playlist",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.comment_playlist.ncm.comment_playlist.inv.001.raw.json",
+      "rawSha256": "4b1cf67b3fd256bd1d97584f7710845fc08ac8b6054c71ea3deeaf3fcf22ec7c",
+      "redactedFile": "ncm.comment_playlist.ncm.comment_playlist.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment_playlist.none.001",
+      "apiAuditId": "ncm.comment_playlist",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment_playlist.ncm.comment_playlist.none.001.raw.json",
+      "rawSha256": "91a60b00fd080a5cbdb627c571c2e00e8bc45a5afc496de27ad1b01738f01eda",
+      "redactedFile": "ncm.comment_playlist.ncm.comment_playlist.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment.anon.001",
+      "apiAuditId": "ncm.comment",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.comment.ncm.comment.anon.001.raw.json",
+      "rawSha256": "8efbf3cb0cb78c480c07e6ee1c8e1f37e74f3140b23ae6fdfd2b3851f5b4370a",
+      "redactedFile": "ncm.comment.ncm.comment.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment.inv.001",
+      "apiAuditId": "ncm.comment",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.comment.ncm.comment.inv.001.raw.json",
+      "rawSha256": "748442923c12c745439f65dd551e5591c60b6af7a2938c227746af7ad5867264",
+      "redactedFile": "ncm.comment.ncm.comment.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment.missing.none.neg.001",
+      "apiAuditId": "ncm.comment",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment.ncm.comment.missing.none.neg.001.raw.json",
+      "rawSha256": "f38153957a51f87c0f5d7cbb8be51916740d3e25b9ff8b7e8dc6e396bc97bb99",
+      "redactedFile": "ncm.comment.ncm.comment.missing.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.comment.none.001",
+      "apiAuditId": "ncm.comment",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.comment.ncm.comment.none.001.raw.json",
+      "rawSha256": "5cf39496ed7b27169a3f25e301002548d491fbc358c953bd23c167c878c04146",
+      "redactedFile": "ncm.comment.ncm.comment.none.001.redacted.json"
     },
     {
       "caseId": "ncm.dj_banner.anon.001",
@@ -840,6 +1632,166 @@
       "rawFile": "ncm.lyric.ncm.lyric.none.001.raw.json",
       "rawSha256": "b62155412214d5c06702fbe09c890df80845d209e0370fdb5510041113fa974a",
       "redactedFile": "ncm.lyric.ncm.lyric.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_all.anon.001",
+      "apiAuditId": "ncm.mv_all",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.mv_all.ncm.mv_all.anon.001.raw.json",
+      "rawSha256": "4c77e58b223dc3126e31c0adc0f5e5d3873210d444eb0546f2fc9df343380ac9",
+      "redactedFile": "ncm.mv_all.ncm.mv_all.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_all.inv.001",
+      "apiAuditId": "ncm.mv_all",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.mv_all.ncm.mv_all.inv.001.raw.json",
+      "rawSha256": "08ec4447ec1314c66f9b55a0546c1a7d70bad6d9512264479e10ef4aa6716dc0",
+      "redactedFile": "ncm.mv_all.ncm.mv_all.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_all.none.001",
+      "apiAuditId": "ncm.mv_all",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_all.ncm.mv_all.none.001.raw.json",
+      "rawSha256": "f74a1832d08af1f9671076aec36c7279e8af66bcf8c38b63ea9c1b97abc1cdde",
+      "redactedFile": "ncm.mv_all.ncm.mv_all.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_all.none.002",
+      "apiAuditId": "ncm.mv_all",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_all.ncm.mv_all.none.002.raw.json",
+      "rawSha256": "1dc1245702d8105e0c8812ff9d842e238174000124c405324067fbaf2520c861",
+      "redactedFile": "ncm.mv_all.ncm.mv_all.none.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_detail_info.anon.001",
+      "apiAuditId": "ncm.mv_detail_info",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.mv_detail_info.ncm.mv_detail_info.anon.001.raw.json",
+      "rawSha256": "b60344499a9ee30327cdb3c5df3f5f56af121ed35934311a69146810d7209494",
+      "redactedFile": "ncm.mv_detail_info.ncm.mv_detail_info.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_detail_info.id0.none.neg.001",
+      "apiAuditId": "ncm.mv_detail_info",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_detail_info.ncm.mv_detail_info.id0.none.neg.001.raw.json",
+      "rawSha256": "5c060862ea32a644705d3d8b04608e9c529a6e5adc54fc2f65a52858a69b4ca2",
+      "redactedFile": "ncm.mv_detail_info.ncm.mv_detail_info.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_detail_info.inv.001",
+      "apiAuditId": "ncm.mv_detail_info",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.mv_detail_info.ncm.mv_detail_info.inv.001.raw.json",
+      "rawSha256": "7ce4169d433ac00439b7f98af5cc9acf169e3ddcd82d32852a0e8b7b21b6b325",
+      "redactedFile": "ncm.mv_detail_info.ncm.mv_detail_info.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_detail_info.none.001",
+      "apiAuditId": "ncm.mv_detail_info",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_detail_info.ncm.mv_detail_info.none.001.raw.json",
+      "rawSha256": "9cc705146ddf355919412d54a55213975a9201dcc92500c6108534a42c26ffe5",
+      "redactedFile": "ncm.mv_detail_info.ncm.mv_detail_info.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_detail.anon.001",
+      "apiAuditId": "ncm.mv_detail",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.mv_detail.ncm.mv_detail.anon.001.raw.json",
+      "rawSha256": "2d95d1ea33ff52bd8ec77ac802041d0176dba84451aa5ea913d2dd2cd935ff1a",
+      "redactedFile": "ncm.mv_detail.ncm.mv_detail.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_detail.id0.none.neg.001",
+      "apiAuditId": "ncm.mv_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_detail.ncm.mv_detail.id0.none.neg.001.raw.json",
+      "rawSha256": "43ef3da2ca1375371e9a10427310444d5bea7403b3425d1d10daf690a7d35077",
+      "redactedFile": "ncm.mv_detail.ncm.mv_detail.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_detail.inv.001",
+      "apiAuditId": "ncm.mv_detail",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.mv_detail.ncm.mv_detail.inv.001.raw.json",
+      "rawSha256": "d94567d0d0ee7c83349de51dd18408e7eafcc781bb4f9e5adcb0ff4760e96571",
+      "redactedFile": "ncm.mv_detail.ncm.mv_detail.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_detail.none.001",
+      "apiAuditId": "ncm.mv_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_detail.ncm.mv_detail.none.001.raw.json",
+      "rawSha256": "bb95ca6ef96afe7073fa5ebccc50fcf6f96925c04bc1e002867c730ef8dbb9a7",
+      "redactedFile": "ncm.mv_detail.ncm.mv_detail.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_exclusive_rcmd.anon.001",
+      "apiAuditId": "ncm.mv_exclusive_rcmd",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.mv_exclusive_rcmd.ncm.mv_exclusive_rcmd.anon.001.raw.json",
+      "rawSha256": "10d85adf97f1a89757c150c53c568a93cecc72d263277b29d0a92761a23a402a",
+      "redactedFile": "ncm.mv_exclusive_rcmd.ncm.mv_exclusive_rcmd.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_exclusive_rcmd.inv.001",
+      "apiAuditId": "ncm.mv_exclusive_rcmd",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.mv_exclusive_rcmd.ncm.mv_exclusive_rcmd.inv.001.raw.json",
+      "rawSha256": "f100834b60dc624477f41f33fc4ffb3f151ae46d739dcf98598f6e0511801563",
+      "redactedFile": "ncm.mv_exclusive_rcmd.ncm.mv_exclusive_rcmd.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_exclusive_rcmd.none.001",
+      "apiAuditId": "ncm.mv_exclusive_rcmd",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_exclusive_rcmd.ncm.mv_exclusive_rcmd.none.001.raw.json",
+      "rawSha256": "86305480a1c1effeebb98e18517734ab190ed2051ff847783a5cd3a313fd24d9",
+      "redactedFile": "ncm.mv_exclusive_rcmd.ncm.mv_exclusive_rcmd.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_exclusive_rcmd.none.002",
+      "apiAuditId": "ncm.mv_exclusive_rcmd",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_exclusive_rcmd.ncm.mv_exclusive_rcmd.none.002.raw.json",
+      "rawSha256": "c368a254e74ff98fe27dbd41d19c77653fd6e6bba8e1c164c64d6575be24990a",
+      "redactedFile": "ncm.mv_exclusive_rcmd.ncm.mv_exclusive_rcmd.none.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_first.anon.001",
+      "apiAuditId": "ncm.mv_first",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.mv_first.ncm.mv_first.anon.001.raw.json",
+      "rawSha256": "3e38af9cd99c14b9d770724388d69e25b78e455d42e875d73892f85736d69995",
+      "redactedFile": "ncm.mv_first.ncm.mv_first.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_first.inv.001",
+      "apiAuditId": "ncm.mv_first",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.mv_first.ncm.mv_first.inv.001.raw.json",
+      "rawSha256": "d7d56805965eeeca4f1c724ef92012137b9aef6d838364651acd752220d05336",
+      "redactedFile": "ncm.mv_first.ncm.mv_first.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_first.none.001",
+      "apiAuditId": "ncm.mv_first",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_first.ncm.mv_first.none.001.raw.json",
+      "rawSha256": "2ca2d9baacf089c747bda424d3e065c543a54b7b7c8d88991dfa3685ee1b2703",
+      "redactedFile": "ncm.mv_first.ncm.mv_first.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.mv_first.none.002",
+      "apiAuditId": "ncm.mv_first",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.mv_first.ncm.mv_first.none.002.raw.json",
+      "rawSha256": "1e72251e2e1689f6223defaf24f5d8bb1e83fe498ebea5104f872a1c85a84b3d",
+      "redactedFile": "ncm.mv_first.ncm.mv_first.none.002.redacted.json"
     },
     {
       "caseId": "ncm.mv_url.anon.001",
@@ -1178,6 +2130,38 @@
       "redactedFile": "ncm.playlist_detail_dynamic.ncm.playlist_detail_dynamic.none.001.redacted.json"
     },
     {
+      "caseId": "ncm.playlist_detail_rcmd_get.anon.001",
+      "apiAuditId": "ncm.playlist_detail_rcmd_get",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.playlist_detail_rcmd_get.ncm.playlist_detail_rcmd_get.anon.001.raw.json",
+      "rawSha256": "4039c6b9e849b29742735f4b1d6621c1e2c9b798be029c6d18a44e38edcf363e",
+      "redactedFile": "ncm.playlist_detail_rcmd_get.ncm.playlist_detail_rcmd_get.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail_rcmd_get.id0.none.neg.001",
+      "apiAuditId": "ncm.playlist_detail_rcmd_get",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.playlist_detail_rcmd_get.ncm.playlist_detail_rcmd_get.id0.none.neg.001.raw.json",
+      "rawSha256": "59e442cb3bbc7de810c03999da1268677ee387a70e0711e2d5f361347156322c",
+      "redactedFile": "ncm.playlist_detail_rcmd_get.ncm.playlist_detail_rcmd_get.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail_rcmd_get.inv.001",
+      "apiAuditId": "ncm.playlist_detail_rcmd_get",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.playlist_detail_rcmd_get.ncm.playlist_detail_rcmd_get.inv.001.raw.json",
+      "rawSha256": "03b24aa9b403fae5022a6ba7bd096563d2553d4829d7e194b72dbeae8ef2b0dc",
+      "redactedFile": "ncm.playlist_detail_rcmd_get.ncm.playlist_detail_rcmd_get.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_detail_rcmd_get.none.001",
+      "apiAuditId": "ncm.playlist_detail_rcmd_get",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.playlist_detail_rcmd_get.ncm.playlist_detail_rcmd_get.none.001.raw.json",
+      "rawSha256": "407fb300ceb756222d0db6fd1a73d47e9e3e8f7e604515ec85babbc47ab5c832",
+      "redactedFile": "ncm.playlist_detail_rcmd_get.ncm.playlist_detail_rcmd_get.none.001.redacted.json"
+    },
+    {
       "caseId": "ncm.playlist_detail.id0.none.neg.001",
       "apiAuditId": "ncm.playlist_detail",
       "auth": "AUTH_NONE",
@@ -1386,6 +2370,62 @@
       "redactedFile": "ncm.playlist_track_all.ncm.playlist_track_all.toplist.none.001.redacted.json"
     },
     {
+      "caseId": "ncm.playlist_tracks.anon.001",
+      "apiAuditId": "ncm.playlist_tracks",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.anon.001.raw.json",
+      "rawSha256": "b577185e303aa0617bfd95014842e94c8ed25536ebbb6c483d8afe424b2063d2",
+      "redactedFile": "ncm.playlist_tracks.ncm.playlist_tracks.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_tracks.id0.none.neg.001",
+      "apiAuditId": "ncm.playlist_tracks",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.id0.none.neg.001.raw.json",
+      "rawSha256": "029ac04a3483a6d214d33750daedeb10f0aabd3f03ad49b394a35cafc92ed800",
+      "redactedFile": "ncm.playlist_tracks.ncm.playlist_tracks.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_tracks.inv.001",
+      "apiAuditId": "ncm.playlist_tracks",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.inv.001.raw.json",
+      "rawSha256": "52c8a0542a923ed7a54d3d08181ec844f64d18e54aab5d0161e0e6c6a1a0f5b2",
+      "redactedFile": "ncm.playlist_tracks.ncm.playlist_tracks.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_tracks.none.001",
+      "apiAuditId": "ncm.playlist_tracks",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.playlist_tracks.ncm.playlist_tracks.none.001.raw.json",
+      "rawSha256": "50e9793720d94713cfa8805f2596efcd35814d71c9924ce81f96b730052e516c",
+      "redactedFile": "ncm.playlist_tracks.ncm.playlist_tracks.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_video_recent.anon.001",
+      "apiAuditId": "ncm.playlist_video_recent",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.anon.001.raw.json",
+      "rawSha256": "cf62313feb59acbd11277d2935df1373a0ddf8ce2f954334b8905e823bc0b903",
+      "redactedFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_video_recent.inv.001",
+      "apiAuditId": "ncm.playlist_video_recent",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.inv.001.raw.json",
+      "rawSha256": "9c2dbba9b7d12d7f1b058fb61ee77139443308eaa1a854c9d2c96644977d43ef",
+      "redactedFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.playlist_video_recent.none.001",
+      "apiAuditId": "ncm.playlist_video_recent",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.none.001.raw.json",
+      "rawSha256": "4e02d8ebd6a18d754e38b886ec7a84910af6328b86a60ae0e8f095b65ca3bc47",
+      "redactedFile": "ncm.playlist_video_recent.ncm.playlist_video_recent.none.001.redacted.json"
+    },
+    {
       "caseId": "ncm.register_anonimous.none.min.001",
       "apiAuditId": "ncm.register_anonimous",
       "auth": "AUTH_NONE",
@@ -1424,6 +2464,38 @@
       "rawFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.raw.json",
       "rawSha256": "760c37fbfeb49fd4aa91cac4e13e1b1e494fa950a6b0bf74cdb164c8556d85c3",
       "redactedFile": "ncm.register_xeapikey.ncm.register_xeapikey.none.min.003.redacted.json"
+    },
+    {
+      "caseId": "ncm.related_allvideo.anon.001",
+      "apiAuditId": "ncm.related_allvideo",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.related_allvideo.ncm.related_allvideo.anon.001.raw.json",
+      "rawSha256": "3410e9029648353fa8c4eaebbb1359e508f16f744c75a08e68e05388db2c2600",
+      "redactedFile": "ncm.related_allvideo.ncm.related_allvideo.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.related_allvideo.id0.none.neg.001",
+      "apiAuditId": "ncm.related_allvideo",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.related_allvideo.ncm.related_allvideo.id0.none.neg.001.raw.json",
+      "rawSha256": "f012298106ac084f83d98571b666830f9f81e5be0e4bc1dc91fdcc052f104a82",
+      "redactedFile": "ncm.related_allvideo.ncm.related_allvideo.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.related_allvideo.inv.001",
+      "apiAuditId": "ncm.related_allvideo",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.related_allvideo.ncm.related_allvideo.inv.001.raw.json",
+      "rawSha256": "ba2b7bfd3773968760027de415fb6220f1d6bf5d17d23b8e83a9b81ae804205d",
+      "redactedFile": "ncm.related_allvideo.ncm.related_allvideo.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.related_allvideo.none.001",
+      "apiAuditId": "ncm.related_allvideo",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.related_allvideo.ncm.related_allvideo.none.001.raw.json",
+      "rawSha256": "21ab019258e48d5ff082014d04595fc31adec8f979ac5554f1a16a2573885bd7",
+      "redactedFile": "ncm.related_allvideo.ncm.related_allvideo.none.001.redacted.json"
     },
     {
       "caseId": "ncm.related_playlist.id0.none.neg.001",
@@ -1682,6 +2754,30 @@
       "redactedFile": "ncm.search.ncm.search.kw1.type1000.none.001.redacted.json"
     },
     {
+      "caseId": "ncm.search.kw1.type1002.anon.001",
+      "apiAuditId": "ncm.search",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.search.ncm.search.kw1.type1002.anon.001.raw.json",
+      "rawSha256": "3e8aceda6bf08b8f40e1a23cbbdd033dd087bd10dcdf0ea48d2afd22dda05149",
+      "redactedFile": "ncm.search.ncm.search.kw1.type1002.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type1002.inv.001",
+      "apiAuditId": "ncm.search",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.search.ncm.search.kw1.type1002.inv.001.raw.json",
+      "rawSha256": "c6363bafe00060106b0bc8565c711925631d73440c36f4b725b775f4b899a7c7",
+      "redactedFile": "ncm.search.ncm.search.kw1.type1002.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.search.kw1.type1002.none.001",
+      "apiAuditId": "ncm.search",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.search.ncm.search.kw1.type1002.none.001.raw.json",
+      "rawSha256": "c867670565593ca96ba9807c8c0a931f2e35d6fb3097b24d958eb64e88949469",
+      "redactedFile": "ncm.search.ncm.search.kw1.type1002.none.001.redacted.json"
+    },
+    {
       "caseId": "ncm.search.kw1.type1004.none.001",
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
@@ -1694,7 +2790,7 @@
       "apiAuditId": "ncm.search",
       "auth": "AUTH_NONE",
       "rawFile": "ncm.search.ncm.search.kw1.type1014.none.001.raw.json",
-      "rawSha256": "e737d9c9eb0c060d2bfe4693819bd1f5e33675f936f510a5d9a827a558d60b4d",
+      "rawSha256": "d0b5c5de495705ebc59a703428b49e7358c4bff7bf88428d95976cc09b6b9952",
       "redactedFile": "ncm.search.ncm.search.kw1.type1014.none.001.redacted.json"
     },
     {
@@ -1704,6 +2800,22 @@
       "rawFile": "ncm.search.ncm.search.kw2.type1.none.001.raw.json",
       "rawSha256": "d3283f62877c862c0ee6de24d974e0c8ee48af984a7d9d60baec26d4dff36c16",
       "redactedFile": "ncm.search.ncm.search.kw2.type1.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.search.kw2.type1002.none.001",
+      "apiAuditId": "ncm.search",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.search.ncm.search.kw2.type1002.none.001.raw.json",
+      "rawSha256": "93889476e8ebdf7d3cc1478983f86964df413bfa3f42115391a2836b0845e60d",
+      "redactedFile": "ncm.search.ncm.search.kw2.type1002.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.search.kw3.type1014.none.001",
+      "apiAuditId": "ncm.search",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.search.ncm.search.kw3.type1014.none.001.raw.json",
+      "rawSha256": "28b9f2cf08e6f824fdf8b71881319d058e0566e4b67a0b83acba123f0e885fbb",
+      "redactedFile": "ncm.search.ncm.search.kw3.type1014.none.001.redacted.json"
     },
     {
       "caseId": "ncm.search.type999.none.neg.001",
@@ -1744,6 +2856,38 @@
       "rawFile": "ncm.simi_artist.ncm.simi_artist.none.001.raw.json",
       "rawSha256": "3b0410e79b5a925aa04bd43e2d83c0841ecabf588462905e44c4ab7c4d074f31",
       "redactedFile": "ncm.simi_artist.ncm.simi_artist.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_mv.anon.001",
+      "apiAuditId": "ncm.simi_mv",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.simi_mv.ncm.simi_mv.anon.001.raw.json",
+      "rawSha256": "a074b447b6dcd150a6f841d4f60390ec17aec56e8cdb30002296b15b966dcc6b",
+      "redactedFile": "ncm.simi_mv.ncm.simi_mv.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_mv.id0.none.neg.001",
+      "apiAuditId": "ncm.simi_mv",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.simi_mv.ncm.simi_mv.id0.none.neg.001.raw.json",
+      "rawSha256": "2215b1a912948abacb8be3aef56eeb38e367875f575e7fed4a040e0b56062a73",
+      "redactedFile": "ncm.simi_mv.ncm.simi_mv.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_mv.inv.001",
+      "apiAuditId": "ncm.simi_mv",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.simi_mv.ncm.simi_mv.inv.001.raw.json",
+      "rawSha256": "14e19a07059523cfa30bae69476ef3517ed0300094d290a837757cad5b071dd0",
+      "redactedFile": "ncm.simi_mv.ncm.simi_mv.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_mv.none.001",
+      "apiAuditId": "ncm.simi_mv",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.simi_mv.ncm.simi_mv.none.001.raw.json",
+      "rawSha256": "0de11dbcff8219c052db02c8a4abf057b9ee1f281c02754061786b7e25bc1a52",
+      "redactedFile": "ncm.simi_mv.ncm.simi_mv.none.001.redacted.json"
     },
     {
       "caseId": "ncm.simi_playlist.anon.001",
@@ -1808,6 +2952,134 @@
       "rawFile": "ncm.simi_song.ncm.simi_song.none.001.raw.json",
       "rawSha256": "c9401aa601776d50c93a05e28b246a3587fe639e982cea2a2b0e5875d0e9c063",
       "redactedFile": "ncm.simi_song.ncm.simi_song.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_user.anon.001",
+      "apiAuditId": "ncm.simi_user",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.simi_user.ncm.simi_user.anon.001.raw.json",
+      "rawSha256": "f82baa459af1e904e18471e3b85955d67db695e1c5a375e1a99bf424f0e975dd",
+      "redactedFile": "ncm.simi_user.ncm.simi_user.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_user.id0.none.neg.001",
+      "apiAuditId": "ncm.simi_user",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.simi_user.ncm.simi_user.id0.none.neg.001.raw.json",
+      "rawSha256": "678e1fb0f2cde7eced91275c2e26ebc3d91d28ed2c84b7daec6595e84166e221",
+      "redactedFile": "ncm.simi_user.ncm.simi_user.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_user.inv.001",
+      "apiAuditId": "ncm.simi_user",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.simi_user.ncm.simi_user.inv.001.raw.json",
+      "rawSha256": "c73bbc16716a06c24c8e8b925901c9227e435441640cdabce662311bc954f39e",
+      "redactedFile": "ncm.simi_user.ncm.simi_user.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.simi_user.none.001",
+      "apiAuditId": "ncm.simi_user",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.simi_user.ncm.simi_user.none.001.raw.json",
+      "rawSha256": "c3edf507dc0f43287d2faaaa1ab97c6511c6be06206df39cf976305859e7042f",
+      "redactedFile": "ncm.simi_user.ncm.simi_user.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_chorus.anon.001",
+      "apiAuditId": "ncm.song_chorus",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_chorus.ncm.song_chorus.anon.001.raw.json",
+      "rawSha256": "10d8855f8b304d98a63ac9b0cd66a29619628cf073a63d59750643b626ccb522",
+      "redactedFile": "ncm.song_chorus.ncm.song_chorus.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_chorus.id0.none.neg.001",
+      "apiAuditId": "ncm.song_chorus",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_chorus.ncm.song_chorus.id0.none.neg.001.raw.json",
+      "rawSha256": "b46ee70c696fc60a51ec42b545a2be494aef5dd2a8d4b35996e89b3ff4045367",
+      "redactedFile": "ncm.song_chorus.ncm.song_chorus.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_chorus.inv.001",
+      "apiAuditId": "ncm.song_chorus",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.song_chorus.ncm.song_chorus.inv.001.raw.json",
+      "rawSha256": "3ab324d1c2e636af09cf80b59cc66cb5be92ac06d078f128da98965703ed8d10",
+      "redactedFile": "ncm.song_chorus.ncm.song_chorus.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_chorus.none.001",
+      "apiAuditId": "ncm.song_chorus",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_chorus.ncm.song_chorus.none.001.raw.json",
+      "rawSha256": "bbeb20dd49ba1964448b706339d4c2b098f25b4979a1b63404736a5d546ee76f",
+      "redactedFile": "ncm.song_chorus.ncm.song_chorus.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_copyright_rcmd.anon.001",
+      "apiAuditId": "ncm.song_copyright_rcmd",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_copyright_rcmd.ncm.song_copyright_rcmd.anon.001.raw.json",
+      "rawSha256": "44a634dd3ce50e37a56e57230553944bf55472401b1bcd054fe65a721c7390fd",
+      "redactedFile": "ncm.song_copyright_rcmd.ncm.song_copyright_rcmd.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_copyright_rcmd.id0.none.neg.001",
+      "apiAuditId": "ncm.song_copyright_rcmd",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_copyright_rcmd.ncm.song_copyright_rcmd.id0.none.neg.001.raw.json",
+      "rawSha256": "23da9d84f1413641d5cb8e8ea20abc6950e6688213e7b4951cffdd6098a9dce8",
+      "redactedFile": "ncm.song_copyright_rcmd.ncm.song_copyright_rcmd.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_copyright_rcmd.inv.001",
+      "apiAuditId": "ncm.song_copyright_rcmd",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.song_copyright_rcmd.ncm.song_copyright_rcmd.inv.001.raw.json",
+      "rawSha256": "ead6f0dbcb9f56abdaccf0a5d7e627ddec781825cf11ee026267dd745fba59ea",
+      "redactedFile": "ncm.song_copyright_rcmd.ncm.song_copyright_rcmd.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_copyright_rcmd.none.001",
+      "apiAuditId": "ncm.song_copyright_rcmd",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_copyright_rcmd.ncm.song_copyright_rcmd.none.001.raw.json",
+      "rawSha256": "3514930fca8ae9c5e2ceb498bbd1c6f0147264f6f1b0833a72723e993bc05951",
+      "redactedFile": "ncm.song_copyright_rcmd.ncm.song_copyright_rcmd.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_creators.anon.001",
+      "apiAuditId": "ncm.song_creators",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_creators.ncm.song_creators.anon.001.raw.json",
+      "rawSha256": "ad0604a3375b1843d4e8642f73c35cebd200c1cdad91f5ce900bc111eeab3538",
+      "redactedFile": "ncm.song_creators.ncm.song_creators.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_creators.id0.none.neg.001",
+      "apiAuditId": "ncm.song_creators",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_creators.ncm.song_creators.id0.none.neg.001.raw.json",
+      "rawSha256": "6b14377259189cca0a587d876b9a3be437249dbbd15679ccaf6d7ff382dfa06c",
+      "redactedFile": "ncm.song_creators.ncm.song_creators.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_creators.inv.001",
+      "apiAuditId": "ncm.song_creators",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.song_creators.ncm.song_creators.inv.001.raw.json",
+      "rawSha256": "f9824d5bab1c8731dac79dc833cdbc6b526ac6737026ebf4cb2b3b510f07c7ce",
+      "redactedFile": "ncm.song_creators.ncm.song_creators.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_creators.none.001",
+      "apiAuditId": "ncm.song_creators",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_creators.ncm.song_creators.none.001.raw.json",
+      "rawSha256": "c79b1833aa4e593c384f2a53d983edd4d248ce8686ed9d34bd269d1dd948bedd",
+      "redactedFile": "ncm.song_creators.ncm.song_creators.none.001.redacted.json"
     },
     {
       "caseId": "ncm.song_detail.empty.none.neg.001",
@@ -1946,6 +3218,38 @@
       "redactedFile": "ncm.song_download_url.ncm.song_download_url.B.none.001.redacted.json"
     },
     {
+      "caseId": "ncm.song_dynamic_cover.anon.001",
+      "apiAuditId": "ncm.song_dynamic_cover",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.anon.001.raw.json",
+      "rawSha256": "f0f3403735932f97bda5066f2bf8c03e2d735ecb7e6bf8bb56043364ee697fcb",
+      "redactedFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_dynamic_cover.id0.none.neg.001",
+      "apiAuditId": "ncm.song_dynamic_cover",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.id0.none.neg.001.raw.json",
+      "rawSha256": "5a1121b71f163611134f581adbfee6d7c98bd00b5d9b566605db0a991da975e9",
+      "redactedFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_dynamic_cover.inv.001",
+      "apiAuditId": "ncm.song_dynamic_cover",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.inv.001.raw.json",
+      "rawSha256": "e9cc0a56fa2ac0840d991bf2b575c5f2c49f6a14fff605da1aab07521ec08845",
+      "redactedFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_dynamic_cover.none.001",
+      "apiAuditId": "ncm.song_dynamic_cover",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.none.001.raw.json",
+      "rawSha256": "0ec26f981535aa8203875380de50407483fb66e39ee5f1d76a44cceb1c726b70",
+      "redactedFile": "ncm.song_dynamic_cover.ncm.song_dynamic_cover.none.001.redacted.json"
+    },
+    {
       "caseId": "ncm.song_music_detail.anon.001",
       "apiAuditId": "ncm.song_music_detail",
       "auth": "AUTH_ANON",
@@ -1976,6 +3280,62 @@
       "rawFile": "ncm.song_music_detail.ncm.song_music_detail.none.001.raw.json",
       "rawSha256": "3da3a3e2a8126cf8744a4878c0ea0249e7526988f12e47b1b91d193ffec8e41a",
       "redactedFile": "ncm.song_music_detail.ncm.song_music_detail.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_red_count.anon.001",
+      "apiAuditId": "ncm.song_red_count",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_red_count.ncm.song_red_count.anon.001.raw.json",
+      "rawSha256": "bebe725c163471e43e53b95fa8a756da27a4c4a2d037ead3e0a4674f9792bfb7",
+      "redactedFile": "ncm.song_red_count.ncm.song_red_count.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_red_count.id0.none.neg.001",
+      "apiAuditId": "ncm.song_red_count",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_red_count.ncm.song_red_count.id0.none.neg.001.raw.json",
+      "rawSha256": "d1b77a5f1ad56ac033136cd81ee19abf86e4a829d65067e800a2354b1beba880",
+      "redactedFile": "ncm.song_red_count.ncm.song_red_count.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_red_count.inv.001",
+      "apiAuditId": "ncm.song_red_count",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.song_red_count.ncm.song_red_count.inv.001.raw.json",
+      "rawSha256": "a1a5e2db46243e43060b22b1454655364d0bcfcfe7617121d13a4d6c8f50856b",
+      "redactedFile": "ncm.song_red_count.ncm.song_red_count.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_red_count.none.001",
+      "apiAuditId": "ncm.song_red_count",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_red_count.ncm.song_red_count.none.001.raw.json",
+      "rawSha256": "b16b680fe5214d6636040fb09cc60776ad6606adbf8e723a070b49190a5c2d62",
+      "redactedFile": "ncm.song_red_count.ncm.song_red_count.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_ncmget.local.001",
+      "apiAuditId": "ncm.song_url_ncmget",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.001.raw.json",
+      "rawSha256": "0228cf7a44a90132c43ccae2b3b12bf80f52bc2462eba5cc72f86d51f09b4766",
+      "redactedFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_ncmget.local.002",
+      "apiAuditId": "ncm.song_url_ncmget",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.002.raw.json",
+      "rawSha256": "c347aaf6b48f5b289841b0a5029655df6560ab6fbc6b5700a0e25493704d45fb",
+      "redactedFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_url_ncmget.local.003",
+      "apiAuditId": "ncm.song_url_ncmget",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.003.raw.json",
+      "rawSha256": "e88687f1940766dbebe765150782b77bd08b5ff1e8baeb150d1a8fe71722fef0",
+      "redactedFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.003.redacted.json"
     },
     {
       "caseId": "ncm.song_url_v1_302.A.lossless.none.001",
@@ -2304,6 +3664,70 @@
       "rawFile": "ncm.song_url.ncm.song_url.B.br999.none.001.raw.json",
       "rawSha256": "a6d41d0afee868b3a28ea121d3f57e8970211c548db8274cfacc3a7beea8cc65",
       "redactedFile": "ncm.song_url.ncm.song_url.B.br999.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_wiki_summary.anon.001",
+      "apiAuditId": "ncm.song_wiki_summary",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.anon.001.raw.json",
+      "rawSha256": "54af8388258a0ada2c7072bf05f6d67e4db13523f396631077c7e09ebc91f34f",
+      "redactedFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_wiki_summary.id0.none.neg.001",
+      "apiAuditId": "ncm.song_wiki_summary",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.id0.none.neg.001.raw.json",
+      "rawSha256": "3e1a98239c5c4e985785e21a946396c3c39c195c28f50bfb7374970daf3f1b1e",
+      "redactedFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_wiki_summary.inv.001",
+      "apiAuditId": "ncm.song_wiki_summary",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.inv.001.raw.json",
+      "rawSha256": "9a261bebc6e5275217b8555e21726dede1f206c246bc4686b5bcbf6adca839ca",
+      "redactedFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.song_wiki_summary.none.001",
+      "apiAuditId": "ncm.song_wiki_summary",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.none.001.raw.json",
+      "rawSha256": "9b9d611f4b897b94d095d07f4d77b38dcf7f4d1c438de43baf6435785940f42f",
+      "redactedFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.style_list.anon.001",
+      "apiAuditId": "ncm.style_list",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.style_list.ncm.style_list.anon.001.raw.json",
+      "rawSha256": "bc998a5bc3886a3e115cbb3242078d8af889595500d2bc87391727076a6e81d3",
+      "redactedFile": "ncm.style_list.ncm.style_list.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.style_list.inv.001",
+      "apiAuditId": "ncm.style_list",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.style_list.ncm.style_list.inv.001.raw.json",
+      "rawSha256": "7d03926d7d78a3dfb3ed7f4a3d317b7b1190d72e6f5874b09affd0d282788874",
+      "redactedFile": "ncm.style_list.ncm.style_list.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.style_list.none.001",
+      "apiAuditId": "ncm.style_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.style_list.ncm.style_list.none.001.raw.json",
+      "rawSha256": "8150ac4f67c5c8302bea637a19b85b95dc0362bec935289578c158eb13438fd2",
+      "redactedFile": "ncm.style_list.ncm.style_list.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.style_list.none.002",
+      "apiAuditId": "ncm.style_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.style_list.ncm.style_list.none.002.raw.json",
+      "rawSha256": "6d4d4bba7785eb958683e7e013949fa34b279a328537ed0b254546e934ec71f0",
+      "redactedFile": "ncm.style_list.ncm.style_list.none.002.redacted.json"
     },
     {
       "caseId": "ncm.top_album.anon.001",
@@ -2648,6 +4072,374 @@
       "rawFile": "ncm.user_detail.ncm.user_detail.none.neg.missing-uid.001.raw.json",
       "rawSha256": "d5f4ed3fbe5bd853dbdb69cfb64dd67c6e5226f88e717820378bd8c3bd3046e9",
       "redactedFile": "ncm.user_detail.ncm.user_detail.none.neg.missing-uid.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_follow_mixed.anon.001",
+      "apiAuditId": "ncm.user_follow_mixed",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.user_follow_mixed.ncm.user_follow_mixed.anon.001.raw.json",
+      "rawSha256": "1ea06b183e0262318e53d72325a6c7e8e9749cf2332c92de959ec7f0840c83ed",
+      "redactedFile": "ncm.user_follow_mixed.ncm.user_follow_mixed.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_follow_mixed.inv.001",
+      "apiAuditId": "ncm.user_follow_mixed",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.user_follow_mixed.ncm.user_follow_mixed.inv.001.raw.json",
+      "rawSha256": "5da41632f4aaadc6c0f2d113aff807e4212adf7b6b7d8709384e48baeaab82c1",
+      "redactedFile": "ncm.user_follow_mixed.ncm.user_follow_mixed.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_follow_mixed.none.001",
+      "apiAuditId": "ncm.user_follow_mixed",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_follow_mixed.ncm.user_follow_mixed.none.001.raw.json",
+      "rawSha256": "2305b663efd06fde8a8feb2e10617b778f649d6ad291e396c371362887477284",
+      "redactedFile": "ncm.user_follow_mixed.ncm.user_follow_mixed.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_followeds.anon.001",
+      "apiAuditId": "ncm.user_followeds",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.user_followeds.ncm.user_followeds.anon.001.raw.json",
+      "rawSha256": "89c92e4b7d4fef3780f9d6d8cf9cfdf570bd23f8293d3af2762728059f35caa6",
+      "redactedFile": "ncm.user_followeds.ncm.user_followeds.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_followeds.inv.001",
+      "apiAuditId": "ncm.user_followeds",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.user_followeds.ncm.user_followeds.inv.001.raw.json",
+      "rawSha256": "be17edae3f74ba46084eea2972e8c1060f24cd095e7adf85b383deca2633166d",
+      "redactedFile": "ncm.user_followeds.ncm.user_followeds.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_followeds.none.001",
+      "apiAuditId": "ncm.user_followeds",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_followeds.ncm.user_followeds.none.001.raw.json",
+      "rawSha256": "3362a6a5a837f9cff6d36702297e64ed55aa32246593a6e96dabd194860aa512",
+      "redactedFile": "ncm.user_followeds.ncm.user_followeds.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_followeds.uid0.none.neg.001",
+      "apiAuditId": "ncm.user_followeds",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_followeds.ncm.user_followeds.uid0.none.neg.001.raw.json",
+      "rawSha256": "ea7dc30994ea8a9a87a89706f9ade57f45aff49ba65fa95e0ee3d82a4d6c6fdf",
+      "redactedFile": "ncm.user_followeds.ncm.user_followeds.uid0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_follows.anon.001",
+      "apiAuditId": "ncm.user_follows",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.user_follows.ncm.user_follows.anon.001.raw.json",
+      "rawSha256": "0b0587a0a9d61e67accd81d0091b82b6147d522939f28e4f839b1a1e574f44c0",
+      "redactedFile": "ncm.user_follows.ncm.user_follows.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_follows.inv.001",
+      "apiAuditId": "ncm.user_follows",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.user_follows.ncm.user_follows.inv.001.raw.json",
+      "rawSha256": "31d9b40191104bafedea7ad1c8b6dd7832d3a4b810c7ef63c41f9bf091f36bbc",
+      "redactedFile": "ncm.user_follows.ncm.user_follows.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_follows.none.001",
+      "apiAuditId": "ncm.user_follows",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_follows.ncm.user_follows.none.001.raw.json",
+      "rawSha256": "afdeb0d3bb7f514c618ecfd8cfffe6f3b28bba68000799f0f9ed8be4442236fc",
+      "redactedFile": "ncm.user_follows.ncm.user_follows.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_follows.uid0.none.neg.001",
+      "apiAuditId": "ncm.user_follows",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_follows.ncm.user_follows.uid0.none.neg.001.raw.json",
+      "rawSha256": "054d61aa7027e65b2716d8bf2c529a37a444b7e6a64ad051f9a1d42c4a1a2b6e",
+      "redactedFile": "ncm.user_follows.ncm.user_follows.uid0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_playlist_collect.anon.001",
+      "apiAuditId": "ncm.user_playlist_collect",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.user_playlist_collect.ncm.user_playlist_collect.anon.001.raw.json",
+      "rawSha256": "6f147d9c849a04bd6f68c48b8c647c001db05969d075ed576792dd9ef1c8ca02",
+      "redactedFile": "ncm.user_playlist_collect.ncm.user_playlist_collect.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_playlist_collect.inv.001",
+      "apiAuditId": "ncm.user_playlist_collect",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.user_playlist_collect.ncm.user_playlist_collect.inv.001.raw.json",
+      "rawSha256": "61f9235bf2280740783c2bed2ad87a13739b43f107d1fd75368515a44efcf482",
+      "redactedFile": "ncm.user_playlist_collect.ncm.user_playlist_collect.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_playlist_collect.none.001",
+      "apiAuditId": "ncm.user_playlist_collect",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_playlist_collect.ncm.user_playlist_collect.none.001.raw.json",
+      "rawSha256": "f691d2a880c753394388e52abf5296dd791fa9e80aa769a0b893040482118058",
+      "redactedFile": "ncm.user_playlist_collect.ncm.user_playlist_collect.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_playlist_collect.uid0.none.neg.001",
+      "apiAuditId": "ncm.user_playlist_collect",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_playlist_collect.ncm.user_playlist_collect.uid0.none.neg.001.raw.json",
+      "rawSha256": "9e1bf7b047e90a3ef8778abe35adc794d3b40b2b59636752d568955adfe8997d",
+      "redactedFile": "ncm.user_playlist_collect.ncm.user_playlist_collect.uid0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_playlist.anon.001",
+      "apiAuditId": "ncm.user_playlist",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.user_playlist.ncm.user_playlist.anon.001.raw.json",
+      "rawSha256": "8bcce98b6efbf6eb0068f37051e045c5f9ee303bf1b8bf9eb2e73263ae8f299f",
+      "redactedFile": "ncm.user_playlist.ncm.user_playlist.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_playlist.inv.001",
+      "apiAuditId": "ncm.user_playlist",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.user_playlist.ncm.user_playlist.inv.001.raw.json",
+      "rawSha256": "3b89de4f36c113c0f58c1c3ab761966b6bb182fae9255d8c9c76579cf44c852c",
+      "redactedFile": "ncm.user_playlist.ncm.user_playlist.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_playlist.none.001",
+      "apiAuditId": "ncm.user_playlist",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_playlist.ncm.user_playlist.none.001.raw.json",
+      "rawSha256": "7119452c9094522788d517804a1039f43ff702850455e8b86016afd709ac6ab8",
+      "redactedFile": "ncm.user_playlist.ncm.user_playlist.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_playlist.none.002",
+      "apiAuditId": "ncm.user_playlist",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_playlist.ncm.user_playlist.none.002.raw.json",
+      "rawSha256": "ab2f362283e69c5ff75cb682f58913b54b2be81429224508d0c1a0c95198348e",
+      "redactedFile": "ncm.user_playlist.ncm.user_playlist.none.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_playlist.page.none.001",
+      "apiAuditId": "ncm.user_playlist",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_playlist.ncm.user_playlist.page.none.001.raw.json",
+      "rawSha256": "0196172429c57573483bd2f51ccda90a6b6ee36306f9fceb866991206cbabfc2",
+      "redactedFile": "ncm.user_playlist.ncm.user_playlist.page.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_playlist.uid0.none.neg.001",
+      "apiAuditId": "ncm.user_playlist",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_playlist.ncm.user_playlist.uid0.none.neg.001.raw.json",
+      "rawSha256": "621f7dfc0ed77eb3e50e06560aaaa87b32398a3cd6ac8d9afd2ded97a49628d9",
+      "redactedFile": "ncm.user_playlist.ncm.user_playlist.uid0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_record.anon.001",
+      "apiAuditId": "ncm.user_record",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.user_record.ncm.user_record.anon.001.raw.json",
+      "rawSha256": "5e44614de73f9dd32f951498055d2fc6e8f08ee3bb39dfe34ec15e198086850a",
+      "redactedFile": "ncm.user_record.ncm.user_record.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_record.inv.001",
+      "apiAuditId": "ncm.user_record",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.user_record.ncm.user_record.inv.001.raw.json",
+      "rawSha256": "2ee052d7b5603fa831145f5b6ec6bbad731dd8fd280237ea2ceebf9534dc09d2",
+      "redactedFile": "ncm.user_record.ncm.user_record.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_record.none.001",
+      "apiAuditId": "ncm.user_record",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_record.ncm.user_record.none.001.raw.json",
+      "rawSha256": "ed5af30f58ccb9a17ae91c039e85ed8f094d219104f174899994e8741e46fc59",
+      "redactedFile": "ncm.user_record.ncm.user_record.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_record.none.002",
+      "apiAuditId": "ncm.user_record",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_record.ncm.user_record.none.002.raw.json",
+      "rawSha256": "c0bf5d25158baf4f4a1bcc7f925ddd0ca020d03ec2facc84545a9b856aa8cd3b",
+      "redactedFile": "ncm.user_record.ncm.user_record.none.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.user_record.uid0.none.neg.001",
+      "apiAuditId": "ncm.user_record",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.user_record.ncm.user_record.uid0.none.neg.001.raw.json",
+      "rawSha256": "4152000d1049b34a7f7b7fb88ba04fc287e09263ff562305c6fb72c7257b02a4",
+      "redactedFile": "ncm.user_record.ncm.user_record.uid0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_category_list.anon.001",
+      "apiAuditId": "ncm.video_category_list",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.video_category_list.ncm.video_category_list.anon.001.raw.json",
+      "rawSha256": "fa1616f676a9a0a8311574b549ab5b92d904c20f2721daccac36d75d49184396",
+      "redactedFile": "ncm.video_category_list.ncm.video_category_list.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_category_list.inv.001",
+      "apiAuditId": "ncm.video_category_list",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.video_category_list.ncm.video_category_list.inv.001.raw.json",
+      "rawSha256": "a0be7c7c05b54bc623bc0341bd90e34e68a022d01ec75d02b4b914175b7fdf49",
+      "redactedFile": "ncm.video_category_list.ncm.video_category_list.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_category_list.none.001",
+      "apiAuditId": "ncm.video_category_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_category_list.ncm.video_category_list.none.001.raw.json",
+      "rawSha256": "60fb729159e91b6d5fdc40a6b0959ac6f1bb92c87b58a0acfd8b026b9863bfa3",
+      "redactedFile": "ncm.video_category_list.ncm.video_category_list.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_category_list.none.002",
+      "apiAuditId": "ncm.video_category_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_category_list.ncm.video_category_list.none.002.raw.json",
+      "rawSha256": "6d32e0936cee85bf9115f35c9712acde614572982e7e0305b9337132f521959d",
+      "redactedFile": "ncm.video_category_list.ncm.video_category_list.none.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_detail_info.vid0.none.neg.001",
+      "apiAuditId": "ncm.video_detail_info",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_detail_info.ncm.video_detail_info.vid0.none.neg.001.raw.json",
+      "rawSha256": "034bdbe30f112c3cca95d99ab1653d1d73d9fe1914557f0ab3fd2df80b097bed",
+      "redactedFile": "ncm.video_detail_info.ncm.video_detail_info.vid0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_detail.id0.none.neg.001",
+      "apiAuditId": "ncm.video_detail",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_detail.ncm.video_detail.id0.none.neg.001.raw.json",
+      "rawSha256": "4801edd86fc6d250fa52b8dfe5205010372fcfc5444324566b22cfc3957c0d2a",
+      "redactedFile": "ncm.video_detail.ncm.video_detail.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_group_list.anon.001",
+      "apiAuditId": "ncm.video_group_list",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.video_group_list.ncm.video_group_list.anon.001.raw.json",
+      "rawSha256": "217eee28dd24cb383a0db9af83584f6d2308901819d070560e6626e9fec04bbc",
+      "redactedFile": "ncm.video_group_list.ncm.video_group_list.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_group_list.inv.001",
+      "apiAuditId": "ncm.video_group_list",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.video_group_list.ncm.video_group_list.inv.001.raw.json",
+      "rawSha256": "52bd87c170e80222a56a86c5a7fb03b2cb8bce33479f8021b048834f1095acbc",
+      "redactedFile": "ncm.video_group_list.ncm.video_group_list.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_group_list.none.001",
+      "apiAuditId": "ncm.video_group_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_group_list.ncm.video_group_list.none.001.raw.json",
+      "rawSha256": "7992efbaaca9113f52b1d759c15c519c8bb6c3c8f5c94864b3b31641d845cea5",
+      "redactedFile": "ncm.video_group_list.ncm.video_group_list.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_group_list.none.002",
+      "apiAuditId": "ncm.video_group_list",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_group_list.ncm.video_group_list.none.002.raw.json",
+      "rawSha256": "8fd584e0379f52f585461273893180c679fff3e44dde3f4988a9af6b10e752df",
+      "redactedFile": "ncm.video_group_list.ncm.video_group_list.none.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_group.id0.none.neg.001",
+      "apiAuditId": "ncm.video_group",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_group.ncm.video_group.id0.none.neg.001.raw.json",
+      "rawSha256": "40e48e14a03a2128b9d0649815699cdccaa95cec85b49919f745db974d9e5b3b",
+      "redactedFile": "ncm.video_group.ncm.video_group.id0.none.neg.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_timeline_all.anon.001",
+      "apiAuditId": "ncm.video_timeline_all",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.video_timeline_all.ncm.video_timeline_all.anon.001.raw.json",
+      "rawSha256": "4468c4d246f97d49407a71fef156e1e865965d18202c0739f3f08890cfd4063e",
+      "redactedFile": "ncm.video_timeline_all.ncm.video_timeline_all.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_timeline_all.inv.001",
+      "apiAuditId": "ncm.video_timeline_all",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.video_timeline_all.ncm.video_timeline_all.inv.001.raw.json",
+      "rawSha256": "866bfffac165ca71148d67a98be05cf65337992191f5d17b0a13197e69fcd5ba",
+      "redactedFile": "ncm.video_timeline_all.ncm.video_timeline_all.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_timeline_all.none.001",
+      "apiAuditId": "ncm.video_timeline_all",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_timeline_all.ncm.video_timeline_all.none.001.raw.json",
+      "rawSha256": "b6a4597ead4c3bad044cbd64901180c7cdb8a4b90a5222d7cac759b8df220a62",
+      "redactedFile": "ncm.video_timeline_all.ncm.video_timeline_all.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_timeline_all.none.002",
+      "apiAuditId": "ncm.video_timeline_all",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_timeline_all.ncm.video_timeline_all.none.002.raw.json",
+      "rawSha256": "03a9618d7f8f673db9333728fecf88528e1f5fc0ba9883289d2f1efbfafbecf2",
+      "redactedFile": "ncm.video_timeline_all.ncm.video_timeline_all.none.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_timeline_recommend.anon.001",
+      "apiAuditId": "ncm.video_timeline_recommend",
+      "auth": "AUTH_ANON",
+      "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.anon.001.raw.json",
+      "rawSha256": "934f62f6b9bf84129cd1a57544b07b99296b0a1d99e0692d73f49805578d60ad",
+      "redactedFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.anon.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_timeline_recommend.inv.001",
+      "apiAuditId": "ncm.video_timeline_recommend",
+      "auth": "AUTH_INVALID_EXPIRED",
+      "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.inv.001.raw.json",
+      "rawSha256": "ae6b729255554185e94f940a8f25bc86e86f111b6c9f98716afd6881ada85694",
+      "redactedFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.inv.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_timeline_recommend.none.001",
+      "apiAuditId": "ncm.video_timeline_recommend",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.none.001.raw.json",
+      "rawSha256": "fb716be8bbcb4225ba4d41693fed8e3834833da5d2aceee1cd2671c26c805556",
+      "redactedFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.none.001.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_timeline_recommend.none.002",
+      "apiAuditId": "ncm.video_timeline_recommend",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.none.002.raw.json",
+      "rawSha256": "411b204b2858061636cbb003c612a5b37c94dbad2f9e4afa9af05a84052d8e97",
+      "redactedFile": "ncm.video_timeline_recommend.ncm.video_timeline_recommend.none.002.redacted.json"
+    },
+    {
+      "caseId": "ncm.video_url.id0.none.neg.001",
+      "apiAuditId": "ncm.video_url",
+      "auth": "AUTH_NONE",
+      "rawFile": "ncm.video_url.ncm.video_url.id0.none.neg.001.raw.json",
+      "rawSha256": "baf728135c6dbecd128774273ae8ce875817357e199cc6737eaebe853d2e9dc7",
+      "redactedFile": "ncm.video_url.ncm.video_url.id0.none.neg.001.redacted.json"
     }
   ]
 }

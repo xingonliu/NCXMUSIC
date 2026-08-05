@@ -31,15 +31,2118 @@
   },
   "matrix": {
     "planned": 8,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.song_wiki_summary.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 211,
+        "error": null,
+        "sampleHash": "54af8388258a0ada2c7072bf05f6d67e4db13523f396631077c7e09ebc91f34f",
+        "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_wiki_summary.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 114,
+        "error": null,
+        "sampleHash": "3e1a98239c5c4e985785e21a946396c3c39c195c28f50bfb7374970daf3f1b1e",
+        "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_wiki_summary.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 185,
+        "error": null,
+        "sampleHash": "9a261bebc6e5275217b8555e21726dede1f206c246bc4686b5bcbf6adca839ca",
+        "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_wiki_summary.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 182,
+        "error": null,
+        "sampleHash": "9b9d611f4b897b94d095d07f4d77b38dcf7f4d1c438de43baf6435785940f42f",
+        "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data.blocks[].adInfo",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].alg",
+      "rawType": "string",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].blockConfig",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].blockCursor",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].blockParam",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].canRefresh",
+      "rawType": "boolean",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].channel",
+      "rawType": "string",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "SONG_PLAY_ABOUT_TAB_SIM_CHANNEL"
+    },
+    {
+      "jsonPath": "data.blocks[].code",
+      "rawType": "string",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "SONG_PLAY_ABOUT_MUSIC_MEMORY"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives",
+      "rawType": "array<unknown>",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 4,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].action",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].adInfo",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].blockId",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].code",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].creativeId",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].creativeType",
+      "rawType": "union<string|null>",
+      "presence": 12,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "songTag"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].id",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].position",
+      "rawType": "union<null|string>",
+      "presence": 12,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "9999"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].action",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].alg",
+      "rawType": "union<null|string>",
+      "presence": 24,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "alg-music-rec-pp-sim_song-si-I2I"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExt",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExt.musicMemoryTextType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExt.specialType",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceExtInfo",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceId",
+      "rawType": "union<null|string>",
+      "presence": 24,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "1827600686"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourcePolicyId",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceType",
+      "rawType": "string",
+      "presence": 24,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "melody_style"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].resourceUrl",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].scm",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.buttons",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.colorList",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.coverTagVO",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.descriptions",
+      "rawType": "null",
+      "presence": 21,
+      "nulls": 21,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.descriptions[].description",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "求你别离开我"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.descriptions[].tag",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.icons",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.images",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.images[].action",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.images[].height",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.images[].imageId",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.images[].imageUrl",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "http://p3.music.126.net/9FhSEQtMhP-JP3_U84YfWQ==/10995116579"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.images[].imageWithoutTextUrl",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.images[].md5",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.images[].superscript",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.images[].tag",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.images[].title",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.images[].width",
+      "rawType": "number",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.labels",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.mainTitle.action",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.mainTitle.action.clickAction.action",
+      "rawType": "number",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.mainTitle.action.clickAction.targetUrl",
+      "rawType": "string",
+      "presence": 15,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "orpheus://rnpage?resId=rn-genre&component=rn-genre&mainProce"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.mainTitle.title",
+      "rawType": "string",
+      "presence": 24,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "原声带-电影原声"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.mainTitle.titleImgId",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.mainTitle.titleImgUrl",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitles",
+      "rawType": "null",
+      "presence": 15,
+      "nulls": 15,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitles[].action",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitles[].title",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "林达浪/h3R3"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitles[].titleImgId",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.subTitles[].titleImgUrl",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.superscript",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.textLinks",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.type",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].uiElement.videos",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].valid",
+      "rawType": "boolean",
+      "presence": 24,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "true"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].resources[].visibleStatus",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.buttons",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.colorList",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.coverTagVO",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.descriptions",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.icons",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.images",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.labels",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.mainTitle.action",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.mainTitle.title",
+      "rawType": "string",
+      "presence": 9,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "曲风"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.mainTitle.titleImgId",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.mainTitle.titleImgUrl",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.subTitles",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.superscript",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.textLinks",
+      "rawType": "null",
+      "presence": 6,
+      "nulls": 6,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.textLinks[].tag",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.textLinks[].text",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "国语"
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.textLinks[].url",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.type",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].creatives[].uiElement.videos",
+      "rawType": "null",
+      "presence": 9,
+      "nulls": 9,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].crossPlatformConfig",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].extInfo",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].hasMore",
+      "rawType": "boolean",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].hideTitle",
+      "rawType": "boolean",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.blocks[].id",
+      "rawType": "string",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "35999e58003240d3bff559b6bc1da946"
+    },
+    {
+      "jsonPath": "data.blocks[].md5",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].opRcmd",
+      "rawType": "number",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].position",
+      "rawType": "string",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "5"
+    },
+    {
+      "jsonPath": "data.blocks[].scm",
+      "rawType": "string",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": ""
+    },
+    {
+      "jsonPath": "data.blocks[].showType",
+      "rawType": "string",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "MUSIC_MEMORY_MULTI_TWO_GRID"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.buttons",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.colorList",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.coverTagVO",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.descriptions",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.icons",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.images",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.images[].action",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.images[].height",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.images[].imageId",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.images[].imageUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "http://p3.music.126.net/fkqFqMaEt0CzxYS-0NpCog==/18587244069"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.images[].imageWithoutTextUrl",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.images[].md5",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.images[].superscript",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.images[].tag",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.images[].title",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.images[].width",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.labels",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.mainTitle.action",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.mainTitle.title",
+      "rawType": "string",
+      "presence": 10,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "回忆坐标"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.mainTitle.titleImgId",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.mainTitle.titleImgUrl",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.subTitles",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.subTitles[].action.clickAction.action",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.subTitles[].action.clickAction.targetUrl",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "orpheus://rnpage?component=music-pedia-rn&songId=01018B422E7"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.subTitles[].title",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "全部"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.subTitles[].titleImgId",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.subTitles[].titleImgUrl",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.superscript",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.textLinks",
+      "rawType": "null",
+      "presence": 7,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.textLinks[].tag",
+      "rawType": "null",
+      "presence": 3,
+      "nulls": 3,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.textLinks[].text",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "参与共建"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.textLinks[].url",
+      "rawType": "string",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_INVALID_EXPIRED",
+        "AUTH_NONE"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "https://music.163.com/st/musicwiki/pedia-edit#hash=70fd268ed"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.type",
+      "rawType": "union<null|string>",
+      "presence": 10,
+      "nulls": 7,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "1"
+    },
+    {
+      "jsonPath": "data.blocks[].uiElement.videos",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.blocks[].visibleStatus",
+      "rawType": "null",
+      "presence": 10,
+      "nulls": 10,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.cursor",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "{\"SONG_PLAY_ABOUT_TAB_SIM_CHANNEL\":\"{\\\"blockCodes\\\":[\\\"SONG_"
+    },
+    {
+      "jsonPath": "data.hasMore",
+      "rawType": "boolean",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": "false"
+    },
+    {
+      "jsonPath": "data.pageCodeContext",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "data.pageConfig",
+      "rawType": "null",
+      "presence": 4,
+      "nulls": 4,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "message",
+      "rawType": "string",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.song_wiki_summary.anon.001",
+      "lastSeenCase": "ncm.song_wiki_summary.none.001",
+      "example": ""
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.song_wiki_summary.anon.001",
+      "sampleHash": "54af8388258a0ada2c7072bf05f6d67e4db13523f396631077c7e09ebc91f34f",
+      "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_wiki_summary.id0.none.neg.001",
+      "sampleHash": "3e1a98239c5c4e985785e21a946396c3c39c195c28f50bfb7374970daf3f1b1e",
+      "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_wiki_summary.inv.001",
+      "sampleHash": "9a261bebc6e5275217b8555e21726dede1f206c246bc4686b5bcbf6adca839ca",
+      "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_wiki_summary.none.001",
+      "sampleHash": "9b9d611f4b897b94d095d07f4d77b38dcf7f4d1c438de43baf6435785940f42f",
+      "rawFile": "ncm.song_wiki_summary.ncm.song_wiki_summary.none.001.raw.json"
+    }
+  ]
 }

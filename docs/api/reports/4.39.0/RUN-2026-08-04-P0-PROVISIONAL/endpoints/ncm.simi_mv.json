@@ -32,15 +32,333 @@
   },
   "matrix": {
     "planned": 6,
-    "executed": 0,
-    "cases": []
+    "executed": 4,
+    "cases": [
+      {
+        "caseId": "ncm.simi_mv.anon.001",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 67,
+        "error": null,
+        "sampleHash": "a074b447b6dcd150a6f841d4f60390ec17aec56e8cdb30002296b15b966dcc6b",
+        "rawFile": "ncm.simi_mv.ncm.simi_mv.anon.001.raw.json"
+      },
+      {
+        "caseId": "ncm.simi_mv.id0.none.neg.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 103,
+        "error": null,
+        "sampleHash": "2215b1a912948abacb8be3aef56eeb38e367875f575e7fed4a040e0b56062a73",
+        "rawFile": "ncm.simi_mv.ncm.simi_mv.id0.none.neg.001.raw.json"
+      },
+      {
+        "caseId": "ncm.simi_mv.inv.001",
+        "auth": "AUTH_INVALID_EXPIRED",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 67,
+        "error": null,
+        "sampleHash": "14e19a07059523cfa30bae69476ef3517ed0300094d290a837757cad5b071dd0",
+        "rawFile": "ncm.simi_mv.ncm.simi_mv.inv.001.raw.json"
+      },
+      {
+        "caseId": "ncm.simi_mv.none.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 62,
+        "error": null,
+        "sampleHash": "0de11dbcff8219c052db02c8a4abf057b9ee1f281c02754061786b7e25bc1a52",
+        "rawFile": "ncm.simi_mv.ncm.simi_mv.none.001.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 4,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "200"
+    },
+    {
+      "jsonPath": "mvs[].alg",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "rt"
+    },
+    {
+      "jsonPath": "mvs[].artistId",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "5196"
+    },
+    {
+      "jsonPath": "mvs[].artistName",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "陶喆"
+    },
+    {
+      "jsonPath": "mvs[].artists[].alias",
+      "rawType": "array<unknown>",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 12,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "undefined"
+    },
+    {
+      "jsonPath": "mvs[].artists[].alias[]",
+      "rawType": "string",
+      "presence": 20,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "David Tao"
+    },
+    {
+      "jsonPath": "mvs[].artists[].id",
+      "rawType": "number",
+      "presence": 24,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "5196"
+    },
+    {
+      "jsonPath": "mvs[].artists[].name",
+      "rawType": "string",
+      "presence": 24,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "陶喆"
+    },
+    {
+      "jsonPath": "mvs[].artists[].transNames",
+      "rawType": "null",
+      "presence": 24,
+      "nulls": 24,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "mvs[].briefDesc",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "mvs[].cover",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "http://p3.music.126.net/_lF0atFA17veynfMTl3_Lw==/36393834882"
+    },
+    {
+      "jsonPath": "mvs[].desc",
+      "rawType": "null",
+      "presence": 12,
+      "nulls": 12,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": null
+    },
+    {
+      "jsonPath": "mvs[].duration",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "539000"
+    },
+    {
+      "jsonPath": "mvs[].id",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "142002"
+    },
+    {
+      "jsonPath": "mvs[].mark",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "0"
+    },
+    {
+      "jsonPath": "mvs[].name",
+      "rawType": "string",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "超级面对面 第29期 陶喆：温情的我依然有姿态"
+    },
+    {
+      "jsonPath": "mvs[].playCount",
+      "rawType": "number",
+      "presence": 12,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_ANON",
+        "AUTH_NONE",
+        "AUTH_INVALID_EXPIRED"
+      ],
+      "firstSeenCase": "ncm.simi_mv.anon.001",
+      "lastSeenCase": "ncm.simi_mv.none.001",
+      "example": "498747"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.simi_mv.anon.001",
+      "sampleHash": "a074b447b6dcd150a6f841d4f60390ec17aec56e8cdb30002296b15b966dcc6b",
+      "rawFile": "ncm.simi_mv.ncm.simi_mv.anon.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_mv.id0.none.neg.001",
+      "sampleHash": "2215b1a912948abacb8be3aef56eeb38e367875f575e7fed4a040e0b56062a73",
+      "rawFile": "ncm.simi_mv.ncm.simi_mv.id0.none.neg.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_mv.inv.001",
+      "sampleHash": "14e19a07059523cfa30bae69476ef3517ed0300094d290a837757cad5b071dd0",
+      "rawFile": "ncm.simi_mv.ncm.simi_mv.inv.001.raw.json"
+    },
+    {
+      "caseId": "ncm.simi_mv.none.001",
+      "sampleHash": "0de11dbcff8219c052db02c8a4abf057b9ee1f281c02754061786b7e25bc1a52",
+      "rawFile": "ncm.simi_mv.ncm.simi_mv.none.001.raw.json"
+    }
+  ]
 }

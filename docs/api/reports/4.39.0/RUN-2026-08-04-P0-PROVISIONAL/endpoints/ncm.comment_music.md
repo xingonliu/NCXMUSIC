@@ -92,3 +92,195 @@
 - 建议权限级别：待定
 - 尚未完成事项：登录三态 smoke、最低用例数、结构稳定性、字段字典
 
+## 13. Phase 1 运行记录（RUN-2026-08-04-P0-PROVISIONAL）
+
+- 终态：**partial**（blocker: AUTH_USER 缺失（B-002，写操作已预授权但账号未到位））
+
+| caseId | auth | status | code | durationMs | error |
+| --- | --- | --- | --- | --- | --- |
+| ncm.comment_music.anon.001 | AUTH_ANON | - | 200 | 187 |  |
+| ncm.comment_music.id0.none.neg.001 | AUTH_NONE | - | 200 | 71 |  |
+| ncm.comment_music.inv.001 | AUTH_INVALID_EXPIRED | err | -462 | - | code -462 |
+| ncm.comment_music.none.001 | AUTH_NONE | - | 200 | 145 |  |
+| ncm.comment_music.none.002 | AUTH_NONE | - | 200 | 150 |  |
+
+### 累计字段表（跨 Phase，RUN-2026-08-04-P0-PROVISIONAL）
+
+| JSONPath | rawType | presence | null | empty | auths | example |
+| --- | --- | --- | --- | --- | --- | --- |
+| `cnum` | number | 1 | 0 | 0 | AUTH_ANON | `0` |
+| `code` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE | `200` |
+| `commentBanner` | null | 4 | 4 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments` | array<unknown> | 1 | 0 | 1 | AUTH_NONE | `undefined` |
+| `comments[].aiCommentLabel` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied` | array<unknown> | 6 | 0 | 6 | AUTH_ANON,AUTH_NONE | `undefined` |
+| `comments[].beReplied[].beRepliedCommentId` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `7560109612` |
+| `comments[].beReplied[].content` | string | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `哈哈哈哈！初中谈到现在 今年是第八个年头了 明天终于可以娶到她了！` |
+| `comments[].beReplied[].contentStickerExt` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].expressionUrl` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].ipLocation.ip` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].ipLocation.location` | string | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `江苏` |
+| `comments[].beReplied[].ipLocation.userId` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `4895625818` |
+| `comments[].beReplied[].richContent` | string | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `哈哈哈哈！初中谈到现在 今年是第八个年头了 明天终于可以娶到她了！` |
+| `comments[].beReplied[].status` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].beReplied[].user.anonym` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].beReplied[].user.authStatus` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].beReplied[].user.avatarDetail` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].user.avatarUrl` | string | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `http://p4.music.126.net/rZaX_BD_6x6Egrj4` |
+| `comments[].beReplied[].user.commonIdentity` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].user.experts` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].user.expertTags` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].user.followed` | boolean | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `comments[].beReplied[].user.highlight` | boolean | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `comments[].beReplied[].user.liveInfo` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].user.locationInfo` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].user.mutual` | boolean | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `comments[].beReplied[].user.nickname` | string | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `三之有七` |
+| `comments[].beReplied[].user.remarkName` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].user.socialUserId` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].user.target` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].user.thanked` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].user.userId` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `4895625818` |
+| `comments[].beReplied[].user.userType` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].beReplied[].user.vipRights` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].beReplied[].user.vipType` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `11` |
+| `comments[].commentId` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `9599666109` |
+| `comments[].commentLocationType` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].content` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `幸福` |
+| `comments[].contentResource` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].contentStickerExt` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].expressionUrl` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].favorited` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `comments[].grade` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].ipLocation.ip` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].ipLocation.location` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `河南` |
+| `comments[].ipLocation.userId` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `12647117182` |
+| `comments[].liked` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `comments[].likedCount` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].medal` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].needDisplayTime` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `true` |
+| `comments[].owner` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `comments[].parentCommentId` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `7560109612` |
+| `comments[].pendantData` | null | 6 | 6 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].pendantData.id` | number | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `6956572` |
+| `comments[].pendantData.imageUrl` | string | 3 | 0 | 0 | AUTH_ANON,AUTH_NONE | `http://p1.music.126.net/P_5dD1KUaQYdFB2V` |
+| `comments[].repliedMark` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].richContent` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `幸福` |
+| `comments[].showFloorComment` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].status` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].time` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `1785868028770` |
+| `comments[].timeStr` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `02:27` |
+| `comments[].user.anonym` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].user.authStatus` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].user.avatarDetail` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.avatarUrl` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `http://p4.music.126.net/V_dnNV9gsZtJef17` |
+| `comments[].user.commonIdentity` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.experts` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.expertTags` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.followed` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `comments[].user.highlight` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `comments[].user.liveInfo` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.locationInfo` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.mutual` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `comments[].user.nickname` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `念念以萌为名` |
+| `comments[].user.remarkName` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.socialUserId` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.target` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.thanked` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.userId` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `12647117182` |
+| `comments[].user.userType` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].user.vipRights.associator` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.vipRights.associator.iconUrl` | string | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `https://p6.music.126.net/obj/wonDlsKUwrL` |
+| `comments[].user.vipRights.associator.rights` | boolean | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `true` |
+| `comments[].user.vipRights.associator.vipCode` | number | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `100` |
+| `comments[].user.vipRights.extInfo` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.vipRights.memberLogo` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.vipRights.musicPackage` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.vipRights.musicPackage.iconUrl` | string | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `https://p5.music.126.net/obj/wonDlsKUwrL` |
+| `comments[].user.vipRights.musicPackage.rights` | boolean | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `true` |
+| `comments[].user.vipRights.musicPackage.vipCode` | number | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `220` |
+| `comments[].user.vipRights.redplus` | null | 7 | 7 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `comments[].user.vipRights.redplus.iconUrl` | string | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `https://p6.music.126.net/obj/wonDlsKUwrL` |
+| `comments[].user.vipRights.redplus.rights` | boolean | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `true` |
+| `comments[].user.vipRights.redplus.vipCode` | number | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `300` |
+| `comments[].user.vipRights.redVipAnnualCount` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `-1` |
+| `comments[].user.vipRights.redVipLevel` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].user.vipRights.relationType` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].user.vipType` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `comments[].userBizLevels` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments` | array<unknown> | 1 | 0 | 1 | AUTH_NONE | `undefined` |
+| `hotComments[].aiCommentLabel` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].beReplied` | array<unknown> | 9 | 0 | 9 | AUTH_ANON,AUTH_NONE | `undefined` |
+| `hotComments[].commentId` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `276010092` |
+| `hotComments[].commentLocationType` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `hotComments[].content` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `我不吸烟不喝酒，不泡酒吧夜店，没有不良嗜好。他们只能说我耍大牌，为这是不需要图片` |
+| `hotComments[].contentResource` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].contentStickerExt` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].decoration` | null | 6 | 6 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].expressionUrl` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].favorited` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `hotComments[].grade` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].ipLocation.ip` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].ipLocation.location` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `` |
+| `hotComments[].ipLocation.userId` | union<null|number> | 9 | 6 | 0 | AUTH_ANON,AUTH_NONE | `1815135547` |
+| `hotComments[].liked` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `hotComments[].likedCount` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `408342` |
+| `hotComments[].medal` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].needDisplayTime` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `true` |
+| `hotComments[].owner` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `hotComments[].parentCommentId` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `hotComments[].pendantData` | null | 8 | 8 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].pendantData.id` | number | 1 | 0 | 0 | AUTH_NONE | `4209047` |
+| `hotComments[].pendantData.imageUrl` | string | 1 | 0 | 0 | AUTH_NONE | `http://p1.music.126.net/YxMDXdwDJUQBSQTm` |
+| `hotComments[].repliedMark` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].richContent` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `我不吸烟不喝酒，不泡酒吧夜店，没有不良嗜好。他们只能说我耍大牌，为这是不需要图片` |
+| `hotComments[].showFloorComment` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].status` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `hotComments[].time` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `1483027783245` |
+| `hotComments[].timeStr` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `2016-12-30` |
+| `hotComments[].user.anonym` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `hotComments[].user.authStatus` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `hotComments[].user.avatarDetail` | null | 4 | 4 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.avatarDetail.identityIconUrl` | string | 5 | 0 | 0 | AUTH_ANON,AUTH_NONE | `https://p5.music.126.net/obj/wo3DlcOGw6D` |
+| `hotComments[].user.avatarDetail.identityLevel` | number | 5 | 0 | 0 | AUTH_ANON,AUTH_NONE | `3` |
+| `hotComments[].user.avatarDetail.userType` | number | 5 | 0 | 0 | AUTH_ANON,AUTH_NONE | `207` |
+| `hotComments[].user.avatarUrl` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `http://p4.music.126.net/ra2xMcmVyzJ9KDPa` |
+| `hotComments[].user.commonIdentity` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.experts` | null | 7 | 7 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.experts.1` | string | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `音乐视频达人` |
+| `hotComments[].user.experts.2` | string | 2 | 0 | 0 | AUTH_ANON,AUTH_NONE | `音乐图文达人` |
+| `hotComments[].user.expertTags` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.followed` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `hotComments[].user.highlight` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `hotComments[].user.liveInfo` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.locationInfo` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.mutual` | boolean | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `hotComments[].user.nickname` | string | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `Gloria楽` |
+| `hotComments[].user.remarkName` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.socialUserId` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.target` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.thanked` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.userId` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `76978040` |
+| `hotComments[].user.userType` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `207` |
+| `hotComments[].user.vipRights.associator` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.vipRights.associator.iconUrl` | string | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `https://p5.music.126.net/obj/wonDlsKUwrL` |
+| `hotComments[].user.vipRights.associator.rights` | boolean | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `true` |
+| `hotComments[].user.vipRights.associator.vipCode` | number | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `100` |
+| `hotComments[].user.vipRights.extInfo` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.vipRights.memberLogo` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.vipRights.musicPackage` | null | 3 | 3 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.vipRights.musicPackage.iconUrl` | string | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `https://p5.music.126.net/obj/wonDlsKUwrL` |
+| `hotComments[].user.vipRights.musicPackage.rights` | boolean | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `true` |
+| `hotComments[].user.vipRights.musicPackage.vipCode` | number | 6 | 0 | 0 | AUTH_ANON,AUTH_NONE | `220` |
+| `hotComments[].user.vipRights.redplus` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `hotComments[].user.vipRights.redVipAnnualCount` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `-1` |
+| `hotComments[].user.vipRights.redVipLevel` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `6` |
+| `hotComments[].user.vipRights.relationType` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `0` |
+| `hotComments[].user.vipType` | number | 9 | 0 | 0 | AUTH_ANON,AUTH_NONE | `11` |
+| `hotComments[].userBizLevels` | null | 9 | 9 | 0 | AUTH_ANON,AUTH_NONE |  |
+| `isMusician` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE | `false` |
+| `more` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE | `true` |
+| `moreHot` | boolean | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE | `true` |
+| `topComments` | array<unknown> | 4 | 0 | 4 | AUTH_ANON,AUTH_NONE | `undefined` |
+| `total` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE | `157211` |
+| `userId` | number | 4 | 0 | 0 | AUTH_ANON,AUTH_NONE | `17788444306` |

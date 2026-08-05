@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "caseId": "ncm.playlist_detail_rcmd_get.none.001",
+    "apiAuditId": "ncm.playlist_detail_rcmd_get",
+    "auth": "AUTH_NONE",
+    "params": {
+      "id": "2936255937"
+    },
+    "startedAt": "2026-08-05T02:42:57.993Z",
+    "endedAt": "2026-08-05T02:42:58.120Z",
+    "durationMs": 127,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "message": "success",
+    "data": {
+      "rcmdTitle": "喜欢这个歌单的用户也听了",
+      "jumpUrl": "orpheus://playlistCollection",
+      "recPlaylist": [
+        {
+          "playlist": {
+            "id": 2298534554,
+            "name": "一心只蹦圣贤迪",
+            "coverImgId": 109951163569990370,
+            "coverImgUrl": "http://p1.music.126.net/d29o86icMFv2MaEcIN147w==/109951163569990366.jpg#hash=fae7c82cc545",
+            "playCount": 30464912,
+            "specialType": 0,
+            "action": "orpheus://playlist/2298534554?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 2748492595,
+            "name": "欧美万评优质女声•萦绕耳畔忆于心间",
+            "coverImgId": 109951164018765580,
+            "coverImgUrl": "http://p1.music.126.net/ptx2Jf4PZl3oNLxv4NiADg==/109951164018765577.jpg#hash=23a03584d3ed",
+            "playCount": 40910660,
+            "specialType": 0,
+            "action": "orpheus://playlist/2748492595?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 2032139172,
+            "name": "『电驾』比酒驾更危险的是电驾",
+            "coverImgId": 109951167485071250,
+            "coverImgUrl": "http://p1.music.126.net/1xB9Ec-vr5f3aDvWr02P7g==/109951167485071241.jpg#hash=2ac21288cf76",
+            "playCount": 26722214,
+            "specialType": 0,
+            "action": "orpheus://playlist/2032139172?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 560609382,
+            "name": "『加州公路』皮卡夕阳与微风，生活不止苟且",
+            "coverImgId": 18965476068109010,
+            "coverImgUrl": "http://p1.music.126.net/kzrUM6_p8N0wDXGW71GX3g==/18965476068109008.jpg#hash=9b7e5cebc408",
+            "playCount": 23192558,
+            "specialType": 0,
+            "action": "orpheus://playlist/560609382?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 2230978204,
+            "name": "能让我熬过40分钟的跑步歌单",
+            "coverImgId": 109951168041204080,
+            "coverImgUrl": "http://p1.music.126.net/iqfGd-w21OoLOMZ9PwtYSQ==/109951168041204078.jpg#hash=5c3595b61357",
+            "playCount": 59276556,
+            "specialType": 0,
+            "action": "orpheus://playlist/2230978204?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        },
+        {
+          "playlist": {
+            "id": 824754853,
+            "name": "『开口脆』迷幻嗓音极致瞬间❤️",
+            "coverImgId": 109951165832675600,
+            "coverImgUrl": "http://p1.music.126.net/aJxCPkxj3j_w_1iyeXHacQ==/109951165832675605.jpg#hash=f563e9b61290",
+            "playCount": 51569156,
+            "specialType": 0,
+            "action": "orpheus://playlist/824754853?type=0&uiPlaylistType=UGC"
+          },
+          "alg": "alg_similar_tag"
+        }
+      ]
+    }
+  },
+  "error": null
+}

@@ -1,0 +1,2225 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_video.inv.001",
+    "apiAuditId": "ncm.artist_video",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "id": "7763"
+    },
+    "startedAt": "2026-08-05T02:44:39.068Z",
+    "endedAt": "2026-08-05T02:44:39.173Z",
+    "durationMs": 105,
+    "attempts": 1
+  },
+  "body": {
+    "code": 200,
+    "message": "ok",
+    "data": {
+      "records": [
+        {
+          "id": "34724956",
+          "type": 1,
+          "position": null,
+          "resource": {
+            "mlogBaseData": {
+              "id": "34724956",
+              "userId": null,
+              "type": 3,
+              "originalTitle": null,
+              "text": "G.E.M.邓紫棋为大家送来了2026马年祝福",
+              "desc": "",
+              "interveneText": null,
+              "pubTime": 1771171201447,
+              "coverUrl": "http://p3.music.126.net/2SLY7ajwbrpJjzpNDFJtGQ==/109951172654633627.jpg#hash=f1940cc37ea8",
+              "coverDetail": null,
+              "greatCover": false,
+              "coverPicKey": "109951172654633627",
+              "coverHeight": 240,
+              "coverWidth": 426,
+              "coverColor": -1118482,
+              "coverDynamicUrl": null,
+              "audioDTO": null,
+              "talk": null,
+              "threadId": "R_MV_5_34724956",
+              "duration": 14000,
+              "video": null,
+              "videos": [
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_240P",
+                  "url": "cloudmusic/obj/core/78053871187/271463f602bbfcaca12db4a8df207f56.m3u8",
+                  "duration": 14000,
+                  "size": 938884,
+                  "width": 426,
+                  "height": 240,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_240P",
+                  "url": "cloudmusic/obj/core/78053871187/271463f602bbfcaca12db4a8df207f56.mp4",
+                  "duration": 14000,
+                  "size": 870951,
+                  "width": 426,
+                  "height": 240,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_480P",
+                  "url": "cloudmusic/obj/core/78053871187/1fda2b90eeecc3ad1ab1e039824e1440.m3u8",
+                  "duration": 14000,
+                  "size": 1511156,
+                  "width": 854,
+                  "height": 480,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_480P",
+                  "url": "cloudmusic/obj/core/78053871187/1fda2b90eeecc3ad1ab1e039824e1440.mp4",
+                  "duration": 14000,
+                  "size": 1431189,
+                  "width": 854,
+                  "height": 480,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_720P",
+                  "url": "cloudmusic/obj/core/78053871187/807b153f687e5102b5d34ec6815121bb.m3u8",
+                  "duration": 14000,
+                  "size": 2356968,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_720P",
+                  "url": "cloudmusic/obj/core/78053871187/807b153f687e5102b5d34ec6815121bb.mp4",
+                  "duration": 14000,
+                  "size": 2260852,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_1080P",
+                  "url": "cloudmusic/obj/core/78053871187/bbefb10b6df0c972ee735bfe1707a981.m3u8",
+                  "duration": 14000,
+                  "size": 5508788,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_1080P",
+                  "url": "cloudmusic/obj/core/78053871187/bbefb10b6df0c972ee735bfe1707a981.mp4",
+                  "duration": 14000,
+                  "size": 5319012,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                }
+              ],
+              "graphic": null,
+              "relatedPubUsers": null,
+              "mixInfo": null
+            },
+            "mlogExtVO": {
+              "likedCount": 13764,
+              "commentCount": 1707,
+              "playCount": 125627,
+              "shareCount": 1147,
+              "liked": false,
+              "song": null,
+              "algSong": null,
+              "videoStartPlayTime": null,
+              "canCollect": false,
+              "collectReason": null,
+              "artistName": "G.E.M.邓紫棋",
+              "artists": [
+                {
+                  "id": 7763,
+                  "name": "G.E.M.邓紫棋",
+                  "img1v1Url": "http://p3.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=0e610c6450cf",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 281382,
+                    "nickname": "GEM鄧紫棋",
+                    "avatarUrl": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                }
+              ],
+              "specialTag": null,
+              "channelTag": null
+            },
+            "userProfile": null,
+            "relatedPubUsers": null,
+            "status": 1,
+            "shareUrl": "https://music.163.com/mv/34724956/#hash=26c87c91ecf0",
+            "source": null,
+            "mlogPlaylists": null
+          },
+          "alg": null,
+          "logInfo": null,
+          "reason": null,
+          "reasonType": null,
+          "priorShowLive": null,
+          "actionTime": null,
+          "matchField": 0,
+          "matchFieldContent": null,
+          "srcId": null,
+          "sameCity": false,
+          "followedShowReason": null
+        },
+        {
+          "id": "22792682",
+          "type": 1,
+          "position": null,
+          "resource": {
+            "mlogBaseData": {
+              "id": "22792682",
+              "userId": null,
+              "type": 3,
+              "originalTitle": null,
+              "text": "Sacrifice（争）（2025英雄联盟全球总决赛主题曲）",
+              "desc": "浩瀚星海，铭记每一段热泪与激昂。\n时光飞逝，传奇的炽焰依旧长燃。\n新章待启，争者皆留名\n\n2025全球总决赛，10月14日至11月9日，大幕将启，敬请期待。\n\n2025英雄联盟全球总决赛主题曲《Sacrifice》（争）由G.E.M.邓紫棋演唱。",
+              "interveneText": null,
+              "pubTime": 1760360400136,
+              "coverUrl": "http://p4.music.126.net/VHyXQMd7mUrqED6FrOM4sg==/109951172144930896.jpg#hash=fd1c6f67dfb2",
+              "coverDetail": null,
+              "greatCover": true,
+              "coverPicKey": "109951172144930896",
+              "coverHeight": 240,
+              "coverWidth": 426,
+              "coverColor": -1118482,
+              "coverDynamicUrl": null,
+              "audioDTO": null,
+              "talk": null,
+              "threadId": "R_MV_5_22792682",
+              "duration": 241000,
+              "video": null,
+              "videos": [
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_240P",
+                  "url": "cloudmusic/obj/core/63209460736/7635e148f552c4609e5ba2980947debb.m3u8",
+                  "duration": 241000,
+                  "size": 16801115,
+                  "width": 426,
+                  "height": 240,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_240P",
+                  "url": "cloudmusic/obj/core/63209460736/7635e148f552c4609e5ba2980947debb.mp4",
+                  "duration": 241000,
+                  "size": 15645710,
+                  "width": 426,
+                  "height": 240,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_480P",
+                  "url": "cloudmusic/obj/core/63209460736/0061171ae95cb8bf4c6d584526375696.m3u8",
+                  "duration": 241000,
+                  "size": 26229504,
+                  "width": 854,
+                  "height": 480,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_480P",
+                  "url": "cloudmusic/obj/core/63209460736/0061171ae95cb8bf4c6d584526375696.mp4",
+                  "duration": 241000,
+                  "size": 24884387,
+                  "width": 854,
+                  "height": 480,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_720P",
+                  "url": "cloudmusic/obj/core/63209460736/d28cd55d4aada56ab1ba092420601d1c.m3u8",
+                  "duration": 241000,
+                  "size": 40444747,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_720P",
+                  "url": "cloudmusic/obj/core/63209460736/d28cd55d4aada56ab1ba092420601d1c.mp4",
+                  "duration": 241000,
+                  "size": 38791003,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_1080P",
+                  "url": "cloudmusic/obj/core/63209460736/5e7f4a53cf94ae3100ec95694f3c4b14.m3u8",
+                  "duration": 241000,
+                  "size": 125860293,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_1080P",
+                  "url": "cloudmusic/obj/core/63209460736/5e7f4a53cf94ae3100ec95694f3c4b14.mp4",
+                  "duration": 241000,
+                  "size": 122428922,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                }
+              ],
+              "graphic": null,
+              "relatedPubUsers": null,
+              "mixInfo": null
+            },
+            "mlogExtVO": {
+              "likedCount": 3560,
+              "commentCount": 330,
+              "playCount": 88491,
+              "shareCount": 648,
+              "liked": false,
+              "song": {
+                "id": 2754115754,
+                "name": "Sacrifice",
+                "coverUrl": "http://p3.music.126.net/zthIUEzkMAb4xKe-Y0fwDw==/109951172136699663.jpg#hash=11306d096f30",
+                "duration": 249306,
+                "artists": [
+                  {
+                    "artistId": 1047337,
+                    "artistName": "英雄联盟"
+                  },
+                  {
+                    "artistId": 7763,
+                    "artistName": "G.E.M.邓紫棋"
+                  }
+                ],
+                "privilege": null,
+                "albumName": "Sacrifice",
+                "startTime": null,
+                "endTime": null,
+                "isLiked": null,
+                "playedNum": null
+              },
+              "algSong": null,
+              "videoStartPlayTime": null,
+              "canCollect": true,
+              "collectReason": null,
+              "artistName": "英雄联盟",
+              "artists": [
+                {
+                  "id": 1047337,
+                  "name": "英雄联盟",
+                  "img1v1Url": "http://p3.music.126.net/sRVN7yqE0Ja-dDXVNeh3gQ==/109951165103609061.jpg#hash=b35fdac24c0b",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 482638336,
+                    "nickname": "英雄联盟宇宙",
+                    "avatarUrl": "http://p3.music.126.net/FEg152eXkox0qf99yMlLvw==/109951165103601741.jpg#hash=eff5b29e3006",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                },
+                {
+                  "id": 7763,
+                  "name": "G.E.M.邓紫棋",
+                  "img1v1Url": "http://p3.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=0e610c6450cf",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 281382,
+                    "nickname": "GEM鄧紫棋",
+                    "avatarUrl": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                }
+              ],
+              "specialTag": null,
+              "channelTag": null
+            },
+            "userProfile": null,
+            "relatedPubUsers": null,
+            "status": 1,
+            "shareUrl": "https://music.163.com/mv/22792682/#hash=9169ebc91ca5",
+            "source": null,
+            "mlogPlaylists": null
+          },
+          "alg": null,
+          "logInfo": null,
+          "reason": null,
+          "reasonType": null,
+          "priorShowLive": null,
+          "actionTime": null,
+          "matchField": 0,
+          "matchFieldContent": null,
+          "srcId": null,
+          "sameCity": false,
+          "followedShowReason": null
+        },
+        {
+          "id": "22792008",
+          "type": 1,
+          "position": null,
+          "resource": {
+            "mlogBaseData": {
+              "id": "22792008",
+              "userId": null,
+              "type": 3,
+              "originalTitle": null,
+              "text": "邓紫棋携2025英雄联盟全球总决赛主题曲《Sacrifice（争）》问候云村网友",
+              "desc": "",
+              "interveneText": null,
+              "pubTime": 1760360400126,
+              "coverUrl": "http://p3.music.126.net/7DQRyT3cJmKJHn6ntn6t6w==/109951172144803983.jpg#hash=16ffbc362a42",
+              "coverDetail": null,
+              "greatCover": false,
+              "coverPicKey": "109951172144803983",
+              "coverHeight": 240,
+              "coverWidth": 426,
+              "coverColor": -1118482,
+              "coverDynamicUrl": null,
+              "audioDTO": null,
+              "talk": null,
+              "threadId": "R_MV_5_22792008",
+              "duration": 27000,
+              "video": null,
+              "videos": [
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_240P",
+                  "url": "cloudmusic/obj/core/63209249518/002ed9ee57faced7f0f5d30643656f7f.m3u8",
+                  "duration": 27000,
+                  "size": 2069760,
+                  "width": 426,
+                  "height": 240,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_240P",
+                  "url": "cloudmusic/obj/core/63209249518/002ed9ee57faced7f0f5d30643656f7f.mp4",
+                  "duration": 27000,
+                  "size": 1933442,
+                  "width": 426,
+                  "height": 240,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_480P",
+                  "url": "cloudmusic/obj/core/63209249518/6a4c1bde6002901f8a9cf0a1653b0036.m3u8",
+                  "duration": 27000,
+                  "size": 3219568,
+                  "width": 854,
+                  "height": 480,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_480P",
+                  "url": "cloudmusic/obj/core/63209249518/6a4c1bde6002901f8a9cf0a1653b0036.mp4",
+                  "duration": 27000,
+                  "size": 3065457,
+                  "width": 854,
+                  "height": 480,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_720P",
+                  "url": "cloudmusic/obj/core/63209249518/a506c2f8940e97f1163edfcbb31e987c.m3u8",
+                  "duration": 27000,
+                  "size": 4942400,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_720P",
+                  "url": "cloudmusic/obj/core/63209249518/a506c2f8940e97f1163edfcbb31e987c.mp4",
+                  "duration": 27000,
+                  "size": 4748036,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_1080P",
+                  "url": "cloudmusic/obj/core/63209249518/95767bca700e7c95f8f479c22a01f929.m3u8",
+                  "duration": 27000,
+                  "size": 5827504,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_1080P",
+                  "url": "cloudmusic/obj/core/63209249518/95767bca700e7c95f8f479c22a01f929.mp4",
+                  "duration": 27000,
+                  "size": 5624623,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                }
+              ],
+              "graphic": null,
+              "relatedPubUsers": null,
+              "mixInfo": null
+            },
+            "mlogExtVO": {
+              "likedCount": 568,
+              "commentCount": 61,
+              "playCount": 23540,
+              "shareCount": 11,
+              "liked": false,
+              "song": null,
+              "algSong": null,
+              "videoStartPlayTime": null,
+              "canCollect": false,
+              "collectReason": null,
+              "artistName": "英雄联盟",
+              "artists": [
+                {
+                  "id": 1047337,
+                  "name": "英雄联盟",
+                  "img1v1Url": "http://p3.music.126.net/sRVN7yqE0Ja-dDXVNeh3gQ==/109951165103609061.jpg#hash=b35fdac24c0b",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 482638336,
+                    "nickname": "英雄联盟宇宙",
+                    "avatarUrl": "http://p3.music.126.net/FEg152eXkox0qf99yMlLvw==/109951165103601741.jpg#hash=eff5b29e3006",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                },
+                {
+                  "id": 7763,
+                  "name": "G.E.M.邓紫棋",
+                  "img1v1Url": "http://p4.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=7f33127f0f2b",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 281382,
+                    "nickname": "GEM鄧紫棋",
+                    "avatarUrl": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                }
+              ],
+              "specialTag": null,
+              "channelTag": null
+            },
+            "userProfile": null,
+            "relatedPubUsers": null,
+            "status": 1,
+            "shareUrl": "https://music.163.com/mv/22792008/#hash=0f5e0073f2a7",
+            "source": null,
+            "mlogPlaylists": null
+          },
+          "alg": null,
+          "logInfo": null,
+          "reason": null,
+          "reasonType": null,
+          "priorShowLive": null,
+          "actionTime": null,
+          "matchField": 0,
+          "matchFieldContent": null,
+          "srcId": null,
+          "sameCity": false,
+          "followedShowReason": null
+        },
+        {
+          "id": "22774515",
+          "type": 1,
+          "position": null,
+          "resource": {
+            "mlogBaseData": {
+              "id": "22774515",
+              "userId": null,
+              "type": 3,
+              "originalTitle": null,
+              "text": "云上叨叨EP40 邓紫棋：重录亦重生",
+              "desc": "邓紫棋带着《I AM GLORIA》和小说《启示路》来 “交作业” 啦！ 为什么《I AM GLORIA》这张专辑是 “重生” 而非简单重录？咬字、语气的细微变化里又藏着怎样的成长密码？更揭秘了 13 岁时的小说梦如何在 20 年后成真！ 快戳进采访，听听邓紫棋细说音乐与文字里的成长，解锁更多独家心声！",
+              "interveneText": null,
+              "pubTime": 1755314100145,
+              "coverUrl": "http://p4.music.126.net/6yu8MWOIvGtyZj6fm3UwjA==/109951171580533098.jpg#hash=1eb19e7ff1b5",
+              "coverDetail": null,
+              "greatCover": true,
+              "coverPicKey": "109951171580533098",
+              "coverHeight": 240,
+              "coverWidth": 426,
+              "coverColor": -1118482,
+              "coverDynamicUrl": null,
+              "audioDTO": null,
+              "talk": null,
+              "threadId": "R_MV_5_22774515",
+              "duration": 481000,
+              "video": null,
+              "videos": [
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_240P",
+                  "url": "cloudmusic/obj/core/61562309469/f960d0f9b28bd357b6f13c7bc8a05a8e.m3u8",
+                  "duration": 481000,
+                  "size": 35307006,
+                  "width": 426,
+                  "height": 240,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_240P",
+                  "url": "cloudmusic/obj/core/61562309469/f960d0f9b28bd357b6f13c7bc8a05a8e.mp4",
+                  "duration": 481000,
+                  "size": 32993294,
+                  "width": 426,
+                  "height": 240,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_480P",
+                  "url": "cloudmusic/obj/core/61562309469/c488121667dea2d78099a392fe19ef08.m3u8",
+                  "duration": 481000,
+                  "size": 55551786,
+                  "width": 854,
+                  "height": 480,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_480P",
+                  "url": "cloudmusic/obj/core/61562309469/c488121667dea2d78099a392fe19ef08.mp4",
+                  "duration": 481000,
+                  "size": 52781228,
+                  "width": 854,
+                  "height": 480,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_720P",
+                  "url": "cloudmusic/obj/core/61562309469/ce84fd504c3b9f565225a78baaae94a0.m3u8",
+                  "duration": 481000,
+                  "size": 85713754,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_720P",
+                  "url": "cloudmusic/obj/core/61562309469/ce84fd504c3b9f565225a78baaae94a0.mp4",
+                  "duration": 481000,
+                  "size": 82331499,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_1080P",
+                  "url": "cloudmusic/obj/core/61562309469/028361e20eda755d391094ed7ef83ccb.m3u8",
+                  "duration": 481000,
+                  "size": 163397987,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_1080P",
+                  "url": "cloudmusic/obj/core/61562309469/028361e20eda755d391094ed7ef83ccb.mp4",
+                  "duration": 481000,
+                  "size": 158322574,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                }
+              ],
+              "graphic": null,
+              "relatedPubUsers": null,
+              "mixInfo": null
+            },
+            "mlogExtVO": {
+              "likedCount": 16317,
+              "commentCount": 2450,
+              "playCount": 333578,
+              "shareCount": 947,
+              "liked": false,
+              "song": {
+                "id": 2714278533,
+                "name": "红蔷薇白玫瑰 (G.E.M.重生版)",
+                "coverUrl": "http://p4.music.126.net/Dmg-cQJctLB_4ID4WRytIw==/109951171291365368.jpg#hash=a3b059734289",
+                "duration": 285377,
+                "artists": [
+                  {
+                    "artistId": 7763,
+                    "artistName": "G.E.M.邓紫棋"
+                  }
+                ],
+                "privilege": null,
+                "albumName": "I AM GLORIA",
+                "startTime": null,
+                "endTime": null,
+                "isLiked": null,
+                "playedNum": null
+              },
+              "algSong": null,
+              "videoStartPlayTime": null,
+              "canCollect": true,
+              "collectReason": null,
+              "artistName": "G.E.M.邓紫棋",
+              "artists": [
+                {
+                  "id": 7763,
+                  "name": "G.E.M.邓紫棋",
+                  "img1v1Url": "http://p4.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=7f33127f0f2b",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 281382,
+                    "nickname": "GEM鄧紫棋",
+                    "avatarUrl": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                },
+                {
+                  "id": 59164661,
+                  "name": "云上叨叨",
+                  "img1v1Url": "http://p4.music.126.net/x3k3Sr9S_nu226NgMMbf8g==/109951169067828821.jpg#hash=fd8e06d5a85f",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 8974348353,
+                    "nickname": "云上叨叨",
+                    "avatarUrl": "http://p3.music.126.net/DxqegOTl7WKjlGuH1l6Iwg==/109951173350053584.jpg#hash=f243679ed07f",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                }
+              ],
+              "specialTag": null,
+              "channelTag": null
+            },
+            "userProfile": null,
+            "relatedPubUsers": null,
+            "status": 1,
+            "shareUrl": "https://music.163.com/mv/22774515/#hash=092174432a7e",
+            "source": null,
+            "mlogPlaylists": null
+          },
+          "alg": null,
+          "logInfo": null,
+          "reason": null,
+          "reasonType": null,
+          "priorShowLive": null,
+          "actionTime": null,
+          "matchField": 0,
+          "matchFieldContent": null,
+          "srcId": null,
+          "sameCity": false,
+          "followedShowReason": null
+        },
+        {
+          "id": "22673792",
+          "type": 1,
+          "position": null,
+          "resource": {
+            "mlogBaseData": {
+              "id": "22673792",
+              "userId": null,
+              "type": 3,
+              "originalTitle": null,
+              "text": "来自G.E.M.邓紫棋的2025新年祝福已送达",
+              "desc": "",
+              "interveneText": null,
+              "pubTime": 1737993600760,
+              "coverUrl": "http://p4.music.126.net/kHtYd-HPrl-Z40hoB09d0Q==/109951170406603873.jpg#hash=b6161e4eada9",
+              "coverDetail": null,
+              "greatCover": false,
+              "coverPicKey": "109951170406603873",
+              "coverHeight": 240,
+              "coverWidth": 426,
+              "coverColor": -1118482,
+              "coverDynamicUrl": null,
+              "audioDTO": null,
+              "talk": null,
+              "threadId": "R_MV_5_22673792",
+              "duration": 13000,
+              "video": null,
+              "videos": [
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_240P",
+                  "url": "cloudmusic/0db2/core/e2ad/6e17a7853bf62ff7fabe188b49bab30e.m3u8",
+                  "duration": 13000,
+                  "size": 959188,
+                  "width": 426,
+                  "height": 240,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_240P",
+                  "url": "cloudmusic/0db2/core/e2ad/6e17a7853bf62ff7fabe188b49bab30e.mp4",
+                  "duration": 13000,
+                  "size": 894516,
+                  "width": 426,
+                  "height": 240,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_480P",
+                  "url": "cloudmusic/0db2/core/e2ad/4c3c70fad5b45b7d4d70381c2ae70c3d.m3u8",
+                  "duration": 13000,
+                  "size": 1512472,
+                  "width": 854,
+                  "height": 480,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_480P",
+                  "url": "cloudmusic/0db2/core/e2ad/4c3c70fad5b45b7d4d70381c2ae70c3d.mp4",
+                  "duration": 13000,
+                  "size": 1439442,
+                  "width": 854,
+                  "height": 480,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_720P",
+                  "url": "cloudmusic/0db2/core/e2ad/9f856d58c6466da53fe39b4447378dc0.m3u8",
+                  "duration": 13000,
+                  "size": 2352268,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_720P",
+                  "url": "cloudmusic/0db2/core/e2ad/9f856d58c6466da53fe39b4447378dc0.mp4",
+                  "duration": 13000,
+                  "size": 2258772,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_1080P",
+                  "url": "cloudmusic/0db2/core/e2ad/695198b5f5db8e88694b87c782cd0f16.m3u8",
+                  "duration": 13000,
+                  "size": 4119656,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_1080P",
+                  "url": "cloudmusic/0db2/core/e2ad/695198b5f5db8e88694b87c782cd0f16.mp4",
+                  "duration": 13000,
+                  "size": 3988459,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                }
+              ],
+              "graphic": null,
+              "relatedPubUsers": null,
+              "mixInfo": null
+            },
+            "mlogExtVO": {
+              "likedCount": 3443,
+              "commentCount": 517,
+              "playCount": 83528,
+              "shareCount": 325,
+              "liked": false,
+              "song": null,
+              "algSong": null,
+              "videoStartPlayTime": null,
+              "canCollect": false,
+              "collectReason": "该视频没有配乐，不可添加到视频歌单",
+              "artistName": "G.E.M.邓紫棋",
+              "artists": [
+                {
+                  "id": 7763,
+                  "name": "G.E.M.邓紫棋",
+                  "img1v1Url": "http://p3.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=0e610c6450cf",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 281382,
+                    "nickname": "GEM鄧紫棋",
+                    "avatarUrl": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                }
+              ],
+              "specialTag": null,
+              "channelTag": null
+            },
+            "userProfile": null,
+            "relatedPubUsers": null,
+            "status": 1,
+            "shareUrl": "https://music.163.com/mv/22673792/#hash=47b43dd98b25",
+            "source": null,
+            "mlogPlaylists": null
+          },
+          "alg": null,
+          "logInfo": null,
+          "reason": null,
+          "reasonType": null,
+          "priorShowLive": null,
+          "actionTime": null,
+          "matchField": 0,
+          "matchFieldContent": null,
+          "srcId": null,
+          "sameCity": false,
+          "followedShowReason": null
+        },
+        {
+          "id": "14598776",
+          "type": 1,
+          "position": null,
+          "resource": {
+            "mlogBaseData": {
+              "id": "14598776",
+              "userId": null,
+              "type": 3,
+              "originalTitle": null,
+              "text": "2023 G.E.M.邓紫棋给云村村民拜年啦",
+              "desc": "",
+              "interveneText": null,
+              "pubTime": 1674230401402,
+              "coverUrl": "http://p3.music.126.net/34fQ2IAJKIP9x8vHnm0mig==/109951168244581480.jpg#hash=d427c2a5c18c",
+              "coverDetail": null,
+              "greatCover": false,
+              "coverPicKey": "109951168244581480",
+              "coverHeight": 240,
+              "coverWidth": 426,
+              "coverColor": -1118482,
+              "coverDynamicUrl": null,
+              "audioDTO": null,
+              "talk": null,
+              "threadId": "R_MV_5_14598776",
+              "duration": 14000,
+              "video": null,
+              "videos": [
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_240P",
+                  "url": "cloudmusic/6f10/core/9178/790ce1ccbb61e14564c9567308cd5e0e.m3u8",
+                  "duration": 14000,
+                  "size": 1046608,
+                  "width": 426,
+                  "height": 240,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_240P",
+                  "url": "cloudmusic/6f10/core/9178/790ce1ccbb61e14564c9567308cd5e0e.mp4",
+                  "duration": 14000,
+                  "size": 977945,
+                  "width": 426,
+                  "height": 240,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_480P",
+                  "url": "cloudmusic/6f10/core/9178/782ae46f54c3184da9d21ee1a107a2d1.m3u8",
+                  "duration": 14000,
+                  "size": 1620760,
+                  "width": 854,
+                  "height": 480,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_480P",
+                  "url": "cloudmusic/6f10/core/9178/782ae46f54c3184da9d21ee1a107a2d1.mp4",
+                  "duration": 14000,
+                  "size": 1540643,
+                  "width": 854,
+                  "height": 480,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_720P",
+                  "url": "cloudmusic/6f10/core/9178/047fc6fd9816a1dad50d4bdee54673f2.m3u8",
+                  "duration": 14000,
+                  "size": 2488380,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_720P",
+                  "url": "cloudmusic/6f10/core/9178/047fc6fd9816a1dad50d4bdee54673f2.mp4",
+                  "duration": 14000,
+                  "size": 2387427,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                }
+              ],
+              "graphic": null,
+              "relatedPubUsers": null,
+              "mixInfo": null
+            },
+            "mlogExtVO": {
+              "likedCount": 11160,
+              "commentCount": 1267,
+              "playCount": 739499,
+              "shareCount": 2334,
+              "liked": false,
+              "song": null,
+              "algSong": null,
+              "videoStartPlayTime": null,
+              "canCollect": false,
+              "collectReason": null,
+              "artistName": "G.E.M.邓紫棋",
+              "artists": [
+                {
+                  "id": 7763,
+                  "name": "G.E.M.邓紫棋",
+                  "img1v1Url": "http://p3.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=0e610c6450cf",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 281382,
+                    "nickname": "GEM鄧紫棋",
+                    "avatarUrl": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                }
+              ],
+              "specialTag": null,
+              "channelTag": null
+            },
+            "userProfile": null,
+            "relatedPubUsers": null,
+            "status": 1,
+            "shareUrl": "https://music.163.com/mv/14598776/#hash=cec38794d775",
+            "source": null,
+            "mlogPlaylists": null
+          },
+          "alg": null,
+          "logInfo": null,
+          "reason": null,
+          "reasonType": null,
+          "priorShowLive": null,
+          "actionTime": null,
+          "matchField": 0,
+          "matchFieldContent": null,
+          "srcId": null,
+          "sameCity": false,
+          "followedShowReason": null
+        },
+        {
+          "id": "14584195",
+          "type": 1,
+          "position": null,
+          "resource": {
+            "mlogBaseData": {
+              "id": "14584195",
+              "userId": null,
+              "type": 3,
+              "originalTitle": null,
+              "text": "面壁者",
+              "desc": "动画《三体》由bilibili、三体宇宙、艺画开天联合出品，2022年12月10日起在bilibili独家播出。无数细线横亘在星空之中，如同一把巨大的刷子。三体星舰队将于400年后抵达。遥远蝴蝶扇动着翅膀，也改变了罗辑的命运，轰然打开的门后是世界中心——面壁计划开启。同时，智子所创建的破壁室内，破壁人一一就位……\n动画片尾主题曲《面壁者》由G.E.M.邓紫棋献唱，本专辑主要收录了片尾曲的TV版、完整版、以及伴奏。\n「廓然宇宙漫溢边际/四面哭墙的黑影/覆盖他孤凄的宿命/不可能言语/谎言即是闻名」跟着歌词，让我们沉浸到《三体》的故事中，去探索三体世界的奥妙...",
+              "interveneText": null,
+              "pubTime": 1670470200257,
+              "coverUrl": "http://p4.music.126.net/OIqrJX1oRtMCTsGGB3aWvg==/109951168126552686.jpg#hash=11a1642d6330",
+              "coverDetail": null,
+              "greatCover": true,
+              "coverPicKey": "109951168126552686",
+              "coverHeight": 240,
+              "coverWidth": 426,
+              "coverColor": -1118482,
+              "coverDynamicUrl": null,
+              "audioDTO": null,
+              "talk": null,
+              "threadId": "R_MV_5_14584195",
+              "duration": 264000,
+              "video": null,
+              "videos": [
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_240P",
+                  "url": "cloudmusic/f256/core/1ccf/affc2f9671a3fc409b36d250d906eacd.m3u8",
+                  "duration": 264000,
+                  "size": 18335874,
+                  "width": 426,
+                  "height": 240,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_240P",
+                  "url": "cloudmusic/f256/core/1ccf/affc2f9671a3fc409b36d250d906eacd.mp4",
+                  "duration": 264000,
+                  "size": 17063083,
+                  "width": 426,
+                  "height": 240,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_480P",
+                  "url": "cloudmusic/f256/core/1ccf/a9534f35dda25fbf1a3a4a804c0cac73.m3u8",
+                  "duration": 264000,
+                  "size": 28783655,
+                  "width": 854,
+                  "height": 480,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_480P",
+                  "url": "cloudmusic/f256/core/1ccf/a9534f35dda25fbf1a3a4a804c0cac73.mp4",
+                  "duration": 264000,
+                  "size": 27289684,
+                  "width": 854,
+                  "height": 480,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_720P",
+                  "url": "cloudmusic/f256/core/1ccf/82f81391a45906f4cc59f4243e294161.m3u8",
+                  "duration": 264000,
+                  "size": 44510229,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_720P",
+                  "url": "cloudmusic/f256/core/1ccf/82f81391a45906f4cc59f4243e294161.mp4",
+                  "duration": 264000,
+                  "size": 42692393,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_1080P",
+                  "url": "cloudmusic/f256/core/1ccf/db3952f65a6dd650e78cc34e29382e6f.m3u8",
+                  "duration": 264000,
+                  "size": 83654968,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_1080P",
+                  "url": "cloudmusic/f256/core/1ccf/db3952f65a6dd650e78cc34e29382e6f.mp4",
+                  "duration": 264000,
+                  "size": 81001850,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                }
+              ],
+              "graphic": null,
+              "relatedPubUsers": null,
+              "mixInfo": null
+            },
+            "mlogExtVO": {
+              "likedCount": 7625,
+              "commentCount": 566,
+              "playCount": 467111,
+              "shareCount": 1173,
+              "liked": false,
+              "song": {
+                "id": 2004999754,
+                "name": "面壁者",
+                "coverUrl": "http://p3.music.126.net/15-M_C_SUgY33WYEEl_Q9Q==/109951168126517713.jpg#hash=8b411894c83f",
+                "duration": 258661,
+                "artists": [
+                  {
+                    "artistId": 7763,
+                    "artistName": "G.E.M.邓紫棋"
+                  }
+                ],
+                "privilege": null,
+                "albumName": "面壁者",
+                "startTime": null,
+                "endTime": null,
+                "isLiked": null,
+                "playedNum": null
+              },
+              "algSong": null,
+              "videoStartPlayTime": null,
+              "canCollect": true,
+              "collectReason": null,
+              "artistName": "G.E.M.邓紫棋",
+              "artists": [
+                {
+                  "id": 7763,
+                  "name": "G.E.M.邓紫棋",
+                  "img1v1Url": "http://p4.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=7f33127f0f2b",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 281382,
+                    "nickname": "GEM鄧紫棋",
+                    "avatarUrl": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                }
+              ],
+              "specialTag": null,
+              "channelTag": null
+            },
+            "userProfile": null,
+            "relatedPubUsers": null,
+            "status": 1,
+            "shareUrl": "https://music.163.com/mv/14584195/#hash=c68e829c5382",
+            "source": null,
+            "mlogPlaylists": null
+          },
+          "alg": null,
+          "logInfo": null,
+          "reason": null,
+          "reasonType": null,
+          "priorShowLive": null,
+          "actionTime": null,
+          "matchField": 0,
+          "matchFieldContent": null,
+          "srcId": null,
+          "sameCity": false,
+          "followedShowReason": null
+        },
+        {
+          "id": "14587297",
+          "type": 1,
+          "position": null,
+          "resource": {
+            "mlogBaseData": {
+              "id": "14587297",
+              "userId": null,
+              "type": 3,
+              "originalTitle": null,
+              "text": "邓紫棋携《三体》动画片尾主题曲《面壁者》问候云村网友",
+              "desc": "",
+              "interveneText": null,
+              "pubTime": 1670472631181,
+              "coverUrl": "http://p4.music.126.net/PxKzYJqHTjNki9ytVfD6bg==/109951168129457124.jpg#hash=3021018d77b5",
+              "coverDetail": null,
+              "greatCover": false,
+              "coverPicKey": "109951168129457124",
+              "coverHeight": 240,
+              "coverWidth": 426,
+              "coverColor": -1118482,
+              "coverDynamicUrl": null,
+              "audioDTO": null,
+              "talk": null,
+              "threadId": "R_MV_5_14587297",
+              "duration": 18000,
+              "video": null,
+              "videos": [
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_240P",
+                  "url": "cloudmusic/obj/core/22983455482/c7e4c6d608f831bc4ccd0eb5dabe1599.m3u8",
+                  "duration": 18000,
+                  "size": 1280668,
+                  "width": 426,
+                  "height": 240,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_240P",
+                  "url": "cloudmusic/obj/core/22983455482/c7e4c6d608f831bc4ccd0eb5dabe1599.mp4",
+                  "duration": 18000,
+                  "size": 1192715,
+                  "width": 426,
+                  "height": 240,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_480P",
+                  "url": "cloudmusic/obj/core/22983455482/9714cd7e2c121fb064215c567ec70c2c.m3u8",
+                  "duration": 18000,
+                  "size": 1999768,
+                  "width": 854,
+                  "height": 480,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_480P",
+                  "url": "cloudmusic/obj/core/22983455482/9714cd7e2c121fb064215c567ec70c2c.mp4",
+                  "duration": 18000,
+                  "size": 1897892,
+                  "width": 854,
+                  "height": 480,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_720P",
+                  "url": "cloudmusic/obj/core/22983455482/a8f9232f4e20cf7ffc63a06d45c57c07.m3u8",
+                  "duration": 18000,
+                  "size": 3112728,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_720P",
+                  "url": "cloudmusic/obj/core/22983455482/a8f9232f4e20cf7ffc63a06d45c57c07.mp4",
+                  "duration": 18000,
+                  "size": 2986571,
+                  "width": 1280,
+                  "height": 720,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_1080P",
+                  "url": "cloudmusic/obj/core/22983455482/ad7f7383b1118776ed1aafda03584164.m3u8",
+                  "duration": 18000,
+                  "size": 5713896,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 1080,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_1080P",
+                  "url": "cloudmusic/obj/core/22983455482/ad7f7383b1118776ed1aafda03584164.mp4",
+                  "duration": 18000,
+                  "size": 5533498,
+                  "width": 1920,
+                  "height": 1080,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                }
+              ],
+              "graphic": null,
+              "relatedPubUsers": null,
+              "mixInfo": null
+            },
+            "mlogExtVO": {
+              "likedCount": 1799,
+              "commentCount": 125,
+              "playCount": 195397,
+              "shareCount": 42,
+              "liked": false,
+              "song": null,
+              "algSong": null,
+              "videoStartPlayTime": null,
+              "canCollect": false,
+              "collectReason": null,
+              "artistName": "G.E.M.邓紫棋",
+              "artists": [
+                {
+                  "id": 7763,
+                  "name": "G.E.M.邓紫棋",
+                  "img1v1Url": "http://p4.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=7f33127f0f2b",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 281382,
+                    "nickname": "GEM鄧紫棋",
+                    "avatarUrl": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                }
+              ],
+              "specialTag": null,
+              "channelTag": null
+            },
+            "userProfile": null,
+            "relatedPubUsers": null,
+            "status": 1,
+            "shareUrl": "https://music.163.com/mv/14587297/#hash=282d513fdef7",
+            "source": null,
+            "mlogPlaylists": null
+          },
+          "alg": null,
+          "logInfo": null,
+          "reason": null,
+          "reasonType": null,
+          "priorShowLive": null,
+          "actionTime": null,
+          "matchField": 0,
+          "matchFieldContent": null,
+          "srcId": null,
+          "sameCity": false,
+          "followedShowReason": null
+        },
+        {
+          "id": "14566331",
+          "type": 1,
+          "position": null,
+          "resource": {
+            "mlogBaseData": {
+              "id": "14566331",
+              "userId": null,
+              "type": 3,
+              "originalTitle": null,
+              "text": "天空没有极限",
+              "desc": "当一切违愿  抬头看看蓝天\n天空没有极限  我们的未来无边\n\n华语创作天后G.E.M.邓紫棋第八张创作大碟《启示录》\n第十四波终极主打《天空没有极限》，为启示之旅写下完美终章！\n\n七封致天堂的信，七封天堂的回信。拆开《启示录》的最后一封信《天空没有极限》，曾经遭遇的种种，都只是在试炼我们的信心，当我们不再怀疑，真正相信自己相信爱，未来真的无边。\n\n对于歌迷来说，《天空没有极限》并不陌生，这是一首很多歌迷都翘首以待想听到完整版的歌曲。在G.E.M.邓紫棋踏入30岁的阶段，她确实真真切切地看见，她的世界要大放异彩，她的天空没有极限。这除了是对自己的一种期许以外，也是在收到前面六封天堂的回信之后，真正让爱活在自己里面时的信心。而基于这首歌特别的意义，G.E.M.邓紫棋更邀请了M9 Marginal Youth Singing Choir一众与她有共同信仰的年轻人，参与歌曲结尾大合唱的部分，寓意新的一代同样有着无边的未来！\n\n而《启示录》音乐连续剧的MV故事也来到了大结局，Gloria（G.E.M.邓紫棋饰）临走前说的话，在秋（G.E.M.邓紫棋饰）心里慢慢扎根，伴随着Evan（孙晨竣饰）锲而不舍的隔空关心与鼓励，让秋终于慢慢能相信，真实的自己是会被爱的。她不再抛弃自己，重新打扮自己，并开始了复健训练。一天，Evan如常来到秋的门口放下小礼物，却第一次听到了开门声。眼前是装上了义肢，站着开门的秋。天台上，Evan问了在乐土世界向Gloria表白时一模一样的问题，不一样的是，这一次，面对爱，秋再也没有闪躲。全剧终。\n\nG.E.M.邓紫棋第八张全创作专辑《启示录》圆满落幕，但只要我们愿意，爱的启示依然会每天临到我们的心中。愿每个人每一天都经历到爱。爱是永不止息。\n\n",
+              "interveneText": null,
+              "pubTime": 1663905600489,
+              "coverUrl": "http://p4.music.126.net/kTZr2excCMt10gJdm8YUVg==/109951167898570574.jpg#hash=a764b27d336e",
+              "coverDetail": null,
+              "greatCover": true,
+              "coverPicKey": "109951167898570574",
+              "coverHeight": 240,
+              "coverWidth": 572,
+              "coverColor": -1118482,
+              "coverDynamicUrl": null,
+              "audioDTO": null,
+              "talk": null,
+              "threadId": "R_MV_5_14566331",
+              "duration": 328000,
+              "video": null,
+              "videos": [
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_240P",
+                  "url": "cloudmusic/8883/core/d874/44d8fa889a755e79163e6d1f89905729.m3u8",
+                  "duration": 328000,
+                  "size": 23119364,
+                  "width": 572,
+                  "height": 240,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_240P",
+                  "url": "cloudmusic/8883/core/d874/44d8fa889a755e79163e6d1f89905729.mp4",
+                  "duration": 328000,
+                  "size": 21540566,
+                  "width": 572,
+                  "height": 240,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_480P",
+                  "url": "cloudmusic/8883/core/d874/babc110d27579abc9c88e33015d6f0f7.m3u8",
+                  "duration": 328000,
+                  "size": 36095123,
+                  "width": 1146,
+                  "height": 480,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_480P",
+                  "url": "cloudmusic/8883/core/d874/babc110d27579abc9c88e33015d6f0f7.mp4",
+                  "duration": 328000,
+                  "size": 34210688,
+                  "width": 1146,
+                  "height": 480,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_720P",
+                  "url": "cloudmusic/8883/core/d874/ee2bae0c43de0a32f49393f9c427d03f.m3u8",
+                  "duration": 328000,
+                  "size": 55766503,
+                  "width": 1718,
+                  "height": 720,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_720P",
+                  "url": "cloudmusic/8883/core/d874/ee2bae0c43de0a32f49393f9c427d03f.mp4",
+                  "duration": 328000,
+                  "size": 53497653,
+                  "width": 1718,
+                  "height": 720,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                }
+              ],
+              "graphic": null,
+              "relatedPubUsers": null,
+              "mixInfo": null
+            },
+            "mlogExtVO": {
+              "likedCount": 21535,
+              "commentCount": 1541,
+              "playCount": 893868,
+              "shareCount": 3152,
+              "liked": false,
+              "song": {
+                "id": 1970560265,
+                "name": "天空没有极限",
+                "coverUrl": "http://p4.music.126.net/5WBF8uSFXhLVjvMOCeqflQ==/109951167859171747.jpg#hash=782efdef2c55",
+                "duration": 279704,
+                "artists": [
+                  {
+                    "artistId": 7763,
+                    "artistName": "G.E.M.邓紫棋"
+                  }
+                ],
+                "privilege": null,
+                "albumName": "启示录",
+                "startTime": null,
+                "endTime": null,
+                "isLiked": null,
+                "playedNum": null
+              },
+              "algSong": null,
+              "videoStartPlayTime": null,
+              "canCollect": true,
+              "collectReason": null,
+              "artistName": "G.E.M.邓紫棋",
+              "artists": [
+                {
+                  "id": 7763,
+                  "name": "G.E.M.邓紫棋",
+                  "img1v1Url": "http://p4.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=7f33127f0f2b",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 281382,
+                    "nickname": "GEM鄧紫棋",
+                    "avatarUrl": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                }
+              ],
+              "specialTag": null,
+              "channelTag": null
+            },
+            "userProfile": null,
+            "relatedPubUsers": null,
+            "status": 1,
+            "shareUrl": "https://music.163.com/mv/14566331/#hash=55e3009cf438",
+            "source": null,
+            "mlogPlaylists": null
+          },
+          "alg": null,
+          "logInfo": null,
+          "reason": null,
+          "reasonType": null,
+          "priorShowLive": null,
+          "actionTime": null,
+          "matchField": 0,
+          "matchFieldContent": null,
+          "srcId": null,
+          "sameCity": false,
+          "followedShowReason": null
+        },
+        {
+          "id": "14564962",
+          "type": 1,
+          "position": null,
+          "resource": {
+            "mlogBaseData": {
+              "id": "14564962",
+              "userId": null,
+              "type": 3,
+              "originalTitle": null,
+              "text": "夜的尽头",
+              "desc": "若世界狂如洪流  我陪你寻觅方舟\n自由就在  夜的尽头\n\n华语创作天后G.E.M.邓紫棋第八张创作大碟《启示录》\n第十三波破晓主打《夜的尽头》振奋上线！\n\n七封致天堂的信，七封天堂的回信。拆开《启示录》的第十三封信《夜的尽头》，我们终于在黑暗极处重见光明，在夜的尽头重获自由。\n\n你可曾想过宇宙间的每一颗星、蓝天上的每一片云，还有每一朵花、每一片叶、每一滴雨露、每一束光...都是为着爱你而被创造？你是否想过我们拥有的每一分秒、每个呼吸，都是一个感受美好、见证奇迹的机会？原来一切都是为了我们，原来我们竟拥有着这么多。来到《启示录》的倒数第二首歌，G.E.M.邓紫棋带来一幅破晓的画卷，尽管世界狂如洪流，但我们既被如此深深爱着，便无所畏惧。这就是，真正的自由。\n\nMV故事来到第十三集，Gloria（G.E.M.邓紫棋饰）自行删除数据回到废土，她知道自己也许从此要在这里独自生活，却依然愿为Evan（孙晨竣饰）着想，作出这个出于爱的决定。她没想到的是，有一天，当她在废土酒吧里睹物思人时，沙发上却投射出一个渐渐靠近的身影，她抬头居然看见Evan走近坐在她对面，就在当时乐土酒吧里第一次见面时一样的位置上。原来在现实里，持之以恒经常来给秋（G.E.M.邓紫棋饰）送小盆栽的Evan，也同样有为Gloria着想，于是他把自己的角色删除，让他的数字人可以到废土里陪伴Gloria。另一边，Gloria在秋（G.E.M.邓紫棋饰）的信上留下的一句话：「你相信他会爱真实的你吗」则在秋的心里慢慢发芽，秋开始学习打开自己，接受Evan的关心。\n\n没有爱的地方，才是荒漠。只要心中有爱，再荒废的世界都可以重现生机。Gloria和Evan走在这荒凉的废土里，心里却无比开心、自由。\n\n",
+              "interveneText": null,
+              "pubTime": 1663646400563,
+              "coverUrl": "http://p3.music.126.net/SqSH4tPGaDmKarbxDo-okg==/109951167891040426.jpg#hash=d1466629d481",
+              "coverDetail": null,
+              "greatCover": true,
+              "coverPicKey": "109951167891040426",
+              "coverHeight": 240,
+              "coverWidth": 572,
+              "coverColor": -1118482,
+              "coverDynamicUrl": null,
+              "audioDTO": null,
+              "talk": null,
+              "threadId": "R_MV_5_14564962",
+              "duration": 287000,
+              "video": null,
+              "videos": [
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_240P",
+                  "url": "cloudmusic/59a4/core/5017/ae2ce1eedda2be38d48f032f4b70b66a.m3u8",
+                  "duration": 287000,
+                  "size": 20413632,
+                  "width": 572,
+                  "height": 240,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 240,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_240P",
+                  "url": "cloudmusic/59a4/core/5017/ae2ce1eedda2be38d48f032f4b70b66a.mp4",
+                  "duration": 287000,
+                  "size": 18988983,
+                  "width": 572,
+                  "height": 240,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_480P",
+                  "url": "cloudmusic/59a4/core/5017/8d5ce402ccc4a43e2a1b24bc96a6307f.m3u8",
+                  "duration": 287000,
+                  "size": 31860953,
+                  "width": 1146,
+                  "height": 480,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 480,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_480P",
+                  "url": "cloudmusic/59a4/core/5017/8d5ce402ccc4a43e2a1b24bc96a6307f.mp4",
+                  "duration": 287000,
+                  "size": 30231813,
+                  "width": 1146,
+                  "height": 480,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "TS",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "TS_720P",
+                  "url": "cloudmusic/59a4/core/5017/9782a4cfeb09ed1a42449bcac3dd4b80.m3u8",
+                  "duration": 287000,
+                  "size": 49060321,
+                  "width": 1718,
+                  "height": 720,
+                  "container": "m3u8",
+                  "md5": "",
+                  "check": false
+                },
+                {
+                  "tagSign": {
+                    "br": 720,
+                    "type": "MP4",
+                    "tagSign": "<REDACTED:tagSign>"
+                  },
+                  "tag": "MP4_720P",
+                  "url": "cloudmusic/59a4/core/5017/9782a4cfeb09ed1a42449bcac3dd4b80.mp4",
+                  "duration": 287000,
+                  "size": 47069999,
+                  "width": 1718,
+                  "height": 720,
+                  "container": "mp4",
+                  "md5": "",
+                  "check": false
+                }
+              ],
+              "graphic": null,
+              "relatedPubUsers": null,
+              "mixInfo": null
+            },
+            "mlogExtVO": {
+              "likedCount": 13125,
+              "commentCount": 795,
+              "playCount": 458177,
+              "shareCount": 1522,
+              "liked": false,
+              "song": {
+                "id": 1970560262,
+                "name": "夜的尽头",
+                "coverUrl": "http://p4.music.126.net/5WBF8uSFXhLVjvMOCeqflQ==/109951167859171747.jpg#hash=782efdef2c55",
+                "duration": 281795,
+                "artists": [
+                  {
+                    "artistId": 7763,
+                    "artistName": "G.E.M.邓紫棋"
+                  }
+                ],
+                "privilege": null,
+                "albumName": "启示录",
+                "startTime": null,
+                "endTime": null,
+                "isLiked": null,
+                "playedNum": null
+              },
+              "algSong": null,
+              "videoStartPlayTime": null,
+              "canCollect": true,
+              "collectReason": null,
+              "artistName": "G.E.M.邓紫棋",
+              "artists": [
+                {
+                  "id": 7763,
+                  "name": "G.E.M.邓紫棋",
+                  "img1v1Url": "http://p3.music.126.net/fq1O8ZRT5_FHzg_uLEtUQA==/109951167773880633.jpg#hash=0e610c6450cf",
+                  "followed": false,
+                  "mlogUser": {
+                    "userId": 281382,
+                    "nickname": "GEM鄧紫棋",
+                    "avatarUrl": "http://p3.music.126.net/oJorrgJ3IotZUAbZkBMuFw==/109951167771736533.jpg#hash=003b411193c1",
+                    "followed": false,
+                    "userType": 2,
+                    "avatarDetail": {
+                      "userType": 2,
+                      "identityLevel": 1,
+                      "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4788940880/1a1f/68f5/b59a/b444b81b88567108ba88194fa29144f5.png#hash=8adefddffae8"
+                    }
+                  }
+                }
+              ],
+              "specialTag": null,
+              "channelTag": null
+            },
+            "userProfile": null,
+            "relatedPubUsers": null,
+            "status": 1,
+            "shareUrl": "https://music.163.com/mv/14564962/#hash=5f93c111b400",
+            "source": null,
+            "mlogPlaylists": null
+          },
+          "alg": null,
+          "logInfo": null,
+          "reason": null,
+          "reasonType": null,
+          "priorShowLive": null,
+          "actionTime": null,
+          "matchField": 0,
+          "matchFieldContent": null,
+          "srcId": null,
+          "sameCity": false,
+          "followedShowReason": null
+        }
+      ],
+      "page": {
+        "size": 10,
+        "cursor": "10",
+        "more": true
+      }
+    }
+  },
+  "error": null
+}

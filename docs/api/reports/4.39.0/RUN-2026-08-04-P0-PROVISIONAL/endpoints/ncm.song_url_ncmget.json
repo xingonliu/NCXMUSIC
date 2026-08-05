@@ -25,15 +25,91 @@
   },
   "matrix": {
     "planned": 54,
-    "executed": 0,
-    "cases": []
+    "executed": 3,
+    "cases": [
+      {
+        "caseId": "ncm.song_url_ncmget.local.001",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "0228cf7a44a90132c43ccae2b3b12bf80f52bc2462eba5cc72f86d51f09b4766",
+        "rawFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.001.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_ncmget.local.002",
+        "auth": "AUTH_NONE",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 0,
+        "error": null,
+        "sampleHash": "c347aaf6b48f5b289841b0a5029655df6560ab6fbc6b5700a0e25493704d45fb",
+        "rawFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.002.raw.json"
+      },
+      {
+        "caseId": "ncm.song_url_ncmget.local.003",
+        "auth": "AUTH_ANON",
+        "phase": 1,
+        "code": 200,
+        "durationMs": 1,
+        "error": null,
+        "sampleHash": "e88687f1940766dbebe765150782b77bd08b5ff1e8baeb150d1a8fe71722fef0",
+        "rawFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.003.raw.json"
+      }
+    ]
   },
-  "fields": [],
+  "fields": [
+    {
+      "jsonPath": "code",
+      "rawType": "number",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 0,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_url_ncmget.local.001",
+      "lastSeenCase": "ncm.song_url_ncmget.local.003",
+      "example": "200"
+    },
+    {
+      "jsonPath": "data",
+      "rawType": "array<unknown>",
+      "presence": 3,
+      "nulls": 0,
+      "empties": 3,
+      "auths": [
+        "AUTH_NONE",
+        "AUTH_ANON"
+      ],
+      "firstSeenCase": "ncm.song_url_ncmget.local.001",
+      "lastSeenCase": "ncm.song_url_ncmget.local.003",
+      "example": "undefined"
+    }
+  ],
   "errors": [],
   "sideEffectVerification": null,
   "unknownFieldIds": [],
   "conflictIds": [],
-  "terminalStatus": null,
-  "blocker": null,
-  "evidence": []
+  "terminalStatus": "partial",
+  "blocker": "AUTH_USER 缺失（B-002，写操作已预授权但账号未到位）",
+  "evidence": [
+    {
+      "caseId": "ncm.song_url_ncmget.local.001",
+      "sampleHash": "0228cf7a44a90132c43ccae2b3b12bf80f52bc2462eba5cc72f86d51f09b4766",
+      "rawFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.001.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_ncmget.local.002",
+      "sampleHash": "c347aaf6b48f5b289841b0a5029655df6560ab6fbc6b5700a0e25493704d45fb",
+      "rawFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.002.raw.json"
+    },
+    {
+      "caseId": "ncm.song_url_ncmget.local.003",
+      "sampleHash": "e88687f1940766dbebe765150782b77bd08b5ff1e8baeb150d1a8fe71722fef0",
+      "rawFile": "ncm.song_url_ncmget.ncm.song_url_ncmget.local.003.raw.json"
+    }
+  ]
 }

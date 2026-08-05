@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "caseId": "ncm.artist_new_song.inv.001",
+    "apiAuditId": "ncm.artist_new_song",
+    "auth": "AUTH_INVALID_EXPIRED",
+    "params": {
+      "id": "7763",
+      "limit": 10
+    },
+    "startedAt": "2026-08-05T02:58:37.550Z",
+    "endedAt": "2026-08-05T02:58:37.610Z",
+    "attempts": 1
+  },
+  "error": {
+    "class": "other",
+    "message": "[object Object]",
+    "status": 301,
+    "body": {
+      "code": 301,
+      "message": "系统错误",
+      "debugInfo": null,
+      "data": null,
+      "failData": null
+    },
+    "cookieCount": 0
+  }
+}
