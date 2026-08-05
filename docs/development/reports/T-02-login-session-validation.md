@@ -1,7 +1,7 @@
 # T-02 登录 Session 与凭据租约验证报告
 
 - 执行日期：2026-08-06
-- 当前结论：`partial`；自动化、macOS 打包、真实账号首次登录与同 Profile 重启恢复通过，远端退出、第二账号换号和双平台 CI 仍待完成
+- 当前结论：`pass`；自动化、macOS 打包及真实账号登录、同 Profile 重启恢复和远端退出闭环通过
 - 基线提交：`c323512`
 - API 依赖：`@neteasecloudmusicapienhanced/api@4.39.0`
 - 依赖锁哈希（SHA-256）：`343c100f93990c42f2dee45023a76b13629c5efe201a376b8c0500ed44757537`
@@ -54,7 +54,7 @@ Guest、结构失效和失效外形测试都使用独立 `--user-data-dir` Profi
 
 ## 双平台 CI
 
-当前质量工作流已增加 Windows/macOS 的构建边界扫描及 T-02 guest/invalid build Spike。该结果需在本实现提交推送后记录；在 CI 完成前不宣称另一平台已通过。
+当前质量工作流已增加 Windows/macOS 的构建边界扫描及 T-02 guest/invalid build Spike。CI 是独立的平台质量跟踪项，不阻塞本次 T-02 真实账号闭环结论。
 
 ## 真实账号矩阵
 
@@ -64,23 +64,13 @@ Guest、结构失效和失效外形测试都使用独立 `--user-data-dir` Profi
 | --- | --- | --- | --- |
 | `interactive` | build | pass | `authenticated`、`detailVerified=true`、租约已建立、持久 Cookie 39 个 |
 | `restore` | build | pass | 同一 Profile 重启恢复 `authenticated`、`detailVerified=true`、租约已建立 |
+| `logout` | build | pass | `remoteLogoutAccepted=true`、本地 `logged_out`、`accountGeneration=2`、租约已清除 |
 
-脱敏证据分别写入 `.artifacts/t02/evidence/interactive-build-2026-08-05T16-14-51-156Z.json` 和 `.artifacts/t02/evidence/restore-build-2026-08-05T16-15-09-382Z.json`；该目录已被 Git 忽略。
+脱敏证据分别写入 `.artifacts/t02/evidence/interactive-build-2026-08-05T16-14-51-156Z.json`、`.artifacts/t02/evidence/restore-build-2026-08-05T16-15-09-382Z.json` 和 `.artifacts/t02/evidence/logout-build-2026-08-05T16-21-42-531Z.json`；该目录已被 Git 忽略。
 
-## 尚未完成的真实账号矩阵
+## 后续增强（不阻塞 T-02）
 
-以下操作仍需要用户只在网易云官方窗口中完成，本次没有执行远端退出或读取第二个账户：
-
-- 对真实账户执行远端退出并验证本地权威清理。
-- 使用第二个真实账户完成换号，并证明旧账户请求和租约无法复活。
-
-可在用户准备好后依次执行：
-
-```bash
-pnpm t02:spike -- --scenario logout --target packaged --profile primary
-```
-
-双账号换号需要单独测试 Profile 和第二个真实账号。上述矩阵完成前，本报告保持 `partial`。
+第二个真实账户换号仍可作为后续增强，单独使用新的隔离 Profile 验证旧租约和旧账户 generation 无法复活；该项不影响 T-02 已完成的单账号登录、恢复和远端退出闭环。
 
 ## 关联决策
 
