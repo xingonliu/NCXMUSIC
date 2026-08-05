@@ -78,6 +78,8 @@ Phase 0 技术门禁
 3. 执行 `NcxMusic-Technical-Spike-Plan.md` 的 T-01～T-08。
 4. 为通过的结论建立 ADR；失败方案移出生产入口。
 
+> 执行记录（2026-08-05）：T-01 已 `pass`；T-02 的自动化隔离/租约/脱敏与 Windows packaged 场景已通过，但用户要求暂缓真实 AUTH_USER 交互矩阵，Checkpoint 保持 `partial`。用户允许继续其余 Phase 0 Spike，不代表 T-02 或 Phase 0 Gate 已通过。
+
 ### 完成门禁
 
 - `pnpm dev/typecheck/lint/test/build/package` 可运行。

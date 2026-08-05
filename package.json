@@ -22,9 +22,12 @@
     "smoke:dev": "node scripts/run-electron-smoke.mjs development",
     "smoke:build": "electron-vite build && node scripts/verify-build.mjs && node scripts/run-electron-smoke.mjs build",
     "smoke:packaged": "electron-vite build && node scripts/verify-build.mjs && electron-builder --dir --publish never && node scripts/run-electron-smoke.mjs packaged",
+    "t02:spike": "node scripts/run-login-spike.mjs",
+    "t02:verify-boundaries": "node scripts/verify-auth-boundaries.mjs",
     "release": "electron-vite build && node scripts/verify-build.mjs && electron-builder --publish always"
   },
   "dependencies": {
+    "@neteasecloudmusicapienhanced/api": "4.39.0",
     "vue": "3.5.41",
     "zod": "4.4.3"
   },

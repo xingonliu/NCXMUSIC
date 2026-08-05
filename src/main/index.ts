@@ -4,6 +4,7 @@ import {
   app,
   BrowserWindow,
   ipcMain,
+  session,
   type IpcMainEvent,
   type IpcMainInvokeEvent,
   utilityProcess
@@ -15,12 +16,18 @@ import {
   type RuntimeStatus
 } from '../shared/contracts/control-plane'
 import { ConnectionBroker } from './connection-broker'
+import { AuthSessionController, type EstablishResult } from './auth/auth-session-controller'
+import { CredentialLeaseCoordinator } from './auth/credential-lease-coordinator'
+import { NETEASE_AUTH_PARTITION } from './auth/navigation-policy'
 import { UtilitySupervisor } from './utility-supervisor'
+import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
 
 const isSmokeTest = process.env.NCX_SMOKE_TEST === '1'
+const isLoginSpike = process.env.NCX_T02_SPIKE === '1'
 let mainWindow: BrowserWindow | undefined
 let supervisor: UtilitySupervisor | undefined
 let broker: ConnectionBroker | undefined
+let authController: AuthSessionController | undefined
 let quitting = false
 
 function utilityEntryPath(): string {
@@ -41,10 +48,134 @@ function createSupervisor(): UtilitySupervisor {
       const normalized = message.trim()
       if (normalized) {
         const writer = stream === 'stderr' ? console.error : console.info
-        writer(`[utility:${stream}] ${normalized}`)
+        writer(`[utility:${stream}] ${redactSensitiveText(normalized)}`)
       }
     }
   )
+}
+
+function emitSpikeResult(result: {
+  scenario: string
+  ok: boolean
+  establish?: EstablishResult
+  snapshot?: ReturnType<AuthSessionController['snapshot']>
+  remoteAccepted?: boolean
+}): void {
+  const establish = result.establish
+  const safe = {
+    scenario: result.scenario,
+    ok: result.ok,
+    ...(establish
+      ? {
+          outcome: establish.outcome,
+          source: establish.source,
+          cookieCount: establish.cookieCount,
+          persistentCookieCount: establish.persistentCookieCount,
+          detailVerified: establish.detailVerified,
+          ...establish.snapshot
+        }
+      : result.snapshot),
+    ...(result.remoteAccepted === undefined
+      ? {}
+      : { remoteLogoutAccepted: result.remoteAccepted })
+  }
+  console.info(`NCX_T02_RESULT ${JSON.stringify(safe)}`)
+  app.exit(result.ok ? 0 : 1)
+}
+
+async function runLoginSpike(): Promise<void> {
+  const controller = authController
+  if (!controller) throw new Error('Auth controller is unavailable')
+  const scenario = process.env.NCX_T02_SCENARIO ?? 'interactive'
+  let finished = false
+  const timeout = setTimeout(() => {
+    emitSpikeResult({ scenario, ok: false, snapshot: controller.snapshot() })
+  }, scenario === 'interactive' ? 10 * 60 * 1_000 : 60_000)
+
+  const finish = (result: Parameters<typeof emitSpikeResult>[0]): void => {
+    if (finished) return
+    finished = true
+    clearTimeout(timeout)
+    emitSpikeResult(result)
+  }
+
+  if (scenario === 'invalid' || scenario === 'expired') {
+    await session.fromPartition(NETEASE_AUTH_PARTITION).cookies.set({
+      url: 'https://music.163.com/',
+      name: 'MUSIC_U',
+      value: scenario === 'invalid' ? 'invalid' : `expired-${'x'.repeat(88)}`,
+      secure: true,
+      httpOnly: true,
+      expirationDate: Math.floor(Date.now() / 1_000) + 3_600
+    })
+  }
+
+  const restored = await controller.restore('startup')
+  if (scenario === 'guest') {
+    finish({ scenario, ok: restored.outcome === 'guest', establish: restored })
+    return
+  }
+  if (scenario === 'invalid') {
+    finish({ scenario, ok: restored.outcome === 'invalid', establish: restored })
+    return
+  }
+  if (scenario === 'expired') {
+    finish({ scenario, ok: restored.outcome === 'invalid', establish: restored })
+    return
+  }
+  if (scenario === 'restore') {
+    finish({ scenario, ok: restored.outcome === 'authenticated', establish: restored })
+    return
+  }
+  if (scenario === 'logout') {
+    if (restored.outcome !== 'authenticated') {
+      finish({ scenario, ok: false, establish: restored })
+      return
+    }
+    const loggedOut = await controller.logout()
+    finish({
+      scenario,
+      ok: loggedOut.snapshot.state === 'guest' && !loggedOut.snapshot.hasCredentialLease,
+      snapshot: loggedOut.snapshot,
+      remoteAccepted: loggedOut.remoteAccepted
+    })
+    return
+  }
+  if (scenario === 'switch') {
+    if (restored.outcome !== 'authenticated') {
+      finish({ scenario, ok: false, establish: restored })
+      return
+    }
+    const previousGeneration = restored.snapshot.accountGeneration
+    const snapshot = await controller.prepareAccountSwitch()
+    finish({
+      scenario,
+      ok:
+        snapshot.accountGeneration === previousGeneration + 1 &&
+        !snapshot.hasCredentialLease,
+      snapshot
+    })
+    return
+  }
+  if (scenario !== 'interactive') {
+    finish({ scenario, ok: false, establish: restored })
+    return
+  }
+  if (restored.outcome === 'authenticated') {
+    finish({ scenario, ok: true, establish: restored })
+    return
+  }
+
+  controller.onResult((result) => {
+    if (result.source !== 'login-window') return
+    if (result.outcome === 'authenticated') {
+      finish({ scenario, ok: true, establish: result })
+    }
+  })
+  controller.onLoginWindowClosed(() => {
+    finish({ scenario, ok: false, snapshot: controller.snapshot() })
+  })
+  controller.openLogin()
 }
 
 function isTrustedSender(event: IpcMainEvent | IpcMainInvokeEvent): boolean {
@@ -164,10 +295,27 @@ async function createWindow(): Promise<void> {
 app.whenReady().then(async () => {
   supervisor = createSupervisor()
   broker = new ConnectionBroker(supervisor, app.getVersion())
+  const credentialLease = new CredentialLeaseCoordinator(supervisor)
+  authController = new AuthSessionController(
+    session.fromPartition(NETEASE_AUTH_PARTITION, { cache: true }),
+    credentialLease
+  )
   registerControlPlane()
-  supervisor.onStatus(broadcastStatus)
+  supervisor.onStatus((status) => {
+    broadcastStatus(status)
+    void authController?.handleUtilityStatus(status)
+  })
   supervisor.start()
+  if (isLoginSpike) {
+    await runLoginSpike()
+    return
+  }
   await createWindow()
+  if (!isSmokeTest) {
+    void authController.restore('startup').catch(() => {
+      console.warn('登录 Session 恢复暂不可用；未清除持久凭据。')
+    })
+  }
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -178,6 +326,7 @@ app.whenReady().then(async () => {
 
 app.on('before-quit', () => {
   quitting = true
+  authController?.shutdown()
   supervisor?.shutdown()
 })
 

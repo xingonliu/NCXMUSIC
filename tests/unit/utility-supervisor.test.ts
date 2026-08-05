@@ -9,11 +9,19 @@ class FakeUtilityProcess {
   readonly stdout = new PassThrough()
   readonly stderr = new PassThrough()
   private exitListener: ((code: number) => void) | undefined
+  private messageListener: ((message: unknown) => void) | undefined
   killed = false
 
   once(event: string, listener: (code: number) => void): this {
     if (event === 'exit') {
       this.exitListener = listener
+    }
+    return this
+  }
+
+  on(event: string, listener: (message: unknown) => void): this {
+    if (event === 'message') {
+      this.messageListener = listener
     }
     return this
   }
@@ -27,6 +35,10 @@ class FakeUtilityProcess {
 
   exit(code = 1): void {
     this.exitListener?.(code)
+  }
+
+  message(value: unknown): void {
+    this.messageListener?.(value)
   }
 
   asElectronProcess(): UtilityProcess {
@@ -98,5 +110,24 @@ describe('UtilitySupervisor', () => {
     children[2]?.exit(0)
     vi.advanceTimersByTime(10_000)
     expect(children).toHaveLength(3)
+  })
+
+  it('reclaims the private control channel when a Utility generation exits', () => {
+    const children: FakeUtilityProcess[] = []
+    const supervisor = new UtilitySupervisor(() => {
+      const child = new FakeUtilityProcess()
+      children.push(child)
+      return child.asElectronProcess()
+    }, () => {})
+    const listener = vi.fn()
+    supervisor.onControlMessage(listener)
+    supervisor.start()
+    children[0]?.message({ kind: 'auth.lease.ack' })
+    expect(listener).toHaveBeenCalledOnce()
+
+    children[0]?.exit()
+    children[0]?.message({ kind: 'stale' })
+    expect(listener).toHaveBeenCalledOnce()
+    expect(supervisor.postControl({ kind: 'secret' })).toBe(false)
   })
 })
