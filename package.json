@@ -20,6 +20,9 @@
     "build": "electron-vite build && node scripts/verify-build.mjs",
     "package": "pnpm build && electron-builder --publish never",
     "package:dir": "pnpm build && electron-builder --dir --publish never",
+    "smoke:dev": "node scripts/run-electron-smoke.mjs development",
+    "smoke:build": "pnpm build && node scripts/run-electron-smoke.mjs build",
+    "smoke:packaged": "pnpm build && electron-builder --dir --publish never --config.directories.output=.artifacts/package-smoke && node scripts/run-electron-smoke.mjs packaged .artifacts/package-smoke",
     "release": "pnpm build && electron-builder --publish always"
   },
   "dependencies": {

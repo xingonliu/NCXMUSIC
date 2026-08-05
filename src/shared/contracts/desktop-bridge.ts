@@ -1,3 +1,5 @@
+import type { NcxRuntimeBridge } from './runtime-bridge'
+
 export interface DesktopBridge {
   readonly platform: string
   readonly versions: {
@@ -5,4 +7,5 @@ export interface DesktopBridge {
     readonly electron: string
     readonly node: string
   }
+  readonly runtime: NcxRuntimeBridge
 }
