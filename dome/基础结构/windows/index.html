@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>macOS WWDC 25/26 Liquid Glass UI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- macOS Window Frame (主窗口) -->
+  <div class="app-window" id="app-window">
+
+    <!-- 1. 全宽渐变遮罩 (宽度占满 100%，贴紧窗口最上边框 top:0，在侧边栏下方) -->
+    <div class="full-window-mask"></div>
+
+    <!-- 2. Header 动作按钮栏 (右上角：包含功能按钮 & 最右侧窗口控制胶囊按钮) -->
+    <header class="main-header">
+      <div class="header-actions">
+        
+        <!-- 搜索按钮 (独立 Liquid Glass 圆按钮) -->
+        <button class="liquid-glass-btn" aria-label="搜索" title="搜索文档">
+          <svg class="btn-icon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <!-- 功能组合按钮组 (Segmented Capsule Control) -->
+        <div class="liquid-segmented-control" role="group" aria-label="视图控制组">
+          <!-- 视图模式 1: 列表 -->
+          <button class="segment-btn active" aria-label="列表视图" title="列表视图">
+            <svg class="btn-icon" viewBox="0 0 24 24">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+          </button>
+          
+          <div class="segment-divider"></div>
+
+          <!-- 视图模式 2: 网格 -->
+          <button class="segment-btn" aria-label="网格视图" title="网格视图">
+            <svg class="btn-icon" viewBox="0 0 24 24">
+              <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+              <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+              <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+              <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+            </svg>
+          </button>
+
+          <div class="segment-divider"></div>
+
+          <!-- 分享按钮 -->
+          <button class="segment-btn" aria-label="分享" title="分享">
+            <svg class="btn-icon" viewBox="0 0 24 24">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 重置按钮 -->
+        <button id="btn-reset" class="liquid-glass-btn" aria-label="重置" title="重置状态与滚动位置">
+          <svg class="btn-icon" viewBox="0 0 24 24">
+            <path d="M21.5 2v6h-6M2.5 22v-6h6"></path>
+            <path d="M2 11.5a10 10 0 0 1 18.8-4.3L21.5 8M2.5 16l1 0.8a10 10 0 0 0 18.5-5.3"></path>
+          </svg>
+        </button>
+        
+        <!-- 回到顶部按钮 -->
+        <button id="btn-scroll-top" class="liquid-glass-btn" aria-label="回到顶部" title="回到顶部">
+          <svg class="btn-icon" viewBox="0 0 24 24">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+        </button>
+
+        <!-- 最右侧窗口控制胶囊按钮 (缩小、全屏/恢复、关闭) -->
+        <div class="liquid-segmented-control window-controls-segment" role="group" aria-label="窗口控制组">
+          <!-- 缩小 -->
+          <button class="segment-btn btn-minimize" id="btn-minimize" aria-label="最小化" title="最小化">
+            <svg class="btn-icon" viewBox="0 0 24 24">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+
+          <div class="segment-divider"></div>
+
+          <!-- 全屏/恢复 -->
+          <button class="segment-btn btn-expand" id="btn-expand" aria-label="全屏/恢复" title="全屏/恢复">
+            <svg class="btn-icon" viewBox="0 0 24 24">
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <polyline points="9 21 3 21 3 15"></polyline>
+              <line x1="21" y1="3" x2="14" y2="10"></line>
+              <line x1="3" y1="21" x2="10" y2="14"></line>
+            </svg>
+          </button>
+
+          <div class="segment-divider"></div>
+
+          <!-- 关闭 -->
+          <button class="segment-btn btn-close" id="btn-close" aria-label="关闭" title="关闭窗口">
+            <svg class="btn-icon" viewBox="0 0 24 24">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- 3. Floating Rounded Sidebar (悬浮侧边栏，不包含交通灯) -->
+    <aside class="sidebar">
+      <!-- Navigation Tabs (Hover 灰色 & 圆角) -->
+      <div class="nav-section-title">核心功能</div>
+      <ul class="nav-tabs">
+        <li class="tab-item active">
+          <svg class="tab-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>设计语言</span>
+        </li>
+        <li class="tab-item">
+          <svg class="tab-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span>灵感图库</span>
+        </li>
+        <li class="tab-item">
+          <svg class="tab-icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+          <span>歌单</span>
+        </li>
+        <li class="tab-item">
+          <svg class="tab-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span>WWDC 文章</span>
+        </li>
+      </ul>
+
+      <div class="nav-section-title">系统管理</div>
+      <ul class="nav-tabs">
+        <li class="tab-item">
+          <svg class="tab-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>空间设置</span>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- 4. Right Main Content Area -->
+    <main class="main-wrapper">
+      <div class="content-area">
+        <article class="article-container">
+          <!-- Tab Title 在内容区域顶部呈现 -->
+          <div class="content-tab-header">
+            <span class="article-badge" id="content-tab-category">WWDC 25/26 Special Edition</span>
+            <h1 class="content-tab-title" id="content-tab-title">设计语言</h1>
+          </div>
+
+          <h2 class="article-subtitle">新一代 Liquid Glass 与 Floating Island 设计范式解析</h2>
+          
+          <div class="article-meta">
+            <div class="author-avatar">WW</div>
+            <div>
+              <span style="font-weight: 600; color: var(--text-primary);">WWDC Design Team</span>
+              <span style="margin: 0 4px;">•</span>
+              <span>2026年6月发布</span>
+              <span style="margin: 0 4px;">•</span>
+              <span>4 分钟阅读</span>
+            </div>
+          </div>
+
+          <div class="article-content">
+            <p>
+              在 WWDC 25 与 WWDC 26 展现的新代 macOS 系统架构中，界面设计完成了由“平铺式容器”向“悬浮空间岛（Floating Island Architecture）”与“液态玻璃（Liquid Glass Material）”的全面演进。
+            </p>
+
+            <div class="article-quote">
+              “界面不再是遮挡内容的框架，而是浮现于内容之上的折射流体。”
+            </div>
+
+            <h2>一、悬浮侧边栏与空间隔离</h2>
+            <p>
+              新的设计规范打破了传统的窗口边到边（Edge-to-Edge）侧边栏切割。侧边栏现在作为独立的悬浮岛存在，拥有更柔和的大圆角边框（Continuous Rounded Corners）。这种设计赋予了窗口更强的空间通透感，使左侧导航与右侧主视图既有机统一，又具备分明的空间层级。
+            </p>
+
+            <div class="article-image-placeholder">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              <span>图 2.1：WWDC 悬浮岛与连续曲率圆角对比示意</span>
+            </div>
+
+            <h2>二、Liquid Glass（液态玻璃）材质的物理拟真</h2>
+            <p>
+              不同于第一代简单的单层 Gaussian Blur 模糊，全新 Liquid Glass 材质模拟了真实三维微光学。每一个无字圆形按钮都包含高强度的内部反射折射、顶部弧形液体高光（Specular Curve）以及微光边框。
+            </p>
+
+            <h2>三、渐变遮罩 Header 的无缝流失</h2>
+            <p>
+              顶部 Header 不再使用僵硬的分界线，而是通过 Alpha 渐变掩码（Gradient Mask Image）与 Backdrop Blur 相结合。长篇文章在向下滚动时，文字并非“撞击”顶部边框，而是如同进入浓雾般自然消退隐藏，打造极致流畅自然的长文阅读体验。
+            </p>
+          </div>
+        </article>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
