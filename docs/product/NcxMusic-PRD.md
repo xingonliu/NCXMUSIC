@@ -167,6 +167,16 @@ Agent 不只是回答问题，而是理解上下文、选择工具、执行操�
 | C-125 | 首版不开放画像权重、阈值或高级算法设置；界面只展示数据来源、变化分数、证据与置信度。 |
 | C-126 | Action Journal 按账号保留最近 30 天或 10,000 条语义事件，任一上限到达即清理最旧记录；不记录播放进度等高频事件。聊天正文和摘要不受该上限影响。 |
 | C-127 | 基础资料只持久化网易云 API 明确返回的称呼、性别、年龄等字段及其更新时间；缺失或无法判断的字段保持未知，小云不得推测补全。 |
+| C-128 | Dynamic Skill 首版支持 AppData 手工编辑、本地文件夹/ZIP 导入和 HTTPS Git 仓库安装，不建设公共 Skill 市场；新发现或下载的 Skill 默认禁用。 |
+| C-129 | 小云发起 Skill 安装、启用或更新时必须展示批准/拒绝卡；用户在设置页主动操作使用普通确认。第三方 Skill Tool 每次执行仍经过统一 PolicyGateway，无法映射到已知能力的 JavaScript Tool 默认逐次审批。 |
+| C-130 | 第三方 Skill JavaScript 只在独立 Skill Host 子进程中 `dynamic import()`，不在 Agent Utility Process 内直接执行；子进程只提供故障和凭据隔离，不宣传为绝对安全沙箱。 |
+| C-131 | 首版不在线安装 npm/pnpm 依赖、不执行生命周期脚本、不支持原生 `.node` 模块；Skill 依赖必须以可审计的纯 JavaScript 随包附带并计入内容哈希。 |
+| C-132 | Skill 不自动更新；记录来源、Git commit、版本和 SHA-256，更新采用暂存校验与原子切换并保留上一版，卸载后在应用内保留 7 天再删除。 |
+| C-133 | MCP 首版基于官方 TypeScript SDK 稳定 v1.x，只支持 `stdio` 与 Streamable HTTP；不实现旧 HTTP+SSE、不做回退，也不采用 SDK v2 alpha。 |
+| C-134 | MCP 工具内部名称固定为 `mcp.<serverId>.<toolName>`，外部工具不能覆盖内置工具，同名 Server 工具通过 `serverId` 隔离。 |
+| C-135 | MCP Tool Annotations 只作为不可信展示提示；首版所有外部 MCP Tool Call 均逐次审批，不受音乐或 Shell 安全等级免审，也不增加第三个权限按钮。 |
+| C-136 | MCP 安装批准允许按已确认且未变化的配置启动和正常重连；命令、参数、URL、工作目录、凭据引用或工具范围变化时必须重新批准。 |
+| C-137 | MCP 不自动更新；小云发起安装、更新、删除均需审批。`stdio` 按需启动、空闲 10 分钟关闭，崩溃最多自动重启 3 次；更新保留旧配置回滚，删除不触碰外部数据。 |
 
 ## 3. 目标用户与使用场景
 
@@ -742,7 +752,7 @@ interface RequestUserSelectionResult {
 
 ### 5.6 Dynamic Skill
 
-暂定目录：
+安装目录：
 
 ```text
 app.getPath("userData")/ncx-data/skills/<skill_name>/
@@ -758,20 +768,19 @@ app.getPath("userData")/ncx-data/skills/<skill_name>/
 3. 校验名称、版本、入口和权限声明。
 4. 建立 Skill 索引。
 5. 根据任务按需注入 Prompt，避免全部加载到上下文。
-6. 加载 JavaScript 工具；动态 `import()` 本身不构成安全隔离，Worker/子进程/权限沙箱方案待技术验证。
+6. 为包含 JavaScript 的 Skill 启动独立 Skill Host 子进程，并只在该进程中动态 `import()` 入口。
 7. 将工具注册到统一 Tool Registry。
 8. 所有调用仍经过 Tool Executor 与权限中间件。
 
 需要支持启用、禁用、错误隔离、版本识别和刷新。
 
-当前设计建议（待确认）：
+首版来源为 AppData 手工编辑、本地文件夹/ZIP 导入和 HTTPS Git 仓库安装，不建设公共市场。所有新发现或下载的 Skill 默认禁用；手工复制文件只代表发现，不代表允许注入 Prompt 或执行 JavaScript。小云发起安装、启用或更新时使用 ApprovalCard，用户在设置页主动操作使用普通确认。
 
-- 来源：用户手写 + 本地导入；Git 仓库安装与应用内市场列入后续版本。
-- 授权：安装时按 SKILL.md 声明一次性同意权限清单；每次实际执行仍经过统一权限中间件，并且只能使用安装后实际注册成功的 Tool 能力。
-- 依赖：支持纯 JS 依赖包，安装前展示依赖清单并锁定版本；原生模块依赖暂不支持。
-- 命名冲突：与内置工具重名时内置优先，设置页展示冲突清单并允许重命名外部工具。
+第三方 Skill Host 不获得 Cookie、API Key、账户数据库句柄或通用 IPC；这种进程拆分提供故障与凭据隔离，但不承诺把任意 JavaScript 变成绝对安全代码。首版不运行 npm/pnpm 安装、不执行 lifecycle script、不支持 `.node` 原生模块；依赖必须作为纯 JavaScript 随包附带。
 
-待确认：Skill 来源信任、签名、更新与卸载规则。
+Skill 自报的风险标签不能直接获得免审。调用 NcxMusic 已注册的类型化音乐/Shell Capability 时重新走对应 M/S 规则；无法映射到已知能力的自定义 JavaScript Tool 默认逐次展示 ApprovalCard。
+
+Skill 不自动更新。安装记录保存来源、Git commit、声明版本和 SHA-256；更新先在 staging 校验再原子切换，并保留上一版回滚。卸载先停用并移入应用内 `.trash`，7 天后删除。完整包格式、Host RPC、安装与回滚约束以 `docs/architecture/NcxMusic-Extensions-Architecture.md` 为准。
 
 ### 5.7 MCP
 
@@ -779,15 +788,19 @@ app.getPath("userData")/ncx-data/skills/<skill_name>/
 - 将 MCP Server 暴露的工具映射到统一 Tool Registry。
 - MCP 工具不能绕过 NcxMusic 的安全分级与审批流程。
 - 需要管理 Server 配置、连接状态、工具列表、启停和错误信息。
-- 基于官方 `@modelcontextprotocol/sdk` 提供的能力，客户端传输候选为 stdio 与 Streamable HTTP；最终首版范围待技术验证。
+- 基于官方 `@modelcontextprotocol/sdk` 稳定 v1.x，首版只实现 `stdio` 与 Streamable HTTP；不实现旧 HTTP+SSE Transport、不做自动回退，也不采用 v2 alpha。
 - 凭据只保存到 Credential Vault；配置可视化编辑与 `.mcp.json` 导入作为暂定方案。
 - 提供 `mcp_manager` Agent Tool，允许小云发起 MCP Server 安装。
 - 每一次安装都必须生成不可跳过的批准/拒绝卡片，展示 Server 来源、传输方式、启动命令或 URL、声明的能力/工具、环境变量名称和工作目录；安装前信息必须标记为“来源声明”，不能冒充已经过客户端验证的实际能力。
 - 只有用户点击“批准”后才能写入配置、安装依赖、启动进程或建立网络连接；主动拒绝、5 分钟过期或任务取消分别返回结构化终态，底层安装逻辑均零执行。
 - 首次连接后通过 SDK 获取实际 capabilities 和 tools，与安装前声明做差异检查；未声明或发生变化的工具默认禁用，待用户查看后再启用。
-- MCP 安装不支持“本会话允许”或“总是允许”，其他音乐/Shell 权限等级与历史审批策略不得自动放行。
-- MCP Server 删除、自动更新、来源信任、签名校验与回滚规则仍待确认。
+- MCP 安装不支持“本会话允许”或“总是允许”，其他音乐/Shell 权限等级与历史审批策略不得自动放行。所有外部 MCP Tool Call 首版均逐次审批；Server 返回的 Tool Annotations 只用于展示，不能参与代码放行。
+- 工具内部名称固定为 `mcp.<serverId>.<toolName>`；外部工具不能覆盖内置工具，Server 间同名工具通过 `serverId` 隔离。
+- 安装批准允许按完全相同的配置启动和正常重连；命令、参数、URL、工作目录、凭据引用或工具范围变化时必须重新批准。
+- MCP 不自动更新；小云发起安装、更新、删除都必须审批，用户在设置页主动操作使用普通确认。更新先验证并保留旧配置回滚，删除只清理 NcxMusic 配置和应用缓存，不删除 Server 在外部创建的数据。
+- `stdio` Server 按需启动，无请求/订阅/任务时空闲 10 分钟关闭；异常崩溃最多自动重启 3 次，继续失败后停用并提示用户。Streamable HTTP 仅在测试或使用时连接。
 - 连接关闭时必须显式关闭 SDK Client/Transport，避免遗留 stdio 子进程、请求处理器或未完成任务。
+- 完整传输、命名、进程监督、审批与回滚规则以 `docs/architecture/NcxMusic-Extensions-Architecture.md` 为准。
 
 ### 5.8 用户画像与长期记忆
 
@@ -1453,12 +1466,17 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 
 ### P2：Skill 与 MCP
 
-- D-501（部分确认）：Dynamic Skill 从用户 AppData 的技能目录加载；用户手写、本地导入、Git 仓库和市场等安装来源的首版范围待确认。
-- D-502（部分确认）：每次 Skill 工具执行都经过统一权限中间件；安装时的权限声明与授权形式待确认。
-- D-503（待确认）：是否允许 Skill 安装第三方 JS 依赖、是否支持原生模块以及版本锁定策略？
-- D-504（已确认）：`mcp_manager` 允许小云发起 MCP Server 安装；每次安装必须弹出卡片并取得当次明确同意，不支持会话或永久豁免，拒绝时底层零执行。删除、自动更新和回滚规则待确认。
-- D-505（部分确认）：使用官方 Model Context Protocol TypeScript SDK；stdio 与 Streamable HTTP 是否都进入首版待技术验证。
-- D-506（待确认）：外部工具与内置工具重名时如何处理？
+- D-501（已确认）：Dynamic Skill 从 AppData 加载；首版支持手工编辑、本地文件夹/ZIP 导入和 HTTPS Git 仓库安装，不建设公共市场，新发现或下载的 Skill 默认禁用。
+- D-502（已确认）：小云发起 Skill 安装、启用或更新时必须逐次审批，用户直接操作使用普通确认；所有 Skill Tool 经过 PolicyGateway，无法映射到已知能力的自定义 JavaScript Tool 默认逐次审批。
+- D-503（已确认）：第三方 JavaScript 在独立 Skill Host 中动态导入；首版不在线安装 npm/pnpm 依赖、不执行生命周期脚本、不支持原生模块，随包纯 JavaScript 依赖计入内容哈希。
+- D-504（已确认）：`mcp_manager` 允许小云发起 MCP Server 安装、更新和删除，每次都必须取得当次明确批准，不支持会话或永久豁免；拒绝时底层零执行，用户在设置页直接操作使用普通确认。
+- D-505（已确认）：首版使用官方 Model Context Protocol TypeScript SDK 稳定 v1.x，只支持 `stdio` 与 Streamable HTTP，不实现旧 HTTP+SSE 或回退，不采用 v2 alpha。
+- D-506（已确认）：MCP 工具内部名称为 `mcp.<serverId>.<toolName>`，外部工具不能覆盖内置工具，同名 Server 工具按 `serverId` 隔离。
+- D-507（已确认）：MCP Tool Annotations 不参与免审判断；首版所有外部 MCP Tool Call 逐次审批，不受 M/S 等级放行且不增加第三个安全按钮。
+- D-508（已确认）：MCP 安装批准允许相同配置正常启动与重连；命令、参数、URL、工作目录、凭据引用或工具范围变化必须重新批准。
+- D-509（已确认）：Skill 与 MCP 都不自动更新；暂存验证后原子切换并保留上一版/配置回滚。Skill 卸载保留 7 天，MCP 删除不触碰外部数据。
+- D-510（已确认）：`stdio` MCP Server 按需启动，空闲 10 分钟且无请求/订阅/任务时关闭，异常崩溃最多自动重启 3 次后停用；Streamable HTTP 按需连接并显式关闭。
+- D-511（已确认）：Skill Host 进程隔离只作为故障和凭据隔离，不宣传为绝对安全沙箱；第三方代码风险必须在安装/启用界面披露。
 
 ### P2：API、数据与缓存
 
@@ -1581,6 +1599,10 @@ Utility Process 崩溃或退出时，Main 负责更新 Agent 可用状态、取�
 | 2026-08-05 | D-302/D-303/D-307 | 画像变化采用成功快照间的去重集合差异；30 分提示，关闭后静默 7 天，追加 15 分可提前再提示；首版不开放高级权重设置。 | 画像快照、启动检查、提示状态、设置页与测试样例 |
 | 2026-08-05 | D-305/D-309 | 画像、聊天、摘要、Working Memory 和 API 明确返回的基础资料不自动过期；缺失资料保持未知，用户按账号显式删除。 | 本地存储、账户切换、隐私、数据管理与字段映射 |
 | 2026-08-05 | D-308 | Action Journal 每账号滚动保留最近 30 天或 10,000 条语义事件，不记录播放进度且不影响聊天和摘要。 | 播放事件、Agent 查询、SQLite 清理与调试边界 |
+| 2026-08-05 | D-501～D-503/D-511 | Skill 支持 AppData、本地文件夹/ZIP 与 HTTPS Git；新包默认禁用，JavaScript 在独立 Host 中导入，首版不在线装依赖或原生模块，并明确进程隔离不是绝对安全沙箱。 | Skill Installer、Host Supervisor、权限披露、安装体积与供应链 |
+| 2026-08-05 | D-504/D-507/D-508 | 小云发起 MCP 生命周期变更必须逐次审批；所有外部 MCP Tool Call 逐次审批，安装只授权未变化配置的正常启动和重连。 | MCP Manager、ApprovalCard、PolicyGateway、配置指纹 |
+| 2026-08-05 | D-505/D-506 | MCP 首版只支持官方 SDK 稳定 v1.x 的 `stdio` 与 Streamable HTTP，不实现旧 SSE；工具以 `mcp.<serverId>.<toolName>` 隔离且不能覆盖内置工具。 | MCP SDK、Transport Factory、Tool Registry、配置 UI |
+| 2026-08-05 | D-509/D-510 | Skill/MCP 不自动更新，采用暂存验证、原子切换与单版本回滚；stdio MCP 按需启动、空闲 10 分钟关闭、崩溃最多重启 3 次。 | 扩展更新、回滚、进程监督、资源占用与卸载 |
 
 ## 13. 暂定里程碑
 
