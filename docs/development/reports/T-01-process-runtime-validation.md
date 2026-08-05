@@ -1,8 +1,9 @@
 # T-01 工程与进程骨架验证报告
 
 - 执行日期：2026-08-05
-- 当前结论：`candidate`（Windows 本地通过，等待同提交 Windows/macOS CI 结果）
+- 当前结论：`pass`
 - 基线提交：`44e0f84`
+- 实现提交：`122569b`、`1361f1b`
 - 依赖锁哈希（SHA-256）：`c17f71508a8b403a82e7f9484c1367113b91b5ccef80b6a496528b05a82d8f89`
 
 ## 验证环境
@@ -36,7 +37,9 @@ Electron 43 的 npm 包不再使用依赖 `postinstall` 下载运行时。全新
 
 ## 双平台 CI
 
-`.github/workflows/quality.yml` 在 `windows-latest` 和 `macos-latest` 上运行安装、类型检查、Lint、单元/契约测试以及三种 Electron Smoke。它不以“编译成功”作为平台通过条件。最终 `pass | block` 结论以实现提交触发的两个矩阵 Job 为准，并在通过后回填本报告。
+`.github/workflows/quality.yml` 在 `windows-latest` 和 `macos-latest` 上运行安装、类型检查、Lint、单元/契约测试以及三种 Electron Smoke。它不以“编译成功”作为平台通过条件。
+
+[Quality Run 31001445316](https://github.com/xingonliu/NCXMUSIC/actions/runs/31001445316) 的两个矩阵 Job 均通过：macOS 用时 1 分 49 秒，Windows 用时 2 分 30 秒；两端的开发、生产构建和打包应用 Smoke 均为 `pass`。因此 T-01 整体结论为 `pass`。
 
 ## 关联决策
 
