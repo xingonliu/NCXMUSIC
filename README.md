@@ -10,6 +10,7 @@ NcxMusic 是一个基于 Electron、Vue 3 和 TypeScript 的 Agent 原生音乐�
 
 ```powershell
 pnpm install --frozen-lockfile
+pnpm electron:install
 pnpm dev
 ```
 
@@ -17,6 +18,7 @@ pnpm dev
 
 | 命令 | 用途 |
 | --- | --- |
+| `pnpm electron:install` | 按当前平台和架构下载 Electron 运行时（二进制不再由 Electron 43 的安装脚本下载） |
 | `pnpm dev` | 启动 Main、Preload、Renderer 与 Utility Process 开发环境 |
 | `pnpm typecheck` | 检查 Node/Electron 与 Vue 两套 TypeScript 入口 |
 | `pnpm lint` | 检查代码、样式和架构依赖边界 |

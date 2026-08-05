@@ -32,6 +32,8 @@
 
 Smoke 必须同时证明 Renderer 没有 `require`/`process`、版本化握手成功、故障注入后 Utility 至少重启一次、ping 成功、取消生效、Renderer 重载后生成新 `connectionId`，并从同一 Utility 世代恢复快照。任一断言失败时进程以非零状态退出。
 
+Electron 43 的 npm 包不再使用依赖 `postinstall` 下载运行时。全新环境在 `pnpm install --frozen-lockfile` 后必须显式执行 `pnpm electron:install`；CI 将该步骤作为 Smoke 的前置门禁，避免开发机缓存掩盖缺失二进制。
+
 ## 双平台 CI
 
 `.github/workflows/quality.yml` 在 `windows-latest` 和 `macos-latest` 上运行安装、类型检查、Lint、单元/契约测试以及三种 Electron Smoke。它不以“编译成功”作为平台通过条件。最终 `pass | block` 结论以实现提交触发的两个矩阵 Job 为准，并在通过后回填本报告。
