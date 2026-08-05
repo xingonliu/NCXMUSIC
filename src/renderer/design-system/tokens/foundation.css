@@ -1,0 +1,37 @@
+:root {
+  color-scheme: light dark;
+
+  --ncx-space-1: 4px;
+  --ncx-space-2: 8px;
+  --ncx-space-3: 12px;
+  --ncx-space-4: 16px;
+  --ncx-space-6: 24px;
+  --ncx-space-8: 32px;
+  --ncx-radius-md: 8px;
+  --ncx-radius-lg: 12px;
+  --ncx-radius-xl: 16px;
+  --ncx-color-canvas: #f5f5f7;
+  --ncx-color-surface: rgb(255 255 255 / 86%);
+  --ncx-color-text-primary: #19191b;
+  --ncx-color-text-secondary: #6f6f76;
+  --ncx-color-border-subtle: rgb(0 0 0 / 8%);
+  --ncx-color-accent: #fa2d48;
+  --ncx-shadow-elevation-1: 0 1px 2px rgb(0 0 0 / 8%);
+  --ncx-shadow-elevation-2: 0 12px 36px rgb(0 0 0 / 10%);
+  --ncx-motion-fast: 120ms;
+  --ncx-font-family: -apple-system, blinkmacsystemfont, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ncx-color-canvas: #111113;
+    --ncx-color-surface: rgb(37 37 40 / 88%);
+    --ncx-color-text-primary: #f5f5f7;
+    --ncx-color-text-secondary: #a8a8af;
+    --ncx-color-border-subtle: rgb(255 255 255 / 10%);
+    --ncx-color-accent: #ff375f;
+    --ncx-shadow-elevation-1: 0 1px 2px rgb(0 0 0 / 24%);
+    --ncx-shadow-elevation-2: 0 12px 36px rgb(0 0 0 / 34%);
+  }
+}

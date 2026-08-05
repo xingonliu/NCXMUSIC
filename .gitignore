@@ -1,6 +1,21 @@
 # macOS
 .DS_Store
 
+# 依赖与构建产物
+node_modules/
+out/
+release/
+coverage/
+playwright-report/
+test-results/
+
+# 本地环境与日志
+*.local
+*.log
+.env
+.env.*
+!.env.example
+
 # 本地工具配置
 .reasonix/
 

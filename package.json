@@ -1,0 +1,80 @@
+{
+  "name": "ncxmusic",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NcxMusic Agent-native desktop music client",
+  "author": "NcxMusic Contributors",
+  "license": "AGPL-3.0-only",
+  "main": "./out/main/index.js",
+  "packageManager": "pnpm@11.20.0",
+  "engines": {
+    "node": ">=22.22.0 <23",
+    "pnpm": "11.20.0"
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "typecheck": "tsc -p tsconfig.node.json --noEmit && vue-tsc -p tsconfig.web.json --noEmit",
+    "lint": "eslint . && stylelint \"src/renderer/**/*.css\" && node scripts/check-boundaries.mjs",
+    "test": "vitest run",
+    "test:e2e": "playwright test --pass-with-no-tests",
+    "build": "electron-vite build && node scripts/verify-build.mjs",
+    "package": "pnpm build && electron-builder --publish never",
+    "package:dir": "pnpm build && electron-builder --dir --publish never",
+    "release": "pnpm build && electron-builder --publish always"
+  },
+  "dependencies": {
+    "@lucide/vue": "1.28.0",
+    "pinia": "3.0.4",
+    "reka-ui": "2.10.1",
+    "vue": "3.5.41",
+    "vue-router": "4.6.4",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.62.1",
+    "@types/node": "22.20.1",
+    "@vitejs/plugin-vue": "6.0.8",
+    "@vue/test-utils": "2.4.11",
+    "electron": "43.3.0",
+    "electron-builder": "26.15.3",
+    "electron-vite": "5.0.0",
+    "eslint": "10.8.0",
+    "eslint-plugin-vue": "10.10.0",
+    "stylelint": "17.14.1",
+    "stylelint-config-standard": "40.0.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.66.0",
+    "vite": "7.3.6",
+    "vitest": "4.1.10",
+    "vue-eslint-parser": "10.4.1",
+    "vue-tsc": "3.3.9"
+  },
+  "build": {
+    "appId": "io.github.ncxmusic.app",
+    "productName": "NcxMusic",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "out/main/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.music"
+    }
+  }
+}
