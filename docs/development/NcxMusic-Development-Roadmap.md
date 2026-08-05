@@ -77,7 +77,7 @@ Phase 0 技术门禁
 3. 执行 `NcxMusic-Technical-Spike-Plan.md` 的 T-01～T-08。
 4. 为通过的结论建立 ADR；失败方案移出生产入口。
 
-> 执行记录（2026-08-05）：T-01 已 `pass`。T-02 的隔离 Session、可撤销租约、脱敏、macOS build/packaged 与自动化场景已通过；真实账号登录、重启恢复、远端退出、双账号换号和本次提交的双平台 CI 尚待证据，因此 T-02 保持 `partial`。
+> 执行记录（2026-08-06）：T-01 已 `pass`。T-02 的隔离 Session、可撤销租约、脱敏、macOS build/packaged、自动化场景，以及真实账号首次登录和同 Profile 重启恢复已通过；远端退出、双账号换号和双平台 CI 尚待证据，因此 T-02 保持 `partial`。
 
 ### 完成门禁
 

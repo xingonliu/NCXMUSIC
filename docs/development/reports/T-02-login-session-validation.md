@@ -1,8 +1,8 @@
 # T-02 登录 Session 与凭据租约验证报告
 
-- 执行日期：2026-08-05
-- 当前结论：`partial`；自动化与 macOS 打包边界通过，真实账号矩阵未执行
-- 基线提交：`50885c6`
+- 执行日期：2026-08-06
+- 当前结论：`partial`；自动化、macOS 打包、真实账号首次登录与同 Profile 重启恢复通过，远端退出、第二账号换号和双平台 CI 仍待完成
+- 基线提交：`c323512`
 - API 依赖：`@neteasecloudmusicapienhanced/api@4.39.0`
 - 依赖锁哈希（SHA-256）：`343c100f93990c42f2dee45023a76b13629c5efe201a376b8c0500ed44757537`
 
@@ -56,20 +56,27 @@ Guest、结构失效和失效外形测试都使用独立 `--user-data-dir` Profi
 
 当前质量工作流已增加 Windows/macOS 的构建边界扫描及 T-02 guest/invalid build Spike。该结果需在本实现提交推送后记录；在 CI 完成前不宣称另一平台已通过。
 
-## 未执行的真实账号矩阵
+## 真实账号矩阵
 
-以下操作需要用户只在网易云官方窗口中完成，本次没有读取浏览器现有登录态，也没有要求用户提供账号、密码或 Cookie：
+2026-08-06 在全新隔离 Profile `real-primary-20260806` 中完成了以下一次性验证。交互式登录只在官方网易云窗口内进行；捕获到 `MUSIC_U` 后，每个场景只执行一次恢复/Probe，不建立轮询，也不在证据中保存 Cookie、账号 ID 或密码。
 
-- 捕获并远端验证真实 `MUSIC_U`。
-- 应用重启后从同一持久 Partition 恢复真实账户。
+| 场景 | 目标 | 结果 | 关键观测 |
+| --- | --- | --- | --- |
+| `interactive` | build | pass | `authenticated`、`detailVerified=true`、租约已建立、持久 Cookie 39 个 |
+| `restore` | build | pass | 同一 Profile 重启恢复 `authenticated`、`detailVerified=true`、租约已建立 |
+
+脱敏证据分别写入 `.artifacts/t02/evidence/interactive-build-2026-08-05T16-14-51-156Z.json` 和 `.artifacts/t02/evidence/restore-build-2026-08-05T16-15-09-382Z.json`；该目录已被 Git 忽略。
+
+## 尚未完成的真实账号矩阵
+
+以下操作仍需要用户只在网易云官方窗口中完成，本次没有执行远端退出或读取第二个账户：
+
 - 对真实账户执行远端退出并验证本地权威清理。
 - 使用第二个真实账户完成换号，并证明旧账户请求和租约无法复活。
 
 可在用户准备好后依次执行：
 
 ```bash
-pnpm t02:spike -- --scenario interactive --target packaged --profile primary
-pnpm t02:spike -- --scenario restore --target packaged --profile primary
 pnpm t02:spike -- --scenario logout --target packaged --profile primary
 ```
 
