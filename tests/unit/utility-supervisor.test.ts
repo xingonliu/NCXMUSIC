@@ -33,6 +33,10 @@ class FakeUtilityProcess {
     this.messageListener?.({ kind: 'utility.ready', protocolVersion: 1 })
   }
 
+  message(value: unknown): void {
+    this.messageListener?.(value)
+  }
+
   exit(code = 1): void {
     this.exitListener?.(code)
   }
@@ -136,5 +140,29 @@ describe('UtilitySupervisor', () => {
     children[2]?.exit(0)
     vi.advanceTimersByTime(10_000)
     expect(children).toHaveLength(3)
+  })
+
+  it('accepts private control events only from the active Utility generation', () => {
+    const children: FakeUtilityProcess[] = []
+    const supervisor = new UtilitySupervisor(
+      () => {
+        const child = new FakeUtilityProcess()
+        children.push(child)
+        return child.asElectronProcess()
+      },
+      () => {}
+    )
+    const listener = vi.fn()
+    supervisor.onControlMessage(listener)
+    supervisor.start()
+    children[0]?.ready()
+    expect(supervisor.postControl({ kind: 'auth.lease.revoke' })).toBe(true)
+    children[0]?.message({ kind: 'auth.lease.ack' })
+    expect(listener).toHaveBeenCalledOnce()
+
+    children[0]?.exit()
+    children[0]?.message({ kind: 'stale' })
+    expect(listener).toHaveBeenCalledOnce()
+    expect(supervisor.postControl({ kind: 'secret' })).toBe(false)
   })
 })

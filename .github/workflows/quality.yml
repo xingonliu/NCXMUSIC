@@ -30,6 +30,10 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm lint
       - run: pnpm test
+      - run: pnpm build
+      - run: pnpm t02:verify-boundaries
+      - run: pnpm t02:spike -- --scenario guest --target build --profile ci-guest
+      - run: pnpm t02:spike -- --scenario invalid --target build --profile ci-invalid
       - run: pnpm smoke:dev
       - run: pnpm smoke:build
       - run: pnpm smoke:packaged

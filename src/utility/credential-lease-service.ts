@@ -1,0 +1,364 @@
+import { createHash } from 'node:crypto'
+import { existsSync } from 'node:fs'
+import { createRequire } from 'node:module'
+import { join } from 'node:path'
+
+import type {
+  CredentialControlCommand,
+  CredentialControlEvent
+} from '../shared/contracts/credential-lease'
+
+const PROBE_LIFETIME_MS = 30_000
+const MAX_LEASE_LIFETIME_MS = 5 * 60 * 1_000
+
+interface NeteaseResponse {
+  body?: unknown
+}
+
+export interface NeteaseAuthApi {
+  login_status(params: { cookie: string; timeout: number }): Promise<NeteaseResponse>
+  user_account(params: { cookie: string; timeout: number }): Promise<NeteaseResponse>
+  user_detail(params: { cookie: string; timeout: number; uid: string }): Promise<NeteaseResponse>
+  logout(params: { cookie: string; timeout: number }): Promise<NeteaseResponse>
+}
+
+interface ValidatedProbe {
+  fingerprint: string
+  accountId: string
+  accountGeneration: number
+  expiresAt: number
+}
+
+interface ActiveLease {
+  leaseId: string
+  accountId: string
+  accountGeneration: number
+  expiresAt: number
+  secret: Buffer
+  expiryTimer: ReturnType<typeof setTimeout>
+}
+
+type ApiLoader = () => Promise<NeteaseAuthApi>
+
+function record(value: unknown): Record<string, unknown> | undefined {
+  return value !== null && typeof value === 'object' && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : undefined
+}
+
+function bodyOf(value: unknown): Record<string, unknown> | undefined {
+  const response = record(value)
+  return record(response?.['body']) ?? response
+}
+
+function numericId(value: unknown): string | undefined {
+  if (typeof value === 'number' && Number.isSafeInteger(value) && value > 0) return String(value)
+  if (typeof value === 'string' && /^\d{1,32}$/u.test(value)) return value
+  return undefined
+}
+
+function accountIdFrom(value: unknown): string | undefined {
+  const body = bodyOf(value)
+  const data = record(body?.['data'])
+  const candidates = [
+    record(data?.['account'])?.['id'],
+    record(data?.['account'])?.['userId'],
+    record(body?.['account'])?.['id'],
+    record(body?.['account'])?.['userId'],
+    record(data?.['profile'])?.['userId'],
+    record(body?.['profile'])?.['userId']
+  ]
+  for (const candidate of candidates) {
+    const id = numericId(candidate)
+    if (id) return id
+  }
+  return undefined
+}
+
+function responseCode(value: unknown): number | undefined {
+  const body = bodyOf(value)
+  const data = record(body?.['data'])
+  const raw = body?.['code'] ?? data?.['code']
+  if (typeof raw === 'number' && Number.isFinite(raw)) return raw
+  if (typeof raw === 'string' && /^-?\d+$/u.test(raw)) return Number(raw)
+  return undefined
+}
+
+function explicitlyMissingAccount(value: unknown): boolean {
+  const body = bodyOf(value)
+  const data = record(body?.['data'])
+  if (responseCode(value) !== 200) return false
+  return (
+    body?.['account'] === null ||
+    body?.['profile'] === null ||
+    data?.['account'] === null ||
+    data?.['profile'] === null
+  )
+}
+
+function fingerprint(value: string): string {
+  return createHash('sha256').update(value).digest('hex')
+}
+
+async function defaultApiLoader(): Promise<NeteaseAuthApi> {
+  const resourcesPath = process.resourcesPath
+  const packagedManifest = resourcesPath
+    ? join(resourcesPath, 'app.asar', 'package.json')
+    : undefined
+  if (packagedManifest && existsSync(packagedManifest)) {
+    return createRequire(packagedManifest)(
+      '@neteasecloudmusicapienhanced/api'
+    ) as NeteaseAuthApi
+  }
+  const imported = await import('@neteasecloudmusicapienhanced/api')
+  return (imported.default ?? imported) as unknown as NeteaseAuthApi
+}
+
+async function withoutThirdPartyConsole<T>(operation: () => Promise<T>): Promise<T> {
+  const original = {
+    debug: console.debug,
+    error: console.error,
+    info: console.info,
+    log: console.log,
+    warn: console.warn
+  }
+  const muted = (): void => {}
+  console.debug = muted
+  console.error = muted
+  console.info = muted
+  console.log = muted
+  console.warn = muted
+  try {
+    return await operation()
+  } finally {
+    console.debug = original.debug
+    console.error = original.error
+    console.info = original.info
+    console.log = original.log
+    console.warn = original.warn
+  }
+}
+
+export class CredentialLeaseService {
+  private api: NeteaseAuthApi | undefined
+  private validatedProbe: ValidatedProbe | undefined
+  private activeLease: ActiveLease | undefined
+
+  constructor(
+    private readonly emit: (event: CredentialControlEvent) => void,
+    private readonly loadApi: ApiLoader = defaultApiLoader,
+    private readonly now: () => number = Date.now
+  ) {}
+
+  async handle(command: CredentialControlCommand): Promise<void> {
+    if (command.kind === 'auth.session.probe') {
+      await this.probe(command)
+      return
+    }
+    if (command.kind === 'auth.lease.grant') {
+      this.grant(command)
+      return
+    }
+    if (command.kind === 'auth.lease.revoke') {
+      if (
+        command.leaseId &&
+        this.activeLease &&
+        command.leaseId !== this.activeLease.leaseId
+      ) {
+        this.emit({
+          kind: 'auth.lease.ack',
+          requestId: command.requestId,
+          leaseId: command.leaseId,
+          accepted: false
+        })
+        return
+      }
+      this.revoke()
+      this.emit({
+        kind: 'auth.lease.ack',
+        requestId: command.requestId,
+        ...(command.leaseId ? { leaseId: command.leaseId } : {}),
+        accepted: true
+      })
+      return
+    }
+    await this.logout(command)
+  }
+
+  shutdown(): void {
+    this.revoke()
+  }
+
+  hasActiveLease(): boolean {
+    return Boolean(this.activeLease && this.activeLease.expiresAt > this.now())
+  }
+
+  private async requiredApi(): Promise<NeteaseAuthApi> {
+    this.api ??= await this.loadApi()
+    return this.api
+  }
+
+  private async probe(
+    command: Extract<CredentialControlCommand, { kind: 'auth.session.probe' }>
+  ): Promise<void> {
+    let cookieHeader = command.cookieHeader
+    command.cookieHeader = ''
+    try {
+      const api = await withoutThirdPartyConsole(() => this.requiredApi())
+      const status = await withoutThirdPartyConsole(() =>
+        api.login_status({ cookie: cookieHeader, timeout: 15_000 })
+      )
+      let accountId = accountIdFrom(status)
+      let account: NeteaseResponse | undefined
+      if (!accountId) {
+        account = await withoutThirdPartyConsole(() =>
+          api.user_account({ cookie: cookieHeader, timeout: 15_000 })
+        )
+        accountId = accountIdFrom(account)
+      }
+      if (!accountId) {
+        this.validatedProbe = undefined
+        const missing = explicitlyMissingAccount(status) || explicitlyMissingAccount(account)
+        this.emit({
+          kind: 'auth.session.probe-result',
+          requestId: command.requestId,
+          valid: false,
+          detailVerified: false,
+          reason: missing ? 'missing-account' : 'remote-unavailable'
+        })
+        return
+      }
+
+      const detail = await withoutThirdPartyConsole(() =>
+        api.user_detail({ cookie: cookieHeader, timeout: 15_000, uid: accountId })
+      )
+      const detailVerified = responseCode(detail) === 200 && accountIdFrom(detail) === accountId
+      if (!detailVerified) {
+        this.validatedProbe = undefined
+        this.emit({
+          kind: 'auth.session.probe-result',
+          requestId: command.requestId,
+          valid: false,
+          detailVerified: false,
+          reason: 'remote-unavailable'
+        })
+        return
+      }
+
+      this.validatedProbe = {
+        fingerprint: fingerprint(cookieHeader),
+        accountId,
+        accountGeneration: command.accountGeneration,
+        expiresAt: this.now() + PROBE_LIFETIME_MS
+      }
+      this.emit({
+        kind: 'auth.session.probe-result',
+        requestId: command.requestId,
+        valid: true,
+        accountId,
+        detailVerified: true,
+        reason: 'authenticated'
+      })
+    } catch {
+      this.validatedProbe = undefined
+      this.emit({
+        kind: 'auth.session.probe-result',
+        requestId: command.requestId,
+        valid: false,
+        detailVerified: false,
+        reason: 'remote-unavailable'
+      })
+    } finally {
+      cookieHeader = ''
+    }
+  }
+
+  private grant(command: Extract<CredentialControlCommand, { kind: 'auth.lease.grant' }>): void {
+    const probe = this.validatedProbe
+    const now = this.now()
+    const accepted = Boolean(
+      probe &&
+        probe.expiresAt > now &&
+        probe.fingerprint === fingerprint(command.cookieHeader) &&
+        probe.accountId === command.accountId &&
+        probe.accountGeneration === command.accountGeneration &&
+        command.expiresAt > now &&
+        command.expiresAt - now <= MAX_LEASE_LIFETIME_MS
+    )
+    this.validatedProbe = undefined
+    if (!accepted) {
+      command.cookieHeader = ''
+      this.emit({
+        kind: 'auth.lease.ack',
+        requestId: command.requestId,
+        accepted: false
+      })
+      return
+    }
+
+    this.revoke()
+    const secret = Buffer.from(command.cookieHeader, 'utf8')
+    command.cookieHeader = ''
+    const expiryTimer = setTimeout(() => this.revoke(), command.expiresAt - now)
+    this.activeLease = {
+      leaseId: command.leaseId,
+      accountId: command.accountId,
+      accountGeneration: command.accountGeneration,
+      expiresAt: command.expiresAt,
+      secret,
+      expiryTimer
+    }
+    this.emit({
+      kind: 'auth.lease.ack',
+      requestId: command.requestId,
+      leaseId: command.leaseId,
+      accepted: true
+    })
+  }
+
+  private async logout(
+    command: Extract<CredentialControlCommand, { kind: 'auth.logout' }>
+  ): Promise<void> {
+    const lease = this.activeLease
+    if (
+      !lease ||
+      lease.leaseId !== command.leaseId ||
+      lease.accountGeneration !== command.accountGeneration ||
+      lease.expiresAt <= this.now()
+    ) {
+      this.emit({
+        kind: 'auth.control-failure',
+        requestId: command.requestId,
+        code: 'LEASE_MISMATCH'
+      })
+      return
+    }
+
+    let remoteAccepted: boolean
+    try {
+      const api = await withoutThirdPartyConsole(() => this.requiredApi())
+      const response = await withoutThirdPartyConsole(() =>
+        api.logout({ cookie: lease.secret.toString('utf8'), timeout: 15_000 })
+      )
+      remoteAccepted = responseCode(response) === 200
+    } catch {
+      remoteAccepted = false
+    } finally {
+      this.revoke()
+    }
+    this.emit({
+      kind: 'auth.logout-result',
+      requestId: command.requestId,
+      remoteAccepted
+    })
+  }
+
+  private revoke(): void {
+    this.validatedProbe = undefined
+    const lease = this.activeLease
+    this.activeLease = undefined
+    if (!lease) return
+    clearTimeout(lease.expiryTimer)
+    lease.secret.fill(0)
+  }
+}

@@ -27,6 +27,7 @@ export class UtilitySupervisor {
     restartAttempt: 0
   }
   private readonly listeners = new Set<(status: RuntimeStatus) => void>()
+  private readonly controlMessageListeners = new Set<(message: unknown) => void>()
 
   constructor(
     private readonly spawnUtility: UtilitySpawner,
@@ -58,6 +59,12 @@ export class UtilitySupervisor {
     this.child.postMessage(metadata, [port])
   }
 
+  postControl(message: unknown): boolean {
+    if (!this.child || this.status.state !== 'ready') return false
+    this.child.postMessage(message)
+    return true
+  }
+
   currentGeneration(): number | undefined {
     return this.child && this.status.state === 'ready' ? this.generation : undefined
   }
@@ -70,6 +77,11 @@ export class UtilitySupervisor {
     this.listeners.add(listener)
     listener(this.status)
     return () => this.listeners.delete(listener)
+  }
+
+  onControlMessage(listener: (message: unknown) => void): () => void {
+    this.controlMessageListeners.add(listener)
+    return () => this.controlMessageListeners.delete(listener)
   }
 
   shutdown(): void {
@@ -105,8 +117,12 @@ export class UtilitySupervisor {
     child.stdout?.on('data', (chunk: Buffer | string) => this.writeLog('stdout', String(chunk)))
     child.stderr?.on('data', (chunk: Buffer | string) => this.writeLog('stderr', String(chunk)))
     child.on('message', (message: unknown) => {
-      if (this.child !== child || !UtilityReadyMessageSchema.safeParse(message).success) return
-      this.markReady(child)
+      if (this.child !== child) return
+      if (UtilityReadyMessageSchema.safeParse(message).success) {
+        this.markReady(child)
+        return
+      }
+      for (const listener of this.controlMessageListeners) listener(message)
     })
     child.once('exit', (code) => {
       if (this.child !== child) return

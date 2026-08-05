@@ -63,6 +63,14 @@ function inspect(file) {
     }
 
     if (
+      (normalizedFile.startsWith('src/renderer/') ||
+        normalizedFile.startsWith('src/preload/')) &&
+      /shared\/contracts\/credential-lease(?:\.|\/|$)/.test(specifier)
+    ) {
+      report(file, specifier, 'Renderer 与 Preload 不得导入凭据租约控制面')
+    }
+
+    if (
       specifier === 'reka-ui' &&
       !normalizedFile.startsWith('src/renderer/design-system/primitives/reka/')
     ) {
