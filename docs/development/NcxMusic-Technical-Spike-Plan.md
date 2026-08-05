@@ -3,6 +3,7 @@
 > 文档状态：Execution Baseline 0.1
 > 建立日期：2026-08-05
 > 目标：在大规模页面开发前验证会造成架构返工的非 API 风险
+> 顺序约束：本文件仅细化最终开发顺序的 Phase 0，不是第二份路线图；执行先后以 `NcxMusic-Development-Roadmap.md` 为唯一权威
 
 ## 1. 执行规则
 
