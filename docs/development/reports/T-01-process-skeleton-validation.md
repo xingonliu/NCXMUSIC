@@ -1,8 +1,9 @@
 # T-01 工程与进程骨架验证报告
 
 - 报告日期：2026-08-05
-- 当前结果：Windows `pass`；macOS 等待远端 CI
-- 源码基线：`fbec1113f4b9a749508da7e004a6cb39b5122703` 之后的 T-01 工作树
+- 当前结果：Windows `pass`；macOS `pass`
+- 实现提交：`589ab1a3311a4dbec7ccb02f8ba4f7d7cef36134`
+- 双平台 CI：[Phase 0 run 30993162829](https://github.com/xingonliu/NCXMUSIC/actions/runs/30993162829)
 
 ## 环境
 
@@ -15,6 +16,8 @@
 | Electron | 43.3.0 |
 | Electron 内嵌运行时 | Node 24.18.1 / Chrome 150.0.7871.212 |
 | pnpm lock SHA-256 | `E681496645A8E19D4E97234E3F550B3B2CD164B19CF6D06D375FE52E90A5D764` |
+| Windows CI | Microsoft Windows Server 2025，`windows-2025-vs2026` |
+| macOS CI | macOS 26.5.2（25F84），`macos-26-arm64` image `20260728.0273.1` |
 
 ## 实现范围
 
@@ -38,6 +41,8 @@
 | `pnpm smoke:build` | pass；生产构建态完成相同链路。 |
 | `pnpm smoke:packaged` | pass；`release/win-unpacked` 的 ASAR/解包路径完成相同链路。 |
 | `pnpm package` | pass；生成 Windows x64 NSIS。 |
+| GitHub Actions `verify (windows-latest)` | pass；Node 24.18.0 下完整矩阵通过。 |
+| GitHub Actions `verify (macos-latest)` | pass；Node 24.18.0 下 build 与 packaged smoke 均通过。 |
 
 Smoke 的六项断言均为 `true`：
 
@@ -68,6 +73,7 @@ Supervisor 单元测试覆盖：stdout/stderr、1/2/5 秒三次重启、第四�
 
 ## 未验证项与解锁条件
 
-- macOS 本机、签名和公证不在当前 Windows 环境中可用。`macos-latest` CI 将运行 install、typecheck、lint、test、build smoke 与 packaged smoke；该 Job 通过后才能把 T-01 Checkpoint 标为 `pass`。
+- macOS 签名、公证及干净实体机器安装不在 T-01 范围内，保留到 Phase 8；本阶段 macOS arm64 CI 的 build 与 packaged smoke 已通过。
 - T-01 不验证正式签名、公证和干净机器安装，这些属于 Phase 8；本阶段已验证当前平台未发布安装包与 unpacked packaged 运行路径。
 - 用户并行加入的未跟踪目录 `dome/` 不属于 T-01，未读取后修改、未格式化、未暂存。
+- Prompt 02 的解锁条件已满足：T-01 Checkpoint 可标记 `pass`。

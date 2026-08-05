@@ -1,6 +1,6 @@
 # ADR-001：T-01 Electron 多进程工程与通信骨架
 
-- 状态：Accepted（等待双平台 CI 复核）
+- 状态：Accepted
 - 日期：2026-08-05
 - 功能映射：PLT-001～010、DAT-014；Phase 0 T-01
 - 关联架构：A-001、A-002、A-003、A-004
@@ -55,4 +55,4 @@ T-01 必须在页面和业务开发前验证单包 Electron 工程、Main/Preloa
 
 - Utility 共享 Contract chunk 会比外置 Zod 大约增加 149 KiB，但换来沙箱与 ASAR 下确定的启动路径。
 - 本阶段只提供进程诊断页，不建设 Design System、播放器、登录或业务页面。
-- macOS 的同一链路由 `phase0.yml` 在 `macos-latest` 运行；没有该证据前不把 T-01 Checkpoint 标为 `pass`。
+- Windows Server 2025 与 macOS 26.5.2 arm64 的 `phase0.yml` 均已通过生产构建和 packaged smoke，T-01 可以标记为 `pass`。
