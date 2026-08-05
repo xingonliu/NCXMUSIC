@@ -10,7 +10,7 @@
 
 1. **单一事实源**：`PlaybackEngine` 持有当前媒体状态，`QueueController` 持有队列状态；UI 只消费快照，`HTMLAudioElement` 只是带副作用的执行器。
 2. **职责分离**：队列决定“播什么”，引擎负责“把指定媒体播好”，异步 URL 解析由独立 `TrackResolver` 完成。
-3. **统一命令入口**：按钮、快捷键、小 N、系统媒体键和恢复流程都投递同一种领域命令。
+3. **统一命令入口**：按钮、快捷键、小云、系统媒体键和恢复流程都投递同一种领域命令。
 4. **命令向下、事件向上**：调用方发送意图，真实媒体事件和执行结果由引擎上报，不能用 UI 猜测播放状态。
 5. **全局只有一个内容音频源**：主播放、试听和 Agent 点播复用同一引擎，不创建第二个内容播放器。
 6. **纯转移与副作用分离**：状态归约、队列算法可纯函数测试；媒体调用、URL 获取和持久化作为 Effects/Adapters。
@@ -19,7 +19,7 @@
 ## 2. 顶层结构
 
 ```text
-UI / 快捷键 / 小 N / 系统媒体键
+UI / 快捷键 / 小云 / 系统媒体键
                   │ PlaybackCommand
                   ▼
           PlaybackCoordinator
@@ -262,7 +262,7 @@ interface QueueController {
 }
 ```
 
-已确认的小 N 语义：
+已确认的小云语义：
 
 - 播放目标是单曲：`insertAndPlay`。队列非空时把歌曲插入当前项之后，立即将 `currentItemId` 切换到新项并播放；队列为空时插为第一项。新歌曲进入正式 `items`，不使用队列外临时状态，播放后也不自动删除。
 - 播放目标是歌单：`replaceAndPlay`，用歌单建立新队列；未指定歌曲时从第一首开始。
@@ -270,7 +270,7 @@ interface QueueController {
 已确认的页面入口语义：
 
 - 歌单、专辑、“我喜欢”和歌手热门歌曲等集合详情中的歌曲行：`replaceAndPlay`，用当前完整列表替换队列，`startIndex` 指向点击项。
-- 小 N 精确点播、全局搜索单曲和推荐单曲卡片：`insertAndPlay`，插入当前项之后并立即切换播放。
+- 小云精确点播、全局搜索单曲和推荐单曲卡片：`insertAndPlay`，插入当前项之后并立即切换播放。
 
 页面或 Agent 的其他动作必须明确选择 `replaceAndPlay`、`insertAndPlay`、`playNext` 或 `enqueue`。搜索和推荐 Section 的“播放全部”、电台/MV 等后续来源仍待确认。
 
@@ -298,7 +298,7 @@ interface QueueController {
 ### 4.5 首版无队列撤销
 
 - `replaceAndPlay`、`insertAndPlay`、`remove`、`reorder` 和 `clear` 即时生效，不创建 Undo 快照。
-- 小 N 的大范围队列变更通过轻提示展示影响数量，不提供撤销按钮。
+- 小云的大范围队列变更通过轻提示展示影响数量，不提供撤销按钮。
 - 队列操作只影响本地播放现场，不得复用歌单 CRUD Service；网易云歌单写入是独立领域行为并经过权限中间件。
 
 ## 5. 播放模式与错误策略

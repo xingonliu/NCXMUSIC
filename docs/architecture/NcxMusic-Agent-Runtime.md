@@ -2,12 +2,12 @@
 
 > 文档状态：Baseline 0.1
 > 建立日期：2026-08-04
-> 最后更新：2026-08-04
-> 关联决策：A-006、D-013、D-102、D-109
+> 最后更新：2026-08-05
+> 关联决策：A-006、D-013、D-101、D-102、D-103、D-106、D-109、D-110、D-111、D-112
 
 ## 1. 目标
 
-小 N 不使用 Agent 框架。Utility Process 内实现可审计、可取消、可恢复快照的 Agent Runtime，并让 Provider、Tool、权限和 UI 通过稳定事件协作。
+小云不使用 Agent 框架。Utility Process 内实现可审计、可取消、可恢复快照的 Agent Runtime，并让 Provider、Tool、权限和 UI 通过稳定事件协作。
 
 核心约束：
 
@@ -16,6 +16,13 @@
 3. 所有 Tool Call 必须经过 Schema、Policy、Scheduler 和 Executor，不能直接调用底层 API。
 4. 只读工具可以受控并行，有副作用的操作必须按冲突域确定性串行。
 5. 限额、取消和失败必须产生明确终态，不能让 UI 永久停在“执行中”。
+
+### 产品输出基线
+
+- Agent 正式名称为“小云”，首版不提供重命名或人格切换。
+- 默认使用简体中文，语气友好、自然、简洁，优先给出结果；复杂任务提供必要进度，用户明确要求时再展开细节。
+- 小云不能把“已发送命令”表述为“已执行成功”，所有操作性结论都必须来自真实 Tool Result。
+- 首页“小云为你推荐”只展示内容，不自动播放或修改队列。用户明确提出“随便放点歌”“来点适合现在听的”等开放式播放意图时，小云可依据画像与当前上下文选歌并立即播放，无需先展示 SelectionCard；真实播放仍经过正常工具与音乐权限规则。
 
 ## 2. 运行时组件
 
@@ -63,7 +70,7 @@ queued
   └─ limit_reached → finalizing → completed
 ```
 
-同一会话只有一个 Active Turn。关闭小 N 侧边栏、路由跳转或语音悬浮组件消失不会取消 Turn；点击停止、退出应用、账号切换或 Runtime 故障才触发相应取消/失败规则。
+同一会话只有一个 Active Turn。关闭小云侧边栏、路由跳转或语音悬浮组件消失不会取消 Turn。点击停止、退出应用、账号切换或 Runtime 故障触发相应取消/失败规则；用户在 Active Turn 中发送新消息时，旧 Turn 以 `superseded_by_user_message` 取消，再立即用新消息创建 Turn。
 
 ## 4. Tool Call 状态机
 
@@ -173,6 +180,7 @@ maxToolRoundsPerTurn = 12
 maxToolCallsPerTurn  = 24
 maxParallelReadTools = 4
 maxActiveTurns       = 1
+activeTurnBudgetMs   = 600_000
 ```
 
 - Tool Round 指一次模型响应提出工具、Runtime 回填结果并准备再次请求模型的完整循环。
@@ -181,6 +189,7 @@ maxActiveTurns       = 1
 - 达到任一限额后不再暴露/执行新工具，Runtime 允许一次不带 Tools 的最终模型请求，要求总结已完成内容、未完成原因和用户可采取的下一步。
 - 最终总结请求不计为新的 Tool Round，且不能通过文本触发隐式工具执行。
 - 限额是代码硬限制，System Prompt 只能告知，不能放宽。
+- `activeTurnBudgetMs` 只累计模型请求、工具调度和执行的主动运行时间；ApprovalCard 的 5 分钟等待与 SelectionCard 的 10 分钟等待暂停该计时。
 
 ## 8. 审批挂起
 
@@ -202,7 +211,7 @@ Policy Engine 先把音乐 Tool Call 归一化为稳定动作类别，再用用�
 
 - Policy 返回 `require_approval` 后创建稳定 `approvalId`，Tool Call 进入 `awaiting_approval`。
 - ApprovalCard 只显示“批准”“拒绝”两个按钮；不提供“批准本次”“本会话允许”“总是允许”或其他授权范围。
-- ApprovalCard 不提供关闭按钮，并在创建 5 分钟后固定过期。离开小 N 页面、收起侧边栏或最小化窗口不会处理审批；Renderer 重载从 Snapshot 恢复卡片和剩余时间。
+- ApprovalCard 不提供关闭按钮，并在创建 5 分钟后固定过期。离开小云页面、收起侧边栏或最小化窗口不会处理审批；Renderer 重载从 Snapshot 恢复卡片和剩余时间。
 - 用户拒绝映射为 `USER_REJECTED`，过期映射为 `APPROVAL_EXPIRED`，应用退出、账号切换、Utility Process 故障或 Turn 取消映射为 `APPROVAL_CANCELLED`；面向模型返回裁剪后的结构化结果。
 - 用户批准只解除当前规范化 Tool Call 的挂起，不代表相同工具、参数或后续调用获得会话级或永久授权。工具、参数、目标账号、账户 generation 或 `commandId` 改变后必须重新判断。
 - 审批过程中不能预执行底层副作用、预启动 Shell/MCP 进程或提前写配置。
@@ -221,13 +230,32 @@ Policy Engine 先把音乐 Tool Call 归一化为稳定动作类别，再用用�
 
 取消不是回滚。收藏、评论、歌单写入、Shell 命令和安装动作是否支持补偿，由具体工具定义，Runtime 不自动执行相反操作。
 
+用户在 Active Turn 期间发送新消息时复用同一取消路径：停止 Provider 流，移除尚未执行的 Tool Call，取消未决 ApprovalCard 与 SelectionCard，并在必要清理后立即处理新意图。已经成功的操作不回滚；已越过不可逆提交点的操作取得真实结果并写入记录，但不会继续驱动旧 Turn。
+
 ## 10. 错误与重试
 
 - Tool Result 使用稳定错误码、可读摘要、`retryable` 和脱敏详情。
 - 写操作、Shell、安装和审批后操作不允许透明自动重试。
-- 只读工具的自动重试次数、退避和整体 Turn 超时尚未确认；在确认前默认不自动重试。
+- 音乐 API 等只读工具只在连接超时、限流或临时 `5xx` 服务错误时最多自动重试 2 次，并采用带随机抖动的短指数退避；鉴权、参数、资源不存在和确定性业务错误不重试。
+- 当前 Provider 的模型请求仅在超时时最多自动重试 5 次，即初始请求之外最多再发起 5 次。重试不切换 Provider Profile，不绕过 10 分钟 Turn 主动运行上限，也不重置轮次和 Tool Call 预算。
+- 模型响应未完整结束前不执行其中的 Tool Call；发生超时时丢弃本次未完成响应，再重新请求。已经完成的历史 Tool Result 保留在上下文中，重试后产生的新 Tool Call 仍重新经过 Schema、Policy、幂等和调度校验。
+- Provider 的鉴权、配额耗尽、请求格式、内容策略和明确不支持等非超时错误不进入上述 5 次重试。
 - Provider 失败不能自动切换到另一个 Provider Profile，因为模型、价格和数据接收方可能不同。
 - Tool Schema 错误返回给模型后允许其在剩余预算内修正，但每次失败仍占 Tool Call 计数。
+
+默认超时基线：
+
+```text
+musicApiReadTimeoutMs = 20_000
+playerCommandTimeoutMs = 10_000
+providerIdleTimeoutMs = 90_000
+shellDefaultTimeoutMs = 120_000
+activeTurnBudgetMs = 600_000
+maxReadToolRetries = 2
+maxProviderTimeoutRetries = 5
+```
+
+`providerIdleTimeoutMs` 从最近一次有效增量重新计时，而不是限制模型完整回答只能持续 90 秒。具体 Tool 可声明更短的超时；需要更长时间的 Shell 调用必须在 Tool 参数与审批展示中明确声明，但仍受 Shell Policy 的硬上限约束。
 
 ## 11. 事件与持久化
 
@@ -240,12 +268,15 @@ Runtime 至少发布：
 
 Renderer 重连时按 A-004 拉取 Active Turn Snapshot，不依赖重放所有文本增量。完成后的用户消息、模型消息和工具摘要写入当前 10 分钟会话块；技术事件进入有界调试日志，不能将完整敏感 Tool 参数写入聊天历史。
 
-## 12. 尚待确认
+应用真正退出后不恢复未完成 Turn，也不自动重跑纯只读任务。下次启动保留对话和工具记录，将末次任务标记为“上次任务已中止”，由用户手动继续。Utility Process 在应用仍运行时崩溃，只自动恢复连接和可用状态；旧 Turn 结束为失败，任何副作用均不自动重放。
 
-1. Active Turn 期间用户再次发送消息时，是中断、排队还是作为 Steering 输入。
-2. 只读工具的自动重试、退避、单工具超时和整体 Turn 超时。
-3. 应用退出后是否恢复未完成的纯只读任务；副作用与审批不会跨进程恢复执行。
-4. Provider 上下文超限时的裁剪和自动压缩阈值。
+## 12. 上下文容量管理
+
+- ContextBuilder 以 Provider 声明、模型目录或用户配置得到的可用上下文窗口为基准；预计输入达到 70% 时自动压缩，不要求用户手动管理。
+- 压缩必须保留系统与权限规则、当前用户意图、当前 Turn 未完成事项、最近消息、有效 Tool Result、必要 Working Memory 和已经确认的用户约束。
+- 较早的对话块使用已有块摘要替代全文；体积较大的只读结果保留结构化摘要与稳定引用，需要时再从本地历史检索。
+- 压缩不得删除待审批/待选择对象、幂等键、账户 generation、当前播放引用或导致副作用被重复规划的执行结果。
+- 如果无法可靠取得模型上下文容量，Provider Profile 必须要求明确配置或使用经验证的保守值；不得猜测一个超大窗口后依赖上游报错。
 
 ## 13. 验收测试
 
@@ -255,3 +286,7 @@ Renderer 重连时按 A-004 拉取 Active Turn Snapshot，不依赖重放所有�
 - 停止流式响应、停止排队工具、取消审批和不可逆执行完成分别得到正确终态。
 - Renderer 重连后恢复同一 Turn Snapshot，不重复 Tool Call；Utility Process 重启后旧 Turn 明确中断。
 - 用户拒绝、策略拒绝、参数错误、超时和用户取消在模型结果与 UI 中可区分。
+- Active Turn 中发送新消息会取消旧流、排队工具、审批与选择，已完成或不可逆操作保持真实状态，并立即建立新 Turn。
+- 只读工具只对临时错误最多重试 2 次；Provider 超时最多重试 5 次，任何非超时 Provider 错误均不触发该策略。
+- 90 秒无模型增量、20 秒音乐 API、10 秒 PlayerCommand、120 秒默认 Shell 和 10 分钟主动 Turn 均能得到确定性超时终态。
+- 上下文预计达到 70% 时完成压缩，并保留当前目标、未完成事项、必要 Tool Result、权限规则和副作用执行事实。
