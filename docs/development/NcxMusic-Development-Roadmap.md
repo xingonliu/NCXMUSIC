@@ -4,6 +4,7 @@
 > 建立日期：2026-08-05
 > 范围：Windows、macOS 首个开源版本
 > 功能范围：`docs/product/NcxMusic-V1-Feature-Inventory.md`
+> 顺序执行提示词：`docs/development/agent-prompts/README.md`
 > 权威性：本文件是唯一开发先后顺序；其他文档只能细化任务，不得另建冲突路线
 > 原则：Phase 顺序表示依赖关系，不表示未经团队容量评估的工期承诺
 
