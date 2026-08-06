@@ -15,6 +15,7 @@
   gap: var(--ncx-shell-gap);
   padding: var(--ncx-shell-gap);
   overflow: hidden;
+  border-radius: var(--ncx-radius-xl);
   color: var(--ncx-color-text-primary);
   background: var(--ncx-color-canvas);
 }
@@ -22,6 +23,8 @@
 .ncx-app-shell--maximized,
 .ncx-app-shell--fullscreen {
   --ncx-shell-gap: 0px;
+
+  border-radius: 0;
 }
 
 .ncx-sidebar {
