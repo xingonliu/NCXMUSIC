@@ -1,7 +1,23 @@
 export const zhCN = {
   app: {
     name: 'NcxMusic',
-    caption: '工程基线'
+    caption: 'Agent 原生音乐客户端'
+  },
+  routes: {
+    'routes.agent': 'AI 助手',
+    'routes.albumDetail': '专辑详情',
+    'routes.artistDetail': '艺人详情',
+    'routes.discover': '发现音乐',
+    'routes.immersiveLyrics': '沉浸歌词',
+    'routes.likedSongs': '喜欢的音乐',
+    'routes.login': '登录',
+    'routes.onboarding': '首次引导',
+    'routes.playbackDetail': '正在播放',
+    'routes.playlistDetail': '歌单详情',
+    'routes.profile': '个人资料',
+    'routes.search': '搜索',
+    'routes.searchResults': '搜索结果',
+    'routes.settings': '设置'
   },
   foundation: {
     eyebrow: 'Foundation 0.1',

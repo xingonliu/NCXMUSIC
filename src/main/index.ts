@@ -11,6 +11,11 @@ import {
 } from 'electron'
 
 import { CONTROL_CHANNELS, type RuntimeStatus } from '../shared/contracts/control-plane'
+import {
+  WINDOW_CONTROL_CHANNELS,
+  type WindowCommand,
+  type WindowSnapshot
+} from '../shared/contracts/window-controls'
 import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
 import { RuntimeStatusSchema } from '../shared/schemas/control-plane'
 import { AuthSessionController, type EstablishResult } from './auth/auth-session-controller'
@@ -26,6 +31,60 @@ let supervisor: UtilitySupervisor | undefined
 let broker: ConnectionBroker | undefined
 let authController: AuthSessionController | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
+
+/** 从 BrowserWindow 读取 Renderer 需要的窗口状态。 */
+function createWindowSnapshot(window: BrowserWindow): WindowSnapshot {
+  return {
+    platform: process.platform,
+    maximized: window.isMaximized(),
+    fullscreen: window.isFullScreen(),
+    focused: window.isFocused()
+  }
+}
+
+/** 向主窗口广播最新窗口状态，供自绘窗口控件同步真实状态。 */
+function publishWindowSnapshot(window = mainWindow): WindowSnapshot | undefined {
+  if (!window || window.isDestroyed()) return undefined
+
+  const snapshot = createWindowSnapshot(window)
+  window.webContents.send(WINDOW_CONTROL_CHANNELS.status, snapshot)
+  return snapshot
+}
+
+/** 监听可能改变窗口控件视觉的 BrowserWindow 事件。 */
+function registerWindowStatePublisher(window: BrowserWindow): void {
+  const publish = (): void => {
+    publishWindowSnapshot(window)
+  }
+
+  window.on('maximize', publish)
+  window.on('unmaximize', publish)
+  window.on('enter-full-screen', publish)
+  window.on('leave-full-screen', publish)
+  window.on('focus', publish)
+  window.on('blur', publish)
+  window.on('restore', publish)
+  window.on('resize', publish)
+}
+
+/** 执行 Renderer 发来的类型化窗口命令。 */
+function applyWindowCommand(command: WindowCommand): WindowSnapshot {
+  const window = mainWindow
+  if (!window || window.isDestroyed()) throw new Error('Main window is unavailable')
+
+  if (command.type === 'window.minimize') {
+    window.minimize()
+  } else if (command.type === 'window.toggleMaximize') {
+    if (window.isMaximized()) window.unmaximize()
+    else window.maximize()
+  } else if (command.type === 'window.requestClose') {
+    window.close()
+  } else if (command.type === 'window.toggleFullscreen') {
+    window.setFullScreen(!window.isFullScreen())
+  }
+
+  return publishWindowSnapshot(window) ?? createWindowSnapshot(window)
+}
 
 function utilityEntryPath(): string {
   if (app.isPackaged) {
@@ -248,6 +307,32 @@ function registerControlPlane(): void {
       restartAttempt: 0
     }
   })
+
+  ipcMain.handle(WINDOW_CONTROL_CHANNELS.snapshot, (event) => {
+    if (!isTrustedSender(event) || !mainWindow) {
+      return {
+        platform: process.platform,
+        maximized: false,
+        fullscreen: false,
+        focused: false
+      } satisfies WindowSnapshot
+    }
+
+    return createWindowSnapshot(mainWindow)
+  })
+
+  ipcMain.handle(WINDOW_CONTROL_CHANNELS.command, (event, command: WindowCommand) => {
+    if (!isTrustedSender(event) || !mainWindow) {
+      return {
+        platform: process.platform,
+        maximized: false,
+        fullscreen: false,
+        focused: false
+      } satisfies WindowSnapshot
+    }
+
+    return applyWindowCommand(command)
+  })
 }
 
 function configureSmokeExit(window: BrowserWindow): void {
@@ -305,6 +390,7 @@ async function createMainWindow(): Promise<void> {
   window.webContents.session.setPermissionRequestHandler((_webContents, _permission, callback) => {
     callback(false)
   })
+  registerWindowStatePublisher(window)
   configureSmokeExit(window)
 
   const developmentUrl = process.env['ELECTRON_RENDERER_URL']

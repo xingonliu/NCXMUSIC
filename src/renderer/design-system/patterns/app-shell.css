@@ -1,0 +1,354 @@
+.ncx-app-shell {
+  --ncx-sidebar-width: 230px;
+  --ncx-header-height: 72px;
+  --ncx-shell-gap: 12px;
+  --ncx-glass-bg: rgb(255 255 255 / 58%);
+  --ncx-glass-border: rgb(255 255 255 / 78%);
+  --ncx-control-hover: rgb(0 0 0 / 6%);
+  --ncx-control-pressed: rgb(0 0 0 / 10%);
+  --ncx-danger-hover: rgb(255 59 48 / 13%);
+
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: var(--ncx-shell-gap);
+  padding: var(--ncx-shell-gap);
+  overflow: hidden;
+  color: var(--ncx-color-text-primary);
+  background:
+    radial-gradient(circle at 12% 8%, rgb(250 45 72 / 13%), transparent 32%),
+    linear-gradient(135deg, rgb(255 255 255 / 92%), var(--ncx-color-canvas));
+}
+
+.ncx-app-shell--maximized,
+.ncx-app-shell--fullscreen {
+  --ncx-shell-gap: 0px;
+}
+
+.ncx-window-mask {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 96px;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 94%) 0%,
+    rgb(255 255 255 / 62%) 56%,
+    rgb(255 255 255 / 0%) 100%
+  );
+  backdrop-filter: blur(16px) saturate(160%);
+  mask-image: linear-gradient(to bottom, black 52%, transparent 100%);
+}
+
+.ncx-sidebar {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  flex: 0 0 var(--ncx-sidebar-width);
+  flex-direction: column;
+  min-width: 0;
+  padding: 14px 10px;
+  border: 1px solid var(--ncx-glass-border);
+  border-radius: var(--ncx-radius-xl);
+  background: var(--ncx-glass-bg);
+  box-shadow:
+    0 8px 20px rgb(0 0 0 / 3%),
+    inset 0 1px 1px rgb(255 255 255 / 88%);
+  backdrop-filter: blur(25px) saturate(160%);
+  -webkit-app-region: drag;
+}
+
+.ncx-traffic-safe-area {
+  height: 30px;
+}
+
+.ncx-brand {
+  display: flex;
+  gap: var(--ncx-space-3);
+  align-items: center;
+  padding: var(--ncx-space-2) var(--ncx-space-3) var(--ncx-space-4);
+  color: inherit;
+  text-decoration: none;
+  -webkit-app-region: no-drag;
+}
+
+.ncx-brand-mark {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: var(--ncx-radius-lg);
+  color: white;
+  background: var(--ncx-color-accent);
+  box-shadow: 0 8px 18px rgb(250 45 72 / 26%);
+}
+
+.ncx-brand-copy {
+  display: grid;
+  gap: 1px;
+}
+
+.ncx-brand-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ncx-brand-caption {
+  color: var(--ncx-color-text-secondary);
+  font-size: 12px;
+}
+
+.ncx-nav {
+  display: grid;
+  gap: var(--ncx-space-4);
+  -webkit-app-region: no-drag;
+}
+
+.ncx-playlist-nav {
+  min-height: 0;
+  margin-top: var(--ncx-space-4);
+  overflow-y: auto;
+  -webkit-app-region: no-drag;
+}
+
+.ncx-account-nav {
+  display: grid;
+  gap: 3px;
+  margin-top: auto;
+  padding-top: var(--ncx-space-4);
+  -webkit-app-region: no-drag;
+}
+
+.ncx-nav-section-title {
+  margin: var(--ncx-space-1) 0;
+  padding: 0 10px;
+  color: var(--ncx-color-text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.ncx-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+  padding: 7px 12px;
+  border-radius: 10px;
+  color: var(--ncx-color-text-primary);
+  font-size: 13px;
+  text-decoration: none;
+  transition:
+    background-color var(--ncx-motion-fast),
+    color var(--ncx-motion-fast),
+    box-shadow var(--ncx-motion-fast);
+}
+
+.ncx-nav-item:hover {
+  background: var(--ncx-control-hover);
+}
+
+.ncx-nav-item--active,
+.ncx-nav-item--active:hover {
+  color: white;
+  background: var(--ncx-color-accent);
+  box-shadow: 0 4px 12px rgb(250 45 72 / 30%);
+}
+
+.ncx-main-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ncx-page-header {
+  position: absolute;
+  z-index: 20;
+  top: 2px;
+  right: 16px;
+  left: 4px;
+  display: flex;
+  height: var(--ncx-header-height);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ncx-space-4);
+  pointer-events: none;
+  -webkit-app-region: drag;
+}
+
+.ncx-app-shell--windows .ncx-page-header {
+  right: 4px;
+}
+
+.ncx-page-title-group,
+.ncx-page-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+  -webkit-app-region: no-drag;
+}
+
+.ncx-page-eyebrow,
+.ncx-page-title {
+  margin: 0;
+}
+
+.ncx-page-eyebrow {
+  color: var(--ncx-color-accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.ncx-page-title {
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.ncx-glass-button,
+.ncx-window-controls {
+  border: 1px solid rgb(0 0 0 / 8%);
+  background: var(--ncx-glass-bg);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 3%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+.ncx-glass-button,
+.ncx-window-control {
+  display: grid;
+  place-items: center;
+  color: var(--ncx-color-text-primary);
+  cursor: pointer;
+}
+
+.ncx-glass-button {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+}
+
+.ncx-back-button {
+  margin-right: 2px;
+}
+
+.ncx-window-controls {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  border-radius: 999px;
+}
+
+.ncx-window-control {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+}
+
+.ncx-glass-button:hover,
+.ncx-window-control:hover {
+  background: var(--ncx-control-hover);
+}
+
+.ncx-glass-button:active,
+.ncx-window-control:active {
+  background: var(--ncx-control-pressed);
+}
+
+.ncx-window-control--close:hover {
+  color: #ff3b30;
+  background: var(--ncx-danger-hover);
+}
+
+.ncx-window-divider {
+  width: 1px;
+  height: 14px;
+  margin: 0 1px;
+  border-radius: 1px;
+  background: rgb(0 0 0 / 12%);
+}
+
+.ncx-content-area {
+  min-height: 0;
+  flex: 1;
+  padding: calc(var(--ncx-header-height) + 8px) 48px 112px 24px;
+  overflow: auto;
+  scroll-behavior: smooth;
+  user-select: text;
+  mask-image: linear-gradient(to bottom, transparent 0, transparent 12px, black 72px, black 100%);
+}
+
+.ncx-content-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ncx-content-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ncx-content-area::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgb(0 0 0 / 14%);
+}
+
+.ncx-content-area:empty::before {
+  display: block;
+  width: min(640px, 100%);
+  height: 220px;
+  margin: 24px auto 0;
+  border: 1px dashed var(--ncx-color-border-subtle);
+  border-radius: var(--ncx-radius-xl);
+  content: '';
+}
+
+.ncx-route-placeholder {
+  width: min(720px, 100%);
+  height: 280px;
+  margin: var(--ncx-space-6) auto 0;
+  border: 1px dashed var(--ncx-color-border-subtle);
+  border-radius: var(--ncx-radius-xl);
+  background: linear-gradient(135deg, rgb(255 255 255 / 30%), transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  .ncx-app-shell {
+    --ncx-glass-bg: rgb(37 37 40 / 64%);
+    --ncx-glass-border: rgb(255 255 255 / 12%);
+    --ncx-control-hover: rgb(255 255 255 / 8%);
+    --ncx-control-pressed: rgb(255 255 255 / 12%);
+
+    background:
+      radial-gradient(circle at 12% 8%, rgb(255 55 95 / 18%), transparent 34%),
+      linear-gradient(135deg, #151518, var(--ncx-color-canvas));
+  }
+
+  .ncx-window-mask {
+    background: linear-gradient(180deg, rgb(17 17 19 / 96%) 0%, rgb(17 17 19 / 58%) 58%, transparent 100%);
+  }
+
+  .ncx-glass-button,
+  .ncx-window-controls {
+    border-color: rgb(255 255 255 / 10%);
+  }
+
+  .ncx-window-divider {
+    background: rgb(255 255 255 / 12%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ncx-nav-item {
+    transition: none;
+  }
+}

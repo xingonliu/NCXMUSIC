@@ -1,15 +1,11 @@
-import { defineComponent } from 'vue'
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
+
+import RoutePlaceholder from '../design-system/patterns/RoutePlaceholder.vue'
 
 // ========= 变量 =========
 
-/** 不输出任何 DOM 的路由占位组件；仅用于先搭建导航骨架。 */
-const RouteSkeletonView = defineComponent({
-  name: 'RouteSkeletonView',
-  setup() {
-    return () => null
-  }
-})
+/** 首版空内容区页面占位组件。 */
+const RouteSkeletonView = RoutePlaceholder
 
 /** 首版冻结的 Vue Router 路由表。 */
 const routes: RouteRecordRaw[] = [

@@ -22,53 +22,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.app-shell {
-  display: grid;
-  grid-template-rows: 64px minmax(0, 1fr);
-  height: 100%;
-}
-
-.window-chrome {
-  display: flex;
-  gap: var(--ncx-space-3);
-  align-items: center;
-  padding: var(--ncx-space-3) var(--ncx-space-6);
-  border-bottom: 1px solid var(--ncx-color-border-subtle);
-  background: var(--ncx-color-surface);
-  box-shadow: var(--ncx-shadow-elevation-1);
-  backdrop-filter: blur(20px);
-  -webkit-app-region: drag;
-}
-
-.brand-mark {
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  border-radius: var(--ncx-radius-lg);
-  color: white;
-  background: var(--ncx-color-accent);
-  font-weight: 700;
-}
-
-.brand-name,
-.brand-caption {
-  margin: 0;
-}
-
-.brand-name {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.brand-caption {
-  color: var(--ncx-color-text-secondary);
-  font-size: 12px;
-}
-
-.workspace {
-  min-height: 0;
-  overflow: auto;
+button {
+  font: inherit;
 }
 
 .foundation-page {

@@ -4,6 +4,12 @@ import { CONTROL_CHANNELS, type RuntimeStatus } from '../shared/contracts/contro
 import type { DesktopBridge } from '../shared/contracts/desktop-bridge'
 import type { NcxRuntimeBridge } from '../shared/contracts/runtime-bridge'
 import {
+  WINDOW_CONTROL_CHANNELS,
+  type WindowCommand,
+  type WindowControlBridge,
+  type WindowSnapshot
+} from '../shared/contracts/window-controls'
+import {
   RuntimeConnectionMetadataSchema,
   RuntimeStatusSchema
 } from '../shared/schemas/control-plane'
@@ -11,6 +17,7 @@ import { RuntimeGateway } from './runtime-gateway'
 
 const gateway = new RuntimeGateway()
 const statusListeners = new Set<(status: RuntimeStatus) => void>()
+const windowSnapshotListeners = new Set<(snapshot: WindowSnapshot) => void>()
 let latestStatus: RuntimeStatus = {
   state: 'starting',
   generation: 0,
@@ -20,6 +27,10 @@ let latestStatus: RuntimeStatus = {
 function publishStatus(status: RuntimeStatus): void {
   latestStatus = status
   for (const listener of statusListeners) listener(status)
+}
+
+function publishWindowSnapshot(snapshot: WindowSnapshot): void {
+  for (const listener of windowSnapshotListeners) listener(snapshot)
 }
 
 ipcRenderer.on(CONTROL_CHANNELS.port, (event, rawMetadata) => {
@@ -82,6 +93,20 @@ const runtimeBridge: NcxRuntimeBridge = {
   }
 }
 
+const windowControlBridge: WindowControlBridge = {
+  snapshot: async () => ipcRenderer.invoke(WINDOW_CONTROL_CHANNELS.snapshot) as Promise<WindowSnapshot>,
+  send: async (command: WindowCommand) =>
+    ipcRenderer.invoke(WINDOW_CONTROL_CHANNELS.command, command) as Promise<WindowSnapshot>,
+  onSnapshot: (listener) => {
+    windowSnapshotListeners.add(listener)
+    return () => windowSnapshotListeners.delete(listener)
+  }
+}
+
+ipcRenderer.on(WINDOW_CONTROL_CHANNELS.status, (_event, snapshot) => {
+  publishWindowSnapshot(snapshot as WindowSnapshot)
+})
+
 const bridge: DesktopBridge = Object.freeze({
   platform: process.platform,
   versions: Object.freeze({
@@ -89,7 +114,8 @@ const bridge: DesktopBridge = Object.freeze({
     electron: process.versions.electron,
     node: process.versions.node
   }),
-  runtime: runtimeBridge
+  runtime: runtimeBridge,
+  windowControls: windowControlBridge
 })
 
 contextBridge.exposeInMainWorld('ncx', bridge)
