@@ -4,8 +4,11 @@ import type { RouteRecordName } from 'vue-router'
 
 /** 侧边栏导航条目的渲染数据。 */
 export interface AppNavigationItem {
+  /** 导航条目显示文案。 */
   readonly label: string
+  /** 导航目标路由名称。 */
   readonly routeName: RouteRecordName
+  /** 导航条目图标语义。 */
   readonly icon: 'discover' | 'search' | 'agent' | 'liked' | 'profile' | 'settings'
 }
 
@@ -24,7 +27,8 @@ export const appPrimaryNavigationSections: readonly AppNavigationSection[] = [
     items: [
       { label: '发现音乐', routeName: 'discover', icon: 'discover' },
       { label: '搜索', routeName: 'search', icon: 'search' },
-      { label: '小云', routeName: 'agent', icon: 'agent' }
+      { label: '小云', routeName: 'agent', icon: 'agent' },
+      { label: '通用组件', routeName: 'design-system-lab', icon: 'settings' }
     ]
   }
 ] as const
