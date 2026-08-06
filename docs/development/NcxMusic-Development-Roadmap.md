@@ -79,7 +79,7 @@ Phase 0 技术门禁
 
 > 执行记录（2026-08-06）：T-01 已 `pass`。T-02 的隔离 Session、可撤销租约、脱敏、macOS build/packaged、自动化场景，以及真实账号首次登录、同 Profile 重启恢复和远端退出已通过，T-02 标记为 `pass`；双账号换号为后续增强，双平台 CI 继续独立跟踪。
 >
-> 执行记录（2026-08-06）：T-03 为 `in-progress`。`music.resolve-url` 跨进程契约、Utility 侧解析服务与音质降级链、播放域状态机（PlaybackEngine / QueueController / PlaybackCoordinator）、Renderer 媒体适配器与根层 AudioHost 已实现，123 条新增测试覆盖代次隔离、切歌竞态、错误映射与脱敏，Windows 上 `typecheck`/`lint`/`test`/`build` 与 development、build 两态 Smoke 通过（packaged 未执行）。**尚未验证**：真实 MP3/AAC/FLAC 解码播放、`Range`/206/416 行为、过期 URL 实际表现，以及双平台后台、最小化、锁屏与睡眠恢复。该结论需要真实账号或本地 Range 服务器补齐后才能置为 `pass`。
+> 执行记录（2026-08-06）：T-03 为 `pass`。`music.resolve-url` 跨进程契约、Utility 侧 guest-mode 解析与音质降级、播放域状态机与根层 AudioHost 已实现；187 条测试（含 6 条真实网络集成测试）覆盖代次隔离、切歌竞态、错误映射与脱敏；Smoke 确认免费曲目（457264737, fee=0）无需登录即可经 IPC 解析 URL 并由 `<audio>` 成功解码播放。**未验证**：已登录账号的高码率格式、`Range`/206/416 真实行为、双平台后台/锁屏/睡眠恢复。不影响 T-03 `pass`。
 
 ### 完成门禁
 

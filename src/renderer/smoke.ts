@@ -34,6 +34,29 @@ async function initialConnectionChecks(): Promise<BeforeReloadState> {
   const cancelled: RuntimeResult<unknown> = await delayedPing
   checks.cancelled = !cancelled.ok && cancelled.error.code === 'REQUEST_CANCELLED'
 
+  // T-03 媒体链路：访客模式解析免费曲目并验证真实 <audio> 可播放
+  const trackId = '457264737'
+  const resolved = await window.ncx.runtime.resolveTrackUrl({ trackId, quality: 'standard' })
+  checks.audioResolved = resolved.ok && resolved.data.url.length > 10
+  if (resolved.ok) {
+    checks.audioReachedCanPlay = await new Promise<boolean>((resolve) => {
+      const element = new Audio()
+      // 不设置 crossOrigin：网易云 CDN 通常不返回 Access-Control-Allow-Origin
+      element.preload = 'auto'
+      element.addEventListener('canplay', () => {
+        resolve(true)
+        element.pause()
+        element.removeAttribute('src')
+        element.load()
+      })
+      element.addEventListener('error', () => resolve(false))
+      element.src = resolved.data.url
+      setTimeout(() => resolve(false), 15_000)
+    })
+  } else {
+    checks.audioReachedCanPlay = false
+  }
+
   const snapshotResult = await window.ncx.runtime.snapshot()
   if (!snapshotResult.ok) throw new Error(snapshotResult.error.message)
   checks.snapshot = snapshotResult.data.pendingRequestIds.length === 0

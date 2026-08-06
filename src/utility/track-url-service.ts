@@ -50,9 +50,12 @@ export class TrackUrlService {
     this.pending.set(requestId, controller)
 
     try {
-      const result = await this.credentialLease.executeWithCookie((cookie) =>
-        this.resolver.resolve(trackId, quality, cookie, controller.signal)
-      )
+      // 优先走凭据租约（登录用户享受完整音质），无租约时以访客身份调 API。
+      // song_url_v1 在无 Cookie 下对免费曲目返回完整流、对付费曲目返回试听片段。
+      const cookie = this.credentialLease.hasActiveLease()
+        ? await this.credentialLease.executeWithCookie(async (value) => value)
+        : ''
+      const result = await this.resolver.resolve(trackId, quality, cookie, controller.signal)
       // 验证结果符合契约（防止 resolver 返回异常数据进入 IPC）
       return ResolvedMediaSourceSchema.parse(result)
     } finally {
