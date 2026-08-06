@@ -6,17 +6,43 @@
 // 所有按钮可用性由 snapshot 推导，不做本地乐观更新。
 // ─────────────────────────────────────────────────────────────────────────────
 
+import {
+  Pause,
+  Play,
+  Repeat,
+  Repeat1,
+  Shuffle,
+  SkipBack,
+  SkipForward,
+  Volume2,
+  VolumeX,
+  X
+} from '@lucide/vue'
 import { computed } from 'vue'
 
 import type { PlayMode } from '../../../../domains/player/types'
+import {
+  CommonButtonGroup,
+  CommonIconButton,
+  CommonProgress,
+  CommonSlider,
+  CommonSpinner
+} from '../../../design-system/components'
 import { zhCN } from '../../../locales/zh-CN'
 import { usePlayer } from '../use-player'
 
 // ========= 变量 =========
 
+/** 播放器组合式接口，只发送命令并读取快照。 */
 const player = usePlayer()
+
+/** 播放器只读快照引用。 */
 const snapshot = player.snapshot
+
+/** 当前播放域轻提示文案。 */
 const notice = player.notice
+
+/** PlayerBar 本地化文案集合。 */
 const text = zhCN.player
 
 /** 当前曲目摘要 */
@@ -38,6 +64,12 @@ const showPause = computed(() => snapshot.value.playback.intent === 'play')
 const durationMs = computed(
   () => snapshot.value.playback.durationMs ?? snapshot.value.playback.positionMs
 )
+
+/** 当前播放进度百分比，供通用 Progress 组件展示。 */
+const progressPercent = computed(() => {
+  if (durationMs.value <= 0) return 0
+  return Math.min(100, Math.max(0, (snapshot.value.playback.positionMs / durationMs.value) * 100))
+})
 
 /** 状态文案 */
 const statusLabel = computed(() => text.status[snapshot.value.playback.status])
@@ -74,16 +106,9 @@ function formatTime(value: number): string {
   return `${minutes}:${String(seconds).padStart(2, '0')}`
 }
 
-/** 拖动进度条：直接投递 seek 命令，不本地改状态 */
-function onSeek(event: Event): void {
-  const target = event.target as HTMLInputElement
-  player.seek(Number(target.value))
-}
-
-/** 调整音量 */
-function onVolume(event: Event): void {
-  const target = event.target as HTMLInputElement
-  player.setVolume(Number(target.value) / 100)
+/** 调整音量。 */
+function onVolume(value: number): void {
+  player.setVolume(value / 100)
 }
 </script>
 
@@ -107,85 +132,126 @@ function onVolume(event: Event): void {
     </div>
 
     <!-- 传输控制 -->
-    <div class="player-transport">
-      <button
-        type="button"
+    <CommonButtonGroup
+      class="player-transport"
+      variant="segmented"
+    >
+      <CommonIconButton
         class="player-button"
+        size="default"
+        variant="ghost"
         :disabled="!hasQueue"
-        :aria-label="text.previous"
+        :label="text.previous"
         @click="player.previous()"
       >
-        ⏮
-      </button>
-      <button
-        type="button"
+        <SkipBack :size="15" />
+      </CommonIconButton>
+      <CommonIconButton
         class="player-button player-button-primary"
+        size="prominent"
+        variant="primary"
         :disabled="!track"
-        :aria-label="showPause ? text.pause : text.play"
+        :label="showPause ? text.pause : text.play"
         @click="player.toggle()"
       >
-        <span
+        <CommonSpinner
           v-if="busy"
+          size="compact"
           class="player-busy"
-          aria-hidden="true"
-        >⋯</span>
-        <span v-else>{{ showPause ? '⏸' : '▶' }}</span>
-      </button>
-      <button
-        type="button"
+        />
+        <Pause
+          v-else-if="showPause"
+          :size="17"
+          fill="currentColor"
+        />
+        <Play
+          v-else
+          :size="17"
+          fill="currentColor"
+        />
+      </CommonIconButton>
+      <CommonIconButton
         class="player-button"
+        size="default"
+        variant="ghost"
         :disabled="!hasQueue"
-        :aria-label="text.next"
+        :label="text.next"
         @click="player.next()"
       >
-        ⏭
-      </button>
-      <button
-        type="button"
+        <SkipForward :size="15" />
+      </CommonIconButton>
+      <CommonIconButton
         class="player-button"
-        :aria-label="text.mode[snapshot.queue.mode]"
-        :title="text.mode[snapshot.queue.mode]"
+        size="default"
+        variant="ghost"
+        :label="text.mode[snapshot.queue.mode]"
         @click="player.setMode(nextMode)"
       >
-        {{ snapshot.queue.mode === 'shuffle' ? '🔀' : snapshot.queue.mode === 'loop-one' ? '🔂' : '🔁' }}
-      </button>
-    </div>
+        <Shuffle
+          v-if="snapshot.queue.mode === 'shuffle'"
+          :size="15"
+        />
+        <Repeat1
+          v-else-if="snapshot.queue.mode === 'loop-one'"
+          :size="15"
+        />
+        <Repeat
+          v-else
+          :size="15"
+        />
+      </CommonIconButton>
+    </CommonButtonGroup>
 
     <!-- 进度 -->
     <div class="player-progress">
       <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
-      <input
-        class="player-slider"
-        type="range"
-        min="0"
-        :max="durationMs"
-        :value="snapshot.playback.positionMs"
-        :disabled="!track"
-        :aria-label="text.progress"
-        @change="onSeek"
-      >
+      <div class="player-progress-control">
+        <CommonProgress
+          v-if="busy"
+          class="player-progress-loading"
+          indeterminate
+          size="compact"
+          :label="statusLabel"
+        />
+        <CommonProgress
+          v-else
+          class="player-progress-bar"
+          :value="progressPercent"
+          :label="text.progress"
+          size="compact"
+        />
+      </div>
       <span class="player-time">{{ formatTime(durationMs) }}</span>
     </div>
 
     <!-- 音量与状态 -->
     <div class="player-output">
-      <button
-        type="button"
+      <CommonIconButton
         class="player-button"
-        :aria-label="snapshot.playback.muted ? text.unmute : text.mute"
+        size="default"
+        variant="ghost"
+        :label="snapshot.playback.muted ? text.unmute : text.mute"
         @click="player.setMuted(!snapshot.playback.muted)"
       >
-        {{ snapshot.playback.muted ? '🔇' : '🔊' }}
-      </button>
-      <input
+        <VolumeX
+          v-if="snapshot.playback.muted"
+          :size="15"
+        />
+        <Volume2
+          v-else
+          :size="15"
+        />
+      </CommonIconButton>
+      <CommonSlider
         class="player-slider player-slider-volume"
-        type="range"
-        min="0"
-        max="100"
-        :value="Math.round(snapshot.playback.volume * 100)"
-        :aria-label="text.volume"
-        @input="onVolume"
-      >
+        :model-value="Math.round(snapshot.playback.volume * 100)"
+        :min="0"
+        :max="100"
+        :label="text.volume"
+        size="compact"
+        :show-value="false"
+        @update:model-value="onVolume"
+      />
       <span
         class="player-status"
         role="status"
@@ -199,28 +265,80 @@ function onVolume(event: Event): void {
       role="alert"
     >
       {{ notice }}
-      <button
-        type="button"
+      <CommonIconButton
         class="player-notice-close"
-        :aria-label="text.dismiss"
+        size="compact"
+        variant="ghost"
+        :label="text.dismiss"
         @click="player.dismissNotice()"
       >
-        ✕
-      </button>
+        <X :size="13" />
+      </CommonIconButton>
     </p>
   </footer>
 </template>
 
 <style scoped>
 .player-bar {
+  --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 72%, transparent);
+  --ncx-player-bar-glass-edge: color-mix(in srgb, white 62%, transparent);
+  --ncx-player-bar-glass-stroke: color-mix(in srgb, var(--ncx-color-text-primary) 9%, transparent);
+  --ncx-player-bar-glass-shadow: 0 22px 52px rgb(20 20 24 / 16%),
+    0 8px 20px rgb(20 20 24 / 8%), inset 0 1px 0 rgb(255 255 255 / 65%);
+  --ncx-player-bar-control-hover: color-mix(in srgb, white 52%, transparent);
+  --ncx-player-bar-control-pressed: color-mix(in srgb, var(--ncx-color-text-primary) 10%, transparent);
+  --ncx-player-bar-track-bg: color-mix(in srgb, var(--ncx-color-text-primary) 13%, transparent);
+  --ncx-player-bar-thumb-shadow: 0 2px 6px rgb(20 20 24 / 18%);
+
+  position: fixed;
+  z-index: var(--ncx-layer-player);
+  bottom: 18px;
+  left: calc(230px + ((100vw - 230px) / 2));
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 2fr) auto;
-  gap: 16px;
+  width: min(920px, calc(100vw - 306px));
+  min-height: 76px;
+  grid-template-columns: minmax(150px, 1fr) auto minmax(220px, 1.6fr) minmax(170px, auto);
+  gap: var(--ncx-space-4);
   align-items: center;
-  padding: 12px 20px;
-  border-top: none;
-  background: var(--ncx-color-surface-raised);
-  box-shadow: var(--ncx-shadow-elevation-1);
+  padding: 13px 18px;
+  border: 1px solid var(--ncx-player-bar-glass-stroke);
+  border-radius: var(--ncx-radius-full);
+  color: var(--ncx-color-text-primary);
+  background:
+    radial-gradient(circle at 15% 8%, rgb(255 255 255 / 46%), transparent 28%),
+    radial-gradient(circle at 86% 18%, rgb(255 255 255 / 30%), transparent 34%),
+    linear-gradient(135deg, var(--ncx-player-bar-glass-edge), transparent 38%),
+    var(--ncx-player-bar-glass-fill);
+  box-shadow: var(--ncx-player-bar-glass-shadow);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  isolation: isolate;
+  overflow: hidden;
+  transform: translateX(-50%);
+  -webkit-app-region: no-drag;
+}
+
+.player-bar::before,
+.player-bar::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  content: '';
+  pointer-events: none;
+}
+
+.player-bar::before {
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 34%) 0%, transparent 42%),
+    linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 20%) 48%, transparent 100%);
+  mask-image: linear-gradient(180deg, black 0%, transparent 70%);
+}
+
+.player-bar::after {
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 28%),
+    inset 0 -1px 0 rgb(0 0 0 / 5%);
 }
 
 .player-track {
@@ -230,8 +348,11 @@ function onVolume(event: Event): void {
 .player-track-name {
   margin: 0;
   overflow: hidden;
+  color: var(--ncx-color-text-primary);
   font-size: 13px;
   font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 20px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -242,16 +363,20 @@ function onVolume(event: Event): void {
   margin: 2px 0 0;
   overflow: hidden;
   font-size: 12px;
-  color: var(--ncx-text-muted, rgb(255 255 255 / 60%));
+  color: var(--ncx-color-text-secondary);
+  line-height: 18px;
   white-space: nowrap;
 }
 
 .player-quality {
-  padding: 0 6px;
-  border: none;
-  border-radius: 3px;
-  background: var(--ncx-color-control-hover);
+  flex: none;
+  padding: 0 7px;
+  border: 1px solid color-mix(in srgb, var(--ncx-color-accent) 18%, transparent);
+  border-radius: var(--ncx-radius-full);
+  color: var(--ncx-color-accent);
+  background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
   font-size: 10px;
+  font-weight: 700;
   line-height: 16px;
 }
 
@@ -259,6 +384,10 @@ function onVolume(event: Event): void {
   display: flex;
   gap: 4px;
   align-items: center;
+  padding: 3px;
+  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
+  border-radius: var(--ncx-radius-full);
+  background: color-mix(in srgb, white 24%, transparent);
 }
 
 .player-button {
@@ -266,16 +395,29 @@ function onVolume(event: Event): void {
   place-items: center;
   width: 32px;
   height: 32px;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 50%;
   background: transparent;
-  color: inherit;
+  color: var(--ncx-color-text-primary);
   cursor: pointer;
   font-size: 14px;
+  line-height: 1;
+  text-shadow: 0 1px 1px rgb(255 255 255 / 28%);
+  transition:
+    background-color var(--ncx-motion-fast),
+    border-color var(--ncx-motion-fast),
+    color var(--ncx-motion-fast),
+    box-shadow var(--ncx-motion-fast);
 }
 
 .player-button:hover:not(:disabled) {
-  background: var(--ncx-surface-hover, rgb(255 255 255 / 10%));
+  border-color: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
+  background: var(--ncx-player-bar-control-hover);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 36%);
+}
+
+.player-button:active:not(:disabled) {
+  background: var(--ncx-player-bar-control-pressed);
 }
 
 .player-button:disabled {
@@ -284,9 +426,31 @@ function onVolume(event: Event): void {
 }
 
 .player-button-primary {
-  width: 36px;
-  height: 36px;
-  background: var(--ncx-accent, rgb(255 255 255 / 16%));
+  width: 42px;
+  height: 42px;
+  border-color: color-mix(in srgb, white 30%, transparent);
+  color: var(--ncx-color-on-accent);
+  background:
+    radial-gradient(circle at 35% 18%, rgb(255 255 255 / 40%), transparent 28%),
+    linear-gradient(145deg, var(--ncx-color-accent-hover), var(--ncx-color-accent));
+  box-shadow:
+    0 8px 18px rgb(20 20 24 / 12%),
+    inset 0 1px 0 rgb(255 255 255 / 35%);
+  font-size: 15px;
+  text-shadow: none;
+}
+
+.player-button-primary:hover:not(:disabled) {
+  border-color: color-mix(in srgb, white 44%, transparent);
+  background:
+    radial-gradient(circle at 35% 18%, rgb(255 255 255 / 48%), transparent 28%),
+    linear-gradient(145deg, var(--ncx-color-accent-hover), var(--ncx-color-accent));
+}
+
+.player-button-primary:active:not(:disabled) {
+  background:
+    radial-gradient(circle at 35% 18%, rgb(255 255 255 / 24%), transparent 28%),
+    linear-gradient(145deg, var(--ncx-color-accent), var(--ncx-color-accent-pressed));
 }
 
 .player-busy {
@@ -300,17 +464,31 @@ function onVolume(event: Event): void {
   align-items: center;
 }
 
+.player-progress-control {
+  flex: 1;
+  min-width: 0;
+}
+
 .player-time,
 .player-status {
   font-size: 11px;
   font-variant-numeric: tabular-nums;
-  color: var(--ncx-text-muted, rgb(255 255 255 / 60%));
+  color: var(--ncx-color-text-secondary);
+}
+
+.player-time {
+  min-width: 34px;
+  text-align: center;
+}
+
+.player-status {
+  min-width: 42px;
+  text-align: right;
 }
 
 .player-slider {
   flex: 1;
   min-width: 0;
-  accent-color: var(--ncx-accent-strong, rgb(255 255 255 / 80%));
 }
 
 .player-slider-volume {
@@ -318,21 +496,106 @@ function onVolume(event: Event): void {
   width: 72px;
 }
 
+.player-slider :deep(.ncx-common-slider-track-container),
+.player-progress-bar :deep(.ncx-common-progress-track),
+.player-progress-loading :deep(.ncx-common-progress-track) {
+  filter: none;
+}
+
+.player-slider :deep(.ncx-common-slider-rail),
+.player-progress-bar :deep(.ncx-common-progress-track),
+.player-progress-loading :deep(.ncx-common-progress-track) {
+  background: var(--ncx-player-bar-track-bg);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+}
+
+.player-slider :deep(.ncx-common-slider-fill),
+.player-progress-bar :deep(.ncx-common-progress-bar),
+.player-progress-loading :deep(.ncx-common-progress-bar) {
+  background: color-mix(in srgb, var(--ncx-color-accent) 78%, white 10%);
+}
+
+.player-slider :deep(.ncx-common-slider-thumb) {
+  width: 14px;
+  height: 14px;
+  background: color-mix(in srgb, var(--ncx-color-accent) 92%, white 8%);
+  box-shadow: var(--ncx-player-bar-thumb-shadow);
+}
+
 .player-notice {
   display: flex;
   grid-column: 1 / -1;
   gap: 8px;
   align-items: center;
-  margin: 0;
+  margin: -2px 2px 0;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--ncx-color-warning) 22%, transparent);
+  border-radius: var(--ncx-radius-full);
+  background: color-mix(in srgb, var(--ncx-color-warning) 10%, transparent);
   font-size: 12px;
-  color: var(--ncx-text-warning, rgb(255 196 120));
+  color: var(--ncx-color-warning);
 }
 
 .player-notice-close {
-  border: none;
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 50%;
   background: transparent;
   color: inherit;
   cursor: pointer;
+  line-height: 1;
+}
+
+.player-notice-close:hover {
+  background: color-mix(in srgb, var(--ncx-color-warning) 14%, transparent);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .player-bar {
+    background: var(--ncx-color-surface-overlay);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .player-bar {
+    --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 70%, transparent);
+    --ncx-player-bar-glass-edge: color-mix(in srgb, white 16%, transparent);
+    --ncx-player-bar-glass-stroke: color-mix(in srgb, white 14%, transparent);
+    --ncx-player-bar-glass-shadow: 0 24px 58px rgb(0 0 0 / 40%),
+      0 8px 24px rgb(0 0 0 / 28%), inset 0 1px 0 rgb(255 255 255 / 12%);
+    --ncx-player-bar-control-hover: color-mix(in srgb, white 14%, transparent);
+    --ncx-player-bar-control-pressed: color-mix(in srgb, white 20%, transparent);
+    --ncx-player-bar-track-bg: color-mix(in srgb, white 16%, transparent);
+  }
+
+  .player-transport {
+    background: color-mix(in srgb, white 8%, transparent);
+  }
+}
+
+@media (width < 1100px) {
+  .player-bar {
+    bottom: 14px;
+    width: calc(100vw - 286px);
+    grid-template-columns: minmax(120px, 1fr) auto minmax(180px, 1.4fr);
+    gap: var(--ncx-space-3);
+    padding-inline: 14px;
+  }
+
+  .player-output {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player-button,
+  .player-busy {
+    transition: none;
+    animation: none;
+  }
 }
 
 @keyframes player-pulse {
