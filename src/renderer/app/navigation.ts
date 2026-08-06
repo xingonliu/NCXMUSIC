@@ -23,7 +23,7 @@ export interface AppNavigationSection {
 /** AppShell 顶部主导航结构，对应发现、搜索和小云一级入口。 */
 export const appPrimaryNavigationSections: readonly AppNavigationSection[] = [
   {
-    label: '主导航',
+    label: '',
     items: [
       { label: '发现音乐', routeName: 'discover', icon: 'discover' },
       { label: '搜索', routeName: 'search', icon: 'search' },

@@ -7,7 +7,6 @@ import {
   Maximize2,
   Minimize2,
   Minus,
-  Music2,
   RotateCcw,
   Search,
   Settings,
@@ -30,7 +29,6 @@ import {
   type AppNavigationItem
 } from '../../app/navigation'
 import { navigateBack } from '../../app/navigation-history'
-import { zhCN } from '../../locales/zh-CN'
 
 // ========= 变量 =========
 
@@ -209,29 +207,16 @@ onBeforeUnmount(() => {
         aria-hidden="true"
       />
 
-      <RouterLink
-        class="ncx-brand"
-        :to="{ name: 'discover' }"
-      >
-        <span
-          class="ncx-brand-mark"
-          aria-hidden="true"
-        >
-          <Music2 :size="18" />
-        </span>
-        <span class="ncx-brand-copy">
-          <span class="ncx-brand-name">{{ zhCN.app.name }}</span>
-          <span class="ncx-brand-caption">{{ zhCN.app.caption }}</span>
-        </span>
-      </RouterLink>
-
       <nav class="ncx-nav">
         <section
           v-for="section in appPrimaryNavigationSections"
-          :key="section.label"
+          :key="section.label || 'primary'"
           class="ncx-nav-section"
         >
-          <p class="ncx-nav-section-title">
+          <p
+            v-if="section.label"
+            class="ncx-nav-section-title"
+          >
             {{ section.label }}
           </p>
           <RouterLink

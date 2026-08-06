@@ -46,42 +46,6 @@
   height: 30px;
 }
 
-.ncx-brand {
-  display: flex;
-  gap: var(--ncx-space-3);
-  align-items: center;
-  padding: var(--ncx-space-2) var(--ncx-space-3) var(--ncx-space-4);
-  color: inherit;
-  text-decoration: none;
-  -webkit-app-region: no-drag;
-}
-
-.ncx-brand-mark {
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  border-radius: var(--ncx-radius-lg);
-  color: white;
-  background: var(--ncx-color-accent);
-  box-shadow: 0 8px 18px rgb(250 45 72 / 26%);
-}
-
-.ncx-brand-copy {
-  display: grid;
-  gap: 1px;
-}
-
-.ncx-brand-name {
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.ncx-brand-caption {
-  color: var(--ncx-color-text-secondary);
-  font-size: 12px;
-}
-
 .ncx-nav {
   display: grid;
   gap: var(--ncx-space-4);
