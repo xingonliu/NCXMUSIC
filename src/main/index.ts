@@ -23,6 +23,7 @@ import { CredentialLeaseCoordinator } from './auth/credential-lease-coordinator'
 import { NETEASE_AUTH_PARTITION } from './auth/navigation-policy'
 import { ConnectionBroker } from './connection-broker'
 import { UtilitySupervisor } from './utility-supervisor'
+import { createMainWindowOptions, createWindowSnapshot } from './window-chrome'
 
 const isSmokeTest = process.env['NCX_SMOKE_TEST'] === '1'
 const isLoginSpike = process.env['NCX_T02_SPIKE'] === '1'
@@ -31,16 +32,6 @@ let supervisor: UtilitySupervisor | undefined
 let broker: ConnectionBroker | undefined
 let authController: AuthSessionController | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
-
-/** 从 BrowserWindow 读取 Renderer 需要的窗口状态。 */
-function createWindowSnapshot(window: BrowserWindow): WindowSnapshot {
-  return {
-    platform: process.platform,
-    maximized: window.isMaximized(),
-    fullscreen: window.isFullScreen(),
-    focused: window.isFocused()
-  }
-}
 
 /** 向主窗口广播最新窗口状态，供自绘窗口控件同步真实状态。 */
 function publishWindowSnapshot(window = mainWindow): WindowSnapshot | undefined {
@@ -359,30 +350,12 @@ function configureSmokeExit(window: BrowserWindow): void {
 }
 
 async function createMainWindow(): Promise<void> {
-  const window = new BrowserWindow({
-    width: 1280,
-    height: 800,
-    minWidth: 960,
-    minHeight: 640,
-    show: false,
-    autoHideMenuBar: true,
-    frame: false,
-    backgroundColor: '#f5f5f7',
-    ...(process.platform === 'darwin'
-      ? {
-          trafficLightPosition: { x: 24, y: 24 },
-          titleBarStyle: 'hidden' as const
-        }
-      : {}),
-    webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
-      contextIsolation: true,
-      sandbox: true,
-      nodeIntegration: false,
-      webSecurity: true,
-      allowRunningInsecureContent: false
-    }
-  })
+  const window = new BrowserWindow(
+    createMainWindowOptions({
+      platform: process.platform,
+      preloadPath: join(__dirname, '../preload/index.js')
+    })
+  )
   mainWindow = window
 
   if (!isSmokeTest) window.once('ready-to-show', () => window.show())
