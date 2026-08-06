@@ -36,7 +36,6 @@
 .ncx-common-check input:focus-visible,
 .ncx-common-switch:focus-visible,
 .ncx-common-slider input:focus-visible,
-.ncx-common-segmented-item:focus-visible,
 .ncx-common-tabs-tab:focus-visible,
 .ncx-common-menu-item:focus-visible,
 .ncx-common-modal button:focus-visible,
@@ -1481,9 +1480,10 @@
   color: var(--ncx-color-text-primary);
 }
 
-.ncx-common-segmented:focus-within {
-  outline: 2px solid color-mix(in srgb, var(--ncx-color-accent) 75%, white);
-  outline-offset: 2px;
+.ncx-common-segmented:focus-within,
+.ncx-common-segmented-item:focus,
+.ncx-common-segmented-item:focus-visible {
+  outline: none !important;
 }
 
 .ncx-common-segmented--disabled {
