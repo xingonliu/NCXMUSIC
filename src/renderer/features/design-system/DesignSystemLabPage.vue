@@ -34,7 +34,6 @@ import {
   CommonProgress,
   CommonRadioGroup,
   CommonResponsiveGrid,
-  CommonScrollArea,
   CommonSearchInput,
   CommonSegmentedControl,
   CommonSelect,
@@ -48,7 +47,6 @@ import {
   CommonTextarea,
   CommonToast,
   CommonTooltip,
-  CommonVirtualList,
   type CommonAccordionItem,
   type CommonMenuItem,
   type CommonOption,
@@ -130,16 +128,18 @@ const safetyOptions: CommonOption[] = [
 
 /** 标签页选项。 */
 const tabOptions: CommonOption[] = [
-  { label: '状态', value: 'states' },
+  { label: '状态', value: 'states', badge: 3 },
   { label: '布局', value: 'layout' },
-  { label: '无障碍', value: 'a11y' }
+  { label: '无障碍', value: 'a11y', disabled: true }
 ]
 
 /** 菜单组件示例项。 */
 const menuItems: CommonMenuItem[] = [
-  { label: '播放下一首', value: 'play-next', shortcut: 'Enter' },
-  { label: '加入歌单', value: 'add-playlist', shortcut: 'A' },
-  { label: '删除缓存', value: 'delete-cache', shortcut: 'Del', danger: true }
+  { label: '播放操作', value: 'header-1', type: 'header' },
+  { label: '播放下一首', value: 'play-next', shortcut: 'Enter', icon: '▶' },
+  { label: '加入歌单', value: 'add-playlist', shortcut: '⌘A', checked: true },
+  { label: '分割', value: 'sep-1', type: 'separator' },
+  { label: '删除缓存', value: 'delete-cache', shortcut: '⌫', danger: true }
 ]
 
 /** 手风琴组件示例项。 */
@@ -149,15 +149,17 @@ const accordionItems: CommonAccordionItem[] = [
   { title: '浮层契约', content: 'Toast、Dialog、Drawer、Popover 各有边界，避免重复反馈。' }
 ]
 
-/** 虚拟列表组件示例项。 */
-const virtualListItems: CommonVirtualListItem[] = Array.from({ length: 36 }, (_, index) => ({
-  id: `track-${index + 1}`,
-  title: `通用列表项 ${index + 1}`,
-  description: `用于验证滚动、焦点和长列表密度 #${index + 1}`
-}))
+/** 虚拟列表数据项。 */
+const virtualListItems: CommonVirtualListItem[] = [
+  { id: '1', title: '单曲 A', description: '无损高质采样' },
+  { id: '2', title: '单曲 B', description: '杜比全景声音轨' },
+  { id: '3', title: '单曲 C', description: '经典原声重现' }
+]
 
 /** 进度条演示值。 */
 const progressValue = computed(() => Math.min(100, sliderValue.value))
+
+
 
 // ========= 函数 =========
 
@@ -318,12 +320,35 @@ function confirmDangerAction(): void {
           <CommonTextarea v-model="textareaValue" />
         </CommonCard>
         <CommonCard>
-          <label>Checkbox / Radio</label>
+          <label>macOS Checkbox / Radio</label>
           <div class="ncx-design-lab-stack">
-            <CommonCheckbox
-              v-model="checkboxValue"
-              label="启用键盘焦点验证"
-            />
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <CommonCheckbox
+                v-model="checkboxValue"
+                size="compact"
+                label="Compact Checkbox"
+              />
+              <CommonCheckbox
+                v-model="checkboxValue"
+                size="default"
+                label="Default Checkbox"
+              />
+              <CommonCheckbox
+                v-model="checkboxValue"
+                size="prominent"
+                label="Prominent Checkbox"
+              />
+              <CommonCheckbox
+                :model-value="false"
+                indeterminate
+                label="Indeterminate"
+              />
+              <CommonCheckbox
+                :model-value="true"
+                disabled
+                label="Disabled"
+              />
+            </div>
             <CommonRadioGroup
               v-model="radioValue"
               :options="pageModeOptions"
@@ -332,12 +357,30 @@ function confirmDangerAction(): void {
           </div>
         </CommonCard>
         <CommonCard>
-          <label>Switch / Slider</label>
+          <label>macOS Switch / Slider</label>
           <div class="ncx-design-lab-stack">
-            <CommonSwitch
-              v-model="switchValue"
-              label="自动播放"
-            />
+            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+              <CommonSwitch
+                v-model="switchValue"
+                size="compact"
+                label="Compact Switch"
+              />
+              <CommonSwitch
+                v-model="switchValue"
+                size="default"
+                label="Default Switch"
+              />
+              <CommonSwitch
+                v-model="switchValue"
+                size="prominent"
+                label="Prominent Switch"
+              />
+              <CommonSwitch
+                :model-value="true"
+                disabled
+                label="Disabled Switch"
+              />
+            </div>
             <CommonSlider
               v-model="sliderValue"
               label="音量"
@@ -345,11 +388,167 @@ function confirmDangerAction(): void {
           </div>
         </CommonCard>
         <CommonCard>
-          <label>SegmentedControl</label>
-          <CommonSegmentedControl
-            v-model="segmentedValue"
-            :options="safetyOptions"
-          />
+          <label>macOS SegmentedControl</label>
+          <div class="ncx-design-lab-stack">
+            <CommonSegmentedControl
+              v-model="segmentedValue"
+              :options="safetyOptions"
+              size="default"
+            />
+          </div>
+        </CommonCard>
+      </CommonResponsiveGrid>
+    </section>
+
+    <section class="ncx-design-lab-section">
+      <h2>macOS UI 规范展示组件 (WWDC25 对齐)</h2>
+      <CommonResponsiveGrid>
+        <CommonCard
+          variant="glass"
+          title="CommonAvatar & CommonBadge 状态徽标与头像"
+        >
+          <div class="ncx-design-lab-stack">
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <CommonAvatar
+                name="Ncx Music"
+                size="compact"
+                status="online"
+              />
+              <CommonAvatar
+                name="Apple User"
+                size="default"
+                shape="square"
+                status="busy"
+              />
+              <CommonAvatar
+                name="David Miller"
+                size="prominent"
+                status="away"
+              />
+              <CommonBadge
+                count="5"
+                type="danger"
+                variant="solid"
+              >
+                <CommonAvatar
+                  name="Inbox Notification"
+                  size="default"
+                />
+              </CommonBadge>
+              <CommonBadge
+                dot
+                type="success"
+              >
+                <CommonAvatar
+                  name="Online User"
+                  size="default"
+                />
+              </CommonBadge>
+            </div>
+            <CommonSeparator
+              inset
+              spacing="compact"
+            />
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <CommonBadge
+                type="info"
+                variant="subtle"
+              >
+                INFO
+              </CommonBadge>
+              <CommonBadge
+                type="success"
+                variant="subtle"
+              >
+                SUCCESS
+              </CommonBadge>
+              <CommonBadge
+                type="warning"
+                variant="subtle"
+              >
+                WARNING
+              </CommonBadge>
+              <CommonBadge
+                type="danger"
+                variant="solid"
+                :count="120"
+                :max="99"
+              />
+              <CommonBadge
+                type="neutral"
+                variant="subtle"
+                count="Beta"
+              />
+            </div>
+          </div>
+        </CommonCard>
+
+        <CommonCard
+          variant="elevated"
+          title="CommonTag macOS 标签与分类"
+        >
+          <div class="ncx-design-lab-stack">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <CommonTag
+                selected
+                color="blue"
+              >
+                精选单曲
+              </CommonTag>
+              <CommonTag color="green">
+                Hi-Res 无损
+              </CommonTag>
+              <CommonTag
+                color="orange"
+                closable
+                @close="recordAction('关闭标签：流行榜')"
+              >
+                流行榜单
+              </CommonTag>
+              <CommonTag
+                color="purple"
+                variant="solid"
+              >
+                VIP 专享
+              </CommonTag>
+              <CommonTag
+                color="red"
+                variant="outline"
+              >
+                热门推荐
+              </CommonTag>
+            </div>
+            <CommonSeparator
+              label="交互提示说明 Tooltip"
+              spacing="compact"
+            />
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <CommonTooltip
+                text="顶部气泡提示：快捷键 Command+K"
+                placement="top"
+              >
+                <CommonTag color="gray">
+                  Top Tooltip
+                </CommonTag>
+              </CommonTooltip>
+              <CommonTooltip
+                text="右侧气泡提示：MacBook M3 Max 优化"
+                placement="right"
+              >
+                <CommonTag color="blue">
+                  Right Tooltip
+                </CommonTag>
+              </CommonTooltip>
+              <CommonTooltip
+                text="底部气泡提示：高清音频流处理"
+                placement="bottom"
+              >
+                <CommonTag color="green">
+                  Bottom Tooltip
+                </CommonTag>
+              </CommonTooltip>
+            </div>
+          </div>
         </CommonCard>
       </CommonResponsiveGrid>
     </section>
@@ -357,23 +556,6 @@ function confirmDangerAction(): void {
     <section class="ncx-design-lab-section">
       <h2>展示与导航</h2>
       <CommonResponsiveGrid>
-        <CommonCard interactive>
-          <div class="ncx-design-lab-row">
-            <CommonAvatar name="NcxMusic" />
-            <CommonBadge type="info">
-              INFO
-            </CommonBadge>
-            <CommonBadge type="warning">
-              WARNING
-            </CommonBadge>
-            <CommonTag selected>
-              精选
-            </CommonTag>
-            <CommonTooltip text="停留或聚焦展示 Tooltip">
-              <CommonTag>Tooltip</CommonTag>
-            </CommonTooltip>
-          </div>
-        </CommonCard>
         <CommonCard>
           <CommonTabs
             v-model="tabsValue"
@@ -406,47 +588,107 @@ function confirmDangerAction(): void {
     </section>
 
     <section class="ncx-design-lab-section">
-      <h2>状态与容器</h2>
+      <h2>macOS 状态与反馈组件 (WWDC25 对齐)</h2>
       <CommonResponsiveGrid>
         <CommonCard>
+          <label>macOS Activity Spinner & Progress</label>
           <div class="ncx-design-lab-stack">
-            <CommonSpinner label="正在加载组件状态" />
-            <CommonProgress :value="progressValue" />
-            <CommonSkeleton :lines="3" />
+            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+              <CommonSpinner
+                size="compact"
+                label="Compact Spokes Spinner"
+              />
+              <CommonSpinner
+                size="default"
+                label="Default Spokes Spinner"
+              />
+              <CommonSpinner
+                size="prominent"
+                label="Prominent Spokes Spinner"
+              />
+              <CommonSpinner
+                size="default"
+                variant="ring"
+                label="Ring Spinner"
+              />
+            </div>
+            <CommonProgress
+              :value="65"
+              show-value
+              label="确定进度"
+            />
+            <CommonProgress
+              indeterminate
+              size="compact"
+              label="不定长加载进度"
+            />
+          </div>
+        </CommonCard>
+        <CommonCard>
+          <label>WWDC25 Glassmorphism Skeleton</label>
+          <div class="ncx-design-lab-stack">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <CommonSkeleton variant="avatar" />
+              <div style="flex: 1;">
+                <CommonSkeleton :lines="2" />
+              </div>
+            </div>
+            <CommonSkeleton
+              variant="rectangular"
+              height="40px"
+            />
           </div>
         </CommonCard>
         <CommonEmptyState
-          title="暂无组件变更"
-          description="空数据区域保留恢复操作入口。"
+          title="暂无音轨列表"
+          description="遵循 macOS ContentUnavailableView 居中布局与微光层级。"
         >
           <CommonButton
             size="compact"
-            @click="recordAction('EmptyState 操作')"
+            variant="secondary"
+            @click="recordAction('EmptyState 导入音乐')"
           >
-            创建示例
+            导入本地音乐
           </CommonButton>
         </CommonEmptyState>
         <CommonErrorState
-          title="组件加载失败"
-          description="错误状态必须说明恢复动作。"
-        >
-          <CommonButton
-            size="compact"
-            variant="danger"
-            @click="recordAction('ErrorState 重试')"
-          >
-            重试
-          </CommonButton>
-        </CommonErrorState>
+          title="网络连接失败"
+          description="无法连接到 Apple Music 云端数据库，请检查网络后再试。"
+          @retry="recordAction('ErrorState 触发重试')"
+        />
         <CommonCard>
-          <CommonInlineMessage type="info">
-            InlineMessage 用于当前 Section 内可恢复的问题。
-          </CommonInlineMessage>
+          <label>macOS Callout InlineMessage</label>
+          <div class="ncx-design-lab-stack">
+            <CommonInlineMessage
+              type="info"
+              title="系统提示"
+              closable
+              @close="recordAction('关闭 InlineMessage')"
+            >
+              这是符合 macOS HIG 规范的内联提示通告栏。
+            </CommonInlineMessage>
+            <CommonInlineMessage
+              type="success"
+              title="同步成功"
+            >
+              播放列表已实时与 iCloud 云端同步。
+            </CommonInlineMessage>
+            <CommonInlineMessage type="warning">
+              存储空间即将不足 1GB。
+            </CommonInlineMessage>
+            <CommonInlineMessage
+              type="danger"
+              title="校验失败"
+            >
+              音频文件 Header 损坏，无法解码。
+            </CommonInlineMessage>
+          </div>
         </CommonCard>
         <CommonCard>
           <CommonAccordion :items="accordionItems" />
         </CommonCard>
         <CommonCard>
+          <label>CommonScrollArea & CommonVirtualList</label>
           <CommonScrollArea>
             <CommonVirtualList :items="virtualListItems" />
           </CommonScrollArea>

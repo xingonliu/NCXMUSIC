@@ -367,16 +367,46 @@
   box-shadow: var(--ncx-shadow-elevation-1);
 }
 
+/* --- 6. CommonAvatar (macOS Avatar) --- */
 .ncx-common-avatar {
-  display: inline-grid;
-  width: 40px;
-  height: 40px;
-  place-items: center;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   overflow: hidden;
+  user-select: none;
+  color: #fff;
+  background: linear-gradient(135deg, var(--ncx-color-accent) 0%, color-mix(in srgb, var(--ncx-color-accent) 65%, #ff9500) 100%);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 10%), var(--ncx-shadow-elevation-1);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.ncx-common-avatar--circle {
   border-radius: var(--ncx-radius-full);
-  color: var(--ncx-color-on-accent);
-  background: linear-gradient(135deg, var(--ncx-color-accent), var(--ncx-color-agent-accent));
-  font-weight: 700;
+}
+
+.ncx-common-avatar--square {
+  border-radius: var(--ncx-radius-lg);
+}
+
+.ncx-common-avatar--compact {
+  width: 28px;
+  height: 28px;
+  font-size: 11px;
+}
+
+.ncx-common-avatar--default {
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+}
+
+.ncx-common-avatar--prominent {
+  width: 48px;
+  height: 48px;
+  font-size: 18px;
 }
 
 .ncx-common-avatar img {
@@ -385,100 +415,551 @@
   object-fit: cover;
 }
 
-.ncx-common-badge,
-.ncx-common-tag {
+.ncx-common-avatar-fallback {
   display: inline-flex;
-  min-height: 22px;
   align-items: center;
-  border: 1px solid transparent;
-  border-radius: var(--ncx-radius-full);
-  font-size: 12px;
-  font-weight: 700;
+  justify-content: center;
+  letter-spacing: 0.5px;
+}
+
+.ncx-common-avatar-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 28%;
+  height: 28%;
+  min-width: 8px;
+  min-height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--ncx-color-surface);
+}
+
+.ncx-common-avatar-status--online {
+  background: #34c759;
+}
+
+.ncx-common-avatar-status--busy {
+  background: #ff3b30;
+}
+
+.ncx-common-avatar-status--away {
+  background: #ff9500;
+}
+
+.ncx-common-avatar-status--offline {
+  background: #8e8e93;
+}
+
+/* --- 7. CommonBadge (macOS Badge) --- */
+.ncx-common-badge-wrapper {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
 }
 
 .ncx-common-badge {
-  padding: 0 var(--ncx-space-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--ncx-radius-full);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  user-select: none;
 }
 
-.ncx-common-tag {
-  padding: 0 var(--ncx-space-3);
-  border-color: var(--ncx-color-border-subtle);
-  color: var(--ncx-color-text-secondary);
-  background: var(--ncx-color-surface);
+.ncx-common-badge--compact {
+  min-height: 16px;
+  padding: 0 5px;
+  font-size: 10px;
 }
 
-.ncx-common-tag-selected {
-  border-color: color-mix(in srgb, var(--ncx-color-accent) 28%, transparent);
-  color: var(--ncx-color-accent);
-  background: color-mix(in srgb, var(--ncx-color-accent) 10%, transparent);
+.ncx-common-badge--default {
+  min-height: 20px;
+  padding: 0 7px;
+  font-size: 11px;
 }
 
+/* Subtle Variant */
+.ncx-common-badge-info.ncx-common-badge--subtle,
 .ncx-common-badge-info {
   color: var(--ncx-color-info);
   background: color-mix(in srgb, var(--ncx-color-info) 12%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-info) 22%, transparent);
 }
 
+.ncx-common-badge-success.ncx-common-badge--subtle,
 .ncx-common-badge-success {
   color: var(--ncx-color-success);
   background: color-mix(in srgb, var(--ncx-color-success) 12%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-success) 22%, transparent);
 }
 
+.ncx-common-badge-warning.ncx-common-badge--subtle,
 .ncx-common-badge-warning {
   color: var(--ncx-color-warning);
   background: color-mix(in srgb, var(--ncx-color-warning) 14%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-warning) 24%, transparent);
 }
 
+.ncx-common-badge-danger.ncx-common-badge--subtle,
 .ncx-common-badge-danger {
   color: var(--ncx-color-danger);
   background: color-mix(in srgb, var(--ncx-color-danger) 12%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-danger) 22%, transparent);
 }
 
-.ncx-common-card {
-  padding: var(--ncx-space-4);
+.ncx-common-badge-neutral.ncx-common-badge--subtle {
+  color: var(--ncx-color-text-secondary);
+  background: var(--ncx-color-surface-raised);
+  border-color: var(--ncx-color-border-subtle);
+}
+
+/* Solid Variant */
+.ncx-common-badge-info.ncx-common-badge--solid {
+  color: #fff;
+  background: #007aff;
+}
+
+.ncx-common-badge-success.ncx-common-badge--solid {
+  color: #fff;
+  background: #34c759;
+}
+
+.ncx-common-badge-warning.ncx-common-badge--solid {
+  color: #fff;
+  background: #ff9500;
+}
+
+.ncx-common-badge-danger.ncx-common-badge--solid {
+  color: #fff;
+  background: #ff3b30;
+}
+
+.ncx-common-badge-neutral.ncx-common-badge--solid {
+  color: #fff;
+  background: #8e8e93;
+}
+
+/* Dot Variant */
+.ncx-common-badge--dot {
+  padding: 0;
+  border-radius: 50%;
+}
+
+.ncx-common-badge--compact.ncx-common-badge--dot {
+  width: 6px;
+  height: 6px;
+  min-height: 6px;
+}
+
+.ncx-common-badge--default.ncx-common-badge--dot {
+  width: 8px;
+  height: 8px;
+  min-height: 8px;
+}
+
+/* Floating Mode */
+.ncx-common-badge--floating {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(45%, -45%);
+  z-index: 2;
+  box-shadow: 0 0 0 2px var(--ncx-color-surface);
+}
+
+/* --- 8. CommonTag (macOS Tag) --- */
+.ncx-common-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ncx-space-1);
   border: 1px solid var(--ncx-color-border-subtle);
+  border-radius: var(--ncx-radius-full);
+  color: var(--ncx-color-text-primary);
+  background: var(--ncx-color-surface-raised);
+  font-weight: 500;
+  user-select: none;
+  outline: 0;
+  transition: background-color var(--ncx-motion-fast), border-color var(--ncx-motion-fast), color var(--ncx-motion-fast), transform var(--ncx-motion-fast);
+}
+
+.ncx-common-tag--compact {
+  min-height: 22px;
+  padding: 0 var(--ncx-space-2);
+  font-size: 11px;
+}
+
+.ncx-common-tag--default {
+  min-height: 26px;
+  padding: 0 var(--ncx-space-3);
+  font-size: 12px;
+}
+
+.ncx-common-tag--prominent {
+  min-height: 30px;
+  padding: 0 var(--ncx-space-4);
+  font-size: 13px;
+}
+
+.ncx-common-tag:hover:not(.ncx-common-tag--disabled) {
+  background: var(--ncx-color-control-hover);
+  border-color: var(--ncx-color-border-default);
+}
+
+.ncx-common-tag:active:not(.ncx-common-tag--disabled) {
+  transform: scale(0.97);
+}
+
+.ncx-common-tag-selected,
+.ncx-common-tag--selected {
+  border-color: color-mix(in srgb, var(--ncx-color-accent) 35%, transparent);
+  color: var(--ncx-color-accent);
+  background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
+  font-weight: 600;
+}
+
+/* Tag Variants */
+.ncx-common-tag--solid {
+  background: var(--ncx-color-text-primary);
+  color: var(--ncx-color-canvas);
+  border-color: transparent;
+}
+
+.ncx-common-tag--outline {
+  background: transparent;
+  border-color: var(--ncx-color-border-strong);
+}
+
+/* Tag Color Presets (macOS Finder Colors) */
+.ncx-common-tag--accent {
+  color: #fa2d48;
+  background: color-mix(in srgb, #fa2d48 12%, transparent);
+  border-color: color-mix(in srgb, #fa2d48 24%, transparent);
+}
+
+.ncx-common-tag--blue {
+  color: #007aff;
+  background: color-mix(in srgb, #007aff 12%, transparent);
+  border-color: color-mix(in srgb, #007aff 24%, transparent);
+}
+
+.ncx-common-tag--green {
+  color: #34c759;
+  background: color-mix(in srgb, #34c759 12%, transparent);
+  border-color: color-mix(in srgb, #34c759 24%, transparent);
+}
+
+.ncx-common-tag--orange {
+  color: #ff9500;
+  background: color-mix(in srgb, #ff9500 14%, transparent);
+  border-color: color-mix(in srgb, #ff9500 26%, transparent);
+}
+
+.ncx-common-tag--purple {
+  color: #af52de;
+  background: color-mix(in srgb, #af52de 12%, transparent);
+  border-color: color-mix(in srgb, #af52de 24%, transparent);
+}
+
+.ncx-common-tag--red {
+  color: #ff3b30;
+  background: color-mix(in srgb, #ff3b30 12%, transparent);
+  border-color: color-mix(in srgb, #ff3b30 24%, transparent);
+}
+
+.ncx-common-tag--gray {
+  color: #8e8e93;
+  background: color-mix(in srgb, #8e8e93 12%, transparent);
+  border-color: color-mix(in srgb, #8e8e93 24%, transparent);
+}
+
+.ncx-common-tag-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-left: 2px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.65;
+  font-size: 14px;
+  line-height: 1;
+  transition: opacity var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
+}
+
+.ncx-common-tag-close:hover {
+  opacity: 1;
+  background: color-mix(in srgb, currentcolor 18%, transparent);
+}
+
+.ncx-common-tag--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --- 9. CommonCard (macOS Card) --- */
+.ncx-common-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
   border-radius: var(--ncx-radius-xl);
   background: var(--ncx-color-surface);
+  border: 1px solid var(--ncx-color-border-subtle);
   box-shadow: var(--ncx-shadow-elevation-1);
+  transition: border-color var(--ncx-motion-normal) cubic-bezier(0.16, 1, 0.3, 1), box-shadow var(--ncx-motion-normal) cubic-bezier(0.16, 1, 0.3, 1), transform var(--ncx-motion-normal) cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.ncx-common-card-interactive:hover {
+.ncx-common-card--padding-none {
+  padding: 0;
+}
+
+.ncx-common-card--padding-compact {
+  padding: var(--ncx-space-3);
+}
+
+.ncx-common-card--padding-default {
+  padding: var(--ncx-space-4);
+}
+
+.ncx-common-card--padding-prominent {
+  padding: var(--ncx-space-6);
+}
+
+.ncx-common-card--flat {
+  background: color-mix(in srgb, var(--ncx-color-surface) 60%, transparent);
+  box-shadow: none;
+}
+
+.ncx-common-card--elevated {
+  background: var(--ncx-color-surface-raised);
+  box-shadow: var(--ncx-shadow-elevation-2);
+}
+
+.ncx-common-card--glass {
+  background: var(--ncx-color-surface);
+  backdrop-filter: blur(20px);
+}
+
+.ncx-common-card-interactive,
+.ncx-common-card--interactive {
+  cursor: pointer;
+}
+
+.ncx-common-card-interactive:hover,
+.ncx-common-card--interactive:hover {
   border-color: color-mix(in srgb, var(--ncx-color-accent) 32%, transparent);
-  transform: translateY(-1px);
+  box-shadow: var(--ncx-shadow-elevation-2);
+  transform: translateY(-2px);
 }
 
+.ncx-common-card-interactive:active,
+.ncx-common-card--interactive:active {
+  transform: translateY(0) scale(0.995);
+}
+
+.ncx-common-card--selected {
+  border-color: var(--ncx-color-accent);
+  box-shadow: 0 0 0 1px var(--ncx-color-accent), var(--ncx-shadow-elevation-1);
+}
+
+.ncx-common-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--ncx-space-3);
+  margin-bottom: var(--ncx-space-3);
+  border-bottom: 1px solid var(--ncx-color-border-subtle);
+  font-weight: 600;
+  color: var(--ncx-color-text-primary);
+}
+
+.ncx-common-card-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ncx-common-card-body {
+  flex: 1;
+}
+
+.ncx-common-card-footer {
+  display: flex;
+  align-items: center;
+  padding-top: var(--ncx-space-3);
+  margin-top: var(--ncx-space-3);
+  border-top: 1px solid var(--ncx-color-border-subtle);
+}
+
+/* --- 10. CommonSeparator (macOS Separator) --- */
 .ncx-common-separator {
-  display: block;
+  background: var(--ncx-color-border-subtle);
+}
+
+.ncx-common-separator-horizontal,
+.ncx-common-separator--horizontal {
+  display: flex;
+  align-items: center;
   width: 100%;
+  height: 1px;
+}
+
+.ncx-common-separator--spacing-none {
+  margin: 0;
+}
+
+.ncx-common-separator--spacing-compact {
+  margin: var(--ncx-space-2) 0;
+}
+
+.ncx-common-separator--spacing-default {
+  margin: var(--ncx-space-4) 0;
+}
+
+.ncx-common-separator--spacing-prominent {
+  margin: var(--ncx-space-6) 0;
+}
+
+.ncx-common-separator-vertical,
+.ncx-common-separator--vertical {
+  display: inline-block;
+  width: 1px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.ncx-common-separator--inset-start {
+  margin-left: var(--ncx-space-4);
+}
+
+.ncx-common-separator--inset-both {
+  margin-left: var(--ncx-space-4);
+  margin-right: var(--ncx-space-4);
+}
+
+.ncx-common-separator--has-label {
+  height: auto;
+  background: transparent;
+}
+
+.ncx-common-separator-line {
+  flex: 1;
   height: 1px;
   background: var(--ncx-color-border-subtle);
 }
 
-.ncx-common-separator-vertical {
-  width: 1px;
-  height: 24px;
+.ncx-common-separator-label {
+  padding: 0 var(--ncx-space-3);
+  color: var(--ncx-color-text-tertiary);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
+/* --- 11. CommonTooltip (macOS Help Tag / Tooltip) --- */
 .ncx-common-tooltip {
   position: relative;
   display: inline-flex;
 }
 
-.ncx-common-tooltip:hover::after,
-.ncx-common-tooltip:focus-visible::after {
+.ncx-common-tooltip-panel {
   position: absolute;
   z-index: var(--ncx-layer-popover);
-  bottom: calc(100% + var(--ncx-space-2));
-  left: 50%;
-  min-width: max-content;
-  padding: var(--ncx-space-2) var(--ncx-space-3);
+  padding: var(--ncx-space-1-5) var(--ncx-space-3);
   border: 1px solid var(--ncx-color-border-subtle);
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-radius-md);
   color: var(--ncx-color-text-primary);
   background: var(--ncx-color-surface-overlay);
+  backdrop-filter: blur(16px);
   box-shadow: var(--ncx-shadow-elevation-2);
-  content: attr(data-tooltip);
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: ncx-tooltip-fade-in var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ncx-common-tooltip-panel--top {
+  bottom: calc(100% + 8px);
+  left: 50%;
   transform: translateX(-50%);
+}
+
+.ncx-common-tooltip-panel--bottom {
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ncx-common-tooltip-panel--left {
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ncx-common-tooltip-panel--right {
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ncx-common-tooltip-arrow {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--ncx-color-surface-overlay);
+  border: 1px solid var(--ncx-color-border-subtle);
+  transform: rotate(45deg);
+}
+
+.ncx-common-tooltip-panel--top .ncx-common-tooltip-arrow {
+  bottom: -4px;
+  left: calc(50% - 3px);
+  border-top: 0;
+  border-left: 0;
+}
+
+.ncx-common-tooltip-panel--bottom .ncx-common-tooltip-arrow {
+  top: -4px;
+  left: calc(50% - 3px);
+  border-bottom: 0;
+  border-right: 0;
+}
+
+.ncx-common-tooltip-panel--left .ncx-common-tooltip-arrow {
+  right: -4px;
+  top: calc(50% - 3px);
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.ncx-common-tooltip-panel--right .ncx-common-tooltip-arrow {
+  left: -4px;
+  top: calc(50% - 3px);
+  border-right: 0;
+  border-top: 0;
+}
+
+@keyframes ncx-tooltip-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
 }
 
 .ncx-common-tabs {
