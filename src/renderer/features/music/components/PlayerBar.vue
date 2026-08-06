@@ -218,10 +218,9 @@ function onVolume(event: Event): void {
   gap: 16px;
   align-items: center;
   padding: 12px 20px;
-  border-top: var(--ncx-glass-liquid-border);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised, rgb(20 20 24 / 85%));
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
-  box-shadow: var(--ncx-glass-specular-light);
+  border-top: none;
+  background: var(--ncx-color-surface-raised);
+  box-shadow: var(--ncx-shadow-elevation-1);
 }
 
 .player-track {
@@ -249,8 +248,9 @@ function onVolume(event: Event): void {
 
 .player-quality {
   padding: 0 6px;
-  border: 1px solid currentcolor;
+  border: none;
   border-radius: 3px;
+  background: var(--ncx-color-control-hover);
   font-size: 10px;
   line-height: 16px;
 }

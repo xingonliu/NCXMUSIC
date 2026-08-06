@@ -92,12 +92,11 @@
   display: grid;
   min-height: 104px;
   place-items: center;
-  border: var(--ncx-glass-liquid-border);
+  border: none;
   border-radius: var(--ncx-radius-lg);
   color: var(--ncx-color-text-secondary);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised);
-  backdrop-filter: var(--ncx-glass-backdrop);
-  box-shadow: var(--ncx-glass-specular-light);
+  background: var(--ncx-color-surface-raised);
+  box-shadow: var(--ncx-shadow-elevation-1);
 }
 
 @media (width < 1100px) {

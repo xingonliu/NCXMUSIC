@@ -62,12 +62,10 @@ button {
   display: inline-flex;
   margin-top: var(--ncx-space-3);
   padding: var(--ncx-space-2) var(--ncx-space-3);
-  border: var(--ncx-glass-liquid-border);
+  border: none;
   border-radius: var(--ncx-radius-md);
   color: var(--ncx-color-text-secondary);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface);
-  backdrop-filter: var(--ncx-glass-backdrop-subtle);
-  box-shadow: var(--ncx-glass-specular-light);
+  background: var(--ncx-color-surface);
   font-size: 12px;
 }
 
@@ -81,20 +79,17 @@ button {
 .layer-card {
   min-height: 180px;
   padding: var(--ncx-space-6);
-  border: var(--ncx-glass-liquid-border);
+  border: none;
   border-radius: var(--ncx-radius-xl);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface);
-  backdrop-filter: var(--ncx-glass-backdrop);
-  box-shadow: var(--ncx-glass-specular-light), var(--ncx-shadow-elevation-1);
+  background: var(--ncx-color-surface);
+  box-shadow: var(--ncx-shadow-elevation-1);
   transition:
-    border-color var(--ncx-motion-fast),
     box-shadow var(--ncx-motion-fast),
     transform var(--ncx-motion-fast);
 }
 
 .layer-card:hover {
-  border-color: color-mix(in srgb, var(--ncx-color-accent) 40%, transparent);
-  box-shadow: var(--ncx-glass-specular-light), var(--ncx-shadow-elevation-2);
+  box-shadow: var(--ncx-shadow-elevation-2);
   transform: translateY(-2px);
 }
 

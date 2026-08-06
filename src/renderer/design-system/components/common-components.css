@@ -107,54 +107,43 @@
 
 /* Primary - macOS Primary Push Button */
 .ncx-common-button-primary {
-  border-color: color-mix(in srgb, var(--ncx-color-accent) 85%, black);
+  border: none;
   color: var(--ncx-color-on-accent);
-  background:
-    linear-gradient(135deg, rgb(255 255 255 / 35%) 0%, transparent 40%),
-    linear-gradient(180deg, color-mix(in srgb, white 18%, var(--ncx-color-accent)) 0%, var(--ncx-color-accent) 100%);
-  backdrop-filter: blur(12px);
-  box-shadow:
-    inset 0 1px 1px rgb(255 255 255 / 50%),
-    0 4px 14px color-mix(in srgb, var(--ncx-color-accent) 30%, transparent);
+  background: var(--ncx-color-accent);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
 }
 
 .ncx-common-button-primary:hover:not(:disabled) {
-  background:
-    linear-gradient(135deg, rgb(255 255 255 / 45%) 0%, transparent 40%),
-    linear-gradient(180deg, color-mix(in srgb, white 28%, var(--ncx-color-accent)) 0%, var(--ncx-color-accent-hover) 100%);
-  box-shadow:
-    inset 0 1px 1px rgb(255 255 255 / 65%),
-    0 6px 18px color-mix(in srgb, var(--ncx-color-accent) 40%, transparent);
+  background: var(--ncx-color-accent-hover);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 16%);
 }
 
 .ncx-common-button-primary:active:not(:disabled) {
   background: var(--ncx-color-accent-pressed);
-  box-shadow: inset 0 1px 3px rgb(0 0 0 / 30%);
+  box-shadow: none;
 }
 
 /* Secondary - macOS Bordered / Push Button */
 .ncx-common-button-secondary {
-  border-color: var(--ncx-color-border-default);
+  border: none;
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised);
-  backdrop-filter: var(--ncx-glass-backdrop-subtle);
-  box-shadow: var(--ncx-glass-specular-light), 0 1px 3px rgb(0 0 0 / 5%);
+  background: var(--ncx-color-surface-raised);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 4%);
 }
 
 .ncx-common-button-secondary:hover:not(:disabled) {
-  border-color: var(--ncx-color-border-strong);
-  background: var(--ncx-glass-liquid-shine), color-mix(in srgb, var(--ncx-color-surface-raised) 80%, white);
-  box-shadow: var(--ncx-glass-specular-light), 0 3px 10px rgb(0 0 0 / 8%);
+  background: var(--ncx-color-control-hover);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 6%);
 }
 
 .ncx-common-button-secondary:active:not(:disabled) {
   background: var(--ncx-color-control-pressed);
-  box-shadow: inset 0 1px 2px rgb(0 0 0 / 10%);
+  box-shadow: none;
 }
 
 /* Ghost - Borderless Button */
 .ncx-common-button-ghost {
-  border-color: transparent;
+  border: none;
   box-shadow: none;
   color: var(--ncx-color-text-primary);
   background: transparent;
@@ -170,19 +159,17 @@
 
 /* Danger - macOS Destructive Button */
 .ncx-common-button-danger {
-  border-color: color-mix(in srgb, var(--ncx-color-danger) 30%, transparent);
+  border: none;
   color: var(--ncx-color-danger);
-  background: color-mix(in srgb, var(--ncx-color-danger) 10%, transparent);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  background: color-mix(in srgb, var(--ncx-color-danger) 12%, transparent);
 }
 
 .ncx-common-button-danger:hover:not(:disabled) {
-  border-color: color-mix(in srgb, var(--ncx-color-danger) 50%, transparent);
-  background: color-mix(in srgb, var(--ncx-color-danger) 18%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-danger) 20%, transparent);
 }
 
 .ncx-common-button-danger:active:not(:disabled) {
-  background: color-mix(in srgb, var(--ncx-color-danger) 26%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-danger) 28%, transparent);
 }
 
 /* Loading 状态 */
@@ -210,7 +197,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: 1px solid transparent;
+  border: none;
   border-radius: var(--ncx-radius-md, 8px);
   color: var(--ncx-color-text-primary);
   background: transparent;
@@ -218,7 +205,6 @@
   user-select: none;
   transition:
     background-color var(--ncx-motion-fast) ease,
-    border-color var(--ncx-motion-fast) ease,
     color var(--ncx-motion-fast) ease,
     box-shadow var(--ncx-motion-fast) ease,
     transform var(--ncx-motion-instant) cubic-bezier(0.2, 0, 0, 1);
@@ -255,22 +241,19 @@
 }
 
 .ncx-common-icon-button-secondary {
-  border-color: var(--ncx-color-border-default);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised);
-  backdrop-filter: var(--ncx-glass-backdrop-subtle);
-  box-shadow: var(--ncx-glass-specular-light);
+  border: none;
+  background: var(--ncx-color-surface-raised);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 4%);
 }
 
 .ncx-common-icon-button-secondary:hover:not(:disabled) {
-  background: var(--ncx-glass-liquid-shine), color-mix(in srgb, var(--ncx-color-surface-raised) 80%, white);
-  box-shadow: var(--ncx-glass-specular-light), 0 3px 8px rgb(0 0 0 / 8%);
+  background: var(--ncx-color-control-hover);
 }
 
 .ncx-common-icon-button-selected {
-  border-color: color-mix(in srgb, var(--ncx-color-accent) 35%, transparent);
+  border: none;
   color: var(--ncx-color-accent);
   background: color-mix(in srgb, var(--ncx-color-accent) 15%, transparent);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 6%);
 }
 
 /* ========= CommonButtonGroup ========= */
@@ -368,18 +351,16 @@
   box-sizing: border-box;
   width: 100%;
   padding: 0 10px;
-  border: 1px solid var(--ncx-color-border-default, rgb(0 0 0 / 15%));
+  border: none;
   border-radius: 6px;
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised, rgb(255 255 255 / 75%));
-  backdrop-filter: var(--ncx-glass-backdrop-subtle);
+  background: var(--ncx-color-surface-raised);
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
   font-size: 13px;
   line-height: 1.4;
   outline: none;
-  box-shadow: var(--ncx-glass-specular-light), inset 0 1px 1px rgb(0 0 0 / 4%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
   transition:
-    border-color var(--ncx-motion-fast, 150ms),
     box-shadow var(--ncx-motion-fast, 150ms),
     background-color var(--ncx-motion-fast, 150ms);
 }
@@ -421,8 +402,7 @@
 .ncx-common-input-wrapper:focus-within,
 .ncx-common-search:focus-within,
 .ncx-common-combobox:focus-within {
-  border-color: var(--ncx-color-accent, #007aff);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ncx-color-accent, #007aff) 35%, transparent), inset 0 0 0 1px var(--ncx-color-accent, #007aff);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ncx-color-accent, #007aff) 40%, transparent);
   outline: none;
 }
 
@@ -433,13 +413,13 @@
 .ncx-common-search.ncx-common-field-invalid,
 .ncx-common-select-wrapper.ncx-common-field-invalid,
 .ncx-common-combobox.ncx-common-field-invalid {
-  border-color: var(--ncx-color-danger, #ff3b30) !important;
+  box-shadow: 0 0 0 2px var(--ncx-color-danger, #ff3b30) !important;
 }
 
 .ncx-common-field-invalid:focus,
 .ncx-common-input-wrapper.ncx-common-field-invalid:focus-within,
 .ncx-common-combobox.ncx-common-field-invalid:focus-within {
-  box-shadow: 0 0 0 3px rgb(255 59 48 / 30%), inset 0 0 0 1px var(--ncx-color-danger, #ff3b30) !important;
+  box-shadow: 0 0 0 2px var(--ncx-color-danger, #ff3b30) !important;
 }
 
 /* Disabled State */
@@ -460,11 +440,10 @@
   align-items: center;
   box-sizing: border-box;
   border-radius: 6px;
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised, rgb(255 255 255 / 75%));
-  backdrop-filter: var(--ncx-glass-backdrop-subtle);
-  border: 1px solid var(--ncx-color-border-default, rgb(0 0 0 / 15%));
-  box-shadow: var(--ncx-glass-specular-light);
-  transition: border-color var(--ncx-motion-fast, 150ms), box-shadow var(--ncx-motion-fast, 150ms);
+  background: var(--ncx-color-surface-raised);
+  border: none;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  transition: box-shadow var(--ncx-motion-fast, 150ms);
 }
 
 .ncx-common-input-wrapper .ncx-common-field {
@@ -547,12 +526,11 @@
   align-items: center;
   gap: 6px;
   padding: 0 10px;
-  border: 1px solid var(--ncx-color-border-default, rgb(0 0 0 / 15%));
+  border: none;
   border-radius: 999px;
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised, rgb(255 255 255 / 75%));
-  backdrop-filter: var(--ncx-glass-backdrop-subtle);
-  box-shadow: var(--ncx-glass-specular-light), inset 0 1px 1px rgb(0 0 0 / 4%);
-  transition: border-color var(--ncx-motion-fast), box-shadow var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
+  background: var(--ncx-color-surface-raised);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  transition: box-shadow var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
 }
 
 .ncx-common-search--compact {
@@ -646,15 +624,14 @@
   box-sizing: border-box;
   width: 100%;
   padding-right: 28px !important;
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised, rgb(255 255 255 / 75%));
-  backdrop-filter: var(--ncx-glass-backdrop-subtle);
+  background: var(--ncx-color-surface-raised);
   color: var(--ncx-color-text-primary);
   cursor: pointer;
   user-select: none;
   border-radius: 6px;
-  border: 1px solid var(--ncx-color-border-default, rgb(0 0 0 / 15%));
-  box-shadow: var(--ncx-glass-specular-light);
-  transition: border-color var(--ncx-motion-fast), box-shadow var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
+  border: none;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  transition: box-shadow var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
 }
 
 .ncx-common-select--placeholder {
@@ -669,7 +646,7 @@
 }
 
 .ncx-common-select:hover:not(.ncx-common-field-disabled) {
-  border-color: var(--ncx-color-border-strong, var(--ncx-color-border-default));
+  background: var(--ncx-color-control-hover);
 }
 
 .ncx-common-select:focus,
@@ -679,8 +656,7 @@
 .ncx-common-select-wrapper--open .ncx-common-select {
   outline: none !important;
   outline-offset: 0 !important;
-  box-shadow: none !important;
-  border-color: var(--ncx-color-border-default, rgb(0 0 0 / 15%));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ncx-color-accent, #007aff) 40%, transparent) !important;
 }
 
 .ncx-common-select-chevron {
@@ -719,10 +695,9 @@
   box-sizing: border-box;
   padding: 4px;
   border-radius: 10px;
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-overlay);
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
-  border: var(--ncx-glass-liquid-border);
-  box-shadow: var(--ncx-glass-specular-light), var(--ncx-glass-liquid-shadow);
+  background: var(--ncx-color-surface-overlay);
+  border: none;
+  box-shadow: var(--ncx-shadow-elevation-2);
   overflow-y: auto;
   max-height: 260px;
   animation: ncx-select-fade-in 120ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -899,10 +874,9 @@
   box-sizing: border-box;
   padding: 4px;
   border-radius: 10px;
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-overlay);
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
-  border: var(--ncx-glass-liquid-border);
-  box-shadow: var(--ncx-glass-specular-light), var(--ncx-glass-liquid-shadow);
+  background: var(--ncx-color-surface-overlay);
+  border: none;
+  box-shadow: var(--ncx-shadow-elevation-2);
   overflow-y: auto;
   max-height: 260px;
   animation: ncx-combobox-fade-in 120ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -1018,11 +992,10 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: 1px solid var(--ncx-color-border-strong);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised);
-  backdrop-filter: blur(8px);
-  box-shadow: var(--ncx-glass-specular-light), 0 1px 2px rgb(0 0 0 / 8%);
-  transition: background var(--ncx-motion-fast), border-color var(--ncx-motion-fast), box-shadow var(--ncx-motion-fast), transform var(--ncx-motion-fast);
+  border: none;
+  background: var(--ncx-color-surface-raised);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+  transition: background var(--ncx-motion-fast), box-shadow var(--ncx-motion-fast), transform var(--ncx-motion-fast);
 }
 
 .ncx-common-check--compact .ncx-common-check-box {
@@ -1051,7 +1024,7 @@
 }
 
 .ncx-common-check:hover:not(.ncx-common-check--disabled) .ncx-common-check-box {
-  border-color: var(--ncx-color-accent);
+  background: var(--ncx-color-control-hover);
 }
 
 .ncx-common-check:active:not(.ncx-common-check--disabled) .ncx-common-check-box {
@@ -1060,9 +1033,9 @@
 
 .ncx-common-check--checked .ncx-common-check-box,
 .ncx-common-check--indeterminate .ncx-common-check-box {
-  border-color: transparent;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--ncx-color-accent) 90%, white) 0%, var(--ncx-color-accent) 100%);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+  border: none;
+  background: var(--ncx-color-accent);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 15%);
 }
 
 .ncx-common-check-input:focus-visible + .ncx-common-check-box {
@@ -1125,12 +1098,11 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: 1px solid var(--ncx-color-border-strong);
+  border: none;
   border-radius: 50%;
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised);
-  backdrop-filter: blur(8px);
-  box-shadow: var(--ncx-glass-specular-light), 0 1px 2px rgb(0 0 0 / 8%);
-  transition: background var(--ncx-motion-fast), border-color var(--ncx-motion-fast), box-shadow var(--ncx-motion-fast), transform var(--ncx-motion-fast);
+  background: var(--ncx-color-surface-raised);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+  transition: background var(--ncx-motion-fast), box-shadow var(--ncx-motion-fast), transform var(--ncx-motion-fast);
 }
 
 .ncx-common-radio--compact .ncx-common-radio-circle {
@@ -1425,11 +1397,10 @@
   display: inline-flex;
   align-items: center;
   padding: 2px;
-  border: var(--ncx-glass-liquid-border);
+  border: none;
   border-radius: var(--ncx-radius-md);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface);
-  backdrop-filter: var(--ncx-glass-backdrop-subtle);
-  box-shadow: var(--ncx-glass-specular-light), inset 0 1px 1px rgb(0 0 0 / 4%);
+  background: var(--ncx-color-surface);
+  box-shadow: none;
   user-select: none;
 }
 
@@ -1438,9 +1409,8 @@
   top: 2px;
   bottom: 2px;
   border-radius: calc(var(--ncx-radius-md) - 2px);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised);
-  backdrop-filter: var(--ncx-glass-backdrop);
-  box-shadow: var(--ncx-glass-specular-light), 0 2px 6px rgb(0 0 0 / 12%);
+  background: var(--ncx-color-surface-raised);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
   transition: left var(--ncx-motion-normal) cubic-bezier(0.2, 0, 0, 1), width var(--ncx-motion-normal) cubic-bezier(0.2, 0, 0, 1);
   pointer-events: none;
 }
@@ -1883,11 +1853,10 @@
   flex-direction: column;
   position: relative;
   border-radius: var(--ncx-radius-xl);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface);
-  backdrop-filter: var(--ncx-glass-backdrop);
-  border: var(--ncx-glass-liquid-border);
-  box-shadow: var(--ncx-glass-specular-light), var(--ncx-shadow-elevation-1);
-  transition: border-color var(--ncx-motion-normal) cubic-bezier(0.16, 1, 0.3, 1), box-shadow var(--ncx-motion-normal) cubic-bezier(0.16, 1, 0.3, 1), transform var(--ncx-motion-normal) cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--ncx-color-surface);
+  border: none;
+  box-shadow: var(--ncx-shadow-elevation-1);
+  transition: box-shadow var(--ncx-motion-normal) cubic-bezier(0.16, 1, 0.3, 1), transform var(--ncx-motion-normal) cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ncx-common-card--padding-none {
@@ -1911,21 +1880,19 @@
 }
 
 .ncx-common-card--flat {
-  background: color-mix(in srgb, var(--ncx-color-surface) 60%, transparent);
+  background: var(--ncx-color-surface-raised);
   box-shadow: none;
 }
 
 .ncx-common-card--elevated {
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised);
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
-  box-shadow: var(--ncx-glass-specular-light), var(--ncx-shadow-elevation-2);
+  background: var(--ncx-color-surface-raised);
+  box-shadow: var(--ncx-shadow-elevation-2);
 }
 
 .ncx-common-card--glass {
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface);
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
-  border: var(--ncx-glass-liquid-border);
-  box-shadow: var(--ncx-glass-specular-light), var(--ncx-shadow-elevation-2);
+  background: var(--ncx-color-surface);
+  border: none;
+  box-shadow: var(--ncx-shadow-elevation-2);
 }
 
 .ncx-common-card-interactive,
@@ -1935,7 +1902,6 @@
 
 .ncx-common-card-interactive:hover,
 .ncx-common-card--interactive:hover {
-  border-color: color-mix(in srgb, var(--ncx-color-accent) 32%, transparent);
   box-shadow: var(--ncx-shadow-elevation-2);
   transform: translateY(-2px);
 }
@@ -1946,8 +1912,7 @@
 }
 
 .ncx-common-card--selected {
-  border-color: var(--ncx-color-accent);
-  box-shadow: 0 0 0 1px var(--ncx-color-accent), var(--ncx-shadow-elevation-1);
+  box-shadow: 0 0 0 2px var(--ncx-color-accent);
 }
 
 .ncx-common-card-header {
@@ -2055,12 +2020,11 @@
   position: absolute;
   z-index: var(--ncx-layer-popover);
   padding: var(--ncx-space-1-5) var(--ncx-space-3);
-  border: var(--ncx-glass-liquid-border);
+  border: none;
   border-radius: var(--ncx-radius-md);
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-overlay);
-  backdrop-filter: var(--ncx-glass-backdrop);
-  box-shadow: var(--ncx-glass-specular-light), var(--ncx-shadow-elevation-2);
+  background: var(--ncx-color-surface-overlay);
+  box-shadow: var(--ncx-shadow-elevation-2);
   font-size: 11px;
   font-weight: 500;
   white-space: nowrap;
@@ -2097,36 +2061,28 @@
   width: 6px;
   height: 6px;
   background: var(--ncx-color-surface-overlay);
-  border: 1px solid var(--ncx-color-border-subtle);
+  border: none;
   transform: rotate(45deg);
 }
 
 .ncx-common-tooltip-panel--top .ncx-common-tooltip-arrow {
   bottom: -4px;
   left: calc(50% - 3px);
-  border-top: 0;
-  border-left: 0;
 }
 
 .ncx-common-tooltip-panel--bottom .ncx-common-tooltip-arrow {
   top: -4px;
   left: calc(50% - 3px);
-  border-bottom: 0;
-  border-right: 0;
 }
 
 .ncx-common-tooltip-panel--left .ncx-common-tooltip-arrow {
   right: -4px;
   top: calc(50% - 3px);
-  border-left: 0;
-  border-bottom: 0;
 }
 
 .ncx-common-tooltip-panel--right .ncx-common-tooltip-arrow {
   left: -4px;
   top: calc(50% - 3px);
-  border-right: 0;
-  border-top: 0;
 }
 
 @keyframes ncx-tooltip-fade-in {
@@ -2164,14 +2120,12 @@
   padding: 3px;
   border-radius: var(--ncx-radius-lg);
   background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent);
 }
 
 .ncx-common-tabs-underlined .ncx-common-tabs-list {
   display: inline-flex;
   align-items: center;
   gap: var(--ncx-space-4);
-  border-bottom: 1px solid var(--ncx-color-border-subtle);
   padding-bottom: 2px;
 }
 
@@ -2239,7 +2193,7 @@
 .ncx-common-tabs-segmented .ncx-common-tabs-tab-active {
   color: var(--ncx-color-text-primary);
   background: var(--ncx-color-surface-raised);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 0 1px rgb(0 0 0 / 16%);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
   font-weight: 600;
 }
 
@@ -2286,11 +2240,10 @@
   min-width: 180px;
   max-width: 320px;
   padding: 4px;
-  border: var(--ncx-glass-liquid-border);
+  border: none;
   border-radius: var(--ncx-radius-lg);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-overlay);
-  box-shadow: var(--ncx-glass-specular-light), var(--ncx-shadow-elevation-2);
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
+  background: var(--ncx-color-surface-overlay);
+  box-shadow: var(--ncx-shadow-elevation-2);
 }
 
 .ncx-common-context {
@@ -2311,7 +2264,7 @@
 .ncx-common-menu-separator {
   height: 1px;
   margin: 4px 6px;
-  background: var(--ncx-color-border-subtle);
+  background: var(--ncx-color-control-hover);
 }
 
 .ncx-common-menu-header {
@@ -2532,7 +2485,7 @@
   animation: ncx-common-skeleton-shimmer 1.5s ease-in-out infinite;
 }
 
-/* --- CommonEmptyState (macOS ContentUnavailableView) --- */
+/* --- CommonEmptyState (macOS Empty View) --- */
 .ncx-common-empty {
   display: flex;
   flex-direction: column;
@@ -2541,10 +2494,9 @@
   gap: var(--ncx-space-4);
   width: 100%;
   padding: var(--ncx-space-8) var(--ncx-space-6);
-  border: 1px dashed var(--ncx-color-border-subtle);
+  border: none;
   border-radius: var(--ncx-radius-xl);
   background: var(--ncx-color-surface);
-  backdrop-filter: blur(var(--ncx-blur-sm));
   text-align: center;
 }
 
@@ -2557,7 +2509,6 @@
   border-radius: var(--ncx-radius-2xl);
   color: var(--ncx-color-text-tertiary);
   background: var(--ncx-color-control-hover);
-  box-shadow: inset 0 1px 1px rgb(255 255 255 / 10%);
 }
 
 .ncx-common-empty-icon {
@@ -2602,10 +2553,9 @@
   gap: var(--ncx-space-4);
   width: 100%;
   padding: var(--ncx-space-8) var(--ncx-space-6);
-  border: 1px solid color-mix(in srgb, var(--ncx-color-danger) 24%, transparent);
+  border: none;
   border-radius: var(--ncx-radius-xl);
-  background: color-mix(in srgb, var(--ncx-color-danger) 4%, var(--ncx-color-surface));
-  backdrop-filter: blur(var(--ncx-blur-sm));
+  background: color-mix(in srgb, var(--ncx-color-danger) 6%, var(--ncx-color-surface));
   text-align: center;
 }
 
@@ -2658,11 +2608,10 @@
   align-items: flex-start;
   gap: var(--ncx-space-3);
   padding: var(--ncx-space-3) var(--ncx-space-4);
-  border: 1px solid transparent;
+  border: none;
   border-radius: var(--ncx-radius-lg);
   font-size: 13px;
   line-height: 1.45;
-  backdrop-filter: blur(var(--ncx-blur-sm));
 }
 
 .ncx-common-inline-message-icon {
@@ -2712,25 +2661,21 @@
 }
 
 .ncx-common-inline-message-info {
-  border-color: color-mix(in srgb, var(--ncx-color-info) 22%, transparent);
   color: var(--ncx-color-info);
   background: color-mix(in srgb, var(--ncx-color-info) 10%, transparent);
 }
 
 .ncx-common-inline-message-success {
-  border-color: color-mix(in srgb, var(--ncx-color-success) 22%, transparent);
   color: var(--ncx-color-success);
   background: color-mix(in srgb, var(--ncx-color-success) 10%, transparent);
 }
 
 .ncx-common-inline-message-warning {
-  border-color: color-mix(in srgb, var(--ncx-color-warning) 26%, transparent);
   color: var(--ncx-color-warning);
   background: color-mix(in srgb, var(--ncx-color-warning) 12%, transparent);
 }
 
 .ncx-common-inline-message-danger {
-  border-color: color-mix(in srgb, var(--ncx-color-danger) 26%, transparent);
   color: var(--ncx-color-danger);
   background: color-mix(in srgb, var(--ncx-color-danger) 11%, transparent);
 }
@@ -2749,10 +2694,9 @@
   max-width: 440px;
   padding: 10px 14px;
   border-radius: var(--ncx-radius-xl);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-overlay);
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
-  border: var(--ncx-glass-liquid-border);
-  box-shadow: var(--ncx-glass-specular-light), 0 16px 36px rgb(0 0 0 / 18%), 0 2px 8px rgb(0 0 0 / 8%);
+  background: var(--ncx-color-surface-overlay);
+  border: none;
+  box-shadow: var(--ncx-shadow-elevation-2);
 }
 
 .ncx-common-toast-icon {
@@ -2846,8 +2790,7 @@
   display: grid;
   place-items: center;
   padding: var(--ncx-space-6);
-  background: rgb(0 0 0 / 28%);
-  backdrop-filter: blur(16px);
+  background: rgb(0 0 0 / 36%);
 }
 
 .ncx-common-overlay-alert {
@@ -2862,11 +2805,10 @@
   max-height: 88vh;
   overflow: hidden;
   padding: var(--ncx-space-6);
-  border: var(--ncx-glass-liquid-border);
+  border: none;
   border-radius: var(--ncx-radius-2xl);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-overlay);
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
-  box-shadow: var(--ncx-glass-specular-light), 0 24px 64px rgb(0 0 0 / 26%), 0 4px 16px rgb(0 0 0 / 12%);
+  background: var(--ncx-color-surface-overlay);
+  box-shadow: var(--ncx-shadow-elevation-3);
 }
 
 .ncx-common-modal-header {
@@ -2930,7 +2872,7 @@
   justify-content: flex-end;
   gap: var(--ncx-space-3);
   padding-top: var(--ncx-space-3);
-  border-top: 1px solid var(--ncx-color-border-subtle);
+  border-top: 1px solid var(--ncx-color-control-hover);
 }
 
 /* Modal Pop Transition */
@@ -2982,7 +2924,6 @@
 .ncx-common-alert-icon-danger {
   color: var(--ncx-color-danger);
   background: color-mix(in srgb, var(--ncx-color-danger) 14%, transparent);
-  box-shadow: 0 0 20px color-mix(in srgb, var(--ncx-color-danger) 25%, transparent);
 }
 
 .ncx-common-alert-icon-warning {
@@ -3059,18 +3000,15 @@
   height: 100%;
   padding: var(--ncx-space-6);
   border: 0;
-  border-left: var(--ncx-glass-liquid-border);
   border-radius: var(--ncx-radius-2xl) 0 0 var(--ncx-radius-2xl);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-overlay);
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
-  box-shadow: var(--ncx-glass-specular-light), -16px 0 48px rgb(0 0 0 / 22%);
+  background: var(--ncx-color-surface-overlay);
+  box-shadow: var(--ncx-shadow-elevation-3);
 }
 
 .ncx-common-drawer-left {
-  border-left: 0;
-  border-right: 1px solid var(--ncx-color-border-default);
+  border: 0;
   border-radius: 0 var(--ncx-radius-2xl) var(--ncx-radius-2xl) 0;
-  box-shadow: 16px 0 48px rgb(0 0 0 / 22%), inset 0 1px 0 rgb(255 255 255 / 12%);
+  box-shadow: var(--ncx-shadow-elevation-3);
 }
 
 .ncx-common-drawer-header {
@@ -3161,11 +3099,10 @@
   margin-top: 8px;
   min-width: 200px;
   padding: 12px 16px;
-  border: var(--ncx-glass-liquid-border);
+  border: none;
   border-radius: var(--ncx-radius-xl);
-  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-overlay);
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
-  box-shadow: var(--ncx-glass-specular-light), 0 12px 32px rgb(0 0 0 / 18%), 0 2px 6px rgb(0 0 0 / 8%);
+  background: var(--ncx-color-surface-overlay);
+  box-shadow: var(--ncx-shadow-elevation-2);
   color: var(--ncx-color-text-secondary);
   font-size: 13px;
   line-height: 1.5;
@@ -3187,17 +3124,13 @@
   width: 10px;
   height: 10px;
   background: var(--ncx-color-surface-overlay);
-  border-top: 1px solid var(--ncx-color-border-default);
-  border-left: 1px solid var(--ncx-color-border-default);
+  border: none;
 }
 
 .ncx-common-popover-panel-top .ncx-common-popover-arrow {
   top: auto;
   bottom: -5px;
-  border-top: 0;
-  border-left: 0;
-  border-bottom: 1px solid var(--ncx-color-border-default);
-  border-right: 1px solid var(--ncx-color-border-default);
+  border: none;
 }
 
 /* Popover Fade Transition */
@@ -3225,7 +3158,7 @@
 
 .ncx-common-accordion-item {
   overflow: hidden;
-  border: 1px solid var(--ncx-color-border-subtle);
+  border: none;
   border-radius: var(--ncx-radius-lg);
   background: var(--ncx-color-surface);
 }
@@ -3260,7 +3193,7 @@
   display: grid;
   gap: 2px;
   padding: var(--ncx-space-3);
-  border: 1px solid var(--ncx-color-border-subtle);
+  border: none;
   border-radius: var(--ncx-radius-lg);
   background: var(--ncx-color-surface-raised);
 }
