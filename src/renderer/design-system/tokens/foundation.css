@@ -23,9 +23,9 @@
   --ncx-control-default: 32px;
   --ncx-control-prominent: 36px;
   --ncx-color-canvas: #f5f5f7;
-  --ncx-color-surface: rgb(255 255 255 / 86%);
-  --ncx-color-surface-raised: rgb(255 255 255 / 96%);
-  --ncx-color-surface-overlay: rgb(255 255 255 / 92%);
+  --ncx-color-surface: rgb(255 255 255 / 65%);
+  --ncx-color-surface-raised: rgb(255 255 255 / 76%);
+  --ncx-color-surface-overlay: rgb(255 255 255 / 82%);
   --ncx-color-control-hover: rgb(0 0 0 / 6%);
   --ncx-color-control-pressed: rgb(0 0 0 / 10%);
   --ncx-color-control-selected: rgb(250 45 72 / 12%);
@@ -50,12 +50,21 @@
   --ncx-color-agent-accent: var(--ncx-color-accent);
   --ncx-color-agent-surface: rgb(250 45 72 / 8%);
   --ncx-color-approval-pending: #ff9f0a;
-  --ncx-shadow-elevation-1: 0 1px 2px rgb(0 0 0 / 8%);
-  --ncx-shadow-elevation-2: 0 12px 36px rgb(0 0 0 / 10%);
-  --ncx-shadow-elevation-3: 0 18px 48px rgb(0 0 0 / 16%);
+  --ncx-shadow-elevation-1: 0 2px 8px rgb(0 0 0 / 6%), inset 0 1px 1px rgb(255 255 255 / 60%);
+  --ncx-shadow-elevation-2: 0 12px 36px rgb(0 0 0 / 10%), inset 0 1px 1px rgb(255 255 255 / 70%);
+  --ncx-shadow-elevation-3: 0 18px 48px rgb(0 0 0 / 16%), inset 0 1px 1px rgb(255 255 255 / 80%);
+  --ncx-blur-xs: 8px;
   --ncx-blur-sm: 12px;
   --ncx-blur-md: 20px;
   --ncx-blur-lg: 32px;
+  --ncx-blur-xl: 48px;
+  --ncx-glass-backdrop: blur(20px) saturate(180%) contrast(102%);
+  --ncx-glass-backdrop-deep: blur(32px) saturate(200%) contrast(105%);
+  --ncx-glass-backdrop-subtle: blur(12px) saturate(150%);
+  --ncx-glass-specular-light: inset 0 1px 1px rgb(255 255 255 / 65%), inset 0 -1px 1px rgb(0 0 0 / 4%);
+  --ncx-glass-liquid-shine: linear-gradient(135deg, rgb(255 255 255 / 45%) 0%, rgb(255 255 255 / 12%) 35%, transparent 100%);
+  --ncx-glass-liquid-border: 1px solid rgb(255 255 255 / 60%);
+  --ncx-glass-liquid-shadow: 0 10px 30px rgb(0 0 0 / 8%), 0 2px 6px rgb(0 0 0 / 4%);
   --ncx-motion-instant: 80ms;
   --ncx-motion-fast: 120ms;
   --ncx-motion-normal: 180ms;
@@ -75,9 +84,9 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --ncx-color-canvas: #111113;
-    --ncx-color-surface: rgb(37 37 40 / 88%);
-    --ncx-color-surface-raised: rgb(47 47 51 / 94%);
-    --ncx-color-surface-overlay: rgb(42 42 46 / 94%);
+    --ncx-color-surface: rgb(30 30 35 / 65%);
+    --ncx-color-surface-raised: rgb(40 40 46 / 76%);
+    --ncx-color-surface-overlay: rgb(35 35 42 / 82%);
     --ncx-color-control-hover: rgb(255 255 255 / 8%);
     --ncx-color-control-pressed: rgb(255 255 255 / 13%);
     --ncx-color-control-selected: rgb(255 55 95 / 16%);
@@ -96,8 +105,12 @@
     --ncx-color-danger: #ff453a;
     --ncx-color-info: #64d2ff;
     --ncx-color-agent-surface: rgb(255 55 95 / 12%);
-    --ncx-shadow-elevation-1: 0 1px 2px rgb(0 0 0 / 24%);
-    --ncx-shadow-elevation-2: 0 12px 36px rgb(0 0 0 / 34%);
-    --ncx-shadow-elevation-3: 0 18px 48px rgb(0 0 0 / 46%);
+    --ncx-shadow-elevation-1: 0 2px 8px rgb(0 0 0 / 24%), inset 0 1px 1px rgb(255 255 255 / 14%);
+    --ncx-shadow-elevation-2: 0 12px 36px rgb(0 0 0 / 34%), inset 0 1px 1px rgb(255 255 255 / 18%);
+    --ncx-shadow-elevation-3: 0 18px 48px rgb(0 0 0 / 46%), inset 0 1px 1px rgb(255 255 255 / 22%);
+    --ncx-glass-specular-light: inset 0 1px 1px rgb(255 255 255 / 22%), inset 0 -1px 1px rgb(0 0 0 / 25%);
+    --ncx-glass-liquid-shine: linear-gradient(135deg, rgb(255 255 255 / 18%) 0%, rgb(255 255 255 / 4%) 40%, transparent 100%);
+    --ncx-glass-liquid-border: 1px solid rgb(255 255 255 / 15%);
+    --ncx-glass-liquid-shadow: 0 12px 36px rgb(0 0 0 / 40%), 0 2px 8px rgb(0 0 0 / 20%);
   }
 }

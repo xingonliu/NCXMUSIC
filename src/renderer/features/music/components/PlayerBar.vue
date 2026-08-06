@@ -12,7 +12,7 @@ import type { PlayMode } from '../../../../domains/player/types'
 import { zhCN } from '../../../locales/zh-CN'
 import { usePlayer } from '../use-player'
 
-// ── 变量区 ──
+// ========= 变量 =========
 
 const player = usePlayer()
 const snapshot = player.snapshot
@@ -60,7 +60,7 @@ const nextMode = computed<PlayMode>(() => {
   return MODE_CYCLE[(index + 1) % MODE_CYCLE.length] ?? 'loop'
 })
 
-// ── 函数区 ──
+// ======== 函数 ======
 
 /**
  * 把毫秒格式化为 m:ss。
@@ -218,8 +218,10 @@ function onVolume(event: Event): void {
   gap: 16px;
   align-items: center;
   padding: 12px 20px;
-  border-top: 1px solid var(--ncx-border-subtle, rgb(255 255 255 / 12%));
-  background: var(--ncx-surface-raised, rgb(20 20 24 / 92%));
+  border-top: var(--ncx-glass-liquid-border);
+  background: var(--ncx-glass-liquid-shine), var(--ncx-color-surface-raised, rgb(20 20 24 / 85%));
+  backdrop-filter: var(--ncx-glass-backdrop-deep);
+  box-shadow: var(--ncx-glass-specular-light);
 }
 
 .player-track {
