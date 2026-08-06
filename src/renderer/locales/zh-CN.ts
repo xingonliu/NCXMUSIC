@@ -8,6 +8,7 @@ export const zhCN = {
     'routes.albumDetail': '专辑详情',
     'routes.artistDetail': '艺人详情',
     'routes.discover': '发现音乐',
+    'routes.designSystemLab': '通用组件',
     'routes.immersiveLyrics': '沉浸歌词',
     'routes.likedSongs': '喜欢的音乐',
     'routes.login': '登录',

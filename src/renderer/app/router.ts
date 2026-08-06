@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 
 import RoutePlaceholder from '../design-system/patterns/RoutePlaceholder.vue'
+import DesignSystemLabPage from '../features/design-system/DesignSystemLabPage.vue'
 
 // ========= 变量 =========
 
@@ -157,6 +158,16 @@ const routes: RouteRecordRaw[] = [
     meta: {
       pageLevel: 1,
       title: 'routes.settings',
+      playerBar: 'hide'
+    }
+  },
+  {
+    path: '/design-system',
+    name: 'design-system-lab',
+    component: DesignSystemLabPage,
+    meta: {
+      pageLevel: 1,
+      title: 'routes.designSystemLab',
       playerBar: 'hide'
     }
   },

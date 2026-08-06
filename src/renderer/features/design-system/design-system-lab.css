@@ -1,0 +1,108 @@
+.ncx-design-lab {
+  display: grid;
+  gap: var(--ncx-space-8);
+  min-height: 100%;
+  padding: 104px var(--ncx-space-6) 120px;
+  overflow: auto;
+}
+
+.ncx-design-lab-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: var(--ncx-space-6);
+  align-items: end;
+}
+
+.ncx-design-lab-eyebrow {
+  margin: 0 0 var(--ncx-space-2);
+  color: var(--ncx-color-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ncx-design-lab h1,
+.ncx-design-lab h2,
+.ncx-design-lab p {
+  margin: 0;
+}
+
+.ncx-design-lab h1 {
+  max-width: 720px;
+  font-size: clamp(36px, 5vw, 60px);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+}
+
+.ncx-design-lab-hero p:last-child {
+  max-width: 760px;
+  margin-top: var(--ncx-space-4);
+  color: var(--ncx-color-text-secondary);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.ncx-design-lab-status {
+  display: grid;
+  gap: var(--ncx-space-2);
+}
+
+.ncx-design-lab-status strong {
+  font-size: 20px;
+}
+
+.ncx-design-lab-status span {
+  color: var(--ncx-color-text-secondary);
+  font-size: 13px;
+}
+
+.ncx-design-lab-section {
+  display: grid;
+  gap: var(--ncx-space-4);
+}
+
+.ncx-design-lab-section h2 {
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.ncx-design-lab-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ncx-space-3);
+}
+
+.ncx-design-lab-stack {
+  display: grid;
+  gap: var(--ncx-space-3);
+}
+
+.ncx-design-lab label {
+  display: grid;
+  gap: var(--ncx-space-2);
+  color: var(--ncx-color-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ncx-design-lab-context-zone {
+  display: grid;
+  min-height: 104px;
+  place-items: center;
+  border: 1px dashed var(--ncx-color-border-default);
+  border-radius: var(--ncx-radius-lg);
+  color: var(--ncx-color-text-secondary);
+  background: var(--ncx-color-surface-raised);
+}
+
+@media (width < 1100px) {
+  .ncx-design-lab {
+    padding-inline: var(--ncx-space-4);
+  }
+
+  .ncx-design-lab-hero {
+    grid-template-columns: 1fr;
+  }
+}
