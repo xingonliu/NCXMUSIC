@@ -316,10 +316,10 @@ function toggleQueueDrawer(): void {
   display: grid;
   width: min(840px, calc(100vw - 290px));
   min-height: 66px;
-  grid-template-columns: minmax(140px, 1.2fr) auto minmax(200px, 1.8fr) minmax(190px, auto);
-  gap: var(--ncx-space-3, 12px);
+  grid-template-columns: minmax(140px, 1.2fr) auto minmax(200px, 1.8fr) auto;
+  gap: var(--ncx-space-4, 16px);
   align-items: center;
-  padding: 10px 16px;
+  padding: 10px 18px;
   border: 1px solid var(--ncx-player-bar-glass-stroke);
   border-radius: var(--ncx-radius-full);
   color: var(--ncx-color-text-primary);
@@ -413,10 +413,15 @@ function toggleQueueDrawer(): void {
   animation: player-pulse 1s ease-in-out infinite;
 }
 
-.player-progress,
+.player-progress {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 .player-output {
   display: flex;
-  gap: 6px;
+  gap: 10px;
   align-items: center;
   min-width: 0;
 }
@@ -439,9 +444,9 @@ function toggleQueueDrawer(): void {
 }
 
 .player-status {
-  min-width: 38px;
+  min-width: 36px;
   text-align: right;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .player-slider {
@@ -451,7 +456,7 @@ function toggleQueueDrawer(): void {
 
 .player-slider-volume {
   flex: none;
-  width: 72px;
+  width: 68px;
   min-width: 0;
 }
 
