@@ -17,5 +17,9 @@ const title = computed(() => resolveRouteTitle(route.meta.title))
   <section
     class="ncx-route-placeholder"
     :aria-label="title"
-  />
+  >
+    <h1 class="ncx-route-title">
+      {{ title }}
+    </h1>
+  </section>
 </template>
