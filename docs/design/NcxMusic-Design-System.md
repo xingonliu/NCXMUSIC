@@ -172,8 +172,8 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 | `layer-popover` | 400 | Menu、Popover、Tooltip |
 | `layer-drawer` | 500 | Drawer、Sheet |
 | `layer-modal` | 600 | Dialog、全局阻断层 |
-| `layer-toast` | 700 | Toast 容器 |
 | `layer-voice` | 800 | 语音悬浮组件 |
+| `layer-toast` | 900 | Toast 容器，始终高于应用内浮层与语音悬浮层 |
 
 业务组件不能使用任意 Z-Index。ApprovalCard 默认位于 Agent 会话流内；只有跨页面的未决审批恢复层才使用 `layer-modal`。
 

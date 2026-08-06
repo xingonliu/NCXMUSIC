@@ -66,8 +66,8 @@
   --ncx-layer-popover: 400;
   --ncx-layer-drawer: 500;
   --ncx-layer-modal: 600;
-  --ncx-layer-toast: 700;
   --ncx-layer-voice: 800;
+  --ncx-layer-toast: 900;
   --ncx-font-family: -apple-system, blinkmacsystemfont, "Segoe UI", "PingFang SC",
     "Microsoft YaHei", sans-serif;
 }

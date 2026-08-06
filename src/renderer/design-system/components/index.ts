@@ -1,5 +1,5 @@
 /* eslint vue/multi-word-component-names: off, vue/one-component-per-file: off */
-import { computed, defineComponent, h, ref, type PropType } from 'vue'
+import { computed, defineComponent, h, ref, Teleport, type PropType } from 'vue'
 
 // ========= 类型 =========
 
@@ -720,7 +720,7 @@ export const CommonToast = defineComponent({
   },
   emits: ['close'],
   setup(props, { emit }) {
-    return () => props.visible ? h('aside', { class: `ncx-common-toast ncx-common-toast-${props.type}`, role: 'status' }, [h('strong', props.title), h('span', props.message), h('button', { type: 'button', onClick: () => emit('close') }, '关闭')]) : null
+    return () => props.visible ? h(Teleport, { to: 'body' }, h('aside', { class: `ncx-common-toast ncx-common-toast-${props.type}`, role: 'status' }, [h('strong', props.title), h('span', props.message), h('button', { type: 'button', onClick: () => emit('close') }, '关闭')])) : null
   }
 })
 
