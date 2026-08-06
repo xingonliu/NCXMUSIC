@@ -253,7 +253,6 @@ function toggleQueueDrawer(): void {
         :model-value="Math.round(snapshot.playback.volume * 100)"
         :min="0"
         :max="100"
-        :label="text.volume"
         size="compact"
         :show-value="false"
         @update:model-value="onVolume"
@@ -419,6 +418,7 @@ function toggleQueueDrawer(): void {
   display: flex;
   gap: 6px;
   align-items: center;
+  min-width: 0;
 }
 
 .player-progress-control {
