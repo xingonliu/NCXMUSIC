@@ -8,5 +8,6 @@ declare module 'vue-router' {
     title: string
     playerBar: 'show' | 'hide'
     headerVariant?: 'default' | 'transparent'
+    fallbackRoute?: string
   }
 }
