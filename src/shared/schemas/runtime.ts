@@ -4,6 +4,7 @@ import {
   ResolveTrackUrlPayloadSchema,
   ResolvedMediaSourceSchema
 } from './music'
+import { ExecuteShellInputSchema, ExecuteShellResultSchema } from './shell'
 
 export const PROTOCOL_VERSION = 1 as const
 
@@ -41,7 +42,7 @@ export const HelloPayloadSchema = z.strictObject({
   role: z.enum(['preload', 'utility']),
   appVersion: z.string().min(1).max(64),
   capabilities: z
-    .array(z.enum(['system.ping', 'system.snapshot', 'music.resolve-url']))
+    .array(z.enum(['system.ping', 'system.snapshot', 'music.resolve-url', 'shell.execute']))
     .max(8)
 })
 
@@ -102,10 +103,17 @@ export const ResolveTrackUrlRequestEnvelopeSchema = z.strictObject({
   payload: ResolveTrackUrlPayloadSchema
 })
 
+/** Renderer/Agent → Utility：执行经过策略网关判定的 Shell 命令 */
+export const ExecuteShellRequestEnvelopeSchema = z.strictObject({
+  ...RequestBaseShape,
+  name: z.literal('shell.execute'),
+  payload: ExecuteShellInputSchema
+})
+
 export const CancelEnvelopeSchema = z.strictObject({
   ...MessageBaseShape,
   kind: z.literal('cancel'),
-  name: z.enum(['system.ping', 'system.snapshot', 'music.resolve-url']),
+  name: z.enum(['system.ping', 'system.snapshot', 'music.resolve-url', 'shell.execute']),
   requestId: z.uuid(),
   reason: z.enum(['user', 'timeout', 'navigation', 'shutdown'])
 })
@@ -123,7 +131,7 @@ const FailureResultSchema = z.strictObject({
 export const ResponseEnvelopeSchema = z.strictObject({
   ...MessageBaseShape,
   kind: z.literal('response'),
-  name: z.enum(['system.ping', 'system.snapshot', 'music.resolve-url']),
+  name: z.enum(['system.ping', 'system.snapshot', 'music.resolve-url', 'shell.execute']),
   requestId: z.uuid(),
   result: z.discriminatedUnion('ok', [SuccessResultSchema, FailureResultSchema])
 })
@@ -133,6 +141,7 @@ export const RuntimeInboundEnvelopeSchema = z.union([
   PingRequestEnvelopeSchema,
   SnapshotRequestEnvelopeSchema,
   ResolveTrackUrlRequestEnvelopeSchema,
+  ExecuteShellRequestEnvelopeSchema,
   CancelEnvelopeSchema
 ])
 
@@ -144,6 +153,7 @@ export const RuntimeOutboundEnvelopeSchema = z.union([
 export type PingRequestEnvelope = z.infer<typeof PingRequestEnvelopeSchema>
 export type SnapshotRequestEnvelope = z.infer<typeof SnapshotRequestEnvelopeSchema>
 export type ResolveTrackUrlRequestEnvelope = z.infer<typeof ResolveTrackUrlRequestEnvelopeSchema>
+export type ExecuteShellRequestEnvelope = z.infer<typeof ExecuteShellRequestEnvelopeSchema>
 export type CancelEnvelope = z.infer<typeof CancelEnvelopeSchema>
 
 export const contractRegistry = {
@@ -167,6 +177,14 @@ export const contractRegistry = {
     resultSchema: ResolvedMediaSourceSchema,
     /** URL 解析需要网络请求，超时设长一些 */
     defaultTimeoutMs: 20_000,
+    retryable: false
+  },
+  'shell.execute': {
+    direction: 'renderer-to-utility',
+    payloadSchema: ExecuteShellInputSchema,
+    resultSchema: ExecuteShellResultSchema,
+    /** Shell 自身默认超时由执行器读取；协议层保留略长的硬超时。 */
+    defaultTimeoutMs: 610_000,
     retryable: false
   }
 } as const

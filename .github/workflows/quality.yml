@@ -31,6 +31,7 @@ jobs:
       - run: pnpm lint
       - run: pnpm test
       - run: pnpm build
+      - run: pnpm t05:spike
       - run: pnpm t02:verify-boundaries
       - run: pnpm t02:spike -- --scenario guest --target build --profile ci-guest
       - run: pnpm t02:spike -- --scenario invalid --target build --profile ci-invalid

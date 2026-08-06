@@ -26,6 +26,7 @@
     "smoke:packaged": "pnpm build && electron-builder --dir --publish never --config.directories.output=.artifacts/package-smoke && node scripts/run-electron-smoke.mjs packaged .artifacts/package-smoke",
     "t02:spike": "node scripts/run-login-spike.mjs",
     "t02:verify-boundaries": "node scripts/verify-auth-boundaries.mjs",
+    "t05:spike": "node scripts/run-shell-spike.mjs",
     "release": "pnpm build && electron-builder --publish always"
   },
   "dependencies": {

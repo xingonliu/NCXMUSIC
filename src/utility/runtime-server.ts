@@ -1,6 +1,7 @@
 import type { RuntimeConnectionMetadata } from '../shared/contracts/control-plane'
 import {
   HelloEnvelopeSchema,
+  ExecuteShellRequestEnvelopeSchema,
   PingRequestEnvelopeSchema,
   PROTOCOL_VERSION,
   ResolveTrackUrlRequestEnvelopeSchema,
@@ -8,11 +9,13 @@ import {
   SnapshotRequestEnvelopeSchema,
   messageBase,
   type CancelEnvelope,
+  type ExecuteShellRequestEnvelope,
   type PingRequestEnvelope,
   type ProtocolError,
   type ResolveTrackUrlRequestEnvelope,
   type SnapshotRequestEnvelope
 } from '../shared/schemas/runtime'
+import type { ShellExecutor } from '../infrastructure/shell/executor'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 类型区
@@ -36,16 +39,25 @@ export interface TrackUrlHandler {
   cancel(requestId: string): void
 }
 
+export interface ShellCommandHandler {
+  /** 执行经过策略网关判定的 Shell 命令。 */
+  execute(requestId: string, payload: unknown): Promise<unknown>
+  /** 取消进行中的 Shell 命令并回收进程树。 */
+  cancel(requestId: string): void
+}
+
 /** 可被响应的请求信封（用于统一 respond* 签名） */
 type AnyRequestEnvelope =
   | PingRequestEnvelope
   | SnapshotRequestEnvelope
   | ResolveTrackUrlRequestEnvelope
+  | ExecuteShellRequestEnvelope
 
 /** 待处理请求：ping 用定时器，resolve-url 交由 handler 自行取消 */
 type PendingRequest =
   | { name: 'system.ping'; timer: ReturnType<typeof setTimeout> }
   | { name: 'music.resolve-url' }
+  | { name: 'shell.execute' }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // UtilityRuntimeServer
@@ -63,8 +75,12 @@ export class UtilityRuntimeServer {
 
   /**
    * @param trackUrlHandler music.resolve-url 的执行方；未注入时该能力返回 CAPABILITY_UNAVAILABLE
+   * @param shellHandler shell.execute 的执行方；未注入时该能力返回 CAPABILITY_UNAVAILABLE
    */
-  constructor(private readonly trackUrlHandler?: TrackUrlHandler) {}
+  constructor(
+    private readonly trackUrlHandler?: TrackUrlHandler,
+    private readonly shellHandler?: ShellCommandHandler | ShellExecutor
+  ) {}
 
   // ── 生命周期区 ──
 
@@ -96,12 +112,13 @@ export class UtilityRuntimeServer {
   // ── 函数区 ──
 
   /** 当前 Utility 实际提供的能力集合 */
-  private capabilities(): Array<'system.ping' | 'system.snapshot' | 'music.resolve-url'> {
-    const base: Array<'system.ping' | 'system.snapshot' | 'music.resolve-url'> = [
+  private capabilities(): Array<'system.ping' | 'system.snapshot' | 'music.resolve-url' | 'shell.execute'> {
+    const base: Array<'system.ping' | 'system.snapshot' | 'music.resolve-url' | 'shell.execute'> = [
       'system.ping',
       'system.snapshot'
     ]
     if (this.trackUrlHandler) base.push('music.resolve-url')
+    if (this.shellHandler) base.push('shell.execute')
     return base
   }
 
@@ -149,6 +166,11 @@ export class UtilityRuntimeServer {
 
     if (envelope.name === 'music.resolve-url') {
       void this.resolveTrackUrl(ResolveTrackUrlRequestEnvelopeSchema.parse(envelope))
+      return
+    }
+
+    if (envelope.name === 'shell.execute') {
+      void this.executeShell(ExecuteShellRequestEnvelopeSchema.parse(envelope))
       return
     }
 
@@ -209,6 +231,44 @@ export class UtilityRuntimeServer {
 
     try {
       const data = await handler.resolve(request.requestId, request.payload)
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondSuccess(request, data)
+    } catch (error) {
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondError(request, this.toProtocolError(error))
+    }
+  }
+
+  /** 执行 shell.execute：委托给 ShellExecutor 并保证连接替换后不误发响应。 */
+  private async executeShell(request: ExecuteShellRequestEnvelope): Promise<void> {
+    const handler = this.shellHandler
+    if (!handler) {
+      this.respondError(request, {
+        code: 'CAPABILITY_UNAVAILABLE',
+        message: '当前运行时未启用 Shell 执行能力。',
+        retryable: false
+      })
+      return
+    }
+
+    if (this.pending.has(request.requestId)) {
+      this.respondError(request, {
+        code: 'PROTOCOL_INVALID_MESSAGE',
+        message: 'requestId 已在使用。',
+        retryable: false
+      })
+      return
+    }
+
+    const connectionId = request.connectionId
+    this.pending.set(request.requestId, { name: 'shell.execute' })
+
+    try {
+      const data = await handler.execute(request.requestId, request.payload)
       if (!this.isCurrentRequest(request.requestId, connectionId)) return
       this.pending.delete(request.requestId)
       this.handledRequests += 1
@@ -283,8 +343,10 @@ export class UtilityRuntimeServer {
 
     if (pending.name === 'system.ping') {
       clearTimeout(pending.timer)
-    } else {
+    } else if (pending.name === 'music.resolve-url') {
       this.trackUrlHandler?.cancel(envelope.requestId)
+    } else {
+      this.shellHandler?.cancel(envelope.requestId)
     }
     this.pending.delete(envelope.requestId)
     this.respondError(envelope, {
@@ -332,8 +394,10 @@ export class UtilityRuntimeServer {
     for (const [requestId, request] of this.pending) {
       if (request.name === 'system.ping') {
         clearTimeout(request.timer)
-      } else {
+      } else if (request.name === 'music.resolve-url') {
         this.trackUrlHandler?.cancel(requestId)
+      } else {
+        this.shellHandler?.cancel(requestId)
       }
     }
     this.pending.clear()
