@@ -4,9 +4,11 @@
 //
 // 只订阅 snapshot 并发送命令，不拥有播放引擎，也不猜测播放状态。
 // 所有按钮可用性由 snapshot 推导，不做本地乐观更新。
+// 所有交互按钮统一基于通用组件 CommonIconButton 渲染。
 // ─────────────────────────────────────────────────────────────────────────────
 
 import {
+  ListMusic,
   Pause,
   Play,
   Repeat,
@@ -18,7 +20,7 @@ import {
   VolumeX,
   X
 } from '@lucide/vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import type { PlayMode } from '../../../../domains/player/types'
 import {
@@ -30,6 +32,7 @@ import {
 } from '../../../design-system/components'
 import { zhCN } from '../../../locales/zh-CN'
 import { usePlayer } from '../use-player'
+import QueueDrawer from './QueueDrawer.vue'
 
 // ========= 变量 =========
 
@@ -44,6 +47,9 @@ const notice = player.notice
 
 /** PlayerBar 本地化文案集合。 */
 const text = zhCN.player
+
+/** 播放队列抽屉开闭状态。 */
+const isQueueOpen = ref<boolean>(false)
 
 /** 当前曲目摘要 */
 const track = computed(() => snapshot.value.playback.track)
@@ -92,7 +98,7 @@ const nextMode = computed<PlayMode>(() => {
   return MODE_CYCLE[(index + 1) % MODE_CYCLE.length] ?? 'loop'
 })
 
-// ======== 函数 ======
+// ========= 函数 =========
 
 /**
  * 把毫秒格式化为 m:ss。
@@ -109,6 +115,11 @@ function formatTime(value: number): string {
 /** 调整音量。 */
 function onVolume(value: number): void {
   player.setVolume(value / 100)
+}
+
+/** 切换播放队列抽屉显隐。 */
+function toggleQueueDrawer(): void {
+  isQueueOpen.value = !isQueueOpen.value
 }
 </script>
 
@@ -137,7 +148,6 @@ function onVolume(value: number): void {
       variant="segmented"
     >
       <CommonIconButton
-        class="player-button"
         size="default"
         variant="ghost"
         :disabled="!hasQueue"
@@ -147,7 +157,6 @@ function onVolume(value: number): void {
         <SkipBack :size="15" />
       </CommonIconButton>
       <CommonIconButton
-        class="player-button player-button-primary"
         size="prominent"
         variant="primary"
         :disabled="!track"
@@ -171,7 +180,6 @@ function onVolume(value: number): void {
         />
       </CommonIconButton>
       <CommonIconButton
-        class="player-button"
         size="default"
         variant="ghost"
         :disabled="!hasQueue"
@@ -181,7 +189,6 @@ function onVolume(value: number): void {
         <SkipForward :size="15" />
       </CommonIconButton>
       <CommonIconButton
-        class="player-button"
         size="default"
         variant="ghost"
         :label="text.mode[snapshot.queue.mode]"
@@ -224,10 +231,9 @@ function onVolume(value: number): void {
       <span class="player-time">{{ formatTime(durationMs) }}</span>
     </div>
 
-    <!-- 音量与状态 -->
+    <!-- 音量与状态控制 -->
     <div class="player-output">
       <CommonIconButton
-        class="player-button"
         size="default"
         variant="ghost"
         :label="snapshot.playback.muted ? text.unmute : text.mute"
@@ -252,6 +258,16 @@ function onVolume(value: number): void {
         :show-value="false"
         @update:model-value="onVolume"
       />
+      <!-- 音乐队列按钮 -->
+      <CommonIconButton
+        size="default"
+        variant="ghost"
+        :selected="isQueueOpen"
+        :label="text.queue"
+        @click="toggleQueueDrawer"
+      >
+        <ListMusic :size="15" />
+      </CommonIconButton>
       <span
         class="player-status"
         role="status"
@@ -275,32 +291,36 @@ function onVolume(value: number): void {
         <X :size="13" />
       </CommonIconButton>
     </p>
+
+    <!-- 播放队列抽屉 -->
+    <QueueDrawer
+      :visible="isQueueOpen"
+      @close="isQueueOpen = false"
+    />
   </footer>
 </template>
 
 <style scoped>
 .player-bar {
-  --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 72%, transparent);
+  --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 76%, transparent);
   --ncx-player-bar-glass-edge: color-mix(in srgb, white 62%, transparent);
   --ncx-player-bar-glass-stroke: color-mix(in srgb, var(--ncx-color-text-primary) 9%, transparent);
-  --ncx-player-bar-glass-shadow: 0 22px 52px rgb(20 20 24 / 16%),
-    0 8px 20px rgb(20 20 24 / 8%), inset 0 1px 0 rgb(255 255 255 / 65%);
-  --ncx-player-bar-control-hover: color-mix(in srgb, white 52%, transparent);
-  --ncx-player-bar-control-pressed: color-mix(in srgb, var(--ncx-color-text-primary) 10%, transparent);
+  --ncx-player-bar-glass-shadow: 0 16px 40px rgb(20 20 24 / 14%),
+    0 6px 16px rgb(20 20 24 / 6%), inset 0 1px 0 rgb(255 255 255 / 65%);
   --ncx-player-bar-track-bg: color-mix(in srgb, var(--ncx-color-text-primary) 13%, transparent);
   --ncx-player-bar-thumb-shadow: 0 2px 6px rgb(20 20 24 / 18%);
 
   position: fixed;
   z-index: var(--ncx-layer-player);
-  bottom: 18px;
+  bottom: 16px;
   left: calc(230px + ((100vw - 230px) / 2));
   display: grid;
-  width: min(920px, calc(100vw - 306px));
-  min-height: 76px;
-  grid-template-columns: minmax(150px, 1fr) auto minmax(220px, 1.6fr) minmax(170px, auto);
-  gap: var(--ncx-space-4);
+  width: min(840px, calc(100vw - 290px));
+  min-height: 66px;
+  grid-template-columns: minmax(140px, 1.2fr) auto minmax(200px, 1.8fr) minmax(190px, auto);
+  gap: var(--ncx-space-3, 12px);
   align-items: center;
-  padding: 13px 18px;
+  padding: 10px 16px;
   border: 1px solid var(--ncx-player-bar-glass-stroke);
   border-radius: var(--ncx-radius-full);
   color: var(--ncx-color-text-primary);
@@ -352,105 +372,42 @@ function onVolume(value: number): void {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  line-height: 20px;
+  line-height: 18px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .player-track-meta {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   margin: 2px 0 0;
   overflow: hidden;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--ncx-color-text-secondary);
-  line-height: 18px;
+  line-height: 16px;
   white-space: nowrap;
 }
 
 .player-quality {
   flex: none;
-  padding: 0 7px;
+  padding: 0 6px;
   border: 1px solid color-mix(in srgb, var(--ncx-color-accent) 18%, transparent);
   border-radius: var(--ncx-radius-full);
   color: var(--ncx-color-accent);
   background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
   font-size: 10px;
   font-weight: 700;
-  line-height: 16px;
+  line-height: 15px;
 }
 
 .player-transport {
   display: flex;
-  gap: 4px;
+  gap: 2px;
   align-items: center;
-  padding: 3px;
+  padding: 2px;
   border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
   border-radius: var(--ncx-radius-full);
   background: color-mix(in srgb, white 24%, transparent);
-}
-
-.player-button {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid transparent;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--ncx-color-text-primary);
-  cursor: pointer;
-  font-size: 14px;
-  line-height: 1;
-  text-shadow: 0 1px 1px rgb(255 255 255 / 28%);
-  transition:
-    background-color var(--ncx-motion-fast),
-    border-color var(--ncx-motion-fast),
-    color var(--ncx-motion-fast),
-    box-shadow var(--ncx-motion-fast);
-}
-
-.player-button:hover:not(:disabled) {
-  border-color: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
-  background: var(--ncx-player-bar-control-hover);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 36%);
-}
-
-.player-button:active:not(:disabled) {
-  background: var(--ncx-player-bar-control-pressed);
-}
-
-.player-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.35;
-}
-
-.player-button-primary {
-  width: 42px;
-  height: 42px;
-  border-color: color-mix(in srgb, white 30%, transparent);
-  color: var(--ncx-color-on-accent);
-  background:
-    radial-gradient(circle at 35% 18%, rgb(255 255 255 / 40%), transparent 28%),
-    linear-gradient(145deg, var(--ncx-color-accent-hover), var(--ncx-color-accent));
-  box-shadow:
-    0 8px 18px rgb(20 20 24 / 12%),
-    inset 0 1px 0 rgb(255 255 255 / 35%);
-  font-size: 15px;
-  text-shadow: none;
-}
-
-.player-button-primary:hover:not(:disabled) {
-  border-color: color-mix(in srgb, white 44%, transparent);
-  background:
-    radial-gradient(circle at 35% 18%, rgb(255 255 255 / 48%), transparent 28%),
-    linear-gradient(145deg, var(--ncx-color-accent-hover), var(--ncx-color-accent));
-}
-
-.player-button-primary:active:not(:disabled) {
-  background:
-    radial-gradient(circle at 35% 18%, rgb(255 255 255 / 24%), transparent 28%),
-    linear-gradient(145deg, var(--ncx-color-accent), var(--ncx-color-accent-pressed));
 }
 
 .player-busy {
@@ -460,7 +417,7 @@ function onVolume(value: number): void {
 .player-progress,
 .player-output {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
 }
 
@@ -477,13 +434,14 @@ function onVolume(value: number): void {
 }
 
 .player-time {
-  min-width: 34px;
+  min-width: 32px;
   text-align: center;
 }
 
 .player-status {
-  min-width: 42px;
+  min-width: 38px;
   text-align: right;
+  font-size: 10px;
 }
 
 .player-slider {
@@ -493,7 +451,7 @@ function onVolume(value: number): void {
 
 .player-slider-volume {
   flex: none;
-  width: 72px;
+  width: 64px;
 }
 
 .player-slider :deep(.ncx-common-slider-track-container),
@@ -516,8 +474,8 @@ function onVolume(value: number): void {
 }
 
 .player-slider :deep(.ncx-common-slider-thumb) {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   background: color-mix(in srgb, var(--ncx-color-accent) 92%, white 8%);
   box-shadow: var(--ncx-player-bar-thumb-shadow);
 }
@@ -528,29 +486,12 @@ function onVolume(value: number): void {
   gap: 8px;
   align-items: center;
   margin: -2px 2px 0;
-  padding: 7px 10px;
+  padding: 6px 10px;
   border: 1px solid color-mix(in srgb, var(--ncx-color-warning) 22%, transparent);
   border-radius: var(--ncx-radius-full);
   background: color-mix(in srgb, var(--ncx-color-warning) 10%, transparent);
   font-size: 12px;
   color: var(--ncx-color-warning);
-}
-
-.player-notice-close {
-  display: grid;
-  width: 20px;
-  height: 20px;
-  place-items: center;
-  border: 1px solid transparent;
-  border-radius: 50%;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  line-height: 1;
-}
-
-.player-notice-close:hover {
-  background: color-mix(in srgb, var(--ncx-color-warning) 14%, transparent);
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -564,10 +505,8 @@ function onVolume(value: number): void {
     --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 70%, transparent);
     --ncx-player-bar-glass-edge: color-mix(in srgb, white 16%, transparent);
     --ncx-player-bar-glass-stroke: color-mix(in srgb, white 14%, transparent);
-    --ncx-player-bar-glass-shadow: 0 24px 58px rgb(0 0 0 / 40%),
-      0 8px 24px rgb(0 0 0 / 28%), inset 0 1px 0 rgb(255 255 255 / 12%);
-    --ncx-player-bar-control-hover: color-mix(in srgb, white 14%, transparent);
-    --ncx-player-bar-control-pressed: color-mix(in srgb, white 20%, transparent);
+    --ncx-player-bar-glass-shadow: 0 20px 48px rgb(0 0 0 / 40%),
+      0 6px 20px rgb(0 0 0 / 28%), inset 0 1px 0 rgb(255 255 255 / 12%);
     --ncx-player-bar-track-bg: color-mix(in srgb, white 16%, transparent);
   }
 
@@ -579,10 +518,10 @@ function onVolume(value: number): void {
 @media (width < 1100px) {
   .player-bar {
     bottom: 14px;
-    width: calc(100vw - 286px);
-    grid-template-columns: minmax(120px, 1fr) auto minmax(180px, 1.4fr);
-    gap: var(--ncx-space-3);
-    padding-inline: 14px;
+    width: calc(100vw - 280px);
+    grid-template-columns: minmax(120px, 1fr) auto minmax(160px, 1.4fr);
+    gap: var(--ncx-space-2, 8px);
+    padding-inline: 12px;
   }
 
   .player-output {
@@ -591,9 +530,7 @@ function onVolume(value: number): void {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .player-button,
   .player-busy {
-    transition: none;
     animation: none;
   }
 }

@@ -56,6 +56,13 @@ export const zhCN = {
     dismiss: '关闭提示',
     /** 音质降级时追加到音质标签后的后缀 */
     downgradedSuffix: '（已降级）',
+    /** 播放队列 */
+    queue: '播放队列',
+    queueTitle: '播放队列',
+    queueEmpty: '播放队列暂无歌曲',
+    clearQueue: '清空队列',
+    removeTrack: '移出队列',
+    nowPlaying: '正在播放',
     /** 播放模式，键与 PlayMode 一致 */
     mode: {
       loop: '列表循环',
