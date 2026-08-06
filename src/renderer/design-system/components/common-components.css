@@ -482,32 +482,41 @@
   font-size: 11px;
 }
 
-/* Subtle Variant */
-.ncx-common-badge-info.ncx-common-badge--subtle,
+/* Type base colors */
 .ncx-common-badge-info {
   color: var(--ncx-color-info);
   background: color-mix(in srgb, var(--ncx-color-info) 12%, transparent);
-  border-color: color-mix(in srgb, var(--ncx-color-info) 22%, transparent);
 }
 
-.ncx-common-badge-success.ncx-common-badge--subtle,
 .ncx-common-badge-success {
   color: var(--ncx-color-success);
   background: color-mix(in srgb, var(--ncx-color-success) 12%, transparent);
-  border-color: color-mix(in srgb, var(--ncx-color-success) 22%, transparent);
 }
 
-.ncx-common-badge-warning.ncx-common-badge--subtle,
 .ncx-common-badge-warning {
   color: var(--ncx-color-warning);
   background: color-mix(in srgb, var(--ncx-color-warning) 14%, transparent);
-  border-color: color-mix(in srgb, var(--ncx-color-warning) 24%, transparent);
 }
 
-.ncx-common-badge-danger.ncx-common-badge--subtle,
 .ncx-common-badge-danger {
   color: var(--ncx-color-danger);
   background: color-mix(in srgb, var(--ncx-color-danger) 12%, transparent);
+}
+
+/* Subtle Variant — adds border */
+.ncx-common-badge-info.ncx-common-badge--subtle {
+  border-color: color-mix(in srgb, var(--ncx-color-info) 22%, transparent);
+}
+
+.ncx-common-badge-success.ncx-common-badge--subtle {
+  border-color: color-mix(in srgb, var(--ncx-color-success) 22%, transparent);
+}
+
+.ncx-common-badge-warning.ncx-common-badge--subtle {
+  border-color: color-mix(in srgb, var(--ncx-color-warning) 24%, transparent);
+}
+
+.ncx-common-badge-danger.ncx-common-badge--subtle {
   border-color: color-mix(in srgb, var(--ncx-color-danger) 22%, transparent);
 }
 
@@ -622,6 +631,10 @@
 }
 
 /* Tag Variants */
+.ncx-common-tag--subtle {
+  /* Default state — inherits from .ncx-common-tag base */
+}
+
 .ncx-common-tag--solid {
   background: var(--ncx-color-text-primary);
   color: var(--ncx-color-canvas);
@@ -732,6 +745,10 @@
 
 .ncx-common-card--padding-prominent {
   padding: var(--ncx-space-6);
+}
+
+.ncx-common-card--default {
+  /* Standard card — uses base .ncx-common-card rules */
 }
 
 .ncx-common-card--flat {
