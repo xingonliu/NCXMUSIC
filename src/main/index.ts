@@ -366,8 +366,14 @@ async function createMainWindow(): Promise<void> {
     minHeight: 640,
     show: false,
     autoHideMenuBar: true,
+    frame: false,
     backgroundColor: '#f5f5f7',
-    ...(process.platform === 'darwin' ? { titleBarStyle: 'hidden' as const } : {}),
+    ...(process.platform === 'darwin'
+      ? {
+          trafficLightPosition: { x: 24, y: 24 },
+          titleBarStyle: 'hidden' as const
+        }
+      : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       contextIsolation: true,

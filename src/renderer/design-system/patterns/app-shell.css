@@ -28,10 +28,10 @@
 
 .ncx-window-mask {
   position: absolute;
-  z-index: 10;
+  z-index: 40;
   top: 0;
   right: 0;
-  left: 0;
+  left: calc(var(--ncx-sidebar-width) + var(--ncx-shell-gap) + var(--ncx-shell-gap));
   height: 96px;
   pointer-events: none;
   background: linear-gradient(
