@@ -1,0 +1,173 @@
+// @vitest-environment happy-dom
+import { mount } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
+import { h } from 'vue'
+
+import {
+  CommonButton,
+  CommonButtonGroup,
+  CommonIconButton,
+  CommonLinkButton
+} from '../../src/renderer/design-system/components'
+
+describe('macOS HIG & WWDC25 按钮族组件规范测试', () => {
+  describe('CommonButton (通用按钮)', () => {
+    it('默认状态正确渲染类名与 default 类型', () => {
+      const wrapper = mount(CommonButton, {
+        slots: { default: '点击操作' }
+      })
+
+      expect(wrapper.element.tagName).toBe('BUTTON')
+      expect(wrapper.classes()).toContain('ncx-common-button')
+      expect(wrapper.classes()).toContain('ncx-common-button-secondary')
+      expect(wrapper.classes()).toContain('ncx-common-button-default')
+      expect(wrapper.attributes('type')).toBe('button')
+      expect(wrapper.text()).toBe('点击操作')
+    })
+
+    it('正确支持所有变体 (primary / secondary / ghost / danger)', () => {
+      const variants = ['primary', 'secondary', 'ghost', 'danger'] as const
+
+      for (const variant of variants) {
+        const wrapper = mount(CommonButton, {
+          props: { variant },
+          slots: { default: variant }
+        })
+        expect(wrapper.classes()).toContain(`ncx-common-button-${variant}`)
+      }
+    })
+
+    it('正确支持所有尺寸 (compact / default / prominent)', () => {
+      const sizes = ['compact', 'default', 'prominent'] as const
+
+      for (const size of sizes) {
+        const wrapper = mount(CommonButton, {
+          props: { size }
+        })
+        expect(wrapper.classes()).toContain(`ncx-common-button-${size}`)
+      }
+    })
+
+    it('点击触发 click 事件', async () => {
+      const wrapper = mount(CommonButton)
+      await wrapper.trigger('click')
+      expect(wrapper.emitted('click')).toHaveLength(1)
+    })
+
+    it('禁用态设置 disabled 属性与 aria-disabled，且拦截点击事件', async () => {
+      const wrapper = mount(CommonButton, {
+        props: { disabled: true }
+      })
+
+      expect(wrapper.attributes('disabled')).toBeDefined()
+      expect(wrapper.attributes('aria-disabled')).toBe('true')
+
+      await wrapper.trigger('click')
+      expect(wrapper.emitted('click')).toBeUndefined()
+    })
+
+    it('加载态 (loading) 显示 Spinner、设置 aria-busy，且拦截点击事件', async () => {
+      const wrapper = mount(CommonButton, {
+        props: { loading: true },
+        slots: { default: '保存中' }
+      })
+
+      expect(wrapper.classes()).toContain('ncx-common-button-loading')
+      expect(wrapper.attributes('aria-busy')).toBe('true')
+      expect(wrapper.attributes('aria-disabled')).toBe('true')
+      expect(wrapper.find('.ncx-common-spinner').exists()).toBe(true)
+
+      await wrapper.trigger('click')
+      expect(wrapper.emitted('click')).toBeUndefined()
+    })
+  })
+
+  describe('CommonIconButton (纯图标按钮)', () => {
+    it('正确渲染无障碍 label 属性 (aria-label & title)', () => {
+      const wrapper = mount(CommonIconButton, {
+        props: { label: '播放音乐' },
+        slots: { default: () => h('span', '▶') }
+      })
+
+      expect(wrapper.element.tagName).toBe('BUTTON')
+      expect(wrapper.classes()).toContain('ncx-common-icon-button')
+      expect(wrapper.attributes('aria-label')).toBe('播放音乐')
+      expect(wrapper.attributes('title')).toBe('播放音乐')
+      expect(wrapper.text()).toBe('▶')
+    })
+
+    it('支持 selected 选定按下状态与 aria-pressed', () => {
+      const wrapper = mount(CommonIconButton, {
+        props: { label: '喜欢', selected: true }
+      })
+
+      expect(wrapper.classes()).toContain('ncx-common-icon-button-selected')
+      expect(wrapper.attributes('aria-pressed')).toBe('true')
+    })
+
+    it('禁用状态正确防护', async () => {
+      const wrapper = mount(CommonIconButton, {
+        props: { label: '设置', disabled: true }
+      })
+
+      expect(wrapper.attributes('disabled')).toBeDefined()
+      expect(wrapper.attributes('aria-disabled')).toBe('true')
+
+      await wrapper.trigger('click')
+      expect(wrapper.emitted('click')).toBeUndefined()
+    })
+  })
+
+  describe('CommonButtonGroup (按钮组容器)', () => {
+    it('正确渲染 role="group" 及连体 connected 变体', () => {
+      const wrapper = mount(CommonButtonGroup, {
+        slots: {
+          default: () => [
+            h(CommonButton, null, () => 'Btn 1'),
+            h(CommonButton, null, () => 'Btn 2')
+          ]
+        }
+      })
+
+      expect(wrapper.attributes('role')).toBe('group')
+      expect(wrapper.classes()).toContain('ncx-common-button-group')
+      expect(wrapper.classes()).toContain('ncx-common-button-group-connected')
+      expect(wrapper.findAll('.ncx-common-button')).toHaveLength(2)
+    })
+
+    it('支持 vertical 纵向排列', () => {
+      const wrapper = mount(CommonButtonGroup, {
+        props: { vertical: true }
+      })
+
+      expect(wrapper.classes()).toContain('ncx-common-button-group-vertical')
+    })
+  })
+
+  describe('CommonLinkButton (链接型按钮)', () => {
+    it('正确渲染 a 标签与 href 链接', () => {
+      const wrapper = mount(CommonLinkButton, {
+        props: { href: 'https://example.com' },
+        slots: { default: '查看详情' }
+      })
+
+      expect(wrapper.element.tagName).toBe('A')
+      expect(wrapper.classes()).toContain('ncx-common-link-button')
+      expect(wrapper.attributes('href')).toBe('https://example.com')
+      expect(wrapper.text()).toBe('查看详情')
+    })
+
+    it('禁用状态移除 href 并注入 aria-disabled，防护点击', async () => {
+      const wrapper = mount(CommonLinkButton, {
+        props: { href: 'https://example.com', disabled: true }
+      })
+
+      expect(wrapper.classes()).toContain('ncx-common-link-button-disabled')
+      expect(wrapper.attributes('href')).toBeUndefined()
+      expect(wrapper.attributes('aria-disabled')).toBe('true')
+
+      await wrapper.trigger('click')
+      expect(wrapper.emitted('click')).toBeUndefined()
+    })
+  })
+})

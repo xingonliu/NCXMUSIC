@@ -45,7 +45,10 @@
   outline-offset: 2px;
 }
 
+/* ========= macOS Button / Controls (WWDC25 HIG Alignment) ========= */
+
 .ncx-common-button {
+  position: relative;
   display: inline-flex;
   min-width: max-content;
   align-items: center;
@@ -53,117 +56,242 @@
   gap: var(--ncx-space-2);
   border: 1px solid transparent;
   border-radius: var(--ncx-radius-md);
-  cursor: pointer;
-  font-weight: 600;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  color: var(--ncx-color-text-primary);
+  font-family: var(--ncx-font-family);
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
   white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  transition:
+    background-color var(--ncx-motion-fast) ease,
+    border-color var(--ncx-motion-fast) ease,
+    color var(--ncx-motion-fast) ease,
+    box-shadow var(--ncx-motion-fast) ease,
+    transform var(--ncx-motion-instant) cubic-bezier(0.2, 0, 0, 1);
 }
 
+.ncx-common-button:active:not(:disabled, .ncx-common-button-loading) {
+  transform: scale(0.97);
+}
+
+/* 尺寸规格 (Control Heights aligned with macOS HIG: 24px / 32px / 38px) */
 .ncx-common-button-compact {
-  min-height: var(--ncx-control-compact);
-  padding: 0 var(--ncx-space-3);
-  font-size: 12px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: var(--ncx-radius-sm, 6px);
+  font-size: 11px;
 }
 
 .ncx-common-button-default {
-  min-height: var(--ncx-control-default);
-  padding: 0 var(--ncx-space-4);
+  height: var(--ncx-control-default, 32px);
+  min-height: var(--ncx-control-default, 32px);
+  padding: 0 14px;
+  border-radius: var(--ncx-radius-md, 8px);
   font-size: 13px;
 }
 
 .ncx-common-button-prominent {
-  min-height: var(--ncx-control-prominent);
-  padding: 0 var(--ncx-space-5);
+  height: 38px;
+  min-height: 38px;
+  padding: 0 18px;
+  border-radius: 10px;
   font-size: 14px;
+  font-weight: 600;
 }
 
+/* 变体款式 (Variants) */
+
+/* Primary - macOS Primary Push Button */
 .ncx-common-button-primary {
+  border-color: color-mix(in srgb, var(--ncx-color-accent) 85%, black);
   color: var(--ncx-color-on-accent);
-  background: var(--ncx-color-accent);
-  box-shadow: 0 8px 18px rgb(250 45 72 / 24%);
+  background: linear-gradient(180deg, color-mix(in srgb, white 15%, var(--ncx-color-accent)) 0%, var(--ncx-color-accent) 100%);
+  box-shadow: 0 1px 2.5px rgb(0 0 0 / 18%), inset 0 1px 0.5px rgb(255 255 255 / 30%);
 }
 
-.ncx-common-button-primary:hover {
-  background: var(--ncx-color-accent-hover);
+.ncx-common-button-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, color-mix(in srgb, white 25%, var(--ncx-color-accent)) 0%, var(--ncx-color-accent-hover) 100%);
+  box-shadow: 0 2px 5px rgb(0 0 0 / 22%), inset 0 1px 0.5px rgb(255 255 255 / 40%);
 }
 
-.ncx-common-button-primary:active {
+.ncx-common-button-primary:active:not(:disabled) {
   background: var(--ncx-color-accent-pressed);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 25%);
 }
 
+/* Secondary - macOS Bordered / Push Button */
 .ncx-common-button-secondary {
   border-color: var(--ncx-color-border-default);
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-color-surface-raised);
+  background: linear-gradient(180deg, var(--ncx-color-surface-raised) 0%, color-mix(in srgb, var(--ncx-color-surface-raised) 90%, black) 100%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 5%), inset 0 1px 0 rgb(255 255 255 / 40%);
 }
 
-.ncx-common-button-secondary:hover,
-.ncx-common-icon-button:hover,
-.ncx-common-menu-item:hover,
-.ncx-common-tabs-tab:hover,
-.ncx-common-segmented-item:hover {
+.ncx-common-button-secondary:hover:not(:disabled) {
+  border-color: var(--ncx-color-border-strong);
   background: var(--ncx-color-control-hover);
 }
 
-.ncx-common-button-secondary:active,
-.ncx-common-icon-button:active,
-.ncx-common-menu-item:active,
-.ncx-common-tabs-tab:active,
-.ncx-common-segmented-item:active {
+.ncx-common-button-secondary:active:not(:disabled) {
+  background: var(--ncx-color-control-pressed);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 10%);
+}
+
+/* Ghost - Borderless Button */
+.ncx-common-button-ghost {
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--ncx-color-text-primary);
+  background: transparent;
+}
+
+.ncx-common-button-ghost:hover:not(:disabled) {
+  background: var(--ncx-color-control-hover);
+}
+
+.ncx-common-button-ghost:active:not(:disabled) {
   background: var(--ncx-color-control-pressed);
 }
 
-.ncx-common-button-ghost {
-  color: var(--ncx-color-text-primary);
-  background: transparent;
-}
-
+/* Danger - macOS Destructive Button */
 .ncx-common-button-danger {
-  border-color: color-mix(in srgb, var(--ncx-color-danger) 24%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-danger) 30%, transparent);
   color: var(--ncx-color-danger);
-  background: color-mix(in srgb, var(--ncx-color-danger) 9%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-danger) 10%, transparent);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
 }
 
+.ncx-common-button-danger:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--ncx-color-danger) 50%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-danger) 18%, transparent);
+}
+
+.ncx-common-button-danger:active:not(:disabled) {
+  background: color-mix(in srgb, var(--ncx-color-danger) 26%, transparent);
+}
+
+/* Loading 状态 */
+.ncx-common-button-loading {
+  cursor: wait;
+  opacity: 0.82;
+}
+
+/* Disabled 状态 */
 .ncx-common-button:disabled,
+.ncx-common-button[aria-disabled="true"],
 .ncx-common-icon-button:disabled,
-.ncx-common-field:disabled,
-.ncx-common-menu-item:disabled {
-  cursor: not-allowed;
-  opacity: 0.48;
+.ncx-common-icon-button[aria-disabled="true"] {
+  cursor: not-allowed !important;
+  opacity: 0.45 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  pointer-events: none !important;
 }
 
+/* ========= CommonIconButton ========= */
 .ncx-common-icon-button {
-  display: inline-grid;
-  place-items: center;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   border: 1px solid transparent;
-  border-radius: var(--ncx-radius-md);
+  border-radius: var(--ncx-radius-md, 8px);
   color: var(--ncx-color-text-primary);
   background: transparent;
   cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--ncx-motion-fast) ease,
+    border-color var(--ncx-motion-fast) ease,
+    color var(--ncx-motion-fast) ease,
+    box-shadow var(--ncx-motion-fast) ease,
+    transform var(--ncx-motion-instant) cubic-bezier(0.2, 0, 0, 1);
+}
+
+.ncx-common-icon-button:active:not(:disabled) {
+  transform: scale(0.95);
 }
 
 .ncx-common-icon-button-compact {
-  width: var(--ncx-control-compact);
-  height: var(--ncx-control-compact);
+  width: 24px;
+  height: 24px;
+  border-radius: var(--ncx-radius-sm, 6px);
 }
 
 .ncx-common-icon-button-default {
-  width: var(--ncx-control-default);
-  height: var(--ncx-control-default);
+  width: var(--ncx-control-default, 32px);
+  height: var(--ncx-control-default, 32px);
+  border-radius: var(--ncx-radius-md, 8px);
 }
 
 .ncx-common-icon-button-prominent {
-  width: var(--ncx-control-prominent);
-  height: var(--ncx-control-prominent);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+}
+
+.ncx-common-icon-button-ghost:hover:not(:disabled) {
+  background: var(--ncx-color-control-hover);
+}
+
+.ncx-common-icon-button-ghost:active:not(:disabled) {
+  background: var(--ncx-color-control-pressed);
+}
+
+.ncx-common-icon-button-secondary {
+  border-color: var(--ncx-color-border-default);
+  background: var(--ncx-color-surface-raised);
+}
+
+.ncx-common-icon-button-secondary:hover:not(:disabled) {
+  background: var(--ncx-color-control-hover);
 }
 
 .ncx-common-icon-button-selected {
-  border-color: color-mix(in srgb, var(--ncx-color-accent) 28%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-accent) 35%, transparent);
   color: var(--ncx-color-accent);
-  background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-accent) 15%, transparent);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 6%);
 }
 
+/* ========= CommonButtonGroup ========= */
 .ncx-common-button-group {
   display: inline-flex;
+  align-items: center;
+}
+
+.ncx-common-button-group-connected {
+  gap: 0;
+}
+
+.ncx-common-button-group-connected > .ncx-common-button,
+.ncx-common-button-group-connected > .ncx-common-icon-button {
+  border-radius: 0;
+}
+
+.ncx-common-button-group-connected > .ncx-common-button:not(:first-child),
+.ncx-common-button-group-connected > .ncx-common-icon-button:not(:first-child) {
+  margin-left: -1px;
+}
+
+.ncx-common-button-group-connected > .ncx-common-button:first-child,
+.ncx-common-button-group-connected > .ncx-common-icon-button:first-child {
+  border-top-left-radius: var(--ncx-radius-md);
+  border-bottom-left-radius: var(--ncx-radius-md);
+}
+
+.ncx-common-button-group-connected > .ncx-common-button:last-child,
+.ncx-common-button-group-connected > .ncx-common-icon-button:last-child {
+  border-top-right-radius: var(--ncx-radius-md);
+  border-bottom-right-radius: var(--ncx-radius-md);
+}
+
+.ncx-common-button-group-segmented {
   gap: var(--ncx-space-1);
   padding: var(--ncx-space-1);
   border: 1px solid var(--ncx-color-border-subtle);
@@ -171,200 +299,973 @@
   background: var(--ncx-color-surface);
 }
 
+.ncx-common-button-group-vertical {
+  flex-direction: column;
+}
+
+.ncx-common-button-group-vertical.ncx-common-button-group-connected > .ncx-common-button:not(:first-child),
+.ncx-common-button-group-vertical.ncx-common-button-group-connected > .ncx-common-icon-button:not(:first-child) {
+  margin-top: -1px;
+  margin-left: 0;
+}
+
+.ncx-common-button-group-vertical.ncx-common-button-group-connected > .ncx-common-button:first-child,
+.ncx-common-button-group-vertical.ncx-common-button-group-connected > .ncx-common-icon-button:first-child {
+  border-radius: 0;
+  border-top-left-radius: var(--ncx-radius-md);
+  border-top-right-radius: var(--ncx-radius-md);
+}
+
+.ncx-common-button-group-vertical.ncx-common-button-group-connected > .ncx-common-button:last-child,
+.ncx-common-button-group-vertical.ncx-common-button-group-connected > .ncx-common-icon-button:last-child {
+  border-radius: 0;
+  border-bottom-left-radius: var(--ncx-radius-md);
+  border-bottom-right-radius: var(--ncx-radius-md);
+}
+
+/* ========= CommonLinkButton ========= */
 .ncx-common-link-button {
   display: inline-flex;
   align-items: center;
+  gap: var(--ncx-space-1);
   color: var(--ncx-color-accent);
+  font-family: var(--ncx-font-family);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
+  cursor: pointer;
+  transition: color var(--ncx-motion-fast) ease, opacity var(--ncx-motion-fast) ease;
 }
 
-.ncx-common-link-button:hover {
+.ncx-common-link-button:hover:not(.ncx-common-link-button-disabled) {
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.ncx-common-link-button-disabled {
-  color: var(--ncx-color-text-disabled);
-  pointer-events: none;
+.ncx-common-link-button-disabled,
+.ncx-common-link-button[aria-disabled="true"] {
+  color: var(--ncx-color-text-disabled) !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  text-decoration: none !important;
 }
 
 .ncx-common-field {
+  box-sizing: border-box;
   width: 100%;
-  min-height: var(--ncx-control-default);
-  padding: 0 var(--ncx-space-3);
-  border: 1px solid var(--ncx-color-border-default);
-  border-radius: var(--ncx-radius-md);
+  padding: 0 10px;
+  border: 1px solid var(--ncx-color-border-default, rgb(0 0 0 / 15%));
+  border-radius: 6px;
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-color-surface-raised);
-  font: inherit;
+  background: var(--ncx-color-surface-raised, rgb(255 255 255 / 85%));
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  outline: none;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 4%);
+  transition:
+    border-color var(--ncx-motion-fast, 150ms),
+    box-shadow var(--ncx-motion-fast, 150ms),
+    background-color var(--ncx-motion-fast, 150ms);
 }
 
 .ncx-common-field::placeholder,
 .ncx-common-search-input::placeholder {
-  color: var(--ncx-color-text-tertiary);
+  color: var(--ncx-color-text-tertiary, rgb(0 0 0 / 40%));
+  font-weight: 400;
 }
 
-.ncx-common-field-invalid {
-  border-color: var(--ncx-color-danger);
+/* Sizes for Input Fields */
+.ncx-common-field--compact {
+  height: 24px;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
-.ncx-common-textarea {
-  min-height: 96px;
-  padding-block: var(--ncx-space-2);
-  line-height: 1.5;
-  resize: vertical;
+.ncx-common-field--default {
+  height: 28px;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 13px;
 }
 
-.ncx-common-search {
-  display: flex;
-  min-height: var(--ncx-control-prominent);
+.ncx-common-field--prominent {
+  height: 34px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* macOS Signature Focus Ring */
+.ncx-common-field:focus,
+.ncx-common-field:focus-visible,
+.ncx-common-input-wrapper:focus-within,
+.ncx-common-search:focus-within,
+.ncx-common-select-wrapper:focus-within,
+.ncx-common-combobox:focus-within {
+  border-color: var(--ncx-color-accent, #007aff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ncx-color-accent, #007aff) 35%, transparent), inset 0 0 0 1px var(--ncx-color-accent, #007aff);
+  outline: none;
+}
+
+/* Invalid State */
+.ncx-common-field-invalid,
+.ncx-common-field-invalid:focus,
+.ncx-common-input-wrapper.ncx-common-field-invalid,
+.ncx-common-search.ncx-common-field-invalid,
+.ncx-common-select-wrapper.ncx-common-field-invalid,
+.ncx-common-combobox.ncx-common-field-invalid {
+  border-color: var(--ncx-color-danger, #ff3b30) !important;
+}
+
+.ncx-common-field-invalid:focus,
+.ncx-common-input-wrapper.ncx-common-field-invalid:focus-within,
+.ncx-common-combobox.ncx-common-field-invalid:focus-within {
+  box-shadow: 0 0 0 3px rgb(255 59 48 / 30%), inset 0 0 0 1px var(--ncx-color-danger, #ff3b30) !important;
+}
+
+/* Disabled State */
+.ncx-common-field:disabled,
+.ncx-common-field-disabled,
+.ncx-common-field-disabled .ncx-common-field {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--ncx-color-surface-disabled, rgb(0 0 0 / 4%));
+  box-shadow: none;
+}
+
+/* Input Wrapper */
+.ncx-common-input-wrapper {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
   align-items: center;
-  gap: var(--ncx-space-2);
-  padding: 0 var(--ncx-space-3);
-  border: 1px solid var(--ncx-color-border-default);
-  border-radius: var(--ncx-radius-full);
-  background: var(--ncx-color-surface-raised);
+  box-sizing: border-box;
+  border-radius: 6px;
+  background: var(--ncx-color-surface-raised, rgb(255 255 255 / 85%));
+  border: 1px solid var(--ncx-color-border-default, rgb(0 0 0 / 15%));
+  transition: border-color var(--ncx-motion-fast, 150ms), box-shadow var(--ncx-motion-fast, 150ms);
+}
+
+.ncx-common-input-wrapper .ncx-common-field {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 0 8px;
+}
+
+.ncx-common-input-prefix,
+.ncx-common-input-suffix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  color: var(--ncx-color-text-tertiary, rgb(0 0 0 / 45%));
+  font-size: 13px;
+  user-select: none;
+}
+
+.ncx-common-input-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--ncx-color-text-tertiary, rgb(0 0 0 / 45%));
+  background: transparent;
+  cursor: pointer;
+  transition: color var(--ncx-motion-fast), transform var(--ncx-motion-fast);
+}
+
+.ncx-common-input-clear:hover {
+  color: var(--ncx-color-text-secondary, rgb(0 0 0 / 75%));
+}
+
+.ncx-common-input-clear svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Textarea */
+.ncx-common-textarea {
+  min-height: 80px;
+  padding: 8px 10px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.ncx-common-textarea--compact {
+  min-height: 60px;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+.ncx-common-textarea--default {
+  min-height: 80px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.ncx-common-textarea--prominent {
+  min-height: 110px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+/* SearchInput */
+.ncx-common-search {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid var(--ncx-color-border-default, rgb(0 0 0 / 15%));
+  border-radius: 999px;
+  background: var(--ncx-color-surface-raised, rgb(255 255 255 / 85%));
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 4%);
+  transition: border-color var(--ncx-motion-fast), box-shadow var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
+}
+
+.ncx-common-search--compact {
+  height: 24px;
+  padding: 0 8px;
+}
+
+.ncx-common-search--default {
+  height: 28px;
+  padding: 0 10px;
+}
+
+.ncx-common-search--prominent {
+  height: 34px;
+  padding: 0 12px;
 }
 
 .ncx-common-search-icon {
-  color: var(--ncx-color-text-tertiary);
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ncx-color-text-tertiary, rgb(0 0 0 / 45%));
+  flex-shrink: 0;
+}
+
+.ncx-common-search-icon svg {
+  width: 14px;
+  height: 14px;
 }
 
 .ncx-common-search-input {
   min-width: 0;
   flex: 1;
-  border: 0;
-  outline: 0;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
   color: var(--ncx-color-text-primary);
-  background: transparent;
+  background: transparent !important;
   font: inherit;
+  padding: 0;
 }
 
-.ncx-common-search-clear,
-.ncx-common-modal button,
-.ncx-common-drawer button {
+.ncx-common-search-input::-webkit-search-cancel-button,
+.ncx-common-search-input::-webkit-search-decoration {
+  appearance: none;
+}
+
+.ncx-common-search-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
   border: 0;
-  color: var(--ncx-color-text-secondary);
+  border-radius: 50%;
+  color: var(--ncx-color-text-tertiary, rgb(0 0 0 / 45%));
   background: transparent;
   cursor: pointer;
-  font: inherit;
+  flex-shrink: 0;
+  transition: color var(--ncx-motion-fast), transform var(--ncx-motion-fast);
+}
+
+.ncx-common-search-clear:hover {
+  color: var(--ncx-color-text-secondary, rgb(0 0 0 / 75%));
+}
+
+.ncx-common-search-clear svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ncx-common-search--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--ncx-color-surface-disabled, rgb(0 0 0 / 4%));
+}
+
+/* Select */
+.ncx-common-select-wrapper {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
 }
 
 .ncx-common-select {
-  appearance: auto;
+  padding-right: 28px !important;
+  background: linear-gradient(180deg, var(--ncx-color-surface-raised, #fff) 0%, var(--ncx-color-surface, #f5f5f7) 100%);
+  cursor: pointer;
+  user-select: none;
+}
+
+.ncx-common-select:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--ncx-color-accent, #007aff) 40%, var(--ncx-color-border-default));
+}
+
+.ncx-common-select:active:not(:disabled) {
+  background: linear-gradient(180deg, #e5e5ea 0%, #d1d1d6 100%);
+}
+
+.ncx-common-select-chevron {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ncx-color-accent, #007aff);
+}
+
+.ncx-common-select-chevron svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Combobox */
+.ncx-common-combobox {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+}
+
+.ncx-common-combobox-input {
+  padding-right: 48px !important;
+}
+
+.ncx-common-combobox-clear {
+  position: absolute;
+  right: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--ncx-color-text-tertiary, rgb(0 0 0 / 45%));
+  background: transparent;
+  cursor: pointer;
+  transition: color var(--ncx-motion-fast);
+}
+
+.ncx-common-combobox-clear:hover {
+  color: var(--ncx-color-text-secondary, rgb(0 0 0 / 75%));
+}
+
+.ncx-common-combobox-clear svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ncx-common-combobox-trigger {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-left: 1px solid var(--ncx-color-border-default, rgb(0 0 0 / 12%));
+  background: transparent;
+  color: var(--ncx-color-text-secondary, rgb(0 0 0 / 60%));
+  cursor: pointer;
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+  transition: background-color var(--ncx-motion-fast), color var(--ncx-motion-fast);
+}
+
+.ncx-common-combobox-trigger:hover:not(:disabled) {
+  background: rgb(0 0 0 / 5%);
+  color: var(--ncx-color-text-primary);
+}
+
+.ncx-common-combobox-trigger svg {
+  width: 12px;
+  height: 12px;
 }
 
 .ncx-common-check {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: var(--ncx-space-2);
   color: var(--ncx-color-text-primary);
   cursor: pointer;
+  user-select: none;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.ncx-common-check--compact {
+  font-size: 12px;
+}
+
+.ncx-common-check--default {
   font-size: 13px;
 }
 
-.ncx-common-check input {
-  accent-color: var(--ncx-color-accent);
+.ncx-common-check--prominent {
+  font-size: 14px;
 }
 
+.ncx-common-check-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ncx-common-check-box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--ncx-color-border-strong);
+  background: linear-gradient(180deg, var(--ncx-color-surface-raised) 0%, var(--ncx-color-surface) 100%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+  transition: background var(--ncx-motion-fast), border-color var(--ncx-motion-fast), box-shadow var(--ncx-motion-fast), transform var(--ncx-motion-fast);
+}
+
+.ncx-common-check--compact .ncx-common-check-box {
+  width: 14px;
+  height: 14px;
+  border-radius: 3.5px;
+}
+
+.ncx-common-check--default .ncx-common-check-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.ncx-common-check--prominent .ncx-common-check-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 4.5px;
+}
+
+.ncx-common-check-icon {
+  width: 80%;
+  height: 80%;
+  color: #fff;
+  transition: transform var(--ncx-motion-fast) cubic-bezier(0.2, 0.8, 0.2, 1.2);
+}
+
+.ncx-common-check:hover:not(.ncx-common-check--disabled) .ncx-common-check-box {
+  border-color: var(--ncx-color-accent);
+}
+
+.ncx-common-check:active:not(.ncx-common-check--disabled) .ncx-common-check-box {
+  transform: scale(0.92);
+}
+
+.ncx-common-check--checked .ncx-common-check-box,
+.ncx-common-check--indeterminate .ncx-common-check-box {
+  border-color: transparent;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ncx-color-accent) 90%, white) 0%, var(--ncx-color-accent) 100%);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+}
+
+.ncx-common-check-input:focus-visible + .ncx-common-check-box {
+  outline: 2px solid color-mix(in srgb, var(--ncx-color-accent) 75%, white);
+  outline-offset: 2px;
+}
+
+.ncx-common-check--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ncx-common-check-label {
+  color: var(--ncx-color-text-primary);
+}
+
+/* --- 2. CommonRadioGroup (macOS Radio Button) --- */
 .ncx-common-radio-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ncx-space-3);
+  display: inline-flex;
+  gap: var(--ncx-space-4);
+  align-items: center;
 }
 
-.ncx-common-switch {
+.ncx-common-radio-group--vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ncx-space-2);
+}
+
+.ncx-common-radio {
   display: inline-flex;
   align-items: center;
   gap: var(--ncx-space-2);
+  color: var(--ncx-color-text-primary);
+  cursor: pointer;
+  user-select: none;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.ncx-common-radio--compact { font-size: 12px; }
+.ncx-common-radio--default { font-size: 13px; }
+.ncx-common-radio--prominent { font-size: 14px; }
+
+.ncx-common-radio-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ncx-common-radio-circle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--ncx-color-border-strong);
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--ncx-color-surface-raised) 0%, var(--ncx-color-surface) 100%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+  transition: background var(--ncx-motion-fast), border-color var(--ncx-motion-fast), box-shadow var(--ncx-motion-fast), transform var(--ncx-motion-fast);
+}
+
+.ncx-common-radio--compact .ncx-common-radio-circle {
+  width: 14px;
+  height: 14px;
+}
+
+.ncx-common-radio--default .ncx-common-radio-circle {
+  width: 16px;
+  height: 16px;
+}
+
+.ncx-common-radio--prominent .ncx-common-radio-circle {
+  width: 18px;
+  height: 18px;
+}
+
+.ncx-common-radio-dot {
+  border-radius: 50%;
+  background: #fff;
+  transform: scale(0);
+  transition: transform var(--ncx-motion-fast) cubic-bezier(0.2, 0.8, 0.2, 1.2);
+}
+
+.ncx-common-radio--compact .ncx-common-radio-dot {
+  width: 5px;
+  height: 5px;
+}
+
+.ncx-common-radio--default .ncx-common-radio-dot {
+  width: 6px;
+  height: 6px;
+}
+
+.ncx-common-radio--prominent .ncx-common-radio-dot {
+  width: 7px;
+  height: 7px;
+}
+
+.ncx-common-radio:hover:not(.ncx-common-radio--disabled) .ncx-common-radio-circle {
+  border-color: var(--ncx-color-accent);
+}
+
+.ncx-common-radio:active:not(.ncx-common-radio--disabled) .ncx-common-radio-circle {
+  transform: scale(0.92);
+}
+
+.ncx-common-radio--selected .ncx-common-radio-circle {
+  border-color: transparent;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ncx-color-accent) 90%, white) 0%, var(--ncx-color-accent) 100%);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+}
+
+.ncx-common-radio--selected .ncx-common-radio-dot {
+  transform: scale(1);
+}
+
+.ncx-common-radio-input:focus-visible + .ncx-common-radio-circle {
+  outline: 2px solid color-mix(in srgb, var(--ncx-color-accent) 75%, white);
+  outline-offset: 2px;
+}
+
+.ncx-common-radio--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* --- 3. CommonSwitch (macOS Toggle Switch) --- */
+.ncx-common-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ncx-space-2);
+  padding: 0;
   border: 0;
   color: var(--ncx-color-text-primary);
   background: transparent;
   cursor: pointer;
-}
-
-.ncx-common-switch span {
-  position: relative;
-  width: 42px;
-  height: 24px;
-  border-radius: var(--ncx-radius-full);
-  background: var(--ncx-color-control-pressed);
-}
-
-.ncx-common-switch span::after {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: white;
-  box-shadow: var(--ncx-shadow-elevation-1);
-  content: '';
-  transition: transform var(--ncx-motion-fast);
-}
-
-.ncx-common-switch-on span {
-  background: var(--ncx-color-accent);
-}
-
-.ncx-common-switch-on span::after {
-  transform: translateX(18px);
-}
-
-.ncx-common-switch strong,
-.ncx-common-slider span,
-.ncx-common-slider b {
+  user-select: none;
   font-size: 13px;
 }
 
+.ncx-common-switch--compact { font-size: 12px; }
+.ncx-common-switch--default { font-size: 13px; }
+.ncx-common-switch--prominent { font-size: 14px; }
+
+.ncx-common-switch-track {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  border-radius: var(--ncx-radius-full);
+  background: var(--ncx-color-control-pressed);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 12%);
+  transition: background-color var(--ncx-motion-fast) cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ncx-common-switch--compact .ncx-common-switch-track {
+  width: 32px;
+  height: 18px;
+}
+
+.ncx-common-switch--default .ncx-common-switch-track {
+  width: 38px;
+  height: 22px;
+}
+
+.ncx-common-switch--prominent .ncx-common-switch-track {
+  width: 44px;
+  height: 26px;
+}
+
+.ncx-common-switch-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 25%), 0 0.5px 1px rgb(0 0 0 / 15%);
+  transition: transform var(--ncx-motion-normal) cubic-bezier(0.2, 0.8, 0.2, 1), width var(--ncx-motion-fast) ease, border-radius var(--ncx-motion-fast) ease;
+}
+
+.ncx-common-switch--compact .ncx-common-switch-knob {
+  width: 14px;
+  height: 14px;
+}
+
+.ncx-common-switch--default .ncx-common-switch-knob {
+  width: 18px;
+  height: 18px;
+}
+
+.ncx-common-switch--prominent .ncx-common-switch-knob {
+  width: 22px;
+  height: 22px;
+}
+
+.ncx-common-switch--on .ncx-common-switch-track {
+  background: var(--ncx-color-accent);
+}
+
+.ncx-common-switch--compact.ncx-common-switch--on .ncx-common-switch-knob {
+  transform: translateX(14px);
+}
+
+.ncx-common-switch--default.ncx-common-switch--on .ncx-common-switch-knob {
+  transform: translateX(16px);
+}
+
+.ncx-common-switch--prominent.ncx-common-switch--on .ncx-common-switch-knob {
+  transform: translateX(18px);
+}
+
+.ncx-common-switch:active:not(.ncx-common-switch--disabled) .ncx-common-switch-knob {
+  width: 58%;
+  border-radius: var(--ncx-radius-full);
+}
+
+.ncx-common-switch:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ncx-color-accent) 75%, white);
+  outline-offset: 2px;
+  border-radius: var(--ncx-radius-full);
+}
+
+.ncx-common-switch--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* --- 4. CommonSlider (macOS Slider) --- */
 .ncx-common-slider {
   display: grid;
-  grid-template-columns: auto minmax(120px, 1fr) 36px;
+  grid-template-columns: auto minmax(120px, 1fr) auto;
   align-items: center;
   gap: var(--ncx-space-3);
+  width: 100%;
 }
 
-.ncx-common-slider input {
-  accent-color: var(--ncx-color-accent);
+.ncx-common-slider-label {
+  color: var(--ncx-color-text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
-.ncx-common-slider b {
+.ncx-common-slider-track-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.ncx-common-slider-rail {
+  width: 100%;
+  border-radius: var(--ncx-radius-full);
+  background: var(--ncx-color-border-default);
+}
+
+.ncx-common-slider--compact .ncx-common-slider-rail,
+.ncx-common-slider--compact .ncx-common-slider-fill {
+  height: 4px;
+}
+
+.ncx-common-slider--default .ncx-common-slider-rail,
+.ncx-common-slider--default .ncx-common-slider-fill {
+  height: 6px;
+}
+
+.ncx-common-slider--prominent .ncx-common-slider-rail,
+.ncx-common-slider--prominent .ncx-common-slider-fill {
+  height: 8px;
+}
+
+.ncx-common-slider-fill {
+  position: absolute;
+  left: 0;
+  border-radius: var(--ncx-radius-full);
+  background: var(--ncx-color-accent);
+  pointer-events: none;
+}
+
+.ncx-common-slider-thumb {
+  position: absolute;
+  top: 50%;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 25%), 0 0 1.5px rgb(0 0 0 / 35%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: transform var(--ncx-motion-fast), box-shadow var(--ncx-motion-fast);
+}
+
+.ncx-common-slider--compact .ncx-common-slider-thumb {
+  width: 14px;
+  height: 14px;
+}
+
+.ncx-common-slider--default .ncx-common-slider-thumb {
+  width: 16px;
+  height: 16px;
+}
+
+.ncx-common-slider--prominent .ncx-common-slider-thumb {
+  width: 20px;
+  height: 20px;
+}
+
+.ncx-common-slider-track-container:hover .ncx-common-slider-thumb {
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow: 0 3px 7px rgb(0 0 0 / 30%), 0 0 2px rgb(0 0 0 / 40%);
+}
+
+.ncx-common-slider-track-container:active .ncx-common-slider-thumb {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.ncx-common-slider-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.ncx-common-slider-input:focus-visible + .ncx-common-slider-thumb,
+.ncx-common-slider-track-container:focus-within .ncx-common-slider-thumb {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ncx-color-accent) 65%, white), 0 2px 5px rgb(0 0 0 / 25%);
+}
+
+.ncx-common-slider-value {
   color: var(--ncx-color-text-secondary);
+  font-size: 13px;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
-.ncx-common-segmented,
-.ncx-common-tabs-list {
+.ncx-common-slider--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ncx-common-slider--disabled .ncx-common-slider-input {
+  cursor: not-allowed;
+}
+
+/* --- 5. CommonSegmentedControl (macOS Segmented Control) --- */
+.ncx-common-segmented {
+  position: relative;
   display: inline-flex;
-  gap: var(--ncx-space-1);
-  padding: var(--ncx-space-1);
+  align-items: center;
+  padding: 2px;
   border: 1px solid var(--ncx-color-border-subtle);
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-radius-md);
   background: var(--ncx-color-surface);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 4%);
+  user-select: none;
 }
 
-.ncx-common-segmented-item,
-.ncx-common-tabs-tab {
-  min-height: var(--ncx-control-compact);
-  padding: 0 var(--ncx-space-3);
+.ncx-common-segmented-indicator {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  border-radius: calc(var(--ncx-radius-md) - 2px);
+  background: var(--ncx-color-surface-raised);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 1px rgb(0 0 0 / 8%);
+  transition: left var(--ncx-motion-normal) cubic-bezier(0.2, 0, 0, 1), width var(--ncx-motion-normal) cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: none;
+}
+
+.ncx-common-segmented-item {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ncx-space-1-5);
+  flex: 1;
   border: 0;
-  border-radius: var(--ncx-radius-md);
+  border-radius: calc(var(--ncx-radius-md) - 2px);
   color: var(--ncx-color-text-secondary);
   background: transparent;
   cursor: pointer;
   font: inherit;
   font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color var(--ncx-motion-fast);
+}
+
+.ncx-common-segmented--compact {
+  height: 26px;
+}
+
+.ncx-common-segmented--compact .ncx-common-segmented-item {
+  padding: 0 var(--ncx-space-2);
+  font-size: 12px;
+}
+
+.ncx-common-segmented--default {
+  height: 30px;
+}
+
+.ncx-common-segmented--default .ncx-common-segmented-item {
+  padding: 0 var(--ncx-space-3);
+  font-size: 13px;
+}
+
+.ncx-common-segmented--prominent {
+  height: 36px;
+}
+
+.ncx-common-segmented--prominent .ncx-common-segmented-item {
+  padding: 0 var(--ncx-space-4);
+  font-size: 14px;
+}
+
+.ncx-common-segmented-item-active {
+  color: var(--ncx-color-text-primary);
   font-weight: 600;
 }
 
-.ncx-common-segmented-item-active,
-.ncx-common-tabs-tab-active {
+.ncx-common-segmented-divider {
+  position: absolute;
+  right: 0;
+  top: 18%;
+  bottom: 18%;
+  width: 1px;
+  background: var(--ncx-color-border-subtle);
+  pointer-events: none;
+}
+
+.ncx-common-segmented-item:hover:not(.ncx-common-segmented-item-disabled, .ncx-common-segmented-item-active) {
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-color-surface-raised);
-  box-shadow: var(--ncx-shadow-elevation-1);
+}
+
+.ncx-common-segmented:focus-within {
+  outline: 2px solid color-mix(in srgb, var(--ncx-color-accent) 75%, white);
+  outline-offset: 2px;
+}
+
+.ncx-common-segmented--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ncx-common-segmented-item-disabled {
+  cursor: not-allowed;
 }
 
 /* --- 6. CommonAvatar (macOS Avatar) --- */
@@ -980,14 +1881,134 @@
 }
 
 .ncx-common-tabs {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--ncx-space-3);
+  width: 100%;
+}
+
+.ncx-common-tabs-full-width .ncx-common-tabs-list {
+  width: 100%;
+}
+
+.ncx-common-tabs-full-width .ncx-common-tabs-tab {
+  flex: 1;
+  text-align: center;
+}
+
+.ncx-common-tabs-segmented .ncx-common-tabs-list {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--ncx-radius-lg);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent);
+}
+
+.ncx-common-tabs-underlined .ncx-common-tabs-list {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ncx-space-4);
+  border-bottom: 1px solid var(--ncx-color-border-subtle);
+  padding-bottom: 2px;
+}
+
+.ncx-common-tabs-pills .ncx-common-tabs-list {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ncx-space-2);
+}
+
+.ncx-common-tabs-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ncx-space-2);
+  border: 0;
+  border-radius: var(--ncx-radius-md);
+  color: var(--ncx-color-text-secondary);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.ncx-common-tabs-compact .ncx-common-tabs-tab {
+  height: 24px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.ncx-common-tabs-default .ncx-common-tabs-tab {
+  height: 28px;
+  padding: 0 var(--ncx-space-3);
+  font-size: 13px;
+}
+
+.ncx-common-tabs-prominent .ncx-common-tabs-tab {
+  height: 32px;
+  padding: 0 var(--ncx-space-4);
+  font-size: 14px;
+}
+
+.ncx-common-tabs-tab-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.ncx-common-tabs-tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--ncx-radius-full);
+  font-size: 10px;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 12%, transparent);
+  color: var(--ncx-color-text-primary);
+}
+
+.ncx-common-tabs-segmented .ncx-common-tabs-tab-active {
+  color: var(--ncx-color-text-primary);
+  background: var(--ncx-color-surface-raised);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 0 1px rgb(0 0 0 / 16%);
+  font-weight: 600;
+}
+
+.ncx-common-tabs-underlined .ncx-common-tabs-tab {
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -3px;
+  padding-left: var(--ncx-space-1);
+  padding-right: var(--ncx-space-1);
+}
+
+.ncx-common-tabs-underlined .ncx-common-tabs-tab-active {
+  color: var(--ncx-color-accent);
+  border-bottom-color: var(--ncx-color-accent);
+  font-weight: 600;
+}
+
+.ncx-common-tabs-pills .ncx-common-tabs-tab-active {
+  color: var(--ncx-color-on-accent);
+  background: var(--ncx-color-accent);
+  font-weight: 600;
+}
+
+.ncx-common-tabs-tab-disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .ncx-common-tabs-panel {
-  margin: 0;
-  color: var(--ncx-color-text-secondary);
-  font-size: 13px;
+  display: block;
 }
 
 .ncx-common-menu,
@@ -1001,14 +2022,14 @@
 .ncx-common-popover-panel {
   position: absolute;
   z-index: var(--ncx-layer-popover);
-  min-width: 220px;
-  margin-top: var(--ncx-space-2);
-  padding: var(--ncx-space-2);
+  min-width: 180px;
+  max-width: 320px;
+  padding: 4px;
   border: 1px solid var(--ncx-color-border-subtle);
   border-radius: var(--ncx-radius-lg);
   background: var(--ncx-color-surface-overlay);
   box-shadow: var(--ncx-shadow-elevation-2);
-  backdrop-filter: blur(var(--ncx-blur-md)) saturate(160%);
+  backdrop-filter: blur(24px) saturate(180%);
 }
 
 .ncx-common-context {
@@ -1019,39 +2040,108 @@
   margin-top: 0;
 }
 
+.ncx-common-menu-chevron {
+  display: inline-block;
+  margin-left: var(--ncx-space-1);
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.ncx-common-menu-separator {
+  height: 1px;
+  margin: 4px 6px;
+  background: var(--ncx-color-border-subtle);
+}
+
+.ncx-common-menu-header {
+  padding: 4px 8px 2px 28px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ncx-color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .ncx-common-menu-item {
   display: flex;
   width: 100%;
-  min-height: 30px;
+  min-height: 26px;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--ncx-space-6);
+  justify-content: flex-start;
+  gap: var(--ncx-space-2);
+  padding: 3px 8px;
   border: 0;
-  border-radius: var(--ncx-radius-md);
+  border-radius: var(--ncx-radius-sm);
   color: var(--ncx-color-text-primary);
   background: transparent;
   cursor: pointer;
   font: inherit;
   font-size: 13px;
   text-align: left;
+  user-select: none;
+}
+
+.ncx-common-menu-item-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  font-size: 12px;
+  font-weight: bold;
+  color: currentcolor;
+}
+
+.ncx-common-menu-item-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+}
+
+.ncx-common-menu-item-label {
+  flex: 1;
+}
+
+.ncx-common-menu-item-shortcut {
+  margin-left: var(--ncx-space-4);
+  font: inherit;
+  font-size: 11px;
+  color: var(--ncx-color-text-tertiary);
+  background: transparent;
+  border: 0;
+}
+
+.ncx-common-menu-item:hover:not(:disabled),
+.ncx-common-menu-item:focus-visible:not(:disabled) {
+  color: #fff;
+  background: var(--ncx-color-accent);
+}
+
+.ncx-common-menu-item:hover:not(:disabled) .ncx-common-menu-item-shortcut,
+.ncx-common-menu-item:focus-visible:not(:disabled) .ncx-common-menu-item-shortcut {
+  color: rgb(255 255 255 / 80%);
 }
 
 .ncx-common-menu-item-danger {
   color: var(--ncx-color-danger);
 }
 
-.ncx-common-menu-item kbd {
-  color: var(--ncx-color-text-tertiary);
-  font: inherit;
-  font-size: 12px;
+.ncx-common-menu-item-danger:hover:not(:disabled) {
+  color: #fff;
+  background: var(--ncx-color-danger);
 }
 
+.ncx-common-menu-item:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+/* --- CommonSpinner (macOS Activity Indicator) --- */
 .ncx-common-spinner {
-  display: inline-block;
-  border: 2px solid color-mix(in srgb, currentcolor 24%, transparent);
-  border-top-color: currentcolor;
-  border-radius: 50%;
-  animation: ncx-common-spin 780ms linear infinite;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ncx-color-text-secondary);
+  vertical-align: middle;
 }
 
 .ncx-common-spinner-compact {
@@ -1065,189 +2155,800 @@
 }
 
 .ncx-common-spinner-prominent {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
 }
 
-.ncx-common-progress {
-  overflow: hidden;
+.ncx-common-spinner-spokes {
+  animation: ncx-common-spin 800ms steps(12, end) infinite;
+}
+
+.ncx-common-spinner-svg {
   width: 100%;
-  height: 8px;
-  border-radius: var(--ncx-radius-full);
-  background: var(--ncx-color-control-pressed);
+  height: 100%;
 }
 
-.ncx-common-progress span {
-  display: block;
+.ncx-common-spinner-ring {
+  border: 2px solid color-mix(in srgb, currentcolor 20%, transparent);
+  border-top-color: currentcolor;
+  border-radius: 50%;
+  animation: ncx-common-spin 750ms linear infinite;
+}
+
+/* --- CommonProgress (macOS Progress Bar) --- */
+.ncx-common-progress-container {
+  display: flex;
+  align-items: center;
+  gap: var(--ncx-space-3);
+  width: 100%;
+}
+
+.ncx-common-progress-track {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  border-radius: var(--ncx-radius-full);
+  background: var(--ncx-color-border-subtle);
+  box-shadow: inset 0 1px 1.5px rgb(0 0 0 / 8%);
+}
+
+.ncx-common-progress-compact .ncx-common-progress-track {
+  height: 4px;
+}
+
+.ncx-common-progress-default .ncx-common-progress-track {
+  height: 6px;
+}
+
+.ncx-common-progress-prominent .ncx-common-progress-track {
+  height: 8px;
+}
+
+.ncx-common-progress-bar {
   height: 100%;
   border-radius: inherit;
   background: var(--ncx-color-accent);
+  transition: width var(--ncx-motion-normal) cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+.ncx-common-progress-indeterminate .ncx-common-progress-bar {
+  width: 40% !important;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--ncx-color-accent) 50%,
+    transparent 100%
+  );
+  animation: ncx-common-progress-indeterminate 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.ncx-common-progress-value-text {
+  color: var(--ncx-color-text-secondary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+/* --- CommonSkeleton (WWDC25 Glassmorphism Skeleton) --- */
 .ncx-common-skeleton {
   display: grid;
-  gap: var(--ncx-space-2);
+  gap: 10px;
+  width: 100%;
 }
 
-.ncx-common-skeleton span {
+.ncx-common-skeleton-line {
+  display: block;
   height: 14px;
-  border-radius: var(--ncx-radius-full);
-  background: linear-gradient(90deg, var(--ncx-color-control-hover), var(--ncx-color-control-pressed), var(--ncx-color-control-hover));
-  background-size: 200% 100%;
-  animation: ncx-common-skeleton 1.3s ease-in-out infinite;
+  border-radius: var(--ncx-radius-md);
+  background: color-mix(in srgb, var(--ncx-color-border-default) 40%, transparent);
 }
 
-.ncx-common-empty,
-.ncx-common-error {
-  display: grid;
-  gap: var(--ncx-space-2);
-  justify-items: start;
-  padding: var(--ncx-space-6);
-  border: 1px dashed var(--ncx-color-border-default);
+.ncx-common-skeleton-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ncx-radius-full);
+  background: color-mix(in srgb, var(--ncx-color-border-default) 40%, transparent);
+}
+
+.ncx-common-skeleton-rectangular,
+.ncx-common-skeleton-card {
+  min-height: 48px;
+  border-radius: var(--ncx-radius-lg);
+  background: color-mix(in srgb, var(--ncx-color-border-default) 40%, transparent);
+}
+
+.ncx-common-skeleton-animated .ncx-common-skeleton-line,
+.ncx-common-skeleton-animated.ncx-common-skeleton-avatar,
+.ncx-common-skeleton-animated.ncx-common-skeleton-rectangular,
+.ncx-common-skeleton-animated.ncx-common-skeleton-card {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--ncx-color-border-default) 30%, transparent) 0%,
+    color-mix(in srgb, var(--ncx-color-border-strong) 40%, transparent) 50%,
+    color-mix(in srgb, var(--ncx-color-border-default) 30%, transparent) 100%
+  );
+  background-size: 200% 100%;
+  animation: ncx-common-skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* --- CommonEmptyState (macOS ContentUnavailableView) --- */
+.ncx-common-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ncx-space-4);
+  width: 100%;
+  padding: var(--ncx-space-8) var(--ncx-space-6);
+  border: 1px dashed var(--ncx-color-border-subtle);
   border-radius: var(--ncx-radius-xl);
   background: var(--ncx-color-surface);
+  backdrop-filter: blur(var(--ncx-blur-sm));
+  text-align: center;
 }
 
-.ncx-common-empty p,
-.ncx-common-error p {
+.ncx-common-empty-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--ncx-radius-2xl);
+  color: var(--ncx-color-text-tertiary);
+  background: var(--ncx-color-control-hover);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 10%);
+}
+
+.ncx-common-empty-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.ncx-common-empty-content {
+  display: grid;
+  gap: var(--ncx-space-1);
+  max-width: 360px;
+}
+
+.ncx-common-empty-title {
+  margin: 0;
+  color: var(--ncx-color-text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ncx-common-empty-description {
   margin: 0;
   color: var(--ncx-color-text-secondary);
+  font-size: 13px;
+  line-height: 1.45;
 }
 
+.ncx-common-empty-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ncx-space-3);
+  margin-top: var(--ncx-space-1);
+}
+
+/* --- CommonErrorState (macOS Alert Error View) --- */
 .ncx-common-error {
-  border-color: color-mix(in srgb, var(--ncx-color-danger) 34%, transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ncx-space-4);
+  width: 100%;
+  padding: var(--ncx-space-8) var(--ncx-space-6);
+  border: 1px solid color-mix(in srgb, var(--ncx-color-danger) 24%, transparent);
+  border-radius: var(--ncx-radius-xl);
+  background: color-mix(in srgb, var(--ncx-color-danger) 4%, var(--ncx-color-surface));
+  backdrop-filter: blur(var(--ncx-blur-sm));
+  text-align: center;
 }
 
-.ncx-common-inline-message {
+.ncx-common-error-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--ncx-radius-2xl);
+  color: var(--ncx-color-danger);
+  background: color-mix(in srgb, var(--ncx-color-danger) 12%, transparent);
+}
+
+.ncx-common-error-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.ncx-common-error-content {
+  display: grid;
+  gap: var(--ncx-space-1);
+  max-width: 360px;
+}
+
+.ncx-common-error-title {
   margin: 0;
-  padding: var(--ncx-space-3);
+  color: var(--ncx-color-text-primary);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.ncx-common-error-description {
+  margin: 0;
+  color: var(--ncx-color-text-secondary);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.ncx-common-error-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ncx-space-3);
+  margin-top: var(--ncx-space-1);
+}
+
+/* --- CommonInlineMessage (macOS Callout Notice) --- */
+.ncx-common-inline-message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ncx-space-3);
+  padding: var(--ncx-space-3) var(--ncx-space-4);
   border: 1px solid transparent;
   border-radius: var(--ncx-radius-lg);
   font-size: 13px;
+  line-height: 1.45;
+  backdrop-filter: blur(var(--ncx-blur-sm));
+}
+
+.ncx-common-inline-message-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+
+.ncx-common-inline-message-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ncx-common-inline-message-title {
+  color: inherit;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ncx-common-inline-message-body {
+  color: inherit;
+  opacity: 0.92;
+}
+
+.ncx-common-inline-message-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  margin: -2px -4px -2px 0;
+  border: 0;
+  border-radius: var(--ncx-radius-xs);
+  color: inherit;
+  background: transparent;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: opacity var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
+}
+
+.ncx-common-inline-message-close:hover {
+  opacity: 1;
+  background: color-mix(in srgb, currentcolor 12%, transparent);
 }
 
 .ncx-common-inline-message-info {
-  border-color: color-mix(in srgb, var(--ncx-color-info) 20%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-info) 22%, transparent);
   color: var(--ncx-color-info);
-  background: color-mix(in srgb, var(--ncx-color-info) 9%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-info) 10%, transparent);
 }
 
 .ncx-common-inline-message-success {
-  border-color: color-mix(in srgb, var(--ncx-color-success) 20%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-success) 22%, transparent);
   color: var(--ncx-color-success);
-  background: color-mix(in srgb, var(--ncx-color-success) 9%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-success) 10%, transparent);
 }
 
 .ncx-common-inline-message-warning {
-  border-color: color-mix(in srgb, var(--ncx-color-warning) 24%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-warning) 26%, transparent);
   color: var(--ncx-color-warning);
-  background: color-mix(in srgb, var(--ncx-color-warning) 11%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-warning) 12%, transparent);
 }
 
 .ncx-common-inline-message-danger {
-  border-color: color-mix(in srgb, var(--ncx-color-danger) 24%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-danger) 26%, transparent);
   color: var(--ncx-color-danger);
-  background: color-mix(in srgb, var(--ncx-color-danger) 10%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-danger) 11%, transparent);
 }
 
+/* --- 12. CommonToast (macOS Banner / HUD Notification Toast) --- */
 .ncx-common-toast {
   position: fixed;
   z-index: var(--ncx-layer-toast);
-  top: 24px;
+  top: 20px;
   left: 50%;
-  display: grid;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--ncx-space-3);
   min-width: 280px;
-  max-width: 420px;
-  gap: 2px;
-  padding: var(--ncx-space-3) var(--ncx-space-4);
-  border: 1px solid var(--ncx-color-border-subtle);
+  max-width: 440px;
+  padding: 10px 14px;
   border-radius: var(--ncx-radius-xl);
   background: var(--ncx-color-surface-overlay);
-  box-shadow: var(--ncx-shadow-elevation-2);
-  transform: translateX(-50%);
+  backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid var(--ncx-color-border-default);
+  box-shadow: 0 16px 36px rgb(0 0 0 / 18%), 0 2px 8px rgb(0 0 0 / 8%), inset 0 1px 0 rgb(255 255 255 / 15%);
 }
 
-.ncx-common-toast span {
+.ncx-common-toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ncx-radius-full);
+}
+
+.ncx-common-toast-icon-success {
+  color: var(--ncx-color-success);
+  background: color-mix(in srgb, var(--ncx-color-success) 14%, transparent);
+}
+
+.ncx-common-toast-icon-warning {
+  color: var(--ncx-color-warning);
+  background: color-mix(in srgb, var(--ncx-color-warning) 14%, transparent);
+}
+
+.ncx-common-toast-icon-danger {
+  color: var(--ncx-color-danger);
+  background: color-mix(in srgb, var(--ncx-color-danger) 14%, transparent);
+}
+
+.ncx-common-toast-icon-info {
+  color: var(--ncx-color-info);
+  background: color-mix(in srgb, var(--ncx-color-info) 14%, transparent);
+}
+
+.ncx-common-toast-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.ncx-common-toast-title {
+  color: var(--ncx-color-text-primary);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ncx-common-toast-message {
   color: var(--ncx-color-text-secondary);
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
-.ncx-common-toast button {
-  position: absolute;
-  top: var(--ncx-space-2);
-  right: var(--ncx-space-2);
+.ncx-common-toast-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
   border: 0;
-  color: var(--ncx-color-text-secondary);
+  border-radius: var(--ncx-radius-full);
+  color: var(--ncx-color-text-tertiary);
   background: transparent;
   cursor: pointer;
+  transition: color var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
 }
 
+.ncx-common-toast-close:hover {
+  color: var(--ncx-color-text-primary);
+  background: var(--ncx-color-control-hover);
+}
+
+/* Toast Transitions */
+.ncx-toast-fade-enter-active,
+.ncx-toast-fade-leave-active {
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1), transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ncx-toast-fade-enter-from,
+.ncx-toast-fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -18px) scale(0.95);
+}
+
+/* --- 13. CommonDialog & CommonAlertDialog (macOS Sheet & Alert Window) --- */
 .ncx-common-overlay {
   position: fixed;
   z-index: var(--ncx-layer-modal);
   inset: 0;
   display: grid;
   place-items: center;
-  padding: var(--ncx-space-8);
-  background: rgb(0 0 0 / 22%);
-  backdrop-filter: blur(var(--ncx-blur-sm));
+  padding: var(--ncx-space-6);
+  background: rgb(0 0 0 / 28%);
+  backdrop-filter: blur(16px);
 }
 
-.ncx-common-overlay-drawer {
-  justify-items: end;
-}
-
-.ncx-common-modal,
-.ncx-common-drawer {
-  display: grid;
-  gap: var(--ncx-space-4);
-  border: 1px solid var(--ncx-color-border-subtle);
-  background: var(--ncx-color-surface-overlay);
-  box-shadow: var(--ncx-shadow-elevation-3);
+.ncx-common-overlay-alert {
+  z-index: calc(var(--ncx-layer-modal) + 10);
 }
 
 .ncx-common-modal {
-  width: min(520px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ncx-space-4);
+  width: min(520px, 92vw);
+  max-height: 88vh;
+  overflow: hidden;
   padding: var(--ncx-space-6);
+  border: 1px solid var(--ncx-color-border-default);
   border-radius: var(--ncx-radius-2xl);
+  background: var(--ncx-color-surface-overlay);
+  backdrop-filter: blur(32px) saturate(200%);
+  box-shadow: 0 24px 64px rgb(0 0 0 / 26%), 0 4px 16px rgb(0 0 0 / 12%), inset 0 1px 0 rgb(255 255 255 / 15%);
 }
 
+.ncx-common-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ncx-space-4);
+}
+
+.ncx-common-modal-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ncx-common-modal-title {
+  margin: 0;
+  color: var(--ncx-color-text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.ncx-common-modal-subtitle {
+  margin: 0;
+  color: var(--ncx-color-text-secondary);
+  font-size: 13px;
+}
+
+.ncx-common-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: var(--ncx-radius-full);
+  color: var(--ncx-color-text-secondary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
+  cursor: pointer;
+  transition: color var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
+}
+
+.ncx-common-modal-close:hover {
+  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 15%, transparent);
+}
+
+.ncx-common-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  color: var(--ncx-color-text-secondary);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.ncx-common-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ncx-space-3);
+  padding-top: var(--ncx-space-3);
+  border-top: 1px solid var(--ncx-color-border-subtle);
+}
+
+/* Modal Pop Transition */
+.ncx-modal-pop-enter-active,
+.ncx-modal-pop-leave-active {
+  transition: opacity 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ncx-modal-pop-enter-active .ncx-common-modal,
+.ncx-modal-pop-leave-active .ncx-common-modal {
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ncx-modal-pop-enter-from,
+.ncx-modal-pop-leave-to {
+  opacity: 0;
+}
+
+.ncx-modal-pop-enter-from .ncx-common-modal,
+.ncx-modal-pop-leave-to .ncx-common-modal {
+  transform: scale(0.93);
+}
+
+/* macOS NSAlert Style */
 .ncx-common-modal-alert {
-  width: min(400px, 100%);
+  align-items: center;
+  width: min(380px, 92vw);
+  gap: var(--ncx-space-3);
+  padding: var(--ncx-space-6);
+  text-align: center;
+}
+
+.ncx-common-alert-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ncx-space-3);
+}
+
+.ncx-common-alert-icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--ncx-radius-full);
+}
+
+.ncx-common-alert-icon-danger {
+  color: var(--ncx-color-danger);
+  background: color-mix(in srgb, var(--ncx-color-danger) 14%, transparent);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--ncx-color-danger) 25%, transparent);
+}
+
+.ncx-common-alert-icon-warning {
+  color: var(--ncx-color-warning);
+  background: color-mix(in srgb, var(--ncx-color-warning) 14%, transparent);
+}
+
+.ncx-common-alert-icon-info {
+  color: var(--ncx-color-info);
+  background: color-mix(in srgb, var(--ncx-color-info) 14%, transparent);
+}
+
+.ncx-common-alert-title {
+  margin: 0;
+  color: var(--ncx-color-text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ncx-common-alert-description {
+  margin: 0;
+  color: var(--ncx-color-text-secondary);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.ncx-common-alert-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ncx-space-3);
+  width: 100%;
+  margin-top: var(--ncx-space-2);
+}
+
+/* Alert Pop Transition */
+.ncx-alert-pop-enter-active,
+.ncx-alert-pop-leave-active {
+  transition: opacity 180ms ease-out;
+}
+
+.ncx-alert-pop-enter-active .ncx-common-modal-alert,
+.ncx-alert-pop-leave-active .ncx-common-modal-alert {
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ncx-alert-pop-enter-from,
+.ncx-alert-pop-leave-to {
+  opacity: 0;
+}
+
+.ncx-alert-pop-enter-from .ncx-common-modal-alert,
+.ncx-alert-pop-leave-to .ncx-common-modal-alert {
+  transform: scale(0.92);
+}
+
+/* --- 14. CommonDrawer (macOS Inspector Side Drawer) --- */
+.ncx-common-overlay-drawer {
+  z-index: var(--ncx-layer-drawer);
+  justify-items: end;
+  padding: 0;
+}
+
+.ncx-common-overlay-drawer-left {
+  justify-items: start;
 }
 
 .ncx-common-drawer {
-  width: min(440px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ncx-space-4);
+  width: min(440px, 90vw);
   height: 100%;
   padding: var(--ncx-space-6);
+  border: 0;
+  border-left: 1px solid var(--ncx-color-border-default);
   border-radius: var(--ncx-radius-2xl) 0 0 var(--ncx-radius-2xl);
+  background: var(--ncx-color-surface-overlay);
+  backdrop-filter: blur(32px) saturate(200%);
+  box-shadow: -16px 0 48px rgb(0 0 0 / 22%), inset 0 1px 0 rgb(255 255 255 / 12%);
 }
 
-.ncx-common-modal header,
-.ncx-common-drawer header,
-.ncx-common-modal footer {
+.ncx-common-drawer-left {
+  border-left: 0;
+  border-right: 1px solid var(--ncx-color-border-default);
+  border-radius: 0 var(--ncx-radius-2xl) var(--ncx-radius-2xl) 0;
+  box-shadow: 16px 0 48px rgb(0 0 0 / 22%), inset 0 1px 0 rgb(255 255 255 / 12%);
+}
+
+.ncx-common-drawer-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--ncx-space-3);
 }
 
-.ncx-common-modal h2,
-.ncx-common-drawer h2,
-.ncx-common-modal p {
+.ncx-common-drawer-title {
   margin: 0;
+  color: var(--ncx-color-text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
-.ncx-common-modal p,
-.ncx-common-modal-body,
-.ncx-common-drawer {
+.ncx-common-drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: var(--ncx-radius-full);
+  color: var(--ncx-color-text-secondary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
+  cursor: pointer;
+  transition: color var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
+}
+
+.ncx-common-drawer-close:hover {
+  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 15%, transparent);
+}
+
+.ncx-common-drawer-body {
+  flex: 1;
+  overflow-y: auto;
   color: var(--ncx-color-text-secondary);
   line-height: 1.55;
 }
 
+/* Drawer Slide Transitions */
+.ncx-drawer-slide-enter-active,
+.ncx-drawer-slide-leave-active {
+  transition: opacity 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ncx-drawer-slide-enter-active .ncx-common-drawer-right,
+.ncx-drawer-slide-leave-active .ncx-common-drawer-right {
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ncx-drawer-slide-enter-active .ncx-common-drawer-left,
+.ncx-drawer-slide-leave-active .ncx-common-drawer-left {
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ncx-drawer-slide-enter-from,
+.ncx-drawer-slide-leave-to {
+  opacity: 0;
+}
+
+.ncx-drawer-slide-enter-from .ncx-common-drawer-right,
+.ncx-drawer-slide-leave-to .ncx-common-drawer-right {
+  transform: translateX(100%);
+}
+
+.ncx-drawer-slide-enter-from .ncx-common-drawer-left,
+.ncx-drawer-slide-leave-to .ncx-common-drawer-left {
+  transform: translateX(-100%);
+}
+
+/* --- 15. CommonPopover (macOS Popover Panel) --- */
+.ncx-common-popover {
+  position: relative;
+  display: inline-block;
+}
+
 .ncx-common-popover-panel {
+  position: absolute;
+  z-index: var(--ncx-layer-popover);
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  min-width: 200px;
+  padding: 12px 16px;
+  border: 1px solid var(--ncx-color-border-default);
+  border-radius: var(--ncx-radius-xl);
+  background: var(--ncx-color-surface-overlay);
+  backdrop-filter: blur(28px) saturate(190%);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 18%), 0 2px 6px rgb(0 0 0 / 8%), inset 0 1px 0 rgb(255 255 255 / 15%);
   color: var(--ncx-color-text-secondary);
+  font-size: 13px;
   line-height: 1.5;
+}
+
+.ncx-common-popover-panel-top {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+/* Popover Arrow */
+.ncx-common-popover-arrow {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: var(--ncx-color-surface-overlay);
+  border-top: 1px solid var(--ncx-color-border-default);
+  border-left: 1px solid var(--ncx-color-border-default);
+}
+
+.ncx-common-popover-panel-top .ncx-common-popover-arrow {
+  top: auto;
+  bottom: -5px;
+  border-top: 0;
+  border-left: 0;
+  border-bottom: 1px solid var(--ncx-color-border-default);
+  border-right: 1px solid var(--ncx-color-border-default);
+}
+
+/* Popover Fade Transition */
+.ncx-popover-fade-enter-active,
+.ncx-popover-fade-leave-active {
+  transition: opacity 160ms ease-out, transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ncx-popover-fade-enter-from,
+.ncx-popover-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-6px) scale(0.96);
 }
 
 .ncx-common-scroll-area {
@@ -1320,9 +3021,23 @@
   }
 }
 
-@keyframes ncx-common-skeleton {
-  to {
-    background-position-x: -200%;
+@keyframes ncx-common-progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+@keyframes ncx-common-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
   }
 }
 
@@ -1336,7 +3051,13 @@
   .ncx-common-segmented-item,
   .ncx-common-tabs-tab,
   .ncx-common-spinner,
-  .ncx-common-skeleton span {
+  .ncx-common-spinner-spokes,
+  .ncx-common-spinner-ring,
+  .ncx-common-progress-indeterminate .ncx-common-progress-bar,
+  .ncx-common-skeleton-animated .ncx-common-skeleton-line,
+  .ncx-common-skeleton-animated.ncx-common-skeleton-avatar,
+  .ncx-common-skeleton-animated.ncx-common-skeleton-rectangular,
+  .ncx-common-skeleton-animated.ncx-common-skeleton-card {
     animation: none;
     transition: none;
   }

@@ -110,9 +110,9 @@ function guardDisabledClick(event: MouseEvent, disabled: boolean): boolean {
   return true
 }
 
-// ========= 操作组件 =========
+// ========= 操作组件 (macOS HIG / WWDC25 规范) =========
 
-/** 通用组件Button：统一按钮入口。 */
+/** 通用组件Button：统一 macOS 标准按钮入口。 */
 export const CommonButton = defineComponent({
   name: '通用组件Button',
   props: {
@@ -140,23 +140,36 @@ export const CommonButton = defineComponent({
       h(
         'button',
         {
-          class: joinClasses('ncx-common-button', `ncx-common-button-${props.variant}`, `ncx-common-button-${props.size}`, props.loading && 'ncx-common-button-loading'),
+          class: joinClasses(
+            'ncx-common-button',
+            `ncx-common-button-${props.variant}`,
+            `ncx-common-button-${props.size}`,
+            props.loading && 'ncx-common-button-loading'
+          ),
           type: props.type,
           disabled: isDisabled.value,
+          'aria-disabled': isDisabled.value ? 'true' : undefined,
           'aria-busy': props.loading ? 'true' : undefined,
           onClick: handleClick
         },
-        [props.loading ? h(CommonSpinner, { size: 'compact' }) : null, h('span', slots.default?.())]
+        [
+          props.loading ? h(CommonSpinner, { size: props.size === 'compact' ? 'compact' : 'default' }) : null,
+          h('span', { class: 'ncx-common-button-text' }, slots.default?.())
+        ]
       )
   }
 })
 
-/** 通用组件IconButton：统一纯图标按钮入口。 */
+/** 通用组件IconButton：统一纯图标按钮入口，遵循 macOS 无障碍与状态规范。 */
 export const CommonIconButton = defineComponent({
   name: '通用组件IconButton',
   props: {
     label: { type: String, required: true },
     size: sizeProp,
+    variant: {
+      type: String as PropType<'ghost' | 'secondary' | 'primary'>,
+      default: 'ghost'
+    },
     selected: Boolean,
     disabled: Boolean
   },
@@ -172,9 +185,15 @@ export const CommonIconButton = defineComponent({
       h(
         'button',
         {
-          class: joinClasses('ncx-common-icon-button', `ncx-common-icon-button-${props.size}`, props.selected && 'ncx-common-icon-button-selected'),
+          class: joinClasses(
+            'ncx-common-icon-button',
+            `ncx-common-icon-button-${props.variant}`,
+            `ncx-common-icon-button-${props.size}`,
+            props.selected && 'ncx-common-icon-button-selected'
+          ),
           type: 'button',
           disabled: props.disabled,
+          'aria-disabled': props.disabled ? 'true' : undefined,
           'aria-label': props.label,
           'aria-pressed': props.selected ? 'true' : undefined,
           title: props.label,
@@ -185,20 +204,41 @@ export const CommonIconButton = defineComponent({
   }
 })
 
-/** 通用组件ButtonGroup：统一按钮组容器。 */
+/** 通用组件ButtonGroup：统一 macOS 组合按钮容器。 */
 export const CommonButtonGroup = defineComponent({
   name: '通用组件ButtonGroup',
-  setup(_, { slots }) {
-    return () => h('div', { class: 'ncx-common-button-group', role: 'group' }, slots.default?.())
+  props: {
+    vertical: Boolean,
+    variant: {
+      type: String as PropType<'connected' | 'segmented'>,
+      default: 'connected'
+    }
+  },
+  setup(props, { slots }) {
+    return () =>
+      h(
+        'div',
+        {
+          class: joinClasses(
+            'ncx-common-button-group',
+            props.vertical && 'ncx-common-button-group-vertical',
+            `ncx-common-button-group-${props.variant}`
+          ),
+          role: 'group'
+        },
+        slots.default?.()
+      )
   }
 })
 
-/** 通用组件LinkButton：统一链接型按钮。 */
+/** 通用组件LinkButton：统一 macOS 链接型按钮。 */
 export const CommonLinkButton = defineComponent({
   name: '通用组件LinkButton',
   props: {
     href: { type: String, default: '#' },
-    disabled: Boolean
+    disabled: Boolean,
+    target: { type: String, default: undefined },
+    rel: { type: String, default: undefined }
   },
   emits: ['click'],
   setup(props, { emit, slots }) {
@@ -214,6 +254,8 @@ export const CommonLinkButton = defineComponent({
         {
           class: joinClasses('ncx-common-link-button', props.disabled && 'ncx-common-link-button-disabled'),
           href: props.disabled ? undefined : props.href,
+          target: props.target,
+          rel: props.rel,
           'aria-disabled': props.disabled ? 'true' : undefined,
           onClick: handleClick
         },
@@ -222,136 +264,506 @@ export const CommonLinkButton = defineComponent({
   }
 })
 
-// ========= 输入组件 =========
+// ========= 输入组件 (macOS HIG / WWDC25 规范) =========
 
-/** 通用组件Input：统一单行输入。 */
+/** 通用组件Input：统一单行输入，完全符合 macOS HIG / WWDC25 规范。 */
 export const CommonInput = defineComponent({
-  name: '通用组件Input',
+  name: 'CommonInput',
   props: {
-    modelValue: { type: String, default: '' },
+    modelValue: { type: [String, Number], default: '' },
     placeholder: { type: String, default: '' },
-    disabled: Boolean,
-    invalid: Boolean
+    disabled: { type: Boolean, default: false },
+    readonly: { type: Boolean, default: false },
+    invalid: { type: Boolean, default: false },
+    size: { type: String as PropType<CommonComponentSize>, default: 'default' },
+    type: { type: String, default: 'text' },
+    clearable: { type: Boolean, default: false },
+    prefix: { type: String, default: '' },
+    suffix: { type: String, default: '' }
   },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    return () =>
-      h('input', {
-        class: joinClasses('ncx-common-field', props.invalid && 'ncx-common-field-invalid'),
+  emits: ['update:modelValue', 'change', 'input', 'clear', 'focus', 'blur'],
+  setup(props, { emit, slots }) {
+    const inputRef = ref<HTMLInputElement | null>(null)
+
+    function handleInput(event: Event): void {
+      const val = readInputValue(event)
+      emit('update:modelValue', val)
+      emit('input', val)
+      emit('change', val)
+    }
+
+    function handleClear(): void {
+      if (props.disabled || props.readonly) return
+      emit('update:modelValue', '')
+      emit('change', '')
+      emit('input', '')
+      emit('clear')
+      inputRef.value?.focus()
+    }
+
+    function handleFocus(event: FocusEvent): void {
+      emit('focus', event)
+    }
+
+    function handleBlur(event: FocusEvent): void {
+      emit('blur', event)
+    }
+
+    return () => {
+      const sizeClass = `ncx-common-field--${props.size || 'default'}`
+      const hasPrefix = Boolean(slots.prefix || props.prefix)
+      const hasSuffix = Boolean(slots.suffix || props.suffix || (props.clearable && props.modelValue))
+
+      const inputElement = h('input', {
+        ref: inputRef,
+        class: joinClasses(
+          'ncx-common-field',
+          'ncx-common-input',
+          sizeClass,
+          props.invalid && 'ncx-common-field-invalid',
+          props.disabled && 'ncx-common-field-disabled'
+        ),
+        type: props.type,
         value: props.modelValue,
         placeholder: props.placeholder,
         disabled: props.disabled,
+        readonly: props.readonly,
         'aria-invalid': props.invalid ? 'true' : undefined,
-        onInput: (event: Event) => emit('update:modelValue', readInputValue(event))
+        onInput: handleInput,
+        onFocus: handleFocus,
+        onBlur: handleBlur
       })
+
+      if (!hasPrefix && !hasSuffix) {
+        return inputElement
+      }
+
+      return h(
+        'div',
+        {
+          class: joinClasses(
+            'ncx-common-input-wrapper',
+            sizeClass,
+            props.invalid && 'ncx-common-field-invalid',
+            props.disabled && 'ncx-common-field-disabled'
+          )
+        },
+        [
+          hasPrefix
+            ? h('span', { class: 'ncx-common-input-prefix' }, slots.prefix ? slots.prefix() : props.prefix)
+            : null,
+          inputElement,
+          props.clearable && props.modelValue && !props.disabled && !props.readonly
+            ? h(
+                'button',
+                {
+                  class: 'ncx-common-input-clear',
+                  type: 'button',
+                  'aria-label': '清空内容',
+                  onClick: handleClear
+                },
+                [
+                  h('svg', { viewBox: '0 0 16 16', fill: 'currentColor' }, [
+                    h('path', {
+                      d: 'M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm2.707 9.293a1 1 0 0 1-1.414 1.414L8 9.414l-1.293 1.293a1 1 0 0 1-1.414-1.414L6.586 8 5.293 6.707a1 1 0 0 1 1.414-1.414L8 6.586l1.293-1.293a1 1 0 0 1 1.414 1.414L9.414 8l1.293 1.293z'
+                    })
+                  ])
+                ]
+              )
+            : null,
+          slots.suffix || props.suffix
+            ? h('span', { class: 'ncx-common-input-suffix' }, slots.suffix ? slots.suffix() : props.suffix)
+            : null
+        ]
+      )
+    }
   }
 })
 
-/** 通用组件Textarea：统一多行输入。 */
+/** 通用组件Textarea：统一多行输入，完全符合 macOS HIG / WWDC25 规范。 */
 export const CommonTextarea = defineComponent({
-  name: '通用组件Textarea',
+  name: 'CommonTextarea',
   props: {
     modelValue: { type: String, default: '' },
     placeholder: { type: String, default: '' },
-    rows: { type: Number, default: 4 }
+    disabled: { type: Boolean, default: false },
+    readonly: { type: Boolean, default: false },
+    invalid: { type: Boolean, default: false },
+    rows: { type: [Number, String], default: 4 },
+    size: { type: String as PropType<CommonComponentSize>, default: 'default' },
+    resize: {
+      type: String as PropType<'none' | 'vertical' | 'horizontal' | 'both'>,
+      default: 'vertical'
+    }
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'change', 'input', 'focus', 'blur'],
   setup(props, { emit }) {
-    return () =>
-      h('textarea', {
-        class: 'ncx-common-field ncx-common-textarea',
+    function handleInput(event: Event): void {
+      const val = readInputValue(event)
+      emit('update:modelValue', val)
+      emit('input', val)
+      emit('change', val)
+    }
+
+    function handleFocus(event: FocusEvent): void {
+      emit('focus', event)
+    }
+
+    function handleBlur(event: FocusEvent): void {
+      emit('blur', event)
+    }
+
+    return () => {
+      const sizeClass = `ncx-common-textarea--${props.size || 'default'}`
+
+      return h('textarea', {
+        class: joinClasses(
+          'ncx-common-field',
+          'ncx-common-textarea',
+          sizeClass,
+          props.invalid && 'ncx-common-field-invalid',
+          props.disabled && 'ncx-common-field-disabled'
+        ),
+        style: { resize: props.resize },
         value: props.modelValue,
         placeholder: props.placeholder,
         rows: props.rows,
-        onInput: (event: Event) => emit('update:modelValue', readInputValue(event))
+        disabled: props.disabled,
+        readonly: props.readonly,
+        'aria-invalid': props.invalid ? 'true' : undefined,
+        onInput: handleInput,
+        onFocus: handleFocus,
+        onBlur: handleBlur
       })
+    }
   }
 })
 
-/** 通用组件SearchInput：统一搜索输入。 */
+/** 通用组件SearchInput：统一搜索输入，带清空交互，完全符合 macOS NSSearchField / WWDC25 规范。 */
 export const CommonSearchInput = defineComponent({
-  name: '通用组件SearchInput',
+  name: 'CommonSearchInput',
   props: {
     modelValue: { type: String, default: '' },
-    placeholder: { type: String, default: '搜索音乐、歌单或小云能力' }
+    placeholder: { type: String, default: '搜索...' },
+    disabled: { type: Boolean, default: false },
+    size: { type: String as PropType<CommonComponentSize>, default: 'default' },
+    autoFocus: { type: Boolean, default: false }
   },
-  emits: ['update:modelValue', 'clear'],
+  emits: ['update:modelValue', 'change', 'clear', 'search', 'focus', 'blur', 'input'],
   setup(props, { emit }) {
-    /** 清空搜索输入内容。 */
-    function clearSearch(): void {
-      emit('update:modelValue', '')
-      emit('clear')
+    const inputRef = ref<HTMLInputElement | null>(null)
+
+    function handleInput(event: Event): void {
+      const val = readInputValue(event)
+      emit('update:modelValue', val)
+      emit('input', val)
+      emit('change', val)
     }
 
-    return () =>
-      h('label', { class: 'ncx-common-search' }, [
-        h('span', { class: 'ncx-common-search-icon', 'aria-hidden': 'true' }, '⌕'),
-        h('input', {
-          class: 'ncx-common-search-input',
-          value: props.modelValue,
-          placeholder: props.placeholder,
-          type: 'search',
-          onInput: (event: Event) => emit('update:modelValue', readInputValue(event))
-        }),
-        props.modelValue
-          ? h('button', { class: 'ncx-common-search-clear', type: 'button', onClick: clearSearch }, '清除')
-          : null
-      ])
-  }
-})
+    function handleClear(): void {
+      if (props.disabled) return
+      emit('update:modelValue', '')
+      emit('change', '')
+      emit('input', '')
+      emit('clear')
+      nextTick(() => {
+        inputRef.value?.focus()
+      })
+    }
 
-/** 通用组件Select：统一下拉选择。 */
-export const CommonSelect = defineComponent({
-  name: '通用组件Select',
-  props: {
-    modelValue: { type: String, default: '' },
-    options: { type: Array as PropType<CommonOption[]>, default: () => [] }
-  },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    return () =>
-      h(
-        'select',
+    function handleKeyDown(event: KeyboardEvent): void {
+      if (event.key === 'Escape') {
+        if (props.modelValue) {
+          event.preventDefault()
+          handleClear()
+        }
+      } else if (event.key === 'Enter') {
+        event.preventDefault()
+        emit('search', props.modelValue)
+      }
+    }
+
+    function handleFocus(event: FocusEvent): void {
+      emit('focus', event)
+    }
+
+    function handleBlur(event: FocusEvent): void {
+      emit('blur', event)
+    }
+
+    return () => {
+      const sizeClass = `ncx-common-search--${props.size || 'default'}`
+
+      return h(
+        'label',
         {
-          class: 'ncx-common-field ncx-common-select',
-          value: props.modelValue,
-          onChange: (event: Event) => emit('update:modelValue', readInputValue(event))
+          class: joinClasses(
+            'ncx-common-search',
+            sizeClass,
+            props.disabled && 'ncx-common-search--disabled'
+          )
         },
-        props.options.map((option) =>
-          h('option', { value: option.value, disabled: option.disabled }, option.label)
-        )
+        [
+          h('span', { class: 'ncx-common-search-icon', 'aria-hidden': 'true' }, [
+            h('svg', { viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor' }, [
+              h('path', {
+                d: 'M11.5 11.5L14 14M7 12C9.76142 12 12 9.76142 12 7C12 4.23858 9.76142 2 7 2C4.23858 2 2 4.23858 2 7C2 9.76142 4.23858 12 7 12Z',
+                'stroke-width': '1.8',
+                'stroke-linecap': 'round',
+                'stroke-linejoin': 'round'
+              })
+            ])
+          ]),
+          h('input', {
+            ref: inputRef,
+            class: 'ncx-common-search-input',
+            value: props.modelValue,
+            placeholder: props.placeholder,
+            disabled: props.disabled,
+            type: 'search',
+            autofocus: props.autoFocus,
+            onInput: handleInput,
+            onKeydown: handleKeyDown,
+            onFocus: handleFocus,
+            onBlur: handleBlur
+          }),
+          props.modelValue && !props.disabled
+            ? h(
+                'button',
+                {
+                  class: 'ncx-common-search-clear',
+                  type: 'button',
+                  'aria-label': '清空搜索',
+                  onClick: handleClear
+                },
+                [
+                  h('svg', { viewBox: '0 0 16 16', fill: 'currentColor' }, [
+                    h('path', {
+                      d: 'M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm2.707 9.293a1 1 0 0 1-1.414 1.414L8 9.414l-1.293 1.293a1 1 0 0 1-1.414-1.414L6.586 8 5.293 6.707a1 1 0 0 1 1.414-1.414L8 6.586l1.293-1.293a1 1 0 0 1 1.414 1.414L9.414 8l1.293 1.293z'
+                    })
+                  ])
+                ]
+              )
+            : null
+        ]
       )
+    }
   }
 })
 
-/** 通用组件Combobox：统一可输入选择。 */
-export const CommonCombobox = defineComponent({
-  name: '通用组件Combobox',
+/** 通用组件Select：统一下拉选择，完全符合 macOS NSPopUpButton / WWDC25 规范。 */
+export const CommonSelect = defineComponent({
+  name: 'CommonSelect',
   props: {
-    modelValue: { type: String, default: '' },
+    modelValue: { type: [String, Number], default: '' },
     options: { type: Array as PropType<CommonOption[]>, default: () => [] },
-    placeholder: { type: String, default: '' }
+    placeholder: { type: String, default: '' },
+    disabled: { type: Boolean, default: false },
+    invalid: { type: Boolean, default: false },
+    size: { type: String as PropType<CommonComponentSize>, default: 'default' }
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'change', 'focus', 'blur'],
   setup(props, { emit }) {
-    /** 当前组件 datalist 的稳定 ID。 */
-    const listId = `ncx-combobox-${Math.random().toString(36).slice(2)}`
+    function handleChange(event: Event): void {
+      const val = readInputValue(event)
+      emit('update:modelValue', val)
+      emit('change', val)
+    }
 
-    return () =>
-      h('div', { class: 'ncx-common-combobox' }, [
-        h('input', {
-          class: 'ncx-common-field',
-          value: props.modelValue,
-          list: listId,
-          placeholder: props.placeholder,
-          onInput: (event: Event) => emit('update:modelValue', readInputValue(event))
-        }),
-        h(
-          'datalist',
-          { id: listId },
-          props.options.map((option) => h('option', { value: option.value }, option.label))
+    function handleFocus(event: FocusEvent): void {
+      emit('focus', event)
+    }
+
+    function handleBlur(event: FocusEvent): void {
+      emit('blur', event)
+    }
+
+    return () => {
+      const sizeClass = `ncx-common-select-wrapper--${props.size || 'default'}`
+
+      const optionNodes = props.options.map((option) =>
+        h('option', { value: option.value, disabled: option.disabled }, option.label)
+      )
+
+      if (props.placeholder) {
+        optionNodes.unshift(
+          h('option', { value: '', disabled: true, selected: !props.modelValue }, props.placeholder)
         )
-      ])
+      }
+
+      return h(
+        'div',
+        {
+          class: joinClasses(
+            'ncx-common-select-wrapper',
+            sizeClass,
+            props.invalid && 'ncx-common-field-invalid',
+            props.disabled && 'ncx-common-field-disabled'
+          )
+        },
+        [
+          h(
+            'select',
+            {
+              class: joinClasses(
+                'ncx-common-field',
+                'ncx-common-select',
+                `ncx-common-select--${props.size || 'default'}`
+              ),
+              value: props.modelValue,
+              disabled: props.disabled,
+              'aria-invalid': props.invalid ? 'true' : undefined,
+              onChange: handleChange,
+              onFocus: handleFocus,
+              onBlur: handleBlur
+            },
+            optionNodes
+          ),
+          h('span', { class: 'ncx-common-select-chevron', 'aria-hidden': 'true' }, [
+            h('svg', { viewBox: '0 0 16 16', fill: 'currentColor' }, [
+              h('path', {
+                d: 'M4.5 5.5L8 2L11.5 5.5M4.5 10.5L8 14L11.5 10.5',
+                stroke: 'currentColor',
+                'stroke-width': '1.8',
+                'stroke-linecap': 'round',
+                'stroke-linejoin': 'round',
+                fill: 'none'
+              })
+            ])
+          ])
+        ]
+      )
+    }
+  }
+})
+
+/** 通用组件Combobox：统一可输入选择，基于 datalist，完全符合 macOS NSComboBox / WWDC25 规范。 */
+export const CommonCombobox = defineComponent({
+  name: 'CommonCombobox',
+  props: {
+    modelValue: { type: [String, Number], default: '' },
+    options: { type: Array as PropType<CommonOption[]>, default: () => [] },
+    placeholder: { type: String, default: '' },
+    disabled: { type: Boolean, default: false },
+    readonly: { type: Boolean, default: false },
+    invalid: { type: Boolean, default: false },
+    size: { type: String as PropType<CommonComponentSize>, default: 'default' },
+    clearable: { type: Boolean, default: false }
+  },
+  emits: ['update:modelValue', 'change', 'input', 'clear', 'focus', 'blur'],
+  setup(props, { emit }) {
+    const listId = `ncx-combobox-${Math.random().toString(36).slice(2)}`
+    const inputRef = ref<HTMLInputElement | null>(null)
+
+    function handleInput(event: Event): void {
+      const val = readInputValue(event)
+      emit('update:modelValue', val)
+      emit('input', val)
+      emit('change', val)
+    }
+
+    function handleTriggerClick(): void {
+      if (props.disabled || props.readonly) return
+      inputRef.value?.focus()
+    }
+
+    function handleClear(): void {
+      if (props.disabled || props.readonly) return
+      emit('update:modelValue', '')
+      emit('change', '')
+      emit('input', '')
+      emit('clear')
+      nextTick(() => {
+        inputRef.value?.focus()
+      })
+    }
+
+    function handleFocus(event: FocusEvent): void {
+      emit('focus', event)
+    }
+
+    function handleBlur(event: FocusEvent): void {
+      emit('blur', event)
+    }
+
+    return () => {
+      const sizeClass = `ncx-common-combobox--${props.size || 'default'}`
+
+      return h(
+        'div',
+        {
+          class: joinClasses(
+            'ncx-common-combobox',
+            sizeClass,
+            props.invalid && 'ncx-common-field-invalid',
+            props.disabled && 'ncx-common-field-disabled'
+          )
+        },
+        [
+          h('input', {
+            ref: inputRef,
+            class: joinClasses(
+              'ncx-common-field',
+              'ncx-common-combobox-input',
+              `ncx-common-field--${props.size || 'default'}`
+            ),
+            value: props.modelValue,
+            list: listId,
+            placeholder: props.placeholder,
+            disabled: props.disabled,
+            readonly: props.readonly,
+            'aria-invalid': props.invalid ? 'true' : undefined,
+            onInput: handleInput,
+            onFocus: handleFocus,
+            onBlur: handleBlur
+          }),
+          props.clearable && props.modelValue && !props.disabled && !props.readonly
+            ? h(
+                'button',
+                {
+                  class: 'ncx-common-combobox-clear',
+                  type: 'button',
+                  'aria-label': '清空选择',
+                  onClick: handleClear
+                },
+                [
+                  h('svg', { viewBox: '0 0 16 16', fill: 'currentColor' }, [
+                    h('path', {
+                      d: 'M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm2.707 9.293a1 1 0 0 1-1.414 1.414L8 9.414l-1.293 1.293a1 1 0 0 1-1.414-1.414L6.586 8 5.293 6.707a1 1 0 0 1 1.414-1.414L8 6.586l1.293-1.293a1 1 0 0 1 1.414 1.414L9.414 8l1.293 1.293z'
+                    })
+                  ])
+                ]
+              )
+            : null,
+          h(
+            'button',
+            {
+              class: 'ncx-common-combobox-trigger',
+              type: 'button',
+              tabindex: -1,
+              disabled: props.disabled,
+              'aria-label': '展开列表选项',
+              onClick: handleTriggerClick
+            },
+            [
+              h('svg', { viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor' }, [
+                h('path', {
+                  d: 'M4 6L8 10L12 6',
+                  'stroke-width': '1.8',
+                  'stroke-linecap': 'round',
+                  'stroke-linejoin': 'round'
+                })
+              ])
+            ]
+          ),
+          h(
+            'datalist',
+            { id: listId },
+            props.options.map((option) => h('option', { value: option.value }, option.label))
+          )
+        ]
+      )
+    }
   }
 })
 

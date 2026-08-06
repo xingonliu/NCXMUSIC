@@ -203,82 +203,173 @@ function confirmDangerAction(): void {
     </section>
 
     <section class="ncx-design-lab-section">
-      <h2>操作</h2>
+      <h2>操作组件 (CommonButton 按钮族 WWDC25 对齐)</h2>
       <CommonCard>
-        <div class="ncx-design-lab-row">
-          <CommonButton
-            variant="primary"
-            @click="recordAction('Primary Button')"
-          >
-            <Play :size="15" />
-            立即播放
-          </CommonButton>
-          <CommonButton
-            variant="secondary"
-            @click="recordAction('Secondary Button')"
-          >
-            加入队列
-          </CommonButton>
-          <CommonButton
-            variant="ghost"
-            @click="recordAction('Ghost Button')"
-          >
-            稍后再说
-          </CommonButton>
-          <CommonButton
-            variant="danger"
-            @click="alertVisible = true"
-          >
-            删除
-          </CommonButton>
-          <CommonButton loading>
-            同步中
-          </CommonButton>
-        </div>
-        <CommonSeparator />
-        <div class="ncx-design-lab-row">
-          <CommonIconButton
-            label="喜欢"
-            selected
-            @click="recordAction('IconButton 喜欢')"
-          >
-            <Heart :size="17" />
-          </CommonIconButton>
-          <CommonIconButton
-            label="通知"
-            @click="recordAction('IconButton 通知')"
-          >
-            <Bell :size="17" />
-          </CommonIconButton>
-          <CommonButtonGroup>
-            <CommonIconButton
-              label="新增"
-              size="compact"
-              @click="recordAction('ButtonGroup 新增')"
+        <div class="ncx-design-lab-stack">
+          <!-- 变体演示 -->
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <CommonButton
+              variant="primary"
+              @click="recordAction('Primary Button')"
             >
-              <Plus :size="14" />
-            </CommonIconButton>
-            <CommonIconButton
-              label="刷新"
-              size="compact"
-              @click="recordAction('ButtonGroup 刷新')"
+              <Play :size="15" />
+              立即播放
+            </CommonButton>
+            <CommonButton
+              variant="secondary"
+              @click="recordAction('Secondary Button')"
             >
-              <RefreshCcw :size="14" />
-            </CommonIconButton>
-            <CommonIconButton
-              label="更多"
-              size="compact"
-              @click="recordAction('ButtonGroup 更多')"
+              加入队列
+            </CommonButton>
+            <CommonButton
+              variant="ghost"
+              @click="recordAction('Ghost Button')"
             >
-              <MoreHorizontal :size="14" />
-            </CommonIconButton>
-          </CommonButtonGroup>
-          <CommonLinkButton
-            href="#/discover"
-            @click="recordAction('LinkButton')"
-          >
-            查看发现页
-          </CommonLinkButton>
+              稍后再说
+            </CommonButton>
+            <CommonButton
+              variant="danger"
+              @click="alertVisible = true"
+            >
+              <Trash2 :size="15" />
+              删除音轨
+            </CommonButton>
+            <CommonButton
+              variant="primary"
+              loading
+            >
+              同步中...
+            </CommonButton>
+            <CommonButton
+              variant="secondary"
+              disabled
+            >
+              已禁用操作
+            </CommonButton>
+          </div>
+
+          <CommonSeparator label="三档尺寸：Compact (24px) / Default (32px) / Prominent (38px)" />
+
+          <!-- 尺寸演示 -->
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <CommonButton
+              size="compact"
+              variant="primary"
+              @click="recordAction('Compact Primary')"
+            >
+              Compact 24px
+            </CommonButton>
+            <CommonButton
+              size="default"
+              variant="primary"
+              @click="recordAction('Default Primary')"
+            >
+              Default 32px
+            </CommonButton>
+            <CommonButton
+              size="prominent"
+              variant="primary"
+              @click="recordAction('Prominent Primary')"
+            >
+              Prominent 38px
+            </CommonButton>
+          </div>
+
+          <CommonSeparator label="图标按钮 (CommonIconButton) & 按钮组 (CommonButtonGroup) & 链接按钮 (CommonLinkButton)" />
+
+          <!-- 图标按钮与组合按钮 -->
+          <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <CommonIconButton
+                label="喜欢"
+                selected
+                @click="recordAction('IconButton 喜欢')"
+              >
+                <Heart :size="17" />
+              </CommonIconButton>
+              <CommonIconButton
+                label="通知"
+                @click="recordAction('IconButton 通知')"
+              >
+                <Bell :size="17" />
+              </CommonIconButton>
+              <CommonIconButton
+                label="已禁用图标"
+                disabled
+              >
+                <Bell :size="17" />
+              </CommonIconButton>
+            </div>
+
+            <!-- 连体 Push Button 组 -->
+            <CommonButtonGroup variant="connected">
+              <CommonButton
+                size="default"
+                variant="secondary"
+                @click="recordAction('ButtonGroup 左侧')"
+              >
+                左侧
+              </CommonButton>
+              <CommonButton
+                size="default"
+                variant="secondary"
+                @click="recordAction('ButtonGroup 中间')"
+              >
+                中间
+              </CommonButton>
+              <CommonButton
+                size="default"
+                variant="secondary"
+                @click="recordAction('ButtonGroup 右侧')"
+              >
+                右侧
+              </CommonButton>
+            </CommonButtonGroup>
+
+            <!-- 组合图标按钮 -->
+            <CommonButtonGroup variant="connected">
+              <CommonIconButton
+                label="新增"
+                size="compact"
+                variant="secondary"
+                @click="recordAction('ButtonGroup 新增')"
+              >
+                <Plus :size="14" />
+              </CommonIconButton>
+              <CommonIconButton
+                label="刷新"
+                size="compact"
+                variant="secondary"
+                @click="recordAction('ButtonGroup 刷新')"
+              >
+                <RefreshCcw :size="14" />
+              </CommonIconButton>
+              <CommonIconButton
+                label="更多"
+                size="compact"
+                variant="secondary"
+                @click="recordAction('ButtonGroup 更多')"
+              >
+                <MoreHorizontal :size="14" />
+              </CommonIconButton>
+            </CommonButtonGroup>
+
+            <!-- 链接按钮 -->
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <CommonLinkButton
+                href="#/discover"
+                @click="recordAction('LinkButton 发现页')"
+              >
+                查看发现页
+              </CommonLinkButton>
+              <CommonLinkButton
+                disabled
+                href="#/disabled"
+              >
+                不可用链接
+              </CommonLinkButton>
+            </div>
+          </div>
         </div>
       </CommonCard>
     </section>
