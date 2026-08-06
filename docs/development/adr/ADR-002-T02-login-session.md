@@ -26,26 +26,6 @@ T-02 要验证网易云官方网页登录能否隔离在独立持久 Session 中
 - 第三方 API 调用期间屏蔽其 Console，Main 对 Utility stdout/stderr 再执行统一脱敏。
 - Phase 0 只提供可复现 Spike CLI，不提前建设正式账户页面、Pinia Account Store、SQLite 账户空间或完整 Music Service。
 
-## 已知例外
-
-T-03 播放媒体链路验证需要真实 Cookie 调用 `song_url_v1`，但 vitest 和纯 Node 脚本无法访问 Electron 的 Cookie Store。为此建立了**显式、受审计的开发期例外**：
-
-### `.env.t03.local`
-
-- **目的**：T-03 Spike 首次运行时，Main 从 Cookie Store 读取 Cookie 并写入 `.env.t03.local`，此后纯 Node 工具（vitest / CLI）可通过 `process.env` 读取。
-- **触发条件**：`NCX_T03_SPIKE=1` 环境变量必须设置，否则 `CredentialEnvWriter` 直接拒绝写入。
-- **git 排除**：`.gitignore` 的 `.env.*` 规则已覆盖；`verify-auth-boundaries.mjs` 主动检查该文件是否被 `git ls-files` 跟踪，跟踪即报 violation。
-- **生命周期**：文件在 Spike 结束时执行 `pnpm t03:purge` 删除。验证账号应在网易云端退出登录。
-- **代码位置**：`src/main/t03-spike/credential-env-writer.ts` 是整个代码库中唯一将 Cookie 写入磁盘的位置，有文件头内联警告。
-- **不与决策 #3 冲突**：该例外仅作用于开发期验证，不修改 `CookieSessionRepository` 的数据流，不影响任何持久存储路径（SQLite/JSON/LocalStorage），且永远不被 Renderer、Preload 或 Utility 读取。
-
-### 门禁
-
-1. `verify-auth-boundaries.mjs` 检查 `.env.t03.local` 未进入 git，检查 T-03 证据不含 env 变量名，检查 scripts/ 无硬编码凭据。
-2. `CredentialEnvWriter` 在 `NCX_T03_SPIKE !== '1'` 时拒绝写入。
-3. 写入文件使用 `0o600` 权限，并包含多个 `# ⚠️` 内联警告。
-4. T-03 达到 `pass` 后本例外应在清理阶段移除。
-
 ## 未关闭项
 
 真实账号的官方登录、同 Profile 重启恢复与远端退出已在隔离 Profile 中完成一次性验证，T-02 达到 `pass`。第二账号换号仍必须由用户在官方页面内完成，作为后续增强；自动化假 Cookie 不能替代真实账号证据。

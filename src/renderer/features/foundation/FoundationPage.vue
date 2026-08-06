@@ -5,7 +5,6 @@ import type { RuntimeStatus } from '../../../shared/contracts/control-plane'
 import type { PingResult, UtilitySnapshot } from '../../../shared/schemas/runtime'
 import { zhCN } from '../../locales/zh-CN'
 import { runRuntimeSmoke } from '../../smoke'
-import { runMediaSmoke } from '../../media-smoke'
 
 const runtimeLabel = computed(
   () => `${window.ncx.platform} · Electron ${window.ncx.versions.electron}`
@@ -18,13 +17,8 @@ const unsubscribeStatus = window.ncx.runtime.onStatus((nextStatus) => {
 })
 
 onMounted(async () => {
-  const params = new URLSearchParams(window.location.search)
-  if (params.has('smoke')) {
+  if (new URLSearchParams(window.location.search).has('smoke')) {
     await runRuntimeSmoke()
-    return
-  }
-  if (params.has('t03')) {
-    await runMediaSmoke()
     return
   }
 
