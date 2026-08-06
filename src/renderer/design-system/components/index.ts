@@ -495,7 +495,7 @@ export const CommonSearchInput = defineComponent({
       const sizeClass = `ncx-common-search--${props.size || 'default'}`
 
       return h(
-        'label',
+        'div',
         {
           class: joinClasses(
             'ncx-common-search',
@@ -551,7 +551,7 @@ export const CommonSearchInput = defineComponent({
   }
 })
 
-/** 通用组件Select：统一下拉选择，完全符合 macOS NSPopUpButton / WWDC25 规范。 */
+/** 通用组件Select：统一下拉选择，完全符合 macOS NSPopUpButton / WWDC25 浮层与勾选规范。 */
 export const CommonSelect = defineComponent({
   name: 'CommonSelect',
   props: {
@@ -564,80 +564,230 @@ export const CommonSelect = defineComponent({
   },
   emits: ['update:modelValue', 'change', 'focus', 'blur'],
   setup(props, { emit }) {
-    function handleChange(event: Event): void {
+    const open = ref(false)
+    const containerRef = ref<HTMLElement | null>(null)
+    const panelStyle = ref<Record<string, string>>({})
+
+    const currentOption = computed(() => {
+      return props.options.find((opt) => String(opt.value) === String(props.modelValue))
+    })
+
+    const displayLabel = computed(() => {
+      if (currentOption.value) {
+        return currentOption.value.label
+      }
+      return props.placeholder || (props.options[0] ? props.options[0].label : '')
+    })
+
+    function updatePosition(): void {
+      if (!containerRef.value) return
+      const rect = containerRef.value.getBoundingClientRect()
+      const optionCount = props.options.length + (props.placeholder ? 1 : 0)
+      const menuHeight = Math.min(260, optionCount * 32 + 12)
+
+      let top = rect.bottom + 4
+      const left = Math.max(8, Math.min(rect.left, window.innerWidth - rect.width - 8))
+
+      if (top + menuHeight > window.innerHeight - 8) {
+        top = Math.max(8, rect.top - menuHeight - 4)
+      }
+
+      panelStyle.value = {
+        position: 'fixed',
+        top: `${Math.round(top)}px`,
+        left: `${Math.round(left)}px`,
+        width: `${Math.round(rect.width)}px`,
+        minWidth: '140px',
+        zIndex: 'var(--ncx-layer-popover, 2000)'
+      }
+    }
+
+    function toggleOpen(): void {
+      if (props.disabled) return
+      open.value = !open.value
+      if (open.value) {
+        nextTick(updatePosition)
+      }
+    }
+
+    function closeMenu(): void {
+      open.value = false
+    }
+
+    function selectValue(val: string | number): void {
+      if (props.disabled) return
+      emit('update:modelValue', val)
+      emit('change', val)
+      closeMenu()
+    }
+
+    function handleNativeChange(event: Event): void {
       const val = readInputValue(event)
       emit('update:modelValue', val)
       emit('change', val)
     }
 
-    function handleFocus(event: FocusEvent): void {
-      emit('focus', event)
+    function handleGlobalClick(e: MouseEvent | PointerEvent): void {
+      if (!open.value) return
+      const target = e.target as Node
+      if (containerRef.value?.contains(target)) return
+      const panelEl = document.querySelector('.ncx-common-select-panel-teleport')
+      if (panelEl?.contains(target)) return
+      closeMenu()
     }
 
-    function handleBlur(event: FocusEvent): void {
-      emit('blur', event)
-    }
+    onMounted(() => {
+      window.addEventListener('pointerdown', handleGlobalClick)
+      window.addEventListener('resize', closeMenu)
+      window.addEventListener('scroll', closeMenu, true)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('pointerdown', handleGlobalClick)
+      window.removeEventListener('resize', closeMenu)
+      window.removeEventListener('scroll', closeMenu, true)
+    })
 
     return () => {
       const sizeClass = `ncx-common-select-wrapper--${props.size || 'default'}`
-
-      const optionNodes = props.options.map((option) =>
-        h('option', { value: option.value, disabled: option.disabled }, option.label)
-      )
-
-      if (props.placeholder) {
-        optionNodes.unshift(
-          h('option', { value: '', disabled: true, selected: !props.modelValue }, props.placeholder)
-        )
-      }
+      const isPlaceholder = !currentOption.value && Boolean(props.placeholder)
 
       return h(
         'div',
         {
+          ref: containerRef,
           class: joinClasses(
             'ncx-common-select-wrapper',
             sizeClass,
+            open.value && 'ncx-common-select-wrapper--open',
             props.invalid && 'ncx-common-field-invalid',
             props.disabled && 'ncx-common-field-disabled'
           )
         },
         [
           h(
-            'select',
+            'div',
             {
               class: joinClasses(
                 'ncx-common-field',
                 'ncx-common-select',
-                `ncx-common-select--${props.size || 'default'}`
+                `ncx-common-select--${props.size || 'default'}`,
+                isPlaceholder && 'ncx-common-select--placeholder'
               ),
+              tabindex: props.disabled ? -1 : 0,
+              onClick: toggleOpen,
+              onKeydown: (e: KeyboardEvent) => {
+                if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+                  e.preventDefault()
+                  toggleOpen()
+                } else if (e.key === 'Escape') {
+                  closeMenu()
+                }
+              }
+            },
+            [
+              h('span', { class: 'ncx-common-select-label' }, displayLabel.value),
+              h('span', { class: 'ncx-common-select-chevron', 'aria-hidden': 'true' }, [
+                h('svg', { viewBox: '0 0 16 16', fill: 'currentColor' }, [
+                  h('path', {
+                    d: 'M4.5 5.5L8 2L11.5 5.5M4.5 10.5L8 14L11.5 10.5',
+                    stroke: 'currentColor',
+                    'stroke-width': '1.8',
+                    'stroke-linecap': 'round',
+                    'stroke-linejoin': 'round',
+                    fill: 'none'
+                  })
+                ])
+              ])
+            ]
+          ),
+          h(
+            'select',
+            {
+              class: 'ncx-common-select-native-hidden',
               value: props.modelValue,
               disabled: props.disabled,
-              'aria-invalid': props.invalid ? 'true' : undefined,
-              onChange: handleChange,
-              onFocus: handleFocus,
-              onBlur: handleBlur
+              'aria-hidden': 'true',
+              tabindex: -1,
+              onChange: handleNativeChange
             },
-            optionNodes
+            [
+              props.placeholder
+                ? h('option', { value: '', disabled: true }, props.placeholder)
+                : null,
+              ...props.options.map((option) =>
+                h('option', { value: option.value, disabled: option.disabled }, option.label)
+              )
+            ]
           ),
-          h('span', { class: 'ncx-common-select-chevron', 'aria-hidden': 'true' }, [
-            h('svg', { viewBox: '0 0 16 16', fill: 'currentColor' }, [
-              h('path', {
-                d: 'M4.5 5.5L8 2L11.5 5.5M4.5 10.5L8 14L11.5 10.5',
-                stroke: 'currentColor',
-                'stroke-width': '1.8',
-                'stroke-linecap': 'round',
-                'stroke-linejoin': 'round',
-                fill: 'none'
-              })
-            ])
-          ])
+          open.value
+            ? h(
+                Teleport,
+                { to: 'body' },
+                h(
+                  'div',
+                  {
+                    class: 'ncx-common-select-panel-teleport',
+                    style: panelStyle.value
+                  },
+                  [
+                    props.placeholder
+                      ? h(
+                          'div',
+                          { class: 'ncx-common-select-option ncx-common-select-option--placeholder' },
+                          props.placeholder
+                        )
+                      : null,
+                    ...props.options.map((option) => {
+                      const isSelected = String(option.value) === String(props.modelValue)
+                      return h(
+                        'button',
+                        {
+                          key: String(option.value),
+                          type: 'button',
+                          class: joinClasses(
+                            'ncx-common-select-option',
+                            isSelected && 'ncx-common-select-option--selected',
+                            option.disabled && 'ncx-common-select-option--disabled'
+                          ),
+                          disabled: option.disabled,
+                          onClick: (e: MouseEvent) => {
+                            e.stopPropagation()
+                            selectValue(option.value)
+                          }
+                        },
+                        [
+                          h('span', { class: 'ncx-common-select-option-text' }, option.label),
+                          isSelected
+                            ? h(
+                                'span',
+                                { class: 'ncx-common-select-option-check', 'aria-hidden': 'true' },
+                                [
+                                  h('svg', { viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor' }, [
+                                    h('path', {
+                                      d: 'M3.5 8.5L6.5 11.5L12.5 4.5',
+                                      'stroke-width': '2.2',
+                                      'stroke-linecap': 'round',
+                                      'stroke-linejoin': 'round'
+                                    })
+                                  ])
+                                ]
+                              )
+                            : null
+                        ]
+                      )
+                    })
+                  ]
+                )
+              )
+            : null
         ]
       )
     }
   }
 })
 
-/** 通用组件Combobox：统一可输入选择，基于 datalist，完全符合 macOS NSComboBox / WWDC25 规范。 */
+/** 通用组件Combobox：统一可输入选择，基于 datalist 配合 Teleport 悬浮圆角浮层，完全符合 macOS NSComboBox / WWDC25 规范。 */
 export const CommonCombobox = defineComponent({
   name: 'CommonCombobox',
   props: {
@@ -654,17 +804,82 @@ export const CommonCombobox = defineComponent({
   setup(props, { emit }) {
     const listId = `ncx-combobox-${Math.random().toString(36).slice(2)}`
     const inputRef = ref<HTMLInputElement | null>(null)
+    const containerRef = ref<HTMLElement | null>(null)
+    const open = ref(false)
+    const panelStyle = ref<Record<string, string>>({})
+
+    const filteredOptions = computed(() => {
+      if (!props.modelValue) return props.options
+      const query = String(props.modelValue).toLowerCase().trim()
+      return props.options.filter(
+        (opt) =>
+          opt.label.toLowerCase().includes(query) ||
+          String(opt.value).toLowerCase().includes(query)
+      )
+    })
+
+    function updatePosition(): void {
+      if (!containerRef.value) return
+      const rect = containerRef.value.getBoundingClientRect()
+      const optionCount = filteredOptions.value.length
+      if (optionCount === 0) {
+        open.value = false
+        return
+      }
+      const menuHeight = Math.min(240, optionCount * 32 + 12)
+
+      let top = rect.bottom + 4
+      const left = Math.max(8, Math.min(rect.left, window.innerWidth - rect.width - 8))
+
+      if (top + menuHeight > window.innerHeight - 8) {
+        top = Math.max(8, rect.top - menuHeight - 4)
+      }
+
+      panelStyle.value = {
+        position: 'fixed',
+        top: `${Math.round(top)}px`,
+        left: `${Math.round(left)}px`,
+        width: `${Math.round(rect.width)}px`,
+        minWidth: '140px',
+        zIndex: 'var(--ncx-layer-popover, 2000)'
+      }
+    }
+
+    function openMenu(): void {
+      if (props.disabled || props.readonly) return
+      if (filteredOptions.value.length > 0) {
+        open.value = true
+        nextTick(updatePosition)
+      }
+    }
+
+    function closeMenu(): void {
+      open.value = false
+    }
+
+    function toggleMenu(): void {
+      if (props.disabled || props.readonly) return
+      if (open.value) {
+        closeMenu()
+      } else {
+        openMenu()
+      }
+    }
 
     function handleInput(event: Event): void {
       const val = readInputValue(event)
       emit('update:modelValue', val)
       emit('input', val)
       emit('change', val)
+      openMenu()
     }
 
-    function handleTriggerClick(): void {
-      if (props.disabled || props.readonly) return
-      inputRef.value?.focus()
+    function handleSelectOption(option: CommonOption): void {
+      if (props.disabled || props.readonly || option.disabled) return
+      emit('update:modelValue', option.value)
+      emit('change', option.value)
+      emit('input', option.value)
+      closeMenu()
     }
 
     function handleClear(): void {
@@ -673,6 +888,7 @@ export const CommonCombobox = defineComponent({
       emit('change', '')
       emit('input', '')
       emit('clear')
+      closeMenu()
       nextTick(() => {
         inputRef.value?.focus()
       })
@@ -680,11 +896,33 @@ export const CommonCombobox = defineComponent({
 
     function handleFocus(event: FocusEvent): void {
       emit('focus', event)
+      openMenu()
     }
 
     function handleBlur(event: FocusEvent): void {
       emit('blur', event)
     }
+
+    function handleGlobalClick(e: MouseEvent | PointerEvent): void {
+      if (!open.value) return
+      const target = e.target as Node
+      if (containerRef.value?.contains(target)) return
+      const panelEl = document.querySelector('.ncx-common-combobox-panel-teleport')
+      if (panelEl?.contains(target)) return
+      closeMenu()
+    }
+
+    onMounted(() => {
+      window.addEventListener('pointerdown', handleGlobalClick)
+      window.addEventListener('resize', closeMenu)
+      window.addEventListener('scroll', closeMenu, true)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('pointerdown', handleGlobalClick)
+      window.removeEventListener('resize', closeMenu)
+      window.removeEventListener('scroll', closeMenu, true)
+    })
 
     return () => {
       const sizeClass = `ncx-common-combobox--${props.size || 'default'}`
@@ -692,9 +930,11 @@ export const CommonCombobox = defineComponent({
       return h(
         'div',
         {
+          ref: containerRef,
           class: joinClasses(
             'ncx-common-combobox',
             sizeClass,
+            open.value && 'ncx-common-combobox--open',
             props.invalid && 'ncx-common-field-invalid',
             props.disabled && 'ncx-common-field-disabled'
           )
@@ -712,6 +952,7 @@ export const CommonCombobox = defineComponent({
             placeholder: props.placeholder,
             disabled: props.disabled,
             readonly: props.readonly,
+            autocomplete: 'off',
             'aria-invalid': props.invalid ? 'true' : undefined,
             onInput: handleInput,
             onFocus: handleFocus,
@@ -743,7 +984,7 @@ export const CommonCombobox = defineComponent({
               tabindex: -1,
               disabled: props.disabled,
               'aria-label': '展开列表选项',
-              onClick: handleTriggerClick
+              onClick: toggleMenu
             },
             [
               h('svg', { viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor' }, [
@@ -760,7 +1001,59 @@ export const CommonCombobox = defineComponent({
             'datalist',
             { id: listId },
             props.options.map((option) => h('option', { value: option.value }, option.label))
-          )
+          ),
+          open.value && filteredOptions.value.length > 0
+            ? h(
+                Teleport,
+                { to: 'body' },
+                h(
+                  'div',
+                  {
+                    class: 'ncx-common-combobox-panel-teleport',
+                    style: panelStyle.value
+                  },
+                  filteredOptions.value.map((option) => {
+                    const isSelected = String(option.value) === String(props.modelValue)
+                    return h(
+                      'button',
+                      {
+                        key: String(option.value),
+                        type: 'button',
+                        class: joinClasses(
+                          'ncx-common-combobox-option',
+                          isSelected && 'ncx-common-combobox-option--selected',
+                          option.disabled && 'ncx-common-combobox-option--disabled'
+                        ),
+                        disabled: option.disabled,
+                        onClick: (e: MouseEvent) => {
+                          e.stopPropagation()
+                          handleSelectOption(option)
+                        }
+                      },
+                      [
+                        h('span', { class: 'ncx-common-combobox-option-text' }, option.label),
+                        isSelected
+                          ? h(
+                              'span',
+                              { class: 'ncx-common-combobox-option-check', 'aria-hidden': 'true' },
+                              [
+                                h('svg', { viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor' }, [
+                                  h('path', {
+                                    d: 'M3.5 8.5L6.5 11.5L12.5 4.5',
+                                    'stroke-width': '2.2',
+                                    'stroke-linecap': 'round',
+                                    'stroke-linejoin': 'round'
+                                  })
+                                ])
+                              ]
+                            )
+                          : null
+                      ]
+                    )
+                  })
+                )
+              )
+            : null
         ]
       )
     }

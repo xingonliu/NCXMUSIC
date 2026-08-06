@@ -378,28 +378,36 @@ function confirmDangerAction(): void {
       <h2>输入与选择</h2>
       <CommonResponsiveGrid>
         <CommonCard>
-          <label>Input</label>
+          <div class="ncx-design-lab-label">
+            Input
+          </div>
           <CommonInput
             v-model="inputValue"
             placeholder="输入项目名称"
           />
         </CommonCard>
         <CommonCard>
-          <label>SearchInput</label>
+          <div class="ncx-design-lab-label">
+            SearchInput
+          </div>
           <CommonSearchInput
             v-model="searchValue"
             @clear="recordAction('搜索已清空')"
           />
         </CommonCard>
         <CommonCard>
-          <label>Select</label>
+          <div class="ncx-design-lab-label">
+            Select
+          </div>
           <CommonSelect
             v-model="selectValue"
             :options="qualityOptions"
           />
         </CommonCard>
         <CommonCard>
-          <label>Combobox</label>
+          <div class="ncx-design-lab-label">
+            Combobox
+          </div>
           <CommonCombobox
             v-model="comboboxValue"
             :options="qualityOptions"
@@ -407,11 +415,15 @@ function confirmDangerAction(): void {
           />
         </CommonCard>
         <CommonCard>
-          <label>Textarea</label>
+          <div class="ncx-design-lab-label">
+            Textarea
+          </div>
           <CommonTextarea v-model="textareaValue" />
         </CommonCard>
         <CommonCard>
-          <label>macOS Checkbox / Radio</label>
+          <div class="ncx-design-lab-label">
+            macOS Checkbox / Radio
+          </div>
           <div class="ncx-design-lab-stack">
             <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
               <CommonCheckbox
@@ -448,7 +460,9 @@ function confirmDangerAction(): void {
           </div>
         </CommonCard>
         <CommonCard>
-          <label>macOS Switch / Slider</label>
+          <div class="ncx-design-lab-label">
+            macOS Switch / Slider
+          </div>
           <div class="ncx-design-lab-stack">
             <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
               <CommonSwitch
@@ -479,7 +493,9 @@ function confirmDangerAction(): void {
           </div>
         </CommonCard>
         <CommonCard>
-          <label>macOS SegmentedControl</label>
+          <div class="ncx-design-lab-label">
+            macOS SegmentedControl
+          </div>
           <div class="ncx-design-lab-stack">
             <CommonSegmentedControl
               v-model="segmentedValue"
@@ -682,7 +698,9 @@ function confirmDangerAction(): void {
       <h2>macOS 状态与反馈组件 (WWDC25 对齐)</h2>
       <CommonResponsiveGrid>
         <CommonCard>
-          <label>macOS Activity Spinner & Progress</label>
+          <div class="ncx-design-lab-label">
+            macOS Activity Spinner & Progress
+          </div>
           <div class="ncx-design-lab-stack">
             <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
               <CommonSpinner
@@ -716,7 +734,9 @@ function confirmDangerAction(): void {
           </div>
         </CommonCard>
         <CommonCard>
-          <label>WWDC25 Glassmorphism Skeleton</label>
+          <div class="ncx-design-lab-label">
+            WWDC25 Glassmorphism Skeleton
+          </div>
           <div class="ncx-design-lab-stack">
             <div style="display: flex; align-items: center; gap: 12px;">
               <CommonSkeleton variant="avatar" />
@@ -748,7 +768,9 @@ function confirmDangerAction(): void {
           @retry="recordAction('ErrorState 触发重试')"
         />
         <CommonCard>
-          <label>macOS Callout InlineMessage</label>
+          <div class="ncx-design-lab-label">
+            macOS Callout InlineMessage
+          </div>
           <div class="ncx-design-lab-stack">
             <CommonInlineMessage
               type="info"
@@ -779,7 +801,9 @@ function confirmDangerAction(): void {
           <CommonAccordion :items="accordionItems" />
         </CommonCard>
         <CommonCard>
-          <label>CommonScrollArea & CommonVirtualList</label>
+          <div class="ncx-design-lab-label">
+            CommonScrollArea & CommonVirtualList
+          </div>
           <CommonScrollArea>
             <CommonVirtualList :items="virtualListItems" />
           </CommonScrollArea>

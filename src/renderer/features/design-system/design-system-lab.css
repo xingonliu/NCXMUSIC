@@ -79,7 +79,8 @@
   gap: var(--ncx-space-3);
 }
 
-.ncx-design-lab label {
+.ncx-design-lab-label,
+.ncx-design-lab label:not(.ncx-common-check, .ncx-common-radio) {
   display: grid;
   gap: var(--ncx-space-2);
   color: var(--ncx-color-text-secondary);
