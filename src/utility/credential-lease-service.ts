@@ -193,6 +193,23 @@ export class CredentialLeaseService {
     return Boolean(this.activeLease && this.activeLease.expiresAt > this.now())
   }
 
+  /**
+   * 在持有 Cookie 的租约生命周期内执行一次 API 调用。
+   * Cookie 字符串不会离开此方法的调用栈——operation 结束后立即回收引用。
+   *
+   * @throws 若当前没有活跃租约或租约已过期，抛出 Error
+   */
+  async executeWithCookie<T>(operation: (cookie: string) => Promise<T>): Promise<T> {
+    const lease = this.activeLease
+    if (!lease || lease.expiresAt <= this.now()) {
+      throw Object.assign(new Error('No active credential lease; cannot execute API call'), {
+        code: 'NO_ACTIVE_LEASE'
+      })
+    }
+    // 读取明文仅用于单次调用，不持久化
+    return operation(lease.secret.toString('utf8'))
+  }
+
   private async requiredApi(): Promise<NeteaseAuthApi> {
     this.api ??= await this.loadApi()
     return this.api

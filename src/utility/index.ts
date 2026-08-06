@@ -5,12 +5,15 @@ import {
 } from '../shared/contracts/credential-lease'
 import { PROTOCOL_VERSION } from '../shared/schemas/runtime'
 import { CredentialLeaseService } from './credential-lease-service'
+import { TrackUrlService } from './track-url-service'
 import { UtilityRuntimeServer, type RuntimePort } from './runtime-server'
 
-const runtime = new UtilityRuntimeServer()
 const credentialLease = new CredentialLeaseService((event) => {
   process.parentPort.postMessage(CredentialControlEventSchema.parse(event))
 })
+/** 播放地址解析服务：经凭据租约取用 Cookie，Renderer 只拿到短期 HTTPS URL */
+const trackUrl = new TrackUrlService(credentialLease)
+const runtime = new UtilityRuntimeServer(trackUrl)
 const shouldCrashBeforeReady = process.argv.includes('--ncx-smoke-crash-before-ready')
 
 process.parentPort.on('message', (event) => {
@@ -61,5 +64,6 @@ if (shouldCrashBeforeReady) {
 }
 process.once('exit', () => {
   credentialLease.shutdown()
+  trackUrl.shutdown()
   runtime.shutdown()
 })

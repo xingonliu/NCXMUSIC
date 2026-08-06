@@ -1,5 +1,10 @@
 import { z } from 'zod'
 
+import {
+  ResolveTrackUrlPayloadSchema,
+  ResolvedMediaSourceSchema
+} from './music'
+
 export const PROTOCOL_VERSION = 1 as const
 
 export const ProtocolErrorCodeSchema = z.enum([
@@ -35,7 +40,9 @@ const MessageBaseShape = {
 export const HelloPayloadSchema = z.strictObject({
   role: z.enum(['preload', 'utility']),
   appVersion: z.string().min(1).max(64),
-  capabilities: z.array(z.enum(['system.ping', 'system.snapshot'])).max(8)
+  capabilities: z
+    .array(z.enum(['system.ping', 'system.snapshot', 'music.resolve-url']))
+    .max(8)
 })
 
 export const HelloEnvelopeSchema = z.strictObject({
@@ -88,10 +95,17 @@ export const SnapshotRequestEnvelopeSchema = z.strictObject({
   payload: z.strictObject({})
 })
 
+/** Renderer → Utility：解析指定曲目的可播放 HTTPS URL */
+export const ResolveTrackUrlRequestEnvelopeSchema = z.strictObject({
+  ...RequestBaseShape,
+  name: z.literal('music.resolve-url'),
+  payload: ResolveTrackUrlPayloadSchema
+})
+
 export const CancelEnvelopeSchema = z.strictObject({
   ...MessageBaseShape,
   kind: z.literal('cancel'),
-  name: z.enum(['system.ping', 'system.snapshot']),
+  name: z.enum(['system.ping', 'system.snapshot', 'music.resolve-url']),
   requestId: z.uuid(),
   reason: z.enum(['user', 'timeout', 'navigation', 'shutdown'])
 })
@@ -109,7 +123,7 @@ const FailureResultSchema = z.strictObject({
 export const ResponseEnvelopeSchema = z.strictObject({
   ...MessageBaseShape,
   kind: z.literal('response'),
-  name: z.enum(['system.ping', 'system.snapshot']),
+  name: z.enum(['system.ping', 'system.snapshot', 'music.resolve-url']),
   requestId: z.uuid(),
   result: z.discriminatedUnion('ok', [SuccessResultSchema, FailureResultSchema])
 })
@@ -118,6 +132,7 @@ export const RuntimeInboundEnvelopeSchema = z.union([
   HelloEnvelopeSchema,
   PingRequestEnvelopeSchema,
   SnapshotRequestEnvelopeSchema,
+  ResolveTrackUrlRequestEnvelopeSchema,
   CancelEnvelopeSchema
 ])
 
@@ -128,6 +143,7 @@ export const RuntimeOutboundEnvelopeSchema = z.union([
 
 export type PingRequestEnvelope = z.infer<typeof PingRequestEnvelopeSchema>
 export type SnapshotRequestEnvelope = z.infer<typeof SnapshotRequestEnvelopeSchema>
+export type ResolveTrackUrlRequestEnvelope = z.infer<typeof ResolveTrackUrlRequestEnvelopeSchema>
 export type CancelEnvelope = z.infer<typeof CancelEnvelopeSchema>
 
 export const contractRegistry = {
@@ -144,6 +160,14 @@ export const contractRegistry = {
     resultSchema: UtilitySnapshotSchema,
     defaultTimeoutMs: 5_000,
     retryable: true
+  },
+  'music.resolve-url': {
+    direction: 'renderer-to-utility',
+    payloadSchema: ResolveTrackUrlPayloadSchema,
+    resultSchema: ResolvedMediaSourceSchema,
+    /** URL 解析需要网络请求，超时设长一些 */
+    defaultTimeoutMs: 20_000,
+    retryable: false
   }
 } as const
 

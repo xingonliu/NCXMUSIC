@@ -1,5 +1,11 @@
 import type { RuntimeConnectionMetadata } from '../shared/contracts/control-plane'
 import {
+  ResolveTrackUrlPayloadSchema,
+  ResolvedMediaSourceSchema,
+  type ResolveTrackUrlPayload,
+  type ResolvedMediaSource
+} from '../shared/schemas/music'
+import {
   HelloEnvelopeSchema,
   PingPayloadSchema,
   PingResultSchema,
@@ -13,6 +19,10 @@ import {
   type UtilitySnapshot
 } from '../shared/schemas/runtime'
 
+// ─────────────────────────────────────────────────────────────────────────────
+// 类型区
+// ─────────────────────────────────────────────────────────────────────────────
+
 export interface RuntimeClientPort {
   postMessage(message: unknown): void
   start(): void
@@ -21,8 +31,11 @@ export interface RuntimeClientPort {
   setCloseHandler(handler: () => void): void
 }
 
+/** 已登记在 Contract Registry 中的请求名称 */
+type RequestName = keyof typeof contractRegistry
+
 interface PendingRequest {
-  name: 'system.ping' | 'system.snapshot'
+  name: RequestName
   resolve: (result: RuntimeResult<unknown>) => void
   timer: ReturnType<typeof setTimeout>
 }
@@ -55,7 +68,7 @@ export class RuntimeGateway {
         payload: {
           role: 'preload',
           appVersion: metadata.appVersion,
-          capabilities: ['system.ping', 'system.snapshot']
+          capabilities: ['system.ping', 'system.snapshot', 'music.resolve-url']
         }
       })
     )
@@ -115,6 +128,37 @@ export class RuntimeGateway {
       : protocolFailure('PROTOCOL_INVALID_MESSAGE', '快照响应不符合契约。')
   }
 
+  /**
+   * 向 Utility 请求解析曲目播放地址。
+   * 返回的 URL 是短期签名地址，调用方不得持久化或写日志。
+   *
+   * @param input trackId 与音质偏好；requestId 可由调用方指定以便取消
+   */
+  async resolveTrackUrl(
+    input: ResolveTrackUrlPayload & { requestId?: string }
+  ): Promise<RuntimeResult<ResolvedMediaSource>> {
+    const payload = ResolveTrackUrlPayloadSchema.safeParse({
+      trackId: input.trackId,
+      quality: input.quality ?? 'auto'
+    })
+    if (!payload.success) {
+      return protocolFailure('PROTOCOL_INVALID_MESSAGE', '播放地址解析参数不合法。')
+    }
+
+    const result = await this.request(
+      'music.resolve-url',
+      payload.data,
+      input.requestId ?? crypto.randomUUID(),
+      contractRegistry['music.resolve-url'].defaultTimeoutMs
+    )
+    if (!result.ok) return result
+
+    const parsed = ResolvedMediaSourceSchema.safeParse(result.data)
+    return parsed.success
+      ? { ok: true, data: parsed.data }
+      : protocolFailure('PROTOCOL_INVALID_MESSAGE', '播放地址响应不符合契约。')
+  }
+
   cancel(requestId: string): boolean {
     const request = this.pending.get(requestId)
     if (!request || !this.port || !this.metadata) return false
@@ -130,7 +174,7 @@ export class RuntimeGateway {
   }
 
   private request(
-    name: 'system.ping' | 'system.snapshot',
+    name: RequestName,
     payload: unknown,
     requestId: string,
     timeoutMs: number

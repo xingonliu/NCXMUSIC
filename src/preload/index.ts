@@ -70,6 +70,7 @@ const runtimeBridge: NcxRuntimeBridge = {
   ping: (input) => gateway.ping(input),
   cancel: (requestId) => gateway.cancel(requestId),
   snapshot: () => gateway.snapshot(),
+  resolveTrackUrl: (input) => gateway.resolveTrackUrl(input),
   retryUtility: async () => {
     const result = await ipcRenderer.invoke(CONTROL_CHANNELS.retry)
     return RuntimeStatusSchema.parse(result)

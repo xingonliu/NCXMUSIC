@@ -3,14 +3,20 @@ import {
   HelloEnvelopeSchema,
   PingRequestEnvelopeSchema,
   PROTOCOL_VERSION,
+  ResolveTrackUrlRequestEnvelopeSchema,
   RuntimeInboundEnvelopeSchema,
   SnapshotRequestEnvelopeSchema,
   messageBase,
   type CancelEnvelope,
   type PingRequestEnvelope,
   type ProtocolError,
+  type ResolveTrackUrlRequestEnvelope,
   type SnapshotRequestEnvelope
 } from '../shared/schemas/runtime'
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 类型区
+// ─────────────────────────────────────────────────────────────────────────────
 
 export interface RuntimePort {
   postMessage(message: unknown): void
@@ -19,12 +25,34 @@ export interface RuntimePort {
   close(): void
 }
 
-interface PendingRequest {
-  name: 'system.ping'
-  timer: ReturnType<typeof setTimeout>
+/**
+ * music.resolve-url 的执行方。由 Utility 组合根注入，
+ * 使 RuntimeServer 不直接依赖凭据租约与网易云 API。
+ */
+export interface TrackUrlHandler {
+  /** 解析播放 URL；失败时抛出携带 code 的 Error */
+  resolve(requestId: string, payload: unknown): Promise<unknown>
+  /** 取消进行中的解析 */
+  cancel(requestId: string): void
 }
 
+/** 可被响应的请求信封（用于统一 respond* 签名） */
+type AnyRequestEnvelope =
+  | PingRequestEnvelope
+  | SnapshotRequestEnvelope
+  | ResolveTrackUrlRequestEnvelope
+
+/** 待处理请求：ping 用定时器，resolve-url 交由 handler 自行取消 */
+type PendingRequest =
+  | { name: 'system.ping'; timer: ReturnType<typeof setTimeout> }
+  | { name: 'music.resolve-url' }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// UtilityRuntimeServer
+// ─────────────────────────────────────────────────────────────────────────────
+
 export class UtilityRuntimeServer {
+  // ── 变量区 ──
   private readonly startedAt = Date.now()
   private activeConnection: RuntimeConnectionMetadata | undefined
   private activePort: RuntimePort | undefined
@@ -32,6 +60,13 @@ export class UtilityRuntimeServer {
   private readonly pending = new Map<string, PendingRequest>()
   private handledRequests = 0
   private handshakeComplete = false
+
+  /**
+   * @param trackUrlHandler music.resolve-url 的执行方；未注入时该能力返回 CAPABILITY_UNAVAILABLE
+   */
+  constructor(private readonly trackUrlHandler?: TrackUrlHandler) {}
+
+  // ── 生命周期区 ──
 
   attach(port: RuntimePort, metadata: RuntimeConnectionMetadata): void {
     this.replaceConnection()
@@ -48,7 +83,7 @@ export class UtilityRuntimeServer {
         payload: {
           role: 'utility',
           appVersion: metadata.appVersion,
-          capabilities: ['system.ping', 'system.snapshot']
+          capabilities: this.capabilities()
         }
       })
     )
@@ -56,6 +91,18 @@ export class UtilityRuntimeServer {
 
   shutdown(): void {
     this.replaceConnection()
+  }
+
+  // ── 函数区 ──
+
+  /** 当前 Utility 实际提供的能力集合 */
+  private capabilities(): Array<'system.ping' | 'system.snapshot' | 'music.resolve-url'> {
+    const base: Array<'system.ping' | 'system.snapshot' | 'music.resolve-url'> = [
+      'system.ping',
+      'system.snapshot'
+    ]
+    if (this.trackUrlHandler) base.push('music.resolve-url')
+    return base
   }
 
   private handleMessage(message: unknown): void {
@@ -100,6 +147,11 @@ export class UtilityRuntimeServer {
       return
     }
 
+    if (envelope.name === 'music.resolve-url') {
+      void this.resolveTrackUrl(ResolveTrackUrlRequestEnvelopeSchema.parse(envelope))
+      return
+    }
+
     this.snapshot(SnapshotRequestEnvelopeSchema.parse(envelope))
   }
 
@@ -127,6 +179,92 @@ export class UtilityRuntimeServer {
     this.pending.set(request.requestId, { name: 'system.ping', timer })
   }
 
+  /**
+   * 处理 music.resolve-url：委托给注入的 handler。
+   * 错误一律转换为脱敏的 ProtocolError，绝不把 URL 或上游原文回传。
+   */
+  private async resolveTrackUrl(request: ResolveTrackUrlRequestEnvelope): Promise<void> {
+    const handler = this.trackUrlHandler
+    if (!handler) {
+      this.respondError(request, {
+        code: 'CAPABILITY_UNAVAILABLE',
+        message: '当前运行时未启用播放地址解析能力。',
+        retryable: false
+      })
+      return
+    }
+
+    if (this.pending.has(request.requestId)) {
+      this.respondError(request, {
+        code: 'PROTOCOL_INVALID_MESSAGE',
+        message: 'requestId 已在使用。',
+        retryable: false
+      })
+      return
+    }
+
+    // 记录连接身份，避免解析期间连接被替换后向新连接误发响应
+    const connectionId = request.connectionId
+    this.pending.set(request.requestId, { name: 'music.resolve-url' })
+
+    try {
+      const data = await handler.resolve(request.requestId, request.payload)
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondSuccess(request, data)
+    } catch (error) {
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondError(request, this.toProtocolError(error))
+    }
+  }
+
+  /** 请求是否仍属于当前连接且未被取消 */
+  private isCurrentRequest(requestId: string, connectionId: string): boolean {
+    return (
+      this.activeConnection?.connectionId === connectionId && this.pending.has(requestId)
+    )
+  }
+
+  /** 将内部错误映射为脱敏协议错误 */
+  private toProtocolError(error: unknown): ProtocolError {
+    const code =
+      typeof error === 'object' && error !== null && 'code' in error
+        ? String((error as { code: unknown }).code)
+        : ''
+
+    if (code === 'PROTOCOL_INVALID_MESSAGE') {
+      return {
+        code: 'PROTOCOL_INVALID_MESSAGE',
+        message: '播放地址解析参数不合法。',
+        retryable: false
+      }
+    }
+    if (code === 'ABORT_ERR' || (error instanceof Error && error.name === 'AbortError')) {
+      return { code: 'REQUEST_CANCELLED', message: '播放地址解析已取消。', retryable: false }
+    }
+    if (code === 'NO_ACTIVE_LEASE') {
+      return {
+        code: 'CAPABILITY_UNAVAILABLE',
+        message: '尚未登录或凭据租约已失效，无法获取播放地址。',
+        retryable: false
+      }
+    }
+    if (code === 'track-unavailable') {
+      return { code: 'CAPABILITY_UNAVAILABLE', message: '该曲目当前不可播放。', retryable: false }
+    }
+    if (code === 'account-unavailable') {
+      return {
+        code: 'CAPABILITY_UNAVAILABLE',
+        message: '当前账号没有该曲目的播放权限。',
+        retryable: false
+      }
+    }
+    return { code: 'UTILITY_UNAVAILABLE', message: '播放地址解析失败。', retryable: true }
+  }
+
   private snapshot(request: SnapshotRequestEnvelope): void {
     this.handledRequests += 1
     this.respondSuccess(request, {
@@ -143,7 +281,11 @@ export class UtilityRuntimeServer {
     const pending = this.pending.get(envelope.requestId)
     if (!pending) return
 
-    clearTimeout(pending.timer)
+    if (pending.name === 'system.ping') {
+      clearTimeout(pending.timer)
+    } else {
+      this.trackUrlHandler?.cancel(envelope.requestId)
+    }
     this.pending.delete(envelope.requestId)
     this.respondError(envelope, {
       code: 'REQUEST_CANCELLED',
@@ -152,10 +294,7 @@ export class UtilityRuntimeServer {
     })
   }
 
-  private respondSuccess(
-    request: PingRequestEnvelope | SnapshotRequestEnvelope,
-    data: unknown
-  ): void {
+  private respondSuccess(request: AnyRequestEnvelope, data: unknown): void {
     this.post({
       ...messageBase(request.connectionId),
       kind: 'response',
@@ -166,7 +305,7 @@ export class UtilityRuntimeServer {
   }
 
   private respondError(
-    request: PingRequestEnvelope | SnapshotRequestEnvelope | CancelEnvelope,
+    request: AnyRequestEnvelope | CancelEnvelope,
     error: ProtocolError
   ): void {
     this.post({
@@ -190,7 +329,13 @@ export class UtilityRuntimeServer {
   private replaceConnection(): void {
     this.unsubscribe?.()
     this.unsubscribe = undefined
-    for (const request of this.pending.values()) clearTimeout(request.timer)
+    for (const [requestId, request] of this.pending) {
+      if (request.name === 'system.ping') {
+        clearTimeout(request.timer)
+      } else {
+        this.trackUrlHandler?.cancel(requestId)
+      }
+    }
     this.pending.clear()
     this.activePort?.close()
     this.activePort = undefined

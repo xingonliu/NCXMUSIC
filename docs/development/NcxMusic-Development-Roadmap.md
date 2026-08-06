@@ -78,6 +78,8 @@ Phase 0 技术门禁
 4. 为通过的结论建立 ADR；失败方案移出生产入口。
 
 > 执行记录（2026-08-06）：T-01 已 `pass`。T-02 的隔离 Session、可撤销租约、脱敏、macOS build/packaged、自动化场景，以及真实账号首次登录、同 Profile 重启恢复和远端退出已通过，T-02 标记为 `pass`；双账号换号为后续增强，双平台 CI 继续独立跟踪。
+>
+> 执行记录（2026-08-06）：T-03 为 `in-progress`。`music.resolve-url` 跨进程契约、Utility 侧解析服务与音质降级链、播放域状态机（PlaybackEngine / QueueController / PlaybackCoordinator）、Renderer 媒体适配器与根层 AudioHost 已实现，123 条新增测试覆盖代次隔离、切歌竞态、错误映射与脱敏，Windows 上 `typecheck`/`lint`/`test`/`build` 与 development、build 两态 Smoke 通过（packaged 未执行）。**尚未验证**：真实 MP3/AAC/FLAC 解码播放、`Range`/206/416 行为、过期 URL 实际表现，以及双平台后台、最小化、锁屏与睡眠恢复。该结论需要真实账号或本地 Range 服务器补齐后才能置为 `pass`。
 
 ### 完成门禁
 
