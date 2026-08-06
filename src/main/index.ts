@@ -14,18 +14,31 @@ import { CONTROL_CHANNELS, type RuntimeStatus } from '../shared/contracts/contro
 import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
 import { RuntimeStatusSchema } from '../shared/schemas/control-plane'
 import { AuthSessionController, type EstablishResult } from './auth/auth-session-controller'
+import { CookieSessionRepository } from './auth/cookie-session-repository'
 import { CredentialLeaseCoordinator } from './auth/credential-lease-coordinator'
 import { NETEASE_AUTH_PARTITION } from './auth/navigation-policy'
 import { ConnectionBroker } from './connection-broker'
+import {
+  extractMusicU,
+  writeT03CredentialEnv,
+  T03_ENV_FILENAME
+} from './t03-spike/credential-env-writer'
+import {
+  observeMediaRequests,
+  type MediaRequestSummary
+} from './t03-spike/media-request-observer'
 import { UtilitySupervisor } from './utility-supervisor'
 
 const isSmokeTest = process.env['NCX_SMOKE_TEST'] === '1'
 const isLoginSpike = process.env['NCX_T02_SPIKE'] === '1'
+const isT03Spike = process.env['NCX_T03_SPIKE'] === '1'
 let mainWindow: BrowserWindow | undefined
 let supervisor: UtilitySupervisor | undefined
 let broker: ConnectionBroker | undefined
 let authController: AuthSessionController | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
+/** T-03 Spike：webRequest 观测器的终止函数，页面结果到达时调用 */
+let stopMediaObserver: (() => MediaRequestSummary) | undefined
 
 function utilityEntryPath(): string {
   if (app.isPackaged) {
@@ -273,6 +286,49 @@ function configureSmokeExit(window: BrowserWindow): void {
   })
 }
 
+/** T-03 Spike：监听页面标题以收集媒体验证结果并上报 webRequest 观测 */
+function configureT03SpikeExit(window: BrowserWindow): void {
+  smokeTimer = setTimeout(() => {
+    console.error('NCX_T03_TIMEOUT')
+    app.exit(1)
+  }, 3 * 60_000)
+
+  window.on('page-title-updated', (event, title) => {
+    if (!title.startsWith('NCX_T03_RESULT ')) return
+    event.preventDefault()
+    if (smokeTimer) clearTimeout(smokeTimer)
+
+    const payload = decodeURIComponent(title.slice('NCX_T03_RESULT '.length))
+    const mediaSummary = stopMediaObserver?.()
+
+    // 脱敏输出：只包含验证结果与 webRequest 观测，不输出播放 URL
+    const safe = {
+      spike: 'T-03',
+      ...(mediaSummary
+        ? {
+            mediaRequests: {
+              recordCount: mediaSummary.records.length,
+              sawPartialContent: mediaSummary.sawPartialContent,
+              sawRangeNotSatisfiable: mediaSummary.sawRangeNotSatisfiable,
+              sawRangeRequest: mediaSummary.sawRangeRequest,
+              contentTypes: mediaSummary.contentTypes
+            }
+          }
+        : {}),
+      pageResult: JSON.parse(payload)
+    }
+    console.info(`NCX_T03_RESULT ${JSON.stringify(safe)}`)
+
+    authController?.shutdown()
+    supervisor?.shutdown()
+    try {
+      app.exit(safe.pageResult?.ok === true ? 0 : 1)
+    } catch {
+      app.exit(1)
+    }
+  })
+}
+
 async function createMainWindow(): Promise<void> {
   const window = new BrowserWindow({
     width: 1280,
@@ -306,15 +362,29 @@ async function createMainWindow(): Promise<void> {
     callback(false)
   })
   configureSmokeExit(window)
+  if (isT03Spike) {
+    configureT03SpikeExit(window)
+    // 观测主窗口 Session 的媒体请求，记录 Range/206/416 等底层 HTTP 细节
+    stopMediaObserver = observeMediaRequests(window.webContents.session)
+  }
 
   const developmentUrl = process.env['ELECTRON_RENDERER_URL']
   if (developmentUrl) {
     const url = new URL(developmentUrl)
     if (isSmokeTest) url.searchParams.set('smoke', '1')
+    else if (isT03Spike) {
+      url.searchParams.set('t03', '1')
+      const tracks = (process.env['NCX_T03_TRACKS'] ?? '').trim()
+      if (tracks) url.searchParams.set('t03tracks', tracks)
+    }
     await window.loadURL(url.toString())
   } else {
     await window.loadFile(join(__dirname, '../renderer/index.html'), {
-      query: isSmokeTest ? { smoke: '1' } : {}
+      query: isSmokeTest
+        ? { smoke: '1' }
+        : isT03Spike
+          ? { t03: '1', ...(process.env['NCX_T03_TRACKS']?.trim() ? { t03tracks: process.env['NCX_T03_TRACKS'].trim() } : {}) }
+          : {}
     })
   }
 }
@@ -348,6 +418,51 @@ if (!hasSingleInstanceLock) {
       if (isLoginSpike) {
         await waitForUtilityReady()
         await runLoginSpike()
+        return
+      }
+      if (isT03Spike) {
+        await waitForUtilityReady()
+        const establish = await authController.restore('startup')
+        if (establish.outcome !== 'authenticated') {
+          console.error(
+            `T-03 Spike：登录 Session 未就绪（outcome=${establish.outcome}）；请先用 NCX_T02_SCENARIO=interactive 登录一次。`
+          )
+          authController.shutdown()
+          supervisor.shutdown()
+          app.exit(1)
+        }
+        // EstablishResult 不含 cookieHeader（已在 establish() 内部零化），
+        // 需独立从 Cookie Store 读取完整 Cookie 头用于写入凭据 env。
+        const credentialRepo = new CookieSessionRepository(
+          session.fromPartition(NETEASE_AUTH_PARTITION, { cache: true })
+        )
+        const inspection = await credentialRepo.inspect()
+        if (inspection.kind !== 'credential') {
+          console.error('T-03 Spike：Cookie 缺失，拒绝写入 env。')
+          authController.shutdown()
+          supervisor.shutdown()
+          app.exit(1)
+          return
+        }
+        const musicU = extractMusicU(inspection.cookieHeader)
+        if (!musicU) {
+          console.error('T-03 Spike：Cookie 头中未提取到 MUSIC_U；凭据 env 将仅包含 Cookie 头。')
+        }
+        // ADR-002 规定 accountId 不离开安全域；使用哈希化指纹作为标识
+        const accountFingerprint = establish.snapshot.accountFingerprint ?? 'unknown'
+        await writeT03CredentialEnv(
+          join(process.cwd(), T03_ENV_FILENAME),
+          {
+            cookieHeader: inspection.cookieHeader,
+            musicU: musicU ?? '',
+            accountId: accountFingerprint
+          }
+        )
+        inspection.cookieHeader = ''
+        console.info(
+          `T-03 Spike：凭据已写入 ${T03_ENV_FILENAME}；accountFingerprint=${accountFingerprint}，musicU 已提取=${Boolean(musicU)}`
+        )
+        await createMainWindow()
         return
       }
       await createMainWindow()

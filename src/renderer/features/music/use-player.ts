@@ -73,6 +73,8 @@ export function usePlayer(): {
   playContext: (context: PlayContext) => Promise<void>
   playTrack: (track: TrackSummary, source: QueueSource) => Promise<void>
   playQueueItem: (queueItemId: string) => Promise<void>
+  play: () => Promise<void>
+  pause: () => void
   toggle: () => Promise<void>
   next: () => Promise<void>
   previous: () => Promise<void>
@@ -96,6 +98,8 @@ export function usePlayer(): {
     playContext: (context) => active.coordinator.playContext(context),
     playTrack: (track, source) => active.coordinator.playTrack(track, source),
     playQueueItem: (queueItemId) => active.coordinator.playQueueItem(queueItemId),
+    play: () => active.coordinator.play(),
+    pause: () => active.coordinator.pause(),
     toggle: () => active.coordinator.toggle(),
     next: () => active.coordinator.next(),
     previous: () => active.coordinator.previous(),
