@@ -451,7 +451,8 @@ function toggleQueueDrawer(): void {
 
 .player-slider-volume {
   flex: none;
-  width: 64px;
+  width: 72px;
+  min-width: 0;
 }
 
 .player-slider :deep(.ncx-common-slider-track-container),
