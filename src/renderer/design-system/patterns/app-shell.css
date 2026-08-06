@@ -79,7 +79,7 @@
   gap: 10px;
   min-height: 34px;
   padding: 7px 12px;
-  border-radius: 10px;
+  border-radius: var(--ncx-radius-md);
   color: var(--ncx-color-text-primary);
   font-size: 13px;
   text-decoration: none;

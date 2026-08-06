@@ -12,12 +12,12 @@
   --ncx-space-10: 40px;
   --ncx-space-12: 48px;
   --ncx-space-16: 64px;
-  --ncx-radius-xs: 4px;
-  --ncx-radius-sm: 6px;
-  --ncx-radius-md: 8px;
-  --ncx-radius-lg: 12px;
-  --ncx-radius-xl: 16px;
-  --ncx-radius-2xl: 20px;
+  --ncx-radius-xs: 6px;
+  --ncx-radius-sm: 10px;
+  --ncx-radius-md: 14px;
+  --ncx-radius-lg: 18px;
+  --ncx-radius-xl: 24px;
+  --ncx-radius-2xl: 30px;
   --ncx-radius-full: 9999px;
   --ncx-control-compact: 28px;
   --ncx-control-default: 32px;
