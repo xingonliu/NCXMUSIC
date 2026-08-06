@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 const projectRoot = fileURLToPath(new URL('..', import.meta.url))
 const requiredArtifacts = [
   'out/main/index.js',
+  'out/main/inputHook.js',
   'out/main/utility.js',
   'out/preload/index.js',
   'out/renderer/index.html'
@@ -34,6 +35,14 @@ if (!utility.includes('parentPort')) {
 }
 if (!utility.includes('createRequire') || !utility.includes('app.asar')) {
   throw new Error('Utility 缺少 packaged API Adapter 的确定模块解析入口')
+}
+
+const inputHook = await readFile(join(projectRoot, 'out/main/inputHook.js'), 'utf8')
+if (!inputHook.includes('uiohook-napi') || !inputHook.includes('parentPort')) {
+  throw new Error('InputHookHost 构建入口缺少原生 Hook 加载或受限父进程通道')
+}
+if (/mousemove|mousedown|mouseup|wheel/u.test(inputHook)) {
+  throw new Error('InputHookHost 不得监听或转发鼠标事件')
 }
 
 for (const artifact of ['out/preload/index.js', 'out/renderer/index.html']) {

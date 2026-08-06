@@ -12,8 +12,10 @@ export default defineConfig({
       rollupOptions: {
         input: {
           index: resolve(__dirname, 'src/main/index.ts'),
-          utility: resolve(__dirname, 'src/utility/index.ts')
+          utility: resolve(__dirname, 'src/utility/index.ts'),
+          inputHook: resolve(__dirname, 'src/input-hook/index.ts')
         },
+        external: ['uiohook-napi'],
         output: {
           entryFileNames: '[name].js'
         }

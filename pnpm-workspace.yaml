@@ -5,6 +5,7 @@ allowBuilds:
   electron: true
   electron-winstaller: true
   esbuild: true
+  uiohook-napi: true
   vue-demi: true
 
 minimumReleaseAgeExclude:
