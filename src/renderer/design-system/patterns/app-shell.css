@@ -15,7 +15,9 @@
   gap: var(--ncx-shell-gap);
   padding: var(--ncx-shell-gap);
   overflow: hidden;
-  border-radius: var(--ncx-radius-xl);
+
+  /* 外壳圆角 = 侧边栏圆角 + 悬浮间距，使窗口曲线与侧边栏完全同心一致。 */
+  border-radius: calc(var(--ncx-radius-xl) + var(--ncx-shell-gap));
   color: var(--ncx-color-text-primary);
   background: var(--ncx-color-canvas);
 }
