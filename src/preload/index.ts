@@ -7,6 +7,7 @@ import {
   WINDOW_CONTROL_CHANNELS,
   type WindowCommand,
   type WindowControlBridge,
+  type WindowDragMessage,
   type WindowSnapshot
 } from '../shared/contracts/window-controls'
 import {
@@ -93,6 +94,12 @@ const runtimeBridge: NcxRuntimeBridge = {
   }
 }
 
+/** 发送自绘拖拽消息，仅通知按下/松开事件本身。 */
+function sendWindowDrag(type: WindowDragMessage['type']): void {
+  const message = { type } satisfies WindowDragMessage
+  ipcRenderer.send(WINDOW_CONTROL_CHANNELS.drag, message)
+}
+
 const windowControlBridge: WindowControlBridge = {
   snapshot: async () => ipcRenderer.invoke(WINDOW_CONTROL_CHANNELS.snapshot) as Promise<WindowSnapshot>,
   send: async (command: WindowCommand) =>
@@ -100,7 +107,9 @@ const windowControlBridge: WindowControlBridge = {
   onSnapshot: (listener) => {
     windowSnapshotListeners.add(listener)
     return () => windowSnapshotListeners.delete(listener)
-  }
+  },
+  dragStart: () => sendWindowDrag('window.dragStart'),
+  dragEnd: () => sendWindowDrag('window.dragEnd')
 }
 
 ipcRenderer.on(WINDOW_CONTROL_CHANNELS.status, (_event, snapshot) => {

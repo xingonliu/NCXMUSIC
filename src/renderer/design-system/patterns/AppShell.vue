@@ -29,14 +29,31 @@ import {
   type AppNavigationItem
 } from '../../app/navigation'
 import { navigateBack } from '../../app/navigation-history'
+import {
+  CommonHeaderButton,
+  CommonHeaderGroupButton,
+  CommonHeaderGroupItem
+} from '../components'
 
 // ========= 变量 =========
+
+/** 可自绘拖拽的区域根节点，命中后根据祖先 app-region 声明决定是否开始拖拽。 */
+const CUSTOM_DRAG_REGION_SELECTOR = '.ncx-sidebar, .ncx-page-header'
 
 /** 当前路由对象，用于驱动标题、层级和导航高亮。 */
 const route = useRoute()
 
 /** Router 实例，提供页面切换与统一返回。 */
 const router = useRouter()
+
+/** 外壳根节点引用，用于拖拽期间捕获 Pointer 事件。 */
+const shellElement = ref<HTMLElement | null>(null)
+
+/** 最大化/全屏下启用自绘拖拽（补偿原生拖拽不还原尺寸的手势缺陷）。 */
+const isCustomDragActive = computed(() => windowSnapshot.value.maximized || windowSnapshot.value.fullscreen)
+
+/** 自绘拖拽进行中绑定的 Pointer 标识，未开始时为 undefined。 */
+let customDragPointerId: number | undefined
 
 /** Main 进程推送的真实窗口快照。 */
 const windowSnapshot = ref<WindowSnapshot>({
@@ -92,6 +109,52 @@ function handleBack(): void {
   navigateBack(router, route)
 }
 
+/**
+ * 判断按下点是否落在交互子区（应拦截拖拽）。
+ * 与 Chromium 原生拖拽命中一致：自目标向上走到拖拽区域根节点，
+ * 途中任意显式声明 no-drag 的元素均视为交互区，根节点本身除外。
+ */
+function isWithinNoDragRegion(target: EventTarget | null): boolean {
+  const element = target instanceof Element ? target : null
+  if (!element) return true
+  const region = element.closest<HTMLElement>(CUSTOM_DRAG_REGION_SELECTOR)
+  if (!region) return true
+  let current: Element | null = element
+  while (current && current !== region) {
+    const regionStyle = window
+      .getComputedStyle(current)
+      .getPropertyValue('-webkit-app-region')
+      .trim()
+    if (regionStyle === 'no-drag') return true
+    current = current.parentElement
+  }
+  return false
+}
+
+/** 自绘拖拽按下：命中拖拽区域且非交互子区时通知 Main 开始跟随手势。 */
+function handleCustomDragPointerDown(event: PointerEvent): void {
+  if (!isCustomDragActive.value) return
+  if (event.button !== 0 || isWithinNoDragRegion(event.target)) return
+  customDragPointerId = event.pointerId
+  event.preventDefault()
+  shellElement.value?.setPointerCapture(event.pointerId)
+  window.ncx.windowControls.dragStart()
+}
+
+/** 自绘拖拽松开/取消：通知 Main 结束手势并释放捕获。 */
+function handleCustomDragPointerUp(event: PointerEvent): void {
+  if (customDragPointerId === undefined || event.pointerId !== customDragPointerId) return
+  customDragPointerId = undefined
+  window.ncx.windowControls.dragEnd()
+}
+
+/** Esc 取消自绘拖拽，复刻原生拖拽的可中断行为。 */
+function handleCustomDragKeyDown(event: KeyboardEvent): void {
+  if (customDragPointerId === undefined || event.key !== 'Escape') return
+  customDragPointerId = undefined
+  window.ncx.windowControls.dragEnd()
+}
+
 // ========= 生命周期 =========
 
 onMounted(async () => {
@@ -99,21 +162,29 @@ onMounted(async () => {
     windowSnapshot.value = snapshot
   })
   windowSnapshot.value = await window.ncx.windowControls.snapshot()
+  window.addEventListener('keydown', handleCustomDragKeyDown)
 })
 
 onBeforeUnmount(() => {
   unsubscribeWindowSnapshot()
+  window.removeEventListener('keydown', handleCustomDragKeyDown)
+  if (customDragPointerId !== undefined) window.ncx.windowControls.dragEnd()
 })
 </script>
 
 <template>
   <div
+    ref="shellElement"
     class="ncx-app-shell"
     :class="[
       isMacOS ? 'ncx-app-shell--macos' : 'ncx-app-shell--windows',
       windowSnapshot.fullscreen ? 'ncx-app-shell--fullscreen' : '',
-      windowSnapshot.maximized ? 'ncx-app-shell--maximized' : ''
+      windowSnapshot.maximized ? 'ncx-app-shell--maximized' : '',
+      isCustomDragActive ? 'ncx-app-shell--custom-drag' : ''
     ]"
+    @pointerdown="handleCustomDragPointerDown"
+    @pointerup="handleCustomDragPointerUp"
+    @pointercancel="handleCustomDragPointerUp"
   >
     <header
       class="ncx-page-header"
@@ -121,57 +192,38 @@ onBeforeUnmount(() => {
     >
       <div class="ncx-header-mask" />
       <div class="ncx-page-leading-actions">
-        <button
+        <CommonHeaderButton
           v-if="isSecondaryPage"
-          class="ncx-glass-button ncx-back-button"
-          type="button"
-          aria-label="返回上一页"
-          title="返回上一页"
+          class="ncx-back-button"
+          label="返回上一页"
           @click="handleBack"
         >
           <ChevronLeft :size="18" />
-        </button>
+        </CommonHeaderButton>
       </div>
 
       <div class="ncx-page-actions">
-        <button
-          class="ncx-glass-button"
-          type="button"
-          aria-label="搜索"
-          title="搜索"
-        >
+        <CommonHeaderButton label="搜索">
           <Search :size="17" />
-        </button>
-        <button
-          class="ncx-glass-button"
-          type="button"
-          aria-label="刷新当前页"
-          title="刷新当前页"
-        >
-          <RotateCcw :size="17" />
-        </button>
+        </CommonHeaderButton>
 
-        <div
+        <CommonHeaderButton label="刷新当前页">
+          <RotateCcw :size="17" />
+        </CommonHeaderButton>
+
+        <CommonHeaderGroupButton
           v-if="isWindows"
-          class="ncx-window-controls"
-          role="group"
-          aria-label="窗口控制"
+          label="窗口控制"
         >
-          <button
-            class="ncx-window-control"
-            type="button"
-            aria-label="最小化"
-            title="最小化"
+          <CommonHeaderGroupItem
+            label="最小化"
             @click="runWindowCommand({ type: 'window.minimize' })"
           >
             <Minus :size="16" />
-          </button>
-          <span class="ncx-window-divider" />
-          <button
-            class="ncx-window-control"
-            type="button"
-            :aria-label="windowSnapshot.maximized ? '还原窗口' : '最大化窗口'"
-            :title="windowSnapshot.maximized ? '还原窗口' : '最大化窗口'"
+          </CommonHeaderGroupItem>
+
+          <CommonHeaderGroupItem
+            :label="windowSnapshot.maximized ? '还原窗口' : '最大化窗口'"
             @click="runWindowCommand({ type: 'window.toggleMaximize' })"
           >
             <Minimize2
@@ -182,18 +234,16 @@ onBeforeUnmount(() => {
               v-else
               :size="15"
             />
-          </button>
-          <span class="ncx-window-divider" />
-          <button
-            class="ncx-window-control ncx-window-control--close"
-            type="button"
-            aria-label="关闭窗口"
-            title="关闭窗口"
+          </CommonHeaderGroupItem>
+
+          <CommonHeaderGroupItem
+            label="关闭窗口"
+            variant="close"
             @click="runWindowCommand({ type: 'window.requestClose' })"
           >
             <X :size="16" />
-          </button>
-        </div>
+          </CommonHeaderGroupItem>
+        </CommonHeaderGroupButton>
       </div>
     </header>
 
