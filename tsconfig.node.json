@@ -16,5 +16,8 @@
     "src/shared/**/*.ts",
     "src/infrastructure/**/*.ts",
     "tests/**/*.ts"
+  ],
+  "exclude": [
+    "tests/unit/player-bar.test.ts"
   ]
 }

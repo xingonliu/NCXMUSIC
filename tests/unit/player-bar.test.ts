@@ -1,0 +1,110 @@
+// @vitest-environment happy-dom
+import { mount } from '@vue/test-utils'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinator'
+import PlayerBar from '../../src/renderer/features/music/components/PlayerBar.vue'
+import { disposePlayer } from '../../src/renderer/features/music/use-player'
+
+// ========= 变量 =========
+
+// ========= 生命周期 =========
+
+describe('PlayerBar 控件区域 UI 规范测试', () => {
+  beforeEach(() => {
+    disposePlayer()
+  })
+
+  afterEach(() => {
+    disposePlayer()
+  })
+
+  it('控件区域渲染 player-transport 容器并使用 CommonIconButton 组件呈现控件', () => {
+    const wrapper = mount(PlayerBar)
+    const transport = wrapper.find('.player-transport')
+
+    expect(transport.exists()).toBe(true)
+
+    // 查找所有 icon 按钮组件
+    const iconButtons = transport.findAllComponents({ name: '通用组件IconButton' })
+    expect(iconButtons.length).toBe(4)
+
+    // 四个按钮分别为：播放模式、上一首、暂停/播放、下一首
+    const [modeBtn, prevBtn, playBtn, nextBtn] = iconButtons
+
+    expect(modeBtn.attributes('aria-label')).toBeDefined()
+    expect(prevBtn.attributes('aria-label')).toBe('上一首')
+    expect(playBtn.attributes('aria-label')).toBe('播放')
+    expect(nextBtn.attributes('aria-label')).toBe('下一首')
+  })
+
+  it('播放/暂停 icon 按钮具有 prominent 尺寸与 primary 变体', () => {
+    const wrapper = mount(PlayerBar)
+    const transport = wrapper.find('.player-transport')
+    const iconButtons = transport.findAllComponents({ name: '通用组件IconButton' })
+
+    const playBtn = iconButtons[2]
+    expect(playBtn.props('size')).toBe('prominent')
+    expect(playBtn.props('variant')).toBe('primary')
+  })
+
+  it('上一首、下一首 icon 按钮具有 default 尺寸与 ghost 变体', () => {
+    const wrapper = mount(PlayerBar)
+    const transport = wrapper.find('.player-transport')
+    const iconButtons = transport.findAllComponents({ name: '通用组件IconButton' })
+
+    const [, prevBtn, , nextBtn] = iconButtons
+    expect(prevBtn.props('size')).toBe('default')
+    expect(prevBtn.props('variant')).toBe('ghost')
+    expect(nextBtn.props('size')).toBe('default')
+    expect(nextBtn.props('variant')).toBe('ghost')
+  })
+
+  it('点击上一首、下一首、暂停/播放能够触发对应的播放器指令', async () => {
+    disposePlayer()
+    const mockTrack = { trackId: '1', name: 'Test Song', artists: ['Artist'], durationMs: 180000, album: 'Album' }
+    vi.spyOn(PlaybackCoordinator.prototype, 'getSnapshot').mockReturnValue({
+      playback: {
+        status: 'idle',
+        intent: 'pause',
+        track: mockTrack,
+        generation: 0,
+        positionMs: 0,
+        durationMs: 180000,
+        bufferedMs: 0,
+        volume: 1,
+        muted: false,
+        seeking: false,
+        error: null,
+        actualQuality: null,
+        downgraded: false
+      },
+      queue: {
+        items: [{ queueItemId: '1', track: mockTrack, source: { kind: 'playlist', playlistId: 'pl-1' }, addedAt: 1700000000000 }],
+        currentItemId: '1',
+        mode: 'loop',
+        revision: 1
+      },
+      quality: 'auto'
+    })
+
+    const previousSpy = vi.spyOn(PlaybackCoordinator.prototype, 'previous').mockResolvedValue(undefined)
+    const nextSpy = vi.spyOn(PlaybackCoordinator.prototype, 'next').mockResolvedValue(undefined)
+    const toggleSpy = vi.spyOn(PlaybackCoordinator.prototype, 'toggle').mockResolvedValue(undefined)
+
+    const wrapper = mount(PlayerBar)
+    const transport = wrapper.find('.player-transport')
+    const iconButtons = transport.findAllComponents({ name: '通用组件IconButton' })
+
+    const [, prevBtn, playBtn, nextBtn] = iconButtons
+
+    await prevBtn.trigger('click')
+    expect(previousSpy).toHaveBeenCalledTimes(1)
+
+    await nextBtn.trigger('click')
+    expect(nextSpy).toHaveBeenCalledTimes(1)
+
+    await playBtn.trigger('click')
+    expect(toggleSpy).toHaveBeenCalledTimes(1)
+  })
+})

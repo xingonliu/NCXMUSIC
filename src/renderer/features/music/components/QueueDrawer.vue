@@ -6,7 +6,7 @@
 // 遵循 Vue3 Composition API + TypeScript 规范，变量与函数清晰分区并编写注释。
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { Play, Repeat, Repeat1, Shuffle, Trash2, Volume2, X } from '@lucide/vue'
+import { Repeat, Repeat1, Shuffle, Trash2, Volume2 } from '@lucide/vue'
 import { computed } from 'vue'
 
 import type { PlayMode, QueueItem } from '../../../../domains/player/types'

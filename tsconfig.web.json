@@ -8,6 +8,7 @@
     "src/renderer/**/*.ts",
     "src/renderer/**/*.vue",
     "src/shared/**/*.ts",
-    "src/domains/player/**/*.ts"
+    "src/domains/player/**/*.ts",
+    "tests/unit/player-bar.test.ts"
   ]
 }

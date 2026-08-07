@@ -24,7 +24,6 @@ import { computed, ref } from 'vue'
 
 import type { PlayMode } from '../../../../domains/player/types'
 import {
-  CommonButtonGroup,
   CommonIconButton,
   CommonProgress,
   CommonSlider,
@@ -142,11 +141,31 @@ function toggleQueueDrawer(): void {
       </p>
     </div>
 
-    <!-- 传输控制 -->
-    <CommonButtonGroup
+    <!-- 传输控制区域：上一首、暂停/播放、下一首及模式切换统一使用 icon 按钮组件并保持适宜间距 -->
+    <div
       class="player-transport"
-      variant="segmented"
+      role="group"
+      :aria-label="text.regionLabel"
     >
+      <CommonIconButton
+        size="default"
+        variant="ghost"
+        :label="text.mode[snapshot.queue.mode]"
+        @click="player.setMode(nextMode)"
+      >
+        <Shuffle
+          v-if="snapshot.queue.mode === 'shuffle'"
+          :size="16"
+        />
+        <Repeat1
+          v-else-if="snapshot.queue.mode === 'loop-one'"
+          :size="16"
+        />
+        <Repeat
+          v-else
+          :size="16"
+        />
+      </CommonIconButton>
       <CommonIconButton
         size="default"
         variant="ghost"
@@ -154,7 +173,7 @@ function toggleQueueDrawer(): void {
         :label="text.previous"
         @click="player.previous()"
       >
-        <SkipBack :size="15" />
+        <SkipBack :size="16" />
       </CommonIconButton>
       <CommonIconButton
         size="prominent"
@@ -170,12 +189,12 @@ function toggleQueueDrawer(): void {
         />
         <Pause
           v-else-if="showPause"
-          :size="17"
+          :size="18"
           fill="currentColor"
         />
         <Play
           v-else
-          :size="17"
+          :size="18"
           fill="currentColor"
         />
       </CommonIconButton>
@@ -186,28 +205,9 @@ function toggleQueueDrawer(): void {
         :label="text.next"
         @click="player.next()"
       >
-        <SkipForward :size="15" />
+        <SkipForward :size="16" />
       </CommonIconButton>
-      <CommonIconButton
-        size="default"
-        variant="ghost"
-        :label="text.mode[snapshot.queue.mode]"
-        @click="player.setMode(nextMode)"
-      >
-        <Shuffle
-          v-if="snapshot.queue.mode === 'shuffle'"
-          :size="15"
-        />
-        <Repeat1
-          v-else-if="snapshot.queue.mode === 'loop-one'"
-          :size="15"
-        />
-        <Repeat
-          v-else
-          :size="15"
-        />
-      </CommonIconButton>
-    </CommonButtonGroup>
+    </div>
 
     <!-- 进度 -->
     <div class="player-progress">
@@ -401,12 +401,14 @@ function toggleQueueDrawer(): void {
 
 .player-transport {
   display: flex;
-  gap: 2px;
+  gap: var(--ncx-space-2, 8px);
   align-items: center;
-  padding: 2px;
-  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
+  justify-content: center;
+  padding: 3px 6px;
+  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
   border-radius: var(--ncx-radius-full);
-  background: color-mix(in srgb, white 24%, transparent);
+  background: color-mix(in srgb, white 20%, transparent);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 20%);
 }
 
 .player-busy {
@@ -517,7 +519,9 @@ function toggleQueueDrawer(): void {
   }
 
   .player-transport {
+    border-color: color-mix(in srgb, white 12%, transparent);
     background: color-mix(in srgb, white 8%, transparent);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%);
   }
 }
 
