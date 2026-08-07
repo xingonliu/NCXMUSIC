@@ -332,7 +332,7 @@ function toggleQueueDrawer(): void {
   backdrop-filter: blur(30px) saturate(180%);
   -webkit-backdrop-filter: blur(30px) saturate(180%);
   isolation: isolate;
-  overflow: hidden;
+  overflow: visible;
   transform: translateX(-50%);
   -webkit-app-region: no-drag;
 }

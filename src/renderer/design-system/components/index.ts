@@ -110,6 +110,44 @@ function guardDisabledClick(event: MouseEvent, disabled: boolean): boolean {
   return true
 }
 
+/** 气泡显隐交互状态：统一鼠标悬浮/聚焦显隐逻辑（含延迟），供 Tooltip 与 IconButton 复用。 */
+function useTooltipInteraction(disabled: () => boolean, delay = 300) {
+  /** 气泡是否处于显示状态。 */
+  const visible = ref(false)
+  /** 延迟显示计时器。 */
+  let timer: ReturnType<typeof setTimeout> | null = null
+
+  /** 鼠标移入：延迟后显示气泡。 */
+  function handleMouseEnter(): void {
+    if (disabled()) return
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+      visible.value = true
+    }, delay)
+  }
+
+  /** 鼠标移出：立即隐藏气泡并清除延迟计时器。 */
+  function handleMouseLeave(): void {
+    if (timer) clearTimeout(timer)
+    visible.value = false
+  }
+
+  /** 获得焦点：立即显示气泡。 */
+  function handleFocusIn(): void {
+    if (disabled()) return
+    if (timer) clearTimeout(timer)
+    visible.value = true
+  }
+
+  /** 失去焦点：立即隐藏气泡。 */
+  function handleFocusOut(): void {
+    if (timer) clearTimeout(timer)
+    visible.value = false
+  }
+
+  return { visible, handleMouseEnter, handleMouseLeave, handleFocusIn, handleFocusOut }
+}
+
 // ========= 操作组件 (macOS HIG / WWDC25 规范) =========
 
 /** 通用组件Button：统一 macOS 标准按钮入口。 */
@@ -160,7 +198,7 @@ export const CommonButton = defineComponent({
   }
 })
 
-/** 通用组件IconButton：统一纯图标按钮入口，遵循 macOS 无障碍与状态规范。 */
+/** 通用组件IconButton：统一纯图标按钮入口，悬停/聚焦自动展示样式化气泡，遵循 macOS 无障碍与状态规范。 */
 export const CommonIconButton = defineComponent({
   name: '通用组件IconButton',
   props: {
@@ -171,10 +209,20 @@ export const CommonIconButton = defineComponent({
       default: 'ghost'
     },
     selected: Boolean,
-    disabled: Boolean
+    disabled: Boolean,
+    /** 气泡弹出位置：top | bottom | left | right。 */
+    tooltipPlacement: {
+      type: String as PropType<'top' | 'bottom' | 'left' | 'right'>,
+      default: 'top'
+    }
   },
   emits: ['click'],
   setup(props, { emit, slots }) {
+    /** 气泡显隐交互状态。 */
+    const { visible, handleMouseEnter, handleMouseLeave, handleFocusIn, handleFocusOut } = useTooltipInteraction(
+      () => props.disabled
+    )
+
     /** 处理图标按钮点击。 */
     function handleClick(event: MouseEvent): void {
       if (guardDisabledClick(event, props.disabled)) return
@@ -196,10 +244,25 @@ export const CommonIconButton = defineComponent({
           'aria-disabled': props.disabled ? 'true' : undefined,
           'aria-label': props.label,
           'aria-pressed': props.selected ? 'true' : undefined,
-          title: props.label,
+          onMouseenter: handleMouseEnter,
+          onMouseleave: handleMouseLeave,
+          onFocusin: handleFocusIn,
+          onFocusout: handleFocusOut,
           onClick: handleClick
         },
-        slots.default?.()
+        [
+          slots.default?.(),
+          visible.value && !props.disabled
+            ? h(
+                'span',
+                {
+                  class: joinClasses('ncx-common-tooltip-panel', `ncx-common-tooltip-panel--${props.tooltipPlacement}`),
+                  role: 'tooltip'
+                },
+                [h('span', { class: 'ncx-common-tooltip-content' }, props.label), h('span', { class: 'ncx-common-tooltip-arrow' })]
+              )
+            : null
+        ]
       )
   }
 })
@@ -1727,38 +1790,11 @@ export const CommonTooltip = defineComponent({
     disabled: { type: Boolean, default: false }
   },
   setup(props, { slots }) {
-    /** 提示框是否处于开启显示状态。 */
-    const visible = ref(false)
-    /** 延迟计时器。 */
-    let timer: ReturnType<typeof setTimeout> | null = null
-
-    /** 鼠标移入逻辑。 */
-    function handleMouseEnter(): void {
-      if (props.disabled) return
-      if (timer) clearTimeout(timer)
-      timer = setTimeout(() => {
-        visible.value = true
-      }, props.delay)
-    }
-
-    /** 鼠标移出逻辑。 */
-    function handleMouseLeave(): void {
-      if (timer) clearTimeout(timer)
-      visible.value = false
-    }
-
-    /** 获得焦点。 */
-    function handleFocusIn(): void {
-      if (props.disabled) return
-      if (timer) clearTimeout(timer)
-      visible.value = true
-    }
-
-    /** 失去焦点。 */
-    function handleFocusOut(): void {
-      if (timer) clearTimeout(timer)
-      visible.value = false
-    }
+    /** 气泡显隐交互状态。 */
+    const { visible, handleMouseEnter, handleMouseLeave, handleFocusIn, handleFocusOut } = useTooltipInteraction(
+      () => props.disabled,
+      props.delay
+    )
 
     return () => {
       const textContent = props.text || ''

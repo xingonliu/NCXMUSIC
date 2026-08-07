@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 import { mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
-import { h } from 'vue'
+import { describe, expect, it, vi } from 'vitest'
+import { h, nextTick } from 'vue'
 
 import {
   CommonButton,
@@ -83,7 +83,7 @@ describe('macOS HIG & WWDC25 按钮族组件规范测试', () => {
   })
 
   describe('CommonIconButton (纯图标按钮)', () => {
-    it('正确渲染无障碍 label 属性 (aria-label & title)', () => {
+    it('正确渲染无障碍 aria-label 且不产生原生 title 气泡', () => {
       const wrapper = mount(CommonIconButton, {
         props: { label: '播放音乐' },
         slots: { default: () => h('span', '▶') }
@@ -92,8 +92,35 @@ describe('macOS HIG & WWDC25 按钮族组件规范测试', () => {
       expect(wrapper.element.tagName).toBe('BUTTON')
       expect(wrapper.classes()).toContain('ncx-common-icon-button')
       expect(wrapper.attributes('aria-label')).toBe('播放音乐')
-      expect(wrapper.attributes('title')).toBe('播放音乐')
+      expect(wrapper.attributes('title')).toBeUndefined()
       expect(wrapper.text()).toBe('▶')
+    })
+
+    it('悬停延迟后展示样式化气泡（CommonTooltip 面板），移出后隐藏', async () => {
+      vi.useFakeTimers()
+      try {
+        const wrapper = mount(CommonIconButton, {
+          props: { label: '播放音乐' }
+        })
+
+        expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(false)
+
+        await wrapper.trigger('mouseenter')
+        await vi.advanceTimersByTimeAsync(300)
+        await nextTick()
+
+        const panel = wrapper.find('.ncx-common-tooltip-panel')
+        expect(panel.exists()).toBe(true)
+        expect(panel.attributes('role')).toBe('tooltip')
+        expect(panel.text()).toBe('播放音乐')
+        expect(panel.classes()).toContain('ncx-common-tooltip-panel--top')
+
+        await wrapper.trigger('mouseleave')
+        await nextTick()
+        expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(false)
+      } finally {
+        vi.useRealTimers()
+      }
     })
 
     it('支持 selected 选定按下状态与 aria-pressed', () => {
@@ -105,16 +132,26 @@ describe('macOS HIG & WWDC25 按钮族组件规范测试', () => {
       expect(wrapper.attributes('aria-pressed')).toBe('true')
     })
 
-    it('禁用状态正确防护', async () => {
-      const wrapper = mount(CommonIconButton, {
-        props: { label: '设置', disabled: true }
-      })
+    it('禁用状态不展示气泡且正确防护', async () => {
+      vi.useFakeTimers()
+      try {
+        const wrapper = mount(CommonIconButton, {
+          props: { label: '设置', disabled: true }
+        })
 
-      expect(wrapper.attributes('disabled')).toBeDefined()
-      expect(wrapper.attributes('aria-disabled')).toBe('true')
+        expect(wrapper.attributes('disabled')).toBeDefined()
+        expect(wrapper.attributes('aria-disabled')).toBe('true')
 
-      await wrapper.trigger('click')
-      expect(wrapper.emitted('click')).toBeUndefined()
+        await wrapper.trigger('mouseenter')
+        await vi.advanceTimersByTimeAsync(300)
+        await nextTick()
+        expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(false)
+
+        await wrapper.trigger('click')
+        expect(wrapper.emitted('click')).toBeUndefined()
+      } finally {
+        vi.useRealTimers()
+      }
     })
   })
 
