@@ -301,13 +301,11 @@ function toggleQueueDrawer(): void {
 
 <style scoped>
 .player-bar {
-  --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 80%, transparent);
-  --ncx-player-bar-glass-stroke: color-mix(in srgb, white 60%, transparent);
-  --ncx-player-bar-glass-shadow:
-    0 16px 36px rgb(0 0 0 / 12%),
-    0 4px 12px rgb(0 0 0 / 4%),
-    inset 0 1px 0 0 rgb(255 255 255 / 80%),
-    inset 0 -1px 0 0 rgb(0 0 0 / 4%);
+  --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 76%, transparent);
+  --ncx-player-bar-glass-edge: color-mix(in srgb, white 62%, transparent);
+  --ncx-player-bar-glass-stroke: color-mix(in srgb, var(--ncx-color-text-primary) 9%, transparent);
+  --ncx-player-bar-glass-shadow: 0 16px 40px rgb(20 20 24 / 14%),
+    0 6px 16px rgb(20 20 24 / 6%), inset 0 1px 0 rgb(255 255 255 / 65%);
   --ncx-player-bar-track-bg: color-mix(in srgb, var(--ncx-color-text-primary) 13%, transparent);
   --ncx-player-bar-thumb-shadow: 0 2px 6px rgb(20 20 24 / 18%);
 
@@ -325,25 +323,41 @@ function toggleQueueDrawer(): void {
   border: 1px solid var(--ncx-player-bar-glass-stroke);
   border-radius: var(--ncx-radius-full);
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-player-bar-glass-fill);
+  background:
+    radial-gradient(circle at 15% 8%, rgb(255 255 255 / 46%), transparent 28%),
+    radial-gradient(circle at 86% 18%, rgb(255 255 255 / 30%), transparent 34%),
+    linear-gradient(135deg, var(--ncx-player-bar-glass-edge), transparent 38%),
+    var(--ncx-player-bar-glass-fill);
   box-shadow: var(--ncx-player-bar-glass-shadow);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
   isolation: isolate;
   overflow: visible;
   transform: translateX(-50%);
   -webkit-app-region: no-drag;
 }
 
+.player-bar::before,
 .player-bar::after {
   position: absolute;
   inset: 0;
   border-radius: inherit;
   content: '';
   pointer-events: none;
+}
+
+.player-bar::before {
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 34%) 0%, transparent 42%),
+    linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 20%) 48%, transparent 100%);
+  mask-image: linear-gradient(180deg, black 0%, transparent 70%);
+}
+
+.player-bar::after {
   box-shadow:
-    inset 0 0 0 1px rgb(255 255 255 / 24%),
-    inset 0 1px 0 0 rgb(255 255 255 / 40%);
+    inset 0 0 0 1px rgb(255 255 255 / 28%),
+    inset 0 -1px 0 rgb(0 0 0 / 5%);
 }
 
 .player-track {
@@ -390,6 +404,11 @@ function toggleQueueDrawer(): void {
   gap: var(--ncx-space-2, 8px);
   align-items: center;
   justify-content: center;
+  padding: 3px 6px;
+  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
+  border-radius: var(--ncx-radius-full);
+  background: color-mix(in srgb, white 20%, transparent);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 20%);
 }
 
 .player-busy {
@@ -491,20 +510,18 @@ function toggleQueueDrawer(): void {
 
 @media (prefers-color-scheme: dark) {
   .player-bar {
-    --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 80%, transparent);
-    --ncx-player-bar-glass-stroke: color-mix(in srgb, white 16%, transparent);
-    --ncx-player-bar-glass-shadow:
-      0 20px 48px rgb(0 0 0 / 45%),
-      0 6px 16px rgb(0 0 0 / 30%),
-      inset 0 1px 0 0 rgb(255 255 255 / 20%),
-      inset 0 -1px 0 0 rgb(0 0 0 / 25%);
+    --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 70%, transparent);
+    --ncx-player-bar-glass-edge: color-mix(in srgb, white 16%, transparent);
+    --ncx-player-bar-glass-stroke: color-mix(in srgb, white 14%, transparent);
+    --ncx-player-bar-glass-shadow: 0 20px 48px rgb(0 0 0 / 40%),
+      0 6px 20px rgb(0 0 0 / 28%), inset 0 1px 0 rgb(255 255 255 / 12%);
     --ncx-player-bar-track-bg: color-mix(in srgb, white 16%, transparent);
   }
 
-  .player-bar::after {
-    box-shadow:
-      inset 0 0 0 1px rgb(255 255 255 / 10%),
-      inset 0 1px 0 0 rgb(255 255 255 / 15%);
+  .player-transport {
+    border-color: color-mix(in srgb, white 12%, transparent);
+    background: color-mix(in srgb, white 8%, transparent);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%);
   }
 }
 

@@ -15,9 +15,7 @@
   gap: var(--ncx-shell-gap);
   padding: var(--ncx-shell-gap);
   overflow: hidden;
-
-  /* 外壳圆角 = 侧边栏圆角 + 悬浮间距，使窗口曲线与侧边栏完全同心一致。 */
-  border-radius: calc(var(--ncx-radius-xl) + var(--ncx-shell-gap));
+  border-radius: var(--ncx-radius-xl);
   color: var(--ncx-color-text-primary);
   background: var(--ncx-color-canvas);
 }
@@ -132,19 +130,7 @@
 }
 
 .ncx-app-shell--windows .ncx-page-header {
-  padding-right: 18px;
-}
-
-/* 最大化/全屏时切换为自绘拖拽：禁用原生 drag 区域，防止两套拖拽竞争。 */
-.ncx-app-shell--custom-drag .ncx-sidebar,
-.ncx-app-shell--custom-drag .ncx-page-header {
-  -webkit-app-region: no-drag;
-}
-
-/* header 原生模式靠系统拖拽穿透（pointer-events:none），自绘模式必须恢复接收事件，
-   否则标题栏区域的 pointerdown 会穿透到外壳根节点、无法识别为拖拽区。 */
-.ncx-app-shell--custom-drag .ncx-page-header {
-  pointer-events: auto;
+  padding-right: 4px;
 }
 
 .ncx-header-mask {
@@ -185,10 +171,8 @@
 
 .ncx-glass-button,
 .ncx-window-control {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   color: var(--ncx-color-text-primary);
   cursor: pointer;
 }

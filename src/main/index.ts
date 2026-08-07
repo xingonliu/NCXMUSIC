@@ -14,7 +14,6 @@ import { CONTROL_CHANNELS, type RuntimeStatus } from '../shared/contracts/contro
 import {
   WINDOW_CONTROL_CHANNELS,
   type WindowCommand,
-  type WindowDragMessage,
   type WindowSnapshot
 } from '../shared/contracts/window-controls'
 import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
@@ -25,7 +24,6 @@ import { NETEASE_AUTH_PARTITION } from './auth/navigation-policy'
 import { ConnectionBroker } from './connection-broker'
 import { UtilitySupervisor } from './utility-supervisor'
 import { createMainWindowOptions, createWindowSnapshot } from './window-chrome'
-import { createWindowDragController, type WindowDragController } from './window-drag'
 
 const isSmokeTest = process.env['NCX_SMOKE_TEST'] === '1'
 const isLoginSpike = process.env['NCX_T02_SPIKE'] === '1'
@@ -33,7 +31,6 @@ let mainWindow: BrowserWindow | undefined
 let supervisor: UtilitySupervisor | undefined
 let broker: ConnectionBroker | undefined
 let authController: AuthSessionController | undefined
-let windowDragController: WindowDragController | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
 
 /** 向主窗口广播最新窗口状态，供自绘窗口控件同步真实状态。 */
@@ -327,12 +324,6 @@ function registerControlPlane(): void {
 
     return applyWindowCommand(command)
   })
-
-  ipcMain.on(WINDOW_CONTROL_CHANNELS.drag, (event, message: WindowDragMessage) => {
-    if (!isTrustedSender(event) || !windowDragController) return
-    if (message?.type === 'window.dragStart') windowDragController.start()
-    else if (message?.type === 'window.dragEnd') windowDragController.end()
-  })
 }
 
 function configureSmokeExit(window: BrowserWindow): void {
@@ -379,7 +370,6 @@ async function createMainWindow(): Promise<void> {
     callback(false)
   })
   registerWindowStatePublisher(window)
-  windowDragController = createWindowDragController(window)
   configureSmokeExit(window)
 
   const developmentUrl = process.env['ELECTRON_RENDERER_URL']

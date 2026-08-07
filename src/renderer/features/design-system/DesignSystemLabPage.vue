@@ -1,18 +1,12 @@
 <script setup lang="ts">
 import {
   Bell,
-  ChevronLeft,
   Heart,
-  Maximize2,
-  Minus,
   MoreHorizontal,
   Play,
   Plus,
   RefreshCcw,
-  RotateCcw,
-  Search,
-  Trash2,
-  X
+  Trash2
 } from '@lucide/vue'
 import { computed, ref } from 'vue'
 
@@ -32,9 +26,6 @@ import {
   CommonDropdownMenu,
   CommonEmptyState,
   CommonErrorState,
-  CommonHeaderButton,
-  CommonHeaderGroupButton,
-  CommonHeaderGroupItem,
   CommonIconButton,
   CommonInlineMessage,
   CommonInput,
@@ -282,75 +273,6 @@ function confirmDangerAction(): void {
             >
               Prominent 38px
             </CommonButton>
-          </div>
-
-          <CommonSeparator label="Header 按钮 (CommonHeaderButton & CommonHeaderGroupButton)" />
-
-          <!-- Header 按钮与 Header 按钮组 -->
-          <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-            <!-- Header 普通按钮展示 -->
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <CommonHeaderButton
-                label="返回上一页"
-                @click="recordAction('HeaderButton 返回')"
-              >
-                <ChevronLeft :size="18" />
-              </CommonHeaderButton>
-
-              <CommonHeaderButton
-                label="搜索内容"
-                @click="recordAction('HeaderButton 搜索')"
-              >
-                <Search :size="17" />
-              </CommonHeaderButton>
-
-              <CommonHeaderButton
-                label="刷新当前页"
-                @click="recordAction('HeaderButton 刷新')"
-              >
-                <RotateCcw :size="17" />
-              </CommonHeaderButton>
-
-              <CommonHeaderButton
-                label="已禁用按钮"
-                disabled
-              >
-                <Search :size="17" />
-              </CommonHeaderButton>
-            </div>
-
-            <!-- Header 成组按钮（插槽模式） -->
-            <CommonHeaderGroupButton label="窗口控制示例（插槽模式）">
-              <CommonHeaderGroupItem
-                label="最小化"
-                @click="recordAction('HeaderGroupItem 最小化')"
-              >
-                <Minus :size="16" />
-              </CommonHeaderGroupItem>
-              <CommonHeaderGroupItem
-                label="最大化"
-                @click="recordAction('HeaderGroupItem 最大化')"
-              >
-                <Maximize2 :size="15" />
-              </CommonHeaderGroupItem>
-              <CommonHeaderGroupItem
-                label="关闭"
-                variant="close"
-                @click="recordAction('HeaderGroupItem 关闭')"
-              >
-                <X :size="16" />
-              </CommonHeaderGroupItem>
-            </CommonHeaderGroupButton>
-
-            <!-- Header 成组按钮（Items 配置模式） -->
-            <CommonHeaderGroupButton
-              label="成组按钮（Items 配置模式）"
-              :items="[
-                { label: '添加项', icon: Plus, onClick: () => recordAction('HeaderGroup items 添加') },
-                { label: '刷新列表', icon: RefreshCcw, onClick: () => recordAction('HeaderGroup items 刷新') },
-                { label: '删除选定', icon: Trash2, variant: 'danger', onClick: () => recordAction('HeaderGroup items 删除') }
-              ]"
-            />
           </div>
 
           <CommonSeparator label="图标按钮 (CommonIconButton) & 按钮组 (CommonButtonGroup) & 链接按钮 (CommonLinkButton)" />
