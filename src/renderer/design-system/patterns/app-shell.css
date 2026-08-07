@@ -141,6 +141,12 @@
   -webkit-app-region: no-drag;
 }
 
+/* header 原生模式靠系统拖拽穿透（pointer-events:none），自绘模式必须恢复接收事件，
+   否则标题栏区域的 pointerdown 会穿透到外壳根节点、无法识别为拖拽区。 */
+.ncx-app-shell--custom-drag .ncx-page-header {
+  pointer-events: auto;
+}
+
 .ncx-header-mask {
   position: absolute;
   z-index: 0;

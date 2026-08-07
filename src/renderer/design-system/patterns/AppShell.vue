@@ -137,8 +137,12 @@ function handleCustomDragPointerDown(event: PointerEvent): void {
   if (event.button !== 0 || isWithinNoDragRegion(event.target)) return
   customDragPointerId = event.pointerId
   event.preventDefault()
-  shellElement.value?.setPointerCapture(event.pointerId)
   window.ncx.windowControls.dragStart()
+  try {
+    shellElement.value?.setPointerCapture(event.pointerId)
+  } catch {
+    // 捕获失败不阻断拖拽：窗口随光标移动，松开事件仍可送达页面。
+  }
 }
 
 /** 自绘拖拽松开/取消：通知 Main 结束手势并释放捕获。 */
