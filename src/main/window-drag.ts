@@ -121,6 +121,8 @@ export function createWindowDragController(
       const onLeaveFullscreen = (): void => {
         pendingLeaveListener = undefined
         leaveFullscreenTimer = undefined
+        // 动画结束后窗口已还原，以还原边界重新锚定，避免被锚定到全屏原点。
+        reanchorAfterRestore()
         beginPolling()
       }
       pendingLeaveListener = onLeaveFullscreen
@@ -130,12 +132,26 @@ export function createWindowDragController(
         if (pendingLeaveListener) window.removeListener('leave-full-screen', pendingLeaveListener)
         pendingLeaveListener = undefined
         leaveFullscreenTimer = undefined
+        reanchorAfterRestore()
         beginPolling()
       }, FULLSCREEN_LEAVE_TIMEOUT_MS)
       return
     }
-    if (startedMaximized) window.unmaximize()
+    if (startedMaximized) {
+      window.unmaximize()
+      // unmaximize 同步生效：以还原边界重新锚定，复刻原生"窗口留在原位、按鼠标增量跟随"，
+      // 而不是把窗口锚定到最大化原点导致按下后跳向屏幕角落。
+      reanchorAfterRestore()
+    }
     beginPolling()
+  }
+
+  /** 窗口已还原为非最大化/全屏尺寸后，以还原边界重新锚定抓取偏移。 */
+  function reanchorAfterRestore(): void {
+    if (!grabOffset || window.isDestroyed()) return
+    const cursor = deps.screen.getCursorScreenPoint()
+    const restored = window.getBounds()
+    grabOffset = { x: cursor.x - restored.x, y: cursor.y - restored.y }
   }
 
   /** 窗口失焦保护：仅主动轮询期间失焦才终止手势，避免漏收 pointerup 后循环空转。 */

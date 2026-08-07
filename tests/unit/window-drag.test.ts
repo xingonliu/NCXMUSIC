@@ -27,6 +27,8 @@ function dragDeps(platform: NodeJS.Platform = 'win32'): WindowDragDeps {
 /** 最小 BrowserWindow 桩：记录位置、最大化/全屏状态与事件监听。 */
 class FakeWindow {
   bounds = { x: 100, y: 80, width: 1280, height: 800 }
+  /** 还原后的边界，unmaximize/退出全屏时由系统恢复到此值。 */
+  restoreBounds = { x: 100, y: 80, width: 1280, height: 800 }
   maximized = false
   fullscreen = false
   destroyed = false
@@ -71,6 +73,7 @@ class FakeWindow {
 
   unmaximize(): void {
     this.maximized = false
+    this.bounds = { ...this.restoreBounds }
   }
 
   maximize(): void {
@@ -79,6 +82,7 @@ class FakeWindow {
 
   setFullScreen(value: boolean): void {
     this.fullscreen = value
+    if (!value) this.bounds = { ...this.restoreBounds }
   }
 
   isDestroyed(): boolean {
@@ -130,20 +134,27 @@ describe('WindowDragController 最大化拖拽还原', () => {
   beforeEach(() => vi.useFakeTimers())
   afterEach(() => vi.useRealTimers())
 
-  it('先 unmaximize 再以按下偏移定位，抓取点不跳', () => {
+  it('最大化拖拽：还原到原位置并按光标增量跟随', () => {
     const window = new FakeWindow()
     window.maximized = true
-    window.bounds = { x: 0, y: 0, width: 1920, height: 1040 }
-    cursor = { x: 750, y: 600 }
+    window.bounds = { x: 0, y: 0, width: 2560, height: 1392 }
+    window.restoreBounds = { x: 640, y: 296, width: 1280, height: 800 }
+    cursor = { x: 1871, y: 841 }
     const controller = createWindowDragController(window.asElectronWindow(), dragDeps())
 
     controller.start()
 
     expect(window.maximized).toBe(false)
-    // 偏移以最大化边界计算 = (750, 600)，还原后窗口原点 = 光标 - 偏移
-    expect(window.bounds.x).toBe(0)
-    expect(window.bounds.y).toBe(0)
-    expect(window.bounds.x + 750).toBe(cursor.x)
+    // 按下瞬间窗口留在还原位置，不被锚定到最大化原点（避免跳到屏幕角落）
+    expect(window.bounds.x).toBe(640)
+    expect(window.bounds.y).toBe(296)
+
+    // 跟随 = 还原原点 + 光标增量
+    cursor = { x: 2000, y: 900 }
+    vi.advanceTimersByTime(16)
+
+    expect(window.bounds.x).toBe(640 + (2000 - 1871))
+    expect(window.bounds.y).toBe(296 + (900 - 841))
   })
 
   it('Windows 结束于工作区顶部时重新最大化', () => {
@@ -187,28 +198,33 @@ describe('WindowDragController 全屏拖拽', () => {
   beforeEach(() => vi.useFakeTimers())
   afterEach(() => vi.useRealTimers())
 
-  it('先退出全屏，收到 leave-full-screen 后才开始跟手', () => {
+  it('先退出全屏，收到 leave-full-screen 后以还原边界跟手', () => {
     const window = new FakeWindow()
     window.fullscreen = true
     window.bounds = { x: 0, y: 0, width: 1920, height: 1080 }
+    window.restoreBounds = { x: 100, y: 80, width: 1280, height: 800 }
     cursor = { x: 900, y: 700 }
     const controller = createWindowDragController(window.asElectronWindow(), dragDeps('darwin'))
 
     controller.start()
 
     expect(window.fullscreen).toBe(false)
-    // 等待退出动画期间不移动窗口
+    // 等待退出动画期间窗口已还原但不跟随
     cursor = { x: 950, y: 720 }
     vi.advanceTimersByTime(32)
-    expect(window.bounds.x).toBe(0)
-    expect(window.bounds.y).toBe(0)
+    expect(window.bounds.x).toBe(100)
+    expect(window.bounds.y).toBe(80)
 
     window.emit('leave-full-screen')
     vi.advanceTimersByTime(16)
 
-    // 偏移以全屏边界计算 = (900, 700)，还原后窗口原点 = 光标 - 偏移
-    expect(window.bounds.x).toBe(50)
-    expect(window.bounds.y).toBe(20)
+    // 还原原点保持，跟随按光标增量
+    expect(window.bounds.x).toBe(100)
+    expect(window.bounds.y).toBe(80)
+    cursor = { x: 1200, y: 900 }
+    vi.advanceTimersByTime(16)
+    expect(window.bounds.x).toBe(100 + (1200 - 950))
+    expect(window.bounds.y).toBe(80 + (900 - 720))
   })
 
   it('leave-full-screen 超时后兜底开始跟手', () => {
@@ -223,9 +239,9 @@ describe('WindowDragController 全屏拖拽', () => {
     vi.advanceTimersByTime(2_000)
     vi.advanceTimersByTime(16)
 
-    expect(window.bounds.x).toBe(0)
-    expect(window.bounds.y).toBe(0)
-    expect(window.bounds.x + 900).toBe(cursor.x)
+    // 以还原边界重新锚定，窗口留在还原原点
+    expect(window.bounds.x).toBe(100)
+    expect(window.bounds.y).toBe(80)
   })
 })
 
@@ -258,8 +274,9 @@ describe('WindowDragController 生命周期保护', () => {
     window.emit('leave-full-screen')
     vi.advanceTimersByTime(16)
 
-    expect(window.bounds.x).toBe(0)
-    expect(window.bounds.y).toBe(0)
+    // 仍跟随且留在还原原点
+    expect(window.bounds.x).toBe(100)
+    expect(window.bounds.y).toBe(80)
   })
 
   it('dispose 后清理轮询与监听', () => {
