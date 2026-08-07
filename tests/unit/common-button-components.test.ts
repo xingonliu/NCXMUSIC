@@ -6,6 +6,9 @@ import { h, nextTick } from 'vue'
 import {
   CommonButton,
   CommonButtonGroup,
+  CommonHeaderButton,
+  CommonHeaderGroupButton,
+  CommonHeaderGroupItem,
   CommonIconButton,
   CommonLinkButton
 } from '../../src/renderer/design-system/components'
@@ -205,6 +208,114 @@ describe('macOS HIG & WWDC25 按钮族组件规范测试', () => {
 
       await wrapper.trigger('click')
       expect(wrapper.emitted('click')).toBeUndefined()
+    })
+  })
+
+  describe('CommonHeaderButton (Header 普通按钮)', () => {
+    it('正确渲染 glass 按钮与 aria-label 属性', () => {
+      const wrapper = mount(CommonHeaderButton, {
+        props: { label: '返回上一页' },
+        slots: { default: () => h('span', '←') }
+      })
+
+      expect(wrapper.element.tagName).toBe('BUTTON')
+      expect(wrapper.classes()).toContain('ncx-common-header-button')
+      expect(wrapper.classes()).toContain('ncx-glass-button')
+      expect(wrapper.attributes('aria-label')).toBe('返回上一页')
+      expect(wrapper.attributes('title')).toBeUndefined()
+      expect(wrapper.text()).toBe('←')
+    })
+
+    it('悬停延迟后展示样式化 Tip 气泡，移出后隐藏', async () => {
+      vi.useFakeTimers()
+      const wrapper = mount(CommonHeaderButton, {
+        props: { label: '搜索内容' }
+      })
+
+      expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(false)
+
+      await wrapper.trigger('mouseenter')
+      expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(false)
+
+      vi.advanceTimersByTime(300)
+      await nextTick()
+      expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(true)
+      expect(wrapper.find('.ncx-common-tooltip-content').text()).toBe('搜索内容')
+
+      await wrapper.trigger('mouseleave')
+      await nextTick()
+      expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(false)
+      vi.useRealTimers()
+    })
+
+    it('点击触发 click 事件，禁用态拦截点击', async () => {
+      const wrapper = mount(CommonHeaderButton, { props: { label: '刷新' } })
+      await wrapper.trigger('click')
+      expect(wrapper.emitted('click')).toHaveLength(1)
+
+      const disabledWrapper = mount(CommonHeaderButton, { props: { label: '刷新', disabled: true } })
+      await disabledWrapper.trigger('click')
+      expect(disabledWrapper.emitted('click')).toBeUndefined()
+    })
+  })
+
+  describe('CommonHeaderGroupButton & CommonHeaderGroupItem (Header 成组按钮)', () => {
+    it('通过插槽渲染成组按钮与关闭样式变体，并验证每一项的 Tip 气泡', async () => {
+      vi.useFakeTimers()
+      const wrapper = mount(CommonHeaderGroupButton, {
+        props: { label: '窗口控制' },
+        slots: {
+          default: () => [
+            h(CommonHeaderGroupItem, { label: '最小化' }, () => '-'),
+            h(CommonHeaderGroupItem, { label: '关闭', variant: 'close' }, () => 'x')
+          ]
+        }
+      })
+
+      expect(wrapper.classes()).toContain('ncx-common-header-group-button')
+      expect(wrapper.classes()).toContain('ncx-window-controls')
+
+      const items = wrapper.findAllComponents(CommonHeaderGroupItem)
+      expect(items).toHaveLength(2)
+
+      const item0 = items[0]!
+      const item1 = items[1]!
+
+      expect(item0.classes()).toContain('ncx-common-header-group-item')
+      expect(item0.classes()).toContain('ncx-window-control')
+      expect(item0.attributes('aria-label')).toBe('最小化')
+
+      expect(item1.classes()).toContain('ncx-window-control--close')
+      expect(item1.attributes('aria-label')).toBe('关闭')
+
+      // 测试第一个按钮 Hover 显示 Tip
+      await item0.trigger('mouseenter')
+      vi.advanceTimersByTime(300)
+      await nextTick()
+      expect(item0.find('.ncx-common-tooltip-panel').exists()).toBe(true)
+      expect(item0.find('.ncx-common-tooltip-content').text()).toBe('最小化')
+
+      vi.useRealTimers()
+    })
+
+    it('支持通过 items 配置项直接渲染组合按钮与分割线', () => {
+      const handleClickMin = vi.fn()
+      const wrapper = mount(CommonHeaderGroupButton, {
+        props: {
+          label: '窗口控制项',
+          items: [
+            { label: '最小化', onClick: handleClickMin },
+            { label: '还原' },
+            { label: '关闭', variant: 'close' }
+          ]
+        }
+      })
+
+      const items = wrapper.findAll('.ncx-common-header-group-item')
+      expect(items).toHaveLength(3)
+
+      const dividers = wrapper.findAll('.ncx-window-divider')
+      expect(dividers).toHaveLength(2)
     })
   })
 })

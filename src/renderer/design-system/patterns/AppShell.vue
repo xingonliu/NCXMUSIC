@@ -29,6 +29,11 @@ import {
   type AppNavigationItem
 } from '../../app/navigation'
 import { navigateBack } from '../../app/navigation-history'
+import {
+  CommonHeaderButton,
+  CommonHeaderGroupButton,
+  CommonHeaderGroupItem
+} from '../components'
 
 // ========= 变量 =========
 
@@ -121,57 +126,38 @@ onBeforeUnmount(() => {
     >
       <div class="ncx-header-mask" />
       <div class="ncx-page-leading-actions">
-        <button
+        <CommonHeaderButton
           v-if="isSecondaryPage"
-          class="ncx-glass-button ncx-back-button"
-          type="button"
-          aria-label="返回上一页"
-          title="返回上一页"
+          class="ncx-back-button"
+          label="返回上一页"
           @click="handleBack"
         >
           <ChevronLeft :size="18" />
-        </button>
+        </CommonHeaderButton>
       </div>
 
       <div class="ncx-page-actions">
-        <button
-          class="ncx-glass-button"
-          type="button"
-          aria-label="搜索"
-          title="搜索"
-        >
+        <CommonHeaderButton label="搜索">
           <Search :size="17" />
-        </button>
-        <button
-          class="ncx-glass-button"
-          type="button"
-          aria-label="刷新当前页"
-          title="刷新当前页"
-        >
-          <RotateCcw :size="17" />
-        </button>
+        </CommonHeaderButton>
 
-        <div
+        <CommonHeaderButton label="刷新当前页">
+          <RotateCcw :size="17" />
+        </CommonHeaderButton>
+
+        <CommonHeaderGroupButton
           v-if="isWindows"
-          class="ncx-window-controls"
-          role="group"
-          aria-label="窗口控制"
+          label="窗口控制"
         >
-          <button
-            class="ncx-window-control"
-            type="button"
-            aria-label="最小化"
-            title="最小化"
+          <CommonHeaderGroupItem
+            label="最小化"
             @click="runWindowCommand({ type: 'window.minimize' })"
           >
             <Minus :size="16" />
-          </button>
-          <span class="ncx-window-divider" />
-          <button
-            class="ncx-window-control"
-            type="button"
-            :aria-label="windowSnapshot.maximized ? '还原窗口' : '最大化窗口'"
-            :title="windowSnapshot.maximized ? '还原窗口' : '最大化窗口'"
+          </CommonHeaderGroupItem>
+
+          <CommonHeaderGroupItem
+            :label="windowSnapshot.maximized ? '还原窗口' : '最大化窗口'"
             @click="runWindowCommand({ type: 'window.toggleMaximize' })"
           >
             <Minimize2
@@ -182,18 +168,16 @@ onBeforeUnmount(() => {
               v-else
               :size="15"
             />
-          </button>
-          <span class="ncx-window-divider" />
-          <button
-            class="ncx-window-control ncx-window-control--close"
-            type="button"
-            aria-label="关闭窗口"
-            title="关闭窗口"
+          </CommonHeaderGroupItem>
+
+          <CommonHeaderGroupItem
+            label="关闭窗口"
+            variant="close"
             @click="runWindowCommand({ type: 'window.requestClose' })"
           >
             <X :size="16" />
-          </button>
-        </div>
+          </CommonHeaderGroupItem>
+        </CommonHeaderGroupButton>
       </div>
     </header>
 

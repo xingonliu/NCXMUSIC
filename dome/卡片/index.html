@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Glass Card - 流体玻璃卡片</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #080711;
+            --primary-glow: #6366f1;
+            --secondary-glow: #ec4899;
+            --accent-glow: #06b6d4;
+            --card-glass-bg: rgba(255, 255, 255, 0.07);
+            --card-border: rgba(255, 255, 255, 0.18);
+            --glass-shine: rgba(255, 255, 255, 0.4);
+            --text-main: #ffffff;
+            --text-sub: rgba(255, 255, 255, 0.65);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ---------------- 背景丰富内容与流体光彩 ---------------- */
+        .bg-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 背景网格与巨型透视文字 */
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
+        }
+
+        .bg-typography {
+            position: absolute;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 16vw;
+            color: rgba(255, 255, 255, 0.025);
+            letter-spacing: -0.05em;
+            line-height: 0.8;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-5deg);
+            white-space: nowrap;
+            text-transform: uppercase;
+        }
+
+        /* 背景流体彩球 (Liquid Blobs) */
+        .liquid-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.75;
+            animation: floatBlob 18s ease-in-out infinite alternate;
+        }
+
+        .blob-1 {
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, var(--primary-glow), #4f46e5);
+            top: -10%;
+            left: 15%;
+            animation-duration: 16s;
+        }
+
+        .blob-2 {
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, var(--secondary-glow), #d946ef);
+            bottom: -10%;
+            right: 15%;
+            animation-duration: 20s;
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, var(--accent-glow), #3b82f6);
+            top: 40%;
+            left: 60%;
+            animation-duration: 14s;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatBlob {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            33% {
+                transform: translate(60px, -80px) scale(1.15) rotate(120deg);
+            }
+            66% {
+                transform: translate(-50px, 40px) scale(0.9) rotate(240deg);
+            }
+            100% {
+                transform: translate(40px, 70px) scale(1.05) rotate(360deg);
+            }
+        }
+
+        /* 背景穿插浮动小卡片 - 增强景深与透光折射对比 */
+        .bg-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .bg-el-1 {
+            top: 15%;
+            left: 10%;
+            transform: rotate(-8deg);
+            animation: hoverFloat 6s ease-in-out infinite alternate;
+        }
+
+        .bg-el-2 {
+            bottom: 18%;
+            right: 12%;
+            transform: rotate(6deg);
+            animation: hoverFloat 8s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes hoverFloat {
+            0% { transform: translateY(0) rotate(-8deg); }
+            100% { transform: translateY(-20px) rotate(-4deg); }
+        }
+
+        /* ---------------- 主卡片容器与 Tilt 视差 ---------------- */
+        .card-wrapper {
+            position: relative;
+            z-index: 10;
+            perspective: 1200px;
+        }
+
+        /* ---------------- Liquid Glass Card 核心样式 ---------------- */
+        .glass-card {
+            position: relative;
+            width: 420px;
+            min-height: 560px;
+            border-radius: 36px;
+            padding: 36px;
+            background: var(--card-glass-bg);
+            /* 高阶玻璃质感：多重模糊 + 饱和度提升 */
+            backdrop-filter: blur(28px) saturate(210%);
+            -webkit-backdrop-filter: blur(28px) saturate(210%);
+            
+            /* 液体玻璃高光边缘边框 */
+            border: 1px solid var(--card-border);
+            
+            /* 复合液态发光与立体阴影 */
+            box-shadow: 
+                0 30px 60px -12px rgba(0, 0, 0, 0.56),
+                0 18px 36px -18px rgba(0, 0, 0, 0.6),
+                inset 0 1px 2px rgba(255, 255, 255, 0.5),
+                inset 0 -1px 2px rgba(255, 255, 255, 0.1),
+                inset 0 0 20px rgba(255, 255, 255, 0.04),
+                0 0 40px rgba(99, 102, 241, 0.15);
+
+            transform-style: preserve-3d;
+            transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.4s ease;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* 鼠标悬停时的液态高光放大 */
+        .glass-card:hover {
+            box-shadow: 
+                0 40px 80px -15px rgba(0, 0, 0, 0.65),
+                0 25px 45px -20px rgba(0, 0, 0, 0.7),
+                inset 0 1px 3px rgba(255, 255, 255, 0.7),
+                inset 0 -1px 3px rgba(255, 255, 255, 0.2),
+                0 0 50px rgba(236, 72, 153, 0.25);
+        }
+
+        /* 动态跟随鼠标的折射光斑/Specular Highlight */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: -50%;
+            background: radial-gradient(
+                circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(255, 255, 255, 0.25) 0%,
+                rgba(255, 255, 255, 0.08) 25%,
+                transparent 60%
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 1;
+            mix-blend-mode: overlay;
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        /* 液态流动彩虹弧光 (Fluid Specular Rim Glow) */
+        .liquid-specular {
+            position: absolute;
+            top: -150%;
+            left: -150%;
+            width: 400%;
+            height: 400%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(255, 255, 255, 0.15) 60deg,
+                rgba(99, 102, 241, 0.3) 120deg,
+                rgba(236, 72, 153, 0.3) 180deg,
+                rgba(6, 182, 212, 0.3) 240deg,
+                transparent 300deg
+            );
+            animation: rotateSpecular 12s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+            mix-blend-mode: color-dodge;
+        }
+
+        @keyframes rotateSpecular {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ---------------- 卡片内部内容 UI ---------------- */
+        .card-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+            transform: translateZ(30px); /* 3D 层级浮出效果 */
+        }
+
+        /* 顶部 Header */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .glass-chip {
+            width: 48px;
+            height: 34px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.05));
+            border: 1px solid rgba(255,255,255,0.3);
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.6);
+        }
+
+        .glass-chip::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 6px 14px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* 主体 Card Body */
+        .card-body {
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        .brand-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.1rem;
+            font-weight: 800;
+            line-height: 1.15;
+            background: linear-gradient(135deg, #ffffff 30%, rgba(255,255,255,0.6));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 24px;
+        }
+
+        /* 液态波浪能量指示器 */
+        .fluid-meter {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 16px 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .meter-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        .meter-label {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+        }
+
+        .meter-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 78%;
+            border-radius: 100px;
+            background: linear-gradient(90deg, var(--accent-glow), var(--primary-glow), var(--secondary-glow));
+            background-size: 200% 100%;
+            animation: fluidGradient 4s ease infinite;
+            position: relative;
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        @keyframes fluidGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 卡片底部 Actions & Footer */
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            transform: translateZ(20px);
+        }
+
+        .btn-liquid {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(15px);
+            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 1px rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-liquid:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.15));
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 25px rgba(99, 102, 241, 0.3),
+                inset 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px) rotate(8deg);
+        }
+
+        /* ---------------- 交互色调控制面板 ---------------- */
+        .controls-panel {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+            background: rgba(15, 15, 25, 0.6);
+            padding: 8px 16px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .theme-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease, border 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .theme-dot:hover {
+            transform: scale(1.2);
+        }
+
+        .theme-dot.active {
+            border-color: #fff;
+            transform: scale(1.15);
+        }
+
+        .t-indigo { background: linear-gradient(135deg, #6366f1, #ec4899); }
+        .t-emerald { background: linear-gradient(135deg, #10b981, #06b6d4); }
+        .t-sunset  { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+
+        /* ---------------- 水滴波纹点击动画 (Ripple) ---------------- */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%);
+            transform: scale(0);
+            animation: rippleAnim 0.75s ease-out forwards;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes rippleAnim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 丰富背景层 -->
+    <div class="bg-container">
+        <div class="bg-grid"></div>
+        <div class="bg-typography">LIQUID GLASS</div>
+
+        <!-- 浮动流体彩球 -->
+        <div class="liquid-blob blob-1"></div>
+        <div class="liquid-blob blob-2"></div>
+        <div class="liquid-blob blob-3"></div>
+
+        <!-- 景深搭配卡片与几何体 -->
+        <div class="bg-element bg-el-1">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <span>Fluid Refraction Engine v2.4</span>
+        </div>
+        <div class="bg-element bg-el-2">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+            <span>Optics Blur Rate: 28px</span>
+        </div>
+    </div>
+
+    <!-- Liquid Glass 卡片结构 -->
+    <div class="card-wrapper" id="cardWrapper">
+        <div class="glass-card" id="glassCard">
+            <!-- 折射与边缘色彩边缘 -->
+            <div class="liquid-specular"></div>
+
+            <!-- 卡片核心内容 -->
+            <div class="card-content">
+                
+                <!-- 头部 -->
+                <div class="card-header">
+                    <div class="glass-chip"></div>
+                    <div class="badge">
+                        <span class="badge-dot"></span>
+                        AETHERIA PRO
+                    </div>
+                </div>
+
+                <!-- 中间主体 -->
+                <div class="card-body">
+                    <p class="brand-title">SPATIAL LIQUID PASS</p>
+                    <h2 class="card-title">Fluid Glassmorphism</h2>
+
+                    <!-- 动态能量条/状态计 -->
+                    <div class="fluid-meter">
+                        <div class="meter-info">
+                            <span class="meter-label">Refractive Index (折射率)</span>
+                            <span class="meter-value">1.52 nD</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 底部操作按钮 -->
+                <div class="card-footer">
+                    <button class="btn-liquid" id="actionBtn">
+                        <span>体验流体质感</span>
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                    </button>
+                    <button class="btn-icon" title="设置与配置">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部主题色彩调色盘控制 -->
+    <div class="controls-panel">
+        <div class="theme-dot t-indigo active" onclick="setTheme('indigo', this)" title="星云靛蓝"></div>
+        <div class="theme-dot t-emerald" onclick="setTheme('emerald', this)" title="极光碧绿"></div>
+        <div class="theme-dot t-sunset" onclick="setTheme('sunset', this)" title="日落金红"></div>
+    </div>
+
+    <!-- JavaScript 交互逻辑：3D Tilt 视差、光斑跟随、水滴波纹、主题切换 -->
+    <script>
+        const card = document.getElementById('glassCard');
+        const wrapper = document.getElementById('cardWrapper');
+
+        // 3D 视角跟随鼠标倾斜 (3D Parallax Tilt)
+        document.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const cardCenterX = rect.left + rect.width / 2;
+            const cardCenterY = rect.top + rect.height / 2;
+
+            // 计算鼠标相对卡片中心的坐标 (-1 到 1)
+            const mouseX = (e.clientX - cardCenterX) / (window.innerWidth / 2);
+            const mouseY = (e.clientY - cardCenterY) / (window.innerHeight / 2);
+
+            // 计算倾斜角度 (最高 15 度)
+            const rotateX = -mouseY * 15;
+            const rotateY = mouseX * 15;
+
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+            // 计算光斑位置 (百分比)
+            const cardX = ((e.clientX - rect.left) / rect.width) * 100;
+            const cardY = ((e.clientY - rect.top) / rect.height) * 100;
+            
+            card.style.setProperty('--mouse-x', `${cardX}%`);
+            card.style.setProperty('--mouse-y', `${cardY}%`);
+        });
+
+        // 鼠标离开时重置卡片倾斜
+        document.addEventListener('mouseleave', () => {
+            card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+        });
+
+        // 水滴波纹点击效果 (Liquid Click Ripple Effect)
+        card.addEventListener('click', (e) => {
+            const rect = card.getBoundingClientRect();
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            
+            const size = Math.max(rect.width, rect.height) * 1.5;
+            ripple.style.width = ripple.style.height = `${size}px`;
+            
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            
+            card.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 750);
+        });
+
+        // 切换背景与液体主题颜色
+        function setTheme(theme, el) {
+            document.querySelectorAll('.theme-dot').forEach(dot => dot.classList.remove('active'));
+            el.classList.add('active');
+
+            const root = document.documentElement;
+            if (theme === 'indigo') {
+                root.style.setProperty('--primary-glow', '#6366f1');
+                root.style.setProperty('--secondary-glow', '#ec4899');
+                root.style.setProperty('--accent-glow', '#06b6d4');
+            } else if (theme === 'emerald') {
+                root.style.setProperty('--primary-glow', '#10b981');
+                root.style.setProperty('--secondary-glow', '#06b6d4');
+                root.style.setProperty('--accent-glow', '#3b82f6');
+            } else if (theme === 'sunset') {
+                root.style.setProperty('--primary-glow', '#f59e0b');
+                root.style.setProperty('--secondary-glow', '#ef4444');
+                root.style.setProperty('--accent-glow', '#ec4899');
+            }
+        }
+    </script>
+</body>
+</html>

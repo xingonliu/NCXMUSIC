@@ -130,14 +130,14 @@
 }
 
 .ncx-app-shell--windows .ncx-page-header {
-  padding-right: 4px;
+  padding-right: 18px;
 }
 
 .ncx-header-mask {
   position: absolute;
   z-index: 0;
   inset: 0;
-  pointer-events: none;
+  pointer-events: auto;
   background: linear-gradient(
     180deg,
     var(--ncx-color-canvas) 0%,
@@ -171,8 +171,10 @@
 
 .ncx-glass-button,
 .ncx-window-control {
-  display: grid;
-  place-items: center;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--ncx-color-text-primary);
   cursor: pointer;
 }

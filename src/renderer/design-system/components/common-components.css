@@ -189,6 +189,87 @@
   pointer-events: none !important;
 }
 
+/* ========= CommonHeaderButton & CommonHeaderGroupButton ========= */
+.ncx-common-header-button,
+.ncx-glass-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 999px;
+  color: var(--ncx-color-text-primary);
+  background: var(--ncx-color-surface-raised);
+  box-shadow: var(--ncx-shadow-elevation-1);
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+
+.ncx-common-header-button:hover,
+.ncx-glass-button:hover {
+  background: var(--ncx-control-hover);
+}
+
+.ncx-common-header-button:active,
+.ncx-glass-button:active {
+  background: var(--ncx-control-pressed);
+}
+
+.ncx-common-header-group-button,
+.ncx-window-controls {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  border: none;
+  border-radius: 999px;
+  background: var(--ncx-color-surface-raised);
+  box-shadow: var(--ncx-shadow-elevation-1);
+  -webkit-app-region: no-drag;
+}
+
+.ncx-common-header-group-item,
+.ncx-window-control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--ncx-color-text-primary);
+  background: transparent;
+  cursor: pointer;
+}
+
+.ncx-common-header-group-item:hover,
+.ncx-window-control:hover {
+  background: var(--ncx-control-hover);
+}
+
+.ncx-common-header-group-item:active,
+.ncx-window-control:active {
+  background: var(--ncx-control-pressed);
+}
+
+.ncx-common-header-group-item--close:hover,
+.ncx-window-control--close:hover {
+  color: #ff3b30;
+  background: var(--ncx-danger-hover);
+}
+
+.ncx-window-divider {
+  flex-shrink: 0;
+  width: 1px;
+  height: 14px;
+  margin: 0 1px;
+  border-radius: 1px;
+  background: rgb(0 0 0 / 12%);
+}
+
 /* ========= CommonIconButton ========= */
 .ncx-common-icon-button {
   position: relative;
