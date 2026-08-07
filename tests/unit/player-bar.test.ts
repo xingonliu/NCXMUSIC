@@ -38,6 +38,13 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     expect(nextBtn.attributes('aria-label')).toBe('下一首')
   })
 
+  it('使用 LiquidGlass 作为播放器控制栏材质层', () => {
+    const wrapper = mount(PlayerBar)
+
+    expect(wrapper.find('.player-bar-material').exists()).toBe(true)
+    expect(wrapper.find('.player-bar-material .glass').exists()).toBe(true)
+  })
+
   it('播放/暂停 icon 按钮具有 prominent 尺寸与 primary 变体', () => {
     const wrapper = mount(PlayerBar)
     const transport = wrapper.find('.player-transport')

@@ -129,11 +129,11 @@ function toggleQueueDrawer(): void {
     :aria-label="text.regionLabel"
   >
     <LiquidGlass
-      class-name="player-bar-material"
+      class="player-bar-material"
       padding="0"
       :style="{ position: 'absolute', top: '50%', left: '50%', width: '100%', height: '100%' }"
       :displacement-scale="35"
-      :blur-amount="0.1"
+      :blur-amount="0"
       :saturation="130"
       :aberration-intensity="2"
       :elasticity="0"
