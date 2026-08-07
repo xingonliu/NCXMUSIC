@@ -18,7 +18,9 @@ body,
 body {
   overflow: hidden;
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-color-canvas);
+
+  /* 透明背景：圆角以外的角落透出窗口透明通道，画布底色由 .ncx-app-shell 绘制。 */
+  background: transparent;
   font-family: var(--ncx-font-family);
   -webkit-font-smoothing: antialiased;
 }

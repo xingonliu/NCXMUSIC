@@ -23,6 +23,7 @@ describe('WindowChrome options', () => {
     expect(options.frame).toBeUndefined()
     expect(options.titleBarStyle).toBe('hidden')
     expect(options.trafficLightPosition).toEqual({ x: 24, y: 24 })
+    expect(options.roundedCorners).toBe(false)
     expect(options.webPreferences?.preload).toBe(preloadPath)
   })
 
@@ -32,6 +33,13 @@ describe('WindowChrome options', () => {
     expect(options.frame).toBe(false)
     expect(options.titleBarStyle).toBeUndefined()
     expect(options.trafficLightPosition).toBeUndefined()
+  })
+
+  it('透明窗口使外轮廓由 CSS 圆角决定', () => {
+    const options = createMainWindowOptions({ platform: 'win32', preloadPath })
+
+    expect(options.transparent).toBe(true)
+    expect(options.backgroundColor).toBe('#00000000')
   })
 
   it('窗口快照只暴露 Renderer 需要的只读状态', () => {

@@ -31,11 +31,15 @@ export function createMainWindowOptions(
     ...MAIN_WINDOW_BOUNDS,
     show: false,
     autoHideMenuBar: true,
-    backgroundColor: '#f5f5f7',
+    // 透明窗口：外轮廓交由 Renderer 的 CSS 圆角绘制，窗口圆角与悬浮侧边栏完全一致。
+    transparent: true,
+    backgroundColor: '#00000000',
     ...(input.platform === 'darwin'
       ? {
           titleBarStyle: 'hidden' as const,
-          trafficLightPosition: MACOS_TRAFFIC_LIGHT_POSITION
+          trafficLightPosition: MACOS_TRAFFIC_LIGHT_POSITION,
+          // 关闭 macOS 原生圆角遮罩，避免其裁切 CSS 圆角，让形状完全由透明通道决定。
+          roundedCorners: false
         }
       : {
           frame: false
