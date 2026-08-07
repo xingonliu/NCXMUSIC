@@ -124,24 +124,25 @@ function toggleQueueDrawer(): void {
 </script>
 
 <template>
-  <footer
-    class="player-bar"
+  <LiquidGlass
+    class="player-bar-glass"
+    role="contentinfo"
     :aria-label="text.regionLabel"
+    padding="10px 18px"
+    :style="{
+      position: 'fixed',
+      top: 'calc(100vh - 49px)',
+      left: 'calc(230px + ((100vw - 230px) / 2))',
+      width: 'min(840px, calc(100vw - 290px))',
+      zIndex: 'var(--ncx-layer-player)'
+    }"
+    :displacement-scale="35"
+    :blur-amount="0"
+    :saturation="130"
+    :aberration-intensity="2"
+    :elasticity="0"
+    :corner-radius="100"
   >
-    <LiquidGlass
-      class="player-bar-material"
-      padding="0"
-      :style="{ position: 'absolute', top: '50%', left: '50%', width: '100%', height: '100%' }"
-      :displacement-scale="35"
-      :blur-amount="0"
-      :saturation="130"
-      :aberration-intensity="2"
-      :elasticity="0"
-      :corner-radius="100"
-    >
-      <div class="player-bar-material-surface" />
-    </LiquidGlass>
-
     <div class="player-bar-content">
       <!-- 曲目信息 -->
       <div class="player-track">
@@ -307,17 +308,17 @@ function toggleQueueDrawer(): void {
         </CommonIconButton>
       </p>
     </div>
+  </LiquidGlass>
 
-    <!-- 播放队列抽屉 -->
-    <QueueDrawer
-      :visible="isQueueOpen"
-      @close="isQueueOpen = false"
-    />
-  </footer>
+  <!-- 播放队列抽屉不放入玻璃材质，避免受其尺寸和层叠上下文影响。 -->
+  <QueueDrawer
+    :visible="isQueueOpen"
+    @close="isQueueOpen = false"
+  />
 </template>
 
 <style scoped>
-.player-bar {
+.player-bar-glass {
   --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 78%, transparent);
   --ncx-player-bar-glass-stroke: color-mix(in srgb, white 60%, transparent);
   --ncx-player-bar-glass-shadow:
@@ -328,59 +329,38 @@ function toggleQueueDrawer(): void {
   --ncx-player-bar-track-bg: color-mix(in srgb, var(--ncx-color-text-primary) 13%, transparent);
   --ncx-player-bar-thumb-shadow: 0 2px 6px rgb(20 20 24 / 18%);
 
-  position: fixed;
-  z-index: var(--ncx-layer-player);
-  bottom: 16px;
-  left: calc(230px + ((100vw - 230px) / 2));
-  width: min(840px, calc(100vw - 290px));
-  min-height: 66px;
   color: var(--ncx-color-text-primary);
   isolation: isolate;
   overflow: visible;
-  transform: translateX(-50%);
   -webkit-app-region: no-drag;
 }
 
-.player-bar :deep(.player-bar-material) {
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.player-bar :deep(.player-bar-material .glass) {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
+.player-bar-glass :deep(.glass) {
+  display: flex !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  min-height: 66px;
   border: 1px solid var(--ncx-player-bar-glass-stroke);
   background: var(--ncx-player-bar-glass-fill);
   box-shadow: var(--ncx-player-bar-glass-shadow);
 }
 
-.player-bar :deep(.player-bar-material .glass > div) {
+.player-bar-glass :deep(.glass > div) {
   width: 100%;
-  height: 100%;
   color: inherit;
   font: inherit;
   text-shadow: none;
 }
 
-.player-bar-material-surface {
-  width: 100%;
-  height: 100%;
-}
-
 .player-bar-content {
   position: relative;
-  z-index: 1;
   display: grid;
   width: 100%;
-  min-height: 66px;
+  min-height: 44px;
   box-sizing: border-box;
-  grid-template-columns: minmax(140px, 1.2fr) auto minmax(200px, 1.8fr) auto;
+  grid-template-columns: minmax(130px, 1.2fr) auto minmax(180px, 1.8fr) minmax(170px, 1.2fr);
   gap: var(--ncx-space-4, 16px);
   align-items: center;
-  padding: 10px 18px;
 }
 
 .player-track {
@@ -444,6 +424,9 @@ function toggleQueueDrawer(): void {
   gap: 10px;
   align-items: center;
   min-width: 0;
+  justify-self: end;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .player-progress-control {
@@ -521,7 +504,7 @@ function toggleQueueDrawer(): void {
 }
 
 @media (prefers-color-scheme: dark) {
-  .player-bar {
+  .player-bar-glass {
     --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 82%, transparent);
     --ncx-player-bar-glass-stroke: color-mix(in srgb, white 16%, transparent);
     --ncx-player-bar-glass-shadow:
@@ -534,11 +517,6 @@ function toggleQueueDrawer(): void {
 }
 
 @media (width < 1100px) {
-  .player-bar {
-    bottom: 14px;
-    width: calc(100vw - 280px);
-  }
-
   .player-bar-content {
     grid-template-columns: minmax(120px, 1fr) auto minmax(160px, 1.4fr);
     gap: var(--ncx-space-2, 8px);
