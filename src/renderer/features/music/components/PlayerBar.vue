@@ -20,6 +20,7 @@ import {
   VolumeX,
   X
 } from '@lucide/vue'
+import { LiquidGlass } from '@wxperia/liquid-glass-vue'
 import { computed, ref } from 'vue'
 
 import type { PlayMode } from '../../../../domains/player/types'
@@ -127,169 +128,185 @@ function toggleQueueDrawer(): void {
     class="player-bar"
     :aria-label="text.regionLabel"
   >
-    <!-- 曲目信息 -->
-    <div class="player-track">
-      <p class="player-track-name">
-        {{ track?.name ?? text.emptyTrack }}
-      </p>
-      <p class="player-track-meta">
-        <span v-if="track">{{ track.artists.join(' / ') }}</span>
-        <span
-          v-if="qualityLabel"
-          class="player-quality"
-        >{{ qualityLabel }}</span>
-      </p>
-    </div>
-
-    <!-- 传输控制区域：上一首、暂停/播放、下一首及模式切换统一使用 icon 按钮组件并保持适宜间距 -->
-    <div
-      class="player-transport"
-      role="group"
-      :aria-label="text.regionLabel"
+    <LiquidGlass
+      class-name="player-bar-material"
+      padding="0"
+      :style="{ position: 'absolute', top: '50%', left: '50%', width: '100%', height: '100%' }"
+      :displacement-scale="35"
+      :blur-amount="0.1"
+      :saturation="130"
+      :aberration-intensity="2"
+      :elasticity="0"
+      :corner-radius="100"
     >
-      <CommonIconButton
-        size="default"
-        variant="ghost"
-        :label="text.mode[snapshot.queue.mode]"
-        @click="player.setMode(nextMode)"
-      >
-        <Shuffle
-          v-if="snapshot.queue.mode === 'shuffle'"
-          :size="16"
-        />
-        <Repeat1
-          v-else-if="snapshot.queue.mode === 'loop-one'"
-          :size="16"
-        />
-        <Repeat
-          v-else
-          :size="16"
-        />
-      </CommonIconButton>
-      <CommonIconButton
-        size="default"
-        variant="ghost"
-        :disabled="!hasQueue"
-        :label="text.previous"
-        @click="player.previous()"
-      >
-        <SkipBack :size="16" />
-      </CommonIconButton>
-      <CommonIconButton
-        size="prominent"
-        variant="primary"
-        :disabled="!track"
-        :label="showPause ? text.pause : text.play"
-        @click="player.toggle()"
-      >
-        <CommonSpinner
-          v-if="busy"
-          size="compact"
-          class="player-busy"
-        />
-        <Pause
-          v-else-if="showPause"
-          :size="18"
-          fill="currentColor"
-        />
-        <Play
-          v-else
-          :size="18"
-          fill="currentColor"
-        />
-      </CommonIconButton>
-      <CommonIconButton
-        size="default"
-        variant="ghost"
-        :disabled="!hasQueue"
-        :label="text.next"
-        @click="player.next()"
-      >
-        <SkipForward :size="16" />
-      </CommonIconButton>
-    </div>
+      <div class="player-bar-material-surface" />
+    </LiquidGlass>
 
-    <!-- 进度 -->
-    <div class="player-progress">
-      <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
-      <div class="player-progress-control">
-        <CommonProgress
-          v-if="busy"
-          class="player-progress-loading"
-          indeterminate
-          size="compact"
-          :label="statusLabel"
-        />
-        <CommonProgress
-          v-else
-          class="player-progress-bar"
-          :value="progressPercent"
-          :label="text.progress"
-          size="compact"
-        />
+    <div class="player-bar-content">
+      <!-- 曲目信息 -->
+      <div class="player-track">
+        <p class="player-track-name">
+          {{ track?.name ?? text.emptyTrack }}
+        </p>
+        <p class="player-track-meta">
+          <span v-if="track">{{ track.artists.join(' / ') }}</span>
+          <span
+            v-if="qualityLabel"
+            class="player-quality"
+          >{{ qualityLabel }}</span>
+        </p>
       </div>
-      <span class="player-time">{{ formatTime(durationMs) }}</span>
-    </div>
 
-    <!-- 音量与状态控制 -->
-    <div class="player-output">
-      <CommonIconButton
-        size="default"
-        variant="ghost"
-        :label="snapshot.playback.muted ? text.unmute : text.mute"
-        @click="player.setMuted(!snapshot.playback.muted)"
+      <!-- 传输控制区域：上一首、暂停/播放、下一首及模式切换统一使用 icon 按钮组件并保持适宜间距 -->
+      <div
+        class="player-transport"
+        role="group"
+        :aria-label="text.regionLabel"
       >
-        <VolumeX
-          v-if="snapshot.playback.muted"
-          :size="15"
-        />
-        <Volume2
-          v-else
-          :size="15"
-        />
-      </CommonIconButton>
-      <CommonSlider
-        class="player-slider player-slider-volume"
-        :model-value="Math.round(snapshot.playback.volume * 100)"
-        :min="0"
-        :max="100"
-        size="compact"
-        :show-value="false"
-        @update:model-value="onVolume"
-      />
-      <!-- 音乐队列按钮 -->
-      <CommonIconButton
-        size="default"
-        variant="ghost"
-        :selected="isQueueOpen"
-        :label="text.queue"
-        @click="toggleQueueDrawer"
-      >
-        <ListMusic :size="15" />
-      </CommonIconButton>
-      <span
-        class="player-status"
-        role="status"
-      >{{ statusLabel }}</span>
-    </div>
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          :label="text.mode[snapshot.queue.mode]"
+          @click="player.setMode(nextMode)"
+        >
+          <Shuffle
+            v-if="snapshot.queue.mode === 'shuffle'"
+            :size="16"
+          />
+          <Repeat1
+            v-else-if="snapshot.queue.mode === 'loop-one'"
+            :size="16"
+          />
+          <Repeat
+            v-else
+            :size="16"
+          />
+        </CommonIconButton>
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          :disabled="!hasQueue"
+          :label="text.previous"
+          @click="player.previous()"
+        >
+          <SkipBack :size="16" />
+        </CommonIconButton>
+        <CommonIconButton
+          size="prominent"
+          variant="primary"
+          :disabled="!track"
+          :label="showPause ? text.pause : text.play"
+          @click="player.toggle()"
+        >
+          <CommonSpinner
+            v-if="busy"
+            size="compact"
+            class="player-busy"
+          />
+          <Pause
+            v-else-if="showPause"
+            :size="18"
+            fill="currentColor"
+          />
+          <Play
+            v-else
+            :size="18"
+            fill="currentColor"
+          />
+        </CommonIconButton>
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          :disabled="!hasQueue"
+          :label="text.next"
+          @click="player.next()"
+        >
+          <SkipForward :size="16" />
+        </CommonIconButton>
+      </div>
 
-    <!-- 不可播放提示：由 Coordinator 的 track-unplayable 事件驱动 -->
-    <p
-      v-if="notice"
-      class="player-notice"
-      role="alert"
-    >
-      {{ notice }}
-      <CommonIconButton
-        class="player-notice-close"
-        size="compact"
-        variant="ghost"
-        :label="text.dismiss"
-        @click="player.dismissNotice()"
+      <!-- 进度 -->
+      <div class="player-progress">
+        <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
+        <div class="player-progress-control">
+          <CommonProgress
+            v-if="busy"
+            class="player-progress-loading"
+            indeterminate
+            size="compact"
+            :label="statusLabel"
+          />
+          <CommonProgress
+            v-else
+            class="player-progress-bar"
+            :value="progressPercent"
+            :label="text.progress"
+            size="compact"
+          />
+        </div>
+        <span class="player-time">{{ formatTime(durationMs) }}</span>
+      </div>
+
+      <!-- 音量与状态控制 -->
+      <div class="player-output">
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          :label="snapshot.playback.muted ? text.unmute : text.mute"
+          @click="player.setMuted(!snapshot.playback.muted)"
+        >
+          <VolumeX
+            v-if="snapshot.playback.muted"
+            :size="15"
+          />
+          <Volume2
+            v-else
+            :size="15"
+          />
+        </CommonIconButton>
+        <CommonSlider
+          class="player-slider player-slider-volume"
+          :model-value="Math.round(snapshot.playback.volume * 100)"
+          :min="0"
+          :max="100"
+          size="compact"
+          :show-value="false"
+          @update:model-value="onVolume"
+        />
+        <!-- 音乐队列按钮 -->
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          :selected="isQueueOpen"
+          :label="text.queue"
+          @click="toggleQueueDrawer"
+        >
+          <ListMusic :size="15" />
+        </CommonIconButton>
+        <span
+          class="player-status"
+          role="status"
+        >{{ statusLabel }}</span>
+      </div>
+
+      <!-- 不可播放提示：由 Coordinator 的 track-unplayable 事件驱动 -->
+      <p
+        v-if="notice"
+        class="player-notice"
+        role="alert"
       >
-        <X :size="13" />
-      </CommonIconButton>
-    </p>
+        {{ notice }}
+        <CommonIconButton
+          class="player-notice-close"
+          size="compact"
+          variant="ghost"
+          :label="text.dismiss"
+          @click="player.dismissNotice()"
+        >
+          <X :size="13" />
+        </CommonIconButton>
+      </p>
+    </div>
 
     <!-- 播放队列抽屉 -->
     <QueueDrawer
@@ -301,7 +318,7 @@ function toggleQueueDrawer(): void {
 
 <style scoped>
 .player-bar {
-  --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 80%, transparent);
+  --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 78%, transparent);
   --ncx-player-bar-glass-stroke: color-mix(in srgb, white 60%, transparent);
   --ncx-player-bar-glass-shadow:
     0 16px 36px rgb(0 0 0 / 12%),
@@ -315,35 +332,55 @@ function toggleQueueDrawer(): void {
   z-index: var(--ncx-layer-player);
   bottom: 16px;
   left: calc(230px + ((100vw - 230px) / 2));
-  display: grid;
   width: min(840px, calc(100vw - 290px));
   min-height: 66px;
-  grid-template-columns: minmax(140px, 1.2fr) auto minmax(200px, 1.8fr) auto;
-  gap: var(--ncx-space-4, 16px);
-  align-items: center;
-  padding: 10px 18px;
-  border: 1px solid var(--ncx-player-bar-glass-stroke);
-  border-radius: var(--ncx-radius-full);
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-player-bar-glass-fill);
-  box-shadow: var(--ncx-player-bar-glass-shadow);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
   isolation: isolate;
   overflow: visible;
   transform: translateX(-50%);
   -webkit-app-region: no-drag;
 }
 
-.player-bar::after {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  content: '';
+.player-bar :deep(.player-bar-material) {
+  z-index: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  box-shadow:
-    inset 0 0 0 1px rgb(255 255 255 / 24%),
-    inset 0 1px 0 0 rgb(255 255 255 / 40%);
+}
+
+.player-bar :deep(.player-bar-material .glass) {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--ncx-player-bar-glass-stroke);
+  background: var(--ncx-player-bar-glass-fill);
+  box-shadow: var(--ncx-player-bar-glass-shadow);
+}
+
+.player-bar :deep(.player-bar-material .glass > div) {
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  font: inherit;
+  text-shadow: none;
+}
+
+.player-bar-material-surface {
+  width: 100%;
+  height: 100%;
+}
+
+.player-bar-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 100%;
+  min-height: 66px;
+  box-sizing: border-box;
+  grid-template-columns: minmax(140px, 1.2fr) auto minmax(200px, 1.8fr) auto;
+  gap: var(--ncx-space-4, 16px);
+  align-items: center;
+  padding: 10px 18px;
 }
 
 .player-track {
@@ -483,15 +520,9 @@ function toggleQueueDrawer(): void {
   color: var(--ncx-color-warning);
 }
 
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .player-bar {
-    background: var(--ncx-color-surface-overlay);
-  }
-}
-
 @media (prefers-color-scheme: dark) {
   .player-bar {
-    --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 80%, transparent);
+    --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 82%, transparent);
     --ncx-player-bar-glass-stroke: color-mix(in srgb, white 16%, transparent);
     --ncx-player-bar-glass-shadow:
       0 20px 48px rgb(0 0 0 / 45%),
@@ -500,18 +531,15 @@ function toggleQueueDrawer(): void {
       inset 0 -1px 0 0 rgb(0 0 0 / 25%);
     --ncx-player-bar-track-bg: color-mix(in srgb, white 16%, transparent);
   }
-
-  .player-bar::after {
-    box-shadow:
-      inset 0 0 0 1px rgb(255 255 255 / 10%),
-      inset 0 1px 0 0 rgb(255 255 255 / 15%);
-  }
 }
 
 @media (width < 1100px) {
   .player-bar {
     bottom: 14px;
     width: calc(100vw - 280px);
+  }
+
+  .player-bar-content {
     grid-template-columns: minmax(120px, 1fr) auto minmax(160px, 1.4fr);
     gap: var(--ncx-space-2, 8px);
     padding-inline: 12px;
