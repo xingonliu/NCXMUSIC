@@ -128,7 +128,7 @@ function toggleQueueDrawer(): void {
     container-class="player-bar-glass"
     role="contentinfo"
     :aria-label="text.regionLabel"
-    :radius="34"
+    :radius="28"
     :border="0.07"
     :displace="0.05"
     :scale="-150"
@@ -353,19 +353,25 @@ function toggleQueueDrawer(): void {
   position: relative;
   display: grid;
   width: 100%;
-  min-height: 66px;
-  padding: 10px 20px;
+  min-height: 54px;
+  padding: 8px 18px;
   box-sizing: border-box;
   grid-template-areas:
     "track transport progress output"
     "notice notice notice notice";
   grid-template-columns: minmax(130px, 1.05fr) auto minmax(190px, 1.45fr) minmax(164px, 0.9fr);
-  gap: var(--ncx-space-4, 16px);
+  grid-template-rows: minmax(38px, auto) auto;
+  column-gap: var(--ncx-space-4, 16px);
+  row-gap: 0;
   align-items: center;
 }
 
 .player-track {
+  display: flex;
+  min-height: 38px;
+  flex-direction: column;
   grid-area: track;
+  justify-content: center;
   min-width: 0;
 }
 
@@ -390,6 +396,10 @@ function toggleQueueDrawer(): void {
   color: var(--ncx-color-text-secondary);
   line-height: 16px;
   white-space: nowrap;
+}
+
+.player-track-meta:empty {
+  display: none;
 }
 
 .player-quality {
@@ -436,6 +446,8 @@ function toggleQueueDrawer(): void {
 }
 
 .player-progress-control {
+  display: flex;
+  align-items: center;
   flex: 1;
   min-width: 0;
 }
@@ -445,6 +457,7 @@ function toggleQueueDrawer(): void {
   font-size: 11px;
   font-variant-numeric: tabular-nums;
   color: var(--ncx-color-text-secondary);
+  line-height: 16px;
 }
 
 .player-time {
@@ -460,6 +473,7 @@ function toggleQueueDrawer(): void {
 
 .player-slider {
   flex: 1;
+  align-self: center;
   min-width: 0;
 }
 
@@ -473,6 +487,13 @@ function toggleQueueDrawer(): void {
 .player-progress-bar :deep(.ncx-common-progress-track),
 .player-progress-loading :deep(.ncx-common-progress-track) {
   filter: none;
+}
+
+.player-progress-bar,
+.player-progress-loading,
+.player-output :deep(.ncx-common-icon-button),
+.player-transport :deep(.ncx-common-icon-button) {
+  align-self: center;
 }
 
 .player-slider :deep(.ncx-common-slider-rail),
@@ -524,7 +545,8 @@ function toggleQueueDrawer(): void {
       "track transport progress"
       "notice notice notice";
     grid-template-columns: minmax(120px, 0.9fr) auto minmax(150px, 1.2fr);
-    gap: var(--ncx-space-2, 8px);
+    column-gap: var(--ncx-space-2, 8px);
+    row-gap: 0;
     padding-inline: var(--ncx-space-3, 12px);
   }
 
