@@ -167,6 +167,7 @@ function toggleQueueDrawer(): void {
         <CommonIconButton
           size="default"
           variant="ghost"
+          tooltip-placement="right"
           :label="text.mode[snapshot.queue.mode]"
           @click="player.setMode(nextMode)"
         >
@@ -186,6 +187,7 @@ function toggleQueueDrawer(): void {
         <CommonIconButton
           size="default"
           variant="ghost"
+          tooltip-placement="right"
           :disabled="!hasQueue"
           :label="text.previous"
           @click="player.previous()"
@@ -195,6 +197,7 @@ function toggleQueueDrawer(): void {
         <CommonIconButton
           size="prominent"
           variant="primary"
+          tooltip-placement="left"
           :disabled="!track"
           :label="showPause ? text.pause : text.play"
           @click="player.toggle()"
@@ -218,6 +221,7 @@ function toggleQueueDrawer(): void {
         <CommonIconButton
           size="default"
           variant="ghost"
+          tooltip-placement="left"
           :disabled="!hasQueue"
           :label="text.next"
           @click="player.next()"
@@ -253,6 +257,7 @@ function toggleQueueDrawer(): void {
         <CommonIconButton
           size="default"
           variant="ghost"
+          tooltip-placement="left"
           :label="snapshot.playback.muted ? text.unmute : text.mute"
           @click="player.setMuted(!snapshot.playback.muted)"
         >
@@ -278,6 +283,7 @@ function toggleQueueDrawer(): void {
         <CommonIconButton
           size="default"
           variant="ghost"
+          tooltip-placement="left"
           :selected="isQueueOpen"
           :label="text.queue"
           @click="toggleQueueDrawer"
@@ -297,6 +303,7 @@ function toggleQueueDrawer(): void {
           class="player-notice-close"
           size="compact"
           variant="ghost"
+          tooltip-placement="left"
           :label="text.dismiss"
           @click="player.dismissNotice()"
         >
@@ -536,4 +543,3 @@ function toggleQueueDrawer(): void {
   }
 }
 </style>
-

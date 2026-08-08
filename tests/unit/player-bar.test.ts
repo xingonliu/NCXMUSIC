@@ -67,6 +67,21 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     expect(nextBtn.props('variant')).toBe('ghost')
   })
 
+  it('音乐控制栏 icon button 的 tip 显式指定左右方向', () => {
+    const wrapper = mount(PlayerBar)
+    const transport = wrapper.find('.player-transport')
+    const output = wrapper.find('.player-output')
+
+    /** 传输控制区 icon 按钮组件。 */
+    const transportButtons = transport.findAllComponents({ name: '通用组件IconButton' })
+
+    /** 输出控制区 icon 按钮组件。 */
+    const outputButtons = output.findAllComponents({ name: '通用组件IconButton' })
+
+    expect(transportButtons.map((button) => button.props('tooltipPlacement'))).toEqual(['right', 'right', 'left', 'left'])
+    expect(outputButtons.map((button) => button.props('tooltipPlacement'))).toEqual(['left', 'left'])
+  })
+
   it('点击上一首、下一首、暂停/播放能够触发对应的播放器指令', async () => {
     disposePlayer()
     const mockTrack = { trackId: '1', name: 'Test Song', artists: ['Artist'], durationMs: 180000, album: 'Album' }

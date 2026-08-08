@@ -103,27 +103,70 @@ describe('macOS HIG & WWDC25 按钮族组件规范测试', () => {
       vi.useFakeTimers()
       try {
         const wrapper = mount(CommonIconButton, {
+          attachTo: document.body,
           props: { label: '播放音乐' }
         })
 
-        expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(false)
+        expect(document.querySelector('.ncx-common-tooltip-panel')).toBeNull()
 
         await wrapper.trigger('mouseenter')
         await vi.advanceTimersByTimeAsync(300)
         await nextTick()
+        await nextTick()
 
-        const panel = wrapper.find('.ncx-common-tooltip-panel')
-        expect(panel.exists()).toBe(true)
-        expect(panel.attributes('role')).toBe('tooltip')
-        expect(panel.text()).toBe('播放音乐')
-        expect(panel.classes()).toContain('ncx-common-tooltip-panel--top')
+        /** Teleport 到 body 的气泡面板。 */
+        const panel = document.querySelector('.ncx-common-tooltip-panel')
+        expect(panel).not.toBeNull()
+        expect(panel?.getAttribute('role')).toBe('tooltip')
+        expect(panel?.textContent).toBe('播放音乐')
+        expect(panel?.classList.contains('ncx-common-tooltip-panel--top')).toBe(true)
 
         await wrapper.trigger('mouseleave')
         await nextTick()
-        expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(false)
+        expect(document.querySelector('.ncx-common-tooltip-panel')).toBeNull()
+        wrapper.unmount()
       } finally {
         vi.useRealTimers()
       }
+    })
+
+    it('支持显式指定气泡方向', async () => {
+      /** 绑定到 document.body 的图标按钮包装器，用于验证 Teleport 气泡。 */
+      const wrapper = mount(CommonIconButton, {
+        attachTo: document.body,
+        props: { label: '上一首', tooltipPlacement: 'left' }
+      })
+
+      await wrapper.trigger('focusin')
+      await nextTick()
+      await nextTick()
+
+      /** 显式左侧定位的气泡面板。 */
+      const panel = document.querySelector('.ncx-common-tooltip-panel')
+      expect(panel?.classList.contains('ncx-common-tooltip-panel--left')).toBe(true)
+
+      wrapper.unmount()
+    })
+
+    it('未指定气泡方向时根据按钮视口位置自动选择', async () => {
+      /** 绑定到 document.body 的图标按钮包装器，用于模拟视口贴边位置。 */
+      const wrapper = mount(CommonIconButton, {
+        attachTo: document.body,
+        props: { label: '靠左按钮' }
+      })
+
+      /** 模拟按钮靠近视口左侧。 */
+      wrapper.element.getBoundingClientRect = vi.fn(() => new DOMRect(12, 120, 24, 24))
+
+      await wrapper.trigger('focusin')
+      await nextTick()
+      await nextTick()
+
+      /** 自动切换到右侧避免贴边的气泡面板。 */
+      const panel = document.querySelector('.ncx-common-tooltip-panel')
+      expect(panel?.classList.contains('ncx-common-tooltip-panel--right')).toBe(true)
+
+      wrapper.unmount()
     })
 
     it('支持 selected 选定按下状态与 aria-pressed', () => {

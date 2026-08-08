@@ -2122,6 +2122,12 @@
   animation: ncx-tooltip-fade-in var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.ncx-common-tooltip-anchor {
+  display: block;
+  z-index: calc(var(--ncx-layer-popover, 400) + 1);
+  pointer-events: none;
+}
+
 .ncx-common-tooltip-panel--top {
   bottom: calc(100% + 8px);
   left: 50%;

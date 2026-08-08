@@ -6,6 +6,9 @@ import { Comment, Fragment, computed, defineComponent, h, nextTick, onMounted, o
 /** 通用组件尺寸。 */
 type CommonComponentSize = 'compact' | 'default' | 'prominent'
 
+/** 通用气泡位置。 */
+type CommonTooltipPlacement = 'top' | 'bottom' | 'left' | 'right'
+
 /** 通用按钮视觉变体。 */
 type CommonButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
 
@@ -210,10 +213,10 @@ export const CommonIconButton = defineComponent({
     },
     selected: Boolean,
     disabled: Boolean,
-    /** 气泡弹出位置：top | bottom | left | right。 */
+    /** 可选气泡弹出位置；未传入时按按钮所在视口位置自动选择。 */
     tooltipPlacement: {
-      type: String as PropType<'top' | 'bottom' | 'left' | 'right'>,
-      default: 'top'
+      type: String as PropType<CommonTooltipPlacement>,
+      default: undefined
     }
   },
   emits: ['click'],
@@ -222,6 +225,70 @@ export const CommonIconButton = defineComponent({
     const { visible, handleMouseEnter, handleMouseLeave, handleFocusIn, handleFocusOut } = useTooltipInteraction(
       () => props.disabled
     )
+
+    /** 图标按钮 DOM 引用，用于读取视口位置。 */
+    const buttonRef = ref<HTMLButtonElement | null>(null)
+
+    /** 当前实际使用的气泡位置。 */
+    const resolvedTooltipPlacement = ref<CommonTooltipPlacement>('top')
+
+    /** 脱离裁剪上下文后的气泡锚点定位样式。 */
+    const tooltipAnchorStyle = ref<Record<string, string>>({})
+
+    /** 根据按钮与视口边缘的距离选择默认气泡方向。 */
+    function resolveTooltipPlacement(rect: DOMRect): CommonTooltipPlacement {
+      if (props.tooltipPlacement) return props.tooltipPlacement
+      if (rect.width === 0 && rect.height === 0) return 'top'
+
+      /** 靠近视口边缘时切换方向的安全距离。 */
+      const edgeThreshold = 72
+      if (rect.top < edgeThreshold) return 'bottom'
+      if (rect.bottom > window.innerHeight - edgeThreshold) return 'top'
+      if (rect.left < edgeThreshold) return 'right'
+      if (rect.right > window.innerWidth - edgeThreshold) return 'left'
+      return 'top'
+    }
+
+    /** 同步气泡锚点到按钮的视口位置。 */
+    function updateTooltipPosition(): void {
+      if (!visible.value || !buttonRef.value) return
+      const rect = buttonRef.value.getBoundingClientRect()
+      resolvedTooltipPlacement.value = resolveTooltipPlacement(rect)
+      tooltipAnchorStyle.value = {
+        position: 'fixed',
+        top: `${Math.round(rect.top)}px`,
+        left: `${Math.round(rect.left)}px`,
+        width: `${Math.round(rect.width)}px`,
+        height: `${Math.round(rect.height)}px`,
+        zIndex: 'calc(var(--ncx-layer-popover, 400) + 1)',
+        pointerEvents: 'none'
+      }
+    }
+
+    /** 视口变化时重新计算可见气泡位置。 */
+    function handleViewportChange(): void {
+      updateTooltipPosition()
+    }
+
+    /** 气泡显示后等待 Teleport 挂载，再同步锚点位置。 */
+    watch(visible, (isVisible) => {
+      if (isVisible) nextTick(updateTooltipPosition)
+    })
+
+    /** 显式位置变化时刷新气泡方向。 */
+    watch(() => props.tooltipPlacement, () => {
+      if (visible.value) updateTooltipPosition()
+    })
+
+    onMounted(() => {
+      window.addEventListener('resize', handleViewportChange, { passive: true })
+      window.addEventListener('scroll', handleViewportChange, { passive: true, capture: true })
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', handleViewportChange)
+      window.removeEventListener('scroll', handleViewportChange, true)
+    })
 
     /** 处理图标按钮点击。 */
     function handleClick(event: MouseEvent): void {
@@ -233,6 +300,7 @@ export const CommonIconButton = defineComponent({
       h(
         'button',
         {
+          ref: buttonRef,
           class: joinClasses(
             'ncx-common-icon-button',
             `ncx-common-icon-button-${props.variant}`,
@@ -254,12 +322,20 @@ export const CommonIconButton = defineComponent({
           slots.default?.(),
           visible.value && !props.disabled
             ? h(
-                'span',
-                {
-                  class: joinClasses('ncx-common-tooltip-panel', `ncx-common-tooltip-panel--${props.tooltipPlacement}`),
-                  role: 'tooltip'
-                },
-                [h('span', { class: 'ncx-common-tooltip-content' }, props.label), h('span', { class: 'ncx-common-tooltip-arrow' })]
+                Teleport,
+                { to: 'body' },
+                h(
+                  'span',
+                  { class: 'ncx-common-tooltip-anchor', style: tooltipAnchorStyle.value },
+                  h(
+                    'span',
+                    {
+                      class: joinClasses('ncx-common-tooltip-panel', `ncx-common-tooltip-panel--${resolvedTooltipPlacement.value}`),
+                      role: 'tooltip'
+                    },
+                    [h('span', { class: 'ncx-common-tooltip-content' }, props.label), h('span', { class: 'ncx-common-tooltip-arrow' })]
+                  )
+                )
               )
             : null
         ]
