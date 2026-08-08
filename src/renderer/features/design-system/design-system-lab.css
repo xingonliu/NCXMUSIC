@@ -99,6 +99,87 @@
   box-shadow: var(--ncx-shadow-elevation-1);
 }
 
+.ncx-design-lab-category {
+  display: grid;
+  gap: var(--ncx-space-6);
+  padding: var(--ncx-space-6);
+  border: 1px solid var(--ncx-color-border-subtle);
+  border-radius: var(--ncx-radius-2xl);
+  background: var(--ncx-color-surface);
+}
+
+.ncx-design-lab-category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--ncx-space-3);
+  border-bottom: 2px solid var(--ncx-color-accent);
+}
+
+.ncx-design-lab-category-title {
+  display: flex;
+  align-items: center;
+  gap: var(--ncx-space-3);
+}
+
+.ncx-design-lab-category-title h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.ncx-design-lab-subcategory {
+  display: grid;
+  gap: var(--ncx-space-4);
+}
+
+.ncx-design-lab-subcategory-header {
+  display: flex;
+  align-items: center;
+  gap: var(--ncx-space-3);
+  margin-top: var(--ncx-space-2);
+}
+
+.ncx-design-lab-subcategory-header h3 {
+  margin: 0;
+  color: var(--ncx-color-text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ncx-design-lab-component-card {
+  display: grid;
+  gap: var(--ncx-space-3);
+}
+
+.ncx-design-lab-component-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--ncx-space-2);
+  border-bottom: 1px dashed var(--ncx-color-border-subtle);
+}
+
+.ncx-design-lab-component-title {
+  display: flex;
+  align-items: center;
+  gap: var(--ncx-space-2);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ncx-design-lab-component-name {
+  color: var(--ncx-color-accent);
+  font-family: var(--ncx-font-mono, monospace);
+  font-size: 13px;
+}
+
+.ncx-design-lab-component-demo {
+  display: grid;
+  gap: var(--ncx-space-3);
+  padding-top: var(--ncx-space-2);
+}
+
 @media (width < 1100px) {
   .ncx-design-lab {
     padding-inline: var(--ncx-space-4);
@@ -107,4 +188,9 @@
   .ncx-design-lab-hero {
     grid-template-columns: 1fr;
   }
+
+  .ncx-design-lab-category {
+    padding: var(--ncx-space-4);
+  }
 }
+
