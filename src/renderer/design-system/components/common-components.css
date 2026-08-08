@@ -1822,6 +1822,8 @@
   color: var(--ncx-color-text-primary);
   background: var(--ncx-color-surface-raised);
   font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
   user-select: none;
   outline: 0;
   transition: background-color var(--ncx-motion-fast), border-color var(--ncx-motion-fast), color var(--ncx-motion-fast), transform var(--ncx-motion-fast);

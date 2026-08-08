@@ -2,7 +2,7 @@
   display: grid;
   gap: var(--ncx-space-8);
   min-height: 100%;
-  padding: 104px var(--ncx-space-6) 120px;
+  padding: 80px var(--ncx-space-6) 120px;
   overflow: auto;
 }
 
@@ -24,23 +24,24 @@
 
 .ncx-design-lab h1,
 .ncx-design-lab h2,
+.ncx-design-lab h3,
 .ncx-design-lab p {
   margin: 0;
 }
 
 .ncx-design-lab h1 {
   max-width: 720px;
-  font-size: clamp(36px, 5vw, 60px);
-  line-height: 1.05;
-  letter-spacing: -0.05em;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
 }
 
 .ncx-design-lab-hero p:last-child {
   max-width: 760px;
-  margin-top: var(--ncx-space-4);
+  margin-top: var(--ncx-space-3);
   color: var(--ncx-color-text-secondary);
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .ncx-design-lab-status {
@@ -49,7 +50,7 @@
 }
 
 .ncx-design-lab-status strong {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .ncx-design-lab-status span {
@@ -57,14 +58,115 @@
   font-size: 13px;
 }
 
-.ncx-design-lab-section {
+/* 大类 1 ~ 8 外框容器 */
+.ncx-design-lab-category {
+  display: grid;
+  gap: var(--ncx-space-6);
+  padding: var(--ncx-space-6);
+  border: 1px solid var(--ncx-color-border-subtle);
+  border-radius: var(--ncx-radius-2xl);
+  background: var(--ncx-color-surface);
+  box-shadow: 0 4px 20px rgb(0 0 0 / 2%);
+}
+
+.ncx-design-lab-category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ncx-space-4);
+  padding-bottom: var(--ncx-space-3);
+  border-bottom: 2px solid var(--ncx-color-accent);
+}
+
+.ncx-design-lab-category-title {
+  display: flex;
+  align-items: center;
+  gap: var(--ncx-space-3);
+  flex-wrap: wrap;
+}
+
+.ncx-design-lab-category-title h2 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* 小类外框容器 */
+.ncx-design-lab-subcategory {
   display: grid;
   gap: var(--ncx-space-4);
 }
 
-.ncx-design-lab-section h2 {
-  font-size: 20px;
-  letter-spacing: -0.02em;
+.ncx-design-lab-subcategory-header {
+  display: flex;
+  align-items: center;
+  gap: var(--ncx-space-3);
+  margin-top: var(--ncx-space-1);
+}
+
+/* 组件网格布局体系 */
+.ncx-design-lab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--ncx-space-4);
+}
+
+.ncx-design-lab-grid--full {
+  grid-template-columns: 1fr;
+}
+
+.ncx-design-lab-grid--2col {
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+}
+
+/* 具体组件展示卡片 */
+.ncx-design-lab-component-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ncx-space-3);
+  height: 100%;
+}
+
+.ncx-design-lab-component-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ncx-space-3);
+  padding-bottom: var(--ncx-space-2);
+  border-bottom: 1px dashed var(--ncx-color-border-subtle);
+  white-space: nowrap;
+}
+
+.ncx-design-lab-component-title {
+  display: flex;
+  align-items: center;
+  gap: var(--ncx-space-2);
+  min-width: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ncx-design-lab-component-name {
+  color: var(--ncx-color-accent);
+  font-family: var(--ncx-font-mono, monospace);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ncx-design-lab-component-tag {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.ncx-design-lab-component-demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ncx-space-3);
+  padding-top: var(--ncx-space-1);
+  flex: 1;
 }
 
 .ncx-design-lab-row {
@@ -79,15 +181,6 @@
   gap: var(--ncx-space-3);
 }
 
-.ncx-design-lab-label,
-.ncx-design-lab label:not(.ncx-common-check, .ncx-common-radio) {
-  display: grid;
-  gap: var(--ncx-space-2);
-  color: var(--ncx-color-text-secondary);
-  font-size: 12px;
-  font-weight: 700;
-}
-
 .ncx-design-lab-context-zone {
   display: grid;
   min-height: 104px;
@@ -97,87 +190,6 @@
   color: var(--ncx-color-text-secondary);
   background: var(--ncx-color-surface-raised);
   box-shadow: var(--ncx-shadow-elevation-1);
-}
-
-.ncx-design-lab-category {
-  display: grid;
-  gap: var(--ncx-space-6);
-  padding: var(--ncx-space-6);
-  border: 1px solid var(--ncx-color-border-subtle);
-  border-radius: var(--ncx-radius-2xl);
-  background: var(--ncx-color-surface);
-}
-
-.ncx-design-lab-category-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: var(--ncx-space-3);
-  border-bottom: 2px solid var(--ncx-color-accent);
-}
-
-.ncx-design-lab-category-title {
-  display: flex;
-  align-items: center;
-  gap: var(--ncx-space-3);
-}
-
-.ncx-design-lab-category-title h2 {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.ncx-design-lab-subcategory {
-  display: grid;
-  gap: var(--ncx-space-4);
-}
-
-.ncx-design-lab-subcategory-header {
-  display: flex;
-  align-items: center;
-  gap: var(--ncx-space-3);
-  margin-top: var(--ncx-space-2);
-}
-
-.ncx-design-lab-subcategory-header h3 {
-  margin: 0;
-  color: var(--ncx-color-text-primary);
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.ncx-design-lab-component-card {
-  display: grid;
-  gap: var(--ncx-space-3);
-}
-
-.ncx-design-lab-component-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: var(--ncx-space-2);
-  border-bottom: 1px dashed var(--ncx-color-border-subtle);
-}
-
-.ncx-design-lab-component-title {
-  display: flex;
-  align-items: center;
-  gap: var(--ncx-space-2);
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.ncx-design-lab-component-name {
-  color: var(--ncx-color-accent);
-  font-family: var(--ncx-font-mono, monospace);
-  font-size: 13px;
-}
-
-.ncx-design-lab-component-demo {
-  display: grid;
-  gap: var(--ncx-space-3);
-  padding-top: var(--ncx-space-2);
 }
 
 @media (width < 1100px) {
@@ -192,5 +204,9 @@
   .ncx-design-lab-category {
     padding: var(--ncx-space-4);
   }
-}
 
+  .ncx-design-lab-grid,
+  .ncx-design-lab-grid--2col {
+    grid-template-columns: 1fr;
+  }
+}

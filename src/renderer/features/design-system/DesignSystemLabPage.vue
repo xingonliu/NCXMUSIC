@@ -192,7 +192,7 @@ function confirmDangerAction(): void {
 
 <template>
   <main class="ncx-design-lab">
-    <!-- 顶部 Banner 说明 -->
+    <!-- 顶部 Hero 区域 -->
     <section class="ncx-design-lab-hero">
       <div>
         <p class="ncx-design-lab-eyebrow">
@@ -200,7 +200,7 @@ function confirmDangerAction(): void {
         </p>
         <h1>通用组件交互测试页</h1>
         <p>
-          遵循规范分级展示通用组件：大类 → 小类 → 具体组件名 + 交互效果展示。
+          按规范分类分级展示通用组件：大类 → 小类 → 具体组件名 + 交互效果。
         </p>
       </div>
       <CommonCard class="ncx-design-lab-status">
@@ -232,21 +232,20 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 1.1：基础按钮与链接 (Buttons & Links)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonButton -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonButton</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 基础按钮
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <div class="ncx-design-lab-stack">
-                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                   <CommonButton
                     variant="primary"
                     @click="recordAction('Primary Button')"
@@ -286,7 +285,7 @@ function confirmDangerAction(): void {
                     已禁用操作
                   </CommonButton>
                 </div>
-                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                   <CommonButton
                     size="compact"
                     variant="primary"
@@ -317,10 +316,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonIconButton</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 图标按钮
               </CommonTag>
             </header>
@@ -353,10 +351,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonButtonGroup</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 组合按钮组
               </CommonTag>
             </header>
@@ -420,10 +417,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonLinkButton</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 链接按钮
               </CommonTag>
             </header>
@@ -444,7 +440,7 @@ function confirmDangerAction(): void {
               </div>
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
 
       <!-- 小类 1.2：顶栏控件 -->
@@ -453,15 +449,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 1.2：顶栏控件 (Header Controls)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonHeaderButton -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonHeaderButton</code>
               </div>
-              <CommonTag color="blue">
+              <CommonTag color="blue" class="ncx-design-lab-component-tag">
                 Header 单按钮
               </CommonTag>
             </header>
@@ -498,14 +493,13 @@ function confirmDangerAction(): void {
             </div>
           </CommonCard>
 
-          <!-- 具体组件：CommonHeaderGroupButton & CommonHeaderGroupItem -->
+          <!-- 具体组件：CommonHeaderGroupButton -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonHeaderGroupButton</code>
               </div>
-              <CommonTag color="blue">
+              <CommonTag color="blue" class="ncx-design-lab-component-tag">
                 Header 成组按钮
               </CommonTag>
             </header>
@@ -544,7 +538,7 @@ function confirmDangerAction(): void {
               </div>
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
     </section>
 
@@ -568,15 +562,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 2.1：文本输入 (Text Inputs)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid">
           <!-- 具体组件：CommonInput -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonInput</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 单行输入框
               </CommonTag>
             </header>
@@ -593,10 +586,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonSearchInput</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 搜索输入框
               </CommonTag>
             </header>
@@ -612,10 +604,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonTextarea</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 多行文本域
               </CommonTag>
             </header>
@@ -623,7 +614,7 @@ function confirmDangerAction(): void {
               <CommonTextarea v-model="textareaValue" />
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
 
       <!-- 小类 2.2：下拉与组合选择 -->
@@ -632,15 +623,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 2.2：下拉与组合选择 (Select & Combobox)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonSelect -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonSelect</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 下拉选择框
               </CommonTag>
             </header>
@@ -656,10 +646,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonCombobox</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 组合选择框
               </CommonTag>
             </header>
@@ -671,7 +660,7 @@ function confirmDangerAction(): void {
               />
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
     </section>
 
@@ -685,7 +674,7 @@ function confirmDangerAction(): void {
           <h2>选择类组件 (Selections)</h2>
         </div>
         <CommonTag color="gray">
-          状态与选项控制
+          选项与状态
         </CommonTag>
       </header>
 
@@ -695,15 +684,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 3.1：勾选与开关 (Checkbox & Switch)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonCheckbox -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonCheckbox</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 复选框
               </CommonTag>
             </header>
@@ -742,10 +730,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonSwitch</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 开关组件
               </CommonTag>
             </header>
@@ -774,7 +761,7 @@ function confirmDangerAction(): void {
               </div>
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
 
       <!-- 小类 3.2：单选与分段 -->
@@ -783,15 +770,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 3.2：单选与分段 (Radio & Segmented)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonRadioGroup -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonRadioGroup</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 单选组
               </CommonTag>
             </header>
@@ -808,10 +794,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonSegmentedControl</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 分段控制器
               </CommonTag>
             </header>
@@ -823,7 +808,7 @@ function confirmDangerAction(): void {
               />
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
 
       <!-- 小类 3.3：数值调节 -->
@@ -832,15 +817,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 3.3：数值调节 (Slider)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--full">
           <!-- 具体组件：CommonSlider -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonSlider</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 滑块控制
               </CommonTag>
             </header>
@@ -851,7 +835,7 @@ function confirmDangerAction(): void {
               />
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
     </section>
 
@@ -865,7 +849,7 @@ function confirmDangerAction(): void {
           <h2>展示类组件 (Display)</h2>
         </div>
         <CommonTag color="gray">
-          数据与视觉展示
+          视觉展示
         </CommonTag>
       </header>
 
@@ -875,15 +859,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 4.1：身份与徽标 (Avatar & Badge)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonAvatar -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonAvatar</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 头像
               </CommonTag>
             </header>
@@ -913,10 +896,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonBadge</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 徽标角标
               </CommonTag>
             </header>
@@ -968,7 +950,7 @@ function confirmDangerAction(): void {
               </div>
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
 
       <!-- 小类 4.2：标签与提示 -->
@@ -977,15 +959,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 4.2：标签与提示 (Tag & Tooltip)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonTag -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonTag</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 标签分类
               </CommonTag>
             </header>
@@ -1027,10 +1008,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonTooltip</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 气泡提示
               </CommonTag>
             </header>
@@ -1063,7 +1043,7 @@ function confirmDangerAction(): void {
               </div>
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
 
       <!-- 小类 4.3：结构卡片与分割线 -->
@@ -1072,15 +1052,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 4.3：结构卡片与分割线 (Card & Separator)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonCard -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonCard</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 结构卡片
               </CommonTag>
             </header>
@@ -1112,10 +1091,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonSeparator</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 分割线
               </CommonTag>
             </header>
@@ -1130,7 +1108,7 @@ function confirmDangerAction(): void {
               </div>
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
     </section>
 
@@ -1154,15 +1132,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 5.1：标签导航 (Tabs Navigation)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--full">
           <!-- 具体组件：CommonTabs -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonTabs</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 标签页
               </CommonTag>
             </header>
@@ -1173,7 +1150,7 @@ function confirmDangerAction(): void {
               />
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
 
       <!-- 小类 5.2：弹出菜单 -->
@@ -1182,15 +1159,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 5.2：弹出菜单 (Popups & Menus)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid">
           <!-- 具体组件：CommonDropdownMenu -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonDropdownMenu</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 下拉菜单
               </CommonTag>
             </header>
@@ -1207,10 +1183,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonContextMenu</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 右键菜单
               </CommonTag>
             </header>
@@ -1230,10 +1205,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonPopover</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 气泡弹出框
               </CommonTag>
             </header>
@@ -1243,7 +1217,7 @@ function confirmDangerAction(): void {
               </CommonPopover>
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
     </section>
 
@@ -1267,15 +1241,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 6.1：加载与进度 (Loading & Progress)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid">
           <!-- 具体组件：CommonSpinner -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonSpinner</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 加载菊花
               </CommonTag>
             </header>
@@ -1306,10 +1279,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonProgress</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 进度条
               </CommonTag>
             </header>
@@ -1333,10 +1305,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonSkeleton</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 骨架屏
               </CommonTag>
             </header>
@@ -1355,7 +1326,7 @@ function confirmDangerAction(): void {
               </div>
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
 
       <!-- 小类 6.2：状态反馈 -->
@@ -1364,15 +1335,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 6.2：状态反馈 (State Feedback)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonEmptyState -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonEmptyState</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 空状态
               </CommonTag>
             </header>
@@ -1396,10 +1366,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonErrorState</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 错误状态
               </CommonTag>
             </header>
@@ -1411,15 +1380,16 @@ function confirmDangerAction(): void {
               />
             </div>
           </CommonCard>
+        </div>
 
+        <div class="ncx-design-lab-grid--full">
           <!-- 具体组件：CommonInlineMessage -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonInlineMessage</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 内联消息栏
               </CommonTag>
             </header>
@@ -1451,7 +1421,7 @@ function confirmDangerAction(): void {
               </div>
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
     </section>
 
@@ -1475,15 +1445,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 7.1：轻提示与阻断对话框 (Toast & Dialogs)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonToast -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonToast</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 轻提示
               </CommonTag>
             </header>
@@ -1498,10 +1467,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonDialog</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 标准对话框
               </CommonTag>
             </header>
@@ -1516,10 +1484,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonAlertDialog</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 危险确认对话框
               </CommonTag>
             </header>
@@ -1538,10 +1505,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonDrawer</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 抽屉面板
               </CommonTag>
             </header>
@@ -1551,7 +1517,7 @@ function confirmDangerAction(): void {
               </CommonButton>
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
     </section>
 
@@ -1575,15 +1541,14 @@ function confirmDangerAction(): void {
           <CommonSeparator label="小类 8.1：折叠与列表容器 (Accordion & Virtual List)" />
         </div>
 
-        <CommonResponsiveGrid>
+        <div class="ncx-design-lab-grid--full">
           <!-- 具体组件：CommonAccordion -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonAccordion</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 手风琴
               </CommonTag>
             </header>
@@ -1591,15 +1556,16 @@ function confirmDangerAction(): void {
               <CommonAccordion :items="accordionItems" />
             </div>
           </CommonCard>
+        </div>
 
+        <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonScrollArea & CommonVirtualList -->
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonScrollArea & CommonVirtualList</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 虚拟列表与滚动
               </CommonTag>
             </header>
@@ -1614,10 +1580,9 @@ function confirmDangerAction(): void {
           <CommonCard class="ncx-design-lab-component-card">
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <span>具体组件：</span>
                 <code class="ncx-design-lab-component-name">CommonResponsiveGrid</code>
               </div>
-              <CommonTag color="gray">
+              <CommonTag color="gray" class="ncx-design-lab-component-tag">
                 响应式网格
               </CommonTag>
             </header>
@@ -1632,7 +1597,7 @@ function confirmDangerAction(): void {
               </CommonResponsiveGrid>
             </div>
           </CommonCard>
-        </CommonResponsiveGrid>
+        </div>
       </div>
     </section>
   </main>
