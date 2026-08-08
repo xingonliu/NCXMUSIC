@@ -2,7 +2,7 @@
 // ==========================================
 // Inspira UI - LiquidGlass 组件
 //
-// 基于 SVG 置换滤镜（feDisplacementMap）实现的高光流体玻璃拟态效果组件。
+// 基于 SVG 滤镜与 CSS Glassmorphism 实现的高光流体玻璃拟态效果组件。
 // 参考 Apple Liquid Glass 视觉效果。
 // ==========================================
 
@@ -48,19 +48,19 @@ export interface LiquidGlassProps {
 
 /** 组件默认属性定义 */
 const props = withDefaults(defineProps<LiquidGlassProps>(), {
-  radius: 16,
+  radius: 33,
   border: 0.07,
-  lightness: 50,
+  lightness: 78,
   blend: 'difference',
   xChannel: 'R',
   yChannel: 'B',
-  alpha: 0.93,
-  blur: 11,
+  alpha: 0.82,
+  blur: 24,
   rOffset: 0,
   gOffset: 10,
   bOffset: 20,
-  scale: -180,
-  frost: 0.05,
+  scale: -20,
+  frost: 0.15,
   class: '',
   containerClass: ''
 })
@@ -72,9 +72,6 @@ const rawId = useId()
 
 /** 格式化后的滤镜 ID */
 const filterId = computed(() => `inspira-liquid-glass-${rawId.replace(/:/g, '')}`)
-
-/** HSL 叠加层颜色 */
-const overlayColor = computed(() => `hsla(0, 0%, ${props.lightness}%, ${props.frost})`)
 
 /** 容器圆角样式 */
 const borderRadiusStyle = computed(() => `${props.radius}px`)
@@ -93,15 +90,15 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
       <defs>
         <filter
           :id="filterId"
-          x="-20%"
-          y="-20%"
-          width="140%"
-          height="140%"
+          x="-10%"
+          y="-10%"
+          width="120%"
+          height="120%"
           filterUnits="objectBoundingBox"
         >
           <feTurbulence
             type="fractalNoise"
-            baseFrequency="0.015"
+            baseFrequency="0.02"
             numOctaves="2"
             result="noise"
           />
@@ -113,11 +110,6 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
             :yChannelSelector="props.yChannel"
             result="displaced"
           />
-          <feGaussianBlur
-            in="displaced"
-            :stdDeviation="props.blur"
-            result="blurred"
-          />
         </filter>
       </defs>
     </svg>
@@ -126,10 +118,16 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
     <div
       class="inspira-liquid-glass-backdrop"
       :style="{
+        borderRadius: borderRadiusStyle
+      }"
+    />
+
+    <!-- 液态玻璃边缘折射与光泽层 -->
+    <div
+      class="inspira-liquid-glass-refraction"
+      :style="{
         borderRadius: borderRadiusStyle,
-        backgroundColor: overlayColor,
-        backdropFilter: `blur(${props.blur}px) url(#${filterId})`,
-        WebkitBackdropFilter: `blur(${props.blur}px) url(#${filterId})`
+        filter: `url(#${filterId})`
       }"
     />
 
@@ -144,7 +142,6 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
 .inspira-liquid-glass-container {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
 }
 
 .inspira-liquid-glass-svg-defs {
@@ -162,12 +159,30 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  border: 1px solid color-mix(in srgb, white 20%, transparent);
-  box-shadow:
-    inset 0 1px 1px rgb(255 255 255 / 30%),
-    inset 0 -1px 1px rgb(0 0 0 / 15%),
-    0 12px 32px rgb(0 0 0 / 18%);
+  background-color: var(--ncx-player-bar-glass-fill, color-mix(in srgb, var(--ncx-color-surface-overlay, #fff) 82%, transparent));
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--ncx-player-bar-glass-stroke, color-mix(in srgb, white 60%, transparent));
+  box-shadow: var(
+    --ncx-player-bar-glass-shadow,
+    0 16px 36px rgb(0 0 0 / 15%),
+    0 4px 12px rgb(0 0 0 / 6%),
+    inset 0 1px 0 0 rgb(255 255 255 / 80%),
+    inset 0 -1px 0 0 rgb(0 0 0 / 5%)
+  );
   transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+}
+
+.inspira-liquid-glass-refraction {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border: 1.5px solid color-mix(in srgb, white 40%, transparent);
+  box-shadow:
+    inset 0 1.5px 3px rgb(255 255 255 / 50%),
+    inset 0 -1.5px 3px rgb(0 0 0 / 10%);
+  opacity: 0.85;
 }
 
 .inspira-liquid-glass-content {

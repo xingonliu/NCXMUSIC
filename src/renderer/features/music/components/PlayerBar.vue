@@ -126,14 +126,13 @@ function toggleQueueDrawer(): void {
 <template>
   <LiquidGlass
     container-class="player-bar-glass"
-    class="player-bar-content"
     role="contentinfo"
     :aria-label="text.regionLabel"
     :radius="33"
-    :scale="-25"
+    :scale="-45"
     :blur="16"
-    :frost="0.08"
-    :lightness="50"
+    :frost="0.12"
+    :lightness="60"
     :alpha="0.85"
     :style="{
       position: 'fixed',
@@ -144,172 +143,174 @@ function toggleQueueDrawer(): void {
       zIndex: 'var(--ncx-layer-player)'
     }"
   >
-    <!-- 曲目信息 -->
-    <div class="player-track">
-      <p class="player-track-name">
-        {{ track?.name ?? text.emptyTrack }}
-      </p>
-      <p class="player-track-meta">
-        <span v-if="track">{{ track.artists.join(' / ') }}</span>
-        <span
-          v-if="qualityLabel"
-          class="player-quality"
-        >{{ qualityLabel }}</span>
-      </p>
-    </div>
-
-    <!-- 传输控制区域：上一首、暂停/播放、下一首及模式切换统一使用 icon 按钮组件并保持适宜间距 -->
-    <div
-      class="player-transport"
-      role="group"
-      :aria-label="text.regionLabel"
-    >
-      <CommonIconButton
-        size="default"
-        variant="ghost"
-        tooltip-placement="right"
-        :label="text.mode[snapshot.queue.mode]"
-        @click="player.setMode(nextMode)"
-      >
-        <Shuffle
-          v-if="snapshot.queue.mode === 'shuffle'"
-          :size="16"
-        />
-        <Repeat1
-          v-else-if="snapshot.queue.mode === 'loop-one'"
-          :size="16"
-        />
-        <Repeat
-          v-else
-          :size="16"
-        />
-      </CommonIconButton>
-      <CommonIconButton
-        size="default"
-        variant="ghost"
-        tooltip-placement="right"
-        :disabled="!hasQueue"
-        :label="text.previous"
-        @click="player.previous()"
-      >
-        <SkipBack :size="16" />
-      </CommonIconButton>
-      <CommonIconButton
-        size="prominent"
-        variant="primary"
-        tooltip-placement="left"
-        :disabled="!track"
-        :label="showPause ? text.pause : text.play"
-        @click="player.toggle()"
-      >
-        <CommonSpinner
-          v-if="busy"
-          size="compact"
-          class="player-busy"
-        />
-        <Pause
-          v-else-if="showPause"
-          :size="18"
-          fill="currentColor"
-        />
-        <Play
-          v-else
-          :size="18"
-          fill="currentColor"
-        />
-      </CommonIconButton>
-      <CommonIconButton
-        size="default"
-        variant="ghost"
-        tooltip-placement="left"
-        :disabled="!hasQueue"
-        :label="text.next"
-        @click="player.next()"
-      >
-        <SkipForward :size="16" />
-      </CommonIconButton>
-    </div>
-
-    <!-- 进度 -->
-    <div class="player-progress">
-      <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
-      <div class="player-progress-control">
-        <CommonProgress
-          v-if="busy"
-          class="player-progress-loading"
-          indeterminate
-          size="compact"
-          :label="statusLabel"
-        />
-        <CommonProgress
-          v-else
-          class="player-progress-bar"
-          :value="progressPercent"
-          :label="text.progress"
-          size="compact"
-        />
+    <div class="player-bar-content">
+      <!-- 曲目信息 -->
+      <div class="player-track">
+        <p class="player-track-name">
+          {{ track?.name ?? text.emptyTrack }}
+        </p>
+        <p class="player-track-meta">
+          <span v-if="track">{{ track.artists.join(' / ') }}</span>
+          <span
+            v-if="qualityLabel"
+            class="player-quality"
+          >{{ qualityLabel }}</span>
+        </p>
       </div>
-      <span class="player-time">{{ formatTime(durationMs) }}</span>
-    </div>
 
-    <!-- 音量与状态控制 -->
-    <div class="player-output">
-      <CommonIconButton
-        size="default"
-        variant="ghost"
-        tooltip-placement="left"
-        :label="snapshot.playback.muted ? text.unmute : text.mute"
-        @click="player.setMuted(!snapshot.playback.muted)"
+      <!-- 传输控制区域：上一首、暂停/播放、下一首及模式切换统一使用 icon 按钮组件并保持适宜间距 -->
+      <div
+        class="player-transport"
+        role="group"
+        :aria-label="text.regionLabel"
       >
-        <VolumeX
-          v-if="snapshot.playback.muted"
-          :size="15"
-        />
-        <Volume2
-          v-else
-          :size="15"
-        />
-      </CommonIconButton>
-      <CommonSlider
-        class="player-slider player-slider-volume"
-        :model-value="Math.round(snapshot.playback.volume * 100)"
-        :min="0"
-        :max="100"
-        size="compact"
-        :show-value="false"
-        @update:model-value="onVolume"
-      />
-      <!-- 音乐队列按钮 -->
-      <CommonIconButton
-        size="default"
-        variant="ghost"
-        tooltip-placement="left"
-        :selected="isQueueOpen"
-        :label="text.queue"
-        @click="toggleQueueDrawer"
-      >
-        <ListMusic :size="15" />
-      </CommonIconButton>
-    </div>
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          tooltip-placement="right"
+          :label="text.mode[snapshot.queue.mode]"
+          @click="player.setMode(nextMode)"
+        >
+          <Shuffle
+            v-if="snapshot.queue.mode === 'shuffle'"
+            :size="16"
+          />
+          <Repeat1
+            v-else-if="snapshot.queue.mode === 'loop-one'"
+            :size="16"
+          />
+          <Repeat
+            v-else
+            :size="16"
+          />
+        </CommonIconButton>
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          tooltip-placement="right"
+          :disabled="!hasQueue"
+          :label="text.previous"
+          @click="player.previous()"
+        >
+          <SkipBack :size="16" />
+        </CommonIconButton>
+        <CommonIconButton
+          size="prominent"
+          variant="primary"
+          tooltip-placement="left"
+          :disabled="!track"
+          :label="showPause ? text.pause : text.play"
+          @click="player.toggle()"
+        >
+          <CommonSpinner
+            v-if="busy"
+            size="compact"
+            class="player-busy"
+          />
+          <Pause
+            v-else-if="showPause"
+            :size="18"
+            fill="currentColor"
+          />
+          <Play
+            v-else
+            :size="18"
+            fill="currentColor"
+          />
+        </CommonIconButton>
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          tooltip-placement="left"
+          :disabled="!hasQueue"
+          :label="text.next"
+          @click="player.next()"
+        >
+          <SkipForward :size="16" />
+        </CommonIconButton>
+      </div>
 
-    <!-- 不可播放提示：由 Coordinator 的 track-unplayable 事件驱动 -->
-    <p
-      v-if="notice"
-      class="player-notice"
-      role="alert"
-    >
-      {{ notice }}
-      <CommonIconButton
-        class="player-notice-close"
-        size="compact"
-        variant="ghost"
-        tooltip-placement="left"
-        :label="text.dismiss"
-        @click="player.dismissNotice()"
+      <!-- 进度 -->
+      <div class="player-progress">
+        <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
+        <div class="player-progress-control">
+          <CommonProgress
+            v-if="busy"
+            class="player-progress-loading"
+            indeterminate
+            size="compact"
+            :label="statusLabel"
+          />
+          <CommonProgress
+            v-else
+            class="player-progress-bar"
+            :value="progressPercent"
+            :label="text.progress"
+            size="compact"
+          />
+        </div>
+        <span class="player-time">{{ formatTime(durationMs) }}</span>
+      </div>
+
+      <!-- 音量与状态控制 -->
+      <div class="player-output">
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          tooltip-placement="left"
+          :label="snapshot.playback.muted ? text.unmute : text.mute"
+          @click="player.setMuted(!snapshot.playback.muted)"
+        >
+          <VolumeX
+            v-if="snapshot.playback.muted"
+            :size="15"
+          />
+          <Volume2
+            v-else
+            :size="15"
+          />
+        </CommonIconButton>
+        <CommonSlider
+          class="player-slider player-slider-volume"
+          :model-value="Math.round(snapshot.playback.volume * 100)"
+          :min="0"
+          :max="100"
+          size="compact"
+          :show-value="false"
+          @update:model-value="onVolume"
+        />
+        <!-- 音乐队列按钮 -->
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          tooltip-placement="left"
+          :selected="isQueueOpen"
+          :label="text.queue"
+          @click="toggleQueueDrawer"
+        >
+          <ListMusic :size="15" />
+        </CommonIconButton>
+      </div>
+
+      <!-- 不可播放提示：由 Coordinator 的 track-unplayable 事件驱动 -->
+      <p
+        v-if="notice"
+        class="player-notice"
+        role="alert"
       >
-        <X :size="13" />
-      </CommonIconButton>
-    </p>
+        {{ notice }}
+        <CommonIconButton
+          class="player-notice-close"
+          size="compact"
+          variant="ghost"
+          tooltip-placement="left"
+          :label="text.dismiss"
+          @click="player.dismissNotice()"
+        >
+          <X :size="13" />
+        </CommonIconButton>
+      </p>
+    </div>
   </LiquidGlass>
 
   <!-- 播放队列抽屉不放入玻璃材质，避免受其尺寸和层叠上下文影响。 -->
