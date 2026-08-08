@@ -128,18 +128,22 @@ function toggleQueueDrawer(): void {
     container-class="player-bar-glass"
     role="contentinfo"
     :aria-label="text.regionLabel"
-    :radius="33"
-    :scale="-45"
-    :blur="16"
-    :frost="0.12"
-    :lightness="60"
-    :alpha="0.85"
+    :radius="34"
+    :border="0.09"
+    :scale="-86"
+    :r-offset="0"
+    :g-offset="8"
+    :b-offset="18"
+    :blur="12"
+    :frost="0.08"
+    :lightness="92"
+    :alpha="0.72"
     :style="{
       position: 'fixed',
       bottom: '18px',
       left: 'calc(230px + ((100vw - 230px) / 2))',
       transform: 'translateX(-50%)',
-      width: 'min(840px, calc(100vw - 290px))',
+      width: 'min(860px, calc(100vw - 288px))',
       zIndex: 'var(--ncx-layer-player)'
     }"
   >
@@ -322,15 +326,17 @@ function toggleQueueDrawer(): void {
 
 <style scoped>
 .player-bar-glass {
-  --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 78%, transparent);
-  --ncx-player-bar-glass-stroke: color-mix(in srgb, white 60%, transparent);
+  --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 52%, transparent);
+  --ncx-player-bar-glass-stroke: color-mix(in srgb, white 68%, transparent);
   --ncx-player-bar-glass-shadow:
-    0 16px 36px rgb(0 0 0 / 12%),
-    0 4px 12px rgb(0 0 0 / 4%),
-    inset 0 1px 0 0 rgb(255 255 255 / 80%),
-    inset 0 -1px 0 0 rgb(0 0 0 / 4%);
-  --ncx-player-bar-track-bg: color-mix(in srgb, var(--ncx-color-text-primary) 13%, transparent);
-  --ncx-player-bar-thumb-shadow: 0 2px 6px rgb(20 20 24 / 18%);
+    0 18px 48px rgb(22 22 28 / 14%),
+    0 5px 16px rgb(22 22 28 / 6%),
+    inset 0 1px 0 0 rgb(255 255 255 / 82%),
+    inset 0 -1px 0 0 rgb(0 0 0 / 5%);
+  --ncx-player-bar-track-bg: color-mix(in srgb, var(--ncx-color-text-primary) 11%, transparent);
+  --ncx-player-bar-thumb-shadow:
+    0 2px 8px rgb(20 20 24 / 18%),
+    0 0 0 3px rgb(255 255 255 / 42%);
 
   color: var(--ncx-color-text-primary);
   isolation: isolate;
@@ -342,15 +348,21 @@ function toggleQueueDrawer(): void {
   position: relative;
   display: grid;
   width: 100%;
-  min-height: 66px;
-  padding: 10px 20px;
+  min-height: 78px;
+  padding: 12px 20px 14px;
   box-sizing: border-box;
-  grid-template-columns: minmax(130px, 1.2fr) auto minmax(180px, 1.8fr) minmax(170px, 1.2fr);
-  gap: var(--ncx-space-4, 16px);
+  grid-template-areas:
+    "track transport output"
+    "progress progress progress"
+    "notice notice notice";
+  grid-template-columns: minmax(160px, 1fr) auto minmax(170px, 1fr);
+  row-gap: var(--ncx-space-2, 8px);
+  column-gap: var(--ncx-space-4, 16px);
   align-items: center;
 }
 
 .player-track {
+  grid-area: track;
   min-width: 0;
 }
 
@@ -360,7 +372,7 @@ function toggleQueueDrawer(): void {
   color: var(--ncx-color-text-primary);
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   line-height: 18px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -391,6 +403,7 @@ function toggleQueueDrawer(): void {
 
 .player-transport {
   display: flex;
+  grid-area: transport;
   gap: var(--ncx-space-2, 8px);
   align-items: center;
   justify-content: center;
@@ -402,12 +415,15 @@ function toggleQueueDrawer(): void {
 
 .player-progress {
   display: flex;
-  gap: var(--ncx-space-2, 8px);
+  grid-area: progress;
+  gap: var(--ncx-space-3, 12px);
   align-items: center;
+  min-width: 0;
 }
 
 .player-output {
   display: flex;
+  grid-area: output;
   gap: var(--ncx-space-2, 8px);
   align-items: center;
   min-width: 0;
@@ -419,6 +435,7 @@ function toggleQueueDrawer(): void {
 .player-progress-control {
   flex: 1;
   min-width: 0;
+  padding: 0 var(--ncx-space-1, 4px);
 }
 
 .player-time,
@@ -429,8 +446,12 @@ function toggleQueueDrawer(): void {
 }
 
 .player-time {
-  min-width: 36px;
-  text-align: center;
+  min-width: 38px;
+  text-align: left;
+}
+
+.player-time:last-child {
+  text-align: right;
 }
 
 .player-status {
@@ -446,7 +467,7 @@ function toggleQueueDrawer(): void {
 
 .player-slider-volume {
   flex: none;
-  width: 72px;
+  width: 78px;
   min-width: 0;
 }
 
@@ -460,7 +481,7 @@ function toggleQueueDrawer(): void {
 .player-progress-bar :deep(.ncx-common-progress-track),
 .player-progress-loading :deep(.ncx-common-progress-track) {
   background: var(--ncx-player-bar-track-bg);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 7%);
 }
 
 .player-slider :deep(.ncx-common-slider-fill),
@@ -470,17 +491,18 @@ function toggleQueueDrawer(): void {
 }
 
 .player-slider :deep(.ncx-common-slider-thumb) {
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   background: color-mix(in srgb, var(--ncx-color-accent) 92%, white 8%);
   box-shadow: var(--ncx-player-bar-thumb-shadow);
 }
 
 .player-notice {
   display: flex;
-  grid-column: 1 / -1;
+  grid-area: notice;
   gap: var(--ncx-space-2, 8px);
   align-items: center;
+  justify-self: center;
   margin: var(--ncx-space-1, 4px) 0 0;
   padding: var(--ncx-space-1-5, 6px) var(--ncx-space-3, 12px);
   border: 1px solid color-mix(in srgb, var(--ncx-color-warning) 22%, transparent);
@@ -492,20 +514,27 @@ function toggleQueueDrawer(): void {
 
 @media (prefers-color-scheme: dark) {
   .player-bar-glass {
-    --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 82%, transparent);
-    --ncx-player-bar-glass-stroke: color-mix(in srgb, white 16%, transparent);
+    --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 58%, transparent);
+    --ncx-player-bar-glass-stroke: color-mix(in srgb, white 18%, transparent);
     --ncx-player-bar-glass-shadow:
-      0 20px 48px rgb(0 0 0 / 45%),
-      0 6px 16px rgb(0 0 0 / 30%),
+      0 20px 52px rgb(0 0 0 / 48%),
+      0 6px 18px rgb(0 0 0 / 32%),
       inset 0 1px 0 0 rgb(255 255 255 / 20%),
       inset 0 -1px 0 0 rgb(0 0 0 / 25%);
-    --ncx-player-bar-track-bg: color-mix(in srgb, white 16%, transparent);
+    --ncx-player-bar-track-bg: color-mix(in srgb, white 15%, transparent);
+    --ncx-player-bar-thumb-shadow:
+      0 2px 8px rgb(0 0 0 / 32%),
+      0 0 0 3px rgb(255 255 255 / 14%);
   }
 }
 
 @media (width < 1100px) {
   .player-bar-content {
-    grid-template-columns: minmax(120px, 1fr) auto minmax(160px, 1.4fr);
+    grid-template-areas:
+      "track transport"
+      "progress progress"
+      "notice notice";
+    grid-template-columns: minmax(120px, 1fr) auto;
     gap: var(--ncx-space-2, 8px);
     padding-inline: var(--ncx-space-3, 12px);
   }

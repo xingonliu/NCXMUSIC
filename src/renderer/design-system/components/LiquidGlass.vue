@@ -2,8 +2,8 @@
 // ==========================================
 // Inspira UI - LiquidGlass 组件
 //
-// 基于 SVG 滤镜与 CSS Glassmorphism 实现的高光流体玻璃拟态效果组件。
-// 参考 Apple Liquid Glass 视觉效果。
+// 基于 SVG displacement map 与 backdrop-filter 的液态玻璃材质。
+// 滤镜只作用在背景层，内容层保持原始清晰度。
 // ==========================================
 
 import { computed, useId } from 'vue'
@@ -48,25 +48,31 @@ export interface LiquidGlassProps {
 
 /** 组件默认属性定义 */
 const props = withDefaults(defineProps<LiquidGlassProps>(), {
-  radius: 33,
+  radius: 16,
   border: 0.07,
-  lightness: 78,
+  lightness: 50,
   blend: 'difference',
   xChannel: 'R',
   yChannel: 'B',
-  alpha: 0.82,
-  blur: 24,
+  alpha: 0.93,
+  blur: 11,
   rOffset: 0,
   gOffset: 10,
   bOffset: 20,
-  scale: -20,
-  frost: 0.15,
+  scale: -180,
+  frost: 0.05,
   class: '',
   containerClass: ''
 })
 
 /** 产生唯一 SVG 滤镜 ID */
 const rawId = useId()
+
+/** SVG displacement map 的基准画布尺寸。 */
+const DISPLACEMENT_MAP_SIZE = 100
+
+/** backdrop-filter 的饱和度倍率，稳定模拟玻璃对背景的增强。 */
+const BACKDROP_SATURATION = 180
 
 // ========= 计算属性 =========
 
@@ -75,12 +81,104 @@ const filterId = computed(() => `inspira-liquid-glass-${rawId.replace(/:/g, '')}
 
 /** 容器圆角样式 */
 const borderRadiusStyle = computed(() => `${props.radius}px`)
+
+/** 边缘折射带宽度；限定在合理范围内避免大圆角时产生撕裂。 */
+const borderInset = computed(() => {
+  return clamp(props.border, 0.01, 0.45) * DISPLACEMENT_MAP_SIZE
+})
+
+/** SVG map 内的圆角百分比。 */
+const mapRadius = computed(() => {
+  return clamp((props.radius / DISPLACEMENT_MAP_SIZE) * 100, 0, 50)
+})
+
+/** CSS 玻璃背景颜色，按文档 lightness / alpha 映射到 HSL。 */
+const glassTint = computed(() => {
+  return `hsl(0 0% ${clamp(props.lightness, 0, 100)}% / ${clamp(props.alpha, 0, 1)})`
+})
+
+/** CSS 磨砂底色，按文档 frost 控制强度。 */
+const frostTint = computed(() => {
+  return `hsl(0 0% ${clamp(props.lightness, 0, 100)}% / ${clamp(props.frost, 0, 1)})`
+})
+
+/** 组件根节点样式，注入滤镜和玻璃材质变量。 */
+const containerStyle = computed(() => {
+  return {
+    borderRadius: borderRadiusStyle.value,
+    '--inspira-liquid-glass-filter': `url(#${filterId.value})`,
+    '--inspira-liquid-glass-radius': borderRadiusStyle.value,
+    '--inspira-liquid-glass-blur': `${Math.max(0, props.blur)}px`,
+    '--inspira-liquid-glass-saturation': `${BACKDROP_SATURATION}%`,
+    '--inspira-liquid-glass-tint': glassTint.value,
+    '--inspira-liquid-glass-frost': frostTint.value
+  }
+})
+
+/** SVG displacement map 的 data URI，供 feImage 稳定引用。 */
+const displacementMapHref = computed(() => {
+  const inset = borderInset.value
+  const innerSize = DISPLACEMENT_MAP_SIZE - inset * 2
+  const innerRadius = Math.max(0, mapRadius.value - inset)
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${DISPLACEMENT_MAP_SIZE} ${DISPLACEMENT_MAP_SIZE}">
+      <defs>
+        <linearGradient id="red" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="rgb(255,0,0)" />
+          <stop offset="50%" stop-color="rgb(128,0,0)" />
+          <stop offset="100%" stop-color="rgb(0,0,0)" />
+        </linearGradient>
+        <linearGradient id="blue" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="rgb(0,0,255)" />
+          <stop offset="50%" stop-color="rgb(0,0,128)" />
+          <stop offset="100%" stop-color="rgb(0,0,0)" />
+        </linearGradient>
+        <mask id="edge">
+          <rect width="100" height="100" rx="${mapRadius.value}" fill="white" />
+          <rect x="${inset}" y="${inset}" width="${innerSize}" height="${innerSize}" rx="${innerRadius}" fill="black" />
+        </mask>
+      </defs>
+      <rect width="100" height="100" fill="rgb(128,128,128)" />
+      <rect width="100" height="100" rx="${mapRadius.value}" fill="url(#red)" mask="url(#edge)" />
+      <rect width="100" height="100" rx="${mapRadius.value}" fill="url(#blue)" mask="url(#edge)" opacity="0.82" style="mix-blend-mode:${props.blend}" />
+    </svg>
+  `
+
+  return `data:image/svg+xml,${encodeSvg(svg)}`
+})
+
+// ========= 函数 =========
+
+/**
+ * 把数值限制在指定闭区间。
+ *
+ * @param value 待限制的数值
+ * @param min 最小值
+ * @param max 最大值
+ */
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value))
+}
+
+/**
+ * 压缩并转义 SVG 字符串，生成可放入 feImage href 的 data URI 内容。
+ *
+ * @param svg 未压缩的 SVG 字符串
+ */
+function encodeSvg(svg: string): string {
+  return encodeURIComponent(svg.replace(/\s+/g, ' ').trim())
+    .replace(/%20/g, ' ')
+    .replace(/%3D/g, '=')
+    .replace(/%3A/g, ':')
+    .replace(/%2F/g, '/')
+    .replace(/%22/g, "'")
+}
 </script>
 
 <template>
   <div
     :class="['inspira-liquid-glass-container', props.containerClass]"
-    :style="{ borderRadius: borderRadiusStyle }"
+    :style="containerStyle"
   >
     <!-- SVG 滤镜定义（非渲染节点） -->
     <svg
@@ -96,25 +194,82 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
           height="120%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.02"
-            numOctaves="2"
-            result="noise"
+          <feImage
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+            result="DISPLACEMENT_MAP"
+            :href="displacementMapHref"
+            preserveAspectRatio="none"
           />
           <feDisplacementMap
             in="SourceGraphic"
-            in2="noise"
-            :scale="props.scale"
+            in2="DISPLACEMENT_MAP"
+            :scale="props.scale + props.rOffset"
             :xChannelSelector="props.xChannel"
             :yChannelSelector="props.yChannel"
-            result="displaced"
+            result="RED_DISPLACED"
+          />
+          <feColorMatrix
+            in="RED_DISPLACED"
+            type="matrix"
+            values="1 0 0 0 0
+                    0 0 0 0 0
+                    0 0 0 0 0
+                    0 0 0 1 0"
+            result="RED_CHANNEL"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="DISPLACEMENT_MAP"
+            :scale="props.scale + props.gOffset"
+            :xChannelSelector="props.xChannel"
+            :yChannelSelector="props.yChannel"
+            result="GREEN_DISPLACED"
+          />
+          <feColorMatrix
+            in="GREEN_DISPLACED"
+            type="matrix"
+            values="0 0 0 0 0
+                    0 1 0 0 0
+                    0 0 0 0 0
+                    0 0 0 1 0"
+            result="GREEN_CHANNEL"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="DISPLACEMENT_MAP"
+            :scale="props.scale + props.bOffset"
+            :xChannelSelector="props.xChannel"
+            :yChannelSelector="props.yChannel"
+            result="BLUE_DISPLACED"
+          />
+          <feColorMatrix
+            in="BLUE_DISPLACED"
+            type="matrix"
+            values="0 0 0 0 0
+                    0 0 0 0 0
+                    0 0 1 0 0
+                    0 0 0 1 0"
+            result="BLUE_CHANNEL"
+          />
+          <feBlend
+            in="RED_CHANNEL"
+            in2="GREEN_CHANNEL"
+            :mode="props.blend"
+            result="RED_GREEN_CHANNELS"
+          />
+          <feBlend
+            in="RED_GREEN_CHANNELS"
+            in2="BLUE_CHANNEL"
+            :mode="props.blend"
           />
         </filter>
       </defs>
     </svg>
 
-    <!-- 玻璃表面高光与底图覆盖层 -->
+    <!-- backdrop-filter 层：只折射背景，不影响内容可读性。 -->
     <div
       class="inspira-liquid-glass-backdrop"
       :style="{
@@ -122,12 +277,11 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
       }"
     />
 
-    <!-- 液态玻璃边缘折射与光泽层 -->
+    <!-- 高光与边缘描边层：模拟液态玻璃边界聚光。 -->
     <div
-      class="inspira-liquid-glass-refraction"
+      class="inspira-liquid-glass-highlight"
       :style="{
-        borderRadius: borderRadiusStyle,
-        filter: `url(#${filterId})`
+        borderRadius: borderRadiusStyle
       }"
     />
 
@@ -142,6 +296,7 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
 .inspira-liquid-glass-container {
   position: relative;
   isolation: isolate;
+  overflow: visible;
 }
 
 .inspira-liquid-glass-svg-defs {
@@ -157,12 +312,20 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
 .inspira-liquid-glass-backdrop {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
+  overflow: hidden;
   pointer-events: none;
-  background-color: var(--ncx-player-bar-glass-fill, color-mix(in srgb, var(--ncx-color-surface-overlay, #fff) 82%, transparent));
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid var(--ncx-player-bar-glass-stroke, color-mix(in srgb, white 60%, transparent));
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 52%), rgb(255 255 255 / 12%) 46%, rgb(255 255 255 / 30%)),
+    var(--ncx-player-bar-glass-fill, var(--inspira-liquid-glass-frost));
+  backdrop-filter:
+    var(--inspira-liquid-glass-filter)
+    blur(var(--inspira-liquid-glass-blur))
+    saturate(var(--inspira-liquid-glass-saturation));
+  -webkit-backdrop-filter:
+    blur(var(--inspira-liquid-glass-blur))
+    saturate(var(--inspira-liquid-glass-saturation));
+  border: 1px solid var(--ncx-player-bar-glass-stroke, rgb(255 255 255 / 46%));
   box-shadow: var(
     --ncx-player-bar-glass-shadow,
     0 16px 36px rgb(0 0 0 / 15%),
@@ -173,22 +336,66 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
   transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
 }
 
-.inspira-liquid-glass-refraction {
+.inspira-liquid-glass-backdrop::before {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  content: "";
   pointer-events: none;
-  border: 1.5px solid color-mix(in srgb, white 40%, transparent);
+  background: var(--inspira-liquid-glass-tint);
+  mix-blend-mode: soft-light;
+  opacity: 0.38;
+}
+
+.inspira-liquid-glass-highlight {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
   box-shadow:
-    inset 0 1.5px 3px rgb(255 255 255 / 50%),
-    inset 0 -1.5px 3px rgb(0 0 0 / 10%);
-  opacity: 0.85;
+    inset 0 0 0 1px rgb(255 255 255 / 44%),
+    inset 0 1.5px 2.5px rgb(255 255 255 / 66%),
+    inset 0 -1.5px 2.5px rgb(0 0 0 / 8%);
+}
+
+.inspira-liquid-glass-highlight::before,
+.inspira-liquid-glass-highlight::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+}
+
+.inspira-liquid-glass-highlight::before {
+  inset: 1px;
+  background:
+    linear-gradient(120deg, rgb(255 255 255 / 70%) 0%, transparent 28%),
+    radial-gradient(circle at 18% 0%, rgb(255 255 255 / 52%), transparent 38%);
+  opacity: 0.58;
+}
+
+.inspira-liquid-glass-highlight::after {
+  right: 14%;
+  bottom: -38%;
+  width: 46%;
+  height: 70%;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 30%);
+  filter: blur(22px);
+  opacity: 0.42;
 }
 
 .inspira-liquid-glass-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: 100%;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .inspira-liquid-glass-backdrop {
+    background:
+      linear-gradient(135deg, rgb(255 255 255 / 72%), rgb(255 255 255 / 44%)),
+      var(--inspira-liquid-glass-frost);
+  }
 }
 </style>
