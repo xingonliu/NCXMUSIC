@@ -125,7 +125,7 @@ function toggleQueueDrawer(): void {
 
 <template>
   <LiquidGlass
-    class="player-bar-glass"
+    class="player-bar-material player-bar-glass"
     role="contentinfo"
     :aria-label="text.regionLabel"
     padding="10px 18px"
@@ -136,10 +136,10 @@ function toggleQueueDrawer(): void {
       width: 'min(840px, calc(100vw - 290px))',
       zIndex: 'var(--ncx-layer-player)'
     }"
-    :displacement-scale="35"
+    :displacement-scale="0"
     :blur-amount="0"
     :saturation="130"
-    :aberration-intensity="2"
+    :aberration-intensity="0"
     :elasticity="0"
     :corner-radius="100"
   >
