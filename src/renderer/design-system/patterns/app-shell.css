@@ -36,7 +36,7 @@
   min-width: 0;
   padding: 14px 10px;
   border: none;
-  border-radius: var(--ncx-radius-xl);
+  border-radius: var(--ncx-radius-lg);
   background: var(--ncx-color-surface);
   box-shadow: var(--ncx-shadow-elevation-1);
   -webkit-app-region: drag;
