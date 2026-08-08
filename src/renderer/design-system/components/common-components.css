@@ -76,6 +76,24 @@
   transform: scale(0.97);
 }
 
+.ncx-common-button-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ncx-space-1-5, 6px);
+  line-height: 1;
+}
+
+.ncx-common-button svg,
+.ncx-common-button-text svg,
+.ncx-common-header-button svg,
+.ncx-common-header-group-item svg,
+.ncx-common-icon-button svg,
+.ncx-common-link-button svg {
+  display: block;
+  flex-shrink: 0;
+}
+
 /* 尺寸规格 (Control Heights aligned with macOS HIG: 24px / 32px / 38px) */
 .ncx-common-button-compact {
   height: 24px;
