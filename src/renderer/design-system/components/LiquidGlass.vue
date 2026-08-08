@@ -128,8 +128,8 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
       :style="{
         borderRadius: borderRadiusStyle,
         backgroundColor: overlayColor,
-        backdropFilter: `url(#${filterId}) blur(${props.blur}px)`,
-        WebkitBackdropFilter: `url(#${filterId}) blur(${props.blur}px)`
+        backdropFilter: `blur(${props.blur}px) url(#${filterId})`,
+        WebkitBackdropFilter: `blur(${props.blur}px) url(#${filterId})`
       }"
     />
 
@@ -149,10 +149,12 @@ const borderRadiusStyle = computed(() => `${props.radius}px`)
 
 .inspira-liquid-glass-svg-defs {
   position: absolute;
-  width: 0;
-  height: 0;
+  top: -9999px;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
   pointer-events: none;
-  opacity: 0;
 }
 
 .inspira-liquid-glass-backdrop {

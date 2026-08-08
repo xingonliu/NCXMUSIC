@@ -130,15 +130,16 @@ function toggleQueueDrawer(): void {
     role="contentinfo"
     :aria-label="text.regionLabel"
     :radius="33"
-    :scale="-120"
+    :scale="-25"
     :blur="16"
     :frost="0.08"
     :lightness="50"
     :alpha="0.85"
     :style="{
       position: 'fixed',
-      top: 'calc(100vh - 49px)',
+      bottom: '18px',
       left: 'calc(230px + ((100vw - 230px) / 2))',
+      transform: 'translateX(-50%)',
       width: 'min(840px, calc(100vw - 290px))',
       zIndex: 'var(--ncx-layer-player)'
     }"
