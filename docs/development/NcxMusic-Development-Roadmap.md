@@ -82,6 +82,8 @@ Phase 0 技术门禁
 > 执行记录（2026-08-06）：T-03 为 `pass`。`music.resolve-url` 跨进程契约、Utility 侧 guest-mode 解析与音质降级、播放域状态机与根层 AudioHost 已实现；187 条测试（含 6 条真实网络集成测试）覆盖代次隔离、切歌竞态、错误映射与脱敏；Smoke 确认免费曲目（457264737, fee=0）无需登录即可经 IPC 解析 URL 并由 `<audio>` 成功解码播放。**未验证**：已登录账号的高码率格式、`Range`/206/416 真实行为、双平台后台/锁屏/睡眠恢复。不影响 T-03 `pass`。
 >
 > 执行记录（2026-08-06）：T-05 为 `pass`。Shell 契约、PowerShell AST 与 zsh 保守模板分类、授权工作区路径边界、最小环境、1 MiB/通道输出上限、64 KiB 模型结果、统一脱敏、流式背压、Windows `taskkill /t` 与 macOS 进程组回收均已实现并测试；`pnpm t05:spike`、`pnpm lint`、`pnpm test`、`pnpm build` 与 `pnpm package:dir` 通过。Shell Tool 当前仍默认 S1，未接入审批 UI 时返回 `rejected`，产品化接入留到 Agent 阶段。
+>
+> 执行记录（2026-08-08）：T-07 为 `provisional-pass`。Chromium Media Session 桥已接入唯一 `PlaybackCoordinator`，元数据、封面、播放状态、进度和系统 play/pause/上一首/下一首/seek 动作已由 `pnpm t07:spike` 覆盖；Windows SMTC、macOS Now Playing、锁屏与蓝牙媒体键仍需真机矩阵验证，若 Web Media Session 不足再按 ADR-007 增加最小原生桥。
 
 ### 完成门禁
 

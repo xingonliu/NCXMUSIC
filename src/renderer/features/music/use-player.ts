@@ -13,6 +13,10 @@ import type {
 } from '../../../domains/player/types'
 import { HtmlAudioAdapter } from './html-audio-adapter'
 import { IpcTrackResolver } from './ipc-track-resolver'
+import {
+  createSystemMediaSessionBridge,
+  type SystemMediaSessionBridge
+} from './system-media-session'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 变量区
@@ -25,9 +29,15 @@ import { IpcTrackResolver } from './ipc-track-resolver'
  * 主播放、试听与 Agent 点播全部复用这一套，不创建第二个内容播放器。
  */
 interface PlayerRuntime {
+  /** 唯一播放编排器，所有播放命令都必须经过它。 */
   coordinator: PlaybackCoordinator
+  /** 唯一播放引擎，持有媒体状态事实源。 */
   engine: PlaybackEngine
+  /** 唯一 HTMLAudioElement 适配器。 */
   adapter: HtmlAudioAdapter
+  /** Chromium Media Session / 系统媒体中心桥。 */
+  systemMedia: SystemMediaSessionBridge
+  /** Vue 只读快照引用，供 UI 消费。 */
   snapshot: Ref<PlayerSnapshot>
   /** 最近一次「曲目不可播放」提示，UI 消费后可清空 */
   notice: Ref<string | null>
@@ -46,6 +56,7 @@ function createRuntime(): PlayerRuntime {
   const queue = new QueueController()
   const resolver = new IpcTrackResolver()
   const coordinator = new PlaybackCoordinator(queue, engine, resolver)
+  const systemMedia = createSystemMediaSessionBridge(coordinator)
 
   const snapshot = ref<PlayerSnapshot>(coordinator.getSnapshot())
   const notice = ref<string | null>(null)
@@ -58,7 +69,7 @@ function createRuntime(): PlayerRuntime {
     notice.value = event.message
   })
 
-  return { coordinator, engine, adapter, snapshot, notice }
+  return { coordinator, engine, adapter, systemMedia, snapshot, notice }
 }
 
 /**
@@ -123,7 +134,8 @@ export function usePlayer(): {
  */
 export function disposePlayer(): void {
   if (!runtime) return
-  // 顺序固定：先停编排（取消在途解析）→ 再停引擎 → 最后解绑原生监听器
+  // 顺序固定：先解绑系统媒体入口 → 停编排 → 停引擎 → 解绑原生监听器
+  runtime.systemMedia.dispose()
   runtime.coordinator.dispose()
   runtime.engine.dispose()
   runtime.adapter.dispose()

@@ -3231,3 +3231,5 @@ export const CommonResponsiveGrid = defineComponent({
     return () => h('div', { class: 'ncx-common-responsive-grid' }, slots.default?.())
   }
 })
+
+

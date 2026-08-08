@@ -33,6 +33,7 @@ jobs:
       - run: pnpm build
       - run: pnpm t05:spike
       - run: node scripts/run-window-chrome-spike.mjs
+      - run: pnpm t07:spike
       - run: pnpm t02:verify-boundaries
       - run: pnpm t02:spike -- --scenario guest --target build --profile ci-guest
       - run: pnpm t02:spike -- --scenario invalid --target build --profile ci-invalid
