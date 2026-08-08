@@ -343,12 +343,9 @@ function toggleQueueDrawer(): void {
     box-shadow:
       0 0 2px 1px rgb(255 255 255 / 88%) inset,
       0 0 10px 4px rgb(255 255 255 / 58%) inset,
-      0 4px 16px rgb(255 255 255 / 42%),
-      0 8px 24px rgb(255 255 255 / 34%),
-      0 16px 56px rgb(255 255 255 / 24%),
+      0 6px 18px rgb(35 38 45 / 12%),
       0 4px 16px rgb(255 255 255 / 42%) inset,
-      0 8px 24px rgb(255 255 255 / 30%) inset,
-      0 16px 56px rgb(255 255 255 / 18%) inset !important;
+      0 8px 24px rgb(255 255 255 / 24%) inset !important;
   }
 }
 
