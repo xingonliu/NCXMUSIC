@@ -52,8 +52,8 @@
 
 ## 已知非 T-07 阻塞
 
-- `pnpm lint` 当前仍会扫描 `src/renderer/public/assets/shader-worker-CJN-6C3l.js`，该 public 产物缺少 worker/browser lint 环境，报 `self` / `ImageData` `no-undef`。
-- `pnpm test` 当前存在范围外失败：T-03 真实网络集成缺少 `xeapi public key`；`tests/unit/shell-policy-classifier.test.ts` 的一个 Windows 路径逃逸断言返回 allow。
+- 截至 2026-08-08 Phase 1 收尾，`pnpm lint` 与默认 `pnpm test` 已通过。
+- T-03 真实网易云网络集成测试改为 `NCXMUSIC_RUN_REAL_NETWORK_TESTS=1` 显式启用；默认测试套件不再依赖外部 xeapi public key。
 
 ## 关联决策
 

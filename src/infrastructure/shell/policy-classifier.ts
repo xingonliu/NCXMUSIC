@@ -194,9 +194,11 @@ export class ShellPolicyClassifier {
 
   /** 对 Shell Tool 输入做确定性分类，返回 allow/ask/deny。 */
   async classify(input: ExecuteShellInput): Promise<ShellPolicyDecision> {
+    /** 按当前 Shell 平台归一后的执行目录。 */
+    const normalizedCwd = input.cwd === undefined ? undefined : this.normalizePathLikeToken(input.cwd)
     let workspace: ResolvedShellWorkspace
     try {
-      workspace = this.workspaceRegistry.resolve(input.workspaceId, input.cwd)
+      workspace = this.workspaceRegistry.resolve(input.workspaceId, normalizedCwd)
     } catch (error) {
       const reason = error instanceof Error ? error.message : 'Shell workspace boundary rejected the command'
       return this.decision('deny', reason, ['unknown'], 'unknown', input.command)
@@ -286,9 +288,15 @@ export class ShellPolicyClassifier {
     }
 
     for (const path of collectPotentialPathArguments(parsed)) {
-      this.workspaceRegistry.resolvePathArgument(path, workspace)
+      this.workspaceRegistry.resolvePathArgument(this.normalizePathLikeToken(path), workspace)
     }
     return undefined
+  }
+
+  /** 将命令中的平台路径分隔符转换为当前进程可验证的形式。 */
+  private normalizePathLikeToken(token: string): string {
+    if (this.platform !== 'win32') return token
+    return token.replaceAll('\\', '/')
   }
 
   private classifyTemplate(parsed: ParsedCommand, workspace: ResolvedShellWorkspace): TemplateDecision {

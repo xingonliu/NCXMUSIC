@@ -117,6 +117,8 @@ Phase 0 技术门禁
 - 业务示例页只使用公共组件，无直接 Reka UI 依赖和任意颜色/Z-Index。
 - MessagePort ping、错误、取消、Renderer 重载握手和 Utility Snapshot 有契约测试。
 
+> 执行记录（2026-08-08）：Phase 1 已 `pass`。工程目录、TypeScript/ESLint/Stylelint/Vitest/Playwright/架构边界、共享 Zod Contract、Runtime MessagePort ping/error/cancel/reload handshake/snapshot 测试、WindowChrome/AppShell/左侧导航、Design Tokens 与通用 UI 组件基线均已落地；新增 `SQLiteMigrationDatabase` 抽象、`runSqliteMigrations()`、应用配置 Schema 版本和内存迁移夹具测试，满足 DAT-008～010 的工程基线。`pnpm typecheck`、`pnpm lint`、`pnpm test` 通过；T-03 真实网易云网络集成改为 `NCXMUSIC_RUN_REAL_NETWORK_TESTS=1` 显式启用，避免普通门禁依赖外部 xeapi public key。
+
 ## 6. Phase 2：账户、存储与 Music Service
 
 依赖 API-A。

@@ -18,6 +18,7 @@
     "tests/**/*.ts"
   ],
   "exclude": [
-    "tests/unit/player-bar.test.ts"
+    "tests/unit/player-bar.test.ts",
+    "tests/unit/design-system-lab-page.test.ts"
   ]
 }

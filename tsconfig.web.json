@@ -9,6 +9,7 @@
     "src/renderer/**/*.vue",
     "src/shared/**/*.ts",
     "src/domains/player/**/*.ts",
-    "tests/unit/player-bar.test.ts"
+    "tests/unit/player-bar.test.ts",
+    "tests/unit/design-system-lab-page.test.ts"
   ]
 }

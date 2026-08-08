@@ -18,9 +18,12 @@ const FREE_TRACK_ID = '457264737'
 /** 需要登录才能播放完整歌曲的付费曲目（fee=1，无登录时返回 30 秒试听） */
 const PAID_TRACK_ID = '449818741'
 
+/** 是否执行依赖真实网易云网络和 xeapi public key 的访客播放集成测试 */
+const shouldRunRealNetworkTests = process.env['NCXMUSIC_RUN_REAL_NETWORK_TESTS'] === '1'
+
 // ── 测试区 ──
 
-describe('TrackUrlService 访客模式（T-03 真实网络）', () => {
+describe.skipIf(!shouldRunRealNetworkTests)('TrackUrlService 访客模式（T-03 真实网络）', () => {
   /**
    * 构造不带活跃租约的 CredentialLeaseService。
    * TrackUrlService 应自动检测到 hasActiveLease() === false 并以空 Cookie 调用 API。

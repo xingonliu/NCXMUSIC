@@ -17,14 +17,16 @@ describe('DesignSystemLabPage 通用组件交互测试页规范测试', () => {
 
     /** 验证大类 1 到 8 的标题节点文本。 */
     const categoryTitles = wrapper.findAll('.ncx-design-lab-category-title h2')
-    expect(categoryTitles[0].text()).toContain('操作类组件')
-    expect(categoryTitles[1].text()).toContain('输入类组件')
-    expect(categoryTitles[2].text()).toContain('选择类组件')
-    expect(categoryTitles[3].text()).toContain('展示类组件')
-    expect(categoryTitles[4].text()).toContain('导航与菜单类组件')
-    expect(categoryTitles[5].text()).toContain('状态与反馈类组件')
-    expect(categoryTitles[6].text()).toContain('浮层类组件')
-    expect(categoryTitles[7].text()).toContain('容器与高级布局类组件')
+    expect(categoryTitles.map((title) => title.text())).toEqual([
+      '操作类组件 (Actions)',
+      '输入类组件 (Inputs)',
+      '选择类组件 (Selections)',
+      '展示类组件 (Display)',
+      '导航与菜单类组件 (Navigation & Menus)',
+      '状态与反馈类组件 (Status & Feedback)',
+      '浮层类组件 (Overlays)',
+      '容器与高级布局类组件 (Containers & Layout)'
+    ])
   })
 
   it('应当包含规范的小类分隔头与具体组件卡片', () => {
