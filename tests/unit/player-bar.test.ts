@@ -8,6 +8,12 @@ import { disposePlayer } from '../../src/renderer/features/music/use-player'
 
 // ========= 变量 =========
 
+/** 测试只需要读取命名 props 的组件 wrapper 最小形状。 */
+type PropsReadableWrapper = {
+  /** 读取指定 props 名称的值。 */
+  props: (name: string) => unknown
+}
+
 // ========= 生命周期 =========
 
 describe('PlayerBar 控件区域 UI 规范测试', () => {
@@ -41,8 +47,8 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
   it('使用 LiquidGlass 作为播放器控制栏材质层', () => {
     const wrapper = mount(PlayerBar)
 
-    expect(wrapper.find('.player-bar-material').exists()).toBe(true)
-    expect(wrapper.find('.player-bar-material .glass').exists()).toBe(true)
+    expect(wrapper.find('.player-bar-glass').exists()).toBe(true)
+    expect(wrapper.find('.inspira-liquid-glass-backdrop').exists()).toBe(true)
   })
 
   it('播放/暂停 icon 按钮具有 prominent 尺寸与 primary 变体', () => {
@@ -73,10 +79,14 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     const output = wrapper.find('.player-output')
 
     /** 传输控制区 icon 按钮组件。 */
-    const transportButtons = transport.findAllComponents({ name: '通用组件IconButton' })
+    const transportButtons = transport.findAllComponents({
+      name: '通用组件IconButton'
+    }) as PropsReadableWrapper[]
 
     /** 输出控制区 icon 按钮组件。 */
-    const outputButtons = output.findAllComponents({ name: '通用组件IconButton' })
+    const outputButtons = output.findAllComponents({
+      name: '通用组件IconButton'
+    }) as PropsReadableWrapper[]
 
     expect(transportButtons.map((button) => button.props('tooltipPlacement'))).toEqual(['right', 'right', 'left', 'left'])
     expect(outputButtons.map((button) => button.props('tooltipPlacement'))).toEqual(['left', 'left'])

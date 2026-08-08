@@ -27,12 +27,12 @@
     "t02:spike": "node scripts/run-login-spike.mjs",
     "t02:verify-boundaries": "node scripts/verify-auth-boundaries.mjs",
     "t05:spike": "node scripts/run-shell-spike.mjs",
+    "t07:spike": "node scripts/run-system-media-spike.mjs",
     "release": "pnpm build && electron-builder --publish always"
   },
   "dependencies": {
     "@lucide/vue": "1.28.0",
     "@neteasecloudmusicapienhanced/api": "4.39.0",
-    "@wxperia/liquid-glass-vue": "^1.0.9",
     "pinia": "3.0.4",
     "reka-ui": "2.10.1",
     "uiohook-napi": "1.5.5",

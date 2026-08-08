@@ -14,9 +14,6 @@ importers:
       '@neteasecloudmusicapienhanced/api':
         specifier: 4.39.0
         version: 4.39.0(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2)
-      '@wxperia/liquid-glass-vue':
-        specifier: ^1.0.9
-        version: 1.0.9(typescript@5.9.3)
       pinia:
         specifier: 3.0.4
         version: 3.0.4(typescript@5.9.3)(vue@3.5.41(typescript@5.9.3))
@@ -1282,9 +1279,6 @@ packages:
     resolution: {integrity: sha512-JRgY90Sz8DDtPMsaDflvPMp9xYk69JZAmbuDvAquUVXKr2gEjqtzGNTTthLfckH0BzBqvnu31gb4a8TGLRe79g==}
     peerDependencies:
       vue: ^3.5.0
-
-  '@wxperia/liquid-glass-vue@1.0.9':
-    resolution: {integrity: sha512-uCGz2GIxhjMY6OshbYUmu+mNKhwiaLb5tdeeM7fdCXhrSrIqxPAirvZ15BtGfTi0yYKmodU6ssBIdjLg0PUhag==}
 
   '@xmldom/xmldom@0.8.13':
     resolution: {integrity: sha512-KRYzxepc14G/CEpEGc3Yn+JKaAeT63smlDr+vjB8jRfgTBBI9wRj/nkQEO+ucV8p8I9bfKLWp37uHgFrbntPvw==}
@@ -5012,12 +5006,6 @@ snapshots:
   '@vueuse/shared@14.4.0(vue@3.5.41(typescript@5.9.3))':
     dependencies:
       vue: 3.5.41(typescript@5.9.3)
-
-  '@wxperia/liquid-glass-vue@1.0.9(typescript@5.9.3)':
-    dependencies:
-      vue: 3.5.41(typescript@5.9.3)
-    transitivePeerDependencies:
-      - typescript
 
   '@xmldom/xmldom@0.8.13': {}
 
