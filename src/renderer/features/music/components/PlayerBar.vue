@@ -338,7 +338,8 @@ function toggleQueueDrawer(): void {
 }
 
 @media (prefers-color-scheme: light) {
-  :deep(.player-bar-glass.effect) {
+  :deep(.player-bar-glass.effect),
+  .player-bar-glass {
     box-shadow:
       0 0 2px 1px rgb(255 255 255 / 88%) inset,
       0 0 10px 4px rgb(255 255 255 / 58%) inset,
