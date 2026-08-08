@@ -128,7 +128,7 @@ function toggleQueueDrawer(): void {
     class="player-bar-material player-bar-glass"
     role="contentinfo"
     :aria-label="text.regionLabel"
-    padding="10px 18px"
+    padding="10px 20px"
     :style="{
       position: 'fixed',
       top: 'calc(100vh - 49px)',
@@ -377,8 +377,8 @@ function toggleQueueDrawer(): void {
 
 .player-track-meta {
   display: flex;
-  gap: 6px;
-  margin: 2px 0 0;
+  gap: var(--ncx-space-1-5, 6px);
+  margin: var(--ncx-space-1, 4px) 0 0;
   overflow: hidden;
   font-size: 11px;
   color: var(--ncx-color-text-secondary);
@@ -388,7 +388,7 @@ function toggleQueueDrawer(): void {
 
 .player-quality {
   flex: none;
-  padding: 0 6px;
+  padding: 0 var(--ncx-space-1-5, 6px);
   border: 1px solid color-mix(in srgb, var(--ncx-color-accent) 18%, transparent);
   border-radius: var(--ncx-radius-full);
   color: var(--ncx-color-accent);
@@ -411,13 +411,13 @@ function toggleQueueDrawer(): void {
 
 .player-progress {
   display: flex;
-  gap: 8px;
+  gap: var(--ncx-space-2, 8px);
   align-items: center;
 }
 
 .player-output {
   display: flex;
-  gap: 10px;
+  gap: var(--ncx-space-2, 8px);
   align-items: center;
   min-width: 0;
   justify-self: end;
@@ -438,7 +438,7 @@ function toggleQueueDrawer(): void {
 }
 
 .player-time {
-  min-width: 32px;
+  min-width: 36px;
   text-align: center;
 }
 
@@ -455,7 +455,7 @@ function toggleQueueDrawer(): void {
 
 .player-slider-volume {
   flex: none;
-  width: 68px;
+  width: 72px;
   min-width: 0;
 }
 
@@ -488,10 +488,10 @@ function toggleQueueDrawer(): void {
 .player-notice {
   display: flex;
   grid-column: 1 / -1;
-  gap: 8px;
+  gap: var(--ncx-space-2, 8px);
   align-items: center;
-  margin: -2px 2px 0;
-  padding: 6px 10px;
+  margin: var(--ncx-space-1, 4px) 0 0;
+  padding: var(--ncx-space-1-5, 6px) var(--ncx-space-3, 12px);
   border: 1px solid color-mix(in srgb, var(--ncx-color-warning) 22%, transparent);
   border-radius: var(--ncx-radius-full);
   background: color-mix(in srgb, var(--ncx-color-warning) 10%, transparent);
@@ -516,7 +516,7 @@ function toggleQueueDrawer(): void {
   .player-bar-content {
     grid-template-columns: minmax(120px, 1fr) auto minmax(160px, 1.4fr);
     gap: var(--ncx-space-2, 8px);
-    padding-inline: 12px;
+    padding-inline: var(--ncx-space-3, 12px);
   }
 
   .player-output {
@@ -536,3 +536,4 @@ function toggleQueueDrawer(): void {
   }
 }
 </style>
+
