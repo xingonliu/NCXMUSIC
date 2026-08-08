@@ -48,7 +48,7 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     const wrapper = mount(PlayerBar)
 
     expect(wrapper.find('.player-bar-glass').exists()).toBe(true)
-    expect(wrapper.find('.inspira-liquid-glass-backdrop').exists()).toBe(true)
+    expect(wrapper.find('.effect .filter').exists()).toBe(true)
   })
 
   it('播放/暂停 icon 按钮具有 prominent 尺寸与 primary 变体', () => {

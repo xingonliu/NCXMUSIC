@@ -129,15 +129,16 @@ function toggleQueueDrawer(): void {
     role="contentinfo"
     :aria-label="text.regionLabel"
     :radius="34"
-    :border="0.09"
-    :scale="-86"
+    :border="0.07"
+    :displace="0.12"
+    :scale="-150"
     :r-offset="0"
-    :g-offset="8"
-    :b-offset="18"
-    :blur="12"
-    :frost="0.08"
-    :lightness="92"
-    :alpha="0.72"
+    :g-offset="10"
+    :b-offset="20"
+    :blur="11"
+    :frost="0.12"
+    :lightness="72"
+    :alpha="0.9"
     :style="{
       position: 'fixed',
       bottom: '18px',
@@ -326,13 +327,6 @@ function toggleQueueDrawer(): void {
 
 <style scoped>
 .player-bar-glass {
-  --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 52%, transparent);
-  --ncx-player-bar-glass-stroke: color-mix(in srgb, white 68%, transparent);
-  --ncx-player-bar-glass-shadow:
-    0 18px 48px rgb(22 22 28 / 14%),
-    0 5px 16px rgb(22 22 28 / 6%),
-    inset 0 1px 0 0 rgb(255 255 255 / 82%),
-    inset 0 -1px 0 0 rgb(0 0 0 / 5%);
   --ncx-player-bar-track-bg: color-mix(in srgb, var(--ncx-color-text-primary) 11%, transparent);
   --ncx-player-bar-thumb-shadow:
     0 2px 8px rgb(20 20 24 / 18%),
@@ -340,7 +334,6 @@ function toggleQueueDrawer(): void {
 
   color: var(--ncx-color-text-primary);
   isolation: isolate;
-  overflow: visible;
   -webkit-app-region: no-drag;
 }
 
@@ -348,16 +341,14 @@ function toggleQueueDrawer(): void {
   position: relative;
   display: grid;
   width: 100%;
-  min-height: 78px;
-  padding: 12px 20px 14px;
+  min-height: 66px;
+  padding: 10px 20px;
   box-sizing: border-box;
   grid-template-areas:
-    "track transport output"
-    "progress progress progress"
-    "notice notice notice";
-  grid-template-columns: minmax(160px, 1fr) auto minmax(170px, 1fr);
-  row-gap: var(--ncx-space-2, 8px);
-  column-gap: var(--ncx-space-4, 16px);
+    "track transport progress output"
+    "notice notice notice notice";
+  grid-template-columns: minmax(130px, 1.05fr) auto minmax(190px, 1.45fr) minmax(164px, 0.9fr);
+  gap: var(--ncx-space-4, 16px);
   align-items: center;
 }
 
@@ -416,7 +407,7 @@ function toggleQueueDrawer(): void {
 .player-progress {
   display: flex;
   grid-area: progress;
-  gap: var(--ncx-space-3, 12px);
+  gap: var(--ncx-space-2, 8px);
   align-items: center;
   min-width: 0;
 }
@@ -435,7 +426,6 @@ function toggleQueueDrawer(): void {
 .player-progress-control {
   flex: 1;
   min-width: 0;
-  padding: 0 var(--ncx-space-1, 4px);
 }
 
 .player-time,
@@ -446,12 +436,8 @@ function toggleQueueDrawer(): void {
 }
 
 .player-time {
-  min-width: 38px;
-  text-align: left;
-}
-
-.player-time:last-child {
-  text-align: right;
+  min-width: 36px;
+  text-align: center;
 }
 
 .player-status {
@@ -467,7 +453,7 @@ function toggleQueueDrawer(): void {
 
 .player-slider-volume {
   flex: none;
-  width: 78px;
+  width: 72px;
   min-width: 0;
 }
 
@@ -491,8 +477,8 @@ function toggleQueueDrawer(): void {
 }
 
 .player-slider :deep(.ncx-common-slider-thumb) {
-  width: 11px;
-  height: 11px;
+  width: 12px;
+  height: 12px;
   background: color-mix(in srgb, var(--ncx-color-accent) 92%, white 8%);
   box-shadow: var(--ncx-player-bar-thumb-shadow);
 }
@@ -502,7 +488,6 @@ function toggleQueueDrawer(): void {
   grid-area: notice;
   gap: var(--ncx-space-2, 8px);
   align-items: center;
-  justify-self: center;
   margin: var(--ncx-space-1, 4px) 0 0;
   padding: var(--ncx-space-1-5, 6px) var(--ncx-space-3, 12px);
   border: 1px solid color-mix(in srgb, var(--ncx-color-warning) 22%, transparent);
@@ -514,13 +499,6 @@ function toggleQueueDrawer(): void {
 
 @media (prefers-color-scheme: dark) {
   .player-bar-glass {
-    --ncx-player-bar-glass-fill: color-mix(in srgb, var(--ncx-color-surface-overlay) 58%, transparent);
-    --ncx-player-bar-glass-stroke: color-mix(in srgb, white 18%, transparent);
-    --ncx-player-bar-glass-shadow:
-      0 20px 52px rgb(0 0 0 / 48%),
-      0 6px 18px rgb(0 0 0 / 32%),
-      inset 0 1px 0 0 rgb(255 255 255 / 20%),
-      inset 0 -1px 0 0 rgb(0 0 0 / 25%);
     --ncx-player-bar-track-bg: color-mix(in srgb, white 15%, transparent);
     --ncx-player-bar-thumb-shadow:
       0 2px 8px rgb(0 0 0 / 32%),
@@ -531,10 +509,9 @@ function toggleQueueDrawer(): void {
 @media (width < 1100px) {
   .player-bar-content {
     grid-template-areas:
-      "track transport"
-      "progress progress"
-      "notice notice";
-    grid-template-columns: minmax(120px, 1fr) auto;
+      "track transport progress"
+      "notice notice notice";
+    grid-template-columns: minmax(120px, 0.9fr) auto minmax(150px, 1.2fr);
     gap: var(--ncx-space-2, 8px);
     padding-inline: var(--ncx-space-3, 12px);
   }
