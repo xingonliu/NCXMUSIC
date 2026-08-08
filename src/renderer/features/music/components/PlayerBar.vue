@@ -284,10 +284,6 @@ function toggleQueueDrawer(): void {
         >
           <ListMusic :size="15" />
         </CommonIconButton>
-        <span
-          class="player-status"
-          role="status"
-        >{{ statusLabel }}</span>
       </div>
 
       <!-- 不可播放提示：由 Coordinator 的 track-unplayable 事件驱动 -->
