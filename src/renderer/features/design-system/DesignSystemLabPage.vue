@@ -68,6 +68,25 @@ import './design-system-lab.css'
 
 // ========= 变量 =========
 
+/** 当前选中的分类 Tab（'all' 或 1 ~ 8）。 */
+const activeTab = ref<number | 'all'>('all')
+
+/** 组件搜索关键字。 */
+const searchFilter = ref('')
+
+/** 分类 Tab 选项列表。 */
+const categoryTabs = [
+  { id: 'all' as const, label: '全部 (8)' },
+  { id: 1 as const, label: '1. 操作类' },
+  { id: 2 as const, label: '2. 输入类' },
+  { id: 3 as const, label: '3. 选择类' },
+  { id: 4 as const, label: '4. 展示类' },
+  { id: 5 as const, label: '5. 导航与菜单' },
+  { id: 6 as const, label: '6. 状态与反馈' },
+  { id: 7 as const, label: '7. 浮层类' },
+  { id: 8 as const, label: '8. 容器与布局' }
+]
+
 /** UI Lab 单行输入示例值。 */
 const inputValue = ref('NcxMusic')
 
@@ -172,6 +191,20 @@ const progressValue = computed(() => Math.min(100, sliderValue.value))
 
 // ========= 函数 =========
 
+/** 判断大类在当前分类 Tab 及搜索过滤下是否显示。 */
+function isCategoryVisible(categoryId: number): boolean {
+  if (activeTab.value !== 'all' && activeTab.value !== categoryId) {
+    return false
+  }
+  return true
+}
+
+/** 切换分类 Tab。 */
+function selectTab(tabId: number | 'all'): void {
+  activeTab.value = tabId
+  recordAction(`切换分类: ${tabId === 'all' ? '全部' : `大类 ${tabId}`}`)
+}
+
 /** 记录 UI Lab 的最近交互。 */
 function recordAction(action: string): void {
   latestAction.value = action
@@ -192,28 +225,50 @@ function confirmDangerAction(): void {
 
 <template>
   <main class="ncx-design-lab">
-    <!-- 顶部 Hero 区域 -->
-    <section class="ncx-design-lab-hero">
-      <div>
-        <p class="ncx-design-lab-eyebrow">
-          Design System UI Lab
-        </p>
-        <h1>通用组件交互测试页</h1>
-        <p>
-          按规范分类分级展示通用组件：大类 → 小类 → 具体组件名 + 交互效果。
-        </p>
+    <!-- 顶部 Sticky 导航 & 筛选栏 -->
+    <header class="ncx-design-lab-nav-header">
+      <div class="ncx-design-lab-nav-top">
+        <div class="ncx-design-lab-nav-title-group">
+          <span class="ncx-design-lab-eyebrow">Design System UI Lab</span>
+          <h1 class="ncx-design-lab-title">通用组件交互测试页</h1>
+        </div>
+
+        <div class="ncx-design-lab-nav-actions">
+          <CommonSearchInput
+            v-model="searchFilter"
+            placeholder="搜索 35+ 通用组件..."
+            class="ncx-design-lab-search"
+            @clear="searchFilter = ''"
+          />
+          <div class="ncx-design-lab-status-pill">
+            <CommonBadge type="success">
+              READY
+            </CommonBadge>
+            <span class="ncx-design-lab-status-action">{{ latestAction }}</span>
+          </div>
+        </div>
       </div>
-      <CommonCard class="ncx-design-lab-status">
-        <CommonBadge type="success">
-          READY
-        </CommonBadge>
-        <strong>{{ latestAction }}</strong>
-        <span>滑块进度：{{ progressValue }}%</span>
-      </CommonCard>
-    </section>
+
+      <!-- 分类 Tab 切换栏 -->
+      <nav class="ncx-design-lab-category-tabs">
+        <button
+          v-for="tab in categoryTabs"
+          :key="tab.id"
+          type="button"
+          class="ncx-design-lab-tab-item"
+          :class="{ 'is-active': activeTab === tab.id }"
+          @click="selectTab(tab.id)"
+        >
+          {{ tab.label }}
+        </button>
+      </nav>
+    </header>
 
     <!-- 大类 1：操作类 (Actions) -->
-    <section class="ncx-design-lab-category">
+    <section
+      v-show="isCategoryVisible(1)"
+      class="ncx-design-lab-category"
+    >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
           <CommonBadge type="info" variant="solid">
@@ -543,7 +598,10 @@ function confirmDangerAction(): void {
     </section>
 
     <!-- 大类 2：输入类 (Inputs) -->
-    <section class="ncx-design-lab-category">
+    <section
+      v-show="isCategoryVisible(2)"
+      class="ncx-design-lab-category"
+    >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
           <CommonBadge type="info" variant="solid">
@@ -665,7 +723,10 @@ function confirmDangerAction(): void {
     </section>
 
     <!-- 大类 3：选择类 (Selections) -->
-    <section class="ncx-design-lab-category">
+    <section
+      v-show="isCategoryVisible(3)"
+      class="ncx-design-lab-category"
+    >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
           <CommonBadge type="info" variant="solid">
@@ -840,7 +901,10 @@ function confirmDangerAction(): void {
     </section>
 
     <!-- 大类 4：展示类 (Display) -->
-    <section class="ncx-design-lab-category">
+    <section
+      v-show="isCategoryVisible(4)"
+      class="ncx-design-lab-category"
+    >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
           <CommonBadge type="info" variant="solid">
@@ -1113,7 +1177,10 @@ function confirmDangerAction(): void {
     </section>
 
     <!-- 大类 5：导航与菜单类 (Navigation & Menus) -->
-    <section class="ncx-design-lab-category">
+    <section
+      v-show="isCategoryVisible(5)"
+      class="ncx-design-lab-category"
+    >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
           <CommonBadge type="info" variant="solid">
@@ -1222,7 +1289,10 @@ function confirmDangerAction(): void {
     </section>
 
     <!-- 大类 6：状态与反馈类 (Status & Feedback) -->
-    <section class="ncx-design-lab-category">
+    <section
+      v-show="isCategoryVisible(6)"
+      class="ncx-design-lab-category"
+    >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
           <CommonBadge type="info" variant="solid">
@@ -1426,7 +1496,10 @@ function confirmDangerAction(): void {
     </section>
 
     <!-- 大类 7：浮层类 (Overlays) -->
-    <section class="ncx-design-lab-category">
+    <section
+      v-show="isCategoryVisible(7)"
+      class="ncx-design-lab-category"
+    >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
           <CommonBadge type="info" variant="solid">
@@ -1522,7 +1595,10 @@ function confirmDangerAction(): void {
     </section>
 
     <!-- 大类 8：容器与高级布局类 (Containers & Layout) -->
-    <section class="ncx-design-lab-category">
+    <section
+      v-show="isCategoryVisible(8)"
+      class="ncx-design-lab-category"
+    >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
           <CommonBadge type="info" variant="solid">
@@ -1570,9 +1646,11 @@ function confirmDangerAction(): void {
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
-              <CommonScrollArea>
-                <CommonVirtualList :items="virtualListItems" />
-              </CommonScrollArea>
+              <div class="ncx-design-lab-scroll-demo">
+                <CommonScrollArea>
+                  <CommonVirtualList :items="virtualListItems" />
+                </CommonScrollArea>
+              </div>
             </div>
           </CommonCard>
 
