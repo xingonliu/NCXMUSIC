@@ -139,6 +139,8 @@ Phase 0 技术门禁
 - Renderer、日志、SQLite 和 Tool 参数无 Cookie/API Key。
 - 同一实体的用户名、歌曲、歌手、专辑和歌单字段只通过标准实体池读取。
 
+> 执行记录（2026-08-08）：Phase 2 已 `pass`。正式产品桥接复用 T-02 已验证的隔离网页登录、Cookie Session、凭据租约、退出和换号 generation 路径；新增 Renderer 安全账户 Bridge（快照、登录、退出、切换账号）与设置页“网易云账户 / 存储 / 隐私”基础模块，Renderer 只接收账户引用和状态，不接收 Cookie、数据库路径或 safeStorage 细节。新增 `music.read` Runtime 契约、Utility `MusicService`、Netease 只读 Adapter、标准实体池和类型化 Preload 方法，覆盖 search、song、artist、album、playlist、user 首批只读能力；新增账户空间/缓存路径解析与 Action Journal 30 天 / 10,000 条保留策略工具。验证已通过 `pnpm typecheck`、`pnpm lint`、`pnpm test`、`pnpm test:e2e`、`pnpm build`；真实登录交互 E2E 继续以 T-02 Spike 的人工账号流程作为外部凭据门禁。
+
 ## 7. Phase 3：搜索到播放的首条纵向闭环
 
 依赖 API-B。这一阶段形成第一个真正可用的播放器版本：

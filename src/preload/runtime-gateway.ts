@@ -1,7 +1,11 @@
 import type { RuntimeConnectionMetadata } from '../shared/contracts/control-plane'
 import {
+  MusicReadPayloadSchema,
+  MusicReadResultSchema,
   ResolveTrackUrlPayloadSchema,
   ResolvedMediaSourceSchema,
+  type MusicReadPayload,
+  type MusicReadResult,
   type ResolveTrackUrlPayload,
   type ResolvedMediaSource
 } from '../shared/schemas/music'
@@ -68,7 +72,7 @@ export class RuntimeGateway {
         payload: {
           role: 'preload',
           appVersion: metadata.appVersion,
-          capabilities: ['system.ping', 'system.snapshot', 'music.resolve-url']
+          capabilities: ['system.ping', 'system.snapshot', 'music.read', 'music.resolve-url']
         }
       })
     )
@@ -157,6 +161,34 @@ export class RuntimeGateway {
     return parsed.success
       ? { ok: true, data: parsed.data }
       : protocolFailure('PROTOCOL_INVALID_MESSAGE', '播放地址响应不符合契约。')
+  }
+
+  /**
+   * 向 Utility 请求标准音乐实体或搜索结果。
+   *
+   * @param input Music Service 只读请求；requestId 可由调用方指定以便取消
+   */
+  async readMusic(
+    input: MusicReadPayload & { requestId?: string }
+  ): Promise<RuntimeResult<MusicReadResult>> {
+    const { requestId, ...payloadInput } = input
+    const payload = MusicReadPayloadSchema.safeParse(payloadInput)
+    if (!payload.success) {
+      return protocolFailure('PROTOCOL_INVALID_MESSAGE', '音乐数据请求参数不合法。')
+    }
+
+    const result = await this.request(
+      'music.read',
+      payload.data,
+      requestId ?? crypto.randomUUID(),
+      contractRegistry['music.read'].defaultTimeoutMs
+    )
+    if (!result.ok) return result
+
+    const parsed = MusicReadResultSchema.safeParse(result.data)
+    return parsed.success
+      ? { ok: true, data: parsed.data }
+      : protocolFailure('PROTOCOL_INVALID_MESSAGE', '音乐数据响应不符合契约。')
   }
 
   cancel(requestId: string): boolean {

@@ -14,7 +14,7 @@ import {
   Trash2,
   X
 } from '@lucide/vue'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 import {
   CommonAccordion,
@@ -185,9 +185,6 @@ const virtualListItems: CommonVirtualListItem[] = [
   { id: '2', title: '单曲 B', description: '杜比全景声音轨' },
   { id: '3', title: '单曲 C', description: '经典原声重现' }
 ]
-
-/** 进度条演示值。 */
-const progressValue = computed(() => Math.min(100, sliderValue.value))
 
 // ========= 函数 =========
 

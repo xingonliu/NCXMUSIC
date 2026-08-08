@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-rou
 
 import RoutePlaceholder from '../design-system/patterns/RoutePlaceholder.vue'
 import DesignSystemLabPage from '../features/design-system/DesignSystemLabPage.vue'
+import SettingsPage from '../features/settings/SettingsPage.vue'
 
 // ========= 变量 =========
 
@@ -154,7 +155,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/settings',
     name: 'settings',
-    component: RouteSkeletonView,
+    component: SettingsPage,
     meta: {
       pageLevel: 1,
       title: 'routes.settings',

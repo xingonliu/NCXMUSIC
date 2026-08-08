@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
 import {
+  MusicReadPayloadSchema,
+  MusicReadResultSchema,
   ResolveTrackUrlPayloadSchema,
   ResolvedMediaSourceSchema
 } from './music'
@@ -42,7 +44,7 @@ export const HelloPayloadSchema = z.strictObject({
   role: z.enum(['preload', 'utility']),
   appVersion: z.string().min(1).max(64),
   capabilities: z
-    .array(z.enum(['system.ping', 'system.snapshot', 'music.resolve-url', 'shell.execute']))
+    .array(z.enum(['system.ping', 'system.snapshot', 'music.read', 'music.resolve-url', 'shell.execute']))
     .max(8)
 })
 
@@ -96,6 +98,13 @@ export const SnapshotRequestEnvelopeSchema = z.strictObject({
   payload: z.strictObject({})
 })
 
+/** Renderer/Agent → Utility：读取标准音乐实体和搜索结果 */
+export const MusicReadRequestEnvelopeSchema = z.strictObject({
+  ...RequestBaseShape,
+  name: z.literal('music.read'),
+  payload: MusicReadPayloadSchema
+})
+
 /** Renderer → Utility：解析指定曲目的可播放 HTTPS URL */
 export const ResolveTrackUrlRequestEnvelopeSchema = z.strictObject({
   ...RequestBaseShape,
@@ -113,7 +122,7 @@ export const ExecuteShellRequestEnvelopeSchema = z.strictObject({
 export const CancelEnvelopeSchema = z.strictObject({
   ...MessageBaseShape,
   kind: z.literal('cancel'),
-  name: z.enum(['system.ping', 'system.snapshot', 'music.resolve-url', 'shell.execute']),
+  name: z.enum(['system.ping', 'system.snapshot', 'music.read', 'music.resolve-url', 'shell.execute']),
   requestId: z.uuid(),
   reason: z.enum(['user', 'timeout', 'navigation', 'shutdown'])
 })
@@ -131,7 +140,7 @@ const FailureResultSchema = z.strictObject({
 export const ResponseEnvelopeSchema = z.strictObject({
   ...MessageBaseShape,
   kind: z.literal('response'),
-  name: z.enum(['system.ping', 'system.snapshot', 'music.resolve-url', 'shell.execute']),
+  name: z.enum(['system.ping', 'system.snapshot', 'music.read', 'music.resolve-url', 'shell.execute']),
   requestId: z.uuid(),
   result: z.discriminatedUnion('ok', [SuccessResultSchema, FailureResultSchema])
 })
@@ -140,6 +149,7 @@ export const RuntimeInboundEnvelopeSchema = z.union([
   HelloEnvelopeSchema,
   PingRequestEnvelopeSchema,
   SnapshotRequestEnvelopeSchema,
+  MusicReadRequestEnvelopeSchema,
   ResolveTrackUrlRequestEnvelopeSchema,
   ExecuteShellRequestEnvelopeSchema,
   CancelEnvelopeSchema
@@ -152,6 +162,7 @@ export const RuntimeOutboundEnvelopeSchema = z.union([
 
 export type PingRequestEnvelope = z.infer<typeof PingRequestEnvelopeSchema>
 export type SnapshotRequestEnvelope = z.infer<typeof SnapshotRequestEnvelopeSchema>
+export type MusicReadRequestEnvelope = z.infer<typeof MusicReadRequestEnvelopeSchema>
 export type ResolveTrackUrlRequestEnvelope = z.infer<typeof ResolveTrackUrlRequestEnvelopeSchema>
 export type ExecuteShellRequestEnvelope = z.infer<typeof ExecuteShellRequestEnvelopeSchema>
 export type CancelEnvelope = z.infer<typeof CancelEnvelopeSchema>
@@ -169,6 +180,13 @@ export const contractRegistry = {
     payloadSchema: z.strictObject({}),
     resultSchema: UtilitySnapshotSchema,
     defaultTimeoutMs: 5_000,
+    retryable: true
+  },
+  'music.read': {
+    direction: 'renderer-to-utility',
+    payloadSchema: MusicReadPayloadSchema,
+    resultSchema: MusicReadResultSchema,
+    defaultTimeoutMs: 20_000,
     retryable: true
   },
   'music.resolve-url': {

@@ -10,6 +10,7 @@ import {
   utilityProcess
 } from 'electron'
 
+import { ACCOUNT_CHANNELS } from '../shared/contracts/account-bridge'
 import { CONTROL_CHANNELS, type RuntimeStatus } from '../shared/contracts/control-plane'
 import {
   WINDOW_CONTROL_CHANNELS,
@@ -17,6 +18,7 @@ import {
   type WindowSnapshot
 } from '../shared/contracts/window-controls'
 import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
+import { AccountSessionSnapshotSchema, type AccountSessionSnapshot } from '../shared/schemas/account'
 import { RuntimeStatusSchema } from '../shared/schemas/control-plane'
 import { AuthSessionController, type EstablishResult } from './auth/auth-session-controller'
 import { CredentialLeaseCoordinator } from './auth/credential-lease-coordinator'
@@ -39,6 +41,39 @@ function publishWindowSnapshot(window = mainWindow): WindowSnapshot | undefined 
 
   const snapshot = createWindowSnapshot(window)
   window.webContents.send(WINDOW_CONTROL_CHANNELS.status, snapshot)
+  return snapshot
+}
+
+/** 生成未初始化时的安全游客账户快照。 */
+function guestAccountSnapshot(): AccountSessionSnapshot {
+  return AccountSessionSnapshotSchema.parse({
+    state: 'logged_out',
+    accountGeneration: 0,
+    hasCredentialLease: false,
+    activeAccount: {
+      kind: 'guest',
+      accountId: 'guest:local',
+      displayName: '游客'
+    },
+    canLogin: true,
+    canLogout: false,
+    canSwitchAccount: false,
+    rendererCanReadSecrets: false
+  })
+}
+
+/** 读取当前账户安全快照。 */
+function currentAccountSnapshot(): AccountSessionSnapshot {
+  return authController?.publicSnapshot() ?? guestAccountSnapshot()
+}
+
+/** 向主窗口广播最新账户安全快照。 */
+function publishAccountSnapshot(): AccountSessionSnapshot {
+  const snapshot = currentAccountSnapshot()
+  const window = mainWindow
+  if (window && !window.isDestroyed()) {
+    window.webContents.send(ACCOUNT_CHANNELS.status, snapshot)
+  }
   return snapshot
 }
 
@@ -299,6 +334,29 @@ function registerControlPlane(): void {
     }
   })
 
+  ipcMain.handle(ACCOUNT_CHANNELS.snapshot, (event) => {
+    if (!isTrustedSender(event)) return guestAccountSnapshot()
+    return publishAccountSnapshot()
+  })
+
+  ipcMain.handle(ACCOUNT_CHANNELS.login, async (event) => {
+    if (!isTrustedSender(event)) return guestAccountSnapshot()
+    await authController?.openLogin(false)
+    return publishAccountSnapshot()
+  })
+
+  ipcMain.handle(ACCOUNT_CHANNELS.switchAccount, async (event) => {
+    if (!isTrustedSender(event)) return guestAccountSnapshot()
+    await authController?.openLogin(true)
+    return publishAccountSnapshot()
+  })
+
+  ipcMain.handle(ACCOUNT_CHANNELS.logout, async (event) => {
+    if (!isTrustedSender(event)) return guestAccountSnapshot()
+    await authController?.logout()
+    return publishAccountSnapshot()
+  })
+
   ipcMain.handle(WINDOW_CONTROL_CHANNELS.snapshot, (event) => {
     if (!isTrustedSender(event) || !mainWindow) {
       return {
@@ -404,10 +462,14 @@ if (!hasSingleInstanceLock) {
         session.fromPartition(NETEASE_AUTH_PARTITION, { cache: true }),
         new CredentialLeaseCoordinator(supervisor)
       )
+      authController.onResult(() => publishAccountSnapshot())
+      authController.onLoginWindowClosed(() => publishAccountSnapshot())
       registerControlPlane()
       supervisor.onStatus((status) => {
         broadcastStatus(status)
-        void authController?.handleUtilityStatus(status)
+        void (authController?.handleUtilityStatus(status) ?? Promise.resolve()).finally(() =>
+          publishAccountSnapshot()
+        )
       })
       supervisor.start()
       if (isLoginSpike) {
@@ -416,6 +478,7 @@ if (!hasSingleInstanceLock) {
         return
       }
       await createMainWindow()
+      publishAccountSnapshot()
       if (!isSmokeTest) {
         void waitForUtilityReady()
           .then(() => authController?.restore('startup'))

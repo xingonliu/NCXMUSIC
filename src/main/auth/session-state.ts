@@ -98,6 +98,11 @@ export class AuthSessionMachine {
     return Math.max(1, this.accountGeneration)
   }
 
+  /** 返回当前通过验证的网易云账户 ID；未登录时为空。 */
+  currentAccountId(): string | undefined {
+    return this.accountId
+  }
+
   snapshot(): AuthSessionSnapshot {
     return {
       state: this.state,

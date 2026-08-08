@@ -9,6 +9,7 @@ import { ShellProcessSupervisor } from '../infrastructure/shell/process-supervis
 import { ShellWorkspaceRegistry } from '../infrastructure/shell/workspace-registry'
 import { PROTOCOL_VERSION } from '../shared/schemas/runtime'
 import { CredentialLeaseService } from './credential-lease-service'
+import { MusicService } from './music-service'
 import { TrackUrlService } from './track-url-service'
 import { UtilityRuntimeServer, type RuntimePort } from './runtime-server'
 
@@ -37,7 +38,9 @@ const credentialLease = new CredentialLeaseService((event) => {
 })
 /** 播放地址解析服务：经凭据租约取用 Cookie，Renderer 只拿到短期 HTTPS URL */
 const trackUrl = new TrackUrlService(credentialLease)
-const runtime = new UtilityRuntimeServer(trackUrl, shellExecutor)
+/** 标准 Music Service：统一搜索与实体详情读取，不向 Renderer 暴露上游原始响应 */
+const musicService = new MusicService(credentialLease)
+const runtime = new UtilityRuntimeServer(trackUrl, shellExecutor, musicService)
 const shouldCrashBeforeReady = process.argv.includes('--ncx-smoke-crash-before-ready')
 
 process.parentPort.on('message', (event) => {
@@ -88,6 +91,7 @@ if (shouldCrashBeforeReady) {
 }
 process.once('exit', () => {
   credentialLease.shutdown()
+  musicService.shutdown()
   trackUrl.shutdown()
   shellExecutor.shutdown()
   runtime.shutdown()

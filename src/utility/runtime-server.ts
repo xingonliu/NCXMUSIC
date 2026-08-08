@@ -2,6 +2,7 @@ import type { RuntimeConnectionMetadata } from '../shared/contracts/control-plan
 import {
   HelloEnvelopeSchema,
   ExecuteShellRequestEnvelopeSchema,
+  MusicReadRequestEnvelopeSchema,
   PingRequestEnvelopeSchema,
   PROTOCOL_VERSION,
   ResolveTrackUrlRequestEnvelopeSchema,
@@ -10,6 +11,7 @@ import {
   messageBase,
   type CancelEnvelope,
   type ExecuteShellRequestEnvelope,
+  type MusicReadRequestEnvelope,
   type PingRequestEnvelope,
   type ProtocolError,
   type ResolveTrackUrlRequestEnvelope,
@@ -26,6 +28,25 @@ export interface RuntimePort {
   subscribe(listener: (message: unknown) => void): () => void
   start(): void
   close(): void
+}
+
+/** Runtime 能力名称。 */
+type RuntimeCapability =
+  | 'system.ping'
+  | 'system.snapshot'
+  | 'music.read'
+  | 'music.resolve-url'
+  | 'shell.execute'
+
+/**
+ * music.read 的执行方。由 Utility 组合根注入，
+ * 使 RuntimeServer 不直接依赖网易云 API 或实体池。
+ */
+export interface MusicReadHandler {
+  /** 执行账户感知的只读音乐请求。 */
+  read(requestId: string, payload: unknown): Promise<unknown>
+  /** 取消进行中的只读音乐请求。 */
+  cancel(requestId: string): void
 }
 
 /**
@@ -50,12 +71,14 @@ export interface ShellCommandHandler {
 type AnyRequestEnvelope =
   | PingRequestEnvelope
   | SnapshotRequestEnvelope
+  | MusicReadRequestEnvelope
   | ResolveTrackUrlRequestEnvelope
   | ExecuteShellRequestEnvelope
 
 /** 待处理请求：ping 用定时器，resolve-url 交由 handler 自行取消 */
 type PendingRequest =
   | { name: 'system.ping'; timer: ReturnType<typeof setTimeout> }
+  | { name: 'music.read' }
   | { name: 'music.resolve-url' }
   | { name: 'shell.execute' }
 
@@ -76,10 +99,12 @@ export class UtilityRuntimeServer {
   /**
    * @param trackUrlHandler music.resolve-url 的执行方；未注入时该能力返回 CAPABILITY_UNAVAILABLE
    * @param shellHandler shell.execute 的执行方；未注入时该能力返回 CAPABILITY_UNAVAILABLE
+   * @param musicReadHandler music.read 的执行方；未注入时该能力返回 CAPABILITY_UNAVAILABLE
    */
   constructor(
     private readonly trackUrlHandler?: TrackUrlHandler,
-    private readonly shellHandler?: ShellCommandHandler | ShellExecutor
+    private readonly shellHandler?: ShellCommandHandler | ShellExecutor,
+    private readonly musicReadHandler?: MusicReadHandler
   ) {}
 
   // ── 生命周期区 ──
@@ -112,11 +137,12 @@ export class UtilityRuntimeServer {
   // ── 函数区 ──
 
   /** 当前 Utility 实际提供的能力集合 */
-  private capabilities(): Array<'system.ping' | 'system.snapshot' | 'music.resolve-url' | 'shell.execute'> {
-    const base: Array<'system.ping' | 'system.snapshot' | 'music.resolve-url' | 'shell.execute'> = [
+  private capabilities(): RuntimeCapability[] {
+    const base: RuntimeCapability[] = [
       'system.ping',
       'system.snapshot'
     ]
+    if (this.musicReadHandler) base.push('music.read')
     if (this.trackUrlHandler) base.push('music.resolve-url')
     if (this.shellHandler) base.push('shell.execute')
     return base
@@ -164,6 +190,11 @@ export class UtilityRuntimeServer {
       return
     }
 
+    if (envelope.name === 'music.read') {
+      void this.readMusic(MusicReadRequestEnvelopeSchema.parse(envelope))
+      return
+    }
+
     if (envelope.name === 'music.resolve-url') {
       void this.resolveTrackUrl(ResolveTrackUrlRequestEnvelopeSchema.parse(envelope))
       return
@@ -199,6 +230,47 @@ export class UtilityRuntimeServer {
     }, request.payload.delayMs)
 
     this.pending.set(request.requestId, { name: 'system.ping', timer })
+  }
+
+  /**
+   * 处理 music.read：委托给注入的 Music Service。
+   * 返回值只允许标准音乐实体 DTO，不包含 Cookie、数据库路径或上游原始响应。
+   */
+  private async readMusic(request: MusicReadRequestEnvelope): Promise<void> {
+    const handler = this.musicReadHandler
+    if (!handler) {
+      this.respondError(request, {
+        code: 'CAPABILITY_UNAVAILABLE',
+        message: '当前运行时未启用 Music Service。',
+        retryable: false
+      })
+      return
+    }
+
+    if (this.pending.has(request.requestId)) {
+      this.respondError(request, {
+        code: 'PROTOCOL_INVALID_MESSAGE',
+        message: 'requestId 已在使用。',
+        retryable: false
+      })
+      return
+    }
+
+    const connectionId = request.connectionId
+    this.pending.set(request.requestId, { name: 'music.read' })
+
+    try {
+      const data = await handler.read(request.requestId, request.payload)
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondSuccess(request, data)
+    } catch (error) {
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondError(request, this.toProtocolError(error))
+    }
   }
 
   /**
@@ -298,12 +370,12 @@ export class UtilityRuntimeServer {
     if (code === 'PROTOCOL_INVALID_MESSAGE') {
       return {
         code: 'PROTOCOL_INVALID_MESSAGE',
-        message: '播放地址解析参数不合法。',
+        message: '运行时请求参数不合法。',
         retryable: false
       }
     }
     if (code === 'ABORT_ERR' || (error instanceof Error && error.name === 'AbortError')) {
-      return { code: 'REQUEST_CANCELLED', message: '播放地址解析已取消。', retryable: false }
+      return { code: 'REQUEST_CANCELLED', message: '请求已取消。', retryable: false }
     }
     if (code === 'NO_ACTIVE_LEASE') {
       return {
@@ -322,7 +394,7 @@ export class UtilityRuntimeServer {
         retryable: false
       }
     }
-    return { code: 'UTILITY_UNAVAILABLE', message: '播放地址解析失败。', retryable: true }
+    return { code: 'UTILITY_UNAVAILABLE', message: '本地服务请求失败。', retryable: true }
   }
 
   private snapshot(request: SnapshotRequestEnvelope): void {
@@ -343,6 +415,8 @@ export class UtilityRuntimeServer {
 
     if (pending.name === 'system.ping') {
       clearTimeout(pending.timer)
+    } else if (pending.name === 'music.read') {
+      this.musicReadHandler?.cancel(envelope.requestId)
     } else if (pending.name === 'music.resolve-url') {
       this.trackUrlHandler?.cancel(envelope.requestId)
     } else {
@@ -394,6 +468,8 @@ export class UtilityRuntimeServer {
     for (const [requestId, request] of this.pending) {
       if (request.name === 'system.ping') {
         clearTimeout(request.timer)
+      } else if (request.name === 'music.read') {
+        this.musicReadHandler?.cancel(requestId)
       } else if (request.name === 'music.resolve-url') {
         this.trackUrlHandler?.cancel(requestId)
       } else {

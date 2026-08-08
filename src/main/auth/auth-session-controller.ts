@@ -1,6 +1,10 @@
 import type { Session } from 'electron'
 
 import type { RuntimeStatus } from '../../shared/contracts/control-plane'
+import {
+  AccountSessionSnapshotSchema,
+  type AccountSessionSnapshot
+} from '../../shared/schemas/account'
 import type { AuthWindowHandle } from './auth-window'
 import { CookieSessionRepository, type CredentialInspection } from './cookie-session-repository'
 import type { CredentialLeaseCoordinator } from './credential-lease-coordinator'
@@ -23,7 +27,7 @@ export class AuthSessionController {
   private authWindow: AuthWindowHandle | undefined
   private establishPromise: Promise<EstablishResult> | undefined
   private cookieDebounce: ReturnType<typeof setTimeout> | undefined
-  private resultListener: ((result: EstablishResult) => void) | undefined
+  private readonly resultListeners = new Set<(result: EstablishResult) => void>()
   private windowClosedListener: (() => void) | undefined
 
   constructor(
@@ -33,8 +37,9 @@ export class AuthSessionController {
     this.repository = new CookieSessionRepository(electronSession)
   }
 
-  onResult(listener: (result: EstablishResult) => void): void {
-    this.resultListener = listener
+  onResult(listener: (result: EstablishResult) => void): () => void {
+    this.resultListeners.add(listener)
+    return () => this.resultListeners.delete(listener)
   }
 
   onLoginWindowClosed(listener: () => void): void {
@@ -106,6 +111,34 @@ export class AuthSessionController {
 
   snapshot(): AuthSessionSnapshot {
     return this.machine.snapshot()
+  }
+
+  publicSnapshot(): AccountSessionSnapshot {
+    const snapshot = this.machine.snapshot()
+    const accountId = this.machine.currentAccountId()
+    const activeAccount = accountId && snapshot.state === 'authenticated'
+      ? {
+          kind: 'netease' as const,
+          accountId: `netease:${accountId}`,
+          neteaseUserId: accountId,
+          accountFingerprint: snapshot.accountFingerprint ?? '000000000000'
+        }
+      : {
+          kind: 'guest' as const,
+          accountId: 'guest:local' as const,
+          displayName: '游客' as const
+        }
+
+    return AccountSessionSnapshotSchema.parse({
+      state: snapshot.state,
+      accountGeneration: snapshot.accountGeneration,
+      hasCredentialLease: snapshot.hasCredentialLease,
+      activeAccount,
+      canLogin: !['opening_official_login', 'waiting_for_cookie', 'validating_cookie'].includes(snapshot.state),
+      canLogout: snapshot.state === 'authenticated',
+      canSwitchAccount: snapshot.state === 'authenticated',
+      rendererCanReadSecrets: false
+    })
   }
 
   closeLoginWindow(): void {
@@ -197,7 +230,7 @@ export class AuthSessionController {
   }
 
   private publish(result: EstablishResult): EstablishResult {
-    this.resultListener?.(result)
+    for (const listener of this.resultListeners) listener(result)
     return result
   }
 

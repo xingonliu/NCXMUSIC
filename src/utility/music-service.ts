@@ -1,0 +1,78 @@
+import { StandardEntityPool } from '../domains/music/entity-pool'
+import {
+  MusicReadPayloadSchema,
+  MusicReadResultSchema,
+  type MusicReadResult
+} from '../shared/schemas/music'
+import { NeteaseMusicApiAdapter, type MusicDataSource } from '../infrastructure/netease/music-api-adapter'
+import type { CredentialLeaseService } from './credential-lease-service'
+
+// ========= 类 =========
+
+/** Utility 侧 Music Service，统一处理账户感知的只读音乐数据请求。 */
+export class MusicService {
+  /** 进行中的请求取消控制器。 */
+  private readonly pending = new Map<string, AbortController>()
+
+  /** 标准实体池，保证 UI 与 Agent 消费同一归一化实体。 */
+  private readonly entityPool = new StandardEntityPool()
+
+  constructor(
+    private readonly credentialLease: CredentialLeaseService,
+    private readonly dataSource: MusicDataSource = new NeteaseMusicApiAdapter()
+  ) {}
+
+  /** 执行只读音乐请求。 */
+  async read(requestId: string, rawPayload: unknown): Promise<MusicReadResult> {
+    const parsed = MusicReadPayloadSchema.safeParse(rawPayload)
+    if (!parsed.success) {
+      throw Object.assign(
+        new Error(`music.read 载荷格式错误：${parsed.error.message}`),
+        { code: 'PROTOCOL_INVALID_MESSAGE' }
+      )
+    }
+
+    const controller = new AbortController()
+    this.pending.set(requestId, controller)
+
+    try {
+      const cookie = this.credentialLease.hasActiveLease()
+        ? await this.credentialLease.executeWithCookie(async (value) => value)
+        : ''
+      const result = await this.dataSource.read(parsed.data, cookie, controller.signal)
+      const normalized = MusicReadResultSchema.parse(result)
+      this.collectEntities(normalized)
+      return normalized
+    } finally {
+      this.pending.delete(requestId)
+    }
+  }
+
+  /** 取消进行中的只读音乐请求。 */
+  cancel(requestId: string): void {
+    const controller = this.pending.get(requestId)
+    if (!controller) return
+    controller.abort()
+    this.pending.delete(requestId)
+  }
+
+  /** 关闭服务并取消全部进行中请求。 */
+  shutdown(): void {
+    for (const controller of this.pending.values()) controller.abort()
+    this.pending.clear()
+  }
+
+  /** 把响应中的标准实体收敛到实体池。 */
+  private collectEntities(result: MusicReadResult): void {
+    if (result.kind === 'search') {
+      this.entityPool.upsertMany([
+        ...result.songs,
+        ...result.artists,
+        ...result.albums,
+        ...result.playlists
+      ])
+      return
+    }
+    if (result.entity) this.entityPool.upsert(result.entity)
+  }
+}
