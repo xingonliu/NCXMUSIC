@@ -162,11 +162,11 @@ onBeforeUnmount(() => {
           >
             <Minimize2
               v-if="windowSnapshot.maximized"
-              :size="15"
+              :size="16"
             />
             <Maximize2
               v-else
-              :size="15"
+              :size="16"
             />
           </CommonHeaderGroupItem>
 

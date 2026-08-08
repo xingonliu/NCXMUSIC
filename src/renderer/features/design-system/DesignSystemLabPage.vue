@@ -571,7 +571,7 @@ function confirmDangerAction(): void {
                     label="最大化"
                     @click="recordAction('HeaderGroupItem 最大化')"
                   >
-                    <Maximize2 :size="15" />
+                    <Maximize2 :size="16" />
                   </CommonHeaderGroupItem>
                   <CommonHeaderGroupItem
                     label="关闭"

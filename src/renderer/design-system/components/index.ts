@@ -540,7 +540,10 @@ export const CommonHeaderGroupButton = defineComponent({
   },
   setup(props, { slots }) {
     return () => {
+      // ========= 变量 =========
       let rawNodes: VNode[] = []
+
+      // ========= 视图渲染逻辑 =========
       if (props.items && props.items.length > 0) {
         rawNodes = props.items.map((item, index) => {
           return h(
@@ -557,7 +560,7 @@ export const CommonHeaderGroupButton = defineComponent({
               item.icon
                 ? typeof item.icon === 'string'
                   ? item.icon
-                  : h(item.icon)
+                  : h(item.icon, { size: 16 })
                 : null
           )
         })
@@ -568,6 +571,7 @@ export const CommonHeaderGroupButton = defineComponent({
         }
       }
 
+      // ========= 节点与分割线组装 =========
       const children: VNode[] = []
       rawNodes.forEach((node, index) => {
         if (index > 0) {
