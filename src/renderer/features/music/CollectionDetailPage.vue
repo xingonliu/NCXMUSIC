@@ -228,7 +228,6 @@ watch([collectionKind, collectionId], () => {
         class="track-list"
         :songs="songs"
         :active-track-id="activeTrackId"
-        :height="620"
         @play="playFromSong"
         @enqueue="enqueueSong"
         @play-next="playSongNext($event, collectionKind === 'album' ? { kind: 'album', albumId: collectionId } : { kind: 'playlist', playlistId: collectionId })"

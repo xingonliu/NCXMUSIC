@@ -230,7 +230,6 @@ watch(artistId, () => {
         <VirtualTrackList
           :songs="hotSongs"
           :active-track-id="activeTrackId"
-          :height="480"
           @play="playSong"
           @enqueue="enqueueSong"
           @play-next="playSongNext($event, { kind: 'artist', artistId })"

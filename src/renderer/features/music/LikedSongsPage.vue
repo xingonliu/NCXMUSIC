@@ -170,7 +170,6 @@ onMounted(async () => {
       v-else
       :songs="songs"
       :active-track-id="activeTrackId"
-      :height="620"
       @play="playSong"
       @enqueue="enqueueSong"
       @play-next="playSongNext($event, { kind: 'liked' })"

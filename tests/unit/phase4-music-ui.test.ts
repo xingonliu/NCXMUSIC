@@ -50,13 +50,13 @@ describe('Phase 4 music UI primitives', () => {
     expect(wrapper.find('.media-artwork-placeholder').exists()).toBe(true)
   })
 
-  it('renders a bounded virtual window for long track collections', async () => {
+  it('renders the complete collection for the page-level scrollbar', () => {
     /** 两百首歌曲的长列表。 */
     const songs = Array.from({ length: 200 }, (_, index) => song(index))
-    /** 固定高度的虚拟歌曲列表。 */
-    const wrapper = mount(VirtualTrackList, { props: { songs, height: 300, rowHeight: 60 } })
+    /** 直接交给页面主滚动容器的歌曲列表。 */
+    const wrapper = mount(VirtualTrackList, { props: { songs } })
 
-    expect(wrapper.findAll('.track-row').length).toBeLessThan(20)
-    expect(wrapper.find('.virtual-track-list-space').attributes('style')).toContain('12000px')
+    expect(wrapper.findAll('.track-row')).toHaveLength(200)
+    expect(wrapper.find('.virtual-track-list').attributes('style')).toBeUndefined()
   })
 })

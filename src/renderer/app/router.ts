@@ -10,6 +10,7 @@ import PlaybackDetailPage from '../features/music/PlaybackDetailPage.vue'
 import LikedSongsPage from '../features/music/LikedSongsPage.vue'
 import SearchPage from '../features/music/SearchPage.vue'
 import SearchResultsPage from '../features/music/SearchResultsPage.vue'
+import SongCollectionPage from '../features/music/SongCollectionPage.vue'
 import SettingsPage from '../features/settings/SettingsPage.vue'
 import ProfilePage from '../features/profile/ProfilePage.vue'
 
@@ -73,6 +74,17 @@ const routes: RouteRecordRaw[] = [
       title: 'routes.searchResults',
       playerBar: 'show',
       fallbackRoute: 'search'
+    }
+  },
+  {
+    path: '/discover/collection/:collection(new|daily)',
+    name: 'song-collection',
+    component: SongCollectionPage,
+    meta: {
+      pageLevel: 2,
+      title: 'routes.songCollection',
+      playerBar: 'show',
+      fallbackRoute: 'discover'
     }
   },
   {

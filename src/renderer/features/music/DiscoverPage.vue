@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CalendarCheck, Play } from '@lucide/vue'
+import { CalendarCheck, ChevronRight, Play } from '@lucide/vue'
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -73,6 +73,12 @@ const isAuthenticated = computed<boolean>(() => account.snapshot.value?.state ==
 /** 当前播放歌曲 ID。 */
 const activeTrackId = computed<string | null>(() => player.snapshot.value.playback.track?.trackId ?? null)
 
+/** 发现页每日推荐预览歌曲。 */
+const dailyPreviewSongs = computed<StandardSong[]>(() => dailySection.value.data.slice(0, 5))
+
+/** 发现页新歌速递预览歌曲。 */
+const newSongsPreview = computed<StandardSong[]>(() => newSongsSection.value.data.slice(0, 5))
+
 // ========= 函数 =========
 
 /** 把 Section 响应结果写入统一状态。 */
@@ -107,7 +113,7 @@ async function loadFeaturedPlaylists(): Promise<void> {
 /** 读取推荐新歌 Section。 */
 async function loadNewSongs(): Promise<void> {
   newSongsSection.value.state = 'loading'
-  const response = await window.ncx.runtime.getNewSongs({ limit: 12 })
+  const response = await window.ncx.runtime.getNewSongs({ limit: 30 })
   if (!response.ok) {
     failSection(newSongsSection.value, response.error.message)
     return
@@ -124,7 +130,7 @@ async function loadNewSongs(): Promise<void> {
 async function loadDailySongs(): Promise<void> {
   if (!isAuthenticated.value) return
   dailySection.value.state = 'loading'
-  const response = await window.ncx.runtime.getDailySongs({ limit: 20 })
+  const response = await window.ncx.runtime.getDailySongs({ limit: 50 })
   if (!response.ok) {
     failSection(dailySection.value, response.error.message)
     return
@@ -140,6 +146,11 @@ async function loadDailySongs(): Promise<void> {
 /** 打开指定歌单详情。 */
 function openPlaylist(playlist: StandardPlaylist): void {
   void router.push({ name: 'playlist-detail', params: { playlistId: playlist.id } })
+}
+
+/** 打开歌曲集合二级页。 */
+function openSongCollection(collection: 'new' | 'daily'): void {
+  void router.push({ name: 'song-collection', params: { collection } })
 }
 
 /** 从发现页立即播放单首歌曲。 */
@@ -236,6 +247,15 @@ onMounted(async () => {
     >
       <template #actions>
         <CommonButton
+          variant="ghost"
+          size="compact"
+          :disabled="dailySection.data.length === 0"
+          @click="openSongCollection('daily')"
+        >
+          查看更多
+          <ChevronRight :size="14" />
+        </CommonButton>
+        <CommonButton
           variant="primary"
           size="compact"
           :disabled="dailySection.data.length === 0"
@@ -246,9 +266,8 @@ onMounted(async () => {
         </CommonButton>
       </template>
       <VirtualTrackList
-        :songs="dailySection.data"
+        :songs="dailyPreviewSongs"
         :active-track-id="activeTrackId"
-        :height="420"
         @play="playSong"
         @enqueue="enqueueSong"
         @play-next="playSongNext($event, { kind: 'discover' })"
@@ -267,6 +286,15 @@ onMounted(async () => {
     >
       <template #actions>
         <CommonButton
+          variant="ghost"
+          size="compact"
+          :disabled="newSongsSection.data.length === 0"
+          @click="openSongCollection('new')"
+        >
+          查看更多
+          <ChevronRight :size="14" />
+        </CommonButton>
+        <CommonButton
           variant="secondary"
           size="compact"
           :disabled="newSongsSection.data.length === 0"
@@ -277,9 +305,8 @@ onMounted(async () => {
         </CommonButton>
       </template>
       <VirtualTrackList
-        :songs="newSongsSection.data"
+        :songs="newSongsPreview"
         :active-track-id="activeTrackId"
-        :height="420"
         @play="playSong"
         @enqueue="enqueueSong"
         @play-next="playSongNext($event, { kind: 'discover' })"

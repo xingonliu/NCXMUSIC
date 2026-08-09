@@ -18,6 +18,7 @@ export const zhCN = {
     'routes.profile': '个人资料',
     'routes.search': '搜索',
     'routes.searchResults': '搜索结果',
+    'routes.songCollection': '歌曲集合',
     'routes.settings': '设置'
   },
   foundation: {

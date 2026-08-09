@@ -185,7 +185,6 @@ watch(query, () => {
           class="track-list"
           :songs="songs"
           :active-track-id="activeTrackId"
-          :height="520"
           @play="playSong"
           @enqueue="enqueueSong"
           @play-next="playSongNext($event, { kind: 'search' })"
