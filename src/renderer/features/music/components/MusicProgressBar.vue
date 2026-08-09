@@ -255,7 +255,7 @@ onBeforeUnmount(() => {
         class="music-progress-fill"
         :style="{ width: `${percentage}%` }"
       >
-        <div class="music-progress-head" />
+        <div class="music-progress-glow-tip" />
       </div>
       <div
         v-if="props.busy"
@@ -289,14 +289,14 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 4px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--ncx-color-text-primary, #ffffff) 18%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-text-primary, #ffffff) 22%, transparent);
   overflow: visible;
-  transition: height 0.18s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease;
+  transition: height 0.18s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .music-progress-bar:hover .music-progress-rail,
 .music-progress-bar--dragging .music-progress-rail {
-  height: 6px;
+  height: 7px;
 }
 
 .music-progress-fill {
@@ -305,35 +305,30 @@ onBeforeUnmount(() => {
   left: 0;
   bottom: 0;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--ncx-color-text-primary, #ffffff) 70%, transparent);
-  transition: background-color 0.2s ease, width 0.05s linear;
-}
-
-.music-progress-bar:hover .music-progress-fill,
-.music-progress-bar--dragging .music-progress-fill {
   background: #ffffff;
+  transition: width 0.05s linear;
 }
 
-.music-progress-head {
+.music-progress-glow-tip {
   position: absolute;
   top: 50%;
   right: 0;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 100%;
   border-radius: 999px;
   background: #ffffff;
   transform: translate(50%, -50%);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease, transform 0.18s ease;
+  transition: opacity 0.18s ease, box-shadow 0.18s ease;
 }
 
-.music-progress-bar:hover .music-progress-head,
-.music-progress-bar--dragging .music-progress-head {
+.music-progress-bar:hover .music-progress-glow-tip,
+.music-progress-bar--dragging .music-progress-glow-tip {
   opacity: 1;
   box-shadow:
-    0 0 10px 2px rgba(255, 255, 255, 0.95),
-    0 0 18px 5px rgba(255, 255, 255, 0.6);
+    0 0 10px 3px rgba(255, 255, 255, 0.95),
+    0 0 20px 6px rgba(255, 255, 255, 0.7);
 }
 
 .music-progress-busy-glow {
