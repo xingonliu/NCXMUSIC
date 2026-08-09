@@ -62,7 +62,7 @@ function activateCard(): void {
 .music-entity-card {
   display: grid;
   min-width: 0;
-  gap: var(--ncx-space-3);
+  gap: var(--ncx-space-4);
   cursor: pointer;
 }
 
@@ -74,6 +74,7 @@ function activateCard(): void {
 
 .music-entity-card-copy {
   min-width: 0;
+  padding-top: 2px;
 }
 
 .music-entity-card h3,
