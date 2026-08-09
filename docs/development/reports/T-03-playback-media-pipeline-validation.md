@@ -19,6 +19,7 @@
 
 - `music.resolve-url` 跨进程契约：Zod `strictObject` 载荷与结果、Contract Registry 登记、20 秒默认超时、不可重试。
 - Utility 侧 `TrackUrlService`：经 `CredentialLeaseService.executeWithCookie` 取用 Cookie，调用 `song_url_v1` 并按 `jymaster → hires → lossless → exhigh → standard` 降级。
+- 播放地址调用显式指定 `weapi`，避免依赖运行时生成的 `/tmp/xeapi_public_key`；同时将网易云返回的明文 CDN 地址规范为 HTTPS。
 - `UtilityRuntimeServer` 扩展：能力声明、取消转发、代次隔离、错误脱敏映射。
 - 领域层：`PlaybackEngine`（status/intent 分离、generation 隔离）、`QueueController`（loop/loop-one/shuffle、Fisher–Yates、错误策略失败集合）、`PlaybackCoordinator`（解析→装载编排与取消句柄）。
 - Renderer：`HtmlAudioAdapter`（原生事件翻译、ducking 增益、监听器解绑）、`IpcTrackResolver`、`AudioHost`（AppShell 根层、RouterView 之外）、`PlayerBar`。
@@ -64,6 +65,10 @@
 1. **`Range`、206/416 行为**：webRequest 观测器已在 Spike 阶段实现但随后清理，可在需要时重新嵌入。
 2. **Windows/macOS 后台、最小化、锁屏与系统睡眠恢复**：尚无平台行为记录。
 3. **已登录账号的高码率无损播放**：登 录后的 jymaster/lossless/hires 全格式验证需要真实账号，已由 API 审计确认 `AUTH_USER`/`AUTH_VIP` 层可返回更高码率。
+
+## 2026-08-09 播放故障复核
+
+在当前 macOS 开发环境复核时，网易云 API 依赖的 `song_url_v1` 默认调用 `xeapi`，但进程临时目录不存在 `xeapi_public_key`，会在发起网络请求前直接抛出 `xeapi public key is missing`，导致所有歌曲统一进入“当前无法播放”分支。播放解析器现显式传入 `crypto: 'weapi'`，不再依赖该临时密钥；同时把 API 返回的 `http://*.music.126.net` 地址转换为 HTTPS，满足媒体契约并避免明文媒体地址阻断。
 
 ## 发现并修复的缺陷
 

@@ -41,14 +41,19 @@ type NeteaseQuality =
   | 'sky'
   | 'jymaster'
 
-interface NeteaseApi {
+export interface NeteaseApi {
   song_url_v1(params: {
     id: string | number
     level: NeteaseQuality
     cookie?: string
     timeout?: number
+    /** 播放地址显式使用 weapi，避免依赖运行时生成的 xeapi 临时公钥。 */
+    crypto?: 'weapi'
   }): Promise<SongUrlResponse>
 }
+
+/** 播放地址解析使用的稳定加密方式，不依赖 /tmp/xeapi_public_key。 */
+const PLAYBACK_API_CRYPTO = 'weapi' as const
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 音质降级链
@@ -83,6 +88,14 @@ function toNeteaseQuality(level: MusicQualityLevel): NeteaseQuality {
     jymaster: 'jymaster'
   }
   return mapping[level] ?? 'standard'
+}
+
+/** 将网易云返回的 CDN 地址规范为 HTTPS，避免明文媒体地址阻断播放。 */
+function toHttpsPlaybackUrl(value: string): string {
+  /** 可修改协议的 URL 对象。 */
+  const url = new URL(value)
+  if (url.protocol === 'http:') url.protocol = 'https:'
+  return url.toString()
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -132,6 +145,13 @@ async function withoutThirdPartyConsole<T>(op: () => Promise<T>): Promise<T> {
 export class TrackUrlResolver {
   private api: NeteaseApi | undefined
 
+  /**
+   * @param api 可选的网易云 API 实例；生产环境省略并按需加载，测试可注入夹具。
+   */
+  constructor(api?: NeteaseApi) {
+    this.api = api
+  }
+
   private async requiredApi(): Promise<NeteaseApi> {
     this.api ??= await loadApi()
     return this.api
@@ -163,7 +183,13 @@ export class TrackUrlResolver {
       signal?.throwIfAborted()
 
       const resp = await withoutThirdPartyConsole(() =>
-        api.song_url_v1({ id: trackId, level, cookie, timeout: 15_000 })
+        api.song_url_v1({
+          id: trackId,
+          level,
+          cookie,
+          timeout: 15_000,
+          crypto: PLAYBACK_API_CRYPTO
+        })
       )
 
       const data = resp.body?.data?.[0]
@@ -183,7 +209,7 @@ export class TrackUrlResolver {
             : toNeteaseQuality(quality as MusicQualityLevel) !== level
 
         return {
-          url: data.url,
+          url: toHttpsPlaybackUrl(data.url),
           requestedQuality,
           actualQuality: actualLevel,
           attemptedQualities: attempted,
