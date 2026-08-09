@@ -72,6 +72,7 @@
   --ncx-layer-base: 0;
   --ncx-layer-sticky: 100;
   --ncx-layer-player: 200;
+  --ncx-layer-presentation: 300;
   --ncx-layer-popover: 400;
   --ncx-layer-drawer: 500;
   --ncx-layer-modal: 600;

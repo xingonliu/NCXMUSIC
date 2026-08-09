@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 
 import type { StandardLyrics, StandardLyricsLine } from '../../../../shared/schemas/music'
 import {
@@ -23,6 +23,12 @@ const props = withDefaults(defineProps<{
   immersive: false
 })
 
+/** 歌词面板事件定义。 */
+const emit = defineEmits<{
+  /** 请求播放器跳转到指定歌词时间点。 */
+  (event: 'seek', positionMs: number): void
+}>()
+
 // ========= 变量 =========
 
 /** 应用歌词展示偏好。 */
@@ -37,8 +43,17 @@ const loading = ref<boolean>(false)
 /** 当前错误文案。 */
 const errorMessage = ref<string>('')
 
+/** 沉浸歌词滚动容器。 */
+const scrollContainer = ref<HTMLElement | null>(null)
+
+/** 用户主动浏览歌词时是否暂停自动跟随。 */
+const autoFollowPaused = ref<boolean>(false)
+
 /** 最近一次歌词请求 ID，用于丢弃迟到响应。 */
 let latestRequestId = ''
+
+/** 恢复自动跟随的延迟定时器。 */
+let resumeAutoFollowTimer: number | undefined
 
 /** 当前高亮歌词行下标。 */
 const activeLineIndex = computed<number>(() => {
@@ -96,18 +111,94 @@ function retryLyrics(): void {
   void loadLyrics(props.trackId)
 }
 
+/**
+ * 返回歌词行相对当前行的视觉层次类名。
+ *
+ * @param index 歌词行下标
+ */
+function lyricLineClass(index: number): Record<string, boolean> {
+  /** 歌词行与当前行的下标距离。 */
+  const distance = Math.abs(index - activeLineIndex.value)
+  return {
+    'lyrics-line--active': distance === 0,
+    'lyrics-line--near': distance === 1,
+    'lyrics-line--far': distance > 2
+  }
+}
+
+/**
+ * 将当前歌词平滑移动到沉浸面板垂直中心附近。
+ *
+ * @param behavior 浏览器滚动行为
+ */
+function scrollToActiveLine(behavior: ScrollBehavior = 'smooth'): void {
+  if (!props.immersive || autoFollowPaused.value || activeLineIndex.value < 0) return
+
+  /** 当前沉浸歌词滚动容器。 */
+  const container = scrollContainer.value
+  if (!container) return
+
+  /** 当前高亮歌词对应的 DOM 元素。 */
+  const activeLine = container.querySelector<HTMLElement>(
+    `[data-lyric-index="${activeLineIndex.value}"]`
+  )
+  if (!activeLine) return
+
+  /** 让当前行中心落在容器 46% 高度处的目标滚动位置。 */
+  const targetTop = activeLine.offsetTop - container.clientHeight * 0.46
+  container.scrollTo({
+    top: Math.max(0, targetTop),
+    behavior
+  })
+}
+
+/** 用户主动浏览歌词时暂时停止自动跟随。 */
+function pauseAutoFollow(): void {
+  if (!props.immersive) return
+  autoFollowPaused.value = true
+  window.clearTimeout(resumeAutoFollowTimer)
+  resumeAutoFollowTimer = window.setTimeout(() => {
+    autoFollowPaused.value = false
+    scrollToActiveLine()
+  }, 4_000)
+}
+
+/**
+ * 点击歌词行后跳转播放进度并立即恢复自动跟随。
+ *
+ * @param line 被点击的标准歌词行
+ */
+function seekToLyric(line: StandardLyricsLine): void {
+  window.clearTimeout(resumeAutoFollowTimer)
+  autoFollowPaused.value = false
+  emit('seek', line.timeMs)
+  void nextTick(() => scrollToActiveLine())
+}
+
 // ========= 生命周期 =========
 
 watch(() => props.trackId, (trackId) => {
   void loadLyrics(trackId)
 }, { immediate: true })
+
+watch(activeLineIndex, async () => {
+  await nextTick()
+  scrollToActiveLine()
+})
+
+onBeforeUnmount(() => {
+  window.clearTimeout(resumeAutoFollowTimer)
+})
 </script>
 
 <template>
   <section
+    ref="scrollContainer"
     class="lyrics-panel"
     :class="{ 'lyrics-panel--immersive': props.immersive }"
     aria-label="歌词"
+    @wheel.passive="pauseAutoFollow"
+    @touchstart.passive="pauseAutoFollow"
   >
     <div
       v-if="loading"
@@ -141,10 +232,17 @@ watch(() => props.trackId, (trackId) => {
         v-for="(line, index) in displayLines"
         :key="`${line.timeMs}-${index}`"
         class="lyrics-line"
-        :class="{ 'lyrics-line--active': index === activeLineIndex }"
+        :class="lyricLineClass(index)"
+        :data-lyric-index="index"
+        :aria-current="index === activeLineIndex ? 'true' : undefined"
       >
-        <span>{{ line.text || '…' }}</span>
-        <small v-if="line.translation && appPreferences.preferences.value.showLyricTranslation">{{ line.translation }}</small>
+        <button
+          type="button"
+          @click="seekToLyric(line)"
+        >
+          <span>{{ line.text || '…' }}</span>
+          <small v-if="line.translation && appPreferences.preferences.value.showLyricTranslation">{{ line.translation }}</small>
+        </button>
       </li>
     </ol>
   </section>
@@ -176,14 +274,33 @@ watch(() => props.trackId, (trackId) => {
 }
 
 .lyrics-line {
-  display: grid;
-  gap: var(--ncx-space-1);
   color: var(--ncx-color-text-tertiary);
   font-size: 18px;
   line-height: 1.35;
   transition:
     color var(--ncx-motion-normal),
+    filter var(--ncx-motion-normal),
+    opacity var(--ncx-motion-normal),
     transform var(--ncx-motion-normal);
+}
+
+.lyrics-line button {
+  display: grid;
+  width: 100%;
+  gap: var(--ncx-space-1);
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.lyrics-line button:focus-visible {
+  border-radius: var(--ncx-radius-xs);
+  outline: 2px solid currentcolor;
+  outline-offset: 6px;
 }
 
 .lyrics-line small {
@@ -199,18 +316,70 @@ watch(() => props.trackId, (trackId) => {
 }
 
 .lyrics-panel--immersive {
-  min-height: 520px;
+  display: block;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  scrollbar-color: rgb(255 255 255 / 24%) transparent;
+  scrollbar-width: thin;
 }
 
 .lyrics-panel--immersive .lyrics-lines {
-  gap: var(--ncx-space-6);
+  gap: 30px;
+  min-height: 100%;
+  padding: 46% 0;
 }
 
 .lyrics-panel--immersive .lyrics-line {
-  font-size: 30px;
+  color: white;
+  font-size: 28px;
+  font-weight: 650;
+  opacity: 0.34;
+  filter: blur(1px);
+  line-height: 1.32;
 }
 
 .lyrics-panel--immersive .lyrics-line small {
   font-size: 16px;
+}
+
+.lyrics-panel--immersive .lyrics-line--near {
+  opacity: 0.58;
+  filter: blur(0.45px);
+}
+
+.lyrics-panel--immersive .lyrics-line--far {
+  opacity: 0.2;
+  filter: blur(1.6px);
+}
+
+.lyrics-panel--immersive .lyrics-line--active {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+.lyrics-panel--immersive .lyrics-line small {
+  color: inherit;
+  opacity: 0.7;
+}
+
+@media (height < 720px) {
+  .lyrics-panel--immersive .lyrics-lines {
+    gap: 24px;
+  }
+
+  .lyrics-panel--immersive .lyrics-line {
+    font-size: 25px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lyrics-panel--immersive,
+  .lyrics-line {
+    scroll-behavior: auto;
+    transition: none;
+  }
 }
 </style>

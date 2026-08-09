@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinator'
 import PlayerBar from '../../src/renderer/features/music/components/PlayerBar.vue'
+import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
 import { disposePlayer, usePlayer, usePlayerRuntime } from '../../src/renderer/features/music/use-player'
 
 // ========= 变量 =========
@@ -19,10 +20,12 @@ type PropsReadableWrapper = {
 describe('PlayerBar 控件区域 UI 规范测试', () => {
   beforeEach(() => {
     disposePlayer()
+    void useImmersivePlayerPresentation().close()
   })
 
   afterEach(() => {
     disposePlayer()
+    void useImmersivePlayerPresentation().close()
   })
 
   it('控件区域渲染 player-transport 容器并使用 CommonIconButton 组件呈现控件', () => {
@@ -138,6 +141,61 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
 
     await playBtn.trigger('click')
     expect(toggleSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('仅歌曲封面作为沉浸播放页入口并在点击后打开根层展示状态', async () => {
+    /** 带封面的当前播放曲目。 */
+    const mockTrack = {
+      trackId: 'immersive-1',
+      name: 'Immersive Song',
+      artists: ['Artist'],
+      durationMs: 180000,
+      album: 'Album',
+      artwork: [{ src: 'https://example.com/cover.jpg', sizes: '96x96', type: 'image/jpeg' }]
+    }
+    vi.spyOn(PlaybackCoordinator.prototype, 'getSnapshot').mockReturnValue({
+      playback: {
+        status: 'paused',
+        intent: 'pause',
+        track: mockTrack,
+        generation: 0,
+        positionMs: 0,
+        durationMs: 180000,
+        bufferedMs: 0,
+        volume: 1,
+        muted: false,
+        seeking: false,
+        error: null,
+        actualQuality: null,
+        downgraded: false
+      },
+      queue: {
+        items: [{
+          queueItemId: 'immersive-item-1',
+          track: mockTrack,
+          source: { kind: 'playlist', playlistId: 'pl-1' },
+          addedAt: 1700000000000
+        }],
+        currentItemId: 'immersive-item-1',
+        mode: 'loop',
+        revision: 1
+      },
+      quality: 'auto'
+    })
+
+    /** 应用级沉浸播放展示控制器。 */
+    const immersivePlayer = useImmersivePlayerPresentation()
+    /** 当前 PlayerBar 测试实例。 */
+    const wrapper = mount(PlayerBar)
+    /** 独立的封面展开按钮。 */
+    const coverButton = wrapper.find('.player-track-cover-button')
+
+    expect(coverButton.attributes('aria-label')).toContain('Immersive Song')
+    expect(wrapper.find('.player-track').attributes('role')).toBeUndefined()
+
+    await coverButton.trigger('click')
+    await vi.waitFor(() => expect(immersivePlayer.isOpen.value).toBe(true))
+    await immersivePlayer.close()
   })
 
   it('当存在播放 notice 时渲染 CommonToast 浮窗组件并能在关闭时清除提示', async () => {

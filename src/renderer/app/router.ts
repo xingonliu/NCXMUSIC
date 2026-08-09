@@ -5,8 +5,6 @@ import DesignSystemLabPage from '../features/design-system/DesignSystemLabPage.v
 import CollectionDetailPage from '../features/music/CollectionDetailPage.vue'
 import ArtistDetailPage from '../features/music/ArtistDetailPage.vue'
 import DiscoverPage from '../features/music/DiscoverPage.vue'
-import ImmersiveLyricsPage from '../features/music/ImmersiveLyricsPage.vue'
-import PlaybackDetailPage from '../features/music/PlaybackDetailPage.vue'
 import LikedSongsPage from '../features/music/LikedSongsPage.vue'
 import SearchPage from '../features/music/SearchPage.vue'
 import SearchResultsPage from '../features/music/SearchResultsPage.vue'
@@ -138,29 +136,6 @@ const routes: RouteRecordRaw[] = [
       title: 'routes.artistDetail',
       playerBar: 'show',
       fallbackRoute: 'discover'
-    }
-  },
-  {
-    path: '/playback',
-    name: 'playback-detail',
-    component: PlaybackDetailPage,
-    meta: {
-      pageLevel: 2,
-      title: 'routes.playbackDetail',
-      playerBar: 'hide',
-      fallbackRoute: 'discover'
-    }
-  },
-  {
-    path: '/lyrics',
-    name: 'immersive-lyrics',
-    component: ImmersiveLyricsPage,
-    meta: {
-      pageLevel: 2,
-      title: 'routes.immersiveLyrics',
-      playerBar: 'hide',
-      headerVariant: 'transparent',
-      fallbackRoute: 'playback-detail'
     }
   },
   {

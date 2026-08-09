@@ -14,14 +14,22 @@ const props = withDefaults(defineProps<{
   alt: string
   /** 封面语义尺寸。 */
   size?: MediaArtworkSize
+  /** 是否根据语义尺寸改写远程封面 URL。 */
+  adaptSource?: boolean
+  /** 浏览器图片加载优先级。 */
+  loading?: 'eager' | 'lazy'
 }>(), {
-  size: 'compact'
+  size: 'compact',
+  adaptSource: true,
+  loading: 'lazy'
 })
 
 // ========= 变量 =========
 
 /** 已按语义尺寸适配的图片地址。 */
-const artworkUrl = computed<string | undefined>(() => adaptArtworkUrl(props.src, props.size))
+const artworkUrl = computed<string | undefined>(() => {
+  return props.adaptSource ? adaptArtworkUrl(props.src, props.size) : props.src
+})
 </script>
 
 <template>
@@ -33,7 +41,7 @@ const artworkUrl = computed<string | undefined>(() => adaptArtworkUrl(props.src,
       v-if="artworkUrl"
       :src="artworkUrl"
       :alt="props.alt"
-      loading="lazy"
+      :loading="props.loading"
       decoding="async"
     >
     <Music2

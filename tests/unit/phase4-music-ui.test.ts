@@ -50,6 +50,24 @@ describe('Phase 4 music UI primitives', () => {
     expect(wrapper.find('.media-artwork-placeholder').exists()).toBe(true)
   })
 
+  it('can preserve an already cached artwork URL during a shared element transition', () => {
+    /** PlayerBar 已经加载过的原始缩略封面。 */
+    const source = 'https://p1.music.126.net/cached.jpg?param=96y96'
+    /** 禁止 URL 改写后的沉浸封面组件。 */
+    const wrapper = mount(MediaArtwork, {
+      props: {
+        src: source,
+        alt: '共享动画封面',
+        size: 'hero',
+        adaptSource: false,
+        loading: 'eager'
+      }
+    })
+
+    expect(wrapper.find('img').attributes('src')).toBe(source)
+    expect(wrapper.find('img').attributes('loading')).toBe('eager')
+  })
+
   it('renders the complete collection for the page-level scrollbar', () => {
     /** 两百首歌曲的长列表。 */
     const songs = Array.from({ length: 200 }, (_, index) => song(index))

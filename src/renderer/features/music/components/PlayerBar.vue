@@ -19,8 +19,7 @@ import {
   Volume2,
   VolumeX
 } from '@lucide/vue'
-import { computed, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, ref } from 'vue'
 
 import type { PlayMode } from '../../../../domains/player/types'
 import {
@@ -32,6 +31,8 @@ import {
 } from '../../../design-system/components'
 import LiquidGlass from '../../../design-system/components/LiquidGlass.vue'
 import { zhCN } from '../../../locales/zh-CN'
+import { useImmersivePlayerPresentation } from '../immersive-player-presentation'
+import { adaptArtworkUrl } from '../music-entity'
 import { usePlayer } from '../use-player'
 import MediaArtwork from './MediaArtwork.vue'
 import QueueDrawer from './QueueDrawer.vue'
@@ -41,8 +42,11 @@ import QueueDrawer from './QueueDrawer.vue'
 /** 播放器组合式接口，只发送命令并读取快照。 */
 const player = usePlayer()
 
-/** Router 实例，用于进入播放详情页。 */
-const router = useRouter()
+/** 应用级沉浸播放展示控制器。 */
+const immersivePlayer = useImmersivePlayerPresentation()
+
+/** 沉浸播放展示层是否已打开。 */
+const isImmersivePlayerOpen = immersivePlayer.isOpen
 
 /** 播放器只读快照引用。 */
 const snapshot = player.snapshot
@@ -129,225 +133,241 @@ function toggleQueueDrawer(): void {
   isQueueOpen.value = !isQueueOpen.value
 }
 
-/** 打开当前歌曲播放详情。 */
-function openPlaybackDetail(): void {
+/**
+ * 从 PlayerBar 封面打开沉浸播放展示层。
+ *
+ * @param event 封面按钮点击事件
+ */
+function openImmersivePlayer(event: MouseEvent): void {
   if (!track.value) return
-  void router.push({ name: 'playback-detail' })
+  /** 沉浸页需要预热的高清封面地址。 */
+  const heroArtworkUrl = adaptArtworkUrl(coverUrl.value, 'hero')
+  /** 关闭展示层后需要恢复焦点的封面按钮。 */
+  const trigger = event.currentTarget as HTMLElement | null
+  void immersivePlayer.open(heroArtworkUrl, trigger)
 }
 </script>
 
 <template>
-  <LiquidGlass
-    container-class="player-bar-glass"
-    role="contentinfo"
-    :aria-label="text.regionLabel"
-    :radius="28"
-    :border="0.07"
-    :displace="0.05"
-    :scale="-150"
-    :r-offset="0"
-    :g-offset="5"
-    :b-offset="8"
-    :blur="10"
-    :frost="0.12"
-    :lightness="72"
-    :alpha="0.9"
-    :style="{
-      position: 'fixed',
-      bottom: '18px',
-      left: 'calc(230px + ((100vw - 230px) / 2))',
-      transform: 'translateX(-50%)',
-      width: 'min(860px, calc(100vw - 288px))',
-      zIndex: 'var(--ncx-layer-player)'
-    }"
+  <div
+    class="player-bar-root"
+    :inert="isImmersivePlayerOpen"
+    :aria-hidden="isImmersivePlayerOpen ? 'true' : undefined"
   >
-    <div class="player-bar-content">
-      <!-- 曲目信息 -->
-      <div
-        class="player-track"
-        :class="{ 'player-track--clickable': track }"
-        role="button"
-        tabindex="0"
-        @click="openPlaybackDetail"
-        @keydown.enter.prevent="openPlaybackDetail"
-        @keydown.space.prevent="openPlaybackDetail"
-      >
-        <MediaArtwork
-          :src="coverUrl"
-          :alt="track?.name ?? text.emptyTrack"
-          size="thumbnail"
-          class="player-track-cover"
-        />
-        <div class="player-track-info">
-          <p class="player-track-name">
-            {{ track?.name ?? text.emptyTrack }}
-          </p>
-          <p class="player-track-meta">
-            <span v-if="track">{{ track.artists.join(' / ') }}</span>
-            <span
-              v-if="qualityLabel"
-              class="player-quality"
-            >{{ qualityLabel }}</span>
-          </p>
+    <LiquidGlass
+      container-class="player-bar-glass"
+      role="contentinfo"
+      :aria-label="text.regionLabel"
+      :radius="28"
+      :border="0.07"
+      :displace="0.05"
+      :scale="-150"
+      :r-offset="0"
+      :g-offset="5"
+      :b-offset="8"
+      :blur="10"
+      :frost="0.12"
+      :lightness="72"
+      :alpha="0.9"
+      :style="{
+        position: 'fixed',
+        bottom: '18px',
+        left: 'calc(230px + ((100vw - 230px) / 2))',
+        transform: 'translateX(-50%)',
+        width: 'min(860px, calc(100vw - 288px))',
+        zIndex: 'var(--ncx-layer-player)'
+      }"
+    >
+      <div class="player-bar-content">
+        <!-- 曲目信息 -->
+        <div class="player-track">
+          <button
+            class="player-track-cover-button"
+            type="button"
+            :disabled="!track"
+            :aria-label="track ? `展开《${track.name}》沉浸播放页` : text.emptyTrack"
+            @click="openImmersivePlayer"
+          >
+            <MediaArtwork
+              :src="coverUrl"
+              :alt="track?.name ?? text.emptyTrack"
+              size="thumbnail"
+              class="player-track-cover"
+              :style="{
+                viewTransitionName: isImmersivePlayerOpen ? 'none' : 'ncx-now-playing-artwork'
+              }"
+            />
+          </button>
+          <div class="player-track-info">
+            <p class="player-track-name">
+              {{ track?.name ?? text.emptyTrack }}
+            </p>
+            <p class="player-track-meta">
+              <span v-if="track">{{ track.artists.join(' / ') }}</span>
+              <span
+                v-if="qualityLabel"
+                class="player-quality"
+              >{{ qualityLabel }}</span>
+            </p>
+          </div>
         </div>
-      </div>
 
-      <!-- 传输控制区域：上一首、暂停/播放、下一首及模式切换统一使用 icon 按钮组件并保持适宜间距 -->
-      <div
-        class="player-transport"
-        role="group"
-        :aria-label="text.regionLabel"
-      >
-        <CommonIconButton
-          size="default"
-          variant="ghost"
-          tooltip-placement="right"
-          :label="text.mode[snapshot.queue.mode]"
-          @click="player.setMode(nextMode)"
+        <!-- 传输控制区域：上一首、暂停/播放、下一首及模式切换统一使用 icon 按钮组件并保持适宜间距 -->
+        <div
+          class="player-transport"
+          role="group"
+          :aria-label="text.regionLabel"
         >
-          <Shuffle
-            v-if="snapshot.queue.mode === 'shuffle'"
-            :size="16"
-          />
-          <Repeat1
-            v-else-if="snapshot.queue.mode === 'loop-one'"
-            :size="16"
-          />
-          <Repeat
-            v-else
-            :size="16"
-          />
-        </CommonIconButton>
-        <CommonIconButton
-          size="default"
-          variant="ghost"
-          tooltip-placement="right"
-          :disabled="!hasQueue"
-          :label="text.previous"
-          @click="player.previous()"
-        >
-          <SkipBack :size="16" />
-        </CommonIconButton>
-        <CommonIconButton
-          size="prominent"
-          variant="primary"
-          tooltip-placement="left"
-          :disabled="!track"
-          :label="showPause ? text.pause : text.play"
-          @click="player.toggle()"
-        >
-          <CommonSpinner
-            v-if="busy"
-            size="compact"
-            class="player-busy"
-          />
-          <Pause
-            v-else-if="showPause"
-            :size="18"
-            fill="currentColor"
-          />
-          <Play
-            v-else
-            :size="18"
-            fill="currentColor"
-          />
-        </CommonIconButton>
-        <CommonIconButton
-          size="default"
-          variant="ghost"
-          tooltip-placement="left"
-          :disabled="!hasQueue"
-          :label="text.next"
-          @click="player.next()"
-        >
-          <SkipForward :size="16" />
-        </CommonIconButton>
-      </div>
+          <CommonIconButton
+            size="default"
+            variant="ghost"
+            tooltip-placement="right"
+            :label="text.mode[snapshot.queue.mode]"
+            @click="player.setMode(nextMode)"
+          >
+            <Shuffle
+              v-if="snapshot.queue.mode === 'shuffle'"
+              :size="16"
+            />
+            <Repeat1
+              v-else-if="snapshot.queue.mode === 'loop-one'"
+              :size="16"
+            />
+            <Repeat
+              v-else
+              :size="16"
+            />
+          </CommonIconButton>
+          <CommonIconButton
+            size="default"
+            variant="ghost"
+            tooltip-placement="right"
+            :disabled="!hasQueue"
+            :label="text.previous"
+            @click="player.previous()"
+          >
+            <SkipBack :size="16" />
+          </CommonIconButton>
+          <CommonIconButton
+            size="prominent"
+            variant="primary"
+            tooltip-placement="left"
+            :disabled="!track"
+            :label="showPause ? text.pause : text.play"
+            @click="player.toggle()"
+          >
+            <CommonSpinner
+              v-if="busy"
+              size="compact"
+              class="player-busy"
+            />
+            <Pause
+              v-else-if="showPause"
+              :size="18"
+              fill="currentColor"
+            />
+            <Play
+              v-else
+              :size="18"
+              fill="currentColor"
+            />
+          </CommonIconButton>
+          <CommonIconButton
+            size="default"
+            variant="ghost"
+            tooltip-placement="left"
+            :disabled="!hasQueue"
+            :label="text.next"
+            @click="player.next()"
+          >
+            <SkipForward :size="16" />
+          </CommonIconButton>
+        </div>
 
-      <!-- 进度 -->
-      <div class="player-progress">
-        <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
-        <div class="player-progress-control">
-          <CommonProgress
-            v-if="busy"
-            class="player-progress-loading"
-            indeterminate
-            size="compact"
-            :label="statusLabel"
-          />
+        <!-- 进度 -->
+        <div class="player-progress">
+          <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
+          <div class="player-progress-control">
+            <CommonProgress
+              v-if="busy"
+              class="player-progress-loading"
+              indeterminate
+              size="compact"
+              :label="statusLabel"
+            />
+            <CommonSlider
+              v-else
+              class="player-slider player-slider-progress"
+              :model-value="snapshot.playback.positionMs"
+              :min="0"
+              :max="Math.max(durationMs, 1)"
+              :step="1000"
+              size="compact"
+              :show-value="false"
+              @update:model-value="onSeek"
+            />
+          </div>
+          <span class="player-time">{{ formatTime(durationMs) }}</span>
+        </div>
+
+        <!-- 音量与状态控制 -->
+        <div class="player-output">
+          <CommonIconButton
+            size="default"
+            variant="ghost"
+            tooltip-placement="left"
+            :label="snapshot.playback.muted ? text.unmute : text.mute"
+            @click="player.setMuted(!snapshot.playback.muted)"
+          >
+            <VolumeX
+              v-if="snapshot.playback.muted"
+              :size="15"
+            />
+            <Volume2
+              v-else
+              :size="15"
+            />
+          </CommonIconButton>
           <CommonSlider
-            v-else
-            class="player-slider player-slider-progress"
-            :model-value="snapshot.playback.positionMs"
+            class="player-slider player-slider-volume"
+            :model-value="Math.round(snapshot.playback.volume * 100)"
             :min="0"
-            :max="Math.max(durationMs, 1)"
-            :step="1000"
+            :max="100"
             size="compact"
             :show-value="false"
-            @update:model-value="onSeek"
+            @update:model-value="onVolume"
           />
+          <!-- 音乐队列按钮 -->
+          <CommonIconButton
+            size="default"
+            variant="ghost"
+            tooltip-placement="left"
+            :selected="isQueueOpen"
+            :label="text.queue"
+            @click="toggleQueueDrawer"
+          >
+            <ListMusic :size="15" />
+          </CommonIconButton>
         </div>
-        <span class="player-time">{{ formatTime(durationMs) }}</span>
       </div>
+    </LiquidGlass>
 
-      <!-- 音量与状态控制 -->
-      <div class="player-output">
-        <CommonIconButton
-          size="default"
-          variant="ghost"
-          tooltip-placement="left"
-          :label="snapshot.playback.muted ? text.unmute : text.mute"
-          @click="player.setMuted(!snapshot.playback.muted)"
-        >
-          <VolumeX
-            v-if="snapshot.playback.muted"
-            :size="15"
-          />
-          <Volume2
-            v-else
-            :size="15"
-          />
-        </CommonIconButton>
-        <CommonSlider
-          class="player-slider player-slider-volume"
-          :model-value="Math.round(snapshot.playback.volume * 100)"
-          :min="0"
-          :max="100"
-          size="compact"
-          :show-value="false"
-          @update:model-value="onVolume"
-        />
-        <!-- 音乐队列按钮 -->
-        <CommonIconButton
-          size="default"
-          variant="ghost"
-          tooltip-placement="left"
-          :selected="isQueueOpen"
-          :label="text.queue"
-          @click="toggleQueueDrawer"
-        >
-          <ListMusic :size="15" />
-        </CommonIconButton>
-      </div>
+    <!-- 不可播放等音乐控制 bar 提示：使用 CommonToast 替代内联消息 -->
+    <CommonToast
+      :visible="!!notice"
+      type="warning"
+      :title="text.noticeTitle"
+      :message="notice ?? ''"
+      :duration="4000"
+      @close="player.dismissNotice()"
+    />
 
-    </div>
-  </LiquidGlass>
-
-  <!-- 不可播放等音乐控制 bar 提示：使用 CommonToast 替代内联消息 -->
-  <CommonToast
-    :visible="!!notice"
-    type="warning"
-    :title="text.noticeTitle"
-    :message="notice ?? ''"
-    :duration="4000"
-    @close="player.dismissNotice()"
-  />
-
-  <!-- 播放队列抽屉不放入玻璃材质，避免受其尺寸和层叠上下文影响。 -->
-  <QueueDrawer
-    :visible="isQueueOpen"
-    @close="isQueueOpen = false"
-  />
+    <!-- 播放队列抽屉不放入玻璃材质，避免受其尺寸和层叠上下文影响。 -->
+    <QueueDrawer
+      :visible="isQueueOpen"
+      @close="isQueueOpen = false"
+    />
+  </div>
 </template>
 
 <style scoped>
@@ -405,21 +425,35 @@ function openPlaybackDetail(): void {
   flex-shrink: 0;
 }
 
+.player-track-cover-button {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ncx-radius-md, 8px);
+  background: transparent;
+  cursor: pointer;
+}
+
+.player-track-cover-button:disabled {
+  cursor: default;
+}
+
+.player-track-cover-button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ncx-color-accent) 72%, white);
+  outline-offset: 3px;
+}
+
 .player-track-info {
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-width: 0;
   flex: 1;
-}
-
-.player-track--clickable {
-  cursor: pointer;
-}
-
-.player-track--clickable:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--ncx-color-accent) 72%, white);
-  outline-offset: 3px;
 }
 
 .player-track-name {

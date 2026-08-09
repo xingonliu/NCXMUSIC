@@ -32,8 +32,11 @@ import { usePlayer } from '../use-player'
 const props = withDefaults(defineProps<{
   /** 是否采用大尺寸播放详情样式。 */
   prominent?: boolean
+  /** 是否采用沉浸播放页的深色紧凑布局。 */
+  immersive?: boolean
 }>(), {
-  prominent: false
+  prominent: false,
+  immersive: false
 })
 
 // ========= 变量 =========
@@ -123,7 +126,10 @@ function handleQuality(value: string | number): void {
 <template>
   <section
     class="playback-controls"
-    :class="{ 'playback-controls--prominent': props.prominent }"
+    :class="{
+      'playback-controls--prominent': props.prominent,
+      'playback-controls--immersive': props.immersive
+    }"
     aria-label="播放控制"
   >
     <div class="playback-controls-transport">
@@ -159,7 +165,7 @@ function handleQuality(value: string | number): void {
 
       <CommonIconButton
         :size="props.prominent ? 'prominent' : 'default'"
-        variant="primary"
+        :variant="props.immersive ? 'ghost' : 'primary'"
         :disabled="!hasTrack"
         :label="showPause ? text.pause : text.play"
         @click="player.toggle()"
@@ -205,7 +211,10 @@ function handleQuality(value: string | number): void {
       <span>{{ formatTime(durationMs) }}</span>
     </div>
 
-    <div class="playback-controls-output">
+    <div
+      v-if="!props.immersive"
+      class="playback-controls-output"
+    >
       <CommonIconButton
         size="default"
         variant="ghost"
@@ -278,5 +287,36 @@ function handleQuality(value: string | number): void {
 
 .playback-controls--prominent {
   gap: var(--ncx-space-5);
+}
+
+.playback-controls--immersive {
+  gap: var(--ncx-space-3);
+  color: white;
+}
+
+.playback-controls--immersive .playback-controls-progress {
+  order: -1;
+}
+
+.playback-controls--immersive .playback-controls-transport {
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.playback-controls--immersive .playback-controls-progress span {
+  color: rgb(255 255 255 / 62%);
+}
+
+.playback-controls--immersive :deep(.ncx-common-icon-button) {
+  color: white;
+}
+
+.playback-controls--immersive :deep(.ncx-common-slider-rail) {
+  background: rgb(255 255 255 / 24%);
+}
+
+.playback-controls--immersive :deep(.ncx-common-slider-fill),
+.playback-controls--immersive :deep(.ncx-common-slider-thumb) {
+  background: white;
 }
 </style>
