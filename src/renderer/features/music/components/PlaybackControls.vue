@@ -25,6 +25,7 @@ import {
 } from '../../../design-system/components'
 import { zhCN } from '../../../locales/zh-CN'
 import { usePlayer } from '../use-player'
+import MusicProgressBar from './MusicProgressBar.vue'
 
 // ========= 属性 =========
 
@@ -199,13 +200,14 @@ function handleQuality(value: string | number): void {
 
     <div class="playback-controls-progress">
       <span>{{ formatTime(snapshot.playback.positionMs) }}</span>
-      <CommonSlider
+      <MusicProgressBar
         class="playback-controls-slider"
         :model-value="snapshot.playback.positionMs"
         :min="0"
         :max="Math.max(durationMs, 1)"
         :step="1000"
-        :show-value="false"
+        :disabled="!hasTrack"
+        :busy="busy"
         @update:model-value="handleSeek"
       />
       <span>{{ formatTime(durationMs) }}</span>

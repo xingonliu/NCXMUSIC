@@ -24,7 +24,6 @@ import { computed, ref } from 'vue'
 import type { PlayMode } from '../../../../domains/player/types'
 import {
   CommonIconButton,
-  CommonProgress,
   CommonSlider,
   CommonSpinner,
   CommonToast
@@ -35,6 +34,7 @@ import { useImmersivePlayerPresentation } from '../immersive-player-presentation
 import { adaptArtworkUrl } from '../music-entity'
 import { usePlayer } from '../use-player'
 import MediaArtwork from './MediaArtwork.vue'
+import MusicProgressBar from './MusicProgressBar.vue'
 import QueueDrawer from './QueueDrawer.vue'
 
 // ========= 变量 =========
@@ -288,22 +288,15 @@ function openImmersivePlayer(event: MouseEvent): void {
         <div class="player-progress">
           <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
           <div class="player-progress-control">
-            <CommonProgress
-              v-if="busy"
-              class="player-progress-loading"
-              indeterminate
-              size="compact"
-              :label="statusLabel"
-            />
-            <CommonSlider
-              v-else
+            <MusicProgressBar
               class="player-slider player-slider-progress"
               :model-value="snapshot.playback.positionMs"
               :min="0"
               :max="Math.max(durationMs, 1)"
               :step="1000"
-              size="compact"
-              :show-value="false"
+              :disabled="!track"
+              :busy="busy"
+              :label="statusLabel"
               @update:model-value="onSeek"
             />
           </div>
