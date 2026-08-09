@@ -7,7 +7,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { Repeat, Repeat1, Shuffle, Trash2, Volume2 } from '@lucide/vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import type { PlayMode, QueueItem } from '../../../../domains/player/types'
 import {
@@ -68,6 +68,9 @@ const drawerTitle = computed<string>(() => {
   return queueCount.value > 0 ? `${text.queueTitle} (${queueCount.value})` : text.queueTitle
 })
 
+/** 当前正在拖动的队列项 ID。 */
+const draggingItemId = ref<string | null>(null)
+
 // ========= 函数 =========
 
 /**
@@ -109,6 +112,33 @@ async function handleToggleMode(): Promise<void> {
  */
 function handleClose(): void {
   emit('close')
+}
+
+/**
+ * 开始拖动队列项。
+ *
+ * @param itemId 队列项唯一 ID
+ */
+function handleDragStart(itemId: string): void {
+  draggingItemId.value = itemId
+}
+
+/**
+ * 结束队列项拖动。
+ */
+function handleDragEnd(): void {
+  draggingItemId.value = null
+}
+
+/**
+ * 把拖动项移动到目标下标。
+ *
+ * @param toIndex 目标队列下标
+ */
+function handleDrop(toIndex: number): void {
+  if (!draggingItemId.value) return
+  player.reorder(draggingItemId.value, toIndex)
+  draggingItemId.value = null
 }
 </script>
 
@@ -166,8 +196,16 @@ function handleClose(): void {
           v-for="(item, index) in queueItems"
           :key="item.queueItemId"
           class="queue-item"
-          :class="{ 'queue-item--active': item.queueItemId === currentItemId }"
+          :class="{
+            'queue-item--active': item.queueItemId === currentItemId,
+            'queue-item--dragging': item.queueItemId === draggingItemId
+          }"
           role="listitem"
+          draggable="true"
+          @dragstart="handleDragStart(item.queueItemId)"
+          @dragover.prevent
+          @drop.prevent="handleDrop(index)"
+          @dragend="handleDragEnd"
           @click="handlePlayItem(item.queueItemId)"
         >
           <!-- 播放指示/序号 -->
@@ -263,6 +301,12 @@ function handleClose(): void {
 
 .queue-item:hover {
   background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
+}
+
+.queue-item--dragging {
+  opacity: 0.56;
+  outline: 1px dashed color-mix(in srgb, var(--ncx-color-accent) 55%, transparent);
+  outline-offset: -2px;
 }
 
 .queue-item--active {

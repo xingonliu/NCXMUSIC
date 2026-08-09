@@ -33,6 +33,8 @@ export interface NcxRuntimeBridge {
   searchMusic(input: { query: string; limit?: number; offset?: number } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
   /** 读取标准歌曲实体 */
   getSong(input: { id: TrackId } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
+  /** 读取标准歌词实体 */
+  getLyrics(input: { id: TrackId } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
   /** 读取标准歌手实体 */
   getArtist(input: { id: ArtistId } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
   /** 读取标准专辑实体 */

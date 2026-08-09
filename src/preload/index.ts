@@ -103,6 +103,12 @@ const runtimeBridge: NcxRuntimeBridge = {
       id: input.id,
       ...(input.requestId ? { requestId: input.requestId } : {})
     }),
+  getLyrics: (input) =>
+    gateway.readMusic({
+      operation: 'getLyrics',
+      id: input.id,
+      ...(input.requestId ? { requestId: input.requestId } : {})
+    }),
   getArtist: (input) =>
     gateway.readMusic({
       operation: 'getArtist',

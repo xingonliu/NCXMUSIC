@@ -91,6 +91,11 @@
   margin: var(--ncx-space-5) 0 0;
 }
 
+.settings-select {
+  width: min(260px, 100%);
+  margin-top: var(--ncx-space-5);
+}
+
 .settings-facts div {
   display: flex;
   justify-content: space-between;

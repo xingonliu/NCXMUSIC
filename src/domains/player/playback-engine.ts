@@ -149,6 +149,33 @@ export class PlaybackEngine {
     this.emitSnapshot()
   }
 
+  /**
+   * 恢复持久化的暂停态。
+   *
+   * @param track 上次当前队列项的曲目摘要
+   * @param positionMs 上次保存的播放位置（毫秒）
+   */
+  restorePaused(track: TrackSummary, positionMs: number): void {
+    this.generation += 1
+    this.canPlay = false
+    this.status = 'paused'
+    this.intent = 'pause'
+    this.pendingAutoplay = false
+    this.pendingStartPositionMs = Math.max(0, positionMs)
+    this.track = track
+    this.positionMs = this.pendingStartPositionMs
+    this.durationMs = track.durationMs
+    this.bufferedMs = 0
+    this.seeking = false
+    this.error = null
+    this.actualQuality = null
+    this.downgraded = false
+
+    this.media.pause()
+    this.media.clearSource()
+    this.emitSnapshot()
+  }
+
   /** 请求播放。媒体尚未 canplay 时只记录意图，等 canplay 后再真正播放。 */
   async play(): Promise<void> {
     if (this.status === 'idle' || !this.track) return

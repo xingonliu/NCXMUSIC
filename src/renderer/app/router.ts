@@ -2,6 +2,11 @@ import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-rou
 
 import RoutePlaceholder from '../design-system/patterns/RoutePlaceholder.vue'
 import DesignSystemLabPage from '../features/design-system/DesignSystemLabPage.vue'
+import CollectionDetailPage from '../features/music/CollectionDetailPage.vue'
+import ImmersiveLyricsPage from '../features/music/ImmersiveLyricsPage.vue'
+import PlaybackDetailPage from '../features/music/PlaybackDetailPage.vue'
+import SearchPage from '../features/music/SearchPage.vue'
+import SearchResultsPage from '../features/music/SearchResultsPage.vue'
 import SettingsPage from '../features/settings/SettingsPage.vue'
 
 // ========= 变量 =========
@@ -48,7 +53,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/search',
     name: 'search',
-    component: RouteSkeletonView,
+    component: SearchPage,
     meta: {
       pageLevel: 1,
       title: 'routes.search',
@@ -58,7 +63,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/search/results',
     name: 'search-results',
-    component: RouteSkeletonView,
+    component: SearchResultsPage,
     meta: {
       pageLevel: 2,
       title: 'routes.searchResults',
@@ -89,7 +94,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/playlists/:playlistId',
     name: 'playlist-detail',
-    component: RouteSkeletonView,
+    component: CollectionDetailPage,
     meta: {
       pageLevel: 2,
       title: 'routes.playlistDetail',
@@ -100,7 +105,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/albums/:albumId',
     name: 'album-detail',
-    component: RouteSkeletonView,
+    component: CollectionDetailPage,
     meta: {
       pageLevel: 2,
       title: 'routes.albumDetail',
@@ -122,7 +127,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/playback',
     name: 'playback-detail',
-    component: RouteSkeletonView,
+    component: PlaybackDetailPage,
     meta: {
       pageLevel: 2,
       title: 'routes.playbackDetail',
@@ -133,7 +138,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/lyrics',
     name: 'immersive-lyrics',
-    component: RouteSkeletonView,
+    component: ImmersiveLyricsPage,
     meta: {
       pageLevel: 2,
       title: 'routes.immersiveLyrics',

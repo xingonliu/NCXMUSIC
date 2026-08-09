@@ -73,6 +73,7 @@ export class MusicService {
       ])
       return
     }
+    if (result.kind === 'lyrics') return
     if (result.entity) this.entityPool.upsert(result.entity)
   }
 }

@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import { Database, LogIn, LogOut, ShieldCheck, UserRound } from '@lucide/vue'
+import { Database, Headphones, LogIn, LogOut, ShieldCheck, UserRound } from '@lucide/vue'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import type { AccountSessionSnapshot } from '../../../shared/schemas/account'
-import { CommonButton } from '../../design-system/components'
+import type { MusicQualityPreference } from '../../../domains/player/types'
+import {
+  CommonButton,
+  CommonSelect,
+  type CommonOption
+} from '../../design-system/components'
+import { zhCN } from '../../locales/zh-CN'
+import { usePlayer } from '../music/use-player'
 import './settings-page.css'
 
 // ========= 类型 =========
@@ -15,6 +22,12 @@ type AccountAction = 'login' | 'logout' | 'switch'
 
 /** 当前账户安全快照。 */
 const accountSnapshot = ref<AccountSessionSnapshot>()
+
+/** 播放器接口，用于设置全局音质偏好。 */
+const player = usePlayer()
+
+/** 播放文案集合。 */
+const playerText = zhCN.player
 
 /** 当前进行中的账户操作。 */
 const busyAction = ref<AccountAction | null>(null)
@@ -44,6 +57,20 @@ const accountStateLabel = computed(() => {
   return labels[state]
 })
 
+/** 音质偏好选项。 */
+const qualityOptions: CommonOption[] = [
+  { label: '自动（最高可用）', value: 'auto' },
+  { label: playerText.quality.standard, value: 'standard' },
+  { label: playerText.quality.higher, value: 'higher' },
+  { label: playerText.quality.exhigh, value: 'exhigh' },
+  { label: playerText.quality.lossless, value: 'lossless' },
+  { label: playerText.quality.hires, value: 'hires' },
+  { label: playerText.quality.jyeffect, value: 'jyeffect' },
+  { label: playerText.quality.sky, value: 'sky' },
+  { label: playerText.quality.dolby, value: 'dolby' },
+  { label: playerText.quality.jymaster, value: 'jymaster' }
+]
+
 // ========= 函数 =========
 
 /** 刷新账户安全快照。 */
@@ -66,6 +93,11 @@ async function runAccountAction(action: AccountAction): Promise<void> {
   } finally {
     busyAction.value = null
   }
+}
+
+/** 设置播放器全局音质偏好。 */
+function setPlaybackQuality(value: string | number): void {
+  void player.setQuality(String(value) as MusicQualityPreference)
 }
 
 // ========= 生命周期 =========
@@ -159,6 +191,25 @@ onBeforeUnmount(() => {
             <dd>30 天 / 10,000 条</dd>
           </div>
         </dl>
+      </article>
+
+      <article class="settings-panel">
+        <div class="settings-panel-icon">
+          <Headphones :size="20" />
+        </div>
+        <p class="settings-label">
+          播放设置
+        </p>
+        <h2>全局音质</h2>
+        <p class="settings-muted">
+          当前播放中改动会重新解析当前歌曲并尽量保持进度。
+        </p>
+        <CommonSelect
+          class="settings-select"
+          :model-value="player.snapshot.value.quality"
+          :options="qualityOptions"
+          @update:model-value="setPlaybackQuality"
+        />
       </article>
 
       <article class="settings-panel">

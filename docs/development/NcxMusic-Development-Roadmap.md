@@ -178,6 +178,8 @@ Phase 0 技术门禁
 - PlayerBar 隐藏、路由跳转、窗口最小化不会停止 AudioHost。
 - 关闭设置的“最小化/退出”两种路径均正确保存并清理。
 
+> 执行记录（2026-08-09）：Phase 3 已 `pass`。搜索页、搜索结果页、歌单/专辑集合详情、播放详情和沉浸歌词页已接入真实 `music.read` / `music.resolve-url` Runtime 链路；新增 `TrackRow`、`MediaArtwork`、页面内 `PlaybackControls`、`LyricsPanel` 和 Pinia 只读播放读模型，PlayerBar 按路由元数据隐藏且 AudioHost 保持根层常驻。播放域补齐持久化 `PlaybackStore`、账户 generation 校验、暂停态恢复、首次播放重新解析 URL、队列拖动排序、seek 滑块、全局音质偏好和歌词标准实体；队列语义覆盖搜索单曲插播、可见列表播放全部、集合详情从点击歌曲起整体替换队列。验证已通过 `pnpm typecheck`、`pnpm test`、`pnpm lint`、`pnpm test:e2e`、`pnpm build`；真实已登录高码率权益仍依赖外部账号门禁，普通门禁继续以游客/公开播放链路和已归一化契约为准。
+
 ## 8. Phase 4：完整音乐客户端页面
 
 依赖 Phase 3 和 API-C 的相关只读/写入子集。

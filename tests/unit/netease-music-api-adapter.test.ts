@@ -39,6 +39,12 @@ function apiFixture(): NeteaseMusicApi {
       return response({ result: { playlists: [{ id: 2488306802, name: '华语私人雷达' }] } })
     }),
     song_detail: vi.fn(async () => response({ songs: [] })),
+    lyric_new: vi.fn(async () =>
+      response({
+        lrc: { lyric: '[00:01.00]夜空中最亮的星\n[00:03.50]能否听清' },
+        tlyric: { lyric: '[00:01.00]The brightest star\n[00:03.50]Can you hear me' }
+      })
+    ),
     artists: vi.fn(async () => response({ artist: null })),
     album: vi.fn(async () => response({ album: null })),
     playlist_detail: vi.fn(async () => response({ playlist: null })),
@@ -71,6 +77,24 @@ describe('NeteaseMusicApiAdapter', () => {
     expect(result.artists[0]).toMatchObject({ kind: 'artist', id: '7763' })
     expect(result.albums[0]).toMatchObject({ kind: 'album', id: '34740156' })
     expect(result.playlists[0]).toMatchObject({ kind: 'playlist', id: '2488306802' })
+    expect(JSON.stringify(result)).not.toContain('cookie')
+  })
+
+  it('normalizes lyrics into timed lines with translations', async () => {
+    /** 网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(apiFixture())
+
+    const result = await adapter.read({
+      operation: 'getLyrics',
+      id: '33894312'
+    }, '', undefined)
+
+    expect(result.kind).toBe('lyrics')
+    if (result.kind !== 'lyrics') throw new Error('Expected lyrics result')
+    expect(result.entity?.lines).toEqual([
+      { timeMs: 1000, text: '夜空中最亮的星', translation: 'The brightest star' },
+      { timeMs: 3500, text: '能否听清', translation: 'Can you hear me' }
+    ])
     expect(JSON.stringify(result)).not.toContain('cookie')
   })
 })

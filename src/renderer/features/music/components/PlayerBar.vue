@@ -21,6 +21,7 @@ import {
   X
 } from '@lucide/vue'
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import type { PlayMode } from '../../../../domains/player/types'
 import {
@@ -38,6 +39,9 @@ import QueueDrawer from './QueueDrawer.vue'
 
 /** 播放器组合式接口，只发送命令并读取快照。 */
 const player = usePlayer()
+
+/** Router 实例，用于进入播放详情页。 */
+const router = useRouter()
 
 /** 播放器只读快照引用。 */
 const snapshot = player.snapshot
@@ -70,12 +74,6 @@ const showPause = computed(() => snapshot.value.playback.intent === 'play')
 const durationMs = computed(
   () => snapshot.value.playback.durationMs ?? snapshot.value.playback.positionMs
 )
-
-/** 当前播放进度百分比，供通用 Progress 组件展示。 */
-const progressPercent = computed(() => {
-  if (durationMs.value <= 0) return 0
-  return Math.min(100, Math.max(0, (snapshot.value.playback.positionMs / durationMs.value) * 100))
-})
 
 /** 状态文案 */
 const statusLabel = computed(() => text.status[snapshot.value.playback.status])
@@ -117,9 +115,20 @@ function onVolume(value: number): void {
   player.setVolume(value / 100)
 }
 
+/** 调整播放进度。 */
+function onSeek(value: number): void {
+  player.seek(value)
+}
+
 /** 切换播放队列抽屉显隐。 */
 function toggleQueueDrawer(): void {
   isQueueOpen.value = !isQueueOpen.value
+}
+
+/** 打开当前歌曲播放详情。 */
+function openPlaybackDetail(): void {
+  if (!track.value) return
+  void router.push({ name: 'playback-detail' })
 }
 </script>
 
@@ -150,7 +159,15 @@ function toggleQueueDrawer(): void {
   >
     <div class="player-bar-content">
       <!-- 曲目信息 -->
-      <div class="player-track">
+      <div
+        class="player-track"
+        :class="{ 'player-track--clickable': track }"
+        role="button"
+        tabindex="0"
+        @click="openPlaybackDetail"
+        @keydown.enter.prevent="openPlaybackDetail"
+        @keydown.space.prevent="openPlaybackDetail"
+      >
         <p class="player-track-name">
           {{ track?.name ?? text.emptyTrack }}
         </p>
@@ -246,12 +263,17 @@ function toggleQueueDrawer(): void {
             size="compact"
             :label="statusLabel"
           />
-          <CommonProgress
+          <CommonSlider
             v-else
-            class="player-progress-bar"
-            :value="progressPercent"
+            class="player-slider player-slider-progress"
+            :model-value="snapshot.playback.positionMs"
+            :min="0"
+            :max="Math.max(durationMs, 1)"
+            :step="1000"
             :label="text.progress"
             size="compact"
+            :show-value="false"
+            @update:model-value="onSeek"
           />
         </div>
         <span class="player-time">{{ formatTime(durationMs) }}</span>
@@ -375,6 +397,15 @@ function toggleQueueDrawer(): void {
   min-width: 0;
 }
 
+.player-track--clickable {
+  cursor: pointer;
+}
+
+.player-track--clickable:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ncx-color-accent) 72%, white);
+  outline-offset: 3px;
+}
+
 .player-track-name {
   margin: 0;
   overflow: hidden;
@@ -483,13 +514,15 @@ function toggleQueueDrawer(): void {
   min-width: 0;
 }
 
+.player-slider-progress {
+  width: 100%;
+}
+
 .player-slider :deep(.ncx-common-slider-track-container),
-.player-progress-bar :deep(.ncx-common-progress-track),
 .player-progress-loading :deep(.ncx-common-progress-track) {
   filter: none;
 }
 
-.player-progress-bar,
 .player-progress-loading,
 .player-output :deep(.ncx-common-icon-button),
 .player-transport :deep(.ncx-common-icon-button) {
@@ -497,14 +530,12 @@ function toggleQueueDrawer(): void {
 }
 
 .player-slider :deep(.ncx-common-slider-rail),
-.player-progress-bar :deep(.ncx-common-progress-track),
 .player-progress-loading :deep(.ncx-common-progress-track) {
   background: var(--ncx-player-bar-track-bg);
   box-shadow: inset 0 1px 1px rgb(0 0 0 / 7%);
 }
 
 .player-slider :deep(.ncx-common-slider-fill),
-.player-progress-bar :deep(.ncx-common-progress-bar),
 .player-progress-loading :deep(.ncx-common-progress-bar) {
   background: color-mix(in srgb, var(--ncx-color-accent) 78%, white 10%);
 }

@@ -1,0 +1,237 @@
+<script setup lang="ts">
+import { ListPlus, Play } from '@lucide/vue'
+import { computed } from 'vue'
+
+import type { StandardSong } from '../../../../shared/schemas/music'
+import { CommonIconButton } from '../../../design-system/components'
+import { formatMusicDuration } from '../music-entity'
+import MediaArtwork from './MediaArtwork.vue'
+
+// ========= 属性与事件 =========
+
+/** 歌曲行属性。 */
+const props = withDefaults(defineProps<{
+  /** 标准歌曲实体。 */
+  song: StandardSong
+  /** 当前歌曲在列表中的序号。 */
+  index: number | undefined
+  /** 是否为当前播放歌曲。 */
+  active?: boolean
+  /** 是否展示封面。 */
+  showArtwork?: boolean
+}>(), {
+  active: false,
+  showArtwork: true
+})
+
+/** 歌曲行事件。 */
+const emit = defineEmits<{
+  (event: 'play', song: StandardSong): void
+  (event: 'enqueue', song: StandardSong): void
+}>()
+
+// ========= 变量 =========
+
+/** 歌手展示文本。 */
+const artistText = computed<string>(() => {
+  return props.song.artists.map((artist) => artist.name).join(' / ') || '未知歌手'
+})
+
+/** 专辑展示文本。 */
+const albumText = computed<string>(() => props.song.album?.name ?? '未知专辑')
+
+/** 展示用曲目时长。 */
+const durationText = computed<string>(() => formatMusicDuration(props.song.durationMs))
+
+/** 是否需要展示 VIP 标签。 */
+const hasVipBadge = computed<boolean>(() => props.song.access.badges.includes('vip'))
+
+/** 是否需要展示付费标签。 */
+const hasPaidBadge = computed<boolean>(() => props.song.access.badges.includes('paid'))
+
+// ========= 函数 =========
+
+/** 播放当前行歌曲。 */
+function handlePlay(): void {
+  emit('play', props.song)
+}
+
+/** 把当前行歌曲追加到队列。 */
+function handleEnqueue(event: MouseEvent): void {
+  event.stopPropagation()
+  emit('enqueue', props.song)
+}
+</script>
+
+<template>
+  <article
+    class="track-row"
+    :class="{ 'track-row--active': props.active }"
+    role="button"
+    tabindex="0"
+    @click="handlePlay"
+    @keydown.enter.prevent="handlePlay"
+    @keydown.space.prevent="handlePlay"
+  >
+    <span class="track-row-index">
+      {{ props.index !== undefined ? props.index + 1 : '' }}
+    </span>
+
+    <MediaArtwork
+      v-if="props.showArtwork"
+      :src="props.song.album?.artworkUrl"
+      :alt="props.song.name"
+      size="dense"
+    />
+
+    <div class="track-row-main">
+      <div class="track-row-title-line">
+        <h3>{{ props.song.name }}</h3>
+        <span
+          v-if="hasVipBadge"
+          class="track-row-badge track-row-badge--vip"
+        >VIP</span>
+        <span
+          v-if="hasPaidBadge"
+          class="track-row-badge track-row-badge--paid"
+        >付费</span>
+      </div>
+      <p>{{ artistText }}</p>
+    </div>
+
+    <p class="track-row-album">
+      {{ albumText }}
+    </p>
+
+    <span class="track-row-duration">
+      {{ durationText }}
+    </span>
+
+    <div class="track-row-actions">
+      <CommonIconButton
+        size="compact"
+        variant="ghost"
+        label="播放"
+        @click.stop="handlePlay"
+      >
+        <Play
+          :size="13"
+          fill="currentColor"
+        />
+      </CommonIconButton>
+      <CommonIconButton
+        size="compact"
+        variant="ghost"
+        label="加入队列"
+        @click="handleEnqueue"
+      >
+        <ListPlus :size="13" />
+      </CommonIconButton>
+    </div>
+  </article>
+</template>
+
+<style scoped>
+.track-row {
+  display: grid;
+  min-height: 56px;
+  align-items: center;
+  grid-template-columns: 32px auto minmax(180px, 1.5fr) minmax(120px, 1fr) 54px 64px;
+  gap: var(--ncx-space-3);
+  padding: var(--ncx-space-2) var(--ncx-space-3);
+  border-radius: var(--ncx-radius-md);
+  cursor: pointer;
+  transition:
+    background-color var(--ncx-motion-fast),
+    color var(--ncx-motion-fast);
+}
+
+.track-row:hover,
+.track-row:focus-visible {
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
+  outline: none;
+}
+
+.track-row--active {
+  background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
+}
+
+.track-row-index,
+.track-row-duration,
+.track-row-album {
+  overflow: hidden;
+  color: var(--ncx-color-text-tertiary);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-row-index,
+.track-row-duration {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.track-row-main {
+  min-width: 0;
+}
+
+.track-row-title-line {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--ncx-space-2);
+}
+
+.track-row h3,
+.track-row p {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-row h3 {
+  color: var(--ncx-color-text-primary);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.track-row p {
+  margin-top: 2px;
+  color: var(--ncx-color-text-secondary);
+  font-size: 12px;
+}
+
+.track-row-badge {
+  flex-shrink: 0;
+  padding: 2px 5px;
+  border-radius: var(--ncx-radius-xs);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.track-row-badge--vip {
+  color: var(--ncx-color-vip);
+  background: color-mix(in srgb, var(--ncx-color-vip) 14%, transparent);
+}
+
+.track-row-badge--paid {
+  color: var(--ncx-color-paid);
+  background: color-mix(in srgb, var(--ncx-color-paid) 16%, transparent);
+}
+
+.track-row-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--ncx-space-1);
+  opacity: 0;
+  transition: opacity var(--ncx-motion-fast);
+}
+
+.track-row:hover .track-row-actions,
+.track-row:focus-within .track-row-actions {
+  opacity: 1;
+}
+</style>

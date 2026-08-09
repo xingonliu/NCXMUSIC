@@ -19,7 +19,7 @@ export interface TrackSummary {
   /** 专辑名 */
   album: string
   /** 专辑封面候选图；仅用于 UI / 系统媒体元数据，不含鉴权信息 */
-  artwork?: TrackArtwork[]
+  artwork?: TrackArtwork[] | undefined
   /** 曲目总时长（毫秒）；API 未提供时为 null */
   durationMs: number | null
 }
@@ -29,9 +29,9 @@ export interface TrackArtwork {
   /** 图片地址；必须是可由 Renderer 安全展示的公开资源 */
   src: string
   /** 图片尺寸，例如 512x512 */
-  sizes?: string
+  sizes?: string | undefined
   /** 图片 MIME 类型，例如 image/jpeg */
-  type?: string
+  type?: string | undefined
 }
 
 /** 引擎装载媒体所需的输入 */

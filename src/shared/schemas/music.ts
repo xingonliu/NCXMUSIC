@@ -97,6 +97,24 @@ export const StandardSongSchema = z.strictObject({
   updatedAt: EntityUpdatedAtSchema
 })
 
+/** 标准歌词行。 */
+export const StandardLyricsLineSchema = z.strictObject({
+  timeMs: z.number().int().nonnegative(),
+  text: z.string().max(500),
+  translation: z.string().max(500).optional()
+})
+
+/** 标准歌词实体。 */
+export const StandardLyricsSchema = z.strictObject({
+  kind: z.literal('lyrics'),
+  trackId: TrackIdSchema,
+  lines: z.array(StandardLyricsLineSchema).default([]),
+  plainText: z.string().max(50_000).optional(),
+  translatedText: z.string().max(50_000).optional(),
+  sources: z.array(MusicEntitySourceSchema).min(1),
+  updatedAt: EntityUpdatedAtSchema
+})
+
 /** 标准歌手实体。 */
 export const StandardArtistSchema = z.strictObject({
   kind: z.literal('artist'),
@@ -179,6 +197,12 @@ export const GetSongPayloadSchema = z.strictObject({
   id: TrackIdSchema
 })
 
+/** 歌词详情请求载荷。 */
+export const GetLyricsPayloadSchema = z.strictObject({
+  operation: z.literal('getLyrics'),
+  id: TrackIdSchema
+})
+
 /** 歌手详情请求载荷。 */
 export const GetArtistPayloadSchema = z.strictObject({
   operation: z.literal('getArtist'),
@@ -207,6 +231,7 @@ export const GetUserPayloadSchema = z.strictObject({
 export const MusicReadPayloadSchema = z.discriminatedUnion('operation', [
   MusicSearchPayloadSchema,
   GetSongPayloadSchema,
+  GetLyricsPayloadSchema,
   GetArtistPayloadSchema,
   GetAlbumPayloadSchema,
   GetPlaylistPayloadSchema,
@@ -227,6 +252,7 @@ export const MusicSearchResultSchema = z.strictObject({
 /** 实体详情响应结果。 */
 export const MusicEntityResultSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('song'), entity: StandardSongSchema.nullable() }),
+  z.strictObject({ kind: z.literal('lyrics'), entity: StandardLyricsSchema.nullable() }),
   z.strictObject({ kind: z.literal('artist'), entity: StandardArtistSchema.nullable() }),
   z.strictObject({ kind: z.literal('album'), entity: StandardAlbumSchema.nullable() }),
   z.strictObject({ kind: z.literal('playlist'), entity: StandardPlaylistSchema.nullable() }),
@@ -296,6 +322,8 @@ export type StandardArtistSummary = z.infer<typeof StandardArtistSummarySchema>
 export type StandardAlbumSummary = z.infer<typeof StandardAlbumSummarySchema>
 export type StandardUserSummary = z.infer<typeof StandardUserSummarySchema>
 export type StandardSong = z.infer<typeof StandardSongSchema>
+export type StandardLyricsLine = z.infer<typeof StandardLyricsLineSchema>
+export type StandardLyrics = z.infer<typeof StandardLyricsSchema>
 export type StandardArtist = z.infer<typeof StandardArtistSchema>
 export type StandardAlbum = z.infer<typeof StandardAlbumSchema>
 export type StandardPlaylist = z.infer<typeof StandardPlaylistSchema>

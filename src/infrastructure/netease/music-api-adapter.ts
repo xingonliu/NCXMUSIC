@@ -11,6 +11,8 @@ import {
   type StandardAlbumSummary,
   type StandardArtist,
   type StandardArtistSummary,
+  type StandardLyrics,
+  type StandardLyricsLine,
   type StandardPlaylist,
   type StandardSong,
   type StandardUser,
@@ -32,6 +34,8 @@ interface NeteaseResponse {
 export interface NeteaseMusicApi {
   search(params: Record<string, unknown>): Promise<NeteaseResponse>
   song_detail(params: Record<string, unknown>): Promise<NeteaseResponse>
+  lyric_new?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  lyric?(params: Record<string, unknown>): Promise<NeteaseResponse>
   artists(params: Record<string, unknown>): Promise<NeteaseResponse>
   album(params: Record<string, unknown>): Promise<NeteaseResponse>
   playlist_detail(params: Record<string, unknown>): Promise<NeteaseResponse>
@@ -45,6 +49,14 @@ export interface MusicDataSource {
 
 /** 运行期普通对象。 */
 type UnknownRecord = Record<string, unknown>
+
+/** 已解析但尚未合并翻译的歌词行。 */
+interface ParsedLyricLine {
+  /** 歌词时间点（毫秒）。 */
+  timeMs: number
+  /** 当前时间点歌词文案。 */
+  text: string
+}
 
 // ========= 变量 =========
 
@@ -151,6 +163,81 @@ function normalizeAccess(raw: UnknownRecord): TrackAccessMeta {
   if (fee === 1) badges.push('vip')
   if (fee === 4) badges.push('paid')
   return { badges, playableKnown: false }
+}
+
+/**
+ * 把 lrc/yrc 歌词文本拆成标准时间轴。
+ *
+ * @param lyricText 网易云返回的原始歌词文本
+ */
+function parseLyricLines(lyricText: string | undefined): ParsedLyricLine[] {
+  if (!lyricText) return []
+
+  /** 单行中所有时间标签及其正文。 */
+  const linePattern = /\[(\d{1,3}):(\d{1,2})(?:[.:](\d{1,3}))?\][^\S\r\n]*(.*)/gu
+  /** 标准化后的歌词行集合。 */
+  const lines: ParsedLyricLine[] = []
+
+  for (const rawLine of lyricText.split(/\r?\n/u)) {
+    linePattern.lastIndex = 0
+    const match = linePattern.exec(rawLine)
+    if (!match) continue
+
+    const minutes = Number(match[1] ?? 0)
+    const seconds = Number(match[2] ?? 0)
+    const fractionText = match[3] ?? '0'
+    const fractionMs = Number(fractionText.padEnd(3, '0').slice(0, 3))
+    const text = (match[4] ?? '').trim()
+    lines.push({
+      timeMs: (minutes * 60 + seconds) * 1000 + fractionMs,
+      text
+    })
+  }
+
+  return lines.sort((a, b) => a.timeMs - b.timeMs)
+}
+
+/**
+ * 合并原文歌词与翻译歌词。
+ *
+ * @param originalLines 原文歌词时间轴
+ * @param translatedLines 翻译歌词时间轴
+ */
+function mergeLyricLines(
+  originalLines: ParsedLyricLine[],
+  translatedLines: ParsedLyricLine[]
+): StandardLyricsLine[] {
+  /** 翻译歌词按毫秒时间点建立的快速查找表。 */
+  const translationByTime = new Map<number, string>()
+  for (const line of translatedLines) {
+    if (line.text) translationByTime.set(line.timeMs, line.text)
+  }
+
+  return originalLines.map((line) => ({
+    timeMs: line.timeMs,
+    text: line.text,
+    ...(translationByTime.get(line.timeMs)
+      ? { translation: translationByTime.get(line.timeMs) as string }
+      : {})
+  }))
+}
+
+/** 从歌词响应体中归一化标准歌词实体。 */
+function normalizeLyrics(id: string, rawBody: UnknownRecord, api: string, observedAt: string): StandardLyrics {
+  const lyricText = stringValue(record(rawBody['lrc'])?.['lyric'])
+  const translatedText = stringValue(record(rawBody['tlyric'])?.['lyric'])
+  const originalLines = parseLyricLines(lyricText)
+  const translatedLines = parseLyricLines(translatedText)
+
+  return {
+    kind: 'lyrics',
+    trackId: id,
+    lines: mergeLyricLines(originalLines, translatedLines),
+    ...(lyricText ? { plainText: lyricText } : {}),
+    ...(translatedText ? { translatedText } : {}),
+    sources: source(api, observedAt),
+    updatedAt: observedAt
+  }
 }
 
 /** 归一化歌手摘要。 */
@@ -314,6 +401,7 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
     signal?.throwIfAborted()
     if (parsed.operation === 'search') return this.search(parsed, cookie, signal)
     if (parsed.operation === 'getSong') return this.getSong(parsed.id, cookie, signal)
+    if (parsed.operation === 'getLyrics') return this.getLyrics(parsed.id, cookie, signal)
     if (parsed.operation === 'getArtist') return this.getArtist(parsed.id, cookie, signal)
     if (parsed.operation === 'getAlbum') return this.getAlbum(parsed.id, cookie, signal)
     if (parsed.operation === 'getPlaylist') return this.getPlaylist(parsed.id, cookie, signal)
@@ -377,6 +465,29 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
     signal?.throwIfAborted()
     const entity = normalizeSong(array(bodyRecord(response)['songs'])[0], 'ncm.song_detail', observedAt)
     return MusicReadResultSchema.parse({ kind: 'song', entity: entity ?? null })
+  }
+
+  /** 读取歌词详情。 */
+  private async getLyrics(id: string, cookie: string, signal?: AbortSignal): Promise<MusicReadResult> {
+    const api = await this.requiredApi()
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    const apiName = api.lyric_new ? 'ncm.lyric_new' : 'ncm.lyric'
+    const readLyrics = api.lyric_new ?? api.lyric
+    if (!readLyrics) {
+      throw Object.assign(new Error('当前网易云 API 依赖不支持歌词读取。'), {
+        code: 'UPSTREAM_UNAVAILABLE'
+      })
+    }
+
+    const response = await withoutThirdPartyConsole(() =>
+      readLyrics.call(api, { id, cookie, timeout: NETEASE_API_TIMEOUT_MS })
+    )
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'lyrics',
+      entity: normalizeLyrics(id, bodyRecord(response), apiName, observedAt)
+    })
   }
 
   /** 读取歌手详情。 */

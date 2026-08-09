@@ -36,6 +36,20 @@ export interface PlaybackCoordinatorOptions {
   quality?: MusicQualityPreference
 }
 
+/** 持久化恢复所需的最小播放器快照。 */
+export interface RestoredPlayerState {
+  /** 已持久化的队列快照。 */
+  queue: QueueSnapshot
+  /** 上次音质偏好。 */
+  quality: MusicQualityPreference
+  /** 上次播放位置（毫秒）。 */
+  positionMs: number
+  /** 上次音量（0~1）。 */
+  volume: number
+  /** 上次静音状态。 */
+  muted: boolean
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // PlaybackCoordinator
 // ─────────────────────────────────────────────────────────────────────────────
@@ -108,11 +122,24 @@ export class PlaybackCoordinator {
 
   /** 播放/暂停切换 */
   async toggle(): Promise<void> {
-    await this.engine.toggle()
+    const playback = this.engine.getSnapshot()
+    if (playback.intent === 'play') {
+      this.pause()
+      return
+    }
+    await this.play()
   }
 
   /** 恢复播放 */
   async play(): Promise<void> {
+    const current = this.queue.getCurrentItem()
+    const playback = this.engine.getSnapshot()
+    if (current && this.shouldResolveRestoredSource(current, playback)) {
+      await this.switchTo(current, true, playback.positionMs)
+      this.emitSnapshot()
+      return
+    }
+
     await this.engine.play()
   }
 
@@ -178,6 +205,23 @@ export class PlaybackCoordinator {
   /** 清空队列并停止播放 */
   async clear(): Promise<void> {
     await this.applyEffect(this.queue.clear())
+  }
+
+  /** 恢复持久化的播放器状态，只恢复到暂停态。 */
+  restorePausedState(state: RestoredPlayerState): void {
+    this.abortActiveResolve()
+    this.quality = state.quality
+    this.engine.setVolume(state.volume)
+    this.engine.setMuted(state.muted)
+    this.queue.restore(state.queue)
+
+    const current = this.queue.getCurrentItem()
+    if (current) {
+      this.engine.restorePaused(current.track, state.positionMs)
+    } else {
+      this.engine.stop()
+    }
+    this.emitSnapshot()
   }
 
   // ── 音质区 ──
@@ -287,6 +331,20 @@ export class PlaybackCoordinator {
     } finally {
       if (this.activeResolve === controller) this.activeResolve = undefined
     }
+  }
+
+  /**
+   * 判断当前引擎状态是否为“恢复占位源”。
+   *
+   * @param item 队列当前项
+   * @param playback 引擎播放快照
+   */
+  private shouldResolveRestoredSource(item: QueueItem, playback: PlaybackSnapshot): boolean {
+    return (
+      playback.status === 'paused' &&
+      playback.actualQuality === null &&
+      playback.track?.trackId === item.track.trackId
+    )
   }
 
   /** 取消进行中的解析 */

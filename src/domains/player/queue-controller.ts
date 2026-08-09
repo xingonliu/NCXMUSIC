@@ -203,6 +203,26 @@ export class QueueController {
   }
 
   /**
+   * 从持久化快照恢复队列结构。
+   *
+   * @param snapshot 已校验的队列快照；不包含播放 URL 或凭据
+   */
+  restore(snapshot: QueueSnapshot): QueueEffect {
+    this.items = [...snapshot.items]
+    this.mode = snapshot.mode
+    this.failedItemIds.clear()
+
+    const restoredCurrent = snapshot.currentItemId
+      ? this.items.find((item) => item.queueItemId === snapshot.currentItemId) ?? null
+      : null
+    const fallbackCurrent = restoredCurrent ?? this.items[0] ?? null
+    this.currentItemId = fallbackCurrent?.queueItemId ?? null
+    this.revision = Math.max(this.revision + 1, snapshot.revision)
+
+    return this.effect(fallbackCurrent, false, true)
+  }
+
+  /**
    * 前进到下一项。
    *
    * - loop：末项回到第一项
