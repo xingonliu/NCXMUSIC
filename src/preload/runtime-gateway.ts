@@ -1,11 +1,15 @@
 import type { RuntimeConnectionMetadata } from '../shared/contracts/control-plane'
 import {
+  MusicMutationPayloadSchema,
+  MusicMutationResultSchema,
   MusicReadPayloadSchema,
   MusicReadResultSchema,
   ResolveTrackUrlPayloadSchema,
   ResolvedMediaSourceSchema,
   type MusicReadPayload,
   type MusicReadResult,
+  type MusicMutationPayload,
+  type MusicMutationResult,
   type ResolveTrackUrlPayload,
   type ResolvedMediaSource
 } from '../shared/schemas/music'
@@ -84,6 +88,7 @@ export class RuntimeGateway {
             'system.ping',
             'system.snapshot',
             'music.read',
+            'music.mutate',
             'music.resolve-url',
             'playback.snapshot.load',
             'playback.snapshot.save'
@@ -204,6 +209,28 @@ export class RuntimeGateway {
     return parsed.success
       ? { ok: true, data: parsed.data }
       : protocolFailure('PROTOCOL_INVALID_MESSAGE', '音乐数据响应不符合契约。')
+  }
+
+  /** 向 Utility 发送一次不可透明重试的音乐写入请求。 */
+  async mutateMusic(
+    input: MusicMutationPayload & { requestId?: string }
+  ): Promise<RuntimeResult<MusicMutationResult>> {
+    const { requestId, ...payloadInput } = input
+    const payload = MusicMutationPayloadSchema.safeParse(payloadInput)
+    if (!payload.success) {
+      return protocolFailure('PROTOCOL_INVALID_MESSAGE', '音乐写入请求参数不合法。')
+    }
+    const result = await this.request(
+      'music.mutate',
+      payload.data,
+      requestId ?? crypto.randomUUID(),
+      contractRegistry['music.mutate'].defaultTimeoutMs
+    )
+    if (!result.ok) return result
+    const parsed = MusicMutationResultSchema.safeParse(result.data)
+    return parsed.success
+      ? { ok: true, data: parsed.data }
+      : protocolFailure('PROTOCOL_INVALID_MESSAGE', '音乐写入响应不符合契约。')
   }
 
   /** 从 Utility 当前账户 SQLite 读取播放快照。 */

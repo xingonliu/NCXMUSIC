@@ -35,6 +35,11 @@ let supervisor: UtilitySupervisor | undefined
 let broker: ConnectionBroker | undefined
 let authController: AuthSessionController | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
+/** 主窗口关闭按钮行为。 */
+let closeWindowBehavior: 'minimize' | 'quit' = 'minimize'
+
+/** 应用是否已经进入真实退出流程。 */
+let appIsQuitting = false
 /** 最近成功发送给当前 Utility 的账户存储上下文键。 */
 let lastAccountStoreCommandKey: string | undefined
 
@@ -122,6 +127,8 @@ function applyWindowCommand(command: WindowCommand): WindowSnapshot {
     window.close()
   } else if (command.type === 'window.toggleFullscreen') {
     window.setFullScreen(!window.isFullScreen())
+  } else if (command.type === 'window.setCloseBehavior') {
+    closeWindowBehavior = command.behavior
   }
 
   return publishWindowSnapshot(window) ?? createWindowSnapshot(window)
@@ -435,6 +442,16 @@ async function createMainWindow(): Promise<void> {
   )
   mainWindow = window
 
+  window.on('close', (event) => {
+    if (appIsQuitting || isSmokeTest) return
+    event.preventDefault()
+    if (closeWindowBehavior === 'quit') {
+      app.quit()
+      return
+    }
+    window.minimize()
+  })
+
   if (!isSmokeTest) window.once('ready-to-show', () => window.show())
   window.once('closed', () => {
     if (mainWindow === window) mainWindow = undefined
@@ -518,6 +535,7 @@ if (!hasSingleInstanceLock) {
 }
 
 app.on('before-quit', () => {
+  appIsQuitting = true
   if (smokeTimer) clearTimeout(smokeTimer)
   authController?.shutdown()
   supervisor?.shutdown()

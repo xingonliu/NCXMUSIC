@@ -571,6 +571,12 @@ function openPlaybackDetail(): void {
 }
 
 @media (width < 1100px) {
+  :deep(.player-bar-glass.effect),
+  .player-bar-glass {
+    backdrop-filter: none !important;
+    background: color-mix(in srgb, var(--ncx-color-surface) 94%, transparent) !important;
+  }
+
   .player-bar-content {
     grid-template-areas:
       "track transport progress"

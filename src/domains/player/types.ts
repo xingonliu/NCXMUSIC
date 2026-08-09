@@ -160,6 +160,9 @@ export type MediaElementEvent =
 /** 队列项的来源，用于 Action Journal 与 UI 展示 */
 export type QueueSource =
   | { kind: 'search' }
+  | { kind: 'discover' }
+  | { kind: 'liked' }
+  | { kind: 'artist'; artistId: string }
   | { kind: 'playlist'; playlistId: string }
   | { kind: 'album'; albumId: string }
   | { kind: 'agent' }

@@ -3,8 +3,12 @@ import { createRequire } from 'node:module'
 import { join } from 'node:path'
 
 import {
+  MusicMutationPayloadSchema,
+  MusicMutationResultSchema,
   MusicReadPayloadSchema,
   MusicReadResultSchema,
+  type MusicMutationPayload,
+  type MusicMutationResult,
   type MusicReadPayload,
   type MusicReadResult,
   type StandardAlbum,
@@ -50,11 +54,27 @@ export interface NeteaseMusicApi {
   album(params: Record<string, unknown>): Promise<NeteaseResponse>
   playlist_detail(params: Record<string, unknown>): Promise<NeteaseResponse>
   user_detail(params: Record<string, unknown>): Promise<NeteaseResponse>
+  personalized?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  personalized_newsong?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  recommend_songs?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  user_playlist?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  likelist?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  artist_album?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  simi_artist?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  like?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  playlist_subscribe?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  album_sub?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  playlist_create?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  playlist_name_update?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  playlist_delete?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  playlist_tracks?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  daily_signin?(params: Record<string, unknown>): Promise<NeteaseResponse>
 }
 
 /** Music Service 底层数据源接口。 */
 export interface MusicDataSource {
   read(payload: MusicReadPayload, cookie: string, signal?: AbortSignal): Promise<MusicReadResult>
+  mutate?(payload: MusicMutationPayload, cookie: string, signal?: AbortSignal): Promise<MusicMutationResult>
 }
 
 /** 运行期普通对象。 */
@@ -180,6 +200,11 @@ function numberValue(value: unknown): number | undefined {
   return typeof value === 'number' && Number.isFinite(value) ? value : undefined
 }
 
+/** 读取布尔字段。 */
+function booleanValue(value: unknown): boolean | undefined {
+  return typeof value === 'boolean' ? value : undefined
+}
+
 /** 将响应 code 的数字或数字字符串形式归一为 number。 */
 function responseCodeValue(value: unknown): number | undefined {
   if (typeof value === 'number' && Number.isInteger(value)) return value
@@ -222,6 +247,20 @@ function bodyRecord(response: NeteaseResponse): UnknownRecord {
 /** 构造实体来源描述。 */
 function source(api: string, observedAt: string): [{ api: string; observedAt: string }] {
   return [{ api, observedAt }]
+}
+
+/** 读取必须存在的网易云 API 方法。 */
+function requiredApiMethod(
+  api: NeteaseMusicApi,
+  name: keyof NeteaseMusicApi
+): (params: Record<string, unknown>) => Promise<NeteaseResponse> {
+  const method = api[name]
+  if (typeof method !== 'function') {
+    throw Object.assign(new Error(`当前网易云 API 依赖不支持 ${String(name)}。`), {
+      code: 'CAPABILITY_UNAVAILABLE'
+    })
+  }
+  return method.bind(api)
 }
 
 /** 根据 fee 字段归一化展示标记。 */
@@ -373,7 +412,12 @@ function normalizeSong(rawValue: unknown, api: string, observedAt: string): Stan
 }
 
 /** 归一化歌手实体。 */
-function normalizeArtist(rawValue: unknown, api: string, observedAt: string): StandardArtist | undefined {
+function normalizeArtist(
+  rawValue: unknown,
+  api: string,
+  observedAt: string,
+  hotSongsValue: unknown = []
+): StandardArtist | undefined {
   const summary = normalizeArtistSummary(rawValue)
   const raw = record(rawValue)
   if (!summary || !raw) return undefined
@@ -385,6 +429,10 @@ function normalizeArtist(rawValue: unknown, api: string, observedAt: string): St
     ...(summary.artworkUrl ? { artworkUrl: summary.artworkUrl } : {}),
     ...(numberValue(raw['musicSize'] ?? raw['songSize']) !== undefined ? { songCount: numberValue(raw['musicSize'] ?? raw['songSize']) } : {}),
     ...(numberValue(raw['albumSize']) !== undefined ? { albumCount: numberValue(raw['albumSize']) } : {}),
+    ...(stringValue(raw['briefDesc'] ?? raw['desc']) ? { description: stringValue(raw['briefDesc'] ?? raw['desc']) } : {}),
+    hotSongs: array(hotSongsValue)
+      .map((song) => normalizeSong(song, api, observedAt))
+      .filter((item): item is StandardSong => Boolean(item)),
     sources: source(api, observedAt),
     updatedAt: observedAt
   }
@@ -405,6 +453,8 @@ function normalizeAlbum(rawValue: unknown, songsValue: unknown, api: string, obs
     ...(summary.artworkUrl ? { artworkUrl: summary.artworkUrl } : {}),
     ...(summary.publishTime !== undefined ? { publishTime: summary.publishTime } : {}),
     ...(numberValue(raw['size']) !== undefined ? { size: numberValue(raw['size']) } : {}),
+    ...(stringValue(raw['description'] ?? raw['briefDesc']) ? { description: stringValue(raw['description'] ?? raw['briefDesc']) } : {}),
+    ...(booleanValue(raw['subscribed']) !== undefined ? { subscribed: booleanValue(raw['subscribed']) } : {}),
     songs,
     sources: source(api, observedAt),
     updatedAt: observedAt
@@ -412,7 +462,12 @@ function normalizeAlbum(rawValue: unknown, songsValue: unknown, api: string, obs
 }
 
 /** 归一化歌单实体。 */
-function normalizePlaylist(rawValue: unknown, api: string, observedAt: string): StandardPlaylist | undefined {
+function normalizePlaylist(
+  rawValue: unknown,
+  api: string,
+  observedAt: string,
+  ownerId?: string
+): StandardPlaylist | undefined {
   const raw = record(rawValue)
   const id = idValue(raw?.['id'])
   const name = stringValue(raw?.['name'])
@@ -424,10 +479,12 @@ function normalizePlaylist(rawValue: unknown, api: string, observedAt: string): 
     id,
     name,
     ...(creator ? { creator } : {}),
-    ...(urlValue(raw['coverImgUrl']) ? { artworkUrl: urlValue(raw['coverImgUrl']) } : {}),
+    ...(urlValue(raw['coverImgUrl'] ?? raw['picUrl']) ? { artworkUrl: urlValue(raw['coverImgUrl'] ?? raw['picUrl']) } : {}),
     ...(numberValue(raw['trackCount']) !== undefined ? { trackCount: numberValue(raw['trackCount']) } : {}),
     ...(numberValue(raw['playCount']) !== undefined ? { playCount: numberValue(raw['playCount']) } : {}),
     ...(typeof raw['subscribed'] === 'boolean' ? { subscribed: raw['subscribed'] } : {}),
+    ...(stringValue(raw['description']) ? { description: stringValue(raw['description']) } : {}),
+    ...(ownerId && creator ? { owned: creator.id === ownerId } : {}),
     songs,
     sources: source(api, observedAt),
     updatedAt: observedAt
@@ -473,7 +530,104 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
     if (parsed.operation === 'getArtist') return this.getArtist(parsed.id, cookie, signal)
     if (parsed.operation === 'getAlbum') return this.getAlbum(parsed.id, cookie, signal)
     if (parsed.operation === 'getPlaylist') return this.getPlaylist(parsed.id, cookie, signal)
-    return this.getUser(parsed.id, cookie, signal)
+    if (parsed.operation === 'getUser') return this.getUser(parsed.id, cookie, signal)
+    if (parsed.operation === 'getFeaturedPlaylists') return this.getFeaturedPlaylists(parsed.limit, cookie, signal)
+    if (parsed.operation === 'getNewSongs') return this.getNewSongs(parsed.limit, cookie, signal)
+    if (parsed.operation === 'getDailySongs') return this.getDailySongs(parsed.limit, cookie, signal)
+    if (parsed.operation === 'getUserPlaylists') {
+      return this.getUserPlaylists(parsed.userId, parsed.limit, parsed.offset, cookie, signal)
+    }
+    if (parsed.operation === 'getLikedSongs') return this.getLikedSongs(parsed.userId, parsed.limit, cookie, signal)
+    if (parsed.operation === 'getArtistAlbums') {
+      return this.getArtistAlbums(parsed.artistId, parsed.limit, parsed.offset, cookie, signal)
+    }
+    return this.getSimilarArtists(parsed.artistId, cookie, signal)
+  }
+
+  /** 执行账户感知的显式音乐写入请求。 */
+  async mutate(
+    payload: MusicMutationPayload,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicMutationResult> {
+    const parsed = MusicMutationPayloadSchema.parse(payload)
+    const api = await this.requiredApi()
+    signal?.throwIfAborted()
+    let response: NeteaseResponse
+    let entityId: string | undefined
+
+    if (parsed.operation === 'likeTrack') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'like')({
+        id: parsed.trackId,
+        like: parsed.liked,
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = parsed.trackId
+    } else if (parsed.operation === 'subscribePlaylist') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'playlist_subscribe')({
+        id: parsed.playlistId,
+        t: parsed.subscribed ? 1 : 0,
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = parsed.playlistId
+    } else if (parsed.operation === 'subscribeAlbum') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'album_sub')({
+        id: parsed.albumId,
+        t: parsed.subscribed ? 1 : 0,
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = parsed.albumId
+    } else if (parsed.operation === 'createPlaylist') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'playlist_create')({
+        name: parsed.name,
+        privacy: parsed.privacy === 'private' ? 10 : 0,
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = idValue(record(bodyRecord(response)['playlist'])?.['id'])
+    } else if (parsed.operation === 'renamePlaylist') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'playlist_name_update')({
+        id: parsed.playlistId,
+        name: parsed.name,
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = parsed.playlistId
+    } else if (parsed.operation === 'deletePlaylist') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'playlist_delete')({
+        id: parsed.playlistId,
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = parsed.playlistId
+    } else if (parsed.operation === 'updatePlaylistTracks') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'playlist_tracks')({
+        pid: parsed.playlistId,
+        tracks: parsed.trackIds.join(','),
+        op: parsed.action === 'add' ? 'add' : 'del',
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = parsed.playlistId
+    } else {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'daily_signin')({
+        type: 1,
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+    }
+
+    signal?.throwIfAborted()
+    bodyRecord(response)
+    return MusicMutationResultSchema.parse({
+      operation: parsed.operation,
+      succeeded: true,
+      ...(entityId ? { entityId } : {}),
+      updatedAt: new Date().toISOString()
+    })
   }
 
   /** 读取或加载网易云 API 实例。 */
@@ -567,7 +721,8 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
       api.artists({ id, cookie, timeout: NETEASE_API_TIMEOUT_MS })
     )
     signal?.throwIfAborted()
-    const entity = normalizeArtist(bodyRecord(response)['artist'], 'ncm.artists', observedAt)
+    const body = bodyRecord(response)
+    const entity = normalizeArtist(body['artist'], 'ncm.artists', observedAt, body['hotSongs'])
     return MusicReadResultSchema.parse({ kind: 'artist', entity: entity ?? null })
   }
 
@@ -609,5 +764,212 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
     signal?.throwIfAborted()
     const entity = normalizeUser(bodyRecord(response)['profile'], 'ncm.user_detail', observedAt)
     return MusicReadResultSchema.parse({ kind: 'user', entity: entity ?? null })
+  }
+
+  /** 读取发现页平台推荐歌单。 */
+  private async getFeaturedPlaylists(
+    limit: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    const api = await this.requiredApi()
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'personalized')({
+      limit,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'playlistCollection',
+      collection: 'featured',
+      playlists: array(bodyRecord(response)['result'])
+        .map((item) => normalizePlaylist(item, 'ncm.personalized', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取发现页推荐新歌。 */
+  private async getNewSongs(
+    limit: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    const api = await this.requiredApi()
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'personalized_newsong')({
+      limit,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    const songs = array(bodyRecord(response)['result'])
+      .map((item) => normalizeSong(record(item)?.['song'] ?? item, 'ncm.personalized_newsong', observedAt))
+      .filter(Boolean)
+    return MusicReadResultSchema.parse({
+      kind: 'songCollection',
+      collection: 'new',
+      songs,
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取登录用户每日推荐歌曲。 */
+  private async getDailySongs(
+    limit: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    const api = await this.requiredApi()
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'recommend_songs')({
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    const body = bodyRecord(response)
+    const songsValue = record(body['data'])?.['dailySongs'] ?? body['recommend']
+    return MusicReadResultSchema.parse({
+      kind: 'songCollection',
+      collection: 'daily',
+      songs: array(songsValue)
+        .slice(0, limit)
+        .map((item) => normalizeSong(item, 'ncm.recommend_songs', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取指定用户的自建与收藏歌单。 */
+  private async getUserPlaylists(
+    userId: string,
+    limit: number,
+    offset: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    const api = await this.requiredApi()
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'user_playlist')({
+      uid: userId,
+      limit,
+      offset,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'playlistCollection',
+      collection: 'user',
+      ownerId: userId,
+      playlists: array(bodyRecord(response)['playlist'])
+        .map((item) => normalizePlaylist(item, 'ncm.user_playlist', observedAt, userId))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取指定用户喜欢歌曲列表。 */
+  private async getLikedSongs(
+    userId: string,
+    limit: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    const api = await this.requiredApi()
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    const likedResponse = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'likelist')({
+      uid: userId,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    const ids = array(bodyRecord(likedResponse)['ids']).map(idValue).filter((item): item is string => Boolean(item)).slice(0, limit)
+    if (ids.length === 0) {
+      return MusicReadResultSchema.parse({
+        kind: 'songCollection',
+        collection: 'liked',
+        ownerId: userId,
+        songs: [],
+        updatedAt: observedAt
+      })
+    }
+    const detailResponse = await withoutThirdPartyConsole(() => api.song_detail({
+      ids: ids.join(','),
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'songCollection',
+      collection: 'liked',
+      ownerId: userId,
+      songs: array(bodyRecord(detailResponse)['songs'])
+        .map((item) => normalizeSong(item, 'ncm.song_detail', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取歌手专辑列表。 */
+  private async getArtistAlbums(
+    artistId: string,
+    limit: number,
+    offset: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    const api = await this.requiredApi()
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'artist_album')({
+      id: artistId,
+      limit,
+      offset,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'albumCollection',
+      collection: 'artist',
+      artistId,
+      albums: array(bodyRecord(response)['hotAlbums'])
+        .map((item) => normalizeAlbum(item, [], 'ncm.artist_album', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取相似歌手列表。 */
+  private async getSimilarArtists(
+    artistId: string,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    const api = await this.requiredApi()
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'simi_artist')({
+      id: artistId,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'artistCollection',
+      collection: 'similar',
+      artistId,
+      artists: array(bodyRecord(response)['artists'])
+        .map((item) => normalizeArtist(item, 'ncm.simi_artist', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
   }
 }

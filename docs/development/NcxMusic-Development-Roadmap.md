@@ -206,6 +206,8 @@ Phase 0 技术门禁
 - 搜索和推荐“播放全部”按可见集合替换队列；所有入口队列语义一致。
 - 登录态、权益、缓存和写操作失败均来自 Adapter 契约，不读取原始 API 字段。
 
+> 执行记录（2026-08-09）：Phase 4 实现完成并标记为 `provisional-pass`。歌单/我喜欢、专辑、歌手、发现、个人信息、设置、播放详情和沉浸歌词均已接入正式路由；发现页采用“精选歌单 → 登录态每日推荐 → 新歌速递”的 Section Registry 装配，三个 Section 独立维护 Loading/Empty/Error/Ready 与重试。标准 `music.mutate` 通道已覆盖歌曲喜欢、歌单/专辑收藏、自建歌单创建/重命名/删除/增删歌曲和签到，写操作无透明重试且游客在 Utility 边界被拒绝。长歌曲列表使用固定行高虚拟窗口，封面统一为五档语义尺寸，歌曲与歌单入口接入首批冻结右键菜单。验证证据见 `docs/development/reports/Phase-4-music-client-pages-validation.md`；真实登录账号写入、权益资源和 Windows/macOS Electron 视觉回归仍需在发布硬化阶段持续验证。
+
 ## 9. Phase 5：小云 Agent 主闭环
 
 **功能映射：** APP-006/011、LLM-001～009、AGT-001～014、TOL-001～011、SEC-001～011、SET-002/004。

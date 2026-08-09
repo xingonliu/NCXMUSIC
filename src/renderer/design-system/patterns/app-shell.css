@@ -59,6 +59,43 @@
   -webkit-app-region: no-drag;
 }
 
+.ncx-playlist-group {
+  margin-top: var(--ncx-space-3);
+}
+
+.ncx-playlist-group-heading {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ncx-space-2);
+  padding-right: 4px;
+}
+
+.ncx-playlist-group-toggle {
+  border: 0;
+  color: var(--ncx-color-text-secondary);
+  background: transparent;
+  cursor: pointer;
+}
+
+.ncx-playlist-nav .ncx-common-context {
+  display: block;
+}
+
+.ncx-playlist-nav .ncx-nav-item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ncx-playlist-nav-error {
+  margin: var(--ncx-space-3) 10px 0;
+  color: var(--ncx-color-danger);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
 .ncx-account-nav {
   display: grid;
   gap: 3px;
@@ -74,6 +111,11 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
+}
+
+.ncx-playlist-group-toggle .ncx-nav-section-title {
+  flex: 1;
+  text-align: left;
 }
 
 .ncx-nav-item {

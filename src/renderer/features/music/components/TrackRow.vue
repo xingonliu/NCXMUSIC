@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ListPlus, Play } from '@lucide/vue'
+import { Heart, ListPlus, Play } from '@lucide/vue'
 import { computed } from 'vue'
 
 import type { StandardSong } from '../../../../shared/schemas/music'
-import { CommonIconButton } from '../../../design-system/components'
+import {
+  CommonContextMenu,
+  CommonIconButton,
+  type CommonMenuItem
+} from '../../../design-system/components'
 import { formatMusicDuration } from '../music-entity'
 import MediaArtwork from './MediaArtwork.vue'
 
@@ -28,6 +32,8 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   (event: 'play', song: StandardSong): void
   (event: 'enqueue', song: StandardSong): void
+  (event: 'play-next', song: StandardSong): void
+  (event: 'like', song: StandardSong): void
 }>()
 
 // ========= 变量 =========
@@ -49,6 +55,16 @@ const hasVipBadge = computed<boolean>(() => props.song.access.badges.includes('v
 /** 是否需要展示付费标签。 */
 const hasPaidBadge = computed<boolean>(() => props.song.access.badges.includes('paid'))
 
+/** 当前歌曲右键菜单，按冻结矩阵提供首批通用动作。 */
+const contextMenuItems = computed<CommonMenuItem[]>(() => [
+  { value: 'play', label: '立即播放' },
+  { value: 'play-next', label: '下一首播放' },
+  { value: 'enqueue', label: '添加到队列末尾' },
+  { value: 'separator-a', type: 'separator' },
+  { value: 'like', label: '收藏' },
+  { value: 'copy-link', label: '复制网易云歌曲链接' }
+])
+
 // ========= 函数 =========
 
 /** 播放当前行歌曲。 */
@@ -61,30 +77,47 @@ function handleEnqueue(event: MouseEvent): void {
   event.stopPropagation()
   emit('enqueue', props.song)
 }
+
+/** 执行当前歌曲右键菜单动作。 */
+function handleContextAction(value: string | number): void {
+  const action = String(value)
+  if (action === 'play') emit('play', props.song)
+  else if (action === 'play-next') emit('play-next', props.song)
+  else if (action === 'enqueue') emit('enqueue', props.song)
+  else if (action === 'like') emit('like', props.song)
+  else if (action === 'copy-link') {
+    void navigator.clipboard.writeText(`https://music.163.com/song?id=${props.song.id}`)
+  }
+}
 </script>
 
 <template>
-  <article
-    class="track-row"
-    :class="{ 'track-row--active': props.active }"
-    role="button"
-    tabindex="0"
-    @click="handlePlay"
-    @keydown.enter.prevent="handlePlay"
-    @keydown.space.prevent="handlePlay"
+  <CommonContextMenu
+    class="track-row-context"
+    :items="contextMenuItems"
+    @select="handleContextAction"
   >
-    <span class="track-row-index">
-      {{ props.index !== undefined ? props.index + 1 : '' }}
-    </span>
+    <article
+      class="track-row"
+      :class="{ 'track-row--active': props.active }"
+      role="button"
+      tabindex="0"
+      @click="handlePlay"
+      @keydown.enter.prevent="handlePlay"
+      @keydown.space.prevent="handlePlay"
+    >
+      <span class="track-row-index">
+        {{ props.index !== undefined ? props.index + 1 : '' }}
+      </span>
 
-    <MediaArtwork
-      v-if="props.showArtwork"
-      :src="props.song.album?.artworkUrl"
-      :alt="props.song.name"
-      size="dense"
-    />
+      <MediaArtwork
+        v-if="props.showArtwork"
+        :src="props.song.album?.artworkUrl"
+        :alt="props.song.name"
+        size="thumbnail"
+      />
 
-    <div class="track-row-main">
+      <div class="track-row-main">
       <div class="track-row-title-line">
         <h3>{{ props.song.name }}</h3>
         <span
@@ -97,17 +130,17 @@ function handleEnqueue(event: MouseEvent): void {
         >付费</span>
       </div>
       <p>{{ artistText }}</p>
-    </div>
+      </div>
 
-    <p class="track-row-album">
-      {{ albumText }}
-    </p>
+      <p class="track-row-album">
+        {{ albumText }}
+      </p>
 
-    <span class="track-row-duration">
-      {{ durationText }}
-    </span>
+      <span class="track-row-duration">
+        {{ durationText }}
+      </span>
 
-    <div class="track-row-actions">
+      <div class="track-row-actions">
       <CommonIconButton
         size="compact"
         variant="ghost"
@@ -127,8 +160,17 @@ function handleEnqueue(event: MouseEvent): void {
       >
         <ListPlus :size="13" />
       </CommonIconButton>
-    </div>
-  </article>
+        <CommonIconButton
+          size="compact"
+          variant="ghost"
+          label="收藏"
+          @click.stop="emit('like', props.song)"
+        >
+          <Heart :size="13" />
+        </CommonIconButton>
+      </div>
+    </article>
+  </CommonContextMenu>
 </template>
 
 <style scoped>
@@ -136,7 +178,7 @@ function handleEnqueue(event: MouseEvent): void {
   display: grid;
   min-height: 56px;
   align-items: center;
-  grid-template-columns: 32px auto minmax(180px, 1.5fr) minmax(120px, 1fr) 54px 64px;
+  grid-template-columns: 32px auto minmax(180px, 1.5fr) minmax(120px, 1fr) 54px 92px;
   gap: var(--ncx-space-3);
   padding: var(--ncx-space-2) var(--ncx-space-3);
   border-radius: var(--ncx-radius-md);
@@ -144,6 +186,10 @@ function handleEnqueue(event: MouseEvent): void {
   transition:
     background-color var(--ncx-motion-fast),
     color var(--ncx-motion-fast);
+}
+
+.track-row-context {
+  display: block;
 }
 
 .track-row:hover,

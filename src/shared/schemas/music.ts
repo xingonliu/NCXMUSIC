@@ -124,6 +124,8 @@ export const StandardArtistSchema = z.strictObject({
   artworkUrl: z.string().url().optional(),
   songCount: z.number().int().nonnegative().optional(),
   albumCount: z.number().int().nonnegative().optional(),
+  description: z.string().max(5_000).optional(),
+  hotSongs: z.array(StandardSongSchema).default([]),
   sources: z.array(MusicEntitySourceSchema).min(1),
   updatedAt: EntityUpdatedAtSchema
 })
@@ -137,6 +139,8 @@ export const StandardAlbumSchema = z.strictObject({
   artworkUrl: z.string().url().optional(),
   publishTime: z.number().int().nonnegative().optional(),
   size: z.number().int().nonnegative().optional(),
+  description: z.string().max(5_000).optional(),
+  subscribed: z.boolean().optional(),
   songs: z.array(StandardSongSchema).default([]),
   sources: z.array(MusicEntitySourceSchema).min(1),
   updatedAt: EntityUpdatedAtSchema
@@ -152,6 +156,8 @@ export const StandardPlaylistSchema = z.strictObject({
   trackCount: z.number().int().nonnegative().optional(),
   playCount: z.number().int().nonnegative().optional(),
   subscribed: z.boolean().optional(),
+  description: z.string().max(5_000).optional(),
+  owned: z.boolean().optional(),
   songs: z.array(StandardSongSchema).default([]),
   sources: z.array(MusicEntitySourceSchema).min(1),
   updatedAt: EntityUpdatedAtSchema
@@ -227,6 +233,53 @@ export const GetUserPayloadSchema = z.strictObject({
   id: MusicUserIdSchema
 })
 
+/** 读取发现页推荐歌单请求。 */
+export const GetFeaturedPlaylistsPayloadSchema = z.strictObject({
+  operation: z.literal('getFeaturedPlaylists'),
+  limit: z.number().int().min(1).max(30).default(12)
+})
+
+/** 读取发现页推荐新歌请求。 */
+export const GetNewSongsPayloadSchema = z.strictObject({
+  operation: z.literal('getNewSongs'),
+  limit: z.number().int().min(1).max(30).default(12)
+})
+
+/** 读取登录用户每日推荐歌曲请求。 */
+export const GetDailySongsPayloadSchema = z.strictObject({
+  operation: z.literal('getDailySongs'),
+  limit: z.number().int().min(1).max(50).default(20)
+})
+
+/** 读取指定用户歌单资产请求。 */
+export const GetUserPlaylistsPayloadSchema = z.strictObject({
+  operation: z.literal('getUserPlaylists'),
+  userId: MusicUserIdSchema,
+  limit: z.number().int().min(1).max(100).default(50),
+  offset: z.number().int().min(0).max(5_000).default(0)
+})
+
+/** 读取指定用户喜欢歌曲请求。 */
+export const GetLikedSongsPayloadSchema = z.strictObject({
+  operation: z.literal('getLikedSongs'),
+  userId: MusicUserIdSchema,
+  limit: z.number().int().min(1).max(500).default(200)
+})
+
+/** 读取歌手专辑列表请求。 */
+export const GetArtistAlbumsPayloadSchema = z.strictObject({
+  operation: z.literal('getArtistAlbums'),
+  artistId: ArtistIdSchema,
+  limit: z.number().int().min(1).max(50).default(20),
+  offset: z.number().int().min(0).max(5_000).default(0)
+})
+
+/** 读取相似歌手列表请求。 */
+export const GetSimilarArtistsPayloadSchema = z.strictObject({
+  operation: z.literal('getSimilarArtists'),
+  artistId: ArtistIdSchema
+})
+
 /** Music Service 只读请求载荷。 */
 export const MusicReadPayloadSchema = z.discriminatedUnion('operation', [
   MusicSearchPayloadSchema,
@@ -235,7 +288,14 @@ export const MusicReadPayloadSchema = z.discriminatedUnion('operation', [
   GetArtistPayloadSchema,
   GetAlbumPayloadSchema,
   GetPlaylistPayloadSchema,
-  GetUserPayloadSchema
+  GetUserPayloadSchema,
+  GetFeaturedPlaylistsPayloadSchema,
+  GetNewSongsPayloadSchema,
+  GetDailySongsPayloadSchema,
+  GetUserPlaylistsPayloadSchema,
+  GetLikedSongsPayloadSchema,
+  GetArtistAlbumsPayloadSchema,
+  GetSimilarArtistsPayloadSchema
 ])
 
 /** 搜索响应结果。 */
@@ -259,11 +319,138 @@ export const MusicEntityResultSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('user'), entity: StandardUserSchema.nullable() })
 ])
 
+/** 标准歌曲集合响应。 */
+export const MusicSongCollectionResultSchema = z.strictObject({
+  kind: z.literal('songCollection'),
+  collection: z.enum(['new', 'daily', 'liked']),
+  ownerId: MusicUserIdSchema.optional(),
+  songs: z.array(StandardSongSchema).default([]),
+  updatedAt: EntityUpdatedAtSchema
+})
+
+/** 标准歌单集合响应。 */
+export const MusicPlaylistCollectionResultSchema = z.strictObject({
+  kind: z.literal('playlistCollection'),
+  collection: z.enum(['featured', 'user']),
+  ownerId: MusicUserIdSchema.optional(),
+  playlists: z.array(StandardPlaylistSchema).default([]),
+  updatedAt: EntityUpdatedAtSchema
+})
+
+/** 标准专辑集合响应。 */
+export const MusicAlbumCollectionResultSchema = z.strictObject({
+  kind: z.literal('albumCollection'),
+  collection: z.literal('artist'),
+  artistId: ArtistIdSchema,
+  albums: z.array(StandardAlbumSchema).default([]),
+  updatedAt: EntityUpdatedAtSchema
+})
+
+/** 标准歌手集合响应。 */
+export const MusicArtistCollectionResultSchema = z.strictObject({
+  kind: z.literal('artistCollection'),
+  collection: z.literal('similar'),
+  artistId: ArtistIdSchema,
+  artists: z.array(StandardArtistSchema).default([]),
+  updatedAt: EntityUpdatedAtSchema
+})
+
 /** Music Service 只读响应结果。 */
 export const MusicReadResultSchema = z.union([
   MusicSearchResultSchema,
-  MusicEntityResultSchema
+  MusicEntityResultSchema,
+  MusicSongCollectionResultSchema,
+  MusicPlaylistCollectionResultSchema,
+  MusicAlbumCollectionResultSchema,
+  MusicArtistCollectionResultSchema
 ])
+
+// ─────────────────────────────────────────────────────────────────────────────
+// music.mutate 请求与响应
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** 喜欢或取消喜欢歌曲请求。 */
+export const LikeTrackMutationSchema = z.strictObject({
+  operation: z.literal('likeTrack'),
+  trackId: TrackIdSchema,
+  liked: z.boolean()
+})
+
+/** 收藏或取消收藏歌单请求。 */
+export const SubscribePlaylistMutationSchema = z.strictObject({
+  operation: z.literal('subscribePlaylist'),
+  playlistId: PlaylistIdSchema,
+  subscribed: z.boolean()
+})
+
+/** 收藏或取消收藏专辑请求。 */
+export const SubscribeAlbumMutationSchema = z.strictObject({
+  operation: z.literal('subscribeAlbum'),
+  albumId: AlbumIdSchema,
+  subscribed: z.boolean()
+})
+
+/** 创建自建歌单请求。 */
+export const CreatePlaylistMutationSchema = z.strictObject({
+  operation: z.literal('createPlaylist'),
+  name: z.string().trim().min(1).max(40),
+  privacy: z.enum(['public', 'private']).default('public')
+})
+
+/** 重命名自建歌单请求。 */
+export const RenamePlaylistMutationSchema = z.strictObject({
+  operation: z.literal('renamePlaylist'),
+  playlistId: PlaylistIdSchema,
+  name: z.string().trim().min(1).max(40)
+})
+
+/** 删除自建歌单请求。 */
+export const DeletePlaylistMutationSchema = z.strictObject({
+  operation: z.literal('deletePlaylist'),
+  playlistId: PlaylistIdSchema
+})
+
+/** 添加或移除歌单歌曲请求。 */
+export const UpdatePlaylistTracksMutationSchema = z.strictObject({
+  operation: z.literal('updatePlaylistTracks'),
+  playlistId: PlaylistIdSchema,
+  trackIds: z.array(TrackIdSchema).min(1).max(500),
+  action: z.enum(['add', 'remove'])
+})
+
+/** 每日签到请求。 */
+export const DailySigninMutationSchema = z.strictObject({
+  operation: z.literal('dailySignin')
+})
+
+/** Music Service 显式写入请求。 */
+export const MusicMutationPayloadSchema = z.discriminatedUnion('operation', [
+  LikeTrackMutationSchema,
+  SubscribePlaylistMutationSchema,
+  SubscribeAlbumMutationSchema,
+  CreatePlaylistMutationSchema,
+  RenamePlaylistMutationSchema,
+  DeletePlaylistMutationSchema,
+  UpdatePlaylistTracksMutationSchema,
+  DailySigninMutationSchema
+])
+
+/** Music Service 写入成功响应。 */
+export const MusicMutationResultSchema = z.strictObject({
+  operation: z.enum([
+    'likeTrack',
+    'subscribePlaylist',
+    'subscribeAlbum',
+    'createPlaylist',
+    'renamePlaylist',
+    'deletePlaylist',
+    'updatePlaylistTracks',
+    'dailySignin'
+  ]),
+  succeeded: z.literal(true),
+  entityId: z.string().regex(/^\d{1,20}$/u).optional(),
+  updatedAt: EntityUpdatedAtSchema
+})
 
 // ─────────────────────────────────────────────────────────────────────────────
 // music.resolve-url 请求载荷
@@ -331,5 +518,7 @@ export type StandardUser = z.infer<typeof StandardUserSchema>
 export type StandardMusicEntity = z.infer<typeof StandardMusicEntitySchema>
 export type MusicReadPayload = z.infer<typeof MusicReadPayloadSchema>
 export type MusicReadResult = z.infer<typeof MusicReadResultSchema>
+export type MusicMutationPayload = z.infer<typeof MusicMutationPayloadSchema>
+export type MusicMutationResult = z.infer<typeof MusicMutationResultSchema>
 export type ResolveTrackUrlPayload = z.infer<typeof ResolveTrackUrlPayloadSchema>
 export type ResolvedMediaSource = z.infer<typeof ResolvedMediaSourceSchema>

@@ -89,6 +89,7 @@ const runtimeBridge: NcxRuntimeBridge = {
   cancel: (requestId) => gateway.cancel(requestId),
   snapshot: () => gateway.snapshot(),
   readMusic: (input) => gateway.readMusic(input),
+  mutateMusic: (input) => gateway.mutateMusic(input),
   searchMusic: (input) =>
     gateway.readMusic({
       operation: 'search',
@@ -131,6 +132,53 @@ const runtimeBridge: NcxRuntimeBridge = {
     gateway.readMusic({
       operation: 'getUser',
       id: input.id,
+      ...(input.requestId ? { requestId: input.requestId } : {})
+    }),
+  getFeaturedPlaylists: (input = {}) =>
+    gateway.readMusic({
+      operation: 'getFeaturedPlaylists',
+      limit: input.limit ?? 12,
+      ...(input.requestId ? { requestId: input.requestId } : {})
+    }),
+  getNewSongs: (input = {}) =>
+    gateway.readMusic({
+      operation: 'getNewSongs',
+      limit: input.limit ?? 12,
+      ...(input.requestId ? { requestId: input.requestId } : {})
+    }),
+  getDailySongs: (input = {}) =>
+    gateway.readMusic({
+      operation: 'getDailySongs',
+      limit: input.limit ?? 20,
+      ...(input.requestId ? { requestId: input.requestId } : {})
+    }),
+  getUserPlaylists: (input) =>
+    gateway.readMusic({
+      operation: 'getUserPlaylists',
+      userId: input.userId,
+      limit: input.limit ?? 50,
+      offset: input.offset ?? 0,
+      ...(input.requestId ? { requestId: input.requestId } : {})
+    }),
+  getLikedSongs: (input) =>
+    gateway.readMusic({
+      operation: 'getLikedSongs',
+      userId: input.userId,
+      limit: input.limit ?? 200,
+      ...(input.requestId ? { requestId: input.requestId } : {})
+    }),
+  getArtistAlbums: (input) =>
+    gateway.readMusic({
+      operation: 'getArtistAlbums',
+      artistId: input.artistId,
+      limit: input.limit ?? 20,
+      offset: input.offset ?? 0,
+      ...(input.requestId ? { requestId: input.requestId } : {})
+    }),
+  getSimilarArtists: (input) =>
+    gateway.readMusic({
+      operation: 'getSimilarArtists',
+      artistId: input.artistId,
       ...(input.requestId ? { requestId: input.requestId } : {})
     }),
   resolveTrackUrl: (input) => gateway.resolveTrackUrl(input),

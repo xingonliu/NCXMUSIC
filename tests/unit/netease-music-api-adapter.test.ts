@@ -48,7 +48,33 @@ function apiFixture(): NeteaseMusicApi {
     artists: vi.fn(async () => response({ artist: null })),
     album: vi.fn(async () => response({ album: null })),
     playlist_detail: vi.fn(async () => response({ playlist: null })),
-    user_detail: vi.fn(async () => response({ profile: null }))
+    user_detail: vi.fn(async () => response({ profile: null })),
+    personalized: vi.fn(async () => response({
+      result: [{ id: 9001, name: '精选歌单', creator: { userId: 10001, nickname: '创建者' } }]
+    })),
+    personalized_newsong: vi.fn(async () => response({
+      result: [{ song: { id: 7001, name: '新歌', ar: [{ id: 77, name: '新歌手' }] } }]
+    })),
+    recommend_songs: vi.fn(async () => response({
+      data: { dailySongs: [{ id: 7002, name: '每日歌曲', ar: [{ id: 78, name: '每日歌手' }] }] }
+    })),
+    user_playlist: vi.fn(async () => response({
+      playlist: [
+        { id: 8001, name: '自建歌单', creator: { userId: 10001, nickname: '当前用户' } },
+        { id: 8002, name: '收藏歌单', creator: { userId: 20002, nickname: '其他用户' }, subscribed: true }
+      ]
+    })),
+    likelist: vi.fn(async () => response({ ids: [33894312] })),
+    artist_album: vi.fn(async () => response({ hotAlbums: [{ id: 34740156, name: '新的心跳' }] })),
+    simi_artist: vi.fn(async () => response({ artists: [{ id: 88, name: '相似歌手' }] })),
+    like: vi.fn(async () => response({ code: 200 })),
+    playlist_subscribe: vi.fn(async () => response({ code: 200 })),
+    album_sub: vi.fn(async () => response({ code: 200 })),
+    playlist_create: vi.fn(async () => response({ code: 200, playlist: { id: 9901 } })),
+    playlist_name_update: vi.fn(async () => response({ code: 200 })),
+    playlist_delete: vi.fn(async () => response({ code: 200 })),
+    playlist_tracks: vi.fn(async () => response({ code: 200 })),
+    daily_signin: vi.fn(async () => response({ code: 200 }))
   }
 }
 
@@ -96,6 +122,55 @@ describe('NeteaseMusicApiAdapter', () => {
       { timeMs: 3500, text: '能否听清', translation: 'Can you hear me' }
     ])
     expect(JSON.stringify(result)).not.toContain('cookie')
+  })
+
+  it('normalizes independent Phase 4 discovery and library collections', async () => {
+    /** 网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(apiFixture())
+    /** 平台推荐歌单结果。 */
+    const featured = await adapter.read({ operation: 'getFeaturedPlaylists', limit: 10 }, '')
+    /** 用户歌单资产结果。 */
+    const library = await adapter.read({
+      operation: 'getUserPlaylists',
+      userId: '10001',
+      limit: 50,
+      offset: 0
+    }, '')
+
+    expect(featured).toMatchObject({
+      kind: 'playlistCollection',
+      collection: 'featured',
+      playlists: [{ id: '9001', name: '精选歌单' }]
+    })
+    expect(library).toMatchObject({
+      kind: 'playlistCollection',
+      collection: 'user',
+      playlists: [
+        { id: '8001', owned: true },
+        { id: '8002', owned: false, subscribed: true }
+      ]
+    })
+  })
+
+  it('executes registered Phase 4 mutations and returns only standard receipts', async () => {
+    /** 带可控写入方法的 API 夹具。 */
+    const api = apiFixture()
+    /** 网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+    /** 创建歌单标准回执。 */
+    const result = await adapter.mutate({
+      operation: 'createPlaylist',
+      name: '通勤',
+      privacy: 'public'
+    }, 'MUSIC_U=secret')
+
+    expect(api.playlist_create).toHaveBeenCalledWith(expect.objectContaining({
+      name: '通勤',
+      privacy: 0,
+      cookie: 'MUSIC_U=secret'
+    }))
+    expect(result).toMatchObject({ operation: 'createPlaylist', succeeded: true, entityId: '9901' })
+    expect(JSON.stringify(result)).not.toContain('MUSIC_U')
   })
 
   it('rejects non-success HTTP status instead of returning an empty entity', async () => {

@@ -5,6 +5,8 @@ import type {
   ArtistId,
   MusicReadPayload,
   MusicReadResult,
+  MusicMutationPayload,
+  MusicMutationResult,
   MusicUserId,
   PlaylistId,
   ResolveTrackUrlPayload,
@@ -33,6 +35,8 @@ export interface NcxRuntimeBridge {
   onStatus(listener: (status: RuntimeStatus) => void): () => void
   /** 低层标准 Music Service 只读入口，供 Agent/页面特殊场景复用 */
   readMusic(input: MusicReadPayload & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
+  /** 低层标准 Music Service 写入入口；调用方必须显式处理失败且不得透明重试。 */
+  mutateMusic(input: MusicMutationPayload & CancellableRuntimeInput): Promise<RuntimeResult<MusicMutationResult>>
   /** 搜索歌曲、歌手、专辑和歌单候选 */
   searchMusic(input: { query: string; limit?: number; offset?: number } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
   /** 读取标准歌曲实体 */
@@ -47,6 +51,20 @@ export interface NcxRuntimeBridge {
   getPlaylist(input: { id: PlaylistId } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
   /** 读取标准用户实体 */
   getUser(input: { id: MusicUserId } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
+  /** 读取发现页平台推荐歌单。 */
+  getFeaturedPlaylists(input?: { limit?: number } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
+  /** 读取发现页推荐新歌。 */
+  getNewSongs(input?: { limit?: number } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
+  /** 读取登录账户每日推荐歌曲。 */
+  getDailySongs(input?: { limit?: number } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
+  /** 读取用户歌单资产。 */
+  getUserPlaylists(input: { userId: MusicUserId; limit?: number; offset?: number } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
+  /** 读取用户喜欢歌曲。 */
+  getLikedSongs(input: { userId: MusicUserId; limit?: number } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
+  /** 读取歌手专辑列表。 */
+  getArtistAlbums(input: { artistId: ArtistId; limit?: number; offset?: number } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
+  /** 读取相似歌手。 */
+  getSimilarArtists(input: { artistId: ArtistId } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
   /** 向 Utility 请求解析指定曲目的短期 HTTPS 播放 URL */
   resolveTrackUrl(
     input: ResolveTrackUrlPayload & { requestId?: string }

@@ -6,6 +6,7 @@ export type WindowCommandType =
   | 'window.toggleMaximize'
   | 'window.requestClose'
   | 'window.toggleFullscreen'
+  | 'window.setCloseBehavior'
 
 /** Renderer 需要区分的桌面平台类型。 */
 export type DesktopPlatform = 'darwin' | 'win32' | 'linux' | string
@@ -18,9 +19,12 @@ export const WINDOW_CONTROL_CHANNELS = {
 } as const
 
 /** Renderer 与 Main 之间传递的窗口命令载荷。 */
-export interface WindowCommand {
-  readonly type: WindowCommandType
-}
+export type WindowCommand =
+  | { readonly type: Exclude<WindowCommandType, 'window.setCloseBehavior'> }
+  | {
+      readonly type: 'window.setCloseBehavior'
+      readonly behavior: 'minimize' | 'quit'
+    }
 
 /** BrowserWindow 的只读状态快照。 */
 export interface WindowSnapshot {
@@ -28,6 +32,7 @@ export interface WindowSnapshot {
   readonly maximized: boolean
   readonly fullscreen: boolean
   readonly focused: boolean
+  readonly closeBehavior?: 'minimize' | 'quit'
 }
 
 /** Preload 暴露给 Renderer 的窗口控制桥接。 */

@@ -1,7 +1,10 @@
 import { StandardEntityPool } from '../domains/music/entity-pool'
 import {
+  MusicMutationPayloadSchema,
+  MusicMutationResultSchema,
   MusicReadPayloadSchema,
   MusicReadResultSchema,
+  type MusicMutationResult,
   type MusicReadResult
 } from '../shared/schemas/music'
 import { NeteaseMusicApiAdapter, type MusicDataSource } from '../infrastructure/netease/music-api-adapter'
@@ -48,6 +51,36 @@ export class MusicService {
     }
   }
 
+  /** 执行必须登录的音乐写入请求，且不进行透明重试。 */
+  async mutate(requestId: string, rawPayload: unknown): Promise<MusicMutationResult> {
+    const parsed = MusicMutationPayloadSchema.safeParse(rawPayload)
+    if (!parsed.success) {
+      throw Object.assign(new Error(`music.mutate 载荷格式错误：${parsed.error.message}`), {
+        code: 'PROTOCOL_INVALID_MESSAGE'
+      })
+    }
+    if (!this.credentialLease.hasActiveLease()) {
+      throw Object.assign(new Error('当前操作需要登录网易云账户。'), { code: 'AUTH_REQUIRED' })
+    }
+    const mutate = this.dataSource.mutate
+    if (!mutate) {
+      throw Object.assign(new Error('当前 Music Service 数据源不支持写操作。'), {
+        code: 'CAPABILITY_UNAVAILABLE'
+      })
+    }
+
+    const controller = new AbortController()
+    this.pending.set(requestId, controller)
+    try {
+      const result = await this.credentialLease.executeWithCookie((cookie) =>
+        mutate.call(this.dataSource, parsed.data, cookie, controller.signal)
+      )
+      return MusicMutationResultSchema.parse(result)
+    } finally {
+      this.pending.delete(requestId)
+    }
+  }
+
   /** 取消进行中的只读音乐请求。 */
   cancel(requestId: string): void {
     const controller = this.pending.get(requestId)
@@ -71,6 +104,22 @@ export class MusicService {
         ...result.albums,
         ...result.playlists
       ])
+      return
+    }
+    if (result.kind === 'songCollection') {
+      this.entityPool.upsertMany(result.songs)
+      return
+    }
+    if (result.kind === 'playlistCollection') {
+      this.entityPool.upsertMany(result.playlists)
+      return
+    }
+    if (result.kind === 'albumCollection') {
+      this.entityPool.upsertMany(result.albums)
+      return
+    }
+    if (result.kind === 'artistCollection') {
+      this.entityPool.upsertMany(result.artists)
       return
     }
     if (result.kind === 'lyrics') return

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Play } from '@lucide/vue'
+import { Heart, ListPlus, Play } from '@lucide/vue'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -16,7 +16,8 @@ import {
   CommonSpinner
 } from '../../design-system/components'
 import MediaArtwork from './components/MediaArtwork.vue'
-import TrackRow from './components/TrackRow.vue'
+import VirtualTrackList from './components/VirtualTrackList.vue'
+import { mutateMusic, playSongNext } from './music-actions'
 import {
   collectionSongs,
   standardSongToTrackSummary,
@@ -46,6 +47,9 @@ const errorMessage = ref<string>('')
 
 /** 当前集合实体。 */
 const collection = ref<PlayableCollection | null>(null)
+
+/** 页面操作提示。 */
+const notice = ref<string>('')
 
 /** 最近一次请求 ID。 */
 let latestRequestId = ''
@@ -135,6 +139,37 @@ function enqueueSong(song: StandardSong): void {
     : { kind: 'playlist', playlistId: collectionId.value })
 }
 
+/** 把当前集合全部歌曲追加到队列末尾。 */
+function enqueueAll(): void {
+  if (songs.value.length === 0) return
+  player.enqueue(standardSongsToTrackSummaries(songs.value), collectionKind.value === 'album'
+    ? { kind: 'album', albumId: collectionId.value }
+    : { kind: 'playlist', playlistId: collectionId.value })
+  notice.value = `已添加 ${songs.value.length} 首歌曲到队列。`
+}
+
+/** 收藏当前集合或取消收藏。 */
+async function toggleSubscription(): Promise<void> {
+  const current = collection.value
+  if (!current) return
+  const subscribed = !current.subscribed
+  const response = current.kind === 'album'
+    ? await mutateMusic({ operation: 'subscribeAlbum', albumId: current.id, subscribed })
+    : await mutateMusic({ operation: 'subscribePlaylist', playlistId: current.id, subscribed })
+  if (!response.ok) {
+    notice.value = response.error.message
+    return
+  }
+  collection.value = { ...current, subscribed }
+  notice.value = subscribed ? `已收藏《${current.name}》。` : `已取消收藏《${current.name}》。`
+}
+
+/** 收藏当前歌曲。 */
+async function likeSong(song: StandardSong): Promise<void> {
+  const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
+  notice.value = response.ok ? `已收藏《${song.name}》。` : response.error.message
+}
+
 // ========= 生命周期 =========
 
 watch([collectionKind, collectionId], () => {
@@ -169,24 +204,36 @@ watch([collectionKind, collectionId], () => {
           <p class="music-page-eyebrow">{{ collection.kind === 'album' ? '专辑' : '歌单' }}</p>
           <h1 id="collection-title">{{ collection.name }}</h1>
           <p>{{ subtitle }} · {{ songs.length }} 首</p>
-          <CommonButton variant="primary" :disabled="songs.length === 0" @click="playAll">
-            <Play :size="15" fill="currentColor" />
-            播放全部
-          </CommonButton>
+          <p v-if="collection.description" class="collection-description">{{ collection.description }}</p>
+          <div class="collection-actions">
+            <CommonButton variant="primary" :disabled="songs.length === 0" @click="playAll">
+              <Play :size="15" fill="currentColor" />
+              播放全部
+            </CommonButton>
+            <CommonButton variant="secondary" :disabled="songs.length === 0" @click="enqueueAll">
+              <ListPlus :size="15" />
+              加入队列
+            </CommonButton>
+            <CommonButton variant="secondary" @click="toggleSubscription">
+              <Heart :size="15" :fill="collection.subscribed ? 'currentColor' : 'none'" />
+              {{ collection.subscribed ? '已收藏' : '收藏' }}
+            </CommonButton>
+          </div>
         </div>
       </header>
 
-      <div class="track-list">
-        <TrackRow
-          v-for="(song, index) in songs"
-          :key="`${song.id}-${index}`"
-          :song="song"
-          :index="index"
-          :active="song.id === activeTrackId"
-          @play="playFromSong"
-          @enqueue="enqueueSong"
-        />
-      </div>
+      <p v-if="notice" class="collection-notice" role="status">{{ notice }}</p>
+
+      <VirtualTrackList
+        class="track-list"
+        :songs="songs"
+        :active-track-id="activeTrackId"
+        :height="620"
+        @play="playFromSong"
+        @enqueue="enqueueSong"
+        @play-next="playSongNext($event, collectionKind === 'album' ? { kind: 'album', albumId: collectionId } : { kind: 'playlist', playlistId: collectionId })"
+        @like="likeSong"
+      />
     </template>
   </section>
 </template>
@@ -237,9 +284,28 @@ watch([collectionKind, collectionId], () => {
   color: var(--ncx-color-text-secondary);
 }
 
+.collection-description {
+  display: -webkit-box;
+  max-width: 680px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-height: 1.55;
+}
+
+.collection-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ncx-space-2);
+}
+
+.collection-notice {
+  margin: var(--ncx-space-6) 0 calc(var(--ncx-space-6) * -1);
+  color: var(--ncx-color-text-secondary);
+  font-size: 13px;
+}
+
 .track-list {
-  display: grid;
-  gap: var(--ncx-space-1);
   margin-top: var(--ncx-space-10);
 }
 </style>

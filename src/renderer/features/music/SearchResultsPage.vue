@@ -17,7 +17,8 @@ import {
   CommonSpinner
 } from '../../design-system/components'
 import MediaArtwork from './components/MediaArtwork.vue'
-import TrackRow from './components/TrackRow.vue'
+import VirtualTrackList from './components/VirtualTrackList.vue'
+import { mutateMusic, playSongNext } from './music-actions'
 import {
   standardSongToTrackSummary,
   standardSongsToTrackSummaries
@@ -119,6 +120,12 @@ function enqueueSong(song: StandardSong): void {
   player.enqueue([standardSongToTrackSummary(song)], { kind: 'search' })
 }
 
+/** 收藏搜索结果歌曲。 */
+async function likeSong(song: StandardSong): Promise<void> {
+  const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
+  if (!response.ok) errorMessage.value = response.error.message
+}
+
 /** 打开专辑详情。 */
 function openAlbum(album: StandardAlbum): void {
   void router.push({ name: 'album-detail', params: { albumId: album.id } })
@@ -174,17 +181,16 @@ watch(query, () => {
     <div v-else class="search-results-content">
       <section v-if="songs.length > 0" class="music-section">
         <h2>歌曲</h2>
-        <div class="track-list">
-          <TrackRow
-            v-for="(song, index) in songs"
-            :key="song.id"
-            :song="song"
-            :index="index"
-            :active="song.id === activeTrackId"
-            @play="playSong"
-            @enqueue="enqueueSong"
-          />
-        </div>
+        <VirtualTrackList
+          class="track-list"
+          :songs="songs"
+          :active-track-id="activeTrackId"
+          :height="520"
+          @play="playSong"
+          @enqueue="enqueueSong"
+          @play-next="playSongNext($event, { kind: 'search' })"
+          @like="likeSong"
+        />
       </section>
 
       <section v-if="albums.length > 0 || playlists.length > 0" class="music-section">
@@ -220,7 +226,7 @@ watch(query, () => {
         <h2>歌手</h2>
         <div class="artist-strip">
           <article v-for="artist in artists" :key="artist.id" class="artist-card">
-            <MediaArtwork :src="artist.artworkUrl" :alt="artist.name" size="list" />
+              <MediaArtwork :src="artist.artworkUrl" :alt="artist.name" size="compact" />
             <strong>{{ artist.name }}</strong>
             <span><UserRound :size="13" /> 歌手</span>
           </article>

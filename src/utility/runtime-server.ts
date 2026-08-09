@@ -2,6 +2,7 @@ import type { RuntimeConnectionMetadata } from '../shared/contracts/control-plan
 import {
   HelloEnvelopeSchema,
   ExecuteShellRequestEnvelopeSchema,
+  MusicMutationRequestEnvelopeSchema,
   MusicReadRequestEnvelopeSchema,
   PlaybackSnapshotLoadRequestEnvelopeSchema,
   PlaybackSnapshotSaveRequestEnvelopeSchema,
@@ -13,6 +14,7 @@ import {
   messageBase,
   type CancelEnvelope,
   type ExecuteShellRequestEnvelope,
+  type MusicMutationRequestEnvelope,
   type MusicReadRequestEnvelope,
   type PlaybackSnapshotLoadRequestEnvelope,
   type PlaybackSnapshotSaveRequestEnvelope,
@@ -39,6 +41,7 @@ type RuntimeCapability =
   | 'system.ping'
   | 'system.snapshot'
   | 'music.read'
+  | 'music.mutate'
   | 'music.resolve-url'
   | 'playback.snapshot.load'
   | 'playback.snapshot.save'
@@ -51,6 +54,8 @@ type RuntimeCapability =
 export interface MusicReadHandler {
   /** 执行账户感知的只读音乐请求。 */
   read(requestId: string, payload: unknown): Promise<unknown>
+  /** 执行账户感知且不可透明重试的音乐写入请求。 */
+  mutate(requestId: string, payload: unknown): Promise<unknown>
   /** 取消进行中的只读音乐请求。 */
   cancel(requestId: string): void
 }
@@ -86,6 +91,7 @@ type AnyRequestEnvelope =
   | PingRequestEnvelope
   | SnapshotRequestEnvelope
   | MusicReadRequestEnvelope
+  | MusicMutationRequestEnvelope
   | ResolveTrackUrlRequestEnvelope
   | PlaybackSnapshotLoadRequestEnvelope
   | PlaybackSnapshotSaveRequestEnvelope
@@ -95,6 +101,7 @@ type AnyRequestEnvelope =
 type PendingRequest =
   | { name: 'system.ping'; timer: ReturnType<typeof setTimeout> }
   | { name: 'music.read' }
+  | { name: 'music.mutate' }
   | { name: 'music.resolve-url' }
   | { name: 'playback.snapshot.load' }
   | { name: 'playback.snapshot.save' }
@@ -162,7 +169,7 @@ export class UtilityRuntimeServer {
       'system.ping',
       'system.snapshot'
     ]
-    if (this.musicReadHandler) base.push('music.read')
+    if (this.musicReadHandler) base.push('music.read', 'music.mutate')
     if (this.trackUrlHandler) base.push('music.resolve-url')
     if (this.playbackSnapshotHandler) {
       base.push('playback.snapshot.load', 'playback.snapshot.save')
@@ -215,6 +222,11 @@ export class UtilityRuntimeServer {
 
     if (envelope.name === 'music.read') {
       void this.readMusic(MusicReadRequestEnvelopeSchema.parse(envelope))
+      return
+    }
+
+    if (envelope.name === 'music.mutate') {
+      void this.mutateMusic(MusicMutationRequestEnvelopeSchema.parse(envelope))
       return
     }
 
@@ -294,6 +306,42 @@ export class UtilityRuntimeServer {
 
     try {
       const data = await handler.read(request.requestId, request.payload)
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondSuccess(request, data)
+    } catch (error) {
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondError(request, this.toProtocolError(error))
+    }
+  }
+
+  /** 处理 music.mutate：显式执行写操作且不在协议层重试。 */
+  private async mutateMusic(request: MusicMutationRequestEnvelope): Promise<void> {
+    const handler = this.musicReadHandler
+    if (!handler) {
+      this.respondError(request, {
+        code: 'CAPABILITY_UNAVAILABLE',
+        message: '当前运行时未启用 Music Service。',
+        retryable: false
+      })
+      return
+    }
+    if (this.pending.has(request.requestId)) {
+      this.respondError(request, {
+        code: 'PROTOCOL_INVALID_MESSAGE',
+        message: 'requestId 已在使用。',
+        retryable: false
+      })
+      return
+    }
+
+    const connectionId = request.connectionId
+    this.pending.set(request.requestId, { name: 'music.mutate' })
+    try {
+      const data = await handler.mutate(request.requestId, request.payload)
       if (!this.isCurrentRequest(request.requestId, connectionId)) return
       this.pending.delete(request.requestId)
       this.handledRequests += 1
@@ -488,6 +536,13 @@ export class UtilityRuntimeServer {
         retryable: false
       }
     }
+    if (code === 'AUTH_REQUIRED') {
+      return {
+        code: 'AUTH_REQUIRED',
+        message: '此操作需要先登录网易云账户。',
+        retryable: false
+      }
+    }
     if (code === 'track-unavailable') {
       return { code: 'CAPABILITY_UNAVAILABLE', message: '该曲目当前不可播放。', retryable: false }
     }
@@ -519,7 +574,7 @@ export class UtilityRuntimeServer {
 
     if (pending.name === 'system.ping') {
       clearTimeout(pending.timer)
-    } else if (pending.name === 'music.read') {
+    } else if (pending.name === 'music.read' || pending.name === 'music.mutate') {
       this.musicReadHandler?.cancel(envelope.requestId)
     } else if (pending.name === 'music.resolve-url') {
       this.trackUrlHandler?.cancel(envelope.requestId)
@@ -572,11 +627,11 @@ export class UtilityRuntimeServer {
     for (const [requestId, request] of this.pending) {
       if (request.name === 'system.ping') {
         clearTimeout(request.timer)
-      } else if (request.name === 'music.read') {
+      } else if (request.name === 'music.read' || request.name === 'music.mutate') {
         this.musicReadHandler?.cancel(requestId)
       } else if (request.name === 'music.resolve-url') {
         this.trackUrlHandler?.cancel(requestId)
-      } else {
+      } else if (request.name === 'shell.execute') {
         this.shellHandler?.cancel(requestId)
       }
     }

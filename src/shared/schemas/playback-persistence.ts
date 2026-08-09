@@ -8,6 +8,9 @@ import { MusicQualityPreferenceSchema } from './music'
 /** 播放快照队列来源 Schema。 */
 const PersistedQueueSourceSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('search') }),
+  z.strictObject({ kind: z.literal('discover') }),
+  z.strictObject({ kind: z.literal('liked') }),
+  z.strictObject({ kind: z.literal('artist'), artistId: z.string().regex(/^\d{1,20}$/u) }),
   z.strictObject({ kind: z.literal('playlist'), playlistId: z.string().min(1) }),
   z.strictObject({ kind: z.literal('album'), albumId: z.string().min(1) }),
   z.strictObject({ kind: z.literal('agent') }),

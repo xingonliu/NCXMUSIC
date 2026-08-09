@@ -8,7 +8,7 @@ import type { TrackArtwork, TrackSummary } from '../../../domains/player/types'
 // ========= 类型 =========
 
 /** 封面语义尺寸。 */
-export type MediaArtworkSize = 'dense' | 'list' | 'card' | 'hero'
+export type MediaArtworkSize = 'thumbnail' | 'compact' | 'card' | 'feature' | 'hero'
 
 /** 可播放集合实体。 */
 export type PlayableCollection = StandardAlbum | StandardPlaylist
@@ -17,10 +17,11 @@ export type PlayableCollection = StandardAlbum | StandardPlaylist
 
 /** 语义尺寸对应的网易云封面边长。 */
 const ARTWORK_PIXEL_SIZE: Record<MediaArtworkSize, number> = {
-  dense: 64,
-  list: 96,
-  card: 256,
-  hero: 512
+  thumbnail: 96,
+  compact: 160,
+  card: 320,
+  feature: 640,
+  hero: 1024
 }
 
 // ========= 函数 =========
@@ -34,10 +35,13 @@ const ARTWORK_PIXEL_SIZE: Record<MediaArtworkSize, number> = {
 export function adaptArtworkUrl(url: string | undefined, size: MediaArtworkSize): string | undefined {
   if (!url) return undefined
   const pixelSize = ARTWORK_PIXEL_SIZE[size]
-  const [withoutHash, hash = ''] = url.split('#')
-  const separator = withoutHash?.includes('?') ? '&' : '?'
-  const sizedUrl = `${withoutHash}${separator}param=${pixelSize}y${pixelSize}`
-  return hash ? `${sizedUrl}#${hash}` : sizedUrl
+  try {
+    const parsed = new URL(url)
+    parsed.searchParams.set('param', `${pixelSize}y${pixelSize}`)
+    return parsed.toString()
+  } catch {
+    return undefined
+  }
 }
 
 /**
@@ -48,7 +52,7 @@ export function adaptArtworkUrl(url: string | undefined, size: MediaArtworkSize)
 export function buildTrackArtwork(artworkUrl: string | undefined): TrackArtwork[] | undefined {
   if (!artworkUrl) return undefined
   return [
-    { src: adaptArtworkUrl(artworkUrl, 'list') ?? artworkUrl, sizes: '96x96', type: 'image/jpeg' },
+    { src: adaptArtworkUrl(artworkUrl, 'thumbnail') ?? artworkUrl, sizes: '96x96', type: 'image/jpeg' },
     { src: adaptArtworkUrl(artworkUrl, 'hero') ?? artworkUrl, sizes: '512x512', type: 'image/jpeg' }
   ]
 }

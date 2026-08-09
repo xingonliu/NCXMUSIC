@@ -202,6 +202,7 @@ export function usePlayer(): {
   setMode: (mode: PlayMode) => Promise<void>
   setQuality: (quality: MusicQualityPreference) => Promise<void>
   enqueue: (tracks: TrackSummary[], source: QueueSource) => void
+  playNext: (tracks: TrackSummary[], source: QueueSource) => void
   reorder: (queueItemId: string, toIndex: number) => void
   remove: (queueItemId: string) => Promise<void>
   clear: () => Promise<void>
@@ -228,6 +229,7 @@ export function usePlayer(): {
     setMode: (mode) => active.coordinator.setMode(mode),
     setQuality: (quality) => active.coordinator.setQuality(quality),
     enqueue: (tracks, source) => active.coordinator.enqueue(tracks, source),
+    playNext: (tracks, source) => active.coordinator.playNext(tracks, source),
     reorder: (queueItemId, toIndex) => active.coordinator.reorder(queueItemId, toIndex),
     remove: (queueItemId) => active.coordinator.remove(queueItemId),
     clear: () => active.coordinator.clear(),

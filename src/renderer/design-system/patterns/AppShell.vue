@@ -23,7 +23,6 @@ import type {
 } from '../../../shared/contracts/window-controls'
 import {
   appAccountNavigationItem,
-  appPlaylistNavigationSections,
   appPrimaryNavigationSections,
   appSettingsNavigationItem,
   type AppNavigationItem
@@ -34,6 +33,7 @@ import {
   CommonHeaderGroupButton,
   CommonHeaderGroupItem
 } from '../components'
+import PlaylistNavigation from '../../features/music/components/PlaylistNavigation.vue'
 
 // ========= 变量 =========
 
@@ -66,6 +66,9 @@ const headerVariant = computed(() => route.meta.headerVariant ?? 'default')
 /** 窗口状态监听清理函数。 */
 let unsubscribeWindowSnapshot = (): void => {}
 
+/** 当前路由页面刷新代次，只重挂 RouterView 叶子组件。 */
+const routeRefreshKey = ref<number>(0)
+
 // ========= 函数 =========
 
 /** 根据导航配置返回对应图标组件。 */
@@ -95,6 +98,16 @@ async function runWindowCommand(command: WindowCommand): Promise<void> {
 /** 全局复用的页面返回函数。 */
 function handleBack(): void {
   navigateBack(router, route)
+}
+
+/** 打开全局搜索页面。 */
+function openSearch(): void {
+  void router.push({ name: 'search' })
+}
+
+/** 重挂当前路由页面组件，保留根层 AudioHost 与播放器运行时。 */
+function refreshCurrentPage(): void {
+  routeRefreshKey.value += 1
 }
 
 // ========= 生命周期 =========
@@ -137,11 +150,11 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="ncx-page-actions">
-        <CommonHeaderButton label="搜索">
+        <CommonHeaderButton label="搜索" @click="openSearch">
           <Search :size="17" />
         </CommonHeaderButton>
 
-        <CommonHeaderButton label="刷新当前页">
+        <CommonHeaderButton label="刷新当前页" @click="refreshCurrentPage">
           <RotateCcw :size="17" />
         </CommonHeaderButton>
 
@@ -220,34 +233,7 @@ onBeforeUnmount(() => {
         </section>
       </nav>
 
-      <nav
-        class="ncx-playlist-nav"
-        aria-label="歌单导航"
-      >
-        <section
-          v-for="section in appPlaylistNavigationSections"
-          :key="section.label"
-          class="ncx-nav-section"
-        >
-          <p class="ncx-nav-section-title">
-            {{ section.label }}
-          </p>
-          <RouterLink
-            v-for="item in section.items"
-            :key="String(item.routeName)"
-            class="ncx-nav-item"
-            :class="{ 'ncx-nav-item--active': isNavigationActive(item) }"
-            :to="{ name: item.routeName }"
-          >
-            <component
-              :is="resolveNavIcon(item)"
-              :size="17"
-              :stroke-width="1.9"
-            />
-            <span>{{ item.label }}</span>
-          </RouterLink>
-        </section>
-      </nav>
+      <PlaylistNavigation />
 
       <nav
         class="ncx-account-nav"
@@ -282,7 +268,12 @@ onBeforeUnmount(() => {
 
     <section class="ncx-main-panel">
       <main class="ncx-content-area">
-        <RouterView />
+        <RouterView v-slot="{ Component, route: activeRoute }">
+          <component
+            :is="Component"
+            :key="`${activeRoute.fullPath}:${routeRefreshKey}`"
+          />
+        </RouterView>
       </main>
     </section>
   </div>

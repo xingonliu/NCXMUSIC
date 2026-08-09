@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<{
   /** 封面语义尺寸。 */
   size?: MediaArtworkSize
 }>(), {
-  size: 'list'
+  size: 'compact'
 })
 
 // ========= 变量 =========
@@ -67,13 +67,13 @@ const artworkUrl = computed<string | undefined>(() => adaptArtworkUrl(props.src,
   object-fit: cover;
 }
 
-.media-artwork--dense {
+.media-artwork--thumbnail {
   width: 36px;
   height: 36px;
   border-radius: var(--ncx-radius-sm);
 }
 
-.media-artwork--list {
+.media-artwork--compact {
   width: 48px;
   height: 48px;
 }
@@ -84,9 +84,16 @@ const artworkUrl = computed<string | undefined>(() => adaptArtworkUrl(props.src,
   border-radius: var(--ncx-radius-lg);
 }
 
+.media-artwork--feature {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: var(--ncx-radius-lg);
+}
+
 .media-artwork--hero {
-  width: min(34vw, 320px);
-  height: min(34vw, 320px);
+  width: min(34vw, 360px);
+  height: min(34vw, 360px);
   min-width: 220px;
   min-height: 220px;
   border-radius: var(--ncx-radius-xl);

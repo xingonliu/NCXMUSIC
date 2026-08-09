@@ -1,6 +1,6 @@
 # NcxMusic
 
-NcxMusic 是一个基于 Electron、Vue 3 和 TypeScript 的 Agent 原生音乐客户端。本仓库当前已完成 Phase 3 搜索到播放纵向闭环，后续业务功能仍按 [最终开发顺序](docs/development/NcxMusic-Development-Roadmap.md) 分阶段实现。
+NcxMusic 是一个基于 Electron、Vue 3 和 TypeScript 的 Agent 原生音乐客户端。本仓库当前已完成 Phase 4 音乐客户端页面、标准音乐写入通道和账户资料库体验，后续 Agent 与画像能力仍按 [最终开发顺序](docs/development/NcxMusic-Development-Roadmap.md) 分阶段实现。
 
 ## 环境
 

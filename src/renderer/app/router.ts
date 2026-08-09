@@ -3,11 +3,15 @@ import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-rou
 import RoutePlaceholder from '../design-system/patterns/RoutePlaceholder.vue'
 import DesignSystemLabPage from '../features/design-system/DesignSystemLabPage.vue'
 import CollectionDetailPage from '../features/music/CollectionDetailPage.vue'
+import ArtistDetailPage from '../features/music/ArtistDetailPage.vue'
+import DiscoverPage from '../features/music/DiscoverPage.vue'
 import ImmersiveLyricsPage from '../features/music/ImmersiveLyricsPage.vue'
 import PlaybackDetailPage from '../features/music/PlaybackDetailPage.vue'
+import LikedSongsPage from '../features/music/LikedSongsPage.vue'
 import SearchPage from '../features/music/SearchPage.vue'
 import SearchResultsPage from '../features/music/SearchResultsPage.vue'
 import SettingsPage from '../features/settings/SettingsPage.vue'
+import ProfilePage from '../features/profile/ProfilePage.vue'
 
 // ========= 变量 =========
 
@@ -43,7 +47,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/discover',
     name: 'discover',
-    component: RouteSkeletonView,
+    component: DiscoverPage,
     meta: {
       pageLevel: 1,
       title: 'routes.discover',
@@ -84,7 +88,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/library/liked',
     name: 'liked-songs',
-    component: RouteSkeletonView,
+    component: LikedSongsPage,
     meta: {
       pageLevel: 1,
       title: 'routes.likedSongs',
@@ -116,7 +120,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/artists/:artistId',
     name: 'artist-detail',
-    component: RouteSkeletonView,
+    component: ArtistDetailPage,
     meta: {
       pageLevel: 2,
       title: 'routes.artistDetail',
@@ -150,7 +154,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/profile',
     name: 'profile',
-    component: RouteSkeletonView,
+    component: ProfilePage,
     meta: {
       pageLevel: 1,
       title: 'routes.profile',

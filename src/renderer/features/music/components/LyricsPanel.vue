@@ -7,6 +7,7 @@ import {
   CommonErrorState,
   CommonSpinner
 } from '../../../design-system/components'
+import { useAppPreferences } from '../../settings/app-preferences'
 
 // ========= 属性 =========
 
@@ -23,6 +24,9 @@ const props = withDefaults(defineProps<{
 })
 
 // ========= 变量 =========
+
+/** 应用歌词展示偏好。 */
+const appPreferences = useAppPreferences()
 
 /** 当前歌词实体。 */
 const lyrics = ref<StandardLyrics | null>(null)
@@ -140,7 +144,7 @@ watch(() => props.trackId, (trackId) => {
         :class="{ 'lyrics-line--active': index === activeLineIndex }"
       >
         <span>{{ line.text || '…' }}</span>
-        <small v-if="line.translation">{{ line.translation }}</small>
+        <small v-if="line.translation && appPreferences.preferences.value.showLyricTranslation">{{ line.translation }}</small>
       </li>
     </ol>
   </section>
