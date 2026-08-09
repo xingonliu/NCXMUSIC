@@ -3073,11 +3073,23 @@ export const CommonDrawer = defineComponent({
   },
   emits: ['close'],
   setup(props, { emit, slots }) {
-    const handleKeydown = (e: KeyboardEvent) => {
+    // ========= 函数 =========
+
+    /** 处理键盘 ESC 按键关闭抽屉。 */
+    const handleKeydown = (e: KeyboardEvent): void => {
       if (props.visible && props.closeOnEsc && e.key === 'Escape') {
         emit('close')
       }
     }
+
+    /** 处理 Overlay 遮罩区域点击关闭抽屉。 */
+    const handleOverlayClick = (e: MouseEvent): void => {
+      if (props.closeOnOverlayClick && e.target === e.currentTarget) {
+        emit('close')
+      }
+    }
+
+    // ========= 生命周期 =========
 
     onMounted(() => {
       window.addEventListener('keydown', handleKeydown)
@@ -3086,12 +3098,6 @@ export const CommonDrawer = defineComponent({
     onUnmounted(() => {
       window.removeEventListener('keydown', handleKeydown)
     })
-
-    const handleOverlayClick = (e: MouseEvent) => {
-      if (props.closeOnOverlayClick && e.target === e.currentTarget) {
-        emit('close')
-      }
-    }
 
     return () => h(Teleport, { to: 'body' }, [
       h(Transition, { name: 'ncx-drawer-slide' }, () =>
@@ -3108,15 +3114,18 @@ export const CommonDrawer = defineComponent({
               }, [
                 h('header', { class: 'ncx-common-drawer-header' }, [
                   h('h2', { class: 'ncx-common-drawer-title' }, props.title),
-                  h('button', {
-                    type: 'button',
-                    class: 'ncx-common-drawer-close',
-                    'aria-label': '关闭抽屉',
-                    onClick: () => emit('close')
-                  }, [
-                    h('svg', { viewBox: '0 0 24 24', width: '12', height: '12', fill: 'none', stroke: 'currentColor', 'stroke-width': '2.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
-                      h('line', { x1: '18', y1: '6', x2: '6', y2: '18' }),
-                      h('line', { x1: '6', y1: '6', x2: '18', y2: '18' })
+                  h('div', { class: 'ncx-common-drawer-header-actions' }, [
+                    slots.headerActions?.(),
+                    h('button', {
+                      type: 'button',
+                      class: 'ncx-common-drawer-close',
+                      'aria-label': '关闭抽屉',
+                      onClick: () => emit('close')
+                    }, [
+                      h('svg', { viewBox: '0 0 24 24', width: '12', height: '12', fill: 'none', stroke: 'currentColor', 'stroke-width': '2.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
+                        h('line', { x1: '18', y1: '6', x2: '6', y2: '18' }),
+                        h('line', { x1: '6', y1: '6', x2: '18', y2: '18' })
+                      ])
                     ])
                   ])
                 ]),

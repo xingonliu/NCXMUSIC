@@ -3120,7 +3120,7 @@
 /* --- 14. CommonDrawer (macOS Inspector Side Drawer) --- */
 .ncx-common-overlay-drawer {
   z-index: var(--ncx-layer-drawer);
-  justify-items: end;
+  place-items: stretch end;
   padding: 0;
 }
 
@@ -3134,11 +3134,14 @@
   gap: var(--ncx-space-4);
   width: min(440px, 90vw);
   height: 100%;
+  max-height: 100vh;
+  box-sizing: border-box;
   padding: var(--ncx-space-6);
   border: 0;
   border-radius: var(--ncx-radius-2xl) 0 0 var(--ncx-radius-2xl);
   background: var(--ncx-color-surface-overlay);
   box-shadow: var(--ncx-shadow-elevation-3);
+  overflow: hidden;
 }
 
 .ncx-common-drawer-left {
@@ -3162,6 +3165,12 @@
   letter-spacing: -0.01em;
 }
 
+.ncx-common-drawer-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ncx-space-2, 8px);
+}
+
 .ncx-common-drawer-close {
   display: flex;
   align-items: center;
@@ -3183,7 +3192,10 @@
 }
 
 .ncx-common-drawer-body {
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   color: var(--ncx-color-text-secondary);
   line-height: 1.55;

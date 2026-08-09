@@ -313,6 +313,32 @@ describe('CommonDrawer macOS Design System', () => {
 
     wrapper.unmount()
   })
+
+  it('正确渲染 headerActions 标头扩展插槽与内容容器结构', async () => {
+    const wrapper = mount(CommonDrawer, {
+      attachTo: document.body,
+      props: {
+        visible: true,
+        title: '播放队列 (107)',
+        placement: 'right'
+      },
+      slots: {
+        headerActions: () => h('button', { class: 'custom-header-action' }, '清空'),
+        default: () => h('div', { class: 'queue-list-fixture' }, 'List Items')
+      }
+    })
+    await nextTick()
+
+    const headerActions = document.querySelector('.ncx-common-drawer-header-actions')
+    expect(headerActions).not.toBeNull()
+    expect(headerActions?.querySelector('.custom-header-action')?.textContent).toBe('清空')
+
+    const drawerBody = document.querySelector('.ncx-common-drawer-body')
+    expect(drawerBody).not.toBeNull()
+    expect(drawerBody?.querySelector('.queue-list-fixture')).not.toBeNull()
+
+    wrapper.unmount()
+  })
 })
 
 describe('CommonPopover macOS Design System', () => {

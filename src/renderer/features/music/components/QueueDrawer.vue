@@ -274,9 +274,8 @@ function handleDrop(toIndex: number): void {
 .queue-drawer-body {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  overflow-y: auto;
-  padding: 8px 12px;
+  min-height: 100%;
+  padding: 4px 0;
 }
 
 .queue-list {
