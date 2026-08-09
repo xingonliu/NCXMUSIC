@@ -294,30 +294,30 @@ onBeforeUnmount(() => {
         >
           <svg
             class="immersive-close-svg"
-            width="36"
-            height="14"
-            viewBox="0 0 36 14"
+            width="56"
+            height="18"
+            viewBox="0 0 56 18"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <line
               class="immersive-close-line immersive-close-line--left"
-              x1="7"
-              y1="7"
-              x2="18"
-              y2="7"
+              x1="5"
+              y1="9"
+              x2="28"
+              y2="9"
               stroke="currentColor"
-              stroke-width="3.5"
+              stroke-width="5.5"
               stroke-linecap="round"
             />
             <line
               class="immersive-close-line immersive-close-line--right"
-              x1="18"
-              y1="7"
-              x2="29"
-              y2="7"
+              x1="28"
+              y1="9"
+              x2="51"
+              y2="9"
               stroke="currentColor"
-              stroke-width="3.5"
+              stroke-width="5.5"
               stroke-linecap="round"
             />
           </svg>
@@ -394,30 +394,30 @@ onBeforeUnmount(() => {
       >
         <svg
           class="immersive-close-svg"
-          width="36"
-          height="14"
-          viewBox="0 0 36 14"
+          width="56"
+          height="18"
+          viewBox="0 0 56 18"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <line
             class="immersive-close-line immersive-close-line--left"
-            x1="7"
-            y1="7"
-            x2="18"
-            y2="7"
+            x1="5"
+            y1="9"
+            x2="28"
+            y2="9"
             stroke="currentColor"
-            stroke-width="3.5"
+            stroke-width="5.5"
             stroke-linecap="round"
           />
           <line
             class="immersive-close-line immersive-close-line--right"
-            x1="18"
-            y1="7"
-            x2="29"
-            y2="7"
+            x1="28"
+            y1="9"
+            x2="51"
+            y2="9"
             stroke="currentColor"
-            stroke-width="3.5"
+            stroke-width="5.5"
             stroke-linecap="round"
           />
         </svg>
@@ -541,17 +541,18 @@ onBeforeUnmount(() => {
 
 .immersive-close-handle {
   display: inline-flex;
-  width: 48px;
-  height: 28px;
+  width: 68px;
+  height: 32px;
   align-items: center;
   justify-content: center;
   align-self: center;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
   padding: 0;
   border: 0;
   border-radius: 999px;
-  color: rgb(255 255 255 / 75%);
+  color: #ffffff;
   background: transparent;
+  opacity: 1;
   cursor: pointer;
   -webkit-app-region: no-drag;
   transition:
@@ -562,12 +563,12 @@ onBeforeUnmount(() => {
 
 .immersive-close-handle:hover,
 .immersive-close-handle:focus-visible {
-  color: white;
-  background: rgb(255 255 255 / 16%);
+  color: #ffffff;
+  background: rgb(255 255 255 / 18%);
 }
 
 .immersive-close-handle:active {
-  transform: scale(0.92);
+  transform: scale(0.94);
 }
 
 .immersive-close-svg {
@@ -576,18 +577,18 @@ onBeforeUnmount(() => {
 }
 
 .immersive-close-line {
-  transform-origin: 18px 7px;
+  transform-origin: 28px 9px;
   transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .immersive-close-handle:hover .immersive-close-line--left,
 .immersive-close-handle--active .immersive-close-line--left {
-  transform: rotate(26deg);
+  transform: rotate(25deg);
 }
 
 .immersive-close-handle:hover .immersive-close-line--right,
 .immersive-close-handle--active .immersive-close-line--right {
-  transform: rotate(-26deg);
+  transform: rotate(-25deg);
 }
 
 .immersive-content {
