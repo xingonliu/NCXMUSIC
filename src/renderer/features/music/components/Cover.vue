@@ -118,22 +118,20 @@ function handlePlayClick(e: MouseEvent): void {
         <Music2 :size="props.size === 'hero' ? 56 : 28" aria-hidden="true" />
       </div>
 
-      <!-- Hover 播放悬浮层（YesPlayMusic 风格毛玻璃圆按钮） -->
-      <transition name="ncx-cover-fade">
-        <div
-          v-if="props.showPlayButton && (isHovered || props.alwaysShowShadow)"
-          class="ncx-cover-overlay"
+      <!-- Hover 播放悬浮层（与 YesPlayMusic 一致，不加 opacity 渐变，避免 backdrop-filter 在过渡中闪烁半透明底色） -->
+      <div
+        v-show="props.showPlayButton && (isHovered || props.alwaysShowShadow)"
+        class="ncx-cover-shade"
+      >
+        <button
+          type="button"
+          class="ncx-cover-play-btn"
+          aria-label="播放"
+          @click="handlePlayClick"
         >
-          <button
-            type="button"
-            class="ncx-cover-play-btn"
-            aria-label="播放"
-            @click="handlePlayClick"
-          >
-            <Play class="ncx-cover-play-icon" fill="currentColor" />
-          </button>
-        </div>
-      </transition>
+          <Play class="ncx-cover-play-icon" fill="currentColor" />
+        </button>
+      </div>
     </div>
 
     <!-- YesPlayMusic 核心：彩色光晕阴影背板 -->
@@ -235,37 +233,36 @@ function handlePlayClick(e: MouseEvent): void {
 
 /* ========= Hover 遮浮层与播放按钮 ========= */
 
-.ncx-cover-overlay {
+.ncx-cover-shade {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, #000 12%, transparent);
+  background: transparent;
 }
 
 .ncx-cover-play-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28%;
-  height: 28%;
+  width: 26%;
+  height: 26%;
   min-width: 32px;
   min-height: 32px;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 50%;
   color: #fff;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .ncx-cover-play-btn:hover {
-  background: rgba(255, 255, 255, 0.35);
-  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.28);
 }
 
 .ncx-cover-play-btn:active {
