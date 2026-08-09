@@ -200,7 +200,6 @@ function handleQuality(value: string | number): void {
         :max="Math.max(durationMs, 1)"
         :step="1000"
         :show-value="false"
-        :label="text.progress"
         @update:model-value="handleSeek"
       />
       <span>{{ formatTime(durationMs) }}</span>

@@ -33,6 +33,7 @@ import {
 import LiquidGlass from '../../../design-system/components/LiquidGlass.vue'
 import { zhCN } from '../../../locales/zh-CN'
 import { usePlayer } from '../use-player'
+import MediaArtwork from './MediaArtwork.vue'
 import QueueDrawer from './QueueDrawer.vue'
 
 // ========= 变量 =========
@@ -57,6 +58,9 @@ const isQueueOpen = ref<boolean>(false)
 
 /** 当前曲目摘要 */
 const track = computed(() => snapshot.value.playback.track)
+
+/** 当前曲目封面 URL */
+const coverUrl = computed<string | undefined>(() => track.value?.artwork?.[0]?.src)
 
 /** 队列中是否有内容可操作 */
 const hasQueue = computed(() => snapshot.value.queue.items.length > 0)
@@ -168,16 +172,24 @@ function openPlaybackDetail(): void {
         @keydown.enter.prevent="openPlaybackDetail"
         @keydown.space.prevent="openPlaybackDetail"
       >
-        <p class="player-track-name">
-          {{ track?.name ?? text.emptyTrack }}
-        </p>
-        <p class="player-track-meta">
-          <span v-if="track">{{ track.artists.join(' / ') }}</span>
-          <span
-            v-if="qualityLabel"
-            class="player-quality"
-          >{{ qualityLabel }}</span>
-        </p>
+        <MediaArtwork
+          :src="coverUrl"
+          :alt="track?.name ?? text.emptyTrack"
+          size="thumbnail"
+          class="player-track-cover"
+        />
+        <div class="player-track-info">
+          <p class="player-track-name">
+            {{ track?.name ?? text.emptyTrack }}
+          </p>
+          <p class="player-track-meta">
+            <span v-if="track">{{ track.artists.join(' / ') }}</span>
+            <span
+              v-if="qualityLabel"
+              class="player-quality"
+            >{{ qualityLabel }}</span>
+          </p>
+        </div>
       </div>
 
       <!-- 传输控制区域：上一首、暂停/播放、下一首及模式切换统一使用 icon 按钮组件并保持适宜间距 -->
@@ -270,7 +282,6 @@ function openPlaybackDetail(): void {
             :min="0"
             :max="Math.max(durationMs, 1)"
             :step="1000"
-            :label="text.progress"
             size="compact"
             :show-value="false"
             @update:model-value="onSeek"
@@ -371,7 +382,7 @@ function openPlaybackDetail(): void {
   padding: 8px 18px;
   box-sizing: border-box;
   grid-template-areas: "track transport progress output";
-  grid-template-columns: minmax(130px, 1.05fr) auto minmax(190px, 1.45fr) minmax(164px, 0.9fr);
+  grid-template-columns: minmax(170px, 1.15fr) auto minmax(190px, 1.45fr) minmax(164px, 0.9fr);
   column-gap: var(--ncx-space-4, 16px);
   row-gap: 0;
   align-items: center;
@@ -379,11 +390,27 @@ function openPlaybackDetail(): void {
 
 .player-track {
   display: flex;
-  min-height: 38px;
-  flex-direction: column;
+  min-height: 40px;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--ncx-space-2-5, 10px);
   grid-area: track;
+  min-width: 0;
+}
+
+.player-track-cover {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ncx-radius-md, 8px);
+  flex-shrink: 0;
+}
+
+.player-track-info {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   min-width: 0;
+  flex: 1;
 }
 
 .player-track--clickable {
@@ -555,7 +582,7 @@ function openPlaybackDetail(): void {
 
   .player-bar-content {
     grid-template-areas: "track transport progress";
-    grid-template-columns: minmax(120px, 0.9fr) auto minmax(150px, 1.2fr);
+    grid-template-columns: minmax(150px, 1fr) auto minmax(150px, 1.2fr);
     column-gap: var(--ncx-space-2, 8px);
     row-gap: 0;
     padding-inline: var(--ncx-space-3, 12px);
