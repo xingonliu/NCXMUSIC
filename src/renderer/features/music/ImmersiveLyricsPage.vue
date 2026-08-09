@@ -7,7 +7,6 @@ import {
   Minimize2,
   Minus,
   Copy,
-  Volume2,
   X
 } from '@lucide/vue'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
@@ -21,8 +20,7 @@ import {
   CommonHeaderButton,
   CommonHeaderGroupButton,
   CommonHeaderGroupItem,
-  CommonIconButton,
-  CommonSlider
+  CommonIconButton
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import LyricsPanel from './components/LyricsPanel.vue'
@@ -96,11 +94,6 @@ let unsubscribeWindowSnapshot = (): void => {}
 /** 请求关闭沉浸播放展示层。 */
 function closeImmersivePlayer(): void {
   emit('close')
-}
-
-/** 在沉浸页中调整播放音量。 */
-function handleVolume(value: number): void {
-  player.setVolume(value / 100)
 }
 
 /** 打开或关闭沉浸页播放队列。 */
@@ -250,25 +243,6 @@ onBeforeUnmount(() => {
       </CommonHeaderButton>
 
       <div class="immersive-toolbar-output">
-        <div
-          class="immersive-volume-control"
-          aria-label="音量控制"
-        >
-          <Volume2
-            :size="17"
-            aria-hidden="true"
-          />
-          <CommonSlider
-            class="immersive-volume-slider"
-            :model-value="Math.round(snapshot.playback.volume * 100)"
-            :min="0"
-            :max="100"
-            :show-value="false"
-            label="音量"
-            @update:model-value="handleVolume"
-          />
-        </div>
-
         <CommonHeaderGroupButton
           v-if="isWindows"
           label="窗口控制"
@@ -405,7 +379,7 @@ onBeforeUnmount(() => {
   display: flex;
   overflow: hidden;
   flex-direction: column;
-  border-radius: var(--ncx-radius-xl);
+  border-radius: 16px;
   color: white;
   background: #111719;
   isolation: isolate;
@@ -413,8 +387,15 @@ onBeforeUnmount(() => {
   view-transition-name: ncx-immersive-player;
 }
 
-.immersive-lyrics-page--fullscreen,
+.immersive-lyrics-page--macos {
+  border-radius: 16px;
+}
+
 .immersive-lyrics-page--windows {
+  border-radius: 8px;
+}
+
+.immersive-lyrics-page--fullscreen {
   border-radius: 0;
 }
 
@@ -432,12 +413,25 @@ onBeforeUnmount(() => {
 }
 
 .immersive-backdrop-artwork {
-  inset: -18%;
+  inset: -20%;
   background-position: center;
   background-size: cover;
-  filter: blur(72px) saturate(1.55) brightness(0.82);
-  opacity: 0.92;
-  transform: scale(1.16);
+  filter: blur(80px) saturate(1.65) brightness(0.8);
+  opacity: 0.9;
+  transform: scale(1.18);
+  animation: ncx-backdrop-pulse 24s ease-in-out infinite alternate;
+}
+
+@keyframes ncx-backdrop-pulse {
+  0% {
+    transform: scale(1.15) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.22) rotate(2deg);
+  }
+  100% {
+    transform: scale(1.16) rotate(-1deg);
+  }
 }
 
 .immersive-backdrop-veil {
@@ -462,8 +456,7 @@ onBeforeUnmount(() => {
 }
 
 .immersive-close-button,
-.immersive-toolbar-output,
-.immersive-volume-control {
+.immersive-toolbar-output {
   -webkit-app-region: no-drag;
 }
 
@@ -475,50 +468,18 @@ onBeforeUnmount(() => {
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / 18%);
 }
 
-.immersive-toolbar-output,
-.immersive-volume-control {
+.immersive-toolbar-output {
   display: flex;
   align-items: center;
-}
-
-.immersive-toolbar-output {
   gap: var(--ncx-space-3);
-}
-
-.immersive-volume-control {
-  width: 180px;
-  height: 38px;
-  gap: var(--ncx-space-2);
-  padding: 0 12px;
-  border-radius: var(--ncx-radius-full);
-  background: rgb(255 255 255 / 12%);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 18%);
-}
-
-.immersive-volume-slider {
-  min-width: 0;
-  flex: 1;
-}
-
-.immersive-volume-slider :deep(.ncx-common-slider-label) {
-  display: none;
-}
-
-.immersive-volume-slider :deep(.ncx-common-slider-rail) {
-  background: rgb(255 255 255 / 24%);
-}
-
-.immersive-volume-slider :deep(.ncx-common-slider-fill),
-.immersive-volume-slider :deep(.ncx-common-slider-thumb) {
-  background: white;
 }
 
 .immersive-content {
   display: grid;
-  width: min(1100px, calc(100% - 72px));
+  width: min(1140px, calc(100% - 72px));
   min-height: 0;
   flex: 1;
-  grid-template-columns: minmax(250px, 340px) minmax(0, 1fr);
+  grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
   gap: clamp(48px, 8vw, 112px);
   align-items: center;
   align-self: center;
@@ -538,8 +499,8 @@ onBeforeUnmount(() => {
   min-width: 0;
   min-height: 0;
   aspect-ratio: 1;
-  border-radius: var(--ncx-radius-lg);
-  box-shadow: 0 24px 70px rgb(0 0 0 / 26%);
+  border-radius: 16px;
+  box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
 }
 
 .immersive-track-row {
@@ -563,14 +524,17 @@ onBeforeUnmount(() => {
 }
 
 .immersive-track-copy h1 {
-  font-size: 16px;
-  line-height: 1.35;
+  font-size: clamp(20px, 1.8vw, 26px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
 .immersive-track-copy p {
-  margin-top: 4px;
+  margin-top: 6px;
   color: rgb(255 255 255 / 68%);
-  font-size: 13px;
+  font-size: clamp(13px, 1vw, 15px);
+  font-weight: 500;
   line-height: 1.4;
 }
 
@@ -587,7 +551,7 @@ onBeforeUnmount(() => {
 }
 
 .immersive-lyrics-panel {
-  height: min(610px, calc(100vh - 138px));
+  height: min(630px, calc(100vh - 138px));
   min-height: 0;
 }
 
@@ -620,10 +584,6 @@ onBeforeUnmount(() => {
     width: calc(100% - 56px);
     grid-template-columns: minmax(230px, 300px) minmax(0, 1fr);
     gap: 48px;
-  }
-
-  .immersive-volume-control {
-    width: 150px;
   }
 }
 
