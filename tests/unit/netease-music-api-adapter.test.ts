@@ -241,4 +241,39 @@ describe('NeteaseMusicApiAdapter', () => {
     await secondRead
     expect(console.log).toBe(originalLog)
   })
+
+  it('normalizes raw third-party rejection objects into NeteaseUpstreamError', async () => {
+    /** 抛出未封装对象 (301 未登录) 的三方 API 夹具。 */
+    const api = apiFixture()
+    api.daily_signin = vi.fn(async () => {
+      throw { status: 301, body: { code: 301, message: null } }
+    })
+    /** 网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+
+    await expect(adapter.mutate({ operation: 'dailySignin' }, 'cookie'))
+      .rejects.toMatchObject({
+        code: 'UPSTREAM_ERROR',
+        httpStatus: 301,
+        upstreamCode: 301,
+        retryable: false,
+        message: '登录状态已失效，请重新登录。'
+      })
+  })
+
+  it('handles duplicate daily signin code -2 with specific error message', async () => {
+    /** 返回重复签到业务码的 API 夹具。 */
+    const api = apiFixture()
+    api.daily_signin = vi.fn(async () => ({ status: 200, body: { code: -2, msg: '重复签到' } }))
+    /** 网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+
+    await expect(adapter.mutate({ operation: 'dailySignin' }, 'cookie'))
+      .rejects.toMatchObject({
+        code: 'UPSTREAM_ERROR',
+        upstreamCode: -2,
+        retryable: false,
+        message: '重复签到'
+      })
+  })
 })

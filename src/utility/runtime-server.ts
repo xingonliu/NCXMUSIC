@@ -496,10 +496,9 @@ export class UtilityRuntimeServer {
 
   /** 将内部错误映射为脱敏协议错误 */
   private toProtocolError(error: unknown): ProtocolError {
-    const code =
-      typeof error === 'object' && error !== null && 'code' in error
-        ? String((error as { code: unknown }).code)
-        : ''
+    const rawError = typeof error === 'object' && error !== null ? (error as Record<string, unknown>) : undefined
+    const code = rawError && 'code' in rawError ? String(rawError['code']) : ''
+    const errorMessage = rawError && typeof rawError['message'] === 'string' && rawError['message'].trim() ? rawError['message'].trim() : ''
 
     if (code === 'PROTOCOL_INVALID_MESSAGE') {
       return {
@@ -520,12 +519,10 @@ export class UtilityRuntimeServer {
     }
     if (code === 'UPSTREAM_ERROR') {
       const retryable =
-        typeof error === 'object' && error !== null && 'retryable' in error
-          ? Boolean((error as { retryable: unknown }).retryable)
-          : true
+        rawError && 'retryable' in rawError ? Boolean(rawError['retryable']) : true
       return {
         code: 'UPSTREAM_ERROR',
-        message: '网易云服务请求失败，请稍后重试或检查登录状态。',
+        message: errorMessage || '网易云服务请求失败，请稍后重试或检查登录状态。',
         retryable
       }
     }
@@ -539,7 +536,7 @@ export class UtilityRuntimeServer {
     if (code === 'AUTH_REQUIRED') {
       return {
         code: 'AUTH_REQUIRED',
-        message: '此操作需要先登录网易云账户。',
+        message: errorMessage || '此操作需要先登录网易云账户。',
         retryable: false
       }
     }
@@ -553,6 +550,32 @@ export class UtilityRuntimeServer {
         retryable: false
       }
     }
+
+    if (rawError && ('status' in rawError || 'body' in rawError)) {
+      const body = typeof rawError['body'] === 'object' && rawError['body'] !== null ? (rawError['body'] as Record<string, unknown>) : {}
+      const upstreamCode = body['code']
+      const msg = typeof body['msg'] === 'string' && body['msg'].trim() ? body['msg'].trim() : typeof body['message'] === 'string' && body['message'].trim() ? body['message'].trim() : ''
+      if (upstreamCode === 301 || rawError['status'] === 301) {
+        return {
+          code: 'AUTH_REQUIRED',
+          message: msg || '登录状态已失效，请重新登录。',
+          retryable: false
+        }
+      }
+      if (upstreamCode === -2) {
+        return {
+          code: 'UPSTREAM_ERROR',
+          message: msg || '今日已重复签到。',
+          retryable: false
+        }
+      }
+      return {
+        code: 'UPSTREAM_ERROR',
+        message: msg || '网易云服务请求失败，请稍后重试或检查登录状态。',
+        retryable: rawError['status'] === 429 || (typeof rawError['status'] === 'number' && rawError['status'] >= 500)
+      }
+    }
+
     return { code: 'UTILITY_UNAVAILABLE', message: '本地服务请求失败。', retryable: true }
   }
 

@@ -42,6 +42,8 @@ export interface NeteaseUpstreamErrorMetadata {
   upstreamCode?: number
   /** 是否适合由 UI 提供重试入口。 */
   retryable: boolean
+  /** 面向用户的离散说明文本。 */
+  message?: string
 }
 
 /** NeteaseCloudMusicApiEnhanced 中 Phase 2 首批只读能力。 */
@@ -124,7 +126,7 @@ async function loadApi(): Promise<NeteaseMusicApi> {
   return (imported.default ?? imported) as unknown as NeteaseMusicApi
 }
 
-/** 屏蔽三方 API 包的 console 输出，避免原始响应或错误串入日志。 */
+/** 屏蔽三方 API 包的 console 输出，避免原始响应或错误串入日志，并归一化上游异常。 */
 async function withoutThirdPartyConsole<T>(op: () => Promise<T>): Promise<T> {
   if (consoleSuppressionDepth === 0) {
     originalConsoleMethods = {
@@ -144,6 +146,8 @@ async function withoutThirdPartyConsole<T>(op: () => Promise<T>): Promise<T> {
   console.warn = noop
   try {
     return await op()
+  } catch (error) {
+    throw normalizeUpstreamError(error)
   } finally {
     consoleSuppressionDepth -= 1
     if (consoleSuppressionDepth === 0 && originalConsoleMethods) {
@@ -170,7 +174,8 @@ export class NeteaseUpstreamError extends Error {
   constructor(metadata: NeteaseUpstreamErrorMetadata) {
     const statusText = metadata.httpStatus === undefined ? 'unknown' : String(metadata.httpStatus)
     const codeText = metadata.upstreamCode === undefined ? 'unknown' : String(metadata.upstreamCode)
-    super(`网易云上游请求失败（HTTP ${statusText}, code ${codeText}）。`)
+    const defaultMsg = `网易云上游请求失败（HTTP ${statusText}, code ${codeText}）。`
+    super(metadata.message || defaultMsg)
     this.name = 'NeteaseUpstreamError'
     this.httpStatus = metadata.httpStatus
     this.upstreamCode = metadata.upstreamCode
@@ -212,6 +217,42 @@ function responseCodeValue(value: unknown): number | undefined {
   return undefined
 }
 
+/** 归一化三方 API 抛出的原生异常或对象为 NeteaseUpstreamError。 */
+function normalizeUpstreamError(error: unknown): NeteaseUpstreamError {
+  if (error instanceof NeteaseUpstreamError) return error
+
+  const raw = record(error)
+  const httpStatus = numberValue(raw?.['status'])
+  const body = record(raw?.['body'])
+  const upstreamCode = responseCodeValue(body?.['code'])
+  const msg = stringValue(body?.['msg'] ?? body?.['message'])
+
+  if (httpStatus === 301 || upstreamCode === 301) {
+    return new NeteaseUpstreamError({
+      httpStatus: httpStatus ?? 301,
+      upstreamCode: upstreamCode ?? 301,
+      retryable: false,
+      message: msg || '登录状态已失效，请重新登录。'
+    })
+  }
+
+  if (upstreamCode === -2) {
+    return new NeteaseUpstreamError({
+      ...(httpStatus !== undefined ? { httpStatus } : {}),
+      upstreamCode: -2,
+      retryable: false,
+      message: msg || '今日已重复签到。'
+    })
+  }
+
+  return new NeteaseUpstreamError({
+    ...(httpStatus !== undefined ? { httpStatus } : {}),
+    ...(upstreamCode !== undefined ? { upstreamCode } : {}),
+    retryable: httpStatus === 429 || (httpStatus !== undefined && httpStatus >= 500),
+    ...(msg ? { message: msg } : {})
+  })
+}
+
 /** 将数字或数字字符串归一为 ID 字符串。 */
 function idValue(value: unknown): string | undefined {
   if (typeof value === 'number' && Number.isInteger(value) && value >= 0) return String(value)
@@ -235,10 +276,18 @@ function bodyRecord(response: NeteaseResponse): UnknownRecord {
     httpStatus !== undefined && (!Number.isInteger(httpStatus) || httpStatus < 200 || httpStatus >= 300)
   const upstreamFailed = upstreamCode !== undefined && upstreamCode !== 200
   if (httpFailed || upstreamFailed) {
+    const msg = stringValue(body['msg'] ?? body['message'])
+    const customMsg =
+      upstreamCode === -2
+        ? msg || '今日已重复签到。'
+        : upstreamCode === 301 || httpStatus === 301
+          ? msg || '登录状态已失效，请重新登录。'
+          : msg
     throw new NeteaseUpstreamError({
       ...(httpStatus !== undefined ? { httpStatus } : {}),
       ...(upstreamCode !== undefined ? { upstreamCode } : {}),
-      retryable: httpStatus === 429 || (httpStatus !== undefined && httpStatus >= 500)
+      retryable: httpStatus === 429 || (httpStatus !== undefined && httpStatus >= 500),
+      ...(customMsg ? { message: customMsg } : {})
     })
   }
   return body
