@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  ChevronDown,
   Heart,
   ListMusic,
   Maximize2,
@@ -293,11 +292,35 @@ onBeforeUnmount(() => {
           @click="handleCloseClick"
           @mousedown="isClosePressed = true"
         >
-          <ChevronDown
-            class="immersive-close-icon"
-            :size="18"
-          />
-          <span class="immersive-close-pill" />
+          <svg
+            class="immersive-close-svg"
+            width="36"
+            height="14"
+            viewBox="0 0 36 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <line
+              class="immersive-close-line immersive-close-line--left"
+              x1="7"
+              y1="7"
+              x2="18"
+              y2="7"
+              stroke="currentColor"
+              stroke-width="3.5"
+              stroke-linecap="round"
+            />
+            <line
+              class="immersive-close-line immersive-close-line--right"
+              x1="18"
+              y1="7"
+              x2="29"
+              y2="7"
+              stroke="currentColor"
+              stroke-width="3.5"
+              stroke-linecap="round"
+            />
+          </svg>
         </button>
 
         <MediaArtwork
@@ -369,11 +392,35 @@ onBeforeUnmount(() => {
         @click="handleCloseClick"
         @mousedown="isClosePressed = true"
       >
-        <ChevronDown
-          class="immersive-close-icon"
-          :size="18"
-        />
-        <span class="immersive-close-pill" />
+        <svg
+          class="immersive-close-svg"
+          width="36"
+          height="14"
+          viewBox="0 0 36 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line
+            class="immersive-close-line immersive-close-line--left"
+            x1="7"
+            y1="7"
+            x2="18"
+            y2="7"
+            stroke="currentColor"
+            stroke-width="3.5"
+            stroke-linecap="round"
+          />
+          <line
+            class="immersive-close-line immersive-close-line--right"
+            x1="18"
+            y1="7"
+            x2="29"
+            y2="7"
+            stroke="currentColor"
+            stroke-width="3.5"
+            stroke-linecap="round"
+          />
+        </svg>
       </button>
       <h1 id="immersive-lyrics-title">
         还没有播放内容
@@ -494,25 +541,28 @@ onBeforeUnmount(() => {
 
 .immersive-close-handle {
   display: inline-flex;
-  width: 44px;
+  width: 48px;
   height: 28px;
   align-items: center;
   justify-content: center;
+  align-self: center;
   margin-bottom: 2px;
   padding: 0;
   border: 0;
   border-radius: 999px;
-  color: white;
+  color: rgb(255 255 255 / 75%);
   background: transparent;
   cursor: pointer;
   -webkit-app-region: no-drag;
   transition:
-    background-color 0.2s ease,
+    color 0.25s ease,
+    background-color 0.25s ease,
     transform 0.15s ease;
 }
 
 .immersive-close-handle:hover,
 .immersive-close-handle:focus-visible {
+  color: white;
   background: rgb(255 255 255 / 16%);
 }
 
@@ -520,27 +570,24 @@ onBeforeUnmount(() => {
   transform: scale(0.92);
 }
 
-.immersive-close-pill {
-  width: 36px;
-  height: 5px;
-  border-radius: 3px;
-  background: rgb(255 255 255 / 45%);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 16%);
-  transition: opacity 0.2s ease;
-}
-
-.immersive-close-icon {
-  display: none;
-}
-
-.immersive-close-handle:hover .immersive-close-pill,
-.immersive-close-handle--active .immersive-close-pill {
-  display: none;
-}
-
-.immersive-close-handle:hover .immersive-close-icon,
-.immersive-close-handle--active .immersive-close-icon {
+.immersive-close-svg {
   display: block;
+  overflow: visible;
+}
+
+.immersive-close-line {
+  transform-origin: 18px 7px;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.immersive-close-handle:hover .immersive-close-line--left,
+.immersive-close-handle--active .immersive-close-line--left {
+  transform: rotate(26deg);
+}
+
+.immersive-close-handle:hover .immersive-close-line--right,
+.immersive-close-handle--active .immersive-close-line--right {
+  transform: rotate(-26deg);
 }
 
 .immersive-content {
