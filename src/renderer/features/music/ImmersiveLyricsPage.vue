@@ -750,9 +750,9 @@ onBeforeUnmount(() => {
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* 关闭沉浸歌词页返回 PlayerBar 时，精确匹配 PlayerBar 封面的 8px 圆角与 360ms 退出动画，消除终点全圆形变与抖动 */
+/* 关闭沉浸歌词页返回 PlayerBar 时，在过渡到音乐 bar 的那一瞬间精确匹配 PlayerBar 封面的 var(--ncx-radius-md) 圆角与 360ms 退出动画 */
 :root:has(::view-transition-old(ncx-immersive-player)) ::view-transition-group(ncx-now-playing-artwork) {
-  border-radius: 8px;
+  border-radius: var(--ncx-radius-md, 8px);
   animation-duration: 360ms;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
