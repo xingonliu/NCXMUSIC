@@ -17,7 +17,6 @@ import type {
   WindowSnapshot
 } from '../../../shared/contracts/window-controls'
 import {
-  CommonHeaderButton,
   CommonHeaderGroupButton,
   CommonHeaderGroupItem,
   CommonIconButton
@@ -75,6 +74,9 @@ const isLiked = ref<boolean>(false)
 /** 沉浸页播放队列抽屉是否打开。 */
 const isQueueOpen = ref<boolean>(false)
 
+/** 沉浸页关闭按钮是否处于按下/活动状态。 */
+const isClosePressed = ref<boolean>(false)
+
 /** Main 进程推送的真实窗口快照。 */
 const windowSnapshot = ref<WindowSnapshot>({
   platform: window.ncx.platform as DesktopPlatform,
@@ -94,6 +96,12 @@ let unsubscribeWindowSnapshot = (): void => {}
 /** 请求关闭沉浸播放展示层。 */
 function closeImmersivePlayer(): void {
   emit('close')
+}
+
+/** 点击关闭按钮，触发下箭头图标并请求关闭沉浸页。 */
+function handleCloseClick(): void {
+  isClosePressed.value = true
+  closeImmersivePlayer()
 }
 
 /** 打开或关闭沉浸页播放队列。 */
@@ -234,14 +242,6 @@ onBeforeUnmount(() => {
     </div>
 
     <header class="immersive-toolbar">
-      <CommonHeaderButton
-        class="immersive-close-button"
-        label="收起沉浸播放页"
-        @click="closeImmersivePlayer"
-      >
-        <ChevronDown :size="19" />
-      </CommonHeaderButton>
-
       <div class="immersive-toolbar-output">
         <CommonHeaderGroupButton
           v-if="isWindows"
@@ -285,6 +285,21 @@ onBeforeUnmount(() => {
         class="immersive-now-playing"
         aria-label="正在播放"
       >
+        <button
+          type="button"
+          class="immersive-close-handle"
+          :class="{ 'immersive-close-handle--active': isClosePressed }"
+          aria-label="收起沉浸播放页"
+          @click="handleCloseClick"
+          @mousedown="isClosePressed = true"
+        >
+          <ChevronDown
+            class="immersive-close-icon"
+            :size="18"
+          />
+          <span class="immersive-close-pill" />
+        </button>
+
         <MediaArtwork
           :src="displayArtworkUrl"
           :alt="track.name"
@@ -346,6 +361,20 @@ onBeforeUnmount(() => {
       v-else
       class="immersive-empty-state"
     >
+      <button
+        type="button"
+        class="immersive-close-handle"
+        :class="{ 'immersive-close-handle--active': isClosePressed }"
+        aria-label="收起沉浸播放页"
+        @click="handleCloseClick"
+        @mousedown="isClosePressed = true"
+      >
+        <ChevronDown
+          class="immersive-close-icon"
+          :size="18"
+        />
+        <span class="immersive-close-pill" />
+      </button>
       <h1 id="immersive-lyrics-title">
         还没有播放内容
       </h1>
@@ -441,37 +470,77 @@ onBeforeUnmount(() => {
 
 .immersive-toolbar {
   display: flex;
-  min-height: 68px;
-  flex: 0 0 68px;
+  min-height: 52px;
+  flex: 0 0 52px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: var(--ncx-space-4);
-  padding: 8px 18px 0 96px;
+  padding: 8px 18px 0 18px;
   -webkit-app-region: drag;
-}
-
-.immersive-lyrics-page--windows .immersive-toolbar,
-.immersive-lyrics-page--fullscreen .immersive-toolbar {
-  padding-left: 18px;
-}
-
-.immersive-close-button,
-.immersive-toolbar-output {
-  -webkit-app-region: no-drag;
-}
-
-.immersive-close-button,
-.immersive-toolbar :deep(.ncx-common-header-group),
-.immersive-toolbar :deep(.ncx-common-header-button) {
-  color: white;
-  background: rgb(255 255 255 / 12%);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 18%);
 }
 
 .immersive-toolbar-output {
   display: flex;
   align-items: center;
   gap: var(--ncx-space-3);
+  -webkit-app-region: no-drag;
+}
+
+.immersive-toolbar :deep(.ncx-common-header-group) {
+  color: white;
+  background: rgb(255 255 255 / 12%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 18%);
+}
+
+.immersive-close-handle {
+  display: inline-flex;
+  width: 44px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  color: white;
+  background: transparent;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.immersive-close-handle:hover,
+.immersive-close-handle:focus-visible {
+  background: rgb(255 255 255 / 16%);
+}
+
+.immersive-close-handle:active {
+  transform: scale(0.92);
+}
+
+.immersive-close-pill {
+  width: 36px;
+  height: 5px;
+  border-radius: 3px;
+  background: rgb(255 255 255 / 45%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 16%);
+  transition: opacity 0.2s ease;
+}
+
+.immersive-close-icon {
+  display: none;
+}
+
+.immersive-close-handle:hover .immersive-close-pill,
+.immersive-close-handle--active .immersive-close-pill {
+  display: none;
+}
+
+.immersive-close-handle:hover .immersive-close-icon,
+.immersive-close-handle--active .immersive-close-icon {
+  display: block;
 }
 
 .immersive-content {
@@ -483,14 +552,15 @@ onBeforeUnmount(() => {
   gap: clamp(48px, 8vw, 112px);
   align-items: center;
   align-self: center;
-  padding: 18px 0 30px;
+  padding: 10px 0 30px;
 }
 
 .immersive-now-playing {
-  display: grid;
+  display: flex;
   min-width: 0;
-  gap: var(--ncx-space-4);
-  align-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ncx-space-3);
 }
 
 .immersive-artwork {
@@ -505,10 +575,15 @@ onBeforeUnmount(() => {
 
 .immersive-track-row {
   display: flex;
+  width: 100%;
   min-width: 0;
   align-items: center;
   justify-content: space-between;
   gap: var(--ncx-space-4);
+}
+
+.immersive-now-playing :deep(.playback-controls) {
+  width: 100%;
 }
 
 .immersive-track-copy {
