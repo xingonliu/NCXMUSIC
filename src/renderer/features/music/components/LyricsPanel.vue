@@ -336,32 +336,33 @@ onBeforeUnmount(() => {
 .lyrics-panel--immersive .lyrics-line {
   color: white;
   font-size: clamp(28px, 2.3vw, 34px);
-  font-weight: 700;
+  font-weight: 750;
   opacity: 0.32;
   filter: blur(1.5px);
   line-height: 1.32;
-  transform: scale(0.96);
+  transform: scale(0.88);
   transform-origin: left center;
+  will-change: transform, opacity, filter;
   transition:
-    color 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-    font-size 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-    opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-    filter 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-    transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .lyrics-panel--immersive .lyrics-line button {
   transform-origin: left center;
+  will-change: transform, opacity, filter;
   transition:
-    opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-    filter 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-    transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .lyrics-panel--immersive .lyrics-line button:hover {
-  opacity: 0.88;
+  opacity: 0.9;
   filter: blur(0px);
-  transform: scale(1.02);
+  transform: scale(1.03);
   transform-origin: left center;
 }
 
@@ -373,18 +374,17 @@ onBeforeUnmount(() => {
   font-weight: 550;
   opacity: 0.6;
   transition:
-    opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-    font-size 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .lyrics-panel--immersive .lyrics-line--active {
   color: #ffffff;
-  font-size: clamp(38px, 3.2vw, 48px);
   font-weight: 800;
   letter-spacing: -0.02em;
   opacity: 1;
   filter: blur(0px);
-  transform: scale(1.04);
+  transform: scale(1.36);
   transform-origin: left center;
   text-shadow: 0 4px 24px rgb(0 0 0 / 35%);
 }
@@ -398,35 +398,32 @@ onBeforeUnmount(() => {
 
 .lyrics-panel--immersive .lyrics-line--active small {
   color: inherit;
-  font-size: clamp(20px, 1.6vw, 25px);
+  font-size: clamp(18px, 1.4vw, 22px);
   font-weight: 600;
   opacity: 0.88;
 }
 
 .lyrics-panel--immersive .lyrics-line--near {
-  font-size: clamp(30px, 2.5vw, 36px);
   font-weight: 750;
-  opacity: 0.52;
+  opacity: 0.55;
   filter: blur(1px);
-  transform: scale(0.98);
+  transform: scale(1.06);
   transform-origin: left center;
 }
 
 .lyrics-panel--immersive .lyrics-line--medium {
-  font-size: clamp(26px, 2.1vw, 32px);
   font-weight: 700;
   opacity: 0.32;
   filter: blur(1.8px);
-  transform: scale(0.95);
+  transform: scale(0.94);
   transform-origin: left center;
 }
 
 .lyrics-panel--immersive .lyrics-line--far {
-  font-size: clamp(24px, 1.8vw, 28px);
   font-weight: 650;
   opacity: 0.16;
   filter: blur(2.5px);
-  transform: scale(0.92);
+  transform: scale(0.86);
   transform-origin: left center;
 }
 
@@ -436,7 +433,7 @@ onBeforeUnmount(() => {
   }
 
   .lyrics-panel--immersive .lyrics-line--active {
-    font-size: 34px;
+    transform: scale(1.22);
   }
 }
 
