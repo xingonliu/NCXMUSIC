@@ -414,7 +414,7 @@ function openImmersivePlayer(event: MouseEvent): void {
 .player-track-cover {
   width: 40px;
   height: 40px;
-  border-radius: var(--ncx-radius-md, 8px);
+  border-radius: 8px;
   flex-shrink: 0;
 }
 
@@ -427,7 +427,7 @@ function openImmersivePlayer(event: MouseEvent): void {
   justify-content: center;
   padding: 0;
   border: 0;
-  border-radius: var(--ncx-radius-md, 8px);
+  border-radius: 8px;
   background: transparent;
   cursor: pointer;
 }
