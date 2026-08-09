@@ -335,8 +335,10 @@ onBeforeUnmount(() => {
 
 .lyrics-panel--immersive .lyrics-line {
   color: white;
-  font-size: clamp(28px, 2.3vw, 34px);
-  font-weight: 750;
+  font-size: clamp(30px, 2.4vw, 36px);
+  font-weight: 900;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke: 0.5px currentColor;
   opacity: 0.32;
   filter: blur(1.5px);
   line-height: 1.32;
@@ -371,7 +373,8 @@ onBeforeUnmount(() => {
   margin-top: 6px;
   color: inherit;
   font-size: clamp(18px, 1.4vw, 22px);
-  font-weight: 550;
+  font-weight: 700;
+  -webkit-text-stroke: 0.2px currentColor;
   opacity: 0.6;
   transition:
     opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
@@ -380,13 +383,14 @@ onBeforeUnmount(() => {
 
 .lyrics-panel--immersive .lyrics-line--active {
   color: #ffffff;
-  font-weight: 800;
+  font-weight: 900;
+  -webkit-text-stroke: 0.6px currentColor;
   letter-spacing: -0.02em;
   opacity: 1;
   filter: blur(0px);
   transform: scale(1.36);
   transform-origin: left center;
-  text-shadow: 0 4px 24px rgb(0 0 0 / 35%);
+  text-shadow: 0 0 1px currentColor, 0 4px 24px rgb(0 0 0 / 40%);
 }
 
 .lyrics-panel--immersive .lyrics-line--active button:hover {
@@ -399,12 +403,14 @@ onBeforeUnmount(() => {
 .lyrics-panel--immersive .lyrics-line--active small {
   color: inherit;
   font-size: clamp(18px, 1.4vw, 22px);
-  font-weight: 600;
+  font-weight: 700;
+  -webkit-text-stroke: 0.3px currentColor;
   opacity: 0.88;
 }
 
 .lyrics-panel--immersive .lyrics-line--near {
-  font-weight: 750;
+  font-weight: 900;
+  -webkit-text-stroke: 0.5px currentColor;
   opacity: 0.55;
   filter: blur(1px);
   transform: scale(1.06);
@@ -412,7 +418,8 @@ onBeforeUnmount(() => {
 }
 
 .lyrics-panel--immersive .lyrics-line--medium {
-  font-weight: 700;
+  font-weight: 900;
+  -webkit-text-stroke: 0.4px currentColor;
   opacity: 0.32;
   filter: blur(1.8px);
   transform: scale(0.94);
@@ -420,7 +427,8 @@ onBeforeUnmount(() => {
 }
 
 .lyrics-panel--immersive .lyrics-line--far {
-  font-weight: 650;
+  font-weight: 900;
+  -webkit-text-stroke: 0.3px currentColor;
   opacity: 0.16;
   filter: blur(2.5px);
   transform: scale(0.86);
