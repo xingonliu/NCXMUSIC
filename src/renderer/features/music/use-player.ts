@@ -240,6 +240,14 @@ export function usePlayer(): {
 }
 
 /**
+ * 读取包含内部 coordinator / engine 的播放器运行时。仅供底层宿主与测试使用。
+ */
+export function usePlayerRuntime(): PlayerRuntime {
+  runtime ??= createRuntime()
+  return runtime
+}
+
+/**
  * 释放播放器单例。仅供测试与应用退出使用。
  * 正常路由切换不得调用——会销毁根层 AudioHost。
  */

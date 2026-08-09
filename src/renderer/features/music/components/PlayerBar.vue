@@ -17,8 +17,7 @@ import {
   SkipBack,
   SkipForward,
   Volume2,
-  VolumeX,
-  X
+  VolumeX
 } from '@lucide/vue'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -28,7 +27,8 @@ import {
   CommonIconButton,
   CommonProgress,
   CommonSlider,
-  CommonSpinner
+  CommonSpinner,
+  CommonToast
 } from '../../../design-system/components'
 import LiquidGlass from '../../../design-system/components/LiquidGlass.vue'
 import { zhCN } from '../../../locales/zh-CN'
@@ -319,26 +319,18 @@ function openPlaybackDetail(): void {
         </CommonIconButton>
       </div>
 
-      <!-- 不可播放提示：由 Coordinator 的 track-unplayable 事件驱动 -->
-      <p
-        v-if="notice"
-        class="player-notice"
-        role="alert"
-      >
-        {{ notice }}
-        <CommonIconButton
-          class="player-notice-close"
-          size="compact"
-          variant="ghost"
-          tooltip-placement="left"
-          :label="text.dismiss"
-          @click="player.dismissNotice()"
-        >
-          <X :size="13" />
-        </CommonIconButton>
-      </p>
     </div>
   </LiquidGlass>
+
+  <!-- 不可播放等音乐控制 bar 提示：使用 CommonToast 替代内联消息 -->
+  <CommonToast
+    :visible="!!notice"
+    type="warning"
+    :title="text.noticeTitle"
+    :message="notice ?? ''"
+    :duration="4000"
+    @close="player.dismissNotice()"
+  />
 
   <!-- 播放队列抽屉不放入玻璃材质，避免受其尺寸和层叠上下文影响。 -->
   <QueueDrawer
@@ -378,11 +370,8 @@ function openPlaybackDetail(): void {
   min-height: 54px;
   padding: 8px 18px;
   box-sizing: border-box;
-  grid-template-areas:
-    "track transport progress output"
-    "notice notice notice notice";
+  grid-template-areas: "track transport progress output";
   grid-template-columns: minmax(130px, 1.05fr) auto minmax(190px, 1.45fr) minmax(164px, 0.9fr);
-  grid-template-rows: minmax(38px, auto) auto;
   column-gap: var(--ncx-space-4, 16px);
   row-gap: 0;
   align-items: center;
@@ -547,19 +536,6 @@ function openPlaybackDetail(): void {
   box-shadow: var(--ncx-player-bar-thumb-shadow);
 }
 
-.player-notice {
-  display: flex;
-  grid-area: notice;
-  gap: var(--ncx-space-2, 8px);
-  align-items: center;
-  margin: var(--ncx-space-1, 4px) 0 0;
-  padding: var(--ncx-space-1-5, 6px) var(--ncx-space-3, 12px);
-  border: 1px solid color-mix(in srgb, var(--ncx-color-warning) 22%, transparent);
-  border-radius: var(--ncx-radius-full);
-  background: color-mix(in srgb, var(--ncx-color-warning) 10%, transparent);
-  font-size: 12px;
-  color: var(--ncx-color-warning);
-}
 
 @media (prefers-color-scheme: dark) {
   .player-bar-glass {
@@ -578,9 +554,7 @@ function openPlaybackDetail(): void {
   }
 
   .player-bar-content {
-    grid-template-areas:
-      "track transport progress"
-      "notice notice notice";
+    grid-template-areas: "track transport progress";
     grid-template-columns: minmax(120px, 0.9fr) auto minmax(150px, 1.2fr);
     column-gap: var(--ncx-space-2, 8px);
     row-gap: 0;

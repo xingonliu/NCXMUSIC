@@ -54,6 +54,8 @@ export const zhCN = {
     progress: '播放进度',
     /** 关闭提示 */
     dismiss: '关闭提示',
+    /** 播放通知标题 */
+    noticeTitle: '播放提示',
     /** 音质降级时追加到音质标签后的后缀 */
     downgradedSuffix: '（已降级）',
     /** 播放队列 */

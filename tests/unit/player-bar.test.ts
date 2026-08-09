@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinator'
 import PlayerBar from '../../src/renderer/features/music/components/PlayerBar.vue'
-import { disposePlayer } from '../../src/renderer/features/music/use-player'
+import { disposePlayer, usePlayer, usePlayerRuntime } from '../../src/renderer/features/music/use-player'
 
 // ========= 变量 =========
 
@@ -138,5 +138,31 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
 
     await playBtn.trigger('click')
     expect(toggleSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('当存在播放 notice 时渲染 CommonToast 浮窗组件并能在关闭时清除提示', async () => {
+    disposePlayer()
+    const playerRuntime = usePlayerRuntime()
+    const player = usePlayer()
+    const wrapper = mount(PlayerBar)
+
+    expect(wrapper.findComponent({ name: '通用组件Toast' }).props('visible')).toBe(false)
+
+    ;(playerRuntime.coordinator as unknown as { emit: (event: unknown) => void }).emit({
+      type: 'track-unplayable',
+      trackId: '101',
+      message: '《Test Song》当前无法播放，已自动跳过。'
+    })
+
+    await wrapper.vm.$nextTick()
+
+    const toast = wrapper.findComponent({ name: '通用组件Toast' })
+    expect(toast.props('visible')).toBe(true)
+    expect(toast.props('message')).toBe('《Test Song》当前无法播放，已自动跳过。')
+
+    await toast.vm.$emit('close')
+    await wrapper.vm.$nextTick()
+
+    expect(player.notice.value).toBeNull()
   })
 })
