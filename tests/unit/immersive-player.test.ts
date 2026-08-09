@@ -61,6 +61,26 @@ describe('应用级沉浸播放展示', () => {
     expect(document.activeElement).toBe(trigger)
   })
 
+  it('高清封面预热未完成时也立即进入展开状态', async () => {
+    /** 测试前浏览器图片解码实现。 */
+    const originalDecode = Image.prototype.decode
+    /** 永不提前完成的高清封面解码任务。 */
+    const pendingDecode = new Promise<void>(() => undefined)
+    Image.prototype.decode = vi.fn(() => pendingDecode)
+
+    try {
+      /** 应用级沉浸播放展示控制器。 */
+      const immersivePlayer = useImmersivePlayerPresentation()
+      /** 不应等待高清封面预热的展开任务。 */
+      const opening = immersivePlayer.open('https://example.com/high-resolution.jpg')
+
+      await vi.waitFor(() => expect(immersivePlayer.isOpen.value).toBe(true))
+      await opening
+    } finally {
+      Image.prototype.decode = originalDecode
+    }
+  })
+
   it('高亮当前歌词并在点击其他歌词时发出精确 seek 位置', async () => {
     getLyrics.mockResolvedValue({
       ok: true,

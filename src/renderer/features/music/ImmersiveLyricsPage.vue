@@ -178,15 +178,26 @@ watch([previewArtworkUrl, artworkUrl], ([previewUrl, highResolutionUrl], _previo
 
   /** 标记当前曲目封面预载是否已经失效。 */
   let cancelled = false
+  /** 共享元素动画结束后替换高清封面的延迟定时器。 */
+  let highResolutionPromotionTimer: number | undefined
   /** 用于后台解码当前曲目高清封面的临时图片。 */
   const highResolutionImage = new Image()
-  highResolutionImage.onload = (): void => {
-    if (!cancelled) displayArtworkUrl.value = highResolutionUrl
+
+  /** 解码高清封面，并在共享元素动画结束后无闪烁替换。 */
+  async function promoteHighResolutionArtwork(): Promise<void> {
+    await highResolutionImage.decode().catch(() => undefined)
+    if (cancelled) return
+    highResolutionPromotionTimer = window.setTimeout(() => {
+      if (!cancelled) displayArtworkUrl.value = highResolutionUrl
+    }, 520)
   }
+
   highResolutionImage.src = highResolutionUrl
+  void promoteHighResolutionArtwork()
 
   onCleanup(() => {
     cancelled = true
+    window.clearTimeout(highResolutionPromotionTimer)
   })
 }, { immediate: true })
 
@@ -640,7 +651,16 @@ onBeforeUnmount(() => {
   mix-blend-mode: normal;
 }
 
+::view-transition-group(root) {
+  z-index: 0;
+}
+
+::view-transition-group(ncx-immersive-player) {
+  z-index: 1;
+}
+
 ::view-transition-group(ncx-now-playing-artwork) {
+  z-index: 2;
   overflow: hidden;
   border-radius: var(--ncx-radius-lg);
   animation-duration: 480ms;

@@ -56,6 +56,14 @@ async function preloadArtwork(artworkUrl: string | undefined): Promise<void> {
   await Promise.race([imageReady, preloadBudget])
 }
 
+/** 在捕获展开终点画面前确保沉浸页封面已经完成解码。 */
+async function waitForImmersiveArtworkDecode(): Promise<void> {
+  /** 新挂载沉浸页中的实际封面图片。 */
+  const artworkImage = document.querySelector<HTMLImageElement>('.immersive-artwork img')
+  if (!artworkImage || typeof artworkImage.decode !== 'function') return
+  await artworkImage.decode().catch(() => undefined)
+}
+
 /**
  * 切换沉浸播放展示状态，并在可用时执行共享元素过渡。
  *
@@ -104,6 +112,7 @@ async function runPresentationTransition(nextOpen: boolean): Promise<void> {
   const transition = startViewTransition(async () => {
     isOpen.value = nextOpen
     await nextTick()
+    if (nextOpen) await waitForImmersiveArtworkDecode()
   })
 
   await transition.finished.catch(() => undefined)
@@ -121,7 +130,7 @@ async function open(
 ): Promise<void> {
   if (isOpen.value) return
   returnFocusElement = trigger ?? document.activeElement as HTMLElement | null
-  await preloadArtwork(artworkUrl)
+  void preloadArtwork(artworkUrl)
   await updatePresentation(true)
 }
 
