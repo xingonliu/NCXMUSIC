@@ -11,6 +11,7 @@ import {
   CommonErrorState,
   CommonSpinner
 } from '../../design-system/components'
+import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
 import { mutateMusic } from '../music/music-actions'
 import { useAppPreferences } from '../settings/app-preferences'
@@ -31,9 +32,6 @@ const loading = ref<boolean>(true)
 
 /** 页面错误文案。 */
 const errorMessage = ref<string>('')
-
-/** 页面操作提示。 */
-const notice = ref<string>('')
 
 /** 退出登录确认框状态。 */
 const logoutDialogVisible = ref<boolean>(false)
@@ -86,13 +84,17 @@ async function login(): Promise<void> {
 /** 执行每日签到。 */
 async function signin(): Promise<void> {
   const response = await mutateMusic({ operation: 'dailySignin' })
-  notice.value = response.ok ? '签到完成。' : response.error.message
+  if (response.ok) {
+    showToast('签到完成。', 'success')
+  } else {
+    showToast(response.error.message, 'danger')
+  }
 }
 
 /** 清理可重建的 Renderer 缓存。 */
 function clearCache(): void {
   appPreferences.clearRendererCache()
-  notice.value = '可重建缓存已清理。'
+  showToast('可重建缓存已清理。', 'success')
 }
 
 /** 退出当前网易云账户。 */
@@ -100,7 +102,7 @@ async function confirmLogout(): Promise<void> {
   logoutDialogVisible.value = false
   await window.ncx.account.logout()
   user.value = null
-  notice.value = '已退出当前账户，本地账户空间仍保留。'
+  showToast('已退出当前账户，本地账户空间仍保留。', 'info')
 }
 
 // ========= 生命周期 =========
@@ -149,8 +151,6 @@ onMounted(async () => {
           签到
         </CommonButton>
       </header>
-
-      <p v-if="notice" class="profile-notice" role="status">{{ notice }}</p>
 
       <dl class="profile-facts">
         <div><dt>关注</dt><dd>{{ user?.follows ?? 0 }}</dd></div>
@@ -236,7 +236,6 @@ onMounted(async () => {
 .profile-hero p,
 .profile-hero h1,
 .profile-hero span,
-.profile-notice,
 .profile-section h2,
 .profile-section p {
   margin: 0;
@@ -254,14 +253,8 @@ onMounted(async () => {
 }
 
 .profile-hero span,
-.profile-notice,
 .profile-section p {
   color: var(--ncx-color-text-secondary);
-}
-
-.profile-notice {
-  margin-top: var(--ncx-space-4);
-  font-size: 13px;
 }
 
 .profile-facts {

@@ -6,7 +6,6 @@
 
 .settings-heading h1,
 .settings-eyebrow,
-.settings-notice,
 .settings-row h2,
 .settings-row p {
   margin: 0;
@@ -28,12 +27,6 @@
 .settings-tabs {
   width: min(480px, 100%);
   margin-top: var(--ncx-space-8);
-}
-
-.settings-notice {
-  margin-top: var(--ncx-space-4);
-  color: var(--ncx-color-text-secondary);
-  font-size: 13px;
 }
 
 .settings-list {

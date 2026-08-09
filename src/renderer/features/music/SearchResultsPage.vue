@@ -14,9 +14,7 @@ import {
   CommonButton,
   CommonEmptyState,
   CommonErrorState,
-  CommonSpinner,
-  CommonTabs,
-  type CommonOption
+  CommonSpinner
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import Cover from './components/Cover.vue'

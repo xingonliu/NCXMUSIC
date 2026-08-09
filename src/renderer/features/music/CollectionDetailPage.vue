@@ -49,9 +49,6 @@ const errorMessage = ref<string>('')
 /** 当前集合实体。 */
 const collection = ref<PlayableCollection | null>(null)
 
-/** 页面操作提示。 */
-const notice = ref<string>('')
-
 /** 最近一次请求 ID。 */
 let latestRequestId = ''
 

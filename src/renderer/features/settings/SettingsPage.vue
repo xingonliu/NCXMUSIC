@@ -23,6 +23,7 @@ import {
   CommonTabs,
   type CommonOption
 } from '../../design-system/components'
+import { showToast } from '../../design-system/use-toast'
 import { zhCN } from '../../locales/zh-CN'
 import { useAccountSessionStore } from '../account/account-session-store'
 import { usePlayer } from '../music/use-player'
@@ -59,9 +60,6 @@ const busyAction = ref<AccountAction | null>(null)
 
 /** 清理缓存确认框显示状态。 */
 const clearCacheDialogVisible = ref<boolean>(false)
-
-/** 设置操作提示。 */
-const notice = ref<string>('')
 
 /** 设置标签选项。 */
 const tabOptions: CommonOption[] = [
@@ -157,7 +155,7 @@ function setCloseBehavior(value: string | number): void {
 function clearCache(): void {
   clearCacheDialogVisible.value = false
   appPreferences.clearRendererCache()
-  notice.value = '可重建缓存已清理。'
+  showToast('可重建缓存已清理。', 'success')
 }
 
 /** 切换设置标签。 */
@@ -188,8 +186,6 @@ onMounted(async () => {
       variant="segmented"
       @update:model-value="setActiveTab"
     />
-
-    <p v-if="notice" class="settings-notice" role="status">{{ notice }}</p>
 
     <div v-if="activeTab === 'account'" class="settings-list">
       <section class="settings-row settings-row--profile">

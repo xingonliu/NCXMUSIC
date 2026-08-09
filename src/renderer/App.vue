@@ -4,6 +4,8 @@ import { useRoute } from 'vue-router'
 
 import AppShell from './design-system/patterns/AppShell.vue'
 import './design-system/patterns/app-shell.css'
+import { CommonToast } from './design-system/components'
+import { activeToast, dismissToast } from './design-system/use-toast'
 import AudioHost from './features/music/components/AudioHost.vue'
 import PlayerBar from './features/music/components/PlayerBar.vue'
 
@@ -25,4 +27,14 @@ const showPlayerBar = computed<boolean>(() => route.meta.playerBar === 'show')
   -->
   <AudioHost />
   <PlayerBar v-if="showPlayerBar" />
+
+  <!-- 全局轻提示 Toast -->
+  <CommonToast
+    :visible="!!activeToast"
+    :type="activeToast?.type ?? 'info'"
+    :title="activeToast?.title ?? '提示'"
+    :message="activeToast?.message ?? ''"
+    :duration="0"
+    @close="dismissToast"
+  />
 </template>

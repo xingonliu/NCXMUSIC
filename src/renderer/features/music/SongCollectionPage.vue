@@ -10,6 +10,7 @@ import {
   CommonErrorState,
   CommonSpinner
 } from '../../design-system/components'
+import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
 import VirtualTrackList from './components/VirtualTrackList.vue'
 import { mutateMusic, playSongNext } from './music-actions'
@@ -122,7 +123,12 @@ function enqueueSong(song: StandardSong): void {
 
 /** 收藏歌曲。 */
 async function likeSong(song: StandardSong): Promise<void> {
-  await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
+  const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
+  if (!response.ok) {
+    showToast(response.error.message, 'warning')
+    return
+  }
+  showToast(`已收藏《${song.name}》。`, 'success')
 }
 
 // ========= 生命周期 =========

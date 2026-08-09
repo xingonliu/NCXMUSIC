@@ -9,6 +9,7 @@ import type {
   StandardSong
 } from '../../../shared/schemas/music'
 import { CommonButton } from '../../design-system/components'
+import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
 import EntityCard from './components/EntityCard.vue'
 import MusicSection from './components/MusicSection.vue'
@@ -63,9 +64,6 @@ const dailySection = ref<SectionState<StandardSong[]>>({
   data: [],
   error: ''
 })
-
-/** 账户辅助操作提示。 */
-const actionNotice = ref<string>('')
 
 /** 当前账户是否为登录账户。 */
 const isAuthenticated = computed<boolean>(() => account.snapshot.value?.state === 'authenticated')
@@ -175,13 +173,21 @@ async function playAll(songs: StandardSong[]): Promise<void> {
 /** 收藏当前歌曲。 */
 async function likeSong(song: StandardSong): Promise<void> {
   const result = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
-  actionNotice.value = result.ok ? `已收藏《${song.name}》。` : result.error.message
+  if (!result.ok) {
+    showToast(result.error.message, 'warning')
+    return
+  }
+  showToast(`已收藏《${song.name}》。`, 'success')
 }
 
 /** 执行网易云每日签到。 */
 async function dailySignin(): Promise<void> {
   const result = await mutateMusic({ operation: 'dailySignin' })
-  actionNotice.value = result.ok ? '签到完成。' : result.error.message
+  if (!result.ok) {
+    showToast(result.error.message, 'danger')
+    return
+  }
+  showToast('签到完成。', 'success')
 }
 
 // ========= 生命周期 =========
@@ -210,8 +216,6 @@ onMounted(async () => {
         签到
       </CommonButton>
     </header>
-
-    <p v-if="actionNotice" class="discover-notice" role="status">{{ actionNotice }}</p>
 
     <MusicSection
       section-id="featured-playlists"
@@ -347,12 +351,6 @@ onMounted(async () => {
   color: var(--ncx-color-accent);
   font-size: 12px;
   font-weight: 700;
-}
-
-.discover-notice {
-  margin: calc(var(--ncx-space-8) * -1) 0;
-  color: var(--ncx-color-text-secondary);
-  font-size: 13px;
 }
 
 .discover-card-grid {

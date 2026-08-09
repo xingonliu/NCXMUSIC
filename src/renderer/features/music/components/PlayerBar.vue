@@ -19,7 +19,7 @@ import {
   Volume2,
   VolumeX
 } from '@lucide/vue'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type { PlayMode } from '../../../../domains/player/types'

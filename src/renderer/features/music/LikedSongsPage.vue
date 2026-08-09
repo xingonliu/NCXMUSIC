@@ -9,6 +9,7 @@ import {
   CommonErrorState,
   CommonSpinner
 } from '../../design-system/components'
+import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
 import VirtualTrackList from './components/VirtualTrackList.vue'
 import { mutateMusic, playSongNext } from './music-actions'
@@ -34,9 +35,6 @@ const loading = ref<boolean>(true)
 
 /** 页面错误文案。 */
 const errorMessage = ref<string>('')
-
-/** 页面操作提示。 */
-const notice = ref<string>('')
 
 /** 当前网易云用户 ID。 */
 const userId = computed<string | null>(() => {
@@ -102,11 +100,11 @@ function enqueueSong(song: StandardSong): void {
 async function unlikeSong(song: StandardSong): Promise<void> {
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: false })
   if (!response.ok) {
-    notice.value = response.error.message
+    showToast(response.error.message, 'warning')
     return
   }
   songs.value = songs.value.filter((item) => item.id !== song.id)
-  notice.value = `已从我喜欢移除《${song.name}》。`
+  showToast(`已从我喜欢移除《${song.name}》。`, 'info')
 }
 
 // ========= 生命周期 =========
@@ -138,8 +136,6 @@ onMounted(async () => {
         播放全部
       </CommonButton>
     </header>
-
-    <p v-if="notice" class="liked-notice" role="status">{{ notice }}</p>
 
     <div v-if="loading" class="liked-loading">
       <CommonSpinner label="正在加载我喜欢" />
@@ -215,14 +211,12 @@ onMounted(async () => {
 
 .liked-heading p,
 .liked-heading h1,
-.liked-heading small,
-.liked-notice {
+.liked-heading small {
   margin: 0;
 }
 
 .liked-heading p,
-.liked-heading small,
-.liked-notice {
+.liked-heading small {
   color: var(--ncx-color-text-secondary);
   font-size: 12px;
 }
@@ -237,9 +231,5 @@ onMounted(async () => {
   justify-content: center;
   gap: var(--ncx-space-2);
   color: var(--ncx-color-text-secondary);
-}
-
-.liked-notice {
-  margin-bottom: var(--ncx-space-3);
 }
 </style>

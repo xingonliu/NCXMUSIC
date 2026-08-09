@@ -13,6 +13,7 @@ import {
   CommonInput,
   type CommonMenuItem
 } from '../../../design-system/components'
+import { showToast } from '../../../design-system/use-toast'
 import { useAccountSessionStore } from '../../account/account-session-store'
 import { mutateMusic } from '../music-actions'
 
@@ -41,9 +42,6 @@ const renameName = ref<string>('')
 
 /** 待删除歌单。 */
 const deleteTarget = ref<StandardPlaylist | null>(null)
-
-/** 导航操作错误提示。 */
-const errorMessage = ref<string>('')
 
 /** 当前网易云用户 ID。 */
 const userId = computed<string | null>(() => {
@@ -80,16 +78,15 @@ const collectedMenuItems: CommonMenuItem[] = [
 /** 读取当前账户歌单资产。 */
 async function loadPlaylists(): Promise<void> {
   playlists.value = []
-  errorMessage.value = ''
   if (!userId.value) return
   const response = await window.ncx.runtime.getUserPlaylists({ userId: userId.value, limit: 100 })
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    showToast(response.error.message, 'warning')
     return
   }
   const result: MusicReadResult = response.data
   if (result.kind !== 'playlistCollection' || result.collection !== 'user') {
-    errorMessage.value = '歌单导航响应类型不匹配。'
+    showToast('歌单导航响应类型不匹配。', 'warning')
     return
   }
   playlists.value = result.playlists
@@ -101,11 +98,12 @@ async function createPlaylist(): Promise<void> {
   if (!name) return
   const response = await mutateMusic({ operation: 'createPlaylist', name, privacy: 'public' })
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    showToast(response.error.message, 'warning')
     return
   }
   createDialogVisible.value = false
   createName.value = ''
+  showToast('歌单创建成功。', 'success')
   await loadPlaylists()
 }
 
@@ -122,10 +120,11 @@ async function renamePlaylist(): Promise<void> {
   if (!target || !name) return
   const response = await mutateMusic({ operation: 'renamePlaylist', playlistId: target.id, name })
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    showToast(response.error.message, 'warning')
     return
   }
   renameTarget.value = null
+  showToast('歌单已重命名。', 'success')
   await loadPlaylists()
 }
 
@@ -136,9 +135,10 @@ async function deletePlaylist(): Promise<void> {
   deleteTarget.value = null
   const response = await mutateMusic({ operation: 'deletePlaylist', playlistId: target.id })
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    showToast(response.error.message, 'warning')
     return
   }
+  showToast('歌单已删除。', 'info')
   await loadPlaylists()
 }
 
@@ -150,10 +150,11 @@ async function unsubscribePlaylist(playlist: StandardPlaylist): Promise<void> {
     subscribed: false
   })
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    showToast(response.error.message, 'warning')
     return
   }
   playlists.value = playlists.value.filter((item) => item.id !== playlist.id)
+  showToast('已取消收藏歌单。', 'info')
 }
 
 /** 处理歌单入口右键动作。 */
@@ -245,8 +246,6 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
         </CommonContextMenu>
       </template>
     </section>
-
-    <p v-if="errorMessage" class="ncx-playlist-nav-error" role="status">{{ errorMessage }}</p>
 
     <CommonDialog
       :visible="createDialogVisible"
