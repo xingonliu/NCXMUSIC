@@ -328,15 +328,15 @@ onBeforeUnmount(() => {
 }
 
 .lyrics-panel--immersive .lyrics-lines {
-  gap: clamp(28px, 3.5vh, 40px);
+  gap: clamp(32px, 4vh, 46px);
   min-height: 100%;
   padding: 42% 16px 42% 8px;
 }
 
 .lyrics-panel--immersive .lyrics-line {
   color: white;
-  font-size: clamp(24px, 2vw, 30px);
-  font-weight: 650;
+  font-size: clamp(28px, 2.3vw, 34px);
+  font-weight: 700;
   opacity: 0.32;
   filter: blur(1.5px);
   line-height: 1.32;
@@ -369,8 +369,8 @@ onBeforeUnmount(() => {
   display: block;
   margin-top: 6px;
   color: inherit;
-  font-size: clamp(16px, 1.2vw, 19px);
-  font-weight: 500;
+  font-size: clamp(18px, 1.4vw, 22px);
+  font-weight: 550;
   opacity: 0.6;
   transition:
     opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
@@ -379,8 +379,8 @@ onBeforeUnmount(() => {
 
 .lyrics-panel--immersive .lyrics-line--active {
   color: #ffffff;
-  font-size: clamp(32px, 2.5vw, 40px);
-  font-weight: 750;
+  font-size: clamp(38px, 3.2vw, 48px);
+  font-weight: 800;
   letter-spacing: -0.02em;
   opacity: 1;
   filter: blur(0px);
@@ -398,14 +398,14 @@ onBeforeUnmount(() => {
 
 .lyrics-panel--immersive .lyrics-line--active small {
   color: inherit;
-  font-size: clamp(18px, 1.4vw, 22px);
-  font-weight: 500;
+  font-size: clamp(20px, 1.6vw, 25px);
+  font-weight: 600;
   opacity: 0.88;
 }
 
 .lyrics-panel--immersive .lyrics-line--near {
-  font-size: clamp(24px, 2vw, 30px);
-  font-weight: 650;
+  font-size: clamp(30px, 2.5vw, 36px);
+  font-weight: 750;
   opacity: 0.52;
   filter: blur(1px);
   transform: scale(0.98);
@@ -413,8 +413,8 @@ onBeforeUnmount(() => {
 }
 
 .lyrics-panel--immersive .lyrics-line--medium {
-  font-size: clamp(22px, 1.8vw, 27px);
-  font-weight: 600;
+  font-size: clamp(26px, 2.1vw, 32px);
+  font-weight: 700;
   opacity: 0.32;
   filter: blur(1.8px);
   transform: scale(0.95);
@@ -422,8 +422,8 @@ onBeforeUnmount(() => {
 }
 
 .lyrics-panel--immersive .lyrics-line--far {
-  font-size: clamp(20px, 1.6vw, 25px);
-  font-weight: 600;
+  font-size: clamp(24px, 1.8vw, 28px);
+  font-weight: 650;
   opacity: 0.16;
   filter: blur(2.5px);
   transform: scale(0.92);
@@ -432,11 +432,11 @@ onBeforeUnmount(() => {
 
 @media (height < 720px) {
   .lyrics-panel--immersive .lyrics-lines {
-    gap: 24px;
+    gap: 28px;
   }
 
   .lyrics-panel--immersive .lyrics-line--active {
-    font-size: 28px;
+    font-size: 34px;
   }
 }
 
