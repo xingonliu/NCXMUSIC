@@ -4,6 +4,8 @@
 
 /** Migration runner 依赖的最小 SQLite 能力接口。 */
 export interface SQLiteMigrationDatabase {
+  /** 执行当前连接上的结构化 SQL；内存测试夹具可省略。 */
+  exec?(sql: string): void
   /** 读取 PRAGMA user_version 或等价 schema version。 */
   getUserVersion(): Promise<number>
   /** 写入 PRAGMA user_version 或等价 schema version。 */

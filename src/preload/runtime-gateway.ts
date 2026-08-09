@@ -10,6 +10,14 @@ import {
   type ResolvedMediaSource
 } from '../shared/schemas/music'
 import {
+  PersistedPlaybackSnapshotSchema,
+  PlaybackSnapshotLoadPayloadSchema,
+  PlaybackSnapshotLoadResultSchema,
+  PlaybackSnapshotSaveResultSchema,
+  type PersistedPlaybackSnapshot,
+  type PlaybackSnapshotLoadPayload
+} from '../shared/schemas/playback-persistence'
+import {
   HelloEnvelopeSchema,
   PingPayloadSchema,
   PingResultSchema,
@@ -72,7 +80,14 @@ export class RuntimeGateway {
         payload: {
           role: 'preload',
           appVersion: metadata.appVersion,
-          capabilities: ['system.ping', 'system.snapshot', 'music.read', 'music.resolve-url']
+          capabilities: [
+            'system.ping',
+            'system.snapshot',
+            'music.read',
+            'music.resolve-url',
+            'playback.snapshot.load',
+            'playback.snapshot.save'
+          ]
         }
       })
     )
@@ -189,6 +204,48 @@ export class RuntimeGateway {
     return parsed.success
       ? { ok: true, data: parsed.data }
       : protocolFailure('PROTOCOL_INVALID_MESSAGE', '音乐数据响应不符合契约。')
+  }
+
+  /** 从 Utility 当前账户 SQLite 读取播放快照。 */
+  async loadPlaybackSnapshot(
+    input: PlaybackSnapshotLoadPayload
+  ): Promise<RuntimeResult<PersistedPlaybackSnapshot | null>> {
+    const payload = PlaybackSnapshotLoadPayloadSchema.safeParse(input)
+    if (!payload.success) {
+      return protocolFailure('PROTOCOL_INVALID_MESSAGE', '播放快照读取参数不合法。')
+    }
+    const result = await this.request(
+      'playback.snapshot.load',
+      payload.data,
+      crypto.randomUUID(),
+      contractRegistry['playback.snapshot.load'].defaultTimeoutMs
+    )
+    if (!result.ok) return result
+    const parsed = PlaybackSnapshotLoadResultSchema.safeParse(result.data)
+    return parsed.success
+      ? { ok: true, data: parsed.data.snapshot }
+      : protocolFailure('PROTOCOL_INVALID_MESSAGE', '播放快照读取响应不符合契约。')
+  }
+
+  /** 通过 Utility 单写者保存当前账户播放快照。 */
+  async savePlaybackSnapshot(
+    snapshot: PersistedPlaybackSnapshot
+  ): Promise<RuntimeResult<{ savedAt: number }>> {
+    const parsedSnapshot = PersistedPlaybackSnapshotSchema.safeParse(snapshot)
+    if (!parsedSnapshot.success) {
+      return protocolFailure('PROTOCOL_INVALID_MESSAGE', '播放快照保存参数不合法。')
+    }
+    const result = await this.request(
+      'playback.snapshot.save',
+      { snapshot: parsedSnapshot.data },
+      crypto.randomUUID(),
+      contractRegistry['playback.snapshot.save'].defaultTimeoutMs
+    )
+    if (!result.ok) return result
+    const parsed = PlaybackSnapshotSaveResultSchema.safeParse(result.data)
+    return parsed.success
+      ? { ok: true, data: parsed.data }
+      : protocolFailure('PROTOCOL_INVALID_MESSAGE', '播放快照保存响应不符合契约。')
   }
 
   cancel(requestId: string): boolean {

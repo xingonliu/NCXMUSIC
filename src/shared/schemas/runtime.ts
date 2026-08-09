@@ -7,6 +7,12 @@ import {
   ResolvedMediaSourceSchema
 } from './music'
 import { ExecuteShellInputSchema, ExecuteShellResultSchema } from './shell'
+import {
+  PlaybackSnapshotLoadPayloadSchema,
+  PlaybackSnapshotLoadResultSchema,
+  PlaybackSnapshotSavePayloadSchema,
+  PlaybackSnapshotSaveResultSchema
+} from './playback-persistence'
 
 export const PROTOCOL_VERSION = 1 as const
 
@@ -16,6 +22,7 @@ export const ProtocolErrorCodeSchema = z.enum([
   'CONNECTION_REPLACED',
   'REQUEST_TIMEOUT',
   'REQUEST_CANCELLED',
+  'UPSTREAM_ERROR',
   'UTILITY_UNAVAILABLE',
   'CAPABILITY_UNAVAILABLE'
 ])
@@ -44,7 +51,15 @@ export const HelloPayloadSchema = z.strictObject({
   role: z.enum(['preload', 'utility']),
   appVersion: z.string().min(1).max(64),
   capabilities: z
-    .array(z.enum(['system.ping', 'system.snapshot', 'music.read', 'music.resolve-url', 'shell.execute']))
+    .array(z.enum([
+      'system.ping',
+      'system.snapshot',
+      'music.read',
+      'music.resolve-url',
+      'playback.snapshot.load',
+      'playback.snapshot.save',
+      'shell.execute'
+    ]))
     .max(8)
 })
 
@@ -112,6 +127,20 @@ export const ResolveTrackUrlRequestEnvelopeSchema = z.strictObject({
   payload: ResolveTrackUrlPayloadSchema
 })
 
+/** Renderer → Utility：读取当前账户播放快照。 */
+export const PlaybackSnapshotLoadRequestEnvelopeSchema = z.strictObject({
+  ...RequestBaseShape,
+  name: z.literal('playback.snapshot.load'),
+  payload: PlaybackSnapshotLoadPayloadSchema
+})
+
+/** Renderer → Utility：保存当前账户播放快照。 */
+export const PlaybackSnapshotSaveRequestEnvelopeSchema = z.strictObject({
+  ...RequestBaseShape,
+  name: z.literal('playback.snapshot.save'),
+  payload: PlaybackSnapshotSavePayloadSchema
+})
+
 /** Renderer/Agent → Utility：执行经过策略网关判定的 Shell 命令 */
 export const ExecuteShellRequestEnvelopeSchema = z.strictObject({
   ...RequestBaseShape,
@@ -122,7 +151,15 @@ export const ExecuteShellRequestEnvelopeSchema = z.strictObject({
 export const CancelEnvelopeSchema = z.strictObject({
   ...MessageBaseShape,
   kind: z.literal('cancel'),
-  name: z.enum(['system.ping', 'system.snapshot', 'music.read', 'music.resolve-url', 'shell.execute']),
+  name: z.enum([
+    'system.ping',
+    'system.snapshot',
+    'music.read',
+    'music.resolve-url',
+    'playback.snapshot.load',
+    'playback.snapshot.save',
+    'shell.execute'
+  ]),
   requestId: z.uuid(),
   reason: z.enum(['user', 'timeout', 'navigation', 'shutdown'])
 })
@@ -140,7 +177,15 @@ const FailureResultSchema = z.strictObject({
 export const ResponseEnvelopeSchema = z.strictObject({
   ...MessageBaseShape,
   kind: z.literal('response'),
-  name: z.enum(['system.ping', 'system.snapshot', 'music.read', 'music.resolve-url', 'shell.execute']),
+  name: z.enum([
+    'system.ping',
+    'system.snapshot',
+    'music.read',
+    'music.resolve-url',
+    'playback.snapshot.load',
+    'playback.snapshot.save',
+    'shell.execute'
+  ]),
   requestId: z.uuid(),
   result: z.discriminatedUnion('ok', [SuccessResultSchema, FailureResultSchema])
 })
@@ -151,6 +196,8 @@ export const RuntimeInboundEnvelopeSchema = z.union([
   SnapshotRequestEnvelopeSchema,
   MusicReadRequestEnvelopeSchema,
   ResolveTrackUrlRequestEnvelopeSchema,
+  PlaybackSnapshotLoadRequestEnvelopeSchema,
+  PlaybackSnapshotSaveRequestEnvelopeSchema,
   ExecuteShellRequestEnvelopeSchema,
   CancelEnvelopeSchema
 ])
@@ -164,6 +211,8 @@ export type PingRequestEnvelope = z.infer<typeof PingRequestEnvelopeSchema>
 export type SnapshotRequestEnvelope = z.infer<typeof SnapshotRequestEnvelopeSchema>
 export type MusicReadRequestEnvelope = z.infer<typeof MusicReadRequestEnvelopeSchema>
 export type ResolveTrackUrlRequestEnvelope = z.infer<typeof ResolveTrackUrlRequestEnvelopeSchema>
+export type PlaybackSnapshotLoadRequestEnvelope = z.infer<typeof PlaybackSnapshotLoadRequestEnvelopeSchema>
+export type PlaybackSnapshotSaveRequestEnvelope = z.infer<typeof PlaybackSnapshotSaveRequestEnvelopeSchema>
 export type ExecuteShellRequestEnvelope = z.infer<typeof ExecuteShellRequestEnvelopeSchema>
 export type CancelEnvelope = z.infer<typeof CancelEnvelopeSchema>
 
@@ -196,6 +245,20 @@ export const contractRegistry = {
     /** URL 解析需要网络请求，超时设长一些 */
     defaultTimeoutMs: 20_000,
     retryable: false
+  },
+  'playback.snapshot.load': {
+    direction: 'renderer-to-utility',
+    payloadSchema: PlaybackSnapshotLoadPayloadSchema,
+    resultSchema: PlaybackSnapshotLoadResultSchema,
+    defaultTimeoutMs: 5_000,
+    retryable: true
+  },
+  'playback.snapshot.save': {
+    direction: 'renderer-to-utility',
+    payloadSchema: PlaybackSnapshotSavePayloadSchema,
+    resultSchema: PlaybackSnapshotSaveResultSchema,
+    defaultTimeoutMs: 5_000,
+    retryable: true
   },
   'shell.execute': {
     direction: 'renderer-to-utility',

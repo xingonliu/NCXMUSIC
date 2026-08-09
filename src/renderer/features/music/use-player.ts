@@ -100,7 +100,17 @@ function installPlaybackPersistence(
   const bridge = readDesktopBridge()
   if (!bridge?.account) return () => {}
 
-  const store = new PlaybackStore()
+  const store = new PlaybackStore({
+    persistence: {
+      load: async (nextAccount) => {
+        const result = await bridge.runtime.loadPlaybackSnapshot(nextAccount)
+        return result.ok ? result.data : null
+      },
+      save: async (persistedSnapshot) => {
+        await bridge.runtime.savePlaybackSnapshot(persistedSnapshot)
+      }
+    }
+  })
   let account: PlaybackStoreAccountContext | undefined
   let hasRestoredInitialSnapshot = false
 
@@ -124,7 +134,7 @@ function installPlaybackPersistence(
 
   /** 根据账户上下文恢复对应播放快照；无快照时清空当前队列。 */
   async function restoreForAccount(nextAccount: PlaybackStoreAccountContext, clearWhenMissing: boolean): Promise<void> {
-    const restored = store.load(nextAccount)
+    const restored = await store.load(nextAccount)
     if (restored) {
       active.coordinator.restorePausedState(restored)
       return

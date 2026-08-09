@@ -1,6 +1,14 @@
+import { copyFileSync, existsSync, mkdirSync } from 'node:fs'
+import { DatabaseSync } from 'node:sqlite'
 import { join, normalize } from 'node:path'
 
 import { AccountIdSchema, type AccountId, type NeteaseUserId } from '../../shared/schemas/account'
+import { ACCOUNT_SQLITE_SCHEMA_VERSION } from '../../shared/schemas/storage'
+import {
+  type SQLiteMigration,
+  runSqliteMigrations,
+  type SQLiteMigrationDatabase
+} from './migration-runner'
 
 // ========= 类型 =========
 
@@ -127,4 +135,196 @@ export function buildActionJournalCleanupSql(
       LIMIT -1 OFFSET ${policy.maxEvents}
     );`
   ]
+}
+
+// ========= SQLite 迁移 =========
+
+/** 首版账户数据库迁移：建立 Action Journal 与播放快照事实表。 */
+export const ACCOUNT_SQLITE_MIGRATIONS: readonly SQLiteMigration[] = [
+  {
+    version: 1,
+    description: '建立账户 Action Journal 与播放快照表',
+    up: (database): void => {
+      database.exec?.(`
+        CREATE TABLE IF NOT EXISTS action_journal (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          occurred_at INTEGER NOT NULL,
+          event_type TEXT NOT NULL,
+          payload_json TEXT NOT NULL
+        );
+        CREATE INDEX IF NOT EXISTS idx_action_journal_occurred_at
+          ON action_journal (occurred_at DESC, id DESC);
+        CREATE TABLE IF NOT EXISTS playback_snapshot (
+          account_id TEXT PRIMARY KEY,
+          account_generation INTEGER NOT NULL,
+          saved_at INTEGER NOT NULL,
+          snapshot_json TEXT NOT NULL
+        );
+      `)
+    }
+  }
+]
+
+// ========= 类型 =========
+
+/** Utility 单写者账户存储的写事务回调。 */
+export type AccountStoreWrite<T> = (database: DatabaseSync, account: AccountSpaceDescriptor) => T | Promise<T>
+
+/** Utility 当前账户 SQLite 单写者。 */
+export interface AccountStoreOptions {
+  /** 应用持久数据根目录。 */
+  dataRoot: string
+  /** 可注入迁移集合，测试可使用最小迁移。 */
+  migrations?: readonly SQLiteMigration[]
+}
+
+// ========= 函数 =========
+
+/** 将 Node SQLite 连接适配为迁移运行器依赖。 */
+function createMigrationDatabase(
+  database: DatabaseSync,
+  backupPath: string,
+  shouldCreateBackup: boolean
+): SQLiteMigrationDatabase {
+  return {
+    exec: (sql: string): void => database.exec(sql),
+    getUserVersion: async (): Promise<number> => {
+      const row = database.prepare('PRAGMA user_version').get() as { user_version?: unknown }
+      return typeof row.user_version === 'number' ? row.user_version : Number(row.user_version ?? 0)
+    },
+    setUserVersion: async (version: number): Promise<void> => {
+      database.exec(`PRAGMA user_version = ${version}`)
+    },
+    runInTransaction: async (work: () => Promise<void>): Promise<void> => {
+      database.exec('BEGIN IMMEDIATE')
+      try {
+        await work()
+        database.exec('COMMIT')
+      } catch (error) {
+        database.exec('ROLLBACK')
+        throw error
+      }
+    },
+    createBackup: async (): Promise<void> => {
+      if (!shouldCreateBackup || existsSync(backupPath)) return
+      const sourcePath = database.prepare('PRAGMA database_list').all()[0] as { file?: unknown } | undefined
+      const sourceFile = typeof sourcePath?.file === 'string' ? sourcePath.file : undefined
+      if (sourceFile && existsSync(sourceFile)) copyFileSync(sourceFile, backupPath)
+    }
+  }
+}
+
+// ========= 类 =========
+
+/** Utility 进程持有的单账户 SQLite 单写者。 */
+export class UtilityAccountStore {
+  /** 应用持久数据根目录。 */
+  private readonly dataRoot: string
+
+  /** 当前使用的迁移集合。 */
+  private readonly migrations: readonly SQLiteMigration[]
+
+  /** 当前账户描述。 */
+  private currentAccount: AccountSpaceDescriptor | undefined
+
+  /** 当前账户数据库连接。 */
+  private database: DatabaseSync | undefined
+
+  /** 当前账户 generation，用于拒绝 Renderer 的迟到写入。 */
+  private accountGeneration = 0
+
+  /** 串行化所有写操作，确保 Utility 是唯一写者。 */
+  private writeTail: Promise<void> = Promise.resolve()
+
+  /** 串行化账户打开与关闭，避免快速换号时同时持有多个连接。 */
+  private lifecycleTail: Promise<void> = Promise.resolve()
+
+  constructor(options: AccountStoreOptions) {
+    this.dataRoot = normalize(options.dataRoot)
+    this.migrations = options.migrations ?? ACCOUNT_SQLITE_MIGRATIONS
+  }
+
+  /** 打开账户目录、SQLite 连接并执行待应用迁移。 */
+  async open(accountId: AccountId, accountGeneration = 0): Promise<AccountSpaceDescriptor> {
+    const run = this.lifecycleTail.then(() => this.openNow(accountId, accountGeneration))
+    this.lifecycleTail = run.then(() => undefined, () => undefined)
+    return run
+  }
+
+  /** 实际执行账户连接切换；只允许由生命周期队列调用。 */
+  private async openNow(accountId: AccountId, accountGeneration: number): Promise<AccountSpaceDescriptor> {
+    await this.closeNow()
+    const account = resolveAccountSpace(this.dataRoot, { accountId })
+    mkdirSync(account.rootDir, { recursive: true })
+    const databaseExisted = existsSync(account.sqlitePath)
+    const database = new DatabaseSync(account.sqlitePath, {
+      timeout: 5_000,
+      enableForeignKeyConstraints: true
+    })
+    try {
+      database.exec('PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 5000;')
+      const backupPath = `${account.sqlitePath}.bak-v${ACCOUNT_SQLITE_SCHEMA_VERSION}`
+      await runSqliteMigrations(
+        createMigrationDatabase(database, backupPath, databaseExisted),
+        this.migrations,
+        ACCOUNT_SQLITE_SCHEMA_VERSION
+      )
+    } catch (error) {
+      database.close()
+      throw error
+    }
+    this.database = database
+    this.currentAccount = account
+    this.accountGeneration = accountGeneration
+    return account
+  }
+
+  /** 切换账户时先关闭旧连接，再打开目标账户连接。 */
+  async switchAccount(accountId: AccountId, accountGeneration = 0): Promise<AccountSpaceDescriptor> {
+    return this.open(accountId, accountGeneration)
+  }
+
+  /** 在 Utility 单写者队列中执行一个数据库操作。 */
+  write<T>(operation: AccountStoreWrite<T>): Promise<T> {
+    const run = this.writeTail.then(async () => {
+      const database = this.database
+      const account = this.currentAccount
+      if (!database || !account) throw new Error('账户 SQLite 尚未打开。')
+      return operation(database, account)
+    })
+    this.writeTail = run.then(() => undefined, () => undefined)
+    return run
+  }
+
+  /** 返回当前账户描述；未打开时返回 undefined。 */
+  current(): AccountSpaceDescriptor | undefined {
+    return this.currentAccount
+  }
+
+  /** 返回 Utility 当前账户 generation。 */
+  currentGeneration(): number {
+    return this.accountGeneration
+  }
+
+  /** 等待已排队的账户打开或关闭操作完成。 */
+  async settled(): Promise<void> {
+    await this.lifecycleTail
+  }
+
+  /** 等待写入队列并关闭当前账户数据库。 */
+  async close(): Promise<void> {
+    const run = this.lifecycleTail.then(() => this.closeNow())
+    this.lifecycleTail = run.then(() => undefined, () => undefined)
+    return run
+  }
+
+  /** 实际关闭当前连接；只允许由生命周期队列调用。 */
+  private async closeNow(): Promise<void> {
+    await this.writeTail
+    const database = this.database
+    this.database = undefined
+    this.currentAccount = undefined
+    this.accountGeneration = 0
+    database?.close()
+  }
 }

@@ -139,7 +139,7 @@ Phase 0 技术门禁
 - Renderer、日志、SQLite 和 Tool 参数无 Cookie/API Key。
 - 同一实体的用户名、歌曲、歌手、专辑和歌单字段只通过标准实体池读取。
 
-> 执行记录（2026-08-08）：Phase 2 已 `pass`。正式产品桥接复用 T-02 已验证的隔离网页登录、Cookie Session、凭据租约、退出和换号 generation 路径；新增 Renderer 安全账户 Bridge（快照、登录、退出、切换账号）与设置页“网易云账户 / 存储 / 隐私”基础模块，Renderer 只接收账户引用和状态，不接收 Cookie、数据库路径或 safeStorage 细节。新增 `music.read` Runtime 契约、Utility `MusicService`、Netease 只读 Adapter、标准实体池和类型化 Preload 方法，覆盖 search、song、artist、album、playlist、user 首批只读能力；新增账户空间/缓存路径解析与 Action Journal 30 天 / 10,000 条保留策略工具。验证已通过 `pnpm typecheck`、`pnpm lint`、`pnpm test`、`pnpm test:e2e`、`pnpm build`；真实登录交互 E2E 继续以 T-02 Spike 的人工账号流程作为外部凭据门禁。
+> 执行记录（2026-08-09 纠正）：Phase 2 为 `provisional-pass`。正式产品桥接、隔离网页登录、Cookie Session、凭据租约、换号 generation、`music.read` Runtime、Utility `MusicService`、网易云 Adapter、标准实体池与账户 SQLite 单写者均已落地；`pnpm test:e2e` 现会实际执行账户切换、搜索和恢复的确定性跨层流程。官方登录、Cookie 失效、退出与双真实账号换号仍缺少可重复的 Electron UI 自动化，因此“E2E 全部通过”门禁尚未满足，不能以 T-02 人工 Spike 替代。
 
 ## 7. Phase 3：搜索到播放的首条纵向闭环
 
@@ -178,7 +178,7 @@ Phase 0 技术门禁
 - PlayerBar 隐藏、路由跳转、窗口最小化不会停止 AudioHost。
 - 关闭设置的“最小化/退出”两种路径均正确保存并清理。
 
-> 执行记录（2026-08-09）：Phase 3 已 `pass`。搜索页、搜索结果页、歌单/专辑集合详情、播放详情和沉浸歌词页已接入真实 `music.read` / `music.resolve-url` Runtime 链路；新增 `TrackRow`、`MediaArtwork`、页面内 `PlaybackControls`、`LyricsPanel` 和 Pinia 只读播放读模型，PlayerBar 按路由元数据隐藏且 AudioHost 保持根层常驻。播放域补齐持久化 `PlaybackStore`、账户 generation 校验、暂停态恢复、首次播放重新解析 URL、队列拖动排序、seek 滑块、全局音质偏好和歌词标准实体；队列语义覆盖搜索单曲插播、可见列表播放全部、集合详情从点击歌曲起整体替换队列。验证已通过 `pnpm typecheck`、`pnpm test`、`pnpm lint`、`pnpm test:e2e`、`pnpm build`；真实已登录高码率权益仍依赖外部账号门禁，普通门禁继续以游客/公开播放链路和已归一化契约为准。
+> 执行记录（2026-08-09 纠正）：Phase 3 为 `provisional-pass`。搜索到播放链路、播放控制、歌词、队列和账户隔离恢复已实现；Playwright 现实际覆盖搜索、开始播放、下一首、账户切换和模拟重启恢复，不再允许零测试通过。真实 Electron UI、真实登录账号与高码率权益链路仍需补齐自动化后，才能把本阶段标记为完整 `pass`。
 
 ## 8. Phase 4：完整音乐客户端页面
 

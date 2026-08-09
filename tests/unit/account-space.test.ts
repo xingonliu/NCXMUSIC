@@ -1,4 +1,8 @@
-import { describe, expect, it } from 'vitest'
+import { existsSync, mkdtempSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+
+import { afterEach, describe, expect, it } from 'vitest'
 
 import {
   buildActionJournalCleanupSql,
@@ -6,10 +10,31 @@ import {
   resolveCacheSpace,
   resolveNcxCacheRoot,
   resolveNcxDataRoot,
-  toNeteaseAccountId
+  toNeteaseAccountId,
+  UtilityAccountStore
 } from '../../src/infrastructure/persistence/account-space'
 
+// ========= 变量 =========
+
+/** 测试创建的临时目录，结束后逐个清理。 */
+const temporaryDirectories: string[] = []
+
+// ========= 函数 =========
+
+/** 创建本测试独占的临时持久数据根目录。 */
+function temporaryDataRoot(): string {
+  const root = mkdtempSync(join(tmpdir(), 'ncx-account-space-'))
+  temporaryDirectories.push(root)
+  return root
+}
+
 // ========= 测试区 =========
+
+afterEach(() => {
+  for (const directory of temporaryDirectories.splice(0)) {
+    rmSync(directory, { recursive: true, force: true })
+  }
+})
 
 describe('account storage spaces', () => {
   it('resolves guest and netease account paths without leaking arbitrary names', () => {
@@ -45,5 +70,28 @@ describe('account storage spaces', () => {
     expect(statements).toHaveLength(2)
     expect(statements[0]).toContain('DELETE FROM action_journal')
     expect(statements[1]).toContain('OFFSET 10000')
+  })
+
+  it('creates, migrates and switches the Utility-owned account SQLite connection', async () => {
+    /** Utility 单写者测试实例。 */
+    const store = new UtilityAccountStore({ dataRoot: temporaryDataRoot() })
+    /** 已打开的游客账户。 */
+    const guest = await store.open('guest:local')
+    /** 游客数据库表名。 */
+    const guestTables = await store.write((database) =>
+      database.prepare("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name").all()
+    ) as Array<{ name: string }>
+
+    expect(existsSync(guest.sqlitePath)).toBe(true)
+    expect(guestTables.map((row) => row.name)).toContain('playback_snapshot')
+
+    /** 已切换的网易云账户。 */
+    const netease = await store.switchAccount(toNeteaseAccountId('10001'))
+    expect(netease.sqlitePath).not.toBe(guest.sqlitePath)
+    expect(existsSync(netease.sqlitePath)).toBe(true)
+    expect(store.current()?.accountId).toBe('netease:10001')
+
+    await store.close()
+    expect(store.current()).toBeUndefined()
   })
 })

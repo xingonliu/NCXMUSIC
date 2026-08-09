@@ -30,6 +30,16 @@ interface NeteaseResponse {
   body?: unknown
 }
 
+/** 网易云上游错误的安全元数据。 */
+export interface NeteaseUpstreamErrorMetadata {
+  /** HTTP 状态码。 */
+  httpStatus?: number
+  /** 网易云响应体业务 code。 */
+  upstreamCode?: number
+  /** 是否适合由 UI 提供重试入口。 */
+  retryable: boolean
+}
+
 /** NeteaseCloudMusicApiEnhanced 中 Phase 2 首批只读能力。 */
 export interface NeteaseMusicApi {
   search(params: Record<string, unknown>): Promise<NeteaseResponse>
@@ -71,6 +81,12 @@ const SEARCH_TYPES = {
   playlists: '1000'
 } as const
 
+/** 当前并发执行的三方 console 屏蔽请求数。 */
+let consoleSuppressionDepth = 0
+
+/** 第一层屏蔽进入时保存的 console 方法。 */
+let originalConsoleMethods: Pick<Console, 'debug' | 'error' | 'info' | 'log' | 'warn'> | undefined
+
 // ========= 函数 =========
 
 /** 动态加载锁定版本的 NeteaseCloudMusicApiEnhanced。 */
@@ -90,13 +106,16 @@ async function loadApi(): Promise<NeteaseMusicApi> {
 
 /** 屏蔽三方 API 包的 console 输出，避免原始响应或错误串入日志。 */
 async function withoutThirdPartyConsole<T>(op: () => Promise<T>): Promise<T> {
-  const original = {
-    debug: console.debug,
-    error: console.error,
-    info: console.info,
-    log: console.log,
-    warn: console.warn
+  if (consoleSuppressionDepth === 0) {
+    originalConsoleMethods = {
+      debug: console.debug,
+      error: console.error,
+      info: console.info,
+      log: console.log,
+      warn: console.warn
+    }
   }
+  consoleSuppressionDepth += 1
   const noop = (): void => {}
   console.debug = noop
   console.error = noop
@@ -106,7 +125,36 @@ async function withoutThirdPartyConsole<T>(op: () => Promise<T>): Promise<T> {
   try {
     return await op()
   } finally {
-    Object.assign(console, original)
+    consoleSuppressionDepth -= 1
+    if (consoleSuppressionDepth === 0 && originalConsoleMethods) {
+      Object.assign(console, originalConsoleMethods)
+      originalConsoleMethods = undefined
+    }
+  }
+}
+
+/** 网易云响应失败时抛出的统一上游错误。 */
+export class NeteaseUpstreamError extends Error {
+  /** Runtime 统一识别的错误码。 */
+  readonly code = 'UPSTREAM_ERROR'
+
+  /** HTTP 状态码。 */
+  readonly httpStatus: number | undefined
+
+  /** 网易云响应体业务 code。 */
+  readonly upstreamCode: number | undefined
+
+  /** 是否适合重试。 */
+  readonly retryable: boolean
+
+  constructor(metadata: NeteaseUpstreamErrorMetadata) {
+    const statusText = metadata.httpStatus === undefined ? 'unknown' : String(metadata.httpStatus)
+    const codeText = metadata.upstreamCode === undefined ? 'unknown' : String(metadata.upstreamCode)
+    super(`网易云上游请求失败（HTTP ${statusText}, code ${codeText}）。`)
+    this.name = 'NeteaseUpstreamError'
+    this.httpStatus = metadata.httpStatus
+    this.upstreamCode = metadata.upstreamCode
+    this.retryable = metadata.retryable
   }
 }
 
@@ -132,6 +180,13 @@ function numberValue(value: unknown): number | undefined {
   return typeof value === 'number' && Number.isFinite(value) ? value : undefined
 }
 
+/** 将响应 code 的数字或数字字符串形式归一为 number。 */
+function responseCodeValue(value: unknown): number | undefined {
+  if (typeof value === 'number' && Number.isInteger(value)) return value
+  if (typeof value === 'string' && /^-?\d+$/u.test(value)) return Number(value)
+  return undefined
+}
+
 /** 将数字或数字字符串归一为 ID 字符串。 */
 function idValue(value: unknown): string | undefined {
   if (typeof value === 'number' && Number.isInteger(value) && value >= 0) return String(value)
@@ -148,7 +203,20 @@ function urlValue(value: unknown): string | undefined {
 
 /** 读取响应体对象。 */
 function bodyRecord(response: NeteaseResponse): UnknownRecord {
-  return record(response.body) ?? {}
+  const body = record(response.body) ?? {}
+  const httpStatus = response.status
+  const upstreamCode = responseCodeValue(body['code'])
+  const httpFailed =
+    httpStatus !== undefined && (!Number.isInteger(httpStatus) || httpStatus < 200 || httpStatus >= 300)
+  const upstreamFailed = upstreamCode !== undefined && upstreamCode !== 200
+  if (httpFailed || upstreamFailed) {
+    throw new NeteaseUpstreamError({
+      ...(httpStatus !== undefined ? { httpStatus } : {}),
+      ...(upstreamCode !== undefined ? { upstreamCode } : {}),
+      retryable: httpStatus === 429 || (httpStatus !== undefined && httpStatus >= 500)
+    })
+  }
+  return body
 }
 
 /** 构造实体来源描述。 */

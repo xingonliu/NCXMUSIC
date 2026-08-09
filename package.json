@@ -17,7 +17,7 @@
     "typecheck": "tsc -p tsconfig.node.json --noEmit && vue-tsc -p tsconfig.web.json --noEmit",
     "lint": "eslint . && stylelint \"src/renderer/**/*.css\" && node scripts/check-boundaries.mjs",
     "test": "vitest run",
-    "test:e2e": "playwright test --pass-with-no-tests",
+    "test:e2e": "playwright test",
     "build": "electron-vite build && node scripts/verify-build.mjs",
     "package": "pnpm build && electron-builder --publish never",
     "package:dir": "pnpm build && electron-builder --dir --publish never",

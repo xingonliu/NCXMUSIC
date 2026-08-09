@@ -15,6 +15,9 @@ export interface EntityPoolSnapshot {
   entities: StandardMusicEntity[]
 }
 
+/** 实体字段递归合并时使用的普通对象。 */
+type EntityRecord = Record<string, unknown>
+
 // ========= 函数 =========
 
 /** 构造实体池稳定键。 */
@@ -34,12 +37,67 @@ function mergeSources(
   return [...merged.values()].sort((a, b) => a.api.localeCompare(b.api) || a.observedAt.localeCompare(b.observedAt))
 }
 
+/** 判断未知值是否为可递归合并的普通对象。 */
+function isRecord(value: unknown): value is EntityRecord {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+/** 合并带稳定 id 的对象数组，并保留当前对象中的丰富字段。 */
+function mergeIdentifiedArray(current: unknown[], incoming: unknown[]): unknown[] | undefined {
+  if (!current.every(isRecord) || !incoming.every(isRecord)) return undefined
+  if (![...current, ...incoming].every((item) => typeof item['id'] === 'string')) return undefined
+
+  const merged = new Map<string, EntityRecord>()
+  for (const item of current) merged.set(item['id'] as string, item)
+  for (const item of incoming) {
+    const id = item['id'] as string
+    const existing = merged.get(id)
+    merged.set(id, existing ? mergeRecord(existing, item) : item)
+  }
+  return [...merged.values()]
+}
+
+/** 合并标准字段值；空数组和空对象不能覆盖已有非空数据。 */
+function mergeValue(current: unknown, incoming: unknown): unknown {
+  if (incoming === undefined || incoming === null || incoming === '') return current
+  if (Array.isArray(incoming)) {
+    if (incoming.length === 0) return Array.isArray(current) && current.length > 0 ? current : incoming
+    if (!Array.isArray(current) || current.length === 0) return incoming
+    const identified = mergeIdentifiedArray(current, incoming)
+    if (identified) return identified
+    return [...new Set([...current, ...incoming])]
+  }
+  if (isRecord(incoming)) {
+    if (!isRecord(current)) return incoming
+    return mergeRecord(current, incoming)
+  }
+  return incoming
+}
+
+/** 递归合并两个实体对象。 */
+function mergeRecord(current: EntityRecord, incoming: EntityRecord): EntityRecord {
+  const merged: EntityRecord = { ...current }
+  for (const [key, value] of Object.entries(incoming)) {
+    merged[key] = mergeValue(current[key], value)
+  }
+  return merged
+}
+
 /** 按标准实体字段合并，后到的非空字段补齐已有实体。 */
 function mergeEntity(current: StandardMusicEntity, incoming: StandardMusicEntity): StandardMusicEntity {
   if (current.kind !== incoming.kind || current.id !== incoming.id) return incoming
+  const merged = mergeRecord(
+    current as unknown as EntityRecord,
+    incoming as unknown as EntityRecord
+  )
+  if (current.kind === 'song' && incoming.kind === 'song') {
+    merged['access'] = {
+      badges: [...new Set([...current.access.badges, ...incoming.access.badges])],
+      playableKnown: current.access.playableKnown || incoming.access.playableKnown
+    }
+  }
   return StandardMusicEntitySchema.parse({
-    ...current,
-    ...incoming,
+    ...merged,
     sources: mergeSources(current.sources, incoming.sources),
     updatedAt: incoming.updatedAt >= current.updatedAt ? incoming.updatedAt : current.updatedAt
   })

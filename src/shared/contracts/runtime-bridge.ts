@@ -11,6 +11,10 @@ import type {
   ResolvedMediaSource,
   TrackId
 } from '../schemas/music'
+import type {
+  PersistedPlaybackSnapshot,
+  PlaybackSnapshotLoadPayload
+} from '../schemas/playback-persistence'
 
 // ========= 类型 =========
 
@@ -47,4 +51,12 @@ export interface NcxRuntimeBridge {
   resolveTrackUrl(
     input: ResolveTrackUrlPayload & { requestId?: string }
   ): Promise<RuntimeResult<ResolvedMediaSource>>
+  /** 从 Utility 当前账户 SQLite 读取播放快照。 */
+  loadPlaybackSnapshot(
+    input: PlaybackSnapshotLoadPayload
+  ): Promise<RuntimeResult<PersistedPlaybackSnapshot | null>>
+  /** 通过 Utility 单写者保存当前账户播放快照。 */
+  savePlaybackSnapshot(
+    snapshot: PersistedPlaybackSnapshot
+  ): Promise<RuntimeResult<{ savedAt: number }>>
 }

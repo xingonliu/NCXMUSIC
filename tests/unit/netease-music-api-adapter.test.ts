@@ -97,4 +97,73 @@ describe('NeteaseMusicApiAdapter', () => {
     ])
     expect(JSON.stringify(result)).not.toContain('cookie')
   })
+
+  it('rejects non-success HTTP status instead of returning an empty entity', async () => {
+    /** 返回限流响应的网易云 API。 */
+    const api = apiFixture()
+    api.song_detail = vi.fn(async () => ({ status: 429, body: { code: 429 } }))
+    /** 网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+
+    await expect(adapter.read({ operation: 'getSong', id: '33894312' }, '', undefined))
+      .rejects.toMatchObject({
+        code: 'UPSTREAM_ERROR',
+        httpStatus: 429,
+        upstreamCode: 429,
+        retryable: true
+      })
+  })
+
+  it('rejects non-success body code even when HTTP succeeds', async () => {
+    /** 返回登录失效业务码的网易云 API。 */
+    const api = apiFixture()
+    api.lyric_new = vi.fn(async () => ({ status: 200, body: { code: 301 } }))
+    /** 网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+
+    await expect(adapter.read({ operation: 'getLyrics', id: '33894312' }, '', undefined))
+      .rejects.toMatchObject({
+        code: 'UPSTREAM_ERROR',
+        httpStatus: 200,
+        upstreamCode: 301,
+        retryable: false
+      })
+  })
+
+  it('restores console only after all concurrent third-party calls complete', async () => {
+    /** 测试进入前的 console.log。 */
+    const originalLog = console.log
+    /** 第一个并发调用释放函数。 */
+    let releaseFirst = (): void => {}
+    /** 第一个并发调用。 */
+    const first = new Promise<{ status: number; body: unknown }>((resolve) => {
+      releaseFirst = () => resolve(response({ songs: [] }))
+    })
+    /** 第二个并发调用释放函数。 */
+    let releaseSecond = (): void => {}
+    /** 第二个并发调用。 */
+    const second = new Promise<{ status: number; body: unknown }>((resolve) => {
+      releaseSecond = () => resolve(response({ songs: [] }))
+    })
+    /** 并发读取歌曲的网易云 API。 */
+    const api = apiFixture()
+    api.song_detail = vi
+      .fn<() => Promise<{ status: number; body: unknown }>>()
+      .mockReturnValueOnce(first)
+      .mockReturnValueOnce(second)
+    /** 网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+    /** 第一个读取任务。 */
+    const firstRead = adapter.read({ operation: 'getSong', id: '1' }, '', undefined)
+    /** 第二个读取任务。 */
+    const secondRead = adapter.read({ operation: 'getSong', id: '2' }, '', undefined)
+
+    releaseFirst()
+    await firstRead
+    expect(console.log).not.toBe(originalLog)
+
+    releaseSecond()
+    await secondRead
+    expect(console.log).toBe(originalLog)
+  })
 })

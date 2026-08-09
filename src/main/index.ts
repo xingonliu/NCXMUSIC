@@ -10,6 +10,7 @@ import {
   utilityProcess
 } from 'electron'
 
+import { resolveNcxDataRoot } from '../infrastructure/persistence/account-space'
 import { ACCOUNT_CHANNELS } from '../shared/contracts/account-bridge'
 import { CONTROL_CHANNELS, type RuntimeStatus } from '../shared/contracts/control-plane'
 import {
@@ -34,6 +35,8 @@ let supervisor: UtilitySupervisor | undefined
 let broker: ConnectionBroker | undefined
 let authController: AuthSessionController | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
+/** 最近成功发送给当前 Utility 的账户存储上下文键。 */
+let lastAccountStoreCommandKey: string | undefined
 
 /** 向主窗口广播最新窗口状态，供自绘窗口控件同步真实状态。 */
 function publishWindowSnapshot(window = mainWindow): WindowSnapshot | undefined {
@@ -70,6 +73,18 @@ function currentAccountSnapshot(): AccountSessionSnapshot {
 /** 向主窗口广播最新账户安全快照。 */
 function publishAccountSnapshot(): AccountSessionSnapshot {
   const snapshot = currentAccountSnapshot()
+  const accountStoreCommandKey =
+    `${snapshot.activeAccount.accountId}:${snapshot.accountGeneration}`
+  if (
+    accountStoreCommandKey !== lastAccountStoreCommandKey &&
+    supervisor?.postControl({
+      kind: 'account-store.open',
+      accountId: snapshot.activeAccount.accountId,
+      accountGeneration: snapshot.accountGeneration
+    })
+  ) {
+    lastAccountStoreCommandKey = accountStoreCommandKey
+  }
   const window = mainWindow
   if (window && !window.isDestroyed()) {
     window.webContents.send(ACCOUNT_CHANNELS.status, snapshot)
@@ -126,6 +141,10 @@ function createSupervisor(): UtilitySupervisor {
       const args = shouldCrashFirstUtilityForSmoke ? ['--ncx-smoke-crash-before-ready'] : []
       shouldCrashFirstUtilityForSmoke = false
       return utilityProcess.fork(utilityEntryPath(), args, {
+        env: {
+          ...process.env,
+          NCXMUSIC_DATA_ROOT: resolveNcxDataRoot(app.getPath('userData'))
+        },
         serviceName: 'NcxMusic Runtime',
         stdio: 'pipe'
       })
@@ -466,6 +485,7 @@ if (!hasSingleInstanceLock) {
       authController.onLoginWindowClosed(() => publishAccountSnapshot())
       registerControlPlane()
       supervisor.onStatus((status) => {
+        if (status.state !== 'ready') lastAccountStoreCommandKey = undefined
         broadcastStatus(status)
         void (authController?.handleUtilityStatus(status) ?? Promise.resolve()).finally(() =>
           publishAccountSnapshot()

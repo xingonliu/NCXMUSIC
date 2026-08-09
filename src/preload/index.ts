@@ -134,6 +134,8 @@ const runtimeBridge: NcxRuntimeBridge = {
       ...(input.requestId ? { requestId: input.requestId } : {})
     }),
   resolveTrackUrl: (input) => gateway.resolveTrackUrl(input),
+  loadPlaybackSnapshot: (input) => gateway.loadPlaybackSnapshot(input),
+  savePlaybackSnapshot: (snapshot) => gateway.savePlaybackSnapshot(snapshot),
   retryUtility: async () => {
     const result = await ipcRenderer.invoke(CONTROL_CHANNELS.retry)
     return RuntimeStatusSchema.parse(result)

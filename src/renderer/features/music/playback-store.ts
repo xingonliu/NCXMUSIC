@@ -1,20 +1,24 @@
-import { z } from 'zod'
-
 import type { PlayerSnapshot, RestoredPlayerState } from '../../../domains/player/playback-coordinator'
-import { MusicQualityPreferenceSchema } from '../../../shared/schemas/music'
+import type { AccountId } from '../../../shared/schemas/account'
+import {
+  PersistedPlaybackSnapshotSchema,
+  type PersistedPlaybackSnapshot
+} from '../../../shared/schemas/playback-persistence'
 
 // ========= 类型 =========
 
 /** 播放快照归属的账户上下文。 */
 export interface PlaybackStoreAccountContext {
   /** 当前公开账户引用，不包含 Cookie 或本地路径。 */
-  accountId: string
+  accountId: AccountId
   /** 当前账户 generation，用于换号后丢弃旧快照。 */
   accountGeneration: number
 }
 
 /** 播放快照存储可配置依赖。 */
 export interface PlaybackStoreOptions {
+  /** Utility SQLite 持久化端口；生产环境必须注入。 */
+  persistence?: PlaybackSnapshotPersistence
   /** 浏览器存储对象，测试可注入内存实现。 */
   storage?: Storage
   /** 当前时间函数，测试可注入确定性时钟。 */
@@ -23,74 +27,27 @@ export interface PlaybackStoreOptions {
   debounceMs?: number
 }
 
+/** Renderer 使用的账户播放快照持久化端口。 */
+export interface PlaybackSnapshotPersistence {
+  /** 从 Utility SQLite 读取指定账户快照。 */
+  load(account: PlaybackStoreAccountContext): Promise<PersistedPlaybackSnapshot | null>
+  /** 通过 Utility 单写者保存指定账户快照。 */
+  save(snapshot: PersistedPlaybackSnapshot): Promise<void>
+}
+
 // ========= 变量 =========
 
-/** 播放快照存储键。 */
-const PLAYBACK_STORE_KEY = 'ncxmusic.playback.snapshot.v1'
+/** 旧版全账户共用的播放快照键，仅用于一次性兼容迁移。 */
+const LEGACY_PLAYBACK_STORE_KEY = 'ncxmusic.playback.snapshot.v1'
+
+/** 按账户隔离的播放快照键前缀。 */
+const PLAYBACK_STORE_KEY_PREFIX = 'ncxmusic.playback.account.v1'
 
 /** 语义变化写入防抖。 */
 const DEFAULT_DEBOUNCE_MS = 250
 
 /** 播放进度节流写入窗口。 */
 const PROGRESS_THROTTLE_MS = 5_000
-
-/** 队列来源持久化 Schema。 */
-const PersistedQueueSourceSchema = z.discriminatedUnion('kind', [
-  z.strictObject({ kind: z.literal('search') }),
-  z.strictObject({ kind: z.literal('playlist'), playlistId: z.string().min(1) }),
-  z.strictObject({ kind: z.literal('album'), albumId: z.string().min(1) }),
-  z.strictObject({ kind: z.literal('agent') }),
-  z.strictObject({ kind: z.literal('resume') })
-])
-
-/** 曲目封面持久化 Schema。 */
-const PersistedTrackArtworkSchema = z.strictObject({
-  src: z.string().url(),
-  sizes: z.string().optional(),
-  type: z.string().optional()
-})
-
-/** 曲目摘要持久化 Schema。 */
-const PersistedTrackSummarySchema = z.strictObject({
-  trackId: z.string().regex(/^\d{1,20}$/u),
-  name: z.string().min(1).max(200),
-  artists: z.array(z.string().min(1).max(160)).default([]),
-  album: z.string().max(200),
-  artwork: z.array(PersistedTrackArtworkSchema).optional(),
-  durationMs: z.number().int().nonnegative().nullable()
-})
-
-/** 队列项持久化 Schema。 */
-const PersistedQueueItemSchema = z.strictObject({
-  queueItemId: z.string().min(1),
-  track: PersistedTrackSummarySchema,
-  source: PersistedQueueSourceSchema,
-  addedAt: z.number().int().nonnegative()
-})
-
-/** 队列快照持久化 Schema。 */
-const PersistedQueueSnapshotSchema = z.strictObject({
-  items: z.array(PersistedQueueItemSchema).default([]),
-  currentItemId: z.string().min(1).nullable(),
-  mode: z.enum(['loop', 'loop-one', 'shuffle']),
-  revision: z.number().int().nonnegative()
-})
-
-/** 播放器持久化快照 Schema。 */
-const PersistedPlaybackSnapshotSchema = z.strictObject({
-  schemaVersion: z.literal(1),
-  accountId: z.string().min(1),
-  accountGeneration: z.number().int().nonnegative(),
-  savedAt: z.number().int().nonnegative(),
-  queue: PersistedQueueSnapshotSchema,
-  quality: MusicQualityPreferenceSchema,
-  positionMs: z.number().int().nonnegative(),
-  volume: z.number().min(0).max(1),
-  muted: z.boolean()
-})
-
-/** 播放器持久化快照类型。 */
-type PersistedPlaybackSnapshot = z.infer<typeof PersistedPlaybackSnapshotSchema>
 
 // ========= 函数 =========
 
@@ -123,6 +80,11 @@ function hasPositionToPersist(snapshot: PlayerSnapshot): boolean {
   return snapshot.playback.track !== null && snapshot.playback.positionMs >= 0
 }
 
+/** 为指定账户生成独立播放快照键，generation 不参与跨登录恢复。 */
+function playbackStoreKey(account: PlaybackStoreAccountContext): string {
+  return `${PLAYBACK_STORE_KEY_PREFIX}.${encodeURIComponent(account.accountId)}`
+}
+
 /**
  * 把运行时快照压缩为可持久化对象。
  *
@@ -152,6 +114,9 @@ function toPersistedSnapshot(
 
 /** Renderer 侧播放快照存储。 */
 export class PlaybackStore {
+  /** Utility SQLite 持久化端口。 */
+  private readonly persistence: PlaybackSnapshotPersistence | undefined
+
   /** 实际使用的存储对象。 */
   private readonly storage: Storage | undefined
 
@@ -170,14 +135,21 @@ export class PlaybackStore {
   /** 上一次进度写入时间。 */
   private lastProgressWriteAt = 0
 
+  /** 上一次调度写入的账户键，用于切换账户后重置防抖状态。 */
+  private lastAccountKey = ''
+
   /** 上一次待写入快照。 */
   private pendingSnapshot: PlayerSnapshot | undefined
 
   /** 上一次待写入账户上下文。 */
   private pendingAccount: PlaybackStoreAccountContext | undefined
 
+  /** Utility 持久化写入尾部，用于串行化快照并吸收瞬时错误。 */
+  private persistenceTail: Promise<void> = Promise.resolve()
+
   constructor(options: PlaybackStoreOptions = {}) {
-    this.storage = options.storage ?? globalThis.localStorage
+    this.persistence = options.persistence
+    this.storage = options.storage
     this.now = options.now ?? Date.now
     this.debounceMs = options.debounceMs ?? DEFAULT_DEBOUNCE_MS
   }
@@ -187,9 +159,14 @@ export class PlaybackStore {
    *
    * @param account 当前账户上下文
    */
-  load(account: PlaybackStoreAccountContext): RestoredPlayerState | null {
+  async load(account: PlaybackStoreAccountContext): Promise<RestoredPlayerState | null> {
+    if (this.persistence) {
+      const snapshot = await this.persistence.load(account)
+      return snapshot ? this.toRestoredState(snapshot) : null
+    }
     if (!this.storage) return null
-    const raw = this.storage.getItem(PLAYBACK_STORE_KEY)
+    const accountKey = playbackStoreKey(account)
+    const raw = this.storage.getItem(accountKey) ?? this.storage.getItem(LEGACY_PLAYBACK_STORE_KEY)
     if (!raw) return null
 
     /** 本地存储反序列化后的未知数据。 */
@@ -202,20 +179,13 @@ export class PlaybackStore {
 
     const parsed = PersistedPlaybackSnapshotSchema.safeParse(decoded)
     if (!parsed.success) return null
-    if (
-      parsed.data.accountId !== account.accountId ||
-      parsed.data.accountGeneration !== account.accountGeneration
-    ) {
-      return null
+    if (parsed.data.accountId !== account.accountId) return null
+    if (!this.storage.getItem(accountKey)) {
+      this.storage.setItem(accountKey, raw)
+      this.storage.removeItem(LEGACY_PLAYBACK_STORE_KEY)
     }
 
-    return {
-      queue: parsed.data.queue,
-      quality: parsed.data.quality,
-      positionMs: parsed.data.positionMs,
-      volume: parsed.data.volume,
-      muted: parsed.data.muted
-    }
+    return this.toRestoredState(parsed.data)
   }
 
   /**
@@ -225,8 +195,14 @@ export class PlaybackStore {
    * @param account 当前账户上下文；缺失时跳过写入
    */
   schedule(snapshot: PlayerSnapshot, account: PlaybackStoreAccountContext | undefined): void {
-    if (!account || !this.storage) return
+    if (!account || (!this.persistence && !this.storage)) return
 
+    const accountKey = playbackStoreKey(account)
+    if (accountKey !== this.lastAccountKey) {
+      this.lastAccountKey = accountKey
+      this.lastSignature = ''
+      this.lastProgressWriteAt = 0
+    }
     const nextSignature = semanticSignature(snapshot)
     const signatureChanged = nextSignature !== this.lastSignature
     const progressDue =
@@ -252,7 +228,7 @@ export class PlaybackStore {
    * @param account 当前账户上下文；缺失时跳过写入
    */
   flush(snapshot: PlayerSnapshot, account: PlaybackStoreAccountContext | undefined): void {
-    if (!account || !this.storage) return
+    if (!account || (!this.persistence && !this.storage)) return
     if (this.pendingTimer) clearTimeout(this.pendingTimer)
     this.pendingTimer = undefined
     this.write(snapshot, account)
@@ -262,6 +238,11 @@ export class PlaybackStore {
   dispose(): void {
     if (this.pendingTimer) clearTimeout(this.pendingTimer)
     this.pendingTimer = undefined
+  }
+
+  /** 等待已提交给 Utility 的播放快照写入完成。 */
+  async settled(): Promise<void> {
+    await this.persistenceTail
   }
 
   /** 写入防抖队列中最新的快照。 */
@@ -278,12 +259,28 @@ export class PlaybackStore {
    * @param account 当前账户上下文
    */
   private write(snapshot: PlayerSnapshot, account: PlaybackStoreAccountContext): void {
-    if (!this.storage) return
+    if (!this.persistence && !this.storage) return
     const savedAt = this.now()
     const data = PersistedPlaybackSnapshotSchema.parse(
       toPersistedSnapshot(snapshot, account, savedAt)
     )
-    this.storage.setItem(PLAYBACK_STORE_KEY, JSON.stringify(data))
+    if (this.persistence) {
+      const save = this.persistenceTail.then(() => this.persistence?.save(data))
+      this.persistenceTail = save.then(() => undefined, () => undefined)
+    } else {
+      this.storage?.setItem(playbackStoreKey(account), JSON.stringify(data))
+    }
     this.lastProgressWriteAt = savedAt
+  }
+
+  /** 把已校验的持久化快照转换为播放器恢复状态。 */
+  private toRestoredState(snapshot: PersistedPlaybackSnapshot): RestoredPlayerState {
+    return {
+      queue: snapshot.queue,
+      quality: snapshot.quality,
+      positionMs: snapshot.positionMs,
+      volume: snapshot.volume,
+      muted: snapshot.muted
+    }
   }
 }

@@ -3,6 +3,8 @@ import {
   CredentialControlCommandSchema,
   CredentialControlEventSchema
 } from '../shared/contracts/credential-lease'
+import { AccountStoreOpenCommandSchema } from '../shared/contracts/account-store-control'
+import { UtilityAccountStore } from '../infrastructure/persistence/account-space'
 import { ShellExecutor } from '../infrastructure/shell/executor'
 import { ShellPolicyClassifier } from '../infrastructure/shell/policy-classifier'
 import { ShellProcessSupervisor } from '../infrastructure/shell/process-supervisor'
@@ -10,8 +12,24 @@ import { ShellWorkspaceRegistry } from '../infrastructure/shell/workspace-regist
 import { PROTOCOL_VERSION } from '../shared/schemas/runtime'
 import { CredentialLeaseService } from './credential-lease-service'
 import { MusicService } from './music-service'
+import { PlaybackSnapshotService } from './playback-snapshot-service'
 import { TrackUrlService } from './track-url-service'
 import { UtilityRuntimeServer, type RuntimePort } from './runtime-server'
+
+// ========= 变量 =========
+
+/** Main 注入的持久数据根目录，Utility 只在此目录打开账户数据库。 */
+const accountDataRoot = process.env['NCXMUSIC_DATA_ROOT']
+if (!accountDataRoot) throw new Error('NCXMUSIC_DATA_ROOT is required for Utility persistence')
+
+/** Utility 独占的账户 SQLite 单写者。 */
+const accountStore = new UtilityAccountStore({ dataRoot: accountDataRoot })
+
+/** 当前已接收的账户 generation，用于丢弃迟到的换号命令。 */
+let accountStoreGeneration = 0
+
+/** 启动时先创建并迁移游客账户数据库。 */
+const accountStoreReady = accountStore.open('guest:local')
 
 const shellWorkspaceRegistry = new ShellWorkspaceRegistry({
   defaultWorkspaceRoot: ShellWorkspaceRegistry.defaultRoot(),
@@ -40,10 +58,30 @@ const credentialLease = new CredentialLeaseService((event) => {
 const trackUrl = new TrackUrlService(credentialLease)
 /** 标准 Music Service：统一搜索与实体详情读取，不向 Renderer 暴露上游原始响应 */
 const musicService = new MusicService(credentialLease)
-const runtime = new UtilityRuntimeServer(trackUrl, shellExecutor, musicService)
+/** 播放快照服务：只通过当前账户 SQLite 单写者读写。 */
+const playbackSnapshotService = new PlaybackSnapshotService(accountStore)
+const runtime = new UtilityRuntimeServer(
+  trackUrl,
+  shellExecutor,
+  musicService,
+  playbackSnapshotService
+)
 const shouldCrashBeforeReady = process.argv.includes('--ncx-smoke-crash-before-ready')
 
 process.parentPort.on('message', (event) => {
+  const accountCommand = AccountStoreOpenCommandSchema.safeParse(event.data)
+  if (accountCommand.success) {
+    if (accountCommand.data.accountGeneration < accountStoreGeneration) return
+    accountStoreGeneration = accountCommand.data.accountGeneration
+    void accountStoreReady
+      .then(() => accountStore.switchAccount(
+        accountCommand.data.accountId,
+        accountCommand.data.accountGeneration
+      ))
+      .catch(() => process.exit(87))
+    return
+  }
+
   const command = CredentialControlCommandSchema.safeParse(event.data)
   if (command.success) {
     void credentialLease.handle(command.data).catch(() => {
@@ -84,12 +122,17 @@ process.parentPort.on('message', (event) => {
 if (shouldCrashBeforeReady) {
   setTimeout(() => process.exit(86), 25)
 } else {
-  process.parentPort.postMessage({
-    kind: 'utility.ready',
-    protocolVersion: PROTOCOL_VERSION
-  })
+  void accountStoreReady
+    .then(() => {
+      process.parentPort.postMessage({
+        kind: 'utility.ready',
+        protocolVersion: PROTOCOL_VERSION
+      })
+    })
+    .catch(() => process.exit(87))
 }
 process.once('exit', () => {
+  void accountStore.close()
   credentialLease.shutdown()
   musicService.shutdown()
   trackUrl.shutdown()

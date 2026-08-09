@@ -3,6 +3,8 @@ import {
   HelloEnvelopeSchema,
   ExecuteShellRequestEnvelopeSchema,
   MusicReadRequestEnvelopeSchema,
+  PlaybackSnapshotLoadRequestEnvelopeSchema,
+  PlaybackSnapshotSaveRequestEnvelopeSchema,
   PingRequestEnvelopeSchema,
   PROTOCOL_VERSION,
   ResolveTrackUrlRequestEnvelopeSchema,
@@ -12,6 +14,8 @@ import {
   type CancelEnvelope,
   type ExecuteShellRequestEnvelope,
   type MusicReadRequestEnvelope,
+  type PlaybackSnapshotLoadRequestEnvelope,
+  type PlaybackSnapshotSaveRequestEnvelope,
   type PingRequestEnvelope,
   type ProtocolError,
   type ResolveTrackUrlRequestEnvelope,
@@ -36,6 +40,8 @@ type RuntimeCapability =
   | 'system.snapshot'
   | 'music.read'
   | 'music.resolve-url'
+  | 'playback.snapshot.load'
+  | 'playback.snapshot.save'
   | 'shell.execute'
 
 /**
@@ -60,6 +66,14 @@ export interface TrackUrlHandler {
   cancel(requestId: string): void
 }
 
+/** 播放快照 SQLite 读写执行方。 */
+export interface PlaybackSnapshotHandler {
+  /** 读取当前账户播放快照。 */
+  load(payload: unknown): Promise<unknown>
+  /** 保存当前账户播放快照。 */
+  save(payload: unknown): Promise<unknown>
+}
+
 export interface ShellCommandHandler {
   /** 执行经过策略网关判定的 Shell 命令。 */
   execute(requestId: string, payload: unknown): Promise<unknown>
@@ -73,6 +87,8 @@ type AnyRequestEnvelope =
   | SnapshotRequestEnvelope
   | MusicReadRequestEnvelope
   | ResolveTrackUrlRequestEnvelope
+  | PlaybackSnapshotLoadRequestEnvelope
+  | PlaybackSnapshotSaveRequestEnvelope
   | ExecuteShellRequestEnvelope
 
 /** 待处理请求：ping 用定时器，resolve-url 交由 handler 自行取消 */
@@ -80,6 +96,8 @@ type PendingRequest =
   | { name: 'system.ping'; timer: ReturnType<typeof setTimeout> }
   | { name: 'music.read' }
   | { name: 'music.resolve-url' }
+  | { name: 'playback.snapshot.load' }
+  | { name: 'playback.snapshot.save' }
   | { name: 'shell.execute' }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -100,11 +118,13 @@ export class UtilityRuntimeServer {
    * @param trackUrlHandler music.resolve-url 的执行方；未注入时该能力返回 CAPABILITY_UNAVAILABLE
    * @param shellHandler shell.execute 的执行方；未注入时该能力返回 CAPABILITY_UNAVAILABLE
    * @param musicReadHandler music.read 的执行方；未注入时该能力返回 CAPABILITY_UNAVAILABLE
+   * @param playbackSnapshotHandler 播放快照 SQLite 读写执行方
    */
   constructor(
     private readonly trackUrlHandler?: TrackUrlHandler,
     private readonly shellHandler?: ShellCommandHandler | ShellExecutor,
-    private readonly musicReadHandler?: MusicReadHandler
+    private readonly musicReadHandler?: MusicReadHandler,
+    private readonly playbackSnapshotHandler?: PlaybackSnapshotHandler
   ) {}
 
   // ── 生命周期区 ──
@@ -144,6 +164,9 @@ export class UtilityRuntimeServer {
     ]
     if (this.musicReadHandler) base.push('music.read')
     if (this.trackUrlHandler) base.push('music.resolve-url')
+    if (this.playbackSnapshotHandler) {
+      base.push('playback.snapshot.load', 'playback.snapshot.save')
+    }
     if (this.shellHandler) base.push('shell.execute')
     return base
   }
@@ -197,6 +220,16 @@ export class UtilityRuntimeServer {
 
     if (envelope.name === 'music.resolve-url') {
       void this.resolveTrackUrl(ResolveTrackUrlRequestEnvelopeSchema.parse(envelope))
+      return
+    }
+
+    if (envelope.name === 'playback.snapshot.load') {
+      void this.loadPlaybackSnapshot(PlaybackSnapshotLoadRequestEnvelopeSchema.parse(envelope))
+      return
+    }
+
+    if (envelope.name === 'playback.snapshot.save') {
+      void this.savePlaybackSnapshot(PlaybackSnapshotSaveRequestEnvelopeSchema.parse(envelope))
       return
     }
 
@@ -315,6 +348,59 @@ export class UtilityRuntimeServer {
     }
   }
 
+  /** 从 Utility 当前账户 SQLite 读取播放快照。 */
+  private async loadPlaybackSnapshot(request: PlaybackSnapshotLoadRequestEnvelope): Promise<void> {
+    await this.handlePlaybackSnapshotRequest(request, 'playback.snapshot.load', (handler) =>
+      handler.load(request.payload)
+    )
+  }
+
+  /** 通过 Utility 当前账户 SQLite 保存播放快照。 */
+  private async savePlaybackSnapshot(request: PlaybackSnapshotSaveRequestEnvelope): Promise<void> {
+    await this.handlePlaybackSnapshotRequest(request, 'playback.snapshot.save', (handler) =>
+      handler.save(request.payload)
+    )
+  }
+
+  /** 统一执行播放快照请求并处理连接替换与脱敏错误。 */
+  private async handlePlaybackSnapshotRequest(
+    request: PlaybackSnapshotLoadRequestEnvelope | PlaybackSnapshotSaveRequestEnvelope,
+    name: 'playback.snapshot.load' | 'playback.snapshot.save',
+    operation: (handler: PlaybackSnapshotHandler) => Promise<unknown>
+  ): Promise<void> {
+    const handler = this.playbackSnapshotHandler
+    if (!handler) {
+      this.respondError(request, {
+        code: 'CAPABILITY_UNAVAILABLE',
+        message: '当前运行时未启用播放快照持久化。',
+        retryable: false
+      })
+      return
+    }
+    if (this.pending.has(request.requestId)) {
+      this.respondError(request, {
+        code: 'PROTOCOL_INVALID_MESSAGE',
+        message: 'requestId 已在使用。',
+        retryable: false
+      })
+      return
+    }
+    const connectionId = request.connectionId
+    this.pending.set(request.requestId, { name })
+    try {
+      const data = await operation(handler)
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondSuccess(request, data)
+    } catch (error) {
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondError(request, this.toProtocolError(error))
+    }
+  }
+
   /** 执行 shell.execute：委托给 ShellExecutor 并保证连接替换后不误发响应。 */
   private async executeShell(request: ExecuteShellRequestEnvelope): Promise<void> {
     const handler = this.shellHandler
@@ -374,8 +460,26 @@ export class UtilityRuntimeServer {
         retryable: false
       }
     }
+    if (code === 'CONNECTION_REPLACED') {
+      return {
+        code: 'CONNECTION_REPLACED',
+        message: '账户或运行时连接已切换，请重新读取当前状态。',
+        retryable: true
+      }
+    }
     if (code === 'ABORT_ERR' || (error instanceof Error && error.name === 'AbortError')) {
       return { code: 'REQUEST_CANCELLED', message: '请求已取消。', retryable: false }
+    }
+    if (code === 'UPSTREAM_ERROR') {
+      const retryable =
+        typeof error === 'object' && error !== null && 'retryable' in error
+          ? Boolean((error as { retryable: unknown }).retryable)
+          : true
+      return {
+        code: 'UPSTREAM_ERROR',
+        message: '网易云服务请求失败，请稍后重试或检查登录状态。',
+        retryable
+      }
     }
     if (code === 'NO_ACTIVE_LEASE') {
       return {
@@ -419,7 +523,7 @@ export class UtilityRuntimeServer {
       this.musicReadHandler?.cancel(envelope.requestId)
     } else if (pending.name === 'music.resolve-url') {
       this.trackUrlHandler?.cancel(envelope.requestId)
-    } else {
+    } else if (pending.name === 'shell.execute') {
       this.shellHandler?.cancel(envelope.requestId)
     }
     this.pending.delete(envelope.requestId)
