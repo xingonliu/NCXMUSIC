@@ -287,16 +287,10 @@ onBeforeUnmount(() => {
 .music-progress-rail {
   position: relative;
   width: 100%;
-  height: 4px;
+  height: 6px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--ncx-color-text-primary, #ffffff) 22%, transparent);
   overflow: visible;
-  transition: height 0.18s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.music-progress-bar:hover .music-progress-rail,
-.music-progress-bar--dragging .music-progress-rail {
-  height: 7px;
 }
 
 .music-progress-fill {
