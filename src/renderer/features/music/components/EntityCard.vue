@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import MediaArtwork from './MediaArtwork.vue'
+import Cover from './Cover.vue'
 
 // ========= 属性与事件 =========
 
@@ -25,7 +25,7 @@ const emit = defineEmits<{
 // ========= 变量 =========
 
 /** 当前卡片使用的封面语义尺寸。 */
-const artworkSize = computed<'card' | 'feature'>(() => props.featured ? 'feature' : 'card')
+const artworkSize = computed<'card' | 'feature'>(() => (props.featured ? 'feature' : 'card'))
 
 // ========= 函数 =========
 
@@ -44,10 +44,12 @@ function activateCard(): void {
     @keydown.enter.prevent="activateCard"
     @keydown.space.prevent="activateCard"
   >
-    <MediaArtwork
+    <Cover
       :src="props.artworkUrl"
       :alt="props.title"
       :size="artworkSize"
+      :hover-effect="true"
+      @play="activateCard"
     />
     <div class="music-entity-card-copy">
       <h3>{{ props.title }}</h3>
