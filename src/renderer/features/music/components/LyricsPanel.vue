@@ -319,6 +319,7 @@ onBeforeUnmount(() => {
 .lyrics-panel--immersive {
   display: block;
   min-height: 0;
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
   scroll-behavior: smooth;
@@ -329,7 +330,7 @@ onBeforeUnmount(() => {
 .lyrics-panel--immersive .lyrics-lines {
   gap: clamp(28px, 3.5vh, 40px);
   min-height: 100%;
-  padding: 42% 0;
+  padding: 42% 16px 42% 8px;
 }
 
 .lyrics-panel--immersive .lyrics-line {
@@ -349,10 +350,19 @@ onBeforeUnmount(() => {
     transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+.lyrics-panel--immersive .lyrics-line button {
+  transform-origin: left center;
+  transition:
+    opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
 .lyrics-panel--immersive .lyrics-line button:hover {
-  opacity: 0.85;
+  opacity: 0.88;
   filter: blur(0px);
   transform: scale(1.02);
+  transform-origin: left center;
 }
 
 .lyrics-panel--immersive .lyrics-line small {
@@ -383,6 +393,7 @@ onBeforeUnmount(() => {
   opacity: 1;
   filter: blur(0px);
   transform: scale(1.04);
+  transform-origin: left center;
 }
 
 .lyrics-panel--immersive .lyrics-line--active small {
