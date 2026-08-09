@@ -14,9 +14,12 @@ import {
   CommonButton,
   CommonEmptyState,
   CommonErrorState,
-  CommonSpinner
+  CommonSpinner,
+  CommonTabs,
+  type CommonOption
 } from '../../design-system/components'
-import MediaArtwork from './components/MediaArtwork.vue'
+import { showToast } from '../../design-system/use-toast'
+import Cover from './components/Cover.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
 import { mutateMusic, playSongNext } from './music-actions'
 import {
@@ -123,7 +126,11 @@ function enqueueSong(song: StandardSong): void {
 /** 收藏搜索结果歌曲。 */
 async function likeSong(song: StandardSong): Promise<void> {
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
-  if (!response.ok) errorMessage.value = response.error.message
+  if (!response.ok) {
+    showToast(response.error.message, 'warning')
+    return
+  }
+  showToast(`已收藏《${song.name}》。`, 'success')
 }
 
 /** 打开专辑详情。 */
@@ -202,7 +209,7 @@ watch(query, () => {
             type="button"
             @click="openAlbum(album)"
           >
-            <MediaArtwork :src="album.artworkUrl" :alt="album.name" size="card" />
+            <Cover :src="album.artworkUrl" :alt="album.name" size="card" />
             <strong>{{ album.name }}</strong>
             <span><Disc3 :size="13" /> 专辑</span>
           </button>
@@ -214,7 +221,7 @@ watch(query, () => {
             type="button"
             @click="openPlaylist(playlist)"
           >
-            <MediaArtwork :src="playlist.artworkUrl" :alt="playlist.name" size="card" />
+            <Cover :src="playlist.artworkUrl" :alt="playlist.name" size="card" />
             <strong>{{ playlist.name }}</strong>
             <span><ListMusic :size="13" /> 歌单</span>
           </button>
@@ -225,7 +232,7 @@ watch(query, () => {
         <h2>歌手</h2>
         <div class="artist-strip">
           <article v-for="artist in artists" :key="artist.id" class="artist-card">
-              <MediaArtwork :src="artist.artworkUrl" :alt="artist.name" size="compact" />
+            <Cover :src="artist.artworkUrl" :alt="artist.name" size="compact" shape="circle" />
             <strong>{{ artist.name }}</strong>
             <span><UserRound :size="13" /> 歌手</span>
           </article>

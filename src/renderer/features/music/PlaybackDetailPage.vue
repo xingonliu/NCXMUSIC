@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 
 import { CommonButton, CommonEmptyState } from '../../design-system/components'
 import LyricsPanel from './components/LyricsPanel.vue'
-import MediaArtwork from './components/MediaArtwork.vue'
+import Cover from './components/Cover.vue'
 import PlaybackControls from './components/PlaybackControls.vue'
 import { usePlayer } from './use-player'
 
@@ -50,7 +50,13 @@ function openImmersiveLyrics(): void {
 
     <template v-else>
       <div class="playback-detail-hero">
-        <MediaArtwork :src="artworkUrl" :alt="track.name" size="hero" />
+        <Cover
+          :src="artworkUrl"
+          :alt="track.name"
+          size="hero"
+          always-show-shadow
+          :show-play-button="false"
+        />
         <div class="playback-detail-copy">
           <p class="music-page-eyebrow">正在播放</p>
           <h1 id="playback-detail-title">{{ track.name }}</h1>

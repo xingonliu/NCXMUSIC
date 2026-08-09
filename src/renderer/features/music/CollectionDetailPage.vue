@@ -15,7 +15,8 @@ import {
   CommonErrorState,
   CommonSpinner
 } from '../../design-system/components'
-import MediaArtwork from './components/MediaArtwork.vue'
+import { showToast } from '../../design-system/use-toast'
+import Cover from './components/Cover.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
 import { mutateMusic, playSongNext } from './music-actions'
 import {
@@ -145,7 +146,7 @@ function enqueueAll(): void {
   player.enqueue(standardSongsToTrackSummaries(songs.value), collectionKind.value === 'album'
     ? { kind: 'album', albumId: collectionId.value }
     : { kind: 'playlist', playlistId: collectionId.value })
-  notice.value = `已添加 ${songs.value.length} 首歌曲到队列。`
+  showToast(`已添加 ${songs.value.length} 首歌曲到队列。`, 'info')
 }
 
 /** 收藏当前集合或取消收藏。 */
@@ -157,17 +158,21 @@ async function toggleSubscription(): Promise<void> {
     ? await mutateMusic({ operation: 'subscribeAlbum', albumId: current.id, subscribed })
     : await mutateMusic({ operation: 'subscribePlaylist', playlistId: current.id, subscribed })
   if (!response.ok) {
-    notice.value = response.error.message
+    showToast(response.error.message, 'warning')
     return
   }
   collection.value = { ...current, subscribed }
-  notice.value = subscribed ? `已收藏《${current.name}》。` : `已取消收藏《${current.name}》。`
+  showToast(subscribed ? `已收藏《${current.name}》。` : `已取消收藏《${current.name}》。`, 'success')
 }
 
 /** 收藏当前歌曲。 */
 async function likeSong(song: StandardSong): Promise<void> {
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
-  notice.value = response.ok ? `已收藏《${song.name}》。` : response.error.message
+  if (!response.ok) {
+    showToast(response.error.message, 'warning')
+    return
+  }
+  showToast(`已收藏《${song.name}》。`, 'success')
 }
 
 // ========= 生命周期 =========
@@ -199,7 +204,13 @@ watch([collectionKind, collectionId], () => {
 
     <template v-else>
       <header class="collection-hero">
-        <MediaArtwork :src="collection.artworkUrl" :alt="collection.name" size="hero" />
+        <Cover
+          :src="collection.artworkUrl"
+          :alt="collection.name"
+          size="hero"
+          always-show-shadow
+          :show-play-button="false"
+        />
         <div class="collection-hero-copy">
           <p class="music-page-eyebrow">{{ collection.kind === 'album' ? '专辑' : '歌单' }}</p>
           <h1 id="collection-title">{{ collection.name }}</h1>
@@ -221,8 +232,6 @@ watch([collectionKind, collectionId], () => {
           </div>
         </div>
       </header>
-
-      <p v-if="notice" class="collection-notice" role="status">{{ notice }}</p>
 
       <VirtualTrackList
         class="track-list"
@@ -296,12 +305,6 @@ watch([collectionKind, collectionId], () => {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ncx-space-2);
-}
-
-.collection-notice {
-  margin: var(--ncx-space-6) 0 calc(var(--ncx-space-6) * -1);
-  color: var(--ncx-color-text-secondary);
-  font-size: 13px;
 }
 
 .track-list {

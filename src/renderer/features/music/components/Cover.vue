@@ -298,12 +298,14 @@ function handlePlayClick(e: MouseEvent): void {
   border-radius: 50%;
 }
 
-/* ========= Hover 状态效果提升 ========= */
+/* ========= Hover 状态与常显 Hover 效果提升 ========= */
 
+.ncx-cover.always-show-shadow .ncx-cover-media,
 .ncx-cover.has-hover-effect:hover .ncx-cover-media {
   transform: translateY(-2px);
 }
 
+.ncx-cover.always-show-shadow .ncx-cover-shadow,
 .ncx-cover.has-hover-effect:hover .ncx-cover-shadow {
   filter: blur(20px) opacity(0.85);
   transform: scale(0.96, 0.98) translateY(8px);

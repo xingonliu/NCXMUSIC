@@ -15,8 +15,9 @@ import {
   CommonErrorState,
   CommonSpinner
 } from '../../design-system/components'
+import { showToast } from '../../design-system/use-toast'
 import EntityCard from './components/EntityCard.vue'
-import MediaArtwork from './components/MediaArtwork.vue'
+import Cover from './components/Cover.vue'
 import MusicSection from './components/MusicSection.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
 import { mutateMusic, playSongNext } from './music-actions'
@@ -63,9 +64,6 @@ const albumsSection = ref<ListSection<StandardAlbum>>({ state: 'loading', items:
 
 /** 相似歌手 Section。 */
 const similarSection = ref<ListSection<StandardArtist>>({ state: 'loading', items: [], error: '' })
-
-/** 页面动作提示。 */
-const notice = ref<string>('')
 
 /** 当前歌手 ID。 */
 const artistId = computed<string>(() => String(route.params['artistId'] ?? ''))
@@ -161,7 +159,11 @@ function enqueueSong(song: StandardSong): void {
 /** 收藏当前歌曲。 */
 async function likeSong(song: StandardSong): Promise<void> {
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
-  notice.value = response.ok ? `已收藏《${song.name}》。` : response.error.message
+  if (!response.ok) {
+    showToast(response.error.message, 'warning')
+    return
+  }
+  showToast(`已收藏《${song.name}》。`, 'success')
 }
 
 /** 打开指定专辑。 */
@@ -206,7 +208,14 @@ watch(artistId, () => {
 
     <template v-else>
       <header class="artist-hero">
-        <MediaArtwork :src="artist.artworkUrl" :alt="artist.name" size="hero" />
+        <Cover
+          :src="artist.artworkUrl"
+          :alt="artist.name"
+          size="hero"
+          shape="circle"
+          always-show-shadow
+          :show-play-button="false"
+        />
         <div class="artist-hero-copy">
           <p class="music-page-eyebrow"><Radio :size="13" /> 歌手</p>
           <h1 id="artist-title">{{ artist.name }}</h1>
@@ -218,8 +227,6 @@ watch(artistId, () => {
           </CommonButton>
         </div>
       </header>
-
-      <p v-if="notice" class="artist-notice" role="status">{{ notice }}</p>
 
       <MusicSection
         section-id="artist-hot-songs"
@@ -311,8 +318,7 @@ watch(artistId, () => {
 
 .artist-hero-copy h1,
 .artist-hero-copy p,
-.artist-hero-copy small,
-.artist-notice {
+.artist-hero-copy small {
   margin: 0;
 }
 
@@ -322,8 +328,7 @@ watch(artistId, () => {
 }
 
 .artist-hero-copy p:not(.music-page-eyebrow),
-.artist-hero-copy small,
-.artist-notice {
+.artist-hero-copy small {
   color: var(--ncx-color-text-secondary);
 }
 
