@@ -11,7 +11,7 @@
 
 - Screenshot path: conversation attachment `Image #1`（用户于本轮提供的 1280 × 800 拖拽中截图；原始临时路径未写入仓库）。
 - Target viewport: 1280 × 800。
-- Automated state evidence: `tests/unit/immersive-player.test.ts` 覆盖辅助元素渐隐、源目标封面几何插值、距离与速度阈值、单根 SVG 横线，以及达到阈值后在当前拖拽位置直接请求共享元素关闭。
+- Automated state evidence: `tests/unit/immersive-player.test.ts` 覆盖辅助元素渐隐、源目标封面几何插值、距离与速度阈值、单根 SVG 横线、达到阈值后在当前拖拽位置直接请求共享元素关闭，以及共享元素开合方向标记在动画期间保持并在结束后清理。
 - Primary interactions tested: 下拉进度、封面向 PlayerBar 的位置/尺寸/圆角插值、回弹判定、快速下甩、阈值关闭请求、单线 SVG 结构。
 - Console errors checked: unavailable；当前 Electron 应用没有可用的匹配播放状态截图通道。
 
@@ -47,13 +47,16 @@
 2. Fix made: 删除滑出视口的提交动画和等待定时器；阈值成立时保留当前拖拽位移并立即发出关闭请求，由既有 `ncx-now-playing-artwork` View Transition 完成封面到 PlayerBar 的共享元素过渡。
 3. Second finding: 用户提供的 1280 × 800 拖拽中截图显示整个沉浸内容仍直线向下，封面没有在手势过程中向 PlayerBar 目标移动。
 4. Second fix made: 移除 `.immersive-content` 整体 Y 轴平移；按下时读取沉浸封面与 PlayerBar 封面的真实矩形，拖动中让封面沿纵向跟手、横向平滑收拢，并同步插值尺寸和视觉圆角。短杆单独跟手，其他元素只渐隐。
-5. Post-fix evidence: 7 个专项测试通过，其中几何测试确认代表性 1280 × 800 布局在半程同时产生 136.5px 横向移动、273.5px 纵向移动和约 0.556 倍缩放；修正后渲染截图仍不可用。
+5. Third finding: 用户指出封面到达 PlayerBar 的一瞬间仍会抖动，观感接近圆角或尺寸在共享元素快照销毁时没有对齐。
+6. Third fix made: 删除无法通过 DOM 后代关系判断 View Transition 关闭方向的 `:has(::view-transition-old(...))` 规则；控制器改为在根节点显式写入 `opening` 或 `closing`，共享元素的 image-pair 裁切层在关闭的 360ms 内从 16px 连续收敛到 PlayerBar 实际 `--ncx-radius-md`（当前 14px），与原生 40 × 40px 终点几何在同一帧完成。
+7. Post-fix evidence: 8 个专项测试通过，其中几何测试确认代表性 1280 × 800 布局在半程同时产生 136.5px 横向移动、273.5px 纵向移动和约 0.556 倍缩放，方向测试确认开合标记覆盖完整动画生命周期；修正后渲染截图仍不可用。
 
 **Implementation Checklist**
 
 - 在带播放曲目的 Electron 窗口中检查短杆 Hover 泛光且无底色。
 - 慢速下拉检查封面连续缩小、其余元素连续渐隐和未达阈值回弹。
 - 达到阈值释放，检查封面从当前拖拽位置落到 PlayerBar 封面，而非直接向下离场。
+- 放慢观察落点最后一帧，确认 40 × 40px 尺寸与 14px 圆角在共享元素消失前已经对齐，不再出现一次性收缩或圆角跳变。
 - 检查动画期间无控制器闪烁、背景跳变或浏览器控制台错误。
 
 **Follow-up Polish**

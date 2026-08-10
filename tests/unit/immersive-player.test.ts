@@ -25,6 +25,13 @@ const getLyrics = vi.fn()
 /** happy-dom 原始滚动方法。 */
 const originalScrollTo = HTMLElement.prototype.scrollTo
 
+/** 测试环境原始的 View Transition 入口。 */
+const originalStartViewTransition = (
+  document as unknown as {
+    startViewTransition?: Document['startViewTransition']
+  }
+).startViewTransition
+
 // ========= 生命周期 =========
 
 beforeEach(async () => {
@@ -63,6 +70,11 @@ afterEach(async () => {
   HTMLElement.prototype.scrollTo = originalScrollTo
   disposePlayer()
   await useImmersivePlayerPresentation().close()
+  Object.defineProperty(document, 'startViewTransition', {
+    configurable: true,
+    value: originalStartViewTransition
+  })
+  document.documentElement.removeAttribute('data-ncx-immersive-transition')
   document.body.innerHTML = ''
 })
 
@@ -184,6 +196,57 @@ describe('应用级沉浸播放展示', () => {
 
     expect(immersivePlayer.isOpen.value).toBe(false)
     expect(document.activeElement).toBe(trigger)
+  })
+
+  it('共享元素开合期间写入明确方向并在动画结束后清理标记', async () => {
+    /** 由测试手动结束的每一次 View Transition。 */
+    const transitionResolvers: Array<() => void> = []
+    /** 模拟浏览器执行状态更新并保持动画进行中的 View Transition 入口。 */
+    const startViewTransition = vi.fn((
+      updateCallback: () => Promise<void> | void
+    ) => {
+      void updateCallback()
+
+      /** 当前过渡由测试控制完成时机的结束任务。 */
+      const finished = new Promise<void>((resolve) => {
+        transitionResolvers.push(resolve)
+      })
+
+      return { finished }
+    })
+    Object.defineProperty(document, 'startViewTransition', {
+      configurable: true,
+      value: startViewTransition
+    })
+
+    /** 应用级沉浸播放展示控制器。 */
+    const immersivePlayer = useImmersivePlayerPresentation()
+    /** 保持原生动画未结束的打开任务。 */
+    const opening = immersivePlayer.open()
+
+    await vi.waitFor(() => expect(immersivePlayer.isOpen.value).toBe(true))
+    expect(document.documentElement.getAttribute(
+      'data-ncx-immersive-transition'
+    )).toBe('opening')
+    transitionResolvers[0]?.()
+    await opening
+    expect(document.documentElement.hasAttribute(
+      'data-ncx-immersive-transition'
+    )).toBe(false)
+
+    /** 保持原生动画未结束的关闭任务。 */
+    const closing = immersivePlayer.close()
+
+    await vi.waitFor(() => expect(immersivePlayer.isOpen.value).toBe(false))
+    expect(document.documentElement.getAttribute(
+      'data-ncx-immersive-transition'
+    )).toBe('closing')
+    transitionResolvers[1]?.()
+    await closing
+    expect(document.documentElement.hasAttribute(
+      'data-ncx-immersive-transition'
+    )).toBe(false)
+    expect(startViewTransition).toHaveBeenCalledTimes(2)
   })
 
   it('高清封面预热未完成时也立即进入展开状态', async () => {

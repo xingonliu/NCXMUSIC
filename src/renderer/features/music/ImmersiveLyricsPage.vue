@@ -1047,17 +1047,29 @@ onBeforeUnmount(() => {
 
 ::view-transition-group(ncx-now-playing-artwork) {
   z-index: 2;
+}
+
+::view-transition-image-pair(ncx-now-playing-artwork) {
   overflow: hidden;
-  border-radius: 16px;
+  isolation: auto;
+}
+
+:root[data-ncx-immersive-transition='opening']::view-transition-group(ncx-now-playing-artwork) {
   animation-duration: 480ms;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* 关闭沉浸歌词页返回 PlayerBar 时，在过渡到音乐 bar 的那一瞬间精确匹配 PlayerBar 封面的 var(--ncx-radius-md) 圆角与 360ms 退出动画 */
-:root:has(::view-transition-old(ncx-immersive-player)) ::view-transition-group(ncx-now-playing-artwork) {
-  border-radius: var(--ncx-radius-md, 8px);
+:root[data-ncx-immersive-transition='closing']::view-transition-group(ncx-now-playing-artwork) {
   animation-duration: 360ms;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root[data-ncx-immersive-transition='opening']::view-transition-image-pair(ncx-now-playing-artwork) {
+  animation: ncx-artwork-radius-enter 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+:root[data-ncx-immersive-transition='closing']::view-transition-image-pair(ncx-now-playing-artwork) {
+  animation: ncx-artwork-radius-exit 360ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 ::view-transition-new(ncx-immersive-player) {
@@ -1082,8 +1094,29 @@ onBeforeUnmount(() => {
   }
 }
 
+@keyframes ncx-artwork-radius-enter {
+  from {
+    border-radius: var(--ncx-radius-md, 14px);
+  }
+
+  to {
+    border-radius: 16px;
+  }
+}
+
+@keyframes ncx-artwork-radius-exit {
+  from {
+    border-radius: 16px;
+  }
+
+  to {
+    border-radius: var(--ncx-radius-md, 14px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(ncx-now-playing-artwork),
+  ::view-transition-image-pair(ncx-now-playing-artwork),
   ::view-transition-new(ncx-immersive-player),
   ::view-transition-old(ncx-immersive-player) {
     animation-duration: 1ms;

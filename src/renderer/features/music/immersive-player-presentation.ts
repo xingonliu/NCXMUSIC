@@ -24,6 +24,12 @@ let activeTransition: Promise<void> | null = null
 /** 高清封面预热最长等待时间，避免网络慢时阻塞展开交互。 */
 const ARTWORK_PRELOAD_BUDGET_MS = 180
 
+/** 根节点上标记沉浸播放共享元素过渡方向的属性名。 */
+const IMMERSIVE_TRANSITION_DIRECTION_ATTRIBUTE = 'data-ncx-immersive-transition'
+
+/** 沉浸播放共享元素过渡支持的方向。 */
+type ImmersiveTransitionDirection = 'opening' | 'closing'
+
 // ========= 函数 =========
 
 /** 判断用户是否要求减少界面动画。 */
@@ -90,7 +96,6 @@ async function updatePresentation(nextOpen: boolean): Promise<void> {
  * @param nextOpen 下一展示状态
  */
 async function runPresentationTransition(nextOpen: boolean): Promise<void> {
-
   /** 兼容测试环境的可选 View Transition 入口。 */
   const startViewTransition = (
     document as unknown as {
@@ -108,14 +113,34 @@ async function runPresentationTransition(nextOpen: boolean): Promise<void> {
     return
   }
 
-  /** 同步根层展示状态产生的原生 View Transition。 */
-  const transition = startViewTransition(async () => {
-    isOpen.value = nextOpen
-    await nextTick()
-    if (nextOpen) await waitForImmersiveArtworkDecode()
-  })
+  /** 当前共享元素过渡方向，供伪元素样式稳定匹配开合状态。 */
+  const transitionDirection: ImmersiveTransitionDirection = nextOpen
+    ? 'opening'
+    : 'closing'
+  /** 承载过渡方向标记的文档根节点。 */
+  const documentRoot = document.documentElement
+  documentRoot.setAttribute(
+    IMMERSIVE_TRANSITION_DIRECTION_ATTRIBUTE,
+    transitionDirection
+  )
 
-  await transition.finished.catch(() => undefined)
+  try {
+    /** 同步根层展示状态产生的原生 View Transition。 */
+    const transition = startViewTransition(async () => {
+      isOpen.value = nextOpen
+      await nextTick()
+      if (nextOpen) await waitForImmersiveArtworkDecode()
+    })
+
+    await transition.finished.catch(() => undefined)
+  } finally {
+    if (
+      documentRoot.getAttribute(IMMERSIVE_TRANSITION_DIRECTION_ATTRIBUTE)
+      === transitionDirection
+    ) {
+      documentRoot.removeAttribute(IMMERSIVE_TRANSITION_DIRECTION_ATTRIBUTE)
+    }
+  }
 }
 
 /**
