@@ -29,6 +29,7 @@ import {
 } from '../../app/navigation'
 import { navigateBack } from '../../app/navigation-history'
 import {
+  CommonAvatar,
   CommonHeaderButton,
   CommonHeaderGroupButton,
   CommonHeaderGroupItem
@@ -78,6 +79,16 @@ const routeRefreshKey = ref<number>(0)
 
 /** 侧栏账户展示名。 */
 const accountDisplayName = computed<string>(() => account.snapshot.value?.activeAccount.displayName ?? '游客')
+
+/** 账户是否处于已登录状态。 */
+const isAuthenticated = computed<boolean>(() => account.snapshot.value?.state === 'authenticated' && account.snapshot.value?.activeAccount.kind === 'netease')
+
+/** 侧栏账户头像地址。 */
+const accountAvatarUrl = computed<string>(() => {
+  /** 当前活动账户。 */
+  const active = account.snapshot.value?.activeAccount
+  return active?.kind === 'netease' ? active.avatarUrl ?? '' : ''
+})
 
 /** 当前路由是否处于次级导航选中状态（如歌单、个人信息、设置等）。 */
 const isSecondaryNavActive = computed<boolean>(() => {
@@ -279,8 +290,17 @@ onBeforeUnmount(() => {
           :class="{ 'ncx-nav-item--sub-active': isNavigationActive(appAccountNavigationItem) }"
           :to="{ name: appAccountNavigationItem.routeName }"
         >
+          <CommonAvatar
+            v-if="isAuthenticated"
+            :name="accountDisplayName"
+            :src="accountAvatarUrl"
+            :size="20"
+            shape="circle"
+            class="ncx-nav-avatar"
+          />
           <component
             :is="resolveNavIcon(appAccountNavigationItem)"
+            v-else
             :size="17"
             :stroke-width="1.9"
           />

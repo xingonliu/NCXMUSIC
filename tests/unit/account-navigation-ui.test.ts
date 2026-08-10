@@ -31,6 +31,12 @@ describe('account navigation UI contract', () => {
     expect(appShellSource).not.toContain('ncx-nav-item--disabled')
   })
 
+  it('登录账号时侧栏个人信息入口渲染用户头像组件 CommonAvatar', () => {
+    expect(appShellSource).toContain('CommonAvatar')
+    expect(appShellSource).toContain('v-if="isAuthenticated"')
+    expect(appShellSource).toContain(':src="accountAvatarUrl"')
+  })
+
   it('将账户会话操作放在个人信息页并从设置页移除账户标签', () => {
     expect(profilePageSource).toContain('登录账户')
     expect(profilePageSource).toContain("runAccountAction('login')")
