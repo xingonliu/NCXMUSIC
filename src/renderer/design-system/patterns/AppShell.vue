@@ -79,6 +79,12 @@ const routeRefreshKey = ref<number>(0)
 /** 侧栏账户展示名。 */
 const accountDisplayName = computed<string>(() => account.snapshot.value?.activeAccount.displayName ?? '游客')
 
+/** 当前路由是否处于次级导航选中状态（如歌单、个人信息、设置等）。 */
+const isSecondaryNavActive = computed<boolean>(() => {
+  const secondaryRoutes = ['profile', 'settings', 'playlist-detail', 'liked-songs']
+  return typeof route.name === 'string' && secondaryRoutes.includes(route.name)
+})
+
 // ========= 函数 =========
 
 /** 根据导航配置返回对应图标组件。 */
@@ -93,6 +99,14 @@ function resolveNavIcon(item: AppNavigationItem) {
   }
 
   return iconMap[item.icon]
+}
+
+/** 判断主导航条目是否处于激活状态（次级导航选中时不显示主导航高亮）。 */
+function isPrimaryNavigationActive(item: AppNavigationItem): boolean {
+  if (isSecondaryNavActive.value) {
+    return false
+  }
+  return route.name === item.routeName || route.meta.fallbackRoute === item.routeName
 }
 
 /** 判断导航条目是否为当前页或当前页 fallback。 */
@@ -241,7 +255,7 @@ onBeforeUnmount(() => {
             v-for="item in section.items"
             :key="String(item.routeName)"
             class="ncx-nav-item"
-            :class="{ 'ncx-nav-item--active': isNavigationActive(item) }"
+            :class="{ 'ncx-nav-item--active': isPrimaryNavigationActive(item) }"
             :to="{ name: item.routeName }"
           >
             <component
