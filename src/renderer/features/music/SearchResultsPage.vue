@@ -12,7 +12,6 @@ import type {
 } from '../../../shared/schemas/music'
 import {
   CommonButton,
-  CommonDialog,
   CommonEmptyState,
   CommonErrorState,
   CommonSpinner
@@ -20,8 +19,8 @@ import {
 import { showToast } from '../../design-system/use-toast'
 import { t } from '../../i18n'
 import Cover from './components/Cover.vue'
+import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
-import { useAccountSessionStore } from '../account/account-session-store'
 import { mutateMusic, playSongNext } from './music-actions'
 import {
   standardSongToTrackSummary,
@@ -41,9 +40,6 @@ const router = useRouter()
 /** 播放器接口。 */
 const player = usePlayer()
 
-/** 应用账户公开状态，用于能力判定和读取自建歌单。 */
-const account = useAccountSessionStore()
-
 /** 当前搜索请求状态。 */
 const loading = ref<boolean>(false)
 
@@ -55,12 +51,6 @@ const result = ref<Extract<MusicReadResult, { kind: 'search' }> | null>(null)
 
 /** 当前等待选择目标歌单的歌曲。 */
 const playlistTarget = ref<StandardSong | null>(null)
-
-/** 当前账户可写入的自建歌单。 */
-const ownedPlaylists = ref<StandardPlaylist[]>([])
-
-/** 目标歌单加载状态。 */
-const playlistsLoading = ref<boolean>(false)
 
 /** 最近一次请求 ID，用于取消和丢弃迟到响应。 */
 let latestRequestId = ''
@@ -180,54 +170,9 @@ function giveSongToAgent(song: StandardSong): void {
   })
 }
 
-/** 校验写权限，并打开自建歌单选择对话框。 */
-async function openAddToPlaylist(song: StandardSong): Promise<void> {
-  const snapshot = account.snapshot.value ?? await account.refresh()
-  if (!snapshot.canMutateMusic || snapshot.activeAccount.kind !== 'netease') {
-    showToast(t('music.search.loginForPlaylist'), 'warning')
-    return
-  }
-
+/** 打开共享的自建歌单选择对话框。 */
+function openAddToPlaylist(song: StandardSong): void {
   playlistTarget.value = song
-  ownedPlaylists.value = []
-  playlistsLoading.value = true
-  const response = await window.ncx.runtime.getUserPlaylists({
-    userId: snapshot.activeAccount.neteaseUserId,
-    limit: 100
-  })
-  playlistsLoading.value = false
-  if (!response.ok) {
-    playlistTarget.value = null
-    showToast(response.error.message, 'warning')
-    return
-  }
-  if (response.data.kind !== 'playlistCollection' || response.data.collection !== 'user') {
-    playlistTarget.value = null
-    showToast(t('music.search.playlistMismatch'), 'warning')
-    return
-  }
-  ownedPlaylists.value = response.data.playlists.filter((playlist) => playlist.owned)
-}
-
-/** 将待处理歌曲添加到指定自建歌单。 */
-async function addSongToPlaylist(playlist: StandardPlaylist): Promise<void> {
-  const song = playlistTarget.value
-  if (!song) return
-  const response = await mutateMusic({
-    operation: 'updatePlaylistTracks',
-    playlistId: playlist.id,
-    trackIds: [song.id],
-    action: 'add'
-  })
-  if (!response.ok) {
-    showToast(response.error.message, 'warning')
-    return
-  }
-  playlistTarget.value = null
-  showToast(t('music.search.addedToPlaylist', {
-    song: song.name,
-    playlist: playlist.name
-  }), 'success')
 }
 
 // ========= 生命周期 =========
@@ -405,41 +350,9 @@ watch(query, () => {
       </div>
     </Transition>
 
-    <CommonDialog
-      :visible="Boolean(playlistTarget)"
-      title="添加到歌单"
-      :subtitle="playlistTarget?.name ?? ''"
+    <AddTrackToPlaylistDialog
+      :song="playlistTarget"
       @close="playlistTarget = null"
-    >
-      <div
-        v-if="playlistsLoading"
-        class="playlist-picker-status"
-      >
-        <CommonSpinner label="正在读取歌单" />
-      </div>
-      <CommonEmptyState
-        v-else-if="ownedPlaylists.length === 0"
-        title="暂无自建歌单"
-        description="请先创建一个歌单。"
-      />
-      <div
-        v-else
-        class="playlist-picker-list"
-      >
-        <button
-          v-for="playlist in ownedPlaylists"
-          :key="playlist.id"
-          type="button"
-          @click="addSongToPlaylist(playlist)"
-        >
-          <Cover
-            :src="playlist.artworkUrl"
-            :alt="playlist.name"
-            size="thumbnail"
-          />
-          <span>{{ playlist.name }}</span>
-        </button>
-      </div>
-    </CommonDialog>
+    />
   </section>
 </template>

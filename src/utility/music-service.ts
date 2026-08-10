@@ -140,7 +140,7 @@ export class MusicService {
         artists: result.artists.map((entity) => this.entityPool.upsert(entity))
       })
     }
-    if (result.kind === 'lyrics' || !result.entity) return result
+    if (result.kind === 'lyrics' || result.kind === 'commentCollection' || !result.entity) return result
     return MusicReadResultSchema.parse({
       kind: result.kind,
       entity: this.entityPool.upsert(result.entity)

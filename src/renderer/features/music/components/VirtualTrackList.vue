@@ -17,11 +17,20 @@ const props = withDefaults(defineProps<{
   height?: number
   /** 单行冻结高度。 */
   rowHeight?: number
+  /** 是否展示自建歌单歌曲管理动作。 */
+  playlistManagement?: boolean
+  /** 是否暂时禁用歌单管理动作。 */
+  managementBusy?: boolean
+  /** 是否将列表歌曲显示为已收藏。 */
+  liked?: boolean
 }>(), {
   activeTrackId: null,
   height: 520,
   rowHeight: 60,
-  showArtwork: true
+  showArtwork: true,
+  playlistManagement: false,
+  managementBusy: false,
+  liked: false
 })
 
 /** 虚拟歌曲列表事件。 */
@@ -33,6 +42,9 @@ const emit = defineEmits<{
   (event: 'add-to-playlist', song: StandardSong): void
   (event: 'details', song: StandardSong): void
   (event: 'give-agent', song: StandardSong): void
+  (event: 'move-up', song: StandardSong): void
+  (event: 'move-down', song: StandardSong): void
+  (event: 'remove', song: StandardSong): void
 }>()
 
 // ========= 变量 =========
@@ -102,15 +114,18 @@ function handleKeydown(event: KeyboardEvent): void {
 
 <template>
   <div
+    ref="viewport"
     class="virtual-track-list"
     role="list"
     tabindex="0"
-    ref="viewport"
     :style="{ height: `${viewportHeight}px` }"
     @scroll="handleScroll"
     @keydown="handleKeydown"
   >
-    <div class="virtual-track-list-spacer" :style="{ height: `${totalHeight}px` }">
+    <div
+      class="virtual-track-list-spacer"
+      :style="{ height: `${totalHeight}px` }"
+    >
       <div
         class="virtual-track-list-window"
         :style="{ transform: `translateY(${startIndex * props.rowHeight}px)` }"
@@ -127,6 +142,11 @@ function handleKeydown(event: KeyboardEvent): void {
             :index="row.index"
             :active="row.song.id === props.activeTrackId"
             :show-artwork="props.showArtwork"
+            :playlist-management="props.playlistManagement"
+            :management-busy="props.managementBusy"
+            :first-in-playlist="row.index === 0"
+            :last-in-playlist="row.index === props.songs.length - 1"
+            :liked="props.liked"
             @focusin="keyboardIndex = row.index"
             @play="emit('play', $event)"
             @enqueue="emit('enqueue', $event)"
@@ -135,6 +155,9 @@ function handleKeydown(event: KeyboardEvent): void {
             @add-to-playlist="emit('add-to-playlist', $event)"
             @details="emit('details', $event)"
             @give-agent="emit('give-agent', $event)"
+            @move-up="emit('move-up', $event)"
+            @move-down="emit('move-down', $event)"
+            @remove="emit('remove', $event)"
           />
         </div>
       </div>

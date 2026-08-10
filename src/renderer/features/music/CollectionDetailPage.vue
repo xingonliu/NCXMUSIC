@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Heart, ListPlus, Play } from '@lucide/vue'
-import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import type {
   MusicReadResult,
@@ -17,7 +17,10 @@ import {
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import Cover from './components/Cover.vue'
+import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
+import MusicCommentsSection from './components/MusicCommentsSection.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
+import { useAccountSessionStore } from '../account/account-session-store'
 import { mutateMusic, playSongNext } from './music-actions'
 import {
   collectionSongs,
@@ -38,8 +41,14 @@ type CollectionKind = 'album' | 'playlist'
 /** 当前路由对象。 */
 const route = useRoute()
 
+/** Router 实例，用于歌曲详情和小云上下文导航。 */
+const router = useRouter()
+
 /** 播放器接口。 */
 const player = usePlayer()
+
+/** 当前账户公开状态，用于判断歌单编辑权限。 */
+const account = useAccountSessionStore()
 
 /** 当前加载状态。 */
 const loading = ref<boolean>(false)
@@ -52,6 +61,15 @@ const collection = ref<PlayableCollection | null>(null)
 
 /** 最近一次请求 ID。 */
 let latestRequestId = ''
+
+/** 是否正在提交歌单歌曲排序。 */
+const reorderBusy = ref<boolean>(false)
+
+/** 正在移除的歌单歌曲 ID。 */
+const removingTrackId = ref<string | null>(null)
+
+/** 当前等待选择目标歌单的歌曲。 */
+const playlistTarget = ref<StandardSong | null>(null)
 
 /** 当前集合类型。 */
 const collectionKind = computed<CollectionKind>(() => {
@@ -75,6 +93,17 @@ const subtitle = computed<string>(() => {
   if (!collection.value) return ''
   if (collection.value.kind === 'album') return collection.value.artist?.name ?? '专辑'
   return collection.value.creator?.nickname ?? '歌单'
+})
+
+/** 当前详情是否属于登录用户自己的可编辑歌单。 */
+const isOwnedPlaylist = computed<boolean>(() => {
+  /** 当前已加载的集合实体。 */
+  const current = collection.value
+  /** 当前活动账户。 */
+  const active = account.snapshot.value?.activeAccount
+  return current?.kind === 'playlist' &&
+    active?.kind === 'netease' &&
+    current.creator?.id === active.neteaseUserId
 })
 
 // ========= 函数 =========
@@ -150,7 +179,7 @@ function enqueueAll(): void {
 /** 收藏当前集合或取消收藏。 */
 async function toggleSubscription(): Promise<void> {
   const current = collection.value
-  if (!current) return
+  if (!current || (current.kind === 'playlist' && isOwnedPlaylist.value)) return
   const subscribed = !current.subscribed
   const response = current.kind === 'album'
     ? await mutateMusic({ operation: 'subscribeAlbum', albumId: current.id, subscribed })
@@ -173,11 +202,99 @@ async function likeSong(song: StandardSong): Promise<void> {
   showToast(`已收藏《${song.name}》。`, 'success')
 }
 
+/** 从当前自建歌单移除歌曲，并在成功后更新标准实体副本。 */
+async function removePlaylistSong(song: StandardSong): Promise<void> {
+  /** 发起移除时的歌单实体快照。 */
+  const current = collection.value
+  if (current?.kind !== 'playlist' || !isOwnedPlaylist.value || removingTrackId.value) return
+  removingTrackId.value = song.id
+  /** 标准移除歌曲写入回执。 */
+  const response = await mutateMusic({
+    operation: 'updatePlaylistTracks',
+    playlistId: current.id,
+    trackIds: [song.id],
+    action: 'remove'
+  })
+  removingTrackId.value = null
+  if (!response.ok) {
+    showToast(response.error.message, 'warning')
+    return
+  }
+  if (collection.value?.id !== current.id) return
+  /** 移除目标歌曲后的本地歌曲集合。 */
+  const nextSongs = current.songs.filter((item) => item.id !== song.id)
+  collection.value = {
+    ...current,
+    songs: nextSongs,
+    trackCount: nextSongs.length
+  }
+  showToast(`已从歌单移除《${song.name}》。`, 'success')
+}
+
+/** 把自建歌单歌曲向上或向下移动一位，并回滚失败的乐观排序。 */
+async function movePlaylistSong(song: StandardSong, direction: -1 | 1): Promise<void> {
+  /** 发起排序时的歌单实体快照。 */
+  const current = collection.value
+  if (current?.kind !== 'playlist' || !isOwnedPlaylist.value || reorderBusy.value) return
+  /** 当前歌曲在歌单中的原始索引。 */
+  const fromIndex = current.songs.findIndex((item) => item.id === song.id)
+  /** 当前歌曲移动后的目标索引。 */
+  const toIndex = fromIndex + direction
+  if (fromIndex < 0 || toIndex < 0 || toIndex >= current.songs.length) return
+
+  /** 排序失败时用于回滚的歌曲顺序。 */
+  const previousSongs = [...current.songs]
+  /** 即时展示并提交到上游的新歌曲顺序。 */
+  const nextSongs = [...previousSongs]
+  /** 从旧位置取出的目标歌曲。 */
+  const [movedSong] = nextSongs.splice(fromIndex, 1)
+  if (!movedSong) return
+  nextSongs.splice(toIndex, 0, movedSong)
+  collection.value = { ...current, songs: nextSongs }
+  reorderBusy.value = true
+  /** 标准歌单排序写入回执。 */
+  const response = await mutateMusic({
+    operation: 'reorderPlaylistTracks',
+    playlistId: current.id,
+    trackIds: nextSongs.map((item) => item.id)
+  })
+  reorderBusy.value = false
+  if (collection.value?.id !== current.id) return
+  if (!response.ok) {
+    collection.value = { ...current, songs: previousSongs }
+    showToast(response.error.message, 'warning')
+    return
+  }
+  showToast('歌单顺序已保存。', 'success')
+}
+
+/** 打开共享的自建歌单选择对话框。 */
+function openAddToPlaylist(song: StandardSong): void {
+  playlistTarget.value = song
+}
+
+/** 打开正式歌曲详情页。 */
+function openSongDetails(song: StandardSong): void {
+  void router.push({ name: 'song-detail', params: { songId: song.id } })
+}
+
+/** 将歌曲标准上下文交给小云入口。 */
+function giveSongToAgent(song: StandardSong): void {
+  void router.push({
+    name: 'agent',
+    query: { intent: 'track', trackId: song.id, title: song.name }
+  })
+}
+
 // ========= 生命周期 =========
 
 watch([collectionKind, collectionId], () => {
   void loadCollection()
 }, { immediate: true })
+
+onMounted(() => {
+  void account.initialize()
+})
 </script>
 
 <template>
@@ -271,6 +388,7 @@ watch([collectionKind, collectionId], () => {
                 加入队列
               </CommonButton>
               <CommonButton
+                v-if="collection.kind === 'album' || !isOwnedPlaylist"
                 variant="secondary"
                 @click="toggleSubscription"
               >
@@ -292,18 +410,36 @@ watch([collectionKind, collectionId], () => {
             <h2 id="collection-tracks-title">
               歌曲
             </h2>
-            <span>{{ songs.length }} 首</span>
+            <span>{{ songs.length }} 首{{ isOwnedPlaylist ? ' · 可管理' : '' }}</span>
           </header>
           <VirtualTrackList
             class="track-list"
             :songs="songs"
             :active-track-id="activeTrackId"
+            :playlist-management="isOwnedPlaylist"
+            :management-busy="reorderBusy || Boolean(removingTrackId)"
             @play="playFromSong"
             @enqueue="enqueueSong"
             @play-next="playSongNext($event, collectionKind === 'album' ? { kind: 'album', albumId: collectionId } : { kind: 'playlist', playlistId: collectionId })"
             @like="likeSong"
+            @add-to-playlist="openAddToPlaylist"
+            @details="openSongDetails"
+            @give-agent="giveSongToAgent"
+            @move-up="movePlaylistSong($event, -1)"
+            @move-down="movePlaylistSong($event, 1)"
+            @remove="removePlaylistSong"
           />
         </section>
+
+        <MusicCommentsSection
+          :resource-type="collection.kind"
+          :resource-id="collection.id"
+        />
+
+        <AddTrackToPlaylistDialog
+          :song="playlistTarget"
+          @close="playlistTarget = null"
+        />
       </div>
     </Transition>
   </section>

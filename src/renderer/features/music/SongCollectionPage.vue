@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ListMusic, Play } from '@lucide/vue'
 import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import type { MusicReadResult, StandardSong } from '../../../shared/schemas/music'
 import {
@@ -12,6 +12,7 @@ import {
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
+import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
 import { mutateMusic, playSongNext } from './music-actions'
 import {
@@ -31,6 +32,9 @@ type SongCollectionKind = 'new' | 'daily'
 /** 当前路由对象，用于识别歌曲集合类型。 */
 const route = useRoute()
 
+/** Router 实例，用于歌曲详情和小云上下文导航。 */
+const router = useRouter()
+
 /** 应用账户公开状态。 */
 const account = useAccountSessionStore()
 
@@ -45,6 +49,9 @@ const loading = ref<boolean>(true)
 
 /** 页面错误文案。 */
 const errorMessage = ref<string>('')
+
+/** 当前等待选择目标歌单的歌曲。 */
+const playlistTarget = ref<StandardSong | null>(null)
 
 /** 当前歌曲集合类型。 */
 const collection = computed<SongCollectionKind>(() => {
@@ -130,6 +137,24 @@ async function likeSong(song: StandardSong): Promise<void> {
     return
   }
   showToast(`已收藏《${song.name}》。`, 'success')
+}
+
+/** 打开共享的自建歌单选择对话框。 */
+function openAddToPlaylist(song: StandardSong): void {
+  playlistTarget.value = song
+}
+
+/** 打开正式歌曲详情页。 */
+function openSongDetails(song: StandardSong): void {
+  void router.push({ name: 'song-detail', params: { songId: song.id } })
+}
+
+/** 将歌曲标准上下文交给小云入口。 */
+function giveSongToAgent(song: StandardSong): void {
+  void router.push({
+    name: 'agent',
+    query: { intent: 'track', trackId: song.id, title: song.name }
+  })
 }
 
 // ========= 生命周期 =========
@@ -240,8 +265,16 @@ watch(collection, async () => {
           @enqueue="enqueueSong"
           @play-next="playSongNext($event, { kind: 'discover' })"
           @like="likeSong"
+          @add-to-playlist="openAddToPlaylist"
+          @details="openSongDetails"
+          @give-agent="giveSongToAgent"
         />
       </div>
     </Transition>
+
+    <AddTrackToPlaylistDialog
+      :song="playlistTarget"
+      @close="playlistTarget = null"
+    />
   </section>
 </template>

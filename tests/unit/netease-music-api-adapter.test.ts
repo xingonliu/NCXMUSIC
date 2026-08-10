@@ -74,6 +74,34 @@ function apiFixture(): NeteaseMusicApi {
     playlist_name_update: vi.fn(async () => response({ code: 200 })),
     playlist_delete: vi.fn(async () => response({ code: 200 })),
     playlist_tracks: vi.fn(async () => response({ code: 200 })),
+    song_order_update: vi.fn(async () => response({ code: 200 })),
+    comment_music: vi.fn(async () => response({
+      total: 2,
+      more: false,
+      hotComments: [{
+        commentId: 91001,
+        user: { userId: 10001, nickname: '热门听友', avatarUrl: 'https://p1.music.126.net/hot.jpg' },
+        content: '热门评论',
+        time: 1_786_000_000_000,
+        likedCount: 12,
+        liked: true,
+        owner: false,
+        ipLocation: { location: '上海' }
+      }],
+      comments: [{
+        commentId: 91002,
+        user: { userId: 10002, nickname: '普通听友' },
+        content: '普通评论',
+        time: 1_786_000_100_000,
+        likedCount: 0,
+        liked: false,
+        owner: true
+      }]
+    })),
+    comment_album: vi.fn(async () => response({ total: 0, more: false, comments: [], hotComments: [] })),
+    comment_playlist: vi.fn(async () => response({ total: 0, more: false, comments: [], hotComments: [] })),
+    comment: vi.fn(async () => response({ code: 200, comment: { commentId: 92001 } })),
+    comment_like: vi.fn(async () => response({ code: 200 })),
     daily_signin: vi.fn(async () => response({ code: 200 }))
   }
 }
@@ -171,6 +199,82 @@ describe('NeteaseMusicApiAdapter', () => {
     }))
     expect(result).toMatchObject({ operation: 'createPlaylist', succeeded: true, entityId: '9901' })
     expect(JSON.stringify(result)).not.toContain('MUSIC_U')
+  })
+
+  it('normalizes public comments without leaking raw social fields', async () => {
+    /** 网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(apiFixture())
+
+    const result = await adapter.read({
+      operation: 'getComments',
+      resourceType: 'song',
+      resourceId: '33894312',
+      limit: 20,
+      offset: 0
+    }, '')
+
+    expect(result).toMatchObject({
+      kind: 'commentCollection',
+      resourceType: 'song',
+      resourceId: '33894312',
+      total: 2,
+      more: false,
+      hotComments: [{
+        id: '91001',
+        author: { id: '10001', nickname: '热门听友' },
+        content: '热门评论',
+        likedCount: 12,
+        liked: true,
+        location: '上海'
+      }],
+      comments: [{ id: '91002', owner: true }]
+    })
+    expect(JSON.stringify(result)).not.toContain('ipLocation')
+  })
+
+  it('executes comment and playlist ordering mutations with exact SDK parameters', async () => {
+    /** 带可控评论和排序方法的 API 夹具。 */
+    const api = apiFixture()
+    /** 网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+
+    const added = await adapter.mutate({
+      operation: 'addComment',
+      resourceType: 'album',
+      resourceId: '34740156',
+      content: '值得反复听'
+    }, 'MUSIC_U=secret')
+    await adapter.mutate({
+      operation: 'likeComment',
+      resourceType: 'song',
+      resourceId: '33894312',
+      commentId: '91002',
+      liked: true
+    }, 'MUSIC_U=secret')
+    await adapter.mutate({
+      operation: 'reorderPlaylistTracks',
+      playlistId: '8001',
+      trackIds: ['3', '1', '2']
+    }, 'MUSIC_U=secret')
+
+    expect(api.comment).toHaveBeenCalledWith(expect.objectContaining({
+      id: '34740156',
+      type: 3,
+      t: 1,
+      content: '值得反复听'
+    }))
+    expect(api.comment_like).toHaveBeenCalledWith(expect.objectContaining({
+      id: '33894312',
+      type: 0,
+      t: 1,
+      cid: '91002'
+    }))
+    expect(api.song_order_update).toHaveBeenCalledWith(expect.objectContaining({
+      pid: '8001',
+      ids: '3,1,2'
+    }))
+    expect(added).toMatchObject({ operation: 'addComment', entityId: '92001' })
+    expect(JSON.stringify(added)).not.toContain('MUSIC_U')
   })
 
   it('rejects non-success HTTP status instead of returning an empty entity', async () => {

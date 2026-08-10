@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FolderPlus, Heart, ListPlus, Play } from '@lucide/vue'
+import { ChevronDown, ChevronUp, FolderPlus, Heart, ListPlus, Play, Trash2 } from '@lucide/vue'
 import { computed } from 'vue'
 
 import type { StandardSong } from '../../../../shared/schemas/music'
@@ -24,9 +24,24 @@ const props = withDefaults(defineProps<{
   active?: boolean
   /** 是否展示封面。 */
   showArtwork?: boolean
+  /** 是否展示自建歌单歌曲管理动作。 */
+  playlistManagement?: boolean
+  /** 是否暂时禁用歌单歌曲管理动作。 */
+  managementBusy?: boolean
+  /** 当前歌曲是否位于歌单首项。 */
+  firstInPlaylist?: boolean
+  /** 当前歌曲是否位于歌单末项。 */
+  lastInPlaylist?: boolean
+  /** 当前歌曲是否已收藏。 */
+  liked?: boolean
 }>(), {
   active: false,
-  showArtwork: true
+  showArtwork: true,
+  playlistManagement: false,
+  managementBusy: false,
+  firstInPlaylist: false,
+  lastInPlaylist: false,
+  liked: false
 })
 
 /** 歌曲行事件。 */
@@ -38,6 +53,9 @@ const emit = defineEmits<{
   (event: 'add-to-playlist', song: StandardSong): void
   (event: 'details', song: StandardSong): void
   (event: 'give-agent', song: StandardSong): void
+  (event: 'move-up', song: StandardSong): void
+  (event: 'move-down', song: StandardSong): void
+  (event: 'remove', song: StandardSong): void
 }>()
 
 // ========= 变量 =========
@@ -60,17 +78,42 @@ const hasVipBadge = computed<boolean>(() => props.song.access.badges.includes('v
 const hasPaidBadge = computed<boolean>(() => props.song.access.badges.includes('paid'))
 
 /** 当前歌曲右键菜单，按冻结矩阵提供首批通用动作。 */
-const contextMenuItems = computed<CommonMenuItem[]>(() => [
-  { value: 'play', label: '立即播放' },
-  { value: 'play-next', label: '下一首播放' },
-  { value: 'enqueue', label: '添加到队列末尾' },
-  { value: 'separator-a', type: 'separator' },
-  { value: 'like', label: '收藏' },
-  { value: 'add-to-playlist', label: '添加到歌单' },
-  { value: 'details', label: '查看歌曲详情' },
-  { value: 'give-agent', label: '交给 Agent' },
-  { value: 'copy-link', label: '复制网易云歌曲链接' }
-])
+const contextMenuItems = computed<CommonMenuItem[]>(() => {
+  /** 当前歌曲可用的通用上下文动作。 */
+  const items: CommonMenuItem[] = [
+    { value: 'play', label: '立即播放' },
+    { value: 'play-next', label: '下一首播放' },
+    { value: 'enqueue', label: '添加到队列末尾' },
+    { value: 'separator-a', type: 'separator' },
+    { value: 'like', label: props.liked ? '取消收藏' : '收藏' },
+    { value: 'add-to-playlist', label: '添加到歌单' },
+    { value: 'details', label: '查看歌曲详情' },
+    { value: 'give-agent', label: '交给 Agent' },
+    { value: 'copy-link', label: '复制网易云歌曲链接' }
+  ]
+  if (props.playlistManagement) {
+    items.push(
+      { value: 'separator-management', type: 'separator' },
+      {
+        value: 'move-up',
+        label: '上移一位',
+        disabled: props.managementBusy || props.firstInPlaylist
+      },
+      {
+        value: 'move-down',
+        label: '下移一位',
+        disabled: props.managementBusy || props.lastInPlaylist
+      },
+      {
+        value: 'remove',
+        label: '从当前歌单移除',
+        danger: true,
+        disabled: props.managementBusy
+      }
+    )
+  }
+  return items
+})
 
 // ========= 函数 =========
 
@@ -87,6 +130,7 @@ function handleEnqueue(event: MouseEvent): void {
 
 /** 执行当前歌曲右键菜单动作。 */
 function handleContextAction(value: string | number): void {
+  /** 统一转换后的上下文动作标识。 */
   const action = String(value)
   if (action === 'play') emit('play', props.song)
   else if (action === 'play-next') emit('play-next', props.song)
@@ -95,6 +139,9 @@ function handleContextAction(value: string | number): void {
   else if (action === 'add-to-playlist') emit('add-to-playlist', props.song)
   else if (action === 'details') emit('details', props.song)
   else if (action === 'give-agent') emit('give-agent', props.song)
+  else if (action === 'move-up') emit('move-up', props.song)
+  else if (action === 'move-down') emit('move-down', props.song)
+  else if (action === 'remove') emit('remove', props.song)
   else if (action === 'copy-link') {
     void copyText(
       `https://music.163.com/song?id=${props.song.id}`,
@@ -112,7 +159,10 @@ function handleContextAction(value: string | number): void {
   >
     <article
       class="track-row"
-      :class="{ 'track-row--active': props.active }"
+      :class="{
+        'track-row--active': props.active,
+        'track-row--manageable': props.playlistManagement
+      }"
       role="button"
       tabindex="0"
       @click="handlePlay"
@@ -131,18 +181,18 @@ function handleContextAction(value: string | number): void {
       />
 
       <div class="track-row-main">
-      <div class="track-row-title-line">
-        <h3>{{ props.song.name }}</h3>
-        <span
-          v-if="hasVipBadge"
-          class="track-row-badge track-row-badge--vip"
-        >VIP</span>
-        <span
-          v-if="hasPaidBadge"
-          class="track-row-badge track-row-badge--paid"
-        >付费</span>
-      </div>
-      <p>{{ artistText }}</p>
+        <div class="track-row-title-line">
+          <h3>{{ props.song.name }}</h3>
+          <span
+            v-if="hasVipBadge"
+            class="track-row-badge track-row-badge--vip"
+          >VIP</span>
+          <span
+            v-if="hasPaidBadge"
+            class="track-row-badge track-row-badge--paid"
+          >付费</span>
+        </div>
+        <p>{{ artistText }}</p>
       </div>
 
       <p class="track-row-album">
@@ -154,32 +204,35 @@ function handleContextAction(value: string | number): void {
       </span>
 
       <div class="track-row-actions">
-      <CommonIconButton
-        size="compact"
-        variant="ghost"
-        label="播放"
-        @click.stop="handlePlay"
-      >
-        <Play
-          :size="13"
-          fill="currentColor"
-        />
-      </CommonIconButton>
-      <CommonIconButton
-        size="compact"
-        variant="ghost"
-        label="加入队列"
-        @click="handleEnqueue"
-      >
-        <ListPlus :size="13" />
-      </CommonIconButton>
         <CommonIconButton
           size="compact"
           variant="ghost"
-          label="收藏"
+          label="播放"
+          @click.stop="handlePlay"
+        >
+          <Play
+            :size="13"
+            fill="currentColor"
+          />
+        </CommonIconButton>
+        <CommonIconButton
+          size="compact"
+          variant="ghost"
+          label="加入队列"
+          @click="handleEnqueue"
+        >
+          <ListPlus :size="13" />
+        </CommonIconButton>
+        <CommonIconButton
+          size="compact"
+          variant="ghost"
+          :label="props.liked ? '取消收藏' : '收藏'"
           @click.stop="emit('like', props.song)"
         >
-          <Heart :size="13" />
+          <Heart
+            :size="13"
+            :fill="props.liked ? 'currentColor' : 'none'"
+          />
         </CommonIconButton>
         <CommonIconButton
           size="compact"
@@ -189,6 +242,35 @@ function handleContextAction(value: string | number): void {
         >
           <FolderPlus :size="13" />
         </CommonIconButton>
+        <template v-if="props.playlistManagement">
+          <CommonIconButton
+            size="compact"
+            variant="ghost"
+            label="上移一位"
+            :disabled="props.managementBusy || props.firstInPlaylist"
+            @click.stop="emit('move-up', props.song)"
+          >
+            <ChevronUp :size="13" />
+          </CommonIconButton>
+          <CommonIconButton
+            size="compact"
+            variant="ghost"
+            label="下移一位"
+            :disabled="props.managementBusy || props.lastInPlaylist"
+            @click.stop="emit('move-down', props.song)"
+          >
+            <ChevronDown :size="13" />
+          </CommonIconButton>
+          <CommonIconButton
+            size="compact"
+            variant="ghost"
+            label="从当前歌单移除"
+            :disabled="props.managementBusy"
+            @click.stop="emit('remove', props.song)"
+          >
+            <Trash2 :size="13" />
+          </CommonIconButton>
+        </template>
       </div>
     </article>
   </CommonContextMenu>
@@ -207,6 +289,10 @@ function handleContextAction(value: string | number): void {
   transition:
     background-color var(--ncx-motion-fast),
     color var(--ncx-motion-fast);
+}
+
+.track-row--manageable {
+  grid-template-columns: 32px auto minmax(150px, 1.5fr) minmax(100px, 1fr) 54px 164px;
 }
 
 .track-row-context {

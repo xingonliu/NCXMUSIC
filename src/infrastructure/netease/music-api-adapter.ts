@@ -9,6 +9,7 @@ import {
   MusicReadResultSchema,
   type MusicMutationPayload,
   type MusicMutationResult,
+  type MusicCommentResourceType,
   type MusicReadPayload,
   type MusicReadResult,
   type StandardAlbum,
@@ -17,6 +18,7 @@ import {
   type StandardArtistSummary,
   type StandardLyrics,
   type StandardLyricsLine,
+  type StandardMusicComment,
   type StandardPlaylist,
   type StandardSong,
   type StandardUser,
@@ -70,6 +72,12 @@ export interface NeteaseMusicApi {
   playlist_name_update?(params: Record<string, unknown>): Promise<NeteaseResponse>
   playlist_delete?(params: Record<string, unknown>): Promise<NeteaseResponse>
   playlist_tracks?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  song_order_update?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  comment_music?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  comment_album?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  comment_playlist?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  comment?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  comment_like?(params: Record<string, unknown>): Promise<NeteaseResponse>
   daily_signin?(params: Record<string, unknown>): Promise<NeteaseResponse>
 }
 
@@ -102,6 +110,20 @@ const SEARCH_TYPES = {
   albums: '10',
   playlists: '1000'
 } as const
+
+/** 标准评论资源类型到网易云数字类型的稳定映射。 */
+const COMMENT_RESOURCE_TYPES: Record<MusicCommentResourceType, number> = {
+  song: 0,
+  album: 3,
+  playlist: 2
+}
+
+/** 标准评论资源类型到只读 API 方法的稳定映射。 */
+const COMMENT_READ_METHODS: Record<MusicCommentResourceType, keyof NeteaseMusicApi> = {
+  song: 'comment_music',
+  album: 'comment_album',
+  playlist: 'comment_playlist'
+}
 
 /** 当前并发执行的三方 console 屏蔽请求数。 */
 let consoleSuppressionDepth = 0
@@ -558,6 +580,40 @@ function normalizeUser(rawValue: unknown, api: string, observedAt: string): Stan
   }
 }
 
+/** 把歌曲、专辑或歌单评论归一化为不含上游私有字段的标准实体。 */
+function normalizeComment(
+  rawValue: unknown,
+  resourceType: MusicCommentResourceType,
+  resourceId: string
+): StandardMusicComment | undefined {
+  /** 上游评论记录。 */
+  const raw = record(rawValue)
+  /** 归一化后的评论 ID。 */
+  const id = idValue(raw?.['commentId'] ?? raw?.['id'])
+  /** 归一化后的评论作者。 */
+  const author = normalizeUserSummary(raw?.['user'])
+  /** 优先使用纯文本评论正文。 */
+  const content = stringValue(raw?.['content'] ?? raw?.['richContent'])
+  /** 评论创建毫秒时间戳。 */
+  const time = numberValue(raw?.['time'])
+  if (!raw || !id || !author || !content || time === undefined || time < 0) return undefined
+
+  /** 可选的公开评论属地。 */
+  const location = stringValue(record(raw['ipLocation'])?.['location'])
+  return {
+    id,
+    resourceType,
+    resourceId,
+    author,
+    content,
+    time: Math.trunc(time),
+    likedCount: Math.max(0, Math.trunc(numberValue(raw['likedCount']) ?? 0)),
+    liked: booleanValue(raw['liked']) ?? false,
+    owner: booleanValue(raw['owner']) ?? false,
+    ...(location ? { location } : {})
+  }
+}
+
 // ========= 类 =========
 
 /** 网易云音乐只读 Adapter，负责把上游响应转为标准实体。 */
@@ -590,7 +646,17 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
     if (parsed.operation === 'getArtistAlbums') {
       return this.getArtistAlbums(parsed.artistId, parsed.limit, parsed.offset, cookie, signal)
     }
-    return this.getSimilarArtists(parsed.artistId, cookie, signal)
+    if (parsed.operation === 'getSimilarArtists') {
+      return this.getSimilarArtists(parsed.artistId, cookie, signal)
+    }
+    return this.getComments(
+      parsed.resourceType,
+      parsed.resourceId,
+      parsed.limit,
+      parsed.offset,
+      cookie,
+      signal
+    )
   }
 
   /** 执行账户感知的显式音乐写入请求。 */
@@ -661,6 +727,44 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
         timeout: NETEASE_API_TIMEOUT_MS
       }))
       entityId = parsed.playlistId
+    } else if (parsed.operation === 'reorderPlaylistTracks') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'song_order_update')({
+        pid: parsed.playlistId,
+        ids: parsed.trackIds.join(','),
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = parsed.playlistId
+    } else if (parsed.operation === 'addComment') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'comment')({
+        id: parsed.resourceId,
+        type: COMMENT_RESOURCE_TYPES[parsed.resourceType],
+        t: 1,
+        content: parsed.content,
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = idValue(record(bodyRecord(response)['comment'])?.['commentId'])
+    } else if (parsed.operation === 'deleteComment') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'comment')({
+        id: parsed.resourceId,
+        type: COMMENT_RESOURCE_TYPES[parsed.resourceType],
+        t: 0,
+        commentId: parsed.commentId,
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = parsed.commentId
+    } else if (parsed.operation === 'likeComment') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'comment_like')({
+        id: parsed.resourceId,
+        type: COMMENT_RESOURCE_TYPES[parsed.resourceType],
+        t: parsed.liked ? 1 : 0,
+        cid: parsed.commentId,
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = parsed.commentId
     } else {
       response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'daily_signin')({
         type: 1,
@@ -691,7 +795,9 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
     cookie: string,
     signal?: AbortSignal
   ): Promise<MusicReadResult> {
+    /** 已加载且满足方法契约的网易云 API。 */
     const api = await this.requiredApi()
+    /** 本次读取的统一观测时间。 */
     const observedAt = new Date().toISOString()
     const callSearch = async (type: string): Promise<UnknownRecord> => {
       signal?.throwIfAborted()
@@ -1018,6 +1124,53 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
       artists: array(bodyRecord(response)['artists'])
         .map((item) => normalizeArtist(item, 'ncm.simi_artist', observedAt))
         .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取并归一化歌曲、专辑或歌单评论集合。 */
+  private async getComments(
+    resourceType: MusicCommentResourceType,
+    resourceId: string,
+    limit: number,
+    offset: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    const api = await this.requiredApi()
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 上游评论读取响应。 */
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(
+      api,
+      COMMENT_READ_METHODS[resourceType]
+    )({
+      id: resourceId,
+      limit,
+      offset,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    /** 兼容 SDK body 包装后的上游响应主体。 */
+    const body = bodyRecord(response)
+    /** 归一化后的普通评论集合。 */
+    const comments = array(body['comments'])
+      .map((item) => normalizeComment(item, resourceType, resourceId))
+      .filter((item): item is StandardMusicComment => Boolean(item))
+    /** 归一化后的热门评论集合。 */
+    const hotComments = array(body['hotComments'])
+      .map((item) => normalizeComment(item, resourceType, resourceId))
+      .filter((item): item is StandardMusicComment => Boolean(item))
+
+    return MusicReadResultSchema.parse({
+      kind: 'commentCollection',
+      resourceType,
+      resourceId,
+      comments,
+      hotComments,
+      total: Math.max(0, Math.trunc(numberValue(body['total']) ?? comments.length)),
+      more: booleanValue(body['more']) ?? comments.length === limit,
       updatedAt: observedAt
     })
   }

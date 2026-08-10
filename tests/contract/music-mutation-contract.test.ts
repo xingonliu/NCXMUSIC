@@ -60,4 +60,43 @@ describe('music.mutate contract', () => {
     }).success).toBe(false)
     expect(MusicMutationPayloadSchema.safeParse({ operation: 'purchaseAlbum', albumId: '1' }).success).toBe(false)
   })
+
+  it('accepts strict comment and playlist ordering mutations', () => {
+    /** 合法发表评论载荷。 */
+    const comment = MusicMutationPayloadSchema.parse({
+      operation: 'addComment',
+      resourceType: 'song',
+      resourceId: '33894312',
+      content: '值得反复听'
+    })
+    /** 合法歌单歌曲排序载荷。 */
+    const reorder = MusicMutationPayloadSchema.parse({
+      operation: 'reorderPlaylistTracks',
+      playlistId: '8001',
+      trackIds: ['3', '1', '2']
+    })
+
+    expect(comment).toMatchObject({ operation: 'addComment', resourceType: 'song' })
+    expect(reorder).toMatchObject({ operation: 'reorderPlaylistTracks', trackIds: ['3', '1', '2'] })
+  })
+
+  it('rejects invalid comment targets, oversized content, and empty ordering lists', () => {
+    expect(MusicMutationPayloadSchema.safeParse({
+      operation: 'deleteComment',
+      resourceType: 'mv',
+      resourceId: '1',
+      commentId: '2'
+    }).success).toBe(false)
+    expect(MusicMutationPayloadSchema.safeParse({
+      operation: 'addComment',
+      resourceType: 'album',
+      resourceId: '1',
+      content: 'x'.repeat(1_001)
+    }).success).toBe(false)
+    expect(MusicMutationPayloadSchema.safeParse({
+      operation: 'reorderPlaylistTracks',
+      playlistId: '1',
+      trackIds: []
+    }).success).toBe(false)
+  })
 })

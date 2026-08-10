@@ -19,6 +19,12 @@ export const PlaylistIdSchema = z.string().regex(/^\d{1,20}$/u, '歌单 ID 必�
 /** 网易云用户 ID（纯数字字符串，最长 20 位）。 */
 export const MusicUserIdSchema = z.string().regex(/^\d{1,20}$/u, '用户 ID 必须为纯数字')
 
+/** 网易云评论 ID（纯数字字符串，最长 20 位）。 */
+export const MusicCommentIdSchema = z.string().regex(/^\d{1,20}$/u, '评论 ID 必须为纯数字')
+
+/** 首版已经登记评论能力的资源类型。 */
+export const MusicCommentResourceTypeSchema = z.enum(['song', 'album', 'playlist'])
+
 /** 标准实体更新时间，统一使用 ISO 字符串。 */
 export const EntityUpdatedAtSchema = z.string().datetime()
 
@@ -82,6 +88,20 @@ export const StandardUserSummarySchema = z.strictObject({
   id: MusicUserIdSchema,
   nickname: z.string().min(1).max(160),
   avatarUrl: z.string().url().optional()
+})
+
+/** 标准评论实体，隔离网易云原始评论响应字段。 */
+export const StandardMusicCommentSchema = z.strictObject({
+  id: MusicCommentIdSchema,
+  resourceType: MusicCommentResourceTypeSchema,
+  resourceId: z.string().regex(/^\d{1,20}$/u, '评论资源 ID 必须为纯数字'),
+  author: StandardUserSummarySchema,
+  content: z.string().min(1).max(5_000),
+  time: z.number().int().nonnegative(),
+  likedCount: z.number().int().nonnegative().default(0),
+  liked: z.boolean().default(false),
+  owner: z.boolean().default(false),
+  location: z.string().max(80).optional()
 })
 
 /** 标准歌曲实体。 */
@@ -280,6 +300,15 @@ export const GetSimilarArtistsPayloadSchema = z.strictObject({
   artistId: ArtistIdSchema
 })
 
+/** 读取歌曲、专辑或歌单评论请求。 */
+export const GetMusicCommentsPayloadSchema = z.strictObject({
+  operation: z.literal('getComments'),
+  resourceType: MusicCommentResourceTypeSchema,
+  resourceId: z.string().regex(/^\d{1,20}$/u, '评论资源 ID 必须为纯数字'),
+  limit: z.number().int().min(1).max(50).default(20),
+  offset: z.number().int().min(0).max(5_000).default(0)
+})
+
 /** Music Service 只读请求载荷。 */
 export const MusicReadPayloadSchema = z.discriminatedUnion('operation', [
   MusicSearchPayloadSchema,
@@ -295,7 +324,8 @@ export const MusicReadPayloadSchema = z.discriminatedUnion('operation', [
   GetUserPlaylistsPayloadSchema,
   GetLikedSongsPayloadSchema,
   GetArtistAlbumsPayloadSchema,
-  GetSimilarArtistsPayloadSchema
+  GetSimilarArtistsPayloadSchema,
+  GetMusicCommentsPayloadSchema
 ])
 
 /** 搜索响应结果。 */
@@ -355,6 +385,18 @@ export const MusicArtistCollectionResultSchema = z.strictObject({
   updatedAt: EntityUpdatedAtSchema
 })
 
+/** 标准评论集合响应。 */
+export const MusicCommentCollectionResultSchema = z.strictObject({
+  kind: z.literal('commentCollection'),
+  resourceType: MusicCommentResourceTypeSchema,
+  resourceId: z.string().regex(/^\d{1,20}$/u),
+  comments: z.array(StandardMusicCommentSchema).default([]),
+  hotComments: z.array(StandardMusicCommentSchema).default([]),
+  total: z.number().int().nonnegative(),
+  more: z.boolean(),
+  updatedAt: EntityUpdatedAtSchema
+})
+
 /** Music Service 只读响应结果。 */
 export const MusicReadResultSchema = z.union([
   MusicSearchResultSchema,
@@ -362,7 +404,8 @@ export const MusicReadResultSchema = z.union([
   MusicSongCollectionResultSchema,
   MusicPlaylistCollectionResultSchema,
   MusicAlbumCollectionResultSchema,
-  MusicArtistCollectionResultSchema
+  MusicArtistCollectionResultSchema,
+  MusicCommentCollectionResultSchema
 ])
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -418,6 +461,38 @@ export const UpdatePlaylistTracksMutationSchema = z.strictObject({
   action: z.enum(['add', 'remove'])
 })
 
+/** 按完整歌曲 ID 顺序更新自建歌单歌曲排序请求。 */
+export const ReorderPlaylistTracksMutationSchema = z.strictObject({
+  operation: z.literal('reorderPlaylistTracks'),
+  playlistId: PlaylistIdSchema,
+  trackIds: z.array(TrackIdSchema).min(1).max(10_000)
+})
+
+/** 发表评论请求。 */
+export const AddMusicCommentMutationSchema = z.strictObject({
+  operation: z.literal('addComment'),
+  resourceType: MusicCommentResourceTypeSchema,
+  resourceId: z.string().regex(/^\d{1,20}$/u, '评论资源 ID 必须为纯数字'),
+  content: z.string().trim().min(1).max(1_000)
+})
+
+/** 删除本人评论请求。 */
+export const DeleteMusicCommentMutationSchema = z.strictObject({
+  operation: z.literal('deleteComment'),
+  resourceType: MusicCommentResourceTypeSchema,
+  resourceId: z.string().regex(/^\d{1,20}$/u, '评论资源 ID 必须为纯数字'),
+  commentId: MusicCommentIdSchema
+})
+
+/** 点赞或取消点赞评论请求。 */
+export const LikeMusicCommentMutationSchema = z.strictObject({
+  operation: z.literal('likeComment'),
+  resourceType: MusicCommentResourceTypeSchema,
+  resourceId: z.string().regex(/^\d{1,20}$/u, '评论资源 ID 必须为纯数字'),
+  commentId: MusicCommentIdSchema,
+  liked: z.boolean()
+})
+
 /** 每日签到请求。 */
 export const DailySigninMutationSchema = z.strictObject({
   operation: z.literal('dailySignin')
@@ -432,6 +507,10 @@ export const MusicMutationPayloadSchema = z.discriminatedUnion('operation', [
   RenamePlaylistMutationSchema,
   DeletePlaylistMutationSchema,
   UpdatePlaylistTracksMutationSchema,
+  ReorderPlaylistTracksMutationSchema,
+  AddMusicCommentMutationSchema,
+  DeleteMusicCommentMutationSchema,
+  LikeMusicCommentMutationSchema,
   DailySigninMutationSchema
 ])
 
@@ -445,6 +524,10 @@ export const MusicMutationResultSchema = z.strictObject({
     'renamePlaylist',
     'deletePlaylist',
     'updatePlaylistTracks',
+    'reorderPlaylistTracks',
+    'addComment',
+    'deleteComment',
+    'likeComment',
     'dailySignin'
   ]),
   succeeded: z.literal(true),
@@ -501,6 +584,8 @@ export type ArtistId = z.infer<typeof ArtistIdSchema>
 export type AlbumId = z.infer<typeof AlbumIdSchema>
 export type PlaylistId = z.infer<typeof PlaylistIdSchema>
 export type MusicUserId = z.infer<typeof MusicUserIdSchema>
+export type MusicCommentId = z.infer<typeof MusicCommentIdSchema>
+export type MusicCommentResourceType = z.infer<typeof MusicCommentResourceTypeSchema>
 export type MusicQualityLevel = z.infer<typeof MusicQualityLevelSchema>
 export type MusicQualityPreference = z.infer<typeof MusicQualityPreferenceSchema>
 export type MusicEntitySource = z.infer<typeof MusicEntitySourceSchema>
@@ -508,6 +593,7 @@ export type TrackAccessMeta = z.infer<typeof TrackAccessMetaSchema>
 export type StandardArtistSummary = z.infer<typeof StandardArtistSummarySchema>
 export type StandardAlbumSummary = z.infer<typeof StandardAlbumSummarySchema>
 export type StandardUserSummary = z.infer<typeof StandardUserSummarySchema>
+export type StandardMusicComment = z.infer<typeof StandardMusicCommentSchema>
 export type StandardSong = z.infer<typeof StandardSongSchema>
 export type StandardLyricsLine = z.infer<typeof StandardLyricsLineSchema>
 export type StandardLyrics = z.infer<typeof StandardLyricsSchema>

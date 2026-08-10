@@ -6,11 +6,13 @@ import { useRoute } from 'vue-router'
 import type { MusicReadResult, StandardSong } from '../../../shared/schemas/music'
 import {
   CommonButton,
+  CommonEmptyState,
   CommonErrorState,
   CommonSpinner
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import Cover from './components/Cover.vue'
+import MusicCommentsSection from './components/MusicCommentsSection.vue'
 import { mutateMusic } from './music-actions'
 import { formatMusicDuration, standardSongToTrackSummary } from './music-entity'
 import './music-content-pages.css'
@@ -126,56 +128,74 @@ watch(songId, () => void loadSong(), { immediate: true })
         />
       </div>
 
-      <header
+      <div
         v-else-if="song"
         key="content"
-        class="music-detail-hero music-surface"
+        class="song-detail-content"
       >
-        <Cover
-          :src="song.album?.artworkUrl"
-          :alt="song.name"
-          size="hero"
-          :hover-effect="false"
-          :show-play-button="false"
-        />
-        <div class="music-detail-hero-copy">
-          <p class="music-page-eyebrow">
-            歌曲
-          </p>
-          <h1 id="song-detail-title">
-            {{ song.name }}
-          </h1>
-          <p class="song-detail-artist">
-            {{ artistText }}
-          </p>
-          <p class="music-detail-meta">
-            {{ song.album?.name ?? '未知专辑' }} · {{ formatMusicDuration(song.durationMs) }}
-          </p>
-          <div class="music-detail-actions">
-            <CommonButton
-              variant="primary"
-              @click="playSong"
-            >
-              <Play
-                :size="15"
-                fill="currentColor"
-              />播放
-            </CommonButton>
-            <CommonButton
-              variant="secondary"
-              @click="enqueueSong"
-            >
-              <ListPlus :size="15" />加入队列
-            </CommonButton>
-            <CommonButton
-              variant="secondary"
-              @click="likeSong"
-            >
-              <Heart :size="15" />收藏
-            </CommonButton>
+        <header class="music-detail-hero music-surface">
+          <Cover
+            :src="song.album?.artworkUrl"
+            :alt="song.name"
+            size="hero"
+            :hover-effect="false"
+            :show-play-button="false"
+          />
+          <div class="music-detail-hero-copy">
+            <p class="music-page-eyebrow">
+              歌曲
+            </p>
+            <h1 id="song-detail-title">
+              {{ song.name }}
+            </h1>
+            <p class="song-detail-artist">
+              {{ artistText }}
+            </p>
+            <p class="music-detail-meta">
+              {{ song.album?.name ?? '未知专辑' }} · {{ formatMusicDuration(song.durationMs) }}
+            </p>
+            <div class="music-detail-actions">
+              <CommonButton
+                variant="primary"
+                @click="playSong"
+              >
+                <Play
+                  :size="15"
+                  fill="currentColor"
+                />播放
+              </CommonButton>
+              <CommonButton
+                variant="secondary"
+                @click="enqueueSong"
+              >
+                <ListPlus :size="15" />加入队列
+              </CommonButton>
+              <CommonButton
+                variant="secondary"
+                @click="likeSong"
+              >
+                <Heart :size="15" />收藏
+              </CommonButton>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+
+        <MusicCommentsSection
+          resource-type="song"
+          :resource-id="song.id"
+        />
+      </div>
+
+      <div
+        v-else
+        key="empty"
+        class="song-detail-state"
+      >
+        <CommonEmptyState
+          title="没有找到歌曲"
+          description="该歌曲暂时不可用。"
+        />
+      </div>
     </Transition>
   </section>
 </template>

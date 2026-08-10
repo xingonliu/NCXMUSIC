@@ -2459,17 +2459,18 @@ export const CommonContextMenu = defineComponent({
     /** 打开菜单的触发元素，用于关闭后恢复焦点。 */
     let triggerElement: HTMLElement | null = null
 
-    function openMenu(event: MouseEvent): void {
-      if (props.disabled) return
-      event.preventDefault()
-      event.stopPropagation()
-      triggerElement = event.currentTarget instanceof HTMLElement ? event.currentTarget : null
-
+    /** 在指定视口坐标打开菜单，并记录关闭后需要恢复焦点的触发元素。 */
+    function openMenuAt(x: number, y: number, trigger: HTMLElement | null): void {
+      triggerElement = trigger
+      /** 上下文菜单的稳定估算宽度。 */
       const menuWidth = 200
+      /** 根据动作数量约束后的上下文菜单估算高度。 */
       const menuHeight = Math.min(340, props.items.length * 32 + 16)
 
-      let posX = event.clientX
-      let posY = event.clientY
+      /** 经过视口边界修正的水平坐标。 */
+      let posX = x
+      /** 经过视口边界修正的垂直坐标。 */
+      let posY = y
 
       if (posX + menuWidth > window.innerWidth - 8) {
         posX = Math.max(8, window.innerWidth - menuWidth - 8)
@@ -2482,6 +2483,29 @@ export const CommonContextMenu = defineComponent({
       open.value = true
       emit('open-change', true)
       void nextTick(() => panel.value?.querySelector<HTMLElement>('[role="menuitem"]:not([disabled])')?.focus())
+    }
+
+    /** 处理指针右键并在指针位置打开菜单。 */
+    function openMenu(event: MouseEvent): void {
+      if (props.disabled) return
+      event.preventDefault()
+      event.stopPropagation()
+      /** 指针事件命中的菜单触发元素。 */
+      const trigger = event.target instanceof HTMLElement ? event.target : null
+      openMenuAt(event.clientX, event.clientY, trigger)
+    }
+
+    /** 处理 ContextMenu 键或 Shift+F10，并在当前焦点元素附近打开菜单。 */
+    function openMenuFromKeyboard(event: KeyboardEvent): void {
+      if (props.disabled || open.value) return
+      if (event.key !== 'ContextMenu' && !(event.shiftKey && event.key === 'F10')) return
+      event.preventDefault()
+      event.stopPropagation()
+      /** 当前获得键盘焦点的菜单触发元素。 */
+      const trigger = event.target instanceof HTMLElement ? event.target : null
+      /** 键盘菜单相对于触发元素的锚点矩形。 */
+      const rect = trigger?.getBoundingClientRect()
+      openMenuAt(rect?.left ?? 8, rect?.bottom ?? 8, trigger)
     }
 
     function closeMenu(): void {
@@ -2538,7 +2562,11 @@ export const CommonContextMenu = defineComponent({
     })
 
     return () =>
-      h('div', { class: 'ncx-common-context', onContextmenu: openMenu }, [
+      h('div', {
+        class: 'ncx-common-context',
+        onContextmenu: openMenu,
+        onKeydown: openMenuFromKeyboard
+      }, [
         slots.default?.(),
         open.value
           ? h(

@@ -12,6 +12,7 @@ import { CommonButton } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
 import EntityCard from './components/EntityCard.vue'
+import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import MusicSection from './components/MusicSection.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
 import { useDailySignin } from './daily-signin'
@@ -68,6 +69,9 @@ const dailySection = ref<SectionState<StandardSong[]>>({
   data: [],
   error: ''
 })
+
+/** 当前等待选择目标歌单的歌曲。 */
+const playlistTarget = ref<StandardSong | null>(null)
 
 /** 当前账户是否为登录账户。 */
 const isAuthenticated = computed<boolean>(() => account.snapshot.value?.state === 'authenticated')
@@ -184,6 +188,24 @@ async function likeSong(song: StandardSong): Promise<void> {
   showToast(`已收藏《${song.name}》。`, 'success')
 }
 
+/** 打开共享的自建歌单选择对话框。 */
+function openAddToPlaylist(song: StandardSong): void {
+  playlistTarget.value = song
+}
+
+/** 打开正式歌曲详情页。 */
+function openSongDetails(song: StandardSong): void {
+  void router.push({ name: 'song-detail', params: { songId: song.id } })
+}
+
+/** 将歌曲标准上下文交给小云入口。 */
+function giveSongToAgent(song: StandardSong): void {
+  void router.push({
+    name: 'agent',
+    query: { intent: 'track', trackId: song.id, title: song.name }
+  })
+}
+
 /** 执行网易云每日签到。 */
 async function dailySignin(): Promise<void> {
   await signinController.signin()
@@ -285,6 +307,9 @@ watch(
         @enqueue="enqueueSong"
         @play-next="playSongNext($event, { kind: 'discover' })"
         @like="likeSong"
+        @add-to-playlist="openAddToPlaylist"
+        @details="openSongDetails"
+        @give-agent="giveSongToAgent"
       />
     </MusicSection>
 
@@ -324,8 +349,16 @@ watch(
         @enqueue="enqueueSong"
         @play-next="playSongNext($event, { kind: 'discover' })"
         @like="likeSong"
+        @add-to-playlist="openAddToPlaylist"
+        @details="openSongDetails"
+        @give-agent="giveSongToAgent"
       />
     </MusicSection>
+
+    <AddTrackToPlaylistDialog
+      :song="playlistTarget"
+      @close="playlistTarget = null"
+    />
   </section>
 </template>
 

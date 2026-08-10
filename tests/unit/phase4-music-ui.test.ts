@@ -1,9 +1,11 @@
 // @vitest-environment happy-dom
-import { mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { flushPromises, mount } from '@vue/test-utils'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import MediaArtwork from '../../src/renderer/features/music/components/MediaArtwork.vue'
+import MusicCommentsSection from '../../src/renderer/features/music/components/MusicCommentsSection.vue'
 import VirtualTrackList from '../../src/renderer/features/music/components/VirtualTrackList.vue'
+import { disposeAccountSessionStore } from '../../src/renderer/features/account/account-session-store'
 import { adaptArtworkUrl } from '../../src/renderer/features/music/music-entity'
 import type { StandardSong } from '../../src/shared/schemas/music'
 
@@ -30,6 +32,12 @@ function song(index: number): StandardSong {
 // ========= 测试区 =========
 
 describe('Phase 4 music UI primitives', () => {
+  afterEach(() => {
+    disposeAccountSessionStore()
+    document.body.innerHTML = ''
+    vi.restoreAllMocks()
+  })
+
   it('generates all semantic artwork variants with one normalized param', () => {
     /** 带已有尺寸和其他查询参数的原图地址。 */
     const source = 'https://p1.music.126.net/a.jpg?foo=bar&param=10y10'
@@ -77,5 +85,93 @@ describe('Phase 4 music UI primitives', () => {
     expect(wrapper.findAll('.track-row').length).toBeLessThan(200)
     expect(wrapper.find('.virtual-track-list').attributes('style')).toContain('height: 520px')
     expect(wrapper.find('.virtual-track-list-spacer').attributes('style')).toContain('height: 12000px')
+  })
+
+  it('exposes keyboard-reachable playlist ordering and removal controls', async () => {
+    /** 两首可管理的自建歌单歌曲。 */
+    const songs = [song(0), song(1)]
+    /** 开启歌单管理能力的虚拟歌曲列表。 */
+    const wrapper = mount(VirtualTrackList, {
+      props: { songs, playlistManagement: true }
+    })
+
+    const moveDown = wrapper.find('button[aria-label="下移一位"]')
+    const remove = wrapper.find('button[aria-label="从当前歌单移除"]')
+    expect(moveDown.exists()).toBe(true)
+    expect(remove.exists()).toBe(true)
+    await moveDown.trigger('click')
+    await remove.trigger('click')
+    expect(wrapper.emitted('move-down')?.[0]).toEqual([songs[0]])
+    expect(wrapper.emitted('remove')?.[0]).toEqual([songs[0]])
+    await wrapper.find('.track-row').trigger('keydown', { key: 'F10', shiftKey: true })
+    await flushPromises()
+    expect(document.body.querySelector('.ncx-common-context-panel')).not.toBeNull()
+    wrapper.unmount()
+  })
+
+  it('renders normalized public comments while keeping guest mutations disabled', async () => {
+    /** 标准评论读取方法。 */
+    const readMusic = vi.fn(async () => ({
+      ok: true as const,
+      data: {
+        kind: 'commentCollection' as const,
+        resourceType: 'song' as const,
+        resourceId: '1',
+        comments: [{
+          id: '91',
+          resourceType: 'song' as const,
+          resourceId: '1',
+          author: { id: '8', nickname: '听友甲' },
+          content: '这一段编曲很耐听。',
+          time: 1_786_000_000_000,
+          likedCount: 3,
+          liked: false,
+          owner: false
+        }],
+        hotComments: [],
+        total: 1,
+        more: false,
+        updatedAt: observedAt
+      }
+    }))
+    /** 游客账户快照。 */
+    const guestSnapshot = {
+      state: 'guest' as const,
+      accountGeneration: 1,
+      activeAccount: { kind: 'guest' as const },
+      canMutateMusic: false
+    }
+    Object.defineProperty(window, 'ncx', {
+      configurable: true,
+      value: {
+        runtime: {
+          readMusic,
+          mutateMusic: vi.fn(),
+          cancel: vi.fn()
+        },
+        account: {
+          snapshot: vi.fn(async () => guestSnapshot),
+          onSnapshot: vi.fn(() => (): void => {})
+        }
+      }
+    })
+
+    /** 评论 Section。 */
+    const wrapper = mount(MusicCommentsSection, {
+      props: { resourceType: 'song', resourceId: '1' },
+      attachTo: document.body
+    })
+    await flushPromises()
+
+    expect(readMusic).toHaveBeenCalledWith(expect.objectContaining({
+      operation: 'getComments',
+      resourceType: 'song',
+      resourceId: '1'
+    }))
+    expect(wrapper.text()).toContain('听友甲')
+    expect(wrapper.text()).toContain('这一段编曲很耐听。')
+    expect(wrapper.find('textarea').attributes('disabled')).toBeDefined()
+    expect(wrapper.find('button').attributes('disabled')).toBeDefined()
+    wrapper.unmount()
   })
 })

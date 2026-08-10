@@ -206,7 +206,7 @@ Phase 0 技术门禁
 - 搜索和推荐“播放全部”按可见集合替换队列；所有入口队列语义一致。
 - 登录态、权益、缓存和写操作失败均来自 Adapter 契约，不读取原始 API 字段。
 
-> 执行记录（2026-08-09）：Phase 4 实现完成并标记为 `provisional-pass`。歌单/我喜欢、专辑、歌手、发现、个人信息、设置、播放详情和沉浸歌词均已接入正式路由；发现页采用“精选歌单 → 登录态每日推荐 → 新歌速递”的 Section Registry 装配，三个 Section 独立维护 Loading/Empty/Error/Ready 与重试。标准 `music.mutate` 通道已覆盖歌曲喜欢、歌单/专辑收藏、自建歌单创建/重命名/删除/增删歌曲和签到，写操作无透明重试且游客在 Utility 边界被拒绝。长歌曲列表使用固定行高虚拟窗口，封面统一为五档语义尺寸，歌曲与歌单入口接入首批冻结右键菜单。验证证据见 `docs/development/reports/Phase-4-music-client-pages-validation.md`；真实登录账号写入、权益资源和 Windows/macOS Electron 视觉回归仍需在发布硬化阶段持续验证。
+> 执行记录（2026-08-10）：Phase 4 完整范围闭环并标记为 `pass`。除既有歌单/我喜欢、专辑、歌手、发现、个人信息、设置、播放详情和沉浸歌词外，歌曲详情以及歌曲/专辑/歌单评论区已接入正式路由；评论读取支持游客，发布、删除与点赞统一经过登录门禁和严格 `music.mutate` 协议。自建歌单补齐移除、上移和下移，顺序变更失败会回滚；歌曲上下文动作在全部音乐页统一接入加入歌单、详情和小云入口，并支持 Context Menu 键与 Shift+F10。长列表虚拟化、五档封面、Section 独立四态、账户与原始字段隔离保持不变。类型检查、Lint、全量单测、E2E 与 Electron 构建冒烟均通过，验证证据见 `docs/development/reports/Phase-4-music-client-pages-validation.md`；真实权益账号和双平台多 DPI 视觉矩阵归入 Phase 8 发布硬化，不再阻塞 Phase 4 实现门禁。
 
 ## 9. Phase 5：小云 Agent 主闭环
 

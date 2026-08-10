@@ -480,7 +480,13 @@
   min-height: calc(100vh - 180px);
   margin: 0 auto;
   padding: 52px 0 132px;
-  align-items: center;
+  align-items: start;
+}
+
+.song-detail-content {
+  display: grid;
+  width: 100%;
+  gap: var(--ncx-space-8);
 }
 
 .song-detail-page .music-detail-hero {

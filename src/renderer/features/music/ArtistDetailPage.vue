@@ -17,6 +17,7 @@ import {
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import EntityCard from './components/EntityCard.vue'
+import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import Cover from './components/Cover.vue'
 import MusicSection from './components/MusicSection.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
@@ -65,6 +66,9 @@ const albumsSection = ref<ListSection<StandardAlbum>>({ state: 'loading', items:
 
 /** 相似歌手 Section。 */
 const similarSection = ref<ListSection<StandardArtist>>({ state: 'loading', items: [], error: '' })
+
+/** 当前等待选择目标歌单的歌曲。 */
+const playlistTarget = ref<StandardSong | null>(null)
 
 /** 当前歌手 ID。 */
 const artistId = computed<string>(() => String(route.params['artistId'] ?? ''))
@@ -165,6 +169,24 @@ async function likeSong(song: StandardSong): Promise<void> {
     return
   }
   showToast(`已收藏《${song.name}》。`, 'success')
+}
+
+/** 打开共享的自建歌单选择对话框。 */
+function openAddToPlaylist(song: StandardSong): void {
+  playlistTarget.value = song
+}
+
+/** 打开正式歌曲详情页。 */
+function openSongDetails(song: StandardSong): void {
+  void router.push({ name: 'song-detail', params: { songId: song.id } })
+}
+
+/** 将歌曲标准上下文交给小云入口。 */
+function giveSongToAgent(song: StandardSong): void {
+  void router.push({
+    name: 'agent',
+    query: { intent: 'track', trackId: song.id, title: song.name }
+  })
 }
 
 /** 打开指定专辑。 */
@@ -286,6 +308,9 @@ watch(artistId, () => {
             @enqueue="enqueueSong"
             @play-next="playSongNext($event, { kind: 'artist', artistId })"
             @like="likeSong"
+            @add-to-playlist="openAddToPlaylist"
+            @details="openSongDetails"
+            @give-agent="giveSongToAgent"
           />
         </MusicSection>
 
@@ -328,6 +353,11 @@ watch(artistId, () => {
             />
           </div>
         </MusicSection>
+
+        <AddTrackToPlaylistDialog
+          :song="playlistTarget"
+          @close="playlistTarget = null"
+        />
       </div>
     </Transition>
   </section>

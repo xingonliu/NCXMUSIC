@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Heart, LogIn, Play } from '@lucide/vue'
 import { computed, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import type { MusicReadResult, StandardSong } from '../../../shared/schemas/music'
 import {
@@ -11,6 +12,7 @@ import {
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
+import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
 import { mutateMusic, playSongNext } from './music-actions'
 import {
@@ -24,6 +26,9 @@ import { usePlayer } from './use-player'
 /** 应用账户公开状态。 */
 const account = useAccountSessionStore()
 
+/** Router 实例，用于歌曲详情和小云上下文导航。 */
+const router = useRouter()
+
 /** 应用播放器接口。 */
 const player = usePlayer()
 
@@ -35,6 +40,9 @@ const loading = ref<boolean>(true)
 
 /** 页面错误文案。 */
 const errorMessage = ref<string>('')
+
+/** 当前等待选择目标歌单的歌曲。 */
+const playlistTarget = ref<StandardSong | null>(null)
 
 /** 当前网易云用户 ID。 */
 const userId = computed<string | null>(() => {
@@ -107,6 +115,24 @@ async function unlikeSong(song: StandardSong): Promise<void> {
   showToast(`已从我喜欢移除《${song.name}》。`, 'info')
 }
 
+/** 打开共享的自建歌单选择对话框。 */
+function openAddToPlaylist(song: StandardSong): void {
+  playlistTarget.value = song
+}
+
+/** 打开正式歌曲详情页。 */
+function openSongDetails(song: StandardSong): void {
+  void router.push({ name: 'song-detail', params: { songId: song.id } })
+}
+
+/** 将歌曲标准上下文交给小云入口。 */
+function giveSongToAgent(song: StandardSong): void {
+  void router.push({
+    name: 'agent',
+    query: { intent: 'track', trackId: song.id, title: song.name }
+  })
+}
+
 // ========= 生命周期 =========
 
 onMounted(async () => {
@@ -166,10 +192,19 @@ onMounted(async () => {
       v-else
       :songs="songs"
       :active-track-id="activeTrackId"
+      liked
       @play="playSong"
       @enqueue="enqueueSong"
       @play-next="playSongNext($event, { kind: 'liked' })"
       @like="unlikeSong"
+      @add-to-playlist="openAddToPlaylist"
+      @details="openSongDetails"
+      @give-agent="giveSongToAgent"
+    />
+
+    <AddTrackToPlaylistDialog
+      :song="playlistTarget"
+      @close="playlistTarget = null"
     />
   </section>
 </template>

@@ -55,6 +55,29 @@ describe('music.read contract', () => {
     expect(RuntimeInboundEnvelopeSchema.safeParse(request).success).toBe(true)
   })
 
+  it('accepts a strict registered public comments request', () => {
+    /** 当前连接 ID。 */
+    const connectionId = crypto.randomUUID()
+    /** 合法评论集合读取请求。 */
+    const request = {
+      ...messageBase(connectionId),
+      kind: 'request',
+      name: 'music.read',
+      requestId: crypto.randomUUID(),
+      deadlineAt: Date.now() + 20_000,
+      payload: {
+        operation: 'getComments',
+        resourceType: 'album',
+        resourceId: '34740156',
+        limit: 20,
+        offset: 0
+      }
+    }
+
+    expect(MusicReadRequestEnvelopeSchema.parse(request)).toEqual(request)
+    expect(RuntimeInboundEnvelopeSchema.safeParse(request).success).toBe(true)
+  })
+
   it('rejects secret-shaped fields in music payloads', () => {
     expect(
       MusicReadPayloadSchema.safeParse({
