@@ -1,5 +1,7 @@
 import type { RuntimeConnectionMetadata } from '../shared/contracts/control-plane'
 import {
+  AgentCommandRequestEnvelopeSchema,
+  AgentEventEnvelopeSchema,
   AccountDataRequestEnvelopeSchema,
   HelloEnvelopeSchema,
   ExecuteShellRequestEnvelopeSchema,
@@ -14,6 +16,7 @@ import {
   SnapshotRequestEnvelopeSchema,
   messageBase,
   type CancelEnvelope,
+  type AgentCommandRequestEnvelope,
   type AccountDataRequestEnvelope,
   type ExecuteShellRequestEnvelope,
   type MusicMutationRequestEnvelope,
@@ -26,6 +29,7 @@ import {
   type SnapshotRequestEnvelope
 } from '../shared/schemas/runtime'
 import type { ShellExecutor } from '../infrastructure/shell/executor'
+import type { AgentRuntimeEvent } from '../shared/schemas/agent'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 类型区
@@ -49,6 +53,7 @@ type RuntimeCapability =
   | 'playback.snapshot.load'
   | 'playback.snapshot.save'
   | 'shell.execute'
+  | 'agent.command'
 
 /**
  * music.read 的执行方。由 Utility 组合根注入，
@@ -95,6 +100,12 @@ export interface ShellCommandHandler {
   cancel(requestId: string): void
 }
 
+/** Utility 内 Agent Runtime 的命令入口。 */
+export interface AgentCommandHandler {
+  /** 执行已通过共享 Schema 的 Agent 命令。 */
+  command(payload: unknown): Promise<unknown>
+}
+
 /** 可被响应的请求信封（用于统一 respond* 签名） */
 type AnyRequestEnvelope =
   | PingRequestEnvelope
@@ -106,6 +117,7 @@ type AnyRequestEnvelope =
   | PlaybackSnapshotLoadRequestEnvelope
   | PlaybackSnapshotSaveRequestEnvelope
   | ExecuteShellRequestEnvelope
+  | AgentCommandRequestEnvelope
 
 /** 待处理请求：ping 用定时器，resolve-url 交由 handler 自行取消 */
 type PendingRequest =
@@ -117,6 +129,7 @@ type PendingRequest =
   | { name: 'playback.snapshot.load' }
   | { name: 'playback.snapshot.save' }
   | { name: 'shell.execute' }
+  | { name: 'agent.command' }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // UtilityRuntimeServer
@@ -144,7 +157,8 @@ export class UtilityRuntimeServer {
     private readonly shellHandler?: ShellCommandHandler | ShellExecutor,
     private readonly musicReadHandler?: MusicReadHandler,
     private readonly playbackSnapshotHandler?: PlaybackSnapshotHandler,
-    private readonly accountDataHandler?: AccountDataHandler
+    private readonly accountDataHandler?: AccountDataHandler,
+    private readonly agentHandler?: AgentCommandHandler
   ) {}
 
   // ── 生命周期区 ──
@@ -189,6 +203,7 @@ export class UtilityRuntimeServer {
       base.push('playback.snapshot.load', 'playback.snapshot.save')
     }
     if (this.shellHandler) base.push('shell.execute')
+    if (this.agentHandler) base.push('agent.command')
     return base
   }
 
@@ -266,6 +281,11 @@ export class UtilityRuntimeServer {
 
     if (envelope.name === 'shell.execute') {
       void this.executeShell(ExecuteShellRequestEnvelopeSchema.parse(envelope))
+      return
+    }
+
+    if (envelope.name === 'agent.command') {
+      void this.handleAgentCommand(AgentCommandRequestEnvelopeSchema.parse(envelope))
       return
     }
 
@@ -539,6 +559,54 @@ export class UtilityRuntimeServer {
       this.handledRequests += 1
       this.respondError(request, this.toProtocolError(error))
     }
+  }
+
+  /** 执行 Agent 命令；流式内容由独立 agent.event 信封推送。 */
+  private async handleAgentCommand(request: AgentCommandRequestEnvelope): Promise<void> {
+    const handler = this.agentHandler
+    if (!handler) {
+      this.respondError(request, {
+        code: 'CAPABILITY_UNAVAILABLE',
+        message: '当前运行时未启用小云 Agent。',
+        retryable: false
+      })
+      return
+    }
+    if (this.pending.has(request.requestId)) {
+      this.respondError(request, {
+        code: 'PROTOCOL_INVALID_MESSAGE',
+        message: 'requestId 已在使用。',
+        retryable: false
+      })
+      return
+    }
+    const connectionId = request.connectionId
+    this.pending.set(request.requestId, { name: 'agent.command' })
+    try {
+      const data = await handler.command(request.payload)
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondSuccess(request, data)
+    } catch (error) {
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondError(request, this.toProtocolError(error))
+    }
+  }
+
+  /** 向当前 Renderer 连接发布 Agent 快照或播放器命令事件。 */
+  publishAgentEvent(event: AgentRuntimeEvent): void {
+    const connection = this.activeConnection
+    if (!connection || !this.handshakeComplete) return
+    this.post(AgentEventEnvelopeSchema.parse({
+      ...messageBase(connection.connectionId),
+      kind: 'event',
+      name: 'agent.event',
+      eventId: crypto.randomUUID(),
+      payload: event
+    }))
   }
 
   /** 请求是否仍属于当前连接且未被取消 */

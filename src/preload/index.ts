@@ -15,6 +15,14 @@ import {
 } from '../shared/contracts/lifecycle-bridge'
 import type { NcxRuntimeBridge } from '../shared/contracts/runtime-bridge'
 import {
+  PROVIDER_PROFILE_CHANNELS,
+  type ProviderProfileBridge
+} from '../shared/contracts/provider-profile-bridge'
+import {
+  ProviderProfileRequestSchema,
+  ProviderProfileResultSchema
+} from '../shared/schemas/provider-profile'
+import {
   WINDOW_CONTROL_CHANNELS,
   type WindowCommand,
   type WindowControlBridge,
@@ -197,6 +205,8 @@ const runtimeBridge: NcxRuntimeBridge = {
   loadPlaybackSnapshot: (input) => gateway.loadPlaybackSnapshot(input),
   savePlaybackSnapshot: (snapshot) => gateway.savePlaybackSnapshot(snapshot),
   accountData: (input) => gateway.accountData(input),
+  agent: (command) => gateway.agent(command),
+  onAgentEvent: (listener) => gateway.onAgentEvent(listener),
   retryUtility: async () => {
     const result = await ipcRenderer.invoke(CONTROL_CHANNELS.retry)
     return RuntimeStatusSchema.parse(result)
@@ -249,6 +259,17 @@ const lifecycleBridge: LifecycleBridge = {
   }
 }
 
+/** 只向 Main 发送经 Schema 校验的 Profile 管理请求，秘密不进入 Renderer 持久化。 */
+const providerProfileBridge: ProviderProfileBridge = {
+  request: async (input) => {
+    /** 经共享 Schema 校验的请求。 */
+    const request = ProviderProfileRequestSchema.parse(input)
+    /** Main 返回的公开结果。 */
+    const result = await ipcRenderer.invoke(PROVIDER_PROFILE_CHANNELS.request, request)
+    return ProviderProfileResultSchema.parse(result)
+  }
+}
+
 const windowControlBridge: WindowControlBridge = {
   snapshot: async () => ipcRenderer.invoke(WINDOW_CONTROL_CHANNELS.snapshot) as Promise<WindowSnapshot>,
   send: async (command: WindowCommand) =>
@@ -292,6 +313,7 @@ const bridge: DesktopBridge = Object.freeze({
   account: accountBridge,
   clipboard: clipboardBridge,
   lifecycle: lifecycleBridge,
+  providerProfiles: providerProfileBridge,
   runtime: runtimeBridge,
   windowControls: windowControlBridge
 })

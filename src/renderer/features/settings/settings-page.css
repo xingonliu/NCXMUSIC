@@ -85,8 +85,196 @@
   width: 220px;
 }
 
+.model-settings-layout {
+  display: grid;
+  align-items: start;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(360px, 1.2fr);
+  gap: var(--ncx-space-4);
+  margin-top: var(--ncx-space-6);
+}
+
+.model-profile-list,
+.model-profile-editor {
+  overflow: hidden;
+  padding: var(--ncx-space-4);
+  border: 1px solid
+    color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
+  border-radius: var(--ncx-radius-lg);
+  background: var(--ncx-color-surface);
+}
+
+.model-profile-list > header,
+.model-profile-editor > header,
+.model-profile-editor footer,
+.model-profile-editor-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ncx-space-3);
+}
+
+.model-profile-list h2,
+.model-profile-list p,
+.model-profile-editor h2,
+.model-profile-editor p {
+  margin: 0;
+}
+
+.model-profile-list h2,
+.model-profile-editor h2 {
+  font-size: 15px;
+}
+
+.model-profile-list header p,
+.model-profile-editor header p,
+.model-profile-empty {
+  margin-top: 3px;
+  color: var(--ncx-color-text-secondary);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.model-profile-item {
+  display: grid;
+  width: 100%;
+  min-height: 52px;
+  align-items: center;
+  grid-template-columns: 32px minmax(0, 1fr) auto auto;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 7px 8px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  color: inherit;
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent);
+  text-align: left;
+  cursor: pointer;
+}
+
+.model-profile-item.is-active {
+  border-color: color-mix(in srgb, var(--ncx-color-accent) 25%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-accent) 7%, transparent);
+}
+
+.model-profile-icon {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--ncx-color-accent);
+  background: color-mix(
+    in srgb,
+    var(--ncx-color-agent-surface) 90%,
+    transparent
+  );
+}
+
+.model-profile-copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.model-profile-copy strong,
+.model-profile-copy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.model-profile-copy strong {
+  font-size: 12px;
+}
+
+.model-profile-copy small {
+  color: var(--ncx-color-text-secondary);
+  font-size: 10px;
+}
+
+.model-profile-verified {
+  color: #42a56b;
+}
+
+.model-profile-default {
+  padding: 2px 6px;
+  border-radius: 999px;
+  color: var(--ncx-color-accent);
+  background: color-mix(in srgb, var(--ncx-color-accent) 9%, transparent);
+  font-size: 9px;
+}
+
+.model-profile-editor {
+  display: grid;
+  gap: 12px;
+}
+
+.model-preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.model-preset-row button {
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--ncx-color-text-secondary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 5%, transparent);
+  font: inherit;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.model-profile-editor > label {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  color: var(--ncx-color-text-secondary);
+  font-size: 11px;
+}
+
+.model-profile-editor input,
+.model-profile-editor textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid
+    color-mix(in srgb, var(--ncx-color-text-primary) 9%, transparent);
+  border-radius: 9px;
+  outline: none;
+  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-background) 58%, transparent);
+  font: inherit;
+  font-size: 11px;
+}
+
+.model-profile-editor textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.model-profile-editor input:focus,
+.model-profile-editor textarea:focus {
+  border-color: color-mix(in srgb, var(--ncx-color-accent) 46%, transparent);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--ncx-color-accent) 8%, transparent);
+}
+
+.model-profile-editor footer {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding-top: 3px;
+}
+
 @media (width < 1100px) {
   .settings-row {
     grid-template-columns: auto minmax(180px, 1fr) auto;
+  }
+
+  .model-settings-layout {
+    grid-template-columns: 1fr;
   }
 }

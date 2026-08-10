@@ -2,6 +2,7 @@ import type { AccountBridge } from './account-bridge'
 import type { ClipboardBridge } from './clipboard-bridge'
 import type { LifecycleBridge } from './lifecycle-bridge'
 import type { NcxRuntimeBridge } from './runtime-bridge'
+import type { ProviderProfileBridge } from './provider-profile-bridge'
 import type { WindowControlBridge } from './window-controls'
 
 export interface DesktopBridge {
@@ -14,6 +15,7 @@ export interface DesktopBridge {
   readonly account: AccountBridge
   readonly clipboard: ClipboardBridge
   readonly lifecycle: LifecycleBridge
+  readonly providerProfiles: ProviderProfileBridge
   readonly runtime: NcxRuntimeBridge
   readonly windowControls: WindowControlBridge
 }

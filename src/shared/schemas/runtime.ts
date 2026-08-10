@@ -1,6 +1,11 @@
 import { z } from 'zod'
 
 import { AccountDataRequestSchema, AccountDataResultSchema } from './account-data'
+import {
+  AgentCommandSchema,
+  AgentRuntimeEventSchema,
+  AgentSnapshotSchema
+} from './agent'
 
 import {
   MusicMutationPayloadSchema,
@@ -67,9 +72,10 @@ export const HelloPayloadSchema = z.strictObject({
       'account.data',
       'playback.snapshot.load',
       'playback.snapshot.save',
-      'shell.execute'
+      'shell.execute',
+      'agent.command'
     ]))
-    .max(10)
+    .max(12)
 })
 
 export const HelloEnvelopeSchema = z.strictObject({
@@ -171,6 +177,22 @@ export const ExecuteShellRequestEnvelopeSchema = z.strictObject({
   payload: ExecuteShellInputSchema
 })
 
+/** Renderer → Utility：发送 Agent 命令或拉取快照。 */
+export const AgentCommandRequestEnvelopeSchema = z.strictObject({
+  ...RequestBaseShape,
+  name: z.literal('agent.command'),
+  payload: AgentCommandSchema
+})
+
+/** Utility → Renderer：Agent 完整快照或播放器命令事件。 */
+export const AgentEventEnvelopeSchema = z.strictObject({
+  ...MessageBaseShape,
+  kind: z.literal('event'),
+  name: z.literal('agent.event'),
+  eventId: z.uuid(),
+  payload: AgentRuntimeEventSchema
+})
+
 export const CancelEnvelopeSchema = z.strictObject({
   ...MessageBaseShape,
   kind: z.literal('cancel'),
@@ -183,7 +205,8 @@ export const CancelEnvelopeSchema = z.strictObject({
     'account.data',
     'playback.snapshot.load',
     'playback.snapshot.save',
-    'shell.execute'
+    'shell.execute',
+    'agent.command'
   ]),
   requestId: z.uuid(),
   reason: z.enum(['user', 'timeout', 'navigation', 'shutdown'])
@@ -211,7 +234,8 @@ export const ResponseEnvelopeSchema = z.strictObject({
     'account.data',
     'playback.snapshot.load',
     'playback.snapshot.save',
-    'shell.execute'
+    'shell.execute',
+    'agent.command'
   ]),
   requestId: z.uuid(),
   result: z.discriminatedUnion('ok', [SuccessResultSchema, FailureResultSchema])
@@ -228,11 +252,13 @@ export const RuntimeInboundEnvelopeSchema = z.union([
   PlaybackSnapshotLoadRequestEnvelopeSchema,
   PlaybackSnapshotSaveRequestEnvelopeSchema,
   ExecuteShellRequestEnvelopeSchema,
+  AgentCommandRequestEnvelopeSchema,
   CancelEnvelopeSchema
 ])
 
 export const RuntimeOutboundEnvelopeSchema = z.union([
   HelloEnvelopeSchema,
+  AgentEventEnvelopeSchema,
   ResponseEnvelopeSchema
 ])
 
@@ -245,6 +271,7 @@ export type ResolveTrackUrlRequestEnvelope = z.infer<typeof ResolveTrackUrlReque
 export type PlaybackSnapshotLoadRequestEnvelope = z.infer<typeof PlaybackSnapshotLoadRequestEnvelopeSchema>
 export type PlaybackSnapshotSaveRequestEnvelope = z.infer<typeof PlaybackSnapshotSaveRequestEnvelopeSchema>
 export type ExecuteShellRequestEnvelope = z.infer<typeof ExecuteShellRequestEnvelopeSchema>
+export type AgentCommandRequestEnvelope = z.infer<typeof AgentCommandRequestEnvelopeSchema>
 export type CancelEnvelope = z.infer<typeof CancelEnvelopeSchema>
 
 export const contractRegistry = {
@@ -311,6 +338,13 @@ export const contractRegistry = {
     resultSchema: ExecuteShellResultSchema,
     /** Shell 自身默认超时由执行器读取；协议层保留略长的硬超时。 */
     defaultTimeoutMs: 610_000,
+    retryable: false
+  },
+  'agent.command': {
+    direction: 'renderer-to-utility',
+    payloadSchema: AgentCommandSchema,
+    resultSchema: AgentSnapshotSchema,
+    defaultTimeoutMs: 15_000,
     retryable: false
   }
 } as const

@@ -5,6 +5,7 @@ import {
   BrowserWindow,
   clipboard,
   ipcMain,
+  safeStorage,
   type Tray,
   session,
   type IpcMainEvent,
@@ -17,6 +18,7 @@ import {
   resolveNcxDataRoot
 } from '../infrastructure/persistence/account-space'
 import { ACCOUNT_CHANNELS } from '../shared/contracts/account-bridge'
+import { PROVIDER_PROFILE_CHANNELS } from '../shared/contracts/provider-profile-bridge'
 import {
   CLIPBOARD_CHANNELS,
   MAX_CLIPBOARD_TEXT_LENGTH
@@ -31,6 +33,8 @@ import {
 import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
 import { AccountSessionSnapshotSchema, type AccountSessionSnapshot } from '../shared/schemas/account'
 import { RuntimeStatusSchema } from '../shared/schemas/control-plane'
+import { ProviderProfileRequestSchema } from '../shared/schemas/provider-profile'
+import { ProviderProfileStore } from '../infrastructure/credentials/provider-profile-store'
 import { AuthSessionController, type EstablishResult } from './auth/auth-session-controller'
 import { AccountStoreCoordinator } from './auth/account-store-coordinator'
 import {
@@ -41,6 +45,7 @@ import { CredentialLeaseCoordinator } from './auth/credential-lease-coordinator'
 import { NETEASE_AUTH_PARTITION } from './auth/navigation-policy'
 import { ConnectionBroker } from './connection-broker'
 import { AppConfigStore } from './app-config-store'
+import { ProviderProfileCoordinator } from './provider-profile-coordinator'
 import { createApplicationTray } from './app-tray'
 import { UtilitySupervisor } from './utility-supervisor'
 import {
@@ -60,6 +65,8 @@ let authController: AuthSessionController | undefined
 let accountStoreCoordinator: AccountStoreCoordinator | undefined
 /** Main 持有的应用配置唯一权威来源。 */
 let appConfigStore: AppConfigStore | undefined
+/** Main 独占的 Provider Profile 与安全凭据协调器。 */
+let providerProfileCoordinator: ProviderProfileCoordinator | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
 /** 主窗口关闭按钮行为；`minimize` 为兼容旧配置的托盘驻留值。 */
 let closeWindowBehavior: 'minimize' | 'quit' = 'minimize'
@@ -382,6 +389,15 @@ function registerControlPlane(): void {
     clipboard.writeText(text)
   })
 
+  ipcMain.handle(PROVIDER_PROFILE_CHANNELS.request, async (event, rawRequest: unknown) => {
+    if (!isTrustedSender(event) || !providerProfileCoordinator) {
+      throw new Error('Provider Profile 服务不可用。')
+    }
+    /** Renderer 请求必须先通过共享 Schema。 */
+    const request = ProviderProfileRequestSchema.parse(rawRequest)
+    return providerProfileCoordinator.handle(request)
+  })
+
   ipcMain.on(CONTROL_CHANNELS.connect, (event) => {
     if (!isTrustedSender(event)) return
     const status = supervisor?.currentStatus() ?? {
@@ -586,6 +602,14 @@ if (!hasSingleInstanceLock) {
     .then(async () => {
       supervisor = createSupervisor()
       broker = new ConnectionBroker(supervisor, app.getVersion())
+      /** 使用 Electron safeStorage 加密模型 API Key 和自定义 Header 值。 */
+      const providerProfileStore = new ProviderProfileStore(app.getPath('userData'), {
+        isAvailable: () => safeStorage.isEncryptionAvailable(),
+        encrypt: (value) => safeStorage.encryptString(value),
+        decrypt: (value) => safeStorage.decryptString(value)
+      })
+      providerProfileStore.load()
+      providerProfileCoordinator = new ProviderProfileCoordinator(providerProfileStore, supervisor)
       appConfigStore = new AppConfigStore(app.getPath('userData'))
       closeWindowBehavior = appConfigStore.load().closeWindowBehavior
       accountStoreCoordinator = new AccountStoreCoordinator(supervisor)
@@ -604,6 +628,7 @@ if (!hasSingleInstanceLock) {
       registerControlPlane()
       supervisor.onStatus((status) => {
         broadcastStatus(status)
+        if (status.state === 'ready') providerProfileCoordinator?.syncUtility()
         void (authController?.handleUtilityStatus(status) ?? Promise.resolve()).finally(() =>
           publishAccountSnapshot()
         )

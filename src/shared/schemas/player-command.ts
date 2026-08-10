@@ -12,7 +12,7 @@ const PlayerCommandArtworkSchema = z.strictObject({
 })
 
 /** 播放命令中的曲目摘要，不包含播放 URL。 */
-const PlayerCommandTrackSchema = z.strictObject({
+export const PlayerCommandTrackSchema = z.strictObject({
   trackId: z.string().min(1).max(40),
   name: z.string().min(1).max(200),
   artists: z.array(z.string().min(1).max(160)).max(30),
@@ -34,7 +34,8 @@ const PlayerCommandQueueSourceSchema = z.discriminatedUnion('kind', [
 ])
 
 /** 所有入口共用的播放器命令载荷。 */
-const PlayerCommandActionSchema = z.discriminatedUnion('type', [
+/** 所有入口共享的播放器命令动作 Schema。 */
+export const PlayerCommandActionSchema = z.discriminatedUnion('type', [
   z.strictObject({
     type: z.literal('player.play-context'),
     tracks: z.array(PlayerCommandTrackSchema).max(5_000),

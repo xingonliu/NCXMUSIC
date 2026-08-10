@@ -171,6 +171,10 @@
   -webkit-app-region: drag;
 }
 
+.ncx-app-shell--standalone .ncx-page-header {
+  padding-left: 18px;
+}
+
 .ncx-app-shell--windows .ncx-page-header {
   padding-right: 18px;
 }
@@ -288,6 +292,11 @@
   scroll-behavior: smooth;
   user-select: text;
   mask-image: linear-gradient(to bottom, transparent 0, transparent 12px, black 72px, black 100%);
+}
+
+.ncx-app-shell--standalone .ncx-content-area {
+  padding: 0;
+  mask-image: none;
 }
 
 .ncx-content-area::-webkit-scrollbar {

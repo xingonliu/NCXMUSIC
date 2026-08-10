@@ -236,6 +236,8 @@ Phase 0 技术门禁
 - 离开小云路由不取消 Turn；新消息、退出、换号和 Utility 故障按冻结终态处理。
 - 模型看不到权限等级判断、Cookie、凭据或未注册能力。
 
+> 执行记录（2026-08-10）：Phase 5 完整范围闭环并标记为 `pass`。Main 独占并加密保存 Provider Profile，Utility 已接通 OpenAI Compatible、Anthropic Messages 与 Gemini 三协议流式文本/Tool Call；单 Active Turn、取消、12 轮/24 次调用、10 分钟主动预算、90 秒空闲超时与最多五次超时重试均由代码硬限制。10 个核心 Tool、两步 Capability Catalog、Entity Resolver、真实播放器状态/命令桥、M1～M4 与 S1～S4 纯策略、审批/选择协调器及串并行调度均已落地。小云一级路由、Lucide 语义工具图标与状态点、流式消息、审批卡、选择卡、双安全控件、模型设置和七步首次引导完成；离开路由不取消，换号先终止旧 Turn，Renderer 只取得脱敏 Profile 与 Agent 快照。类型检查、Lint、全量单测、6 条 Playwright E2E、Electron 构建冒烟和 1280×800 构建产物视觉检查均通过，验证证据见 `docs/development/reports/Phase-5-xiaoyun-agent-validation.md`。Shell、Dynamic Skill 与 MCP 的模型可见执行入口仍按路线图归入 Phase 7，不在本阶段扩张能力边界。
+
 ## 10. Phase 6：记忆、音乐人格画像与推荐
 
 **功能映射：** MEM-001～006、PRO-001～011、DAT-011～013、SET-003。

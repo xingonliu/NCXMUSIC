@@ -31,6 +31,20 @@ export interface ProviderMessage {
   readonly content: string
   /** Tool 回填消息关联的调用 ID。 */
   readonly toolCallId?: string
+  /** Tool 回填消息对应的注册工具名，Gemini functionResponse 必需。 */
+  readonly toolName?: string
+  /** Assistant 消息中已经完整归一化的 Tool Call。 */
+  readonly toolCalls?: readonly ProviderCompletedToolCall[]
+}
+
+/** Provider 对话历史中的完整 Tool Call。 */
+export interface ProviderCompletedToolCall {
+  /** Provider Tool Call ID。 */
+  readonly id: string
+  /** 注册工具名。 */
+  readonly name: string
+  /** 完整 JSON 参数文本。 */
+  readonly arguments: string
 }
 
 /** Runtime 暴露给模型的工具定义在协议层的最小公共形态。 */
@@ -98,6 +112,8 @@ export type ProviderStreamEvent =
       readonly type: 'tool-call-delta'
       /** Provider 返回或夹具生成的调用 ID。 */
       readonly id: string
+      /** Provider 响应中的稳定调用槽位。 */
+      readonly index?: number
       /** Provider 返回的工具名称。 */
       readonly name?: string
       /** Provider 返回的 JSON 参数片段。 */
@@ -266,10 +282,17 @@ function buildOpenAITextStreamRequest(
   /** OpenAI Compatible 请求体保持最小协议字段。 */
   const body = {
     model: profile.model,
-    messages: input.messages.map((message) => ({
+    messages: input.messages.map((message) => compactUndefined({
       role: message.role,
-      content: message.content,
-      tool_call_id: message.toolCallId
+      content: message.role === 'assistant' && message.toolCalls?.length && !message.content
+        ? null
+        : message.content,
+      tool_call_id: message.toolCallId,
+      tool_calls: message.toolCalls?.map((toolCall) => ({
+        id: toolCall.id,
+        type: 'function',
+        function: { name: toolCall.name, arguments: toolCall.arguments }
+      }))
     })),
     stream: true,
     max_tokens: input.maxTokens ?? DEFAULT_MAX_TOKENS,
@@ -298,10 +321,36 @@ function buildAnthropicTextStreamRequest(
   /** Anthropic 对话消息不接受 system role。 */
   const messages = input.messages
     .filter((message) => message.role !== 'system')
-    .map((message) => ({
-      role: message.role === 'assistant' ? 'assistant' : 'user',
-      content: message.content
-    }))
+    .map((message) => {
+      if (message.role === 'assistant' && message.toolCalls?.length) {
+        return {
+          role: 'assistant',
+          content: [
+            ...(message.content ? [{ type: 'text', text: message.content }] : []),
+            ...message.toolCalls.map((toolCall) => ({
+              type: 'tool_use',
+              id: toolCall.id,
+              name: toolCall.name,
+              input: parseJsonObject(toolCall.arguments)
+            }))
+          ]
+        }
+      }
+      if (message.role === 'tool') {
+        return {
+          role: 'user',
+          content: [{
+            type: 'tool_result',
+            tool_use_id: message.toolCallId,
+            content: message.content
+          }]
+        }
+      }
+      return {
+        role: message.role === 'assistant' ? 'assistant' : 'user',
+        content: message.content
+      }
+    })
 
   /** Anthropic tools 使用 input_schema 字段。 */
   const tools = input.tools?.map((tool) => ({
@@ -345,10 +394,37 @@ function buildGeminiTextStreamRequest(
   /** Gemini contents 使用 user/model 角色。 */
   const contents = input.messages
     .filter((message) => message.role !== 'system')
-    .map((message) => ({
-      role: message.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: message.content }]
-    }))
+    .map((message) => {
+      if (message.role === 'assistant' && message.toolCalls?.length) {
+        return {
+          role: 'model',
+          parts: [
+            ...(message.content ? [{ text: message.content }] : []),
+            ...message.toolCalls.map((toolCall) => ({
+              functionCall: {
+                name: toolCall.name,
+                args: parseJsonObject(toolCall.arguments)
+              }
+            }))
+          ]
+        }
+      }
+      if (message.role === 'tool') {
+        return {
+          role: 'user',
+          parts: [{
+            functionResponse: {
+              name: message.toolName ?? 'tool',
+              response: parseJsonObject(message.content)
+            }
+          }]
+        }
+      }
+      return {
+        role: message.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: message.content }]
+      }
+    })
 
   /** Gemini functionDeclarations 位于 tools.functionDeclarations。 */
   const tools =
@@ -419,9 +495,20 @@ export async function* requestProviderTextStream(
     /** 响应中的流式文本行。 */
     const lines = response.lines
     if (!lines) return
+    /** 将协议分片中的调用槽位关联到首个稳定 Tool Call ID。 */
+    const toolCallIds = new Map<number, string>()
     for await (const line of lines) {
       if (signal.aborted) throw new ProviderProtocolError(cancelledError(profile.protocol))
-      for (const event of parseProviderStreamLine(profile.protocol, line)) yield event
+      for (const event of parseProviderStreamLine(profile.protocol, line)) {
+        if (event.type !== 'tool-call-delta' || event.index === undefined) {
+          yield event
+          continue
+        }
+        /** 当前槽位已经观察到的稳定 ID。 */
+        const knownId = toolCallIds.get(event.index)
+        if (!knownId && event.name) toolCallIds.set(event.index, event.id)
+        yield { ...event, id: knownId ?? event.id }
+      }
     }
   } catch (cause) {
     if (cause instanceof ProviderProtocolError) throw cause
@@ -472,7 +559,8 @@ function parseOpenAIStreamPayload(value: unknown): ProviderStreamEvent[] {
         createToolCallDelta(
           getString(toolCallRecord.id) ?? `tool-${String(toolCallRecord.index ?? 0)}`,
           getString(functionRecord.name),
-          getString(functionRecord.arguments)
+          getString(functionRecord.arguments),
+          getNumber(toolCallRecord.index)
         )
       )
     }
@@ -512,7 +600,12 @@ function parseAnthropicDelta(record: Readonly<Record<string, unknown>>): Provide
     return text ? [{ type: 'text-delta', text }] : []
   }
   if (deltaType === 'input_json_delta') {
-    return [createToolCallDelta(`tool-${String(record.index ?? 0)}`, undefined, getString(delta.partial_json))]
+    return [createToolCallDelta(
+      `tool-${String(record.index ?? 0)}`,
+      undefined,
+      getString(delta.partial_json),
+      getNumber(record.index)
+    )]
   }
   return []
 }
@@ -524,7 +617,12 @@ function parseAnthropicContentBlockStart(
   /** Anthropic content_block 对象。 */
   const block = getRecord(record.content_block)
   if (getString(block.type) !== 'tool_use') return []
-  return [createToolCallDelta(getString(block.id) ?? `tool-${String(record.index ?? 0)}`, getString(block.name))]
+  return [createToolCallDelta(
+    getString(block.id) ?? `tool-${String(record.index ?? 0)}`,
+    getString(block.name),
+    undefined,
+    getNumber(record.index)
+  )]
 }
 
 /** 解析 Gemini generateContent 流式 JSON payload。 */
@@ -569,12 +667,14 @@ function parseGeminiStreamPayload(value: unknown): ProviderStreamEvent[] {
 function createToolCallDelta(
   id: string,
   name?: string,
-  argumentsDelta?: string
+  argumentsDelta?: string,
+  index?: number
 ): ProviderStreamEvent {
   /** Tool Call 增量事件。 */
   const event: {
     type: 'tool-call-delta'
     id: string
+    index?: number
     name?: string
     argumentsDelta?: string
   } = {
@@ -583,6 +683,7 @@ function createToolCallDelta(
   }
   if (name !== undefined) event.name = name
   if (argumentsDelta !== undefined) event.argumentsDelta = argumentsDelta
+  if (index !== undefined) event.index = index
   return event
 }
 
@@ -1134,6 +1235,17 @@ function compactUndefined<T extends Readonly<Record<string, unknown>>>(value: T)
   return output
 }
 
+/** 将 Tool 参数/结果 JSON 文本解析为普通对象，失败时使用安全文本包装。 */
+function parseJsonObject(value: string): Readonly<Record<string, unknown>> {
+  try {
+    /** 未信任 JSON 值。 */
+    const parsed = JSON.parse(value) as unknown
+    return getRecord(parsed)
+  } catch {
+    return { text: value }
+  }
+}
+
 /** 解析 SSE data 行或 JSONL 行。 */
 function parseDataPayload(
   line: string
@@ -1166,6 +1278,11 @@ function getArray(record: Readonly<Record<string, unknown>>, key: string): reado
 /** 读取 string 字段。 */
 function getString(value: unknown): string | undefined {
   return typeof value === 'string' ? value : undefined
+}
+
+/** 读取有限 number 字段。 */
+function getNumber(value: unknown): number | undefined {
+  return typeof value === 'number' && Number.isFinite(value) ? value : undefined
 }
 
 /** 安全脱敏可选文本。 */

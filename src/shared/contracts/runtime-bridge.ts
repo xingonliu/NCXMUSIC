@@ -1,6 +1,7 @@
 import type { RuntimeStatus } from '../schemas/control-plane'
 import type { AccountDataRequest, AccountDataResult } from '../schemas/account-data'
 import type { PingResult, RuntimeResult, UtilitySnapshot } from '../schemas/runtime'
+import type { AgentCommand, AgentRuntimeEvent, AgentSnapshot } from '../schemas/agent'
 import type {
   AlbumId,
   ArtistId,
@@ -34,6 +35,10 @@ export interface NcxRuntimeBridge {
   snapshot(): Promise<RuntimeResult<UtilitySnapshot>>
   retryUtility(): Promise<RuntimeStatus>
   onStatus(listener: (status: RuntimeStatus) => void): () => void
+  /** 发送小云命令并取得可恢复快照。 */
+  agent(command: AgentCommand): Promise<RuntimeResult<AgentSnapshot>>
+  /** 订阅小云完整快照与播放器命令事件。 */
+  onAgentEvent(listener: (event: AgentRuntimeEvent) => void): () => void
   /** 低层标准 Music Service 只读入口，供 Agent/页面特殊场景复用 */
   readMusic(input: MusicReadPayload & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
   /** 低层标准 Music Service 写入入口；调用方必须显式处理失败且不得透明重试。 */

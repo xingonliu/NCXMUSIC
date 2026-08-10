@@ -7,6 +7,7 @@ import {
   Sun
 } from '@lucide/vue'
 import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 import type { MusicQualityPreference } from '../../../domains/player/types'
 import type { AccountSessionSnapshot } from '../../../shared/schemas/account'
@@ -25,12 +26,14 @@ import { zhCN } from '../../locales/zh-CN'
 import { useAccountSessionStore } from '../account/account-session-store'
 import { usePlayer } from '../music/use-player'
 import { useAppPreferences } from './app-preferences'
+import ModelSettingsPanel from './ModelSettingsPanel.vue'
+import SecuritySettingsPanel from './SecuritySettingsPanel.vue'
 import './settings-page.css'
 
 // ========= 类型 =========
 
 /** 设置页标签。 */
-type SettingsTab = 'music' | 'appearance' | 'data'
+type SettingsTab = 'music' | 'models' | 'security' | 'appearance' | 'data'
 
 // ========= 变量 =========
 
@@ -42,6 +45,9 @@ const player = usePlayer()
 
 /** 应用界面偏好。 */
 const appPreferences = useAppPreferences()
+
+/** 当前路由，用于从小云未配置状态直达模型标签。 */
+const route = useRoute()
 
 /** 播放文案集合。 */
 const playerText = zhCN.player
@@ -64,6 +70,8 @@ const dataBusy = ref<boolean>(false)
 /** 设置标签选项。 */
 const tabOptions: CommonOption[] = [
   { label: '音乐', value: 'music' },
+  { label: '模型', value: 'models' },
+  { label: '安全', value: 'security' },
   { label: '外观', value: 'appearance' },
   { label: '数据', value: 'data' }
 ]
@@ -237,6 +245,11 @@ function setActiveTab(value: string | number): void {
 // ========= 生命周期 =========
 
 onMounted(async () => {
+  /** 路由 query 指定的初始设置标签。 */
+  const requestedTab = route.query['tab']
+  if (typeof requestedTab === 'string' && tabOptions.some((option) => option.value === requestedTab)) {
+    activeTab.value = requestedTab as SettingsTab
+  }
   await account.initialize()
   /** Main 持久化并在启动时恢复的权威关闭行为。 */
   const snapshot = await window.ncx.windowControls.snapshot()
@@ -311,6 +324,10 @@ watch(
         />
       </section>
     </div>
+
+    <ModelSettingsPanel v-else-if="activeTab === 'models'" />
+
+    <SecuritySettingsPanel v-else-if="activeTab === 'security'" />
 
     <div v-else-if="activeTab === 'appearance'" class="settings-list">
       <section class="settings-row">

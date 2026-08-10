@@ -1,4 +1,7 @@
 import { RuntimeConnectionMetadataSchema } from '../shared/schemas/control-plane'
+import { AgentRuntime } from '../domains/agent/agent-runtime'
+import { requestProviderTextStream } from '../infrastructure/provider/provider-protocol'
+import { ProviderRuntimeControlSchema } from '../shared/schemas/provider-profile'
 import {
   CredentialControlCommandSchema,
   CredentialControlEventSchema
@@ -75,16 +78,59 @@ const musicService = new MusicService(
 )
 /** 播放快照服务：只通过当前账户 SQLite 单写者读写。 */
 const playbackSnapshotService = new PlaybackSnapshotService(accountStore)
+/** Utility 内单会话 Agent Runtime。 */
+const agentRuntime = new AgentRuntime({
+  provider: {
+    stream: ({ profile, messages, tools, signal }) => requestProviderTextStream(
+      {
+        profileId: profile.profileId,
+        protocol: profile.protocol,
+        model: profile.model,
+        baseUrl: profile.baseUrl,
+        ...(profile.headers ? { headers: profile.headers } : {}),
+        ...(profile.credentialFingerprint
+          ? { credentialFingerprint: profile.credentialFingerprint }
+          : {})
+      },
+      { messages, tools },
+      { signal }
+    )
+  },
+  music: musicService,
+  emit: (event) => runtime.publishAgentEvent(event)
+})
+/** Renderer MessagePort 协议服务。 */
 const runtime = new UtilityRuntimeServer(
   trackUrl,
   shellExecutor,
   musicService,
   playbackSnapshotService,
-  accountDataService
+  accountDataService,
+  agentRuntime
 )
 const shouldCrashBeforeReady = process.argv.includes('--ncx-smoke-crash-before-ready')
 
 process.parentPort.on('message', (event) => {
+  const providerControl = ProviderRuntimeControlSchema.safeParse(event.data)
+  if (providerControl.success) {
+    if (providerControl.data.kind === 'agent.provider.clear') {
+      agentRuntime.configureProvider(undefined)
+    } else {
+      const profile = providerControl.data.profile
+      agentRuntime.configureProvider({
+        profileId: profile.profileId,
+        protocol: profile.protocol,
+        model: profile.model,
+        baseUrl: profile.baseUrl,
+        ...(profile.headers ? { headers: profile.headers } : {}),
+        ...(profile.credentialFingerprint
+          ? { credentialFingerprint: profile.credentialFingerprint }
+          : {})
+      })
+    }
+    return
+  }
+
   const accountCommand = AccountStoreOpenCommandSchema.safeParse(event.data)
   if (accountCommand.success) {
     if (accountCommand.data.accountGeneration < accountStoreGeneration) {
@@ -98,6 +144,7 @@ process.parentPort.on('message', (event) => {
       return
     }
     accountStoreGeneration = accountCommand.data.accountGeneration
+    agentRuntime.terminate('account_switch')
     void accountStoreReady
       .then(() => accountStore.switchAccount(
         accountCommand.data.accountId,
@@ -175,6 +222,7 @@ if (shouldCrashBeforeReady) {
     .catch(() => process.exit(87))
 }
 process.once('exit', () => {
+  agentRuntime.terminate('app_exit')
   void accountStore.close()
   credentialLease.shutdown()
   musicService.shutdown()

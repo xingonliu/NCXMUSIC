@@ -1,5 +1,13 @@
 import type { RuntimeConnectionMetadata } from '../shared/contracts/control-plane'
 import {
+  AgentCommandSchema,
+  AgentRuntimeEventSchema,
+  AgentSnapshotSchema,
+  type AgentCommand,
+  type AgentRuntimeEvent,
+  type AgentSnapshot
+} from '../shared/schemas/agent'
+import {
   AccountDataRequestSchema,
   AccountDataResultSchema,
   type AccountDataRequest,
@@ -29,6 +37,7 @@ import {
 } from '../shared/schemas/playback-persistence'
 import {
   HelloEnvelopeSchema,
+  AgentEventEnvelopeSchema,
   PingPayloadSchema,
   PingResultSchema,
   ResponseEnvelopeSchema,
@@ -73,6 +82,8 @@ export class RuntimeGateway {
   private ready = false
   private readonly pending = new Map<string, PendingRequest>()
   private readonly readyWaiters = new Set<ReadyWaiter>()
+  /** Renderer Agent 事件订阅者。 */
+  private readonly agentListeners = new Set<(event: AgentRuntimeEvent) => void>()
 
   attach(port: RuntimeClientPort, metadata: RuntimeConnectionMetadata): void {
     this.replaceConnection(protocolFailure('CONNECTION_REPLACED', '运行时连接已替换。', true))
@@ -98,7 +109,8 @@ export class RuntimeGateway {
             'music.resolve-url',
             'account.data',
             'playback.snapshot.load',
-            'playback.snapshot.save'
+            'playback.snapshot.save',
+            'agent.command'
           ]
         }
       })
@@ -301,6 +313,33 @@ export class RuntimeGateway {
       : protocolFailure('PROTOCOL_INVALID_MESSAGE', '账户数据响应不符合契约。')
   }
 
+  /** 发送 Agent 命令并校验完整快照响应。 */
+  async agent(command: AgentCommand): Promise<RuntimeResult<AgentSnapshot>> {
+    /** 经共享 Schema 校验的 Agent 命令。 */
+    const payload = AgentCommandSchema.safeParse(command)
+    if (!payload.success) {
+      return protocolFailure('PROTOCOL_INVALID_MESSAGE', 'Agent 命令参数不合法。')
+    }
+    const result = await this.request(
+      'agent.command',
+      payload.data,
+      crypto.randomUUID(),
+      contractRegistry['agent.command'].defaultTimeoutMs
+    )
+    if (!result.ok) return result
+    /** 经共享 Schema 校验的 Agent 快照。 */
+    const parsed = AgentSnapshotSchema.safeParse(result.data)
+    return parsed.success
+      ? { ok: true, data: parsed.data }
+      : protocolFailure('PROTOCOL_INVALID_MESSAGE', 'Agent 快照响应不符合契约。')
+  }
+
+  /** 订阅经 Preload 校验的 Agent 事件。 */
+  onAgentEvent(listener: (event: AgentRuntimeEvent) => void): () => void {
+    this.agentListeners.add(listener)
+    return () => this.agentListeners.delete(listener)
+  }
+
   cancel(requestId: string): boolean {
     const request = this.pending.get(requestId)
     if (!request || !this.port || !this.metadata) return false
@@ -369,6 +408,15 @@ export class RuntimeGateway {
         }
         this.readyWaiters.clear()
       }
+      return
+    }
+
+    /** Utility 推送的 Agent 流式事件。 */
+    const agentEvent = AgentEventEnvelopeSchema.safeParse(message)
+    if (agentEvent.success && agentEvent.data.connectionId === this.metadata?.connectionId) {
+      /** 二次校验后的公开事件。 */
+      const event = AgentRuntimeEventSchema.parse(agentEvent.data.payload)
+      for (const listener of this.agentListeners) listener(event)
       return
     }
 

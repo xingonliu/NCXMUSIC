@@ -67,6 +67,9 @@ const isSecondaryPage = computed(() => route.meta.pageLevel === 2)
 /** Header 视觉变体。 */
 const headerVariant = computed(() => route.meta.headerVariant ?? 'default')
 
+/** 当前路由是否隐藏普通侧边栏。 */
+const isStandalonePage = computed(() => route.meta.shell === 'standalone')
+
 /** 窗口状态监听清理函数。 */
 let unsubscribeWindowSnapshot = (): void => {}
 
@@ -138,7 +141,8 @@ onBeforeUnmount(() => {
     :class="[
       isMacOS ? 'ncx-app-shell--macos' : 'ncx-app-shell--windows',
       windowSnapshot.fullscreen ? 'ncx-app-shell--fullscreen' : '',
-      windowSnapshot.maximized ? 'ncx-app-shell--maximized' : ''
+      windowSnapshot.maximized ? 'ncx-app-shell--maximized' : '',
+      isStandalonePage ? 'ncx-app-shell--standalone' : ''
     ]"
   >
     <header
@@ -158,11 +162,19 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="ncx-page-actions">
-        <CommonHeaderButton label="搜索" @click="openSearch">
+        <CommonHeaderButton
+          v-if="!isStandalonePage"
+          label="搜索"
+          @click="openSearch"
+        >
           <Search :size="17" />
         </CommonHeaderButton>
 
-        <CommonHeaderButton label="刷新当前页" @click="refreshCurrentPage">
+        <CommonHeaderButton
+          v-if="!isStandalonePage"
+          label="刷新当前页"
+          @click="refreshCurrentPage"
+        >
           <RotateCcw :size="17" />
         </CommonHeaderButton>
 
@@ -203,6 +215,7 @@ onBeforeUnmount(() => {
     </header>
 
     <aside
+      v-if="!isStandalonePage"
       class="ncx-sidebar"
       aria-label="主导航"
     >

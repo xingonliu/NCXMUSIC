@@ -13,6 +13,8 @@ import SongDetailPage from '../features/music/SongDetailPage.vue'
 import SongCollectionPage from '../features/music/SongCollectionPage.vue'
 import SettingsPage from '../features/settings/SettingsPage.vue'
 import ProfilePage from '../features/profile/ProfilePage.vue'
+import AgentPage from '../features/agent/AgentPage.vue'
+import OnboardingPage from '../features/onboarding/OnboardingPage.vue'
 
 // ========= 变量 =========
 
@@ -28,11 +30,12 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/onboarding',
     name: 'onboarding',
-    component: RouteSkeletonView,
+    component: OnboardingPage,
     meta: {
       pageLevel: 1,
       title: 'routes.onboarding',
-      playerBar: 'hide'
+      playerBar: 'hide',
+      shell: 'standalone'
     }
   },
   {
@@ -90,7 +93,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/agent',
     name: 'agent',
-    component: RouteSkeletonView,
+    component: AgentPage,
     meta: {
       pageLevel: 1,
       title: 'routes.agent',
@@ -215,4 +218,14 @@ const routes: RouteRecordRaw[] = [
 export const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+// ========= 路由门禁 =========
+
+/** 首次安装在完成或跳过七步引导前统一进入 onboarding。 */
+router.beforeEach((to) => {
+  /** 当前浏览器空间的引导完成标记。 */
+  const completed = localStorage.getItem('ncx.onboarding.completed.v1') === 'true'
+  if (!completed && to.name !== 'onboarding') return { name: 'onboarding' }
+  return true
 })

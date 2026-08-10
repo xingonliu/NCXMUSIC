@@ -161,12 +161,14 @@ describe('provider protocol fixtures', () => {
       {
         type: 'tool-call-delta',
         id: 'call_1',
+        index: 0,
         name: 'control_player',
         argumentsDelta: '{"action"'
       },
       {
         type: 'tool-call-delta',
-        id: 'tool-0',
+        id: 'call_1',
+        index: 0,
         argumentsDelta: ':"play"}'
       },
       { type: 'completed', finishReason: 'tool_calls' },
@@ -203,13 +205,13 @@ describe('provider protocol fixtures', () => {
         'anthropic-messages',
         'data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"call_a","name":"control_player"}}'
       )
-    ).toEqual([{ type: 'tool-call-delta', id: 'call_a', name: 'control_player' }])
+    ).toEqual([{ type: 'tool-call-delta', id: 'call_a', index: 1, name: 'control_player' }])
     expect(
       parseProviderStreamLine(
         'anthropic-messages',
         'data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\\"action\\":\\"pause\\"}"}}'
       )
-    ).toEqual([{ type: 'tool-call-delta', id: 'tool-1', argumentsDelta: '{"action":"pause"}' }])
+    ).toEqual([{ type: 'tool-call-delta', id: 'tool-1', index: 1, argumentsDelta: '{"action":"pause"}' }])
   })
 
   it('构造并解析 Gemini generateContent 文本流和 functionCall', () => {
