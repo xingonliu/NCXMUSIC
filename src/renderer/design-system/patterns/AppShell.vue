@@ -262,7 +262,7 @@ onBeforeUnmount(() => {
       >
         <RouterLink
           class="ncx-nav-item"
-          :class="{ 'ncx-nav-item--active': isNavigationActive(appAccountNavigationItem) }"
+          :class="{ 'ncx-nav-item--sub-active': isNavigationActive(appAccountNavigationItem) }"
           :to="{ name: appAccountNavigationItem.routeName }"
         >
           <component
@@ -274,7 +274,7 @@ onBeforeUnmount(() => {
         </RouterLink>
         <RouterLink
           class="ncx-nav-item"
-          :class="{ 'ncx-nav-item--active': isNavigationActive(appSettingsNavigationItem) }"
+          :class="{ 'ncx-nav-item--sub-active': isNavigationActive(appSettingsNavigationItem) }"
           :to="{ name: appSettingsNavigationItem.routeName }"
         >
           <component

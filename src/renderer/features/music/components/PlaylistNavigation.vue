@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Music2, Plus } from '@lucide/vue'
 import { computed, onMounted, ref, watch } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
 
 import type { MusicReadResult, StandardPlaylist } from '../../../../shared/schemas/music'
 import {
@@ -20,6 +20,9 @@ import { mutateMusic } from '../music-actions'
 import { adaptArtworkUrl } from '../music-entity'
 
 // ========= 变量 =========
+
+/** 当前路由对象，用于判断歌单导航高亮。 */
+const route = useRoute()
 
 /** 应用账户公开状态。 */
 const account = useAccountSessionStore()
@@ -173,6 +176,17 @@ function handlePlaylistAction(playlist: StandardPlaylist, rawAction: string | nu
   }
 }
 
+/** 判断指定歌单条目是否为当前高亮路由。 */
+function isPlaylistActive(playlist: StandardPlaylist): boolean {
+  if (route.name === 'playlist-detail') {
+    return String(route.params.playlistId) === String(playlist.id)
+  }
+  if (route.name === 'liked-songs') {
+    return playlist.name.includes('喜欢的音乐') || playlist.name.includes('我喜欢')
+  }
+  return false
+}
+
 // ========= 生命周期 =========
 
 onMounted(async () => {
@@ -207,6 +221,7 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
       >
         <RouterLink
           class="ncx-nav-item"
+          :class="{ 'ncx-nav-item--sub-active': isPlaylistActive(playlist) }"
           :to="{ name: 'playlist-detail', params: { playlistId: playlist.id } }"
         >
           <span class="ncx-playlist-cover" aria-hidden="true">
