@@ -11,8 +11,7 @@
   margin: 0;
 }
 
-.settings-eyebrow,
-.settings-state {
+.settings-eyebrow {
   color: var(--ncx-color-accent);
   font-size: 12px;
   font-weight: 700;
@@ -75,13 +74,6 @@
   line-height: 1.45;
 }
 
-.settings-state {
-  padding: 5px 9px;
-  border-radius: var(--ncx-radius-full);
-  background: color-mix(in srgb, var(--ncx-color-accent) 10%, transparent);
-}
-
-.settings-actions,
 .settings-theme-options {
   display: flex;
   flex-wrap: wrap;

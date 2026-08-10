@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CalendarCheck, Database, LogIn, LogOut, Music2, Trash2 } from '@lucide/vue'
+import { CalendarCheck, Database, LogIn, LogOut, Music2, ShieldCheck, Trash2 } from '@lucide/vue'
 import { computed, onMounted, ref, watch } from 'vue'
 
 import type { MusicReadResult, StandardUser } from '../../../shared/schemas/music'
@@ -15,6 +15,11 @@ import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
 import { useDailySignin } from '../music/daily-signin'
 import { useAppPreferences } from '../settings/app-preferences'
+
+// ========= 类型 =========
+
+/** 个人信息页支持的账户会话操作。 */
+type AccountAction = 'login' | 'logout' | 'switch'
 
 // ========= 变量 =========
 
@@ -38,6 +43,9 @@ const errorMessage = ref<string>('')
 
 /** 退出登录确认框状态。 */
 const logoutDialogVisible = ref<boolean>(false)
+
+/** 当前进行中的账户操作。 */
+const busyAction = ref<AccountAction | null>(null)
 
 /** 最近一次资料请求 ID，用于丢弃旧账户迟到响应。 */
 let latestProfileRequestId = ''
@@ -102,9 +110,17 @@ async function loadProfile(): Promise<void> {
   user.value = result.entity
 }
 
-/** 打开官方网易云登录。 */
-async function login(): Promise<void> {
-  await window.ncx.account.login()
+/** 执行个人信息页中的账户会话操作。 */
+async function runAccountAction(action: AccountAction): Promise<void> {
+  if (busyAction.value) return
+  busyAction.value = action
+  try {
+    if (action === 'login') await window.ncx.account.login()
+    else if (action === 'logout') await window.ncx.account.logout()
+    else await window.ncx.account.switchAccount()
+  } finally {
+    busyAction.value = null
+  }
 }
 
 /** 执行每日签到。 */
@@ -134,7 +150,7 @@ async function clearCache(): Promise<void> {
 /** 退出当前网易云账户。 */
 async function confirmLogout(): Promise<void> {
   logoutDialogVisible.value = false
-  await window.ncx.account.logout()
+  await runAccountAction('logout')
   user.value = null
   showToast('已退出当前账户，本地账户空间仍保留。', 'info')
 }
@@ -174,12 +190,17 @@ watch(
 
     <CommonEmptyState
       v-else-if="!userId"
-      title="登录后查看个人资料"
+      title="游客"
       description="游客模式不会读取网易云账户资料。"
     >
-      <CommonButton variant="primary" @click="login">
+      <CommonButton
+        variant="primary"
+        :loading="busyAction === 'login'"
+        :disabled="!account.snapshot.value?.canLogin"
+        @click="runAccountAction('login')"
+      >
         <LogIn :size="14" />
-        登录网易云
+        登录账户
       </CommonButton>
     </CommonEmptyState>
 
@@ -230,13 +251,32 @@ watch(
           </CommonButton>
         </section>
 
-        <section class="profile-section profile-section--danger">
-          <span class="profile-section-icon"><LogOut :size="20" /></span>
+        <section class="profile-section">
+          <span class="profile-section-icon"><ShieldCheck :size="20" /></span>
           <div>
             <h2>账户会话</h2>
-            <p>退出不会删除此账户的本地数据。</p>
+            <p>在这里登录、切换或退出账户；退出不会删除本地数据。</p>
           </div>
-          <CommonButton variant="danger" @click="logoutDialogVisible = true">退出登录</CommonButton>
+          <div class="profile-account-actions">
+            <CommonButton
+              variant="primary"
+              :loading="busyAction === 'login'"
+              :disabled="!account.snapshot.value?.canLogin"
+              @click="runAccountAction('login')"
+            ><LogIn :size="14" />登录</CommonButton>
+            <CommonButton
+              variant="secondary"
+              :loading="busyAction === 'switch'"
+              :disabled="!account.snapshot.value?.canSwitchAccount"
+              @click="runAccountAction('switch')"
+            >切换账号</CommonButton>
+            <CommonButton
+              variant="danger"
+              :loading="busyAction === 'logout'"
+              :disabled="!account.snapshot.value?.canLogout"
+              @click="logoutDialogVisible = true"
+            ><LogOut :size="14" />退出</CommonButton>
+          </div>
         </section>
       </div>
     </template>
@@ -349,6 +389,14 @@ watch(
   flex: 1;
 }
 
+.profile-section > .profile-account-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--ncx-space-2);
+}
+
 .profile-section h2 {
   font-size: 16px;
 }
@@ -369,8 +417,4 @@ watch(
   background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
 }
 
-.profile-section--danger .profile-section-icon {
-  color: var(--ncx-color-danger);
-  background: color-mix(in srgb, var(--ncx-color-danger) 10%, transparent);
-}
 </style>

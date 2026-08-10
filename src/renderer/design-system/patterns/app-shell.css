@@ -134,11 +134,6 @@
     box-shadow var(--ncx-motion-fast);
 }
 
-.ncx-nav-item--disabled {
-  cursor: default;
-  opacity: 0.68;
-}
-
 .ncx-nav-item:hover {
   background: var(--ncx-control-hover);
 }

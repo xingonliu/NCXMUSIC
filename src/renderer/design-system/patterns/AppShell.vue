@@ -73,9 +73,6 @@ let unsubscribeWindowSnapshot = (): void => {}
 /** 当前路由页面刷新代次，只重挂 RouterView 叶子组件。 */
 const routeRefreshKey = ref<number>(0)
 
-/** 当前是否为不可点击的游客账户。 */
-const isGuestAccount = computed<boolean>(() => account.snapshot.value?.activeAccount.kind !== 'netease')
-
 /** 侧栏账户展示名。 */
 const accountDisplayName = computed<string>(() => account.snapshot.value?.activeAccount.displayName ?? '游客')
 
@@ -250,16 +247,7 @@ onBeforeUnmount(() => {
         class="ncx-account-nav"
         aria-label="账户和设置"
       >
-        <div
-          v-if="isGuestAccount"
-          class="ncx-nav-item ncx-nav-item--disabled"
-          aria-label="游客账户"
-        >
-          <UserRound :size="17" :stroke-width="1.9" />
-          <span>{{ accountDisplayName }}</span>
-        </div>
         <RouterLink
-          v-else
           class="ncx-nav-item"
           :class="{ 'ncx-nav-item--active': isNavigationActive(appAccountNavigationItem) }"
           :to="{ name: appAccountNavigationItem.routeName }"

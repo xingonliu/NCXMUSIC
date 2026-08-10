@@ -2,13 +2,9 @@
 import {
   Database,
   Headphones,
-  LogIn,
-  LogOut,
   Moon,
   Palette,
-  ShieldCheck,
-  Sun,
-  UserRound
+  Sun
 } from '@lucide/vue'
 import { computed, onMounted, ref, watch } from 'vue'
 
@@ -34,10 +30,7 @@ import './settings-page.css'
 // ========= 类型 =========
 
 /** 设置页标签。 */
-type SettingsTab = 'account' | 'music' | 'appearance' | 'data'
-
-/** 账户操作类型。 */
-type AccountAction = 'login' | 'logout' | 'switch'
+type SettingsTab = 'music' | 'appearance' | 'data'
 
 // ========= 变量 =========
 
@@ -54,10 +47,7 @@ const appPreferences = useAppPreferences()
 const playerText = zhCN.player
 
 /** 当前设置标签。 */
-const activeTab = ref<SettingsTab>('account')
-
-/** 当前进行中的账户操作。 */
-const busyAction = ref<AccountAction | null>(null)
+const activeTab = ref<SettingsTab>('music')
 
 /** 清理缓存确认框显示状态。 */
 const clearCacheDialogVisible = ref<boolean>(false)
@@ -73,7 +63,6 @@ const dataBusy = ref<boolean>(false)
 
 /** 设置标签选项。 */
 const tabOptions: CommonOption[] = [
-  { label: '账户', value: 'account' },
   { label: '音乐', value: 'music' },
   { label: '外观', value: 'appearance' },
   { label: '数据', value: 'data' }
@@ -102,42 +91,10 @@ const closeBehaviorOptions: CommonOption[] = [
 /** 当前账户安全快照。 */
 const accountSnapshot = computed<AccountSessionSnapshot | undefined>(() => account.snapshot.value)
 
-/** 当前展示账户名称。 */
-const accountName = computed<string>(() => accountSnapshot.value?.activeAccount.displayName ?? '游客')
-
 /** 当前展示账户引用。 */
 const accountReference = computed<string>(() => accountSnapshot.value?.activeAccount.accountId ?? 'guest:local')
 
-/** 当前登录状态标签。 */
-const accountStateLabel = computed<string>(() => {
-  const state = accountSnapshot.value?.state ?? 'logged_out'
-  const labels: Record<AccountSessionSnapshot['state'], string> = {
-    logged_out: '游客',
-    opening_official_login: '打开登录',
-    waiting_for_cookie: '等待登录',
-    validating_cookie: '验证中',
-    authenticated: '已登录',
-    session_expired: '已过期',
-    validation_failed: '验证失败',
-    cancelled: '已取消'
-  }
-  return labels[state]
-})
-
 // ========= 函数 =========
-
-/** 执行账户操作并刷新安全快照。 */
-async function runAccountAction(action: AccountAction): Promise<void> {
-  if (busyAction.value) return
-  busyAction.value = action
-  try {
-    if (action === 'login') await window.ncx.account.login()
-    else if (action === 'logout') await window.ncx.account.logout()
-    else await window.ncx.account.switchAccount()
-  } finally {
-    busyAction.value = null
-  }
-}
 
 /** 设置播放器全局音质偏好。 */
 function setPlaybackQuality(value: string | number): void {
@@ -314,45 +271,7 @@ watch(
       @update:model-value="setActiveTab"
     />
 
-    <div v-if="activeTab === 'account'" class="settings-list">
-      <section class="settings-row settings-row--profile">
-        <span class="settings-row-icon"><UserRound :size="19" /></span>
-        <div class="settings-row-copy">
-          <h2>{{ accountName }}</h2>
-          <p>{{ accountReference }} · generation {{ accountSnapshot?.accountGeneration ?? 0 }}</p>
-        </div>
-        <span class="settings-state">{{ accountStateLabel }}</span>
-      </section>
-      <section class="settings-row">
-        <span class="settings-row-icon"><ShieldCheck :size="19" /></span>
-        <div class="settings-row-copy">
-          <h2>账户会话</h2>
-          <p>Renderer 凭据不可读，Cookie 只在 Utility 租约内使用。</p>
-        </div>
-        <div class="settings-actions">
-          <CommonButton
-            variant="primary"
-            :loading="busyAction === 'login'"
-            :disabled="!accountSnapshot?.canLogin"
-            @click="runAccountAction('login')"
-          ><LogIn :size="14" />登录</CommonButton>
-          <CommonButton
-            variant="secondary"
-            :loading="busyAction === 'switch'"
-            :disabled="!accountSnapshot?.canSwitchAccount"
-            @click="runAccountAction('switch')"
-          >切换账号</CommonButton>
-          <CommonButton
-            variant="danger"
-            :loading="busyAction === 'logout'"
-            :disabled="!accountSnapshot?.canLogout"
-            @click="runAccountAction('logout')"
-          ><LogOut :size="14" />退出</CommonButton>
-        </div>
-      </section>
-    </div>
-
-    <div v-else-if="activeTab === 'music'" class="settings-list">
+    <div v-if="activeTab === 'music'" class="settings-list">
       <section class="settings-row">
         <span class="settings-row-icon"><Headphones :size="19" /></span>
         <div class="settings-row-copy">
