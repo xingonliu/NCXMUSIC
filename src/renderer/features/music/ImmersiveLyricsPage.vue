@@ -21,6 +21,7 @@ import {
   CommonIconButton
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
+import { copyText } from '../foundation/clipboard'
 import LyricsPanel from './components/LyricsPanel.vue'
 import MediaArtwork from './components/MediaArtwork.vue'
 import PlaybackControls from './components/PlaybackControls.vue'
@@ -129,12 +130,7 @@ async function copyTrackInformation(): Promise<void> {
 
   /** 由歌曲名和歌手组成的剪贴板文本。 */
   const information = `${currentTrack.name} - ${currentTrack.artists.join(' / ')}`
-  try {
-    await navigator.clipboard.writeText(information)
-    showToast('歌曲信息已复制。', 'success')
-  } catch {
-    showToast('无法访问系统剪贴板。', 'warning')
-  }
+  await copyText(information, '歌曲信息已复制。')
 }
 
 /**

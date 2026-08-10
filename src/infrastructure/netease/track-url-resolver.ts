@@ -71,6 +71,19 @@ const AUTO_QUALITY_CHAIN: NeteaseQuality[] = [
   'standard'
 ]
 
+/** 产品音质从低到高的稳定等级，用于比较请求目标与上游实际档位。 */
+const QUALITY_RANK: Record<MusicQualityLevel, number> = {
+  standard: 0,
+  higher: 1,
+  exhigh: 2,
+  lossless: 3,
+  hires: 4,
+  jyeffect: 5,
+  sky: 6,
+  dolby: 7,
+  jymaster: 8
+}
+
 /**
  * 将架构层音质枚举映射到 netease API 支持的值。
  * higher → standard（降级到最近可用），dolby → 不进入 auto 链，仅显式指定。
@@ -181,6 +194,7 @@ export class TrackUrlResolver {
 
     for (const level of chain) {
       signal?.throwIfAborted()
+      attempted.push(level as MusicQualityLevel)
 
       const resp = await withoutThirdPartyConsole(() =>
         api.song_url_v1({
@@ -197,16 +211,16 @@ export class TrackUrlResolver {
 
       if (data?.url) {
         const actualLevel = (data.level ?? level) as MusicQualityLevel
-        attempted.push(actualLevel)
         const requestedQuality =
           quality === 'auto'
             ? 'auto'
             : (quality as MusicQualityPreference)
-        const firstAttempted = attempted[0]
+        /** 用户本次请求或自动模式的目标档位。 */
+        const targetLevel: MusicQualityLevel = quality === 'auto'
+          ? (AUTO_QUALITY_CHAIN[0] ?? 'jymaster')
+          : quality as MusicQualityLevel
         const isDowngraded =
-          quality === 'auto'
-            ? firstAttempted !== actualLevel
-            : toNeteaseQuality(quality as MusicQualityLevel) !== level
+          QUALITY_RANK[actualLevel] < QUALITY_RANK[targetLevel]
 
         return {
           url: toHttpsPlaybackUrl(data.url),
@@ -214,6 +228,9 @@ export class TrackUrlResolver {
           actualQuality: actualLevel,
           attemptedQualities: attempted,
           downgraded: isDowngraded,
+          ...(isDowngraded
+            ? { downgradeReason: attempted.length > 1 ? 'account-unavailable' as const : 'upstream-fallback' as const }
+            : {}),
           ...(data.br !== undefined ? { bitrate: data.br } : {}),
           ...(data.type ? { format: data.type } : {}),
           ...(data.size !== undefined && data.size > 0 ? { size: data.size } : {})
@@ -221,7 +238,6 @@ export class TrackUrlResolver {
       }
 
       // URL 为 null：此音质当前账号不可用，继续降级
-      attempted.push(level as unknown as MusicQualityLevel)
     }
 
     // 所有音质尝试完毕仍无 URL

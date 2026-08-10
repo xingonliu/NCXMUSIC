@@ -15,6 +15,7 @@ import {
 } from '../../../design-system/components'
 import { showToast } from '../../../design-system/use-toast'
 import { useAccountSessionStore } from '../../account/account-session-store'
+import { copyText } from '../../foundation/clipboard'
 import { mutateMusic } from '../music-actions'
 
 // ========= 变量 =========
@@ -164,7 +165,10 @@ function handlePlaylistAction(playlist: StandardPlaylist, rawAction: string | nu
   else if (action === 'delete') deleteTarget.value = playlist
   else if (action === 'unsubscribe') void unsubscribePlaylist(playlist)
   else if (action === 'copy-link') {
-    void navigator.clipboard.writeText(`https://music.163.com/playlist?id=${playlist.id}`)
+    void copyText(
+      `https://music.163.com/playlist?id=${playlist.id}`,
+      '歌单链接已复制。'
+    )
   }
 }
 

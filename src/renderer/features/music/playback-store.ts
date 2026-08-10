@@ -80,9 +80,9 @@ function hasPositionToPersist(snapshot: PlayerSnapshot): boolean {
   return snapshot.playback.track !== null && snapshot.playback.positionMs >= 0
 }
 
-/** 为指定账户生成独立播放快照键，generation 不参与跨登录恢复。 */
+/** 为指定账户与登录 generation 生成独立播放快照键。 */
 function playbackStoreKey(account: PlaybackStoreAccountContext): string {
-  return `${PLAYBACK_STORE_KEY_PREFIX}.${encodeURIComponent(account.accountId)}`
+  return `${PLAYBACK_STORE_KEY_PREFIX}.${encodeURIComponent(account.accountId)}.${account.accountGeneration}`
 }
 
 /**
@@ -180,6 +180,7 @@ export class PlaybackStore {
     const parsed = PersistedPlaybackSnapshotSchema.safeParse(decoded)
     if (!parsed.success) return null
     if (parsed.data.accountId !== account.accountId) return null
+    if (parsed.data.accountGeneration !== account.accountGeneration) return null
     if (!this.storage.getItem(accountKey)) {
       this.storage.setItem(accountKey, raw)
       this.storage.removeItem(LEGACY_PLAYBACK_STORE_KEY)

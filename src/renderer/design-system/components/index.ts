@@ -1,5 +1,5 @@
 /* eslint vue/multi-word-component-names: off, vue/one-component-per-file: off */
-import { Comment, Fragment, computed, defineComponent, h, nextTick, onMounted, onUnmounted, ref, Teleport, Transition, watch, type Component, type PropType, type VNode } from 'vue'
+import { Comment, Fragment, computed, defineComponent, h, nextTick, onMounted, onUnmounted, ref, Teleport, Transition, watch, type Component, type PropType, type Ref, type VNode } from 'vue'
 
 // ========= 类型 =========
 
@@ -114,7 +114,7 @@ function guardDisabledClick(event: MouseEvent, disabled: boolean): boolean {
 }
 
 /** 气泡显隐交互状态：统一鼠标悬浮/聚焦显隐逻辑（含延迟），供 Tooltip 与 IconButton 复用。 */
-function useTooltipInteraction(disabled: () => boolean, delay = 300) {
+function useTooltipInteraction(disabled: () => boolean, delay = 1_500) {
   /** 气泡是否处于显示状态。 */
   const visible = ref(false)
   /** 延迟显示计时器。 */
@@ -149,6 +149,78 @@ function useTooltipInteraction(disabled: () => boolean, delay = 300) {
   }
 
   return { visible, handleMouseEnter, handleMouseLeave, handleFocusIn, handleFocusOut }
+}
+
+/** 可聚焦控件选择器，用于所有模态表面的焦点陷阱。 */
+const MODAL_FOCUSABLE_SELECTOR = [
+  'button:not([disabled])',
+  '[href]',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])'
+].join(',')
+
+/** 当前打开的模态表面数量，用于嵌套表面关闭时维持背景 inert。 */
+let activeModalCount = 0
+
+/** 设置或清除应用背景不可交互状态。 */
+function setApplicationBackgroundInert(inert: boolean): void {
+  document.querySelectorAll<HTMLElement>('.ncx-app-shell, .ncx-player-bar').forEach((element) => {
+    element.inert = inert
+    if (inert) element.setAttribute('aria-hidden', 'true')
+    else element.removeAttribute('aria-hidden')
+  })
+}
+
+/** 为 Dialog/Alert/Drawer 安装焦点进入、循环与关闭后恢复。 */
+function useModalFocus(visible: () => boolean, panel: Ref<HTMLElement | null>): void {
+  /** 打开表面前的活动元素。 */
+  let previousFocus: HTMLElement | null = null
+
+  /** 将焦点保持在当前模态面板内。 */
+  function trapFocus(event: KeyboardEvent): void {
+    if (!visible() || event.key !== 'Tab' || !panel.value) return
+    const focusable = Array.from(panel.value.querySelectorAll<HTMLElement>(MODAL_FOCUSABLE_SELECTOR))
+      .filter((element) => !element.hidden)
+    if (focusable.length === 0) {
+      event.preventDefault()
+      panel.value.focus()
+      return
+    }
+    const first = focusable[0] as HTMLElement
+    const last = focusable.at(-1) as HTMLElement
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault()
+      last.focus()
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault()
+      first.focus()
+    }
+  }
+
+  watch(visible, async (isVisible) => {
+    if (isVisible) {
+      previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null
+      activeModalCount += 1
+      setApplicationBackgroundInert(true)
+      await nextTick()
+      const first = panel.value?.querySelector<HTMLElement>(MODAL_FOCUSABLE_SELECTOR)
+      ;(first ?? panel.value)?.focus()
+      return
+    }
+    if (activeModalCount > 0) activeModalCount -= 1
+    if (activeModalCount === 0) setApplicationBackgroundInert(false)
+    previousFocus?.focus()
+    previousFocus = null
+  }, { immediate: true })
+
+  onMounted(() => window.addEventListener('keydown', trapFocus, true))
+  onUnmounted(() => {
+    window.removeEventListener('keydown', trapFocus, true)
+    if (visible() && activeModalCount > 0) activeModalCount -= 1
+    if (activeModalCount === 0) setApplicationBackgroundInert(false)
+  })
 }
 
 // ========= 操作组件 (macOS HIG / WWDC25 规范) =========
@@ -2089,7 +2161,7 @@ export const CommonTooltip = defineComponent({
     /** 弹出位置：top | bottom | left | right */
     placement: { type: String as PropType<'top' | 'bottom' | 'left' | 'right'>, default: 'top' },
     /** 延迟显示时间 (毫秒)。 */
-    delay: { type: Number, default: 300 },
+    delay: { type: Number, default: 1_500 },
     /** 是否禁用提示。 */
     disabled: { type: Boolean, default: false }
   },
@@ -2382,11 +2454,16 @@ export const CommonContextMenu = defineComponent({
   setup(props, { emit, slots }) {
     const open = ref(false)
     const position = ref({ x: 0, y: 0 })
+    /** Teleport 菜单面板。 */
+    const panel = ref<HTMLElement | null>(null)
+    /** 打开菜单的触发元素，用于关闭后恢复焦点。 */
+    let triggerElement: HTMLElement | null = null
 
     function openMenu(event: MouseEvent): void {
       if (props.disabled) return
       event.preventDefault()
       event.stopPropagation()
+      triggerElement = event.currentTarget instanceof HTMLElement ? event.currentTarget : null
 
       const menuWidth = 200
       const menuHeight = Math.min(340, props.items.length * 32 + 16)
@@ -2404,12 +2481,15 @@ export const CommonContextMenu = defineComponent({
       position.value = { x: Math.round(posX), y: Math.round(posY) }
       open.value = true
       emit('open-change', true)
+      void nextTick(() => panel.value?.querySelector<HTMLElement>('[role="menuitem"]:not([disabled])')?.focus())
     }
 
     function closeMenu(): void {
       if (!open.value) return
       open.value = false
       emit('open-change', false)
+      triggerElement?.focus()
+      triggerElement = null
     }
 
     function selectItem(item: CommonMenuItem): void {
@@ -2426,9 +2506,25 @@ export const CommonContextMenu = defineComponent({
     }
 
     function handleKeydown(e: KeyboardEvent): void {
-      if (e.key === 'Escape' && open.value) {
+      if (!open.value) return
+      if (e.key === 'Escape') {
+        e.preventDefault()
         closeMenu()
+        return
       }
+      if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return
+      const items = Array.from(panel.value?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([disabled])') ?? [])
+      if (items.length === 0) return
+      const currentIndex = items.indexOf(document.activeElement as HTMLElement)
+      const nextIndex = e.key === 'Home'
+        ? 0
+        : e.key === 'End'
+          ? items.length - 1
+          : e.key === 'ArrowDown'
+            ? (currentIndex + 1 + items.length) % items.length
+            : (currentIndex - 1 + items.length) % items.length
+      e.preventDefault()
+      items[nextIndex]?.focus()
     }
 
     onMounted(() => {
@@ -2452,6 +2548,7 @@ export const CommonContextMenu = defineComponent({
                 'div',
                 {
                   class: 'ncx-common-menu-panel ncx-common-context-panel ncx-common-context-panel-teleport',
+                  ref: panel,
                   role: 'menu',
                   style: {
                     position: 'fixed',
@@ -2930,6 +3027,9 @@ export const CommonDialog = defineComponent({
   },
   emits: ['close'],
   setup(props, { emit, slots }) {
+    /** 当前 Dialog 面板节点。 */
+    const panel = ref<HTMLElement | null>(null)
+    useModalFocus(() => props.visible, panel)
     const handleKeydown = (e: KeyboardEvent) => {
       if (props.visible && props.closeOnEsc && e.key === 'Escape') {
         emit('close')
@@ -2955,7 +3055,9 @@ export const CommonDialog = defineComponent({
         props.visible
           ? h('div', { class: 'ncx-common-overlay', role: 'presentation', onClick: handleOverlayClick }, [
               h('section', {
+                ref: panel,
                 class: 'ncx-common-modal',
+                tabindex: -1,
                 role: 'dialog',
                 'aria-modal': 'true',
                 'aria-label': props.title,
@@ -3001,6 +3103,9 @@ export const CommonAlertDialog = defineComponent({
   },
   emits: ['cancel', 'confirm'],
   setup(props, { emit }) {
+    /** 当前 AlertDialog 面板节点。 */
+    const panel = ref<HTMLElement | null>(null)
+    useModalFocus(() => props.visible, panel)
     const handleKeydown = (e: KeyboardEvent) => {
       if (props.visible && e.key === 'Escape') {
         emit('cancel')
@@ -3038,7 +3143,9 @@ export const CommonAlertDialog = defineComponent({
         props.visible
           ? h('div', { class: 'ncx-common-overlay ncx-common-overlay-alert', role: 'presentation' }, [
               h('section', {
+                ref: panel,
                 class: joinClasses('ncx-common-modal', 'ncx-common-modal-alert', `ncx-common-modal-alert-${props.type}`),
+                tabindex: -1,
                 role: 'alertdialog',
                 'aria-modal': 'true',
                 'aria-label': props.title
@@ -3073,6 +3180,9 @@ export const CommonDrawer = defineComponent({
   },
   emits: ['close'],
   setup(props, { emit, slots }) {
+    /** 当前 Drawer 面板节点。 */
+    const panel = ref<HTMLElement | null>(null)
+    useModalFocus(() => props.visible, panel)
     // ========= 函数 =========
 
     /** 处理键盘 ESC 按键关闭抽屉。 */
@@ -3108,7 +3218,11 @@ export const CommonDrawer = defineComponent({
               onClick: handleOverlayClick
             }, [
               h('aside', {
+                ref: panel,
                 class: joinClasses('ncx-common-drawer', `ncx-common-drawer-${props.placement}`),
+                tabindex: -1,
+                role: 'dialog',
+                'aria-modal': 'true',
                 style: { width: props.width },
                 'aria-label': props.title
               }, [
@@ -3244,5 +3358,3 @@ export const CommonResponsiveGrid = defineComponent({
     return () => h('div', { class: 'ncx-common-responsive-grid' }, slots.default?.())
   }
 })
-
-

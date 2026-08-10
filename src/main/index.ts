@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import {
   app,
   BrowserWindow,
+  clipboard,
   ipcMain,
   session,
   type IpcMainEvent,
@@ -10,9 +11,17 @@ import {
   utilityProcess
 } from 'electron'
 
-import { resolveNcxDataRoot } from '../infrastructure/persistence/account-space'
+import {
+  resolveNcxCacheRoot,
+  resolveNcxDataRoot
+} from '../infrastructure/persistence/account-space'
 import { ACCOUNT_CHANNELS } from '../shared/contracts/account-bridge'
+import {
+  CLIPBOARD_CHANNELS,
+  MAX_CLIPBOARD_TEXT_LENGTH
+} from '../shared/contracts/clipboard-bridge'
 import { CONTROL_CHANNELS, type RuntimeStatus } from '../shared/contracts/control-plane'
+import { LIFECYCLE_CHANNELS } from '../shared/contracts/lifecycle-bridge'
 import {
   WINDOW_CONTROL_CHANNELS,
   type WindowCommand,
@@ -22,9 +31,15 @@ import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
 import { AccountSessionSnapshotSchema, type AccountSessionSnapshot } from '../shared/schemas/account'
 import { RuntimeStatusSchema } from '../shared/schemas/control-plane'
 import { AuthSessionController, type EstablishResult } from './auth/auth-session-controller'
+import { AccountStoreCoordinator } from './auth/account-store-coordinator'
+import {
+  AnonymousSessionRepository,
+  NETEASE_GUEST_PARTITION
+} from './auth/anonymous-session-repository'
 import { CredentialLeaseCoordinator } from './auth/credential-lease-coordinator'
 import { NETEASE_AUTH_PARTITION } from './auth/navigation-policy'
 import { ConnectionBroker } from './connection-broker'
+import { AppConfigStore } from './app-config-store'
 import { UtilitySupervisor } from './utility-supervisor'
 import { createMainWindowOptions, createWindowSnapshot } from './window-chrome'
 
@@ -34,20 +49,34 @@ let mainWindow: BrowserWindow | undefined
 let supervisor: UtilitySupervisor | undefined
 let broker: ConnectionBroker | undefined
 let authController: AuthSessionController | undefined
+/** Utility 账户 SQLite 切换完成回执协调器。 */
+let accountStoreCoordinator: AccountStoreCoordinator | undefined
+/** Main 持有的应用配置唯一权威来源。 */
+let appConfigStore: AppConfigStore | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
 /** 主窗口关闭按钮行为。 */
 let closeWindowBehavior: 'minimize' | 'quit' = 'minimize'
 
 /** 应用是否已经进入真实退出流程。 */
 let appIsQuitting = false
-/** 最近成功发送给当前 Utility 的账户存储上下文键。 */
-let lastAccountStoreCommandKey: string | undefined
+/** 退出前 Renderer 刷新状态。 */
+let quitFlushState: 'idle' | 'flushing' | 'ready' = 'idle'
+/** 等待 Renderer 刷新完成的请求。 */
+const pendingLifecycleFlushes = new Map<string, {
+  /** 完成当前刷新等待。 */
+  resolve: () => void
+  /** 有限等待计时器。 */
+  timer: ReturnType<typeof setTimeout>
+}>()
 
 /** 向主窗口广播最新窗口状态，供自绘窗口控件同步真实状态。 */
 function publishWindowSnapshot(window = mainWindow): WindowSnapshot | undefined {
   if (!window || window.isDestroyed()) return undefined
 
-  const snapshot = createWindowSnapshot(window)
+  const snapshot = {
+    ...createWindowSnapshot(window),
+    closeBehavior: closeWindowBehavior
+  }
   window.webContents.send(WINDOW_CONTROL_CHANNELS.status, snapshot)
   return snapshot
 }
@@ -66,6 +95,7 @@ function guestAccountSnapshot(): AccountSessionSnapshot {
     canLogin: true,
     canLogout: false,
     canSwitchAccount: false,
+    canMutateMusic: false,
     rendererCanReadSecrets: false
   })
 }
@@ -78,18 +108,6 @@ function currentAccountSnapshot(): AccountSessionSnapshot {
 /** 向主窗口广播最新账户安全快照。 */
 function publishAccountSnapshot(): AccountSessionSnapshot {
   const snapshot = currentAccountSnapshot()
-  const accountStoreCommandKey =
-    `${snapshot.activeAccount.accountId}:${snapshot.accountGeneration}`
-  if (
-    accountStoreCommandKey !== lastAccountStoreCommandKey &&
-    supervisor?.postControl({
-      kind: 'account-store.open',
-      accountId: snapshot.activeAccount.accountId,
-      accountGeneration: snapshot.accountGeneration
-    })
-  ) {
-    lastAccountStoreCommandKey = accountStoreCommandKey
-  }
   const window = mainWindow
   if (window && !window.isDestroyed()) {
     window.webContents.send(ACCOUNT_CHANNELS.status, snapshot)
@@ -129,6 +147,7 @@ function applyWindowCommand(command: WindowCommand): WindowSnapshot {
     window.setFullScreen(!window.isFullScreen())
   } else if (command.type === 'window.setCloseBehavior') {
     closeWindowBehavior = command.behavior
+    appConfigStore?.setCloseWindowBehavior(command.behavior)
   }
 
   return publishWindowSnapshot(window) ?? createWindowSnapshot(window)
@@ -150,7 +169,8 @@ function createSupervisor(): UtilitySupervisor {
       return utilityProcess.fork(utilityEntryPath(), args, {
         env: {
           ...process.env,
-          NCXMUSIC_DATA_ROOT: resolveNcxDataRoot(app.getPath('userData'))
+          NCXMUSIC_DATA_ROOT: resolveNcxDataRoot(app.getPath('userData')),
+          NCXMUSIC_CACHE_ROOT: resolveNcxCacheRoot(app.getPath('sessionData'))
         },
         serviceName: 'NcxMusic Runtime',
         stdio: 'pipe'
@@ -334,6 +354,24 @@ function broadcastStatus(status: RuntimeStatus): void {
 }
 
 function registerControlPlane(): void {
+  ipcMain.on(LIFECYCLE_CHANNELS.flushAck, (event, requestId: unknown) => {
+    if (!isTrustedSender(event) || typeof requestId !== 'string') return
+    /** 与 Renderer 回执对应的等待项。 */
+    const pending = pendingLifecycleFlushes.get(requestId)
+    if (!pending) return
+    clearTimeout(pending.timer)
+    pendingLifecycleFlushes.delete(requestId)
+    pending.resolve()
+  })
+
+  ipcMain.handle(CLIPBOARD_CHANNELS.writeText, (event, text: unknown) => {
+    if (!isTrustedSender(event)) throw new Error('拒绝非主窗口剪贴板请求。')
+    if (typeof text !== 'string' || text.length === 0 || text.length > MAX_CLIPBOARD_TEXT_LENGTH) {
+      throw new Error('剪贴板文本不合法。')
+    }
+    clipboard.writeText(text)
+  })
+
   ipcMain.on(CONTROL_CHANNELS.connect, (event) => {
     if (!isTrustedSender(event)) return
     const status = supervisor?.currentStatus() ?? {
@@ -393,7 +431,10 @@ function registerControlPlane(): void {
       } satisfies WindowSnapshot
     }
 
-    return createWindowSnapshot(mainWindow)
+    return {
+      ...createWindowSnapshot(mainWindow),
+      closeBehavior: closeWindowBehavior
+    }
   })
 
   ipcMain.handle(WINDOW_CONTROL_CHANNELS.command, (event, command: WindowCommand) => {
@@ -408,6 +449,39 @@ function registerControlPlane(): void {
 
     return applyWindowCommand(command)
   })
+}
+
+/** 请求 Renderer 刷新播放快照并等待完成或有限超时。 */
+function requestRendererFlush(timeoutMs = 2_500): Promise<void> {
+  /** 当前主窗口。 */
+  const window = mainWindow
+  if (!window || window.isDestroyed() || window.webContents.isDestroyed()) return Promise.resolve()
+  /** 本次退出刷新请求 ID。 */
+  const requestId = crypto.randomUUID()
+  return new Promise((resolve) => {
+    /** 超时后继续退出，避免 Renderer 故障永久阻塞应用。 */
+    const timer = setTimeout(() => {
+      pendingLifecycleFlushes.delete(requestId)
+      resolve()
+    }, timeoutMs)
+    pendingLifecycleFlushes.set(requestId, { resolve, timer })
+    window.webContents.send(LIFECYCLE_CHANNELS.flushRequest, { requestId })
+  })
+}
+
+/** 在真实退出阶段关闭账户、Utility 与等待句柄。 */
+function shutdownApplicationServices(): void {
+  if (appIsQuitting) return
+  appIsQuitting = true
+  if (smokeTimer) clearTimeout(smokeTimer)
+  for (const pending of pendingLifecycleFlushes.values()) {
+    clearTimeout(pending.timer)
+    pending.resolve()
+  }
+  pendingLifecycleFlushes.clear()
+  authController?.shutdown()
+  accountStoreCoordinator?.shutdown()
+  supervisor?.shutdown()
 }
 
 function configureSmokeExit(window: BrowserWindow): void {
@@ -494,15 +568,23 @@ if (!hasSingleInstanceLock) {
     .then(async () => {
       supervisor = createSupervisor()
       broker = new ConnectionBroker(supervisor, app.getVersion())
+      appConfigStore = new AppConfigStore(app.getPath('userData'))
+      closeWindowBehavior = appConfigStore.load().closeWindowBehavior
+      accountStoreCoordinator = new AccountStoreCoordinator(supervisor)
       authController = new AuthSessionController(
         session.fromPartition(NETEASE_AUTH_PARTITION, { cache: true }),
-        new CredentialLeaseCoordinator(supervisor)
+        new CredentialLeaseCoordinator(supervisor),
+        new AnonymousSessionRepository(
+          session.fromPartition(NETEASE_GUEST_PARTITION, { cache: false })
+        ),
+        (accountId, accountGeneration) =>
+          accountStoreCoordinator?.open(accountId, accountGeneration) ??
+          Promise.reject(new Error('Account store coordinator is unavailable'))
       )
       authController.onResult(() => publishAccountSnapshot())
       authController.onLoginWindowClosed(() => publishAccountSnapshot())
       registerControlPlane()
       supervisor.onStatus((status) => {
-        if (status.state !== 'ready') lastAccountStoreCommandKey = undefined
         broadcastStatus(status)
         void (authController?.handleUtilityStatus(status) ?? Promise.resolve()).finally(() =>
           publishAccountSnapshot()
@@ -534,11 +616,18 @@ if (!hasSingleInstanceLock) {
     })
 }
 
-app.on('before-quit', () => {
-  appIsQuitting = true
-  if (smokeTimer) clearTimeout(smokeTimer)
-  authController?.shutdown()
-  supervisor?.shutdown()
+app.on('before-quit', (event) => {
+  if (isSmokeTest || quitFlushState === 'ready') {
+    shutdownApplicationServices()
+    return
+  }
+  event.preventDefault()
+  if (quitFlushState === 'flushing') return
+  quitFlushState = 'flushing'
+  void requestRendererFlush().finally(() => {
+    quitFlushState = 'ready'
+    app.quit()
+  })
 })
 
 app.on('window-all-closed', () => {

@@ -294,7 +294,14 @@ export class SystemMediaSessionBridge {
 
 /** 为 PlaybackCoordinator 创建系统媒体桥。 */
 export function createSystemMediaSessionBridge(
-  coordinator: PlaybackCoordinator
+  coordinator: PlaybackCoordinator,
+  commands: SystemMediaCommands = {
+    play: () => coordinator.play(),
+    pause: () => coordinator.pause(),
+    next: () => coordinator.next(),
+    previous: () => coordinator.previous(),
+    seek: (positionMs) => coordinator.seek(positionMs)
+  }
 ): SystemMediaSessionBridge {
   return new SystemMediaSessionBridge(
     {
@@ -304,13 +311,7 @@ export function createSystemMediaSessionBridge(
           if (event.type === 'snapshot') listener(event.snapshot)
         })
     },
-    {
-      play: () => coordinator.play(),
-      pause: () => coordinator.pause(),
-      next: () => coordinator.next(),
-      previous: () => coordinator.previous(),
-      seek: (positionMs) => coordinator.seek(positionMs)
-    }
+    commands
   )
 }
 

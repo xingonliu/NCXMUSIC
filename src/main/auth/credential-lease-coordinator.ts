@@ -22,6 +22,8 @@ interface PendingControlRequest {
 }
 
 export interface ActiveLeaseMetadata {
+  /** 当前凭据槽位类型。 */
+  kind: 'guest' | 'authenticated'
   leaseId: string
   accountId: string
   accountGeneration: number
@@ -51,6 +53,8 @@ export class CredentialLeaseCoordinator {
     accountId?: string
     detailVerified: boolean
     reason?: 'authenticated' | 'missing-account' | 'remote-unavailable'
+    displayName?: string
+    avatarUrl?: string
   }> {
     const command: CredentialControlCommand = {
       kind: 'auth.session.probe',
@@ -67,7 +71,9 @@ export class CredentialLeaseCoordinator {
         valid: event.valid,
         detailVerified: event.detailVerified,
         ...(event.accountId ? { accountId: event.accountId } : {}),
-        ...(event.reason ? { reason: event.reason } : {})
+        ...(event.reason ? { reason: event.reason } : {}),
+        ...(event.displayName ? { displayName: event.displayName } : {}),
+        ...(event.avatarUrl ? { avatarUrl: event.avatarUrl } : {})
       }
     } finally {
       command.cookieHeader = ''
@@ -104,8 +110,56 @@ export class CredentialLeaseCoordinator {
     }
 
     const metadata = {
+      kind: 'authenticated' as const,
       leaseId,
       accountId,
+      accountGeneration,
+      utilityGeneration,
+      expiresAt
+    }
+    this.setActiveLease(metadata)
+    return metadata
+  }
+
+  /** 向 Utility 发放独立游客匿名租约。 */
+  async grantGuest(
+    cookieHeader: string,
+    accountGeneration: number,
+    lifetimeMs = MAX_LEASE_LIFETIME_MS
+  ): Promise<ActiveLeaseMetadata> {
+    /** 当前 Utility 代次。 */
+    const utilityGeneration = this.transport.currentGeneration()
+    if (!utilityGeneration) throw new Error('Utility is unavailable')
+
+    /** 本次匿名租约 ID。 */
+    const leaseId = crypto.randomUUID()
+    /** 受控匿名租约到期时间。 */
+    const expiresAt = this.now() + Math.min(Math.max(1_000, lifetimeMs), MAX_LEASE_LIFETIME_MS)
+    /** 仅在 Main→Utility 控制面短暂存在的匿名凭据命令。 */
+    const command: CredentialControlCommand = {
+      kind: 'auth.guest-lease.grant',
+      requestId: crypto.randomUUID(),
+      leaseId,
+      accountId: 'guest:local',
+      accountGeneration,
+      expiresAt,
+      cookieHeader
+    }
+    try {
+      /** Utility 对匿名租约的确认事件。 */
+      const event = await this.request(command, 5_000)
+      if (event.kind !== 'auth.lease.ack' || !event.accepted || event.leaseId !== leaseId) {
+        throw new Error('Utility rejected the guest credential lease')
+      }
+    } finally {
+      command.cookieHeader = ''
+    }
+
+    /** 只包含公开租约元数据的 Main 侧记录。 */
+    const metadata: ActiveLeaseMetadata = {
+      kind: 'guest',
+      leaseId,
+      accountId: 'guest:local',
       accountGeneration,
       utilityGeneration,
       expiresAt

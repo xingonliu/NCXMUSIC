@@ -22,7 +22,8 @@ export class MusicService {
 
   constructor(
     private readonly credentialLease: CredentialLeaseService,
-    private readonly dataSource: MusicDataSource = new NeteaseMusicApiAdapter()
+    private readonly dataSource: MusicDataSource = new NeteaseMusicApiAdapter(),
+    private readonly appendJournal: ((eventType: string, payload: Record<string, unknown>) => Promise<void>) | undefined = undefined
   ) {}
 
   /** 执行只读音乐请求。 */
@@ -44,8 +45,7 @@ export class MusicService {
         : ''
       const result = await this.dataSource.read(parsed.data, cookie, controller.signal)
       const normalized = MusicReadResultSchema.parse(result)
-      this.collectEntities(normalized)
-      return normalized
+      return this.collectAndResolveEntities(normalized)
     } finally {
       this.pending.delete(requestId)
     }
@@ -59,7 +59,7 @@ export class MusicService {
         code: 'PROTOCOL_INVALID_MESSAGE'
       })
     }
-    if (!this.credentialLease.hasActiveLease()) {
+    if (!this.credentialLease.hasAuthenticatedLease()) {
       throw Object.assign(new Error('当前操作需要登录网易云账户。'), { code: 'AUTH_REQUIRED' })
     }
     const mutate = this.dataSource.mutate
@@ -75,7 +75,12 @@ export class MusicService {
       const result = await this.credentialLease.executeWithCookie((cookie) =>
         mutate.call(this.dataSource, parsed.data, cookie, controller.signal)
       )
-      return MusicMutationResultSchema.parse(result)
+      const normalized = MusicMutationResultSchema.parse(result)
+      await this.appendJournal?.('music.mutation', {
+        operation: normalized.operation,
+        ...(normalized.entityId ? { entityId: normalized.entityId } : {})
+      }).catch(() => undefined)
+      return normalized
     } finally {
       this.pending.delete(requestId)
     }
@@ -95,34 +100,50 @@ export class MusicService {
     this.pending.clear()
   }
 
-  /** 把响应中的标准实体收敛到实体池。 */
-  private collectEntities(result: MusicReadResult): void {
+  /** 账户切换后清空实体池，保证账户专属实体严格隔离。 */
+  resetEntities(): void {
+    this.entityPool.clear()
+  }
+
+  /** 把响应实体收敛到实体池并从池中返回合并后的标准实体。 */
+  private collectAndResolveEntities(result: MusicReadResult): MusicReadResult {
     if (result.kind === 'search') {
-      this.entityPool.upsertMany([
-        ...result.songs,
-        ...result.artists,
-        ...result.albums,
-        ...result.playlists
-      ])
-      return
+      return MusicReadResultSchema.parse({
+        ...result,
+        songs: result.songs.map((entity) => this.entityPool.upsert(entity)),
+        artists: result.artists.map((entity) => this.entityPool.upsert(entity)),
+        albums: result.albums.map((entity) => this.entityPool.upsert(entity)),
+        playlists: result.playlists.map((entity) => this.entityPool.upsert(entity))
+      })
     }
     if (result.kind === 'songCollection') {
-      this.entityPool.upsertMany(result.songs)
-      return
+      return MusicReadResultSchema.parse({
+        ...result,
+        songs: result.songs.map((entity) => this.entityPool.upsert(entity))
+      })
     }
     if (result.kind === 'playlistCollection') {
-      this.entityPool.upsertMany(result.playlists)
-      return
+      return MusicReadResultSchema.parse({
+        ...result,
+        playlists: result.playlists.map((entity) => this.entityPool.upsert(entity))
+      })
     }
     if (result.kind === 'albumCollection') {
-      this.entityPool.upsertMany(result.albums)
-      return
+      return MusicReadResultSchema.parse({
+        ...result,
+        albums: result.albums.map((entity) => this.entityPool.upsert(entity))
+      })
     }
     if (result.kind === 'artistCollection') {
-      this.entityPool.upsertMany(result.artists)
-      return
+      return MusicReadResultSchema.parse({
+        ...result,
+        artists: result.artists.map((entity) => this.entityPool.upsert(entity))
+      })
     }
-    if (result.kind === 'lyrics') return
-    if (result.entity) this.entityPool.upsert(result.entity)
+    if (result.kind === 'lyrics' || !result.entity) return result
+    return MusicReadResultSchema.parse({
+      kind: result.kind,
+      entity: this.entityPool.upsert(result.entity)
+    })
   }
 }

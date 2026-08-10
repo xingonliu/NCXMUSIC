@@ -2,7 +2,7 @@
 
 > 文档状态：Baseline 0.1
 > 建立日期：2026-08-04
-> 最后更新：2026-08-05
+> 最后更新：2026-08-10
 > 关联决策：A-001、A-004、D-011
 
 ## 1. 目标与边界
@@ -35,6 +35,8 @@ Main 创建 `MessageChannelMain`，一端通过 `webContents.postMessage` 交给
 - Utility Process 持有另一端，注册 Music、Agent、Approval、Selection、Memory 和 PlayerCommand Handler。
 - Main 不转发正常业务消息；只负责身份校验、端口配对、进程生命周期、凭据代理和连接状态。
 - Main 与 Utility Process 的监督/凭据控制使用单独的窄控制通道，不能与 Renderer 业务数据通道混用。
+- 当前数据平面能力包括 `music.read`、`music.mutate`、`music.resolve-url`、`playback.snapshot.load/save` 与 `account.data`；所有请求均登记在共享 Contract Registry。
+- 系统剪贴板不进入通用 Runtime：Main/Preload 只暴露长度不超过 20KB 的 `writeText` 窄桥，不暴露读取能力。应用退出使用独立 Main→Renderer flush 请求与完成回执，并设有限超时。
 
 ## 3. 连接握手
 
@@ -101,6 +103,7 @@ interface CancelEnvelope extends MessageBase {
 - 调用端统一维护 Pending Request Map，并在超时、端口关闭或取消时清理。
 - 取消是尽力而为：收到取消后停止尚未开始的任务；已提交给不可取消上游的任务可以继续清理，但结果不得再改变已取消的前端状态。
 - 只读请求可按 Registry 策略重试；写操作、Shell、MCP 安装和审批后操作禁止透明重试。
+- `account.data` 的写入/删除也禁止透明重试，并由 Utility 对 accountId 与 accountGeneration 做二次校验。
 - Renderer 路由切换只取消页面作用域请求，不取消根层播放器、Agent 会话、待审批任务和活动 Selection Tool；选择工具的最终打断规则由其生命周期决策确定。
 
 ## 6. 流式事件

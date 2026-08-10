@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CalendarCheck, ChevronRight, Play } from '@lucide/vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type {
@@ -14,6 +14,7 @@ import { useAccountSessionStore } from '../account/account-session-store'
 import EntityCard from './components/EntityCard.vue'
 import MusicSection from './components/MusicSection.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
+import { useDailySignin } from './daily-signin'
 import { mutateMusic, playSongNext } from './music-actions'
 import {
   standardSongToTrackSummary,
@@ -43,6 +44,9 @@ const player = usePlayer()
 
 /** 应用账户公开状态。 */
 const account = useAccountSessionStore()
+
+/** 个人资料页与发现页共享的每日签到控制器。 */
+const signinController = useDailySignin()
 
 /** 平台推荐歌单 Section。 */
 const featuredSection = ref<SectionState<StandardPlaylist[]>>({
@@ -182,12 +186,7 @@ async function likeSong(song: StandardSong): Promise<void> {
 
 /** 执行网易云每日签到。 */
 async function dailySignin(): Promise<void> {
-  const result = await mutateMusic({ operation: 'dailySignin' })
-  if (!result.ok) {
-    showToast(result.error.message, 'danger')
-    return
-  }
-  showToast('签到完成。', 'success')
+  await signinController.signin()
 }
 
 // ========= 生命周期 =========
@@ -197,6 +196,14 @@ onMounted(async () => {
   await Promise.all([loadFeaturedPlaylists(), loadNewSongs()])
   if (isAuthenticated.value) await loadDailySongs()
 })
+
+watch(
+  () => [account.snapshot.value?.state, account.snapshot.value?.accountGeneration] as const,
+  ([state]) => {
+    if (state === 'authenticated') void loadDailySongs()
+    else dailySection.value = { state: 'empty', data: [], error: '' }
+  }
+)
 </script>
 
 <template>
@@ -210,10 +217,12 @@ onMounted(async () => {
         v-if="isAuthenticated"
         variant="secondary"
         size="compact"
+        :loading="signinController.state.value === 'signing'"
+        :disabled="!account.snapshot.value?.canMutateMusic"
         @click="dailySignin"
       >
         <CalendarCheck :size="14" />
-        签到
+        {{ signinController.state.value === 'already-signed' ? '今日已签到' : '签到' }}
       </CommonButton>
     </header>
 

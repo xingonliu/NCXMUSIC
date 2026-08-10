@@ -12,13 +12,16 @@ import type {
 } from '../../../shared/schemas/music'
 import {
   CommonButton,
+  CommonDialog,
   CommonEmptyState,
   CommonErrorState,
   CommonSpinner
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
+import { t } from '../../i18n'
 import Cover from './components/Cover.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
+import { useAccountSessionStore } from '../account/account-session-store'
 import { mutateMusic, playSongNext } from './music-actions'
 import {
   standardSongToTrackSummary,
@@ -37,6 +40,9 @@ const router = useRouter()
 /** 播放器接口。 */
 const player = usePlayer()
 
+/** 应用账户公开状态，用于能力判定和读取自建歌单。 */
+const account = useAccountSessionStore()
+
 /** 当前搜索请求状态。 */
 const loading = ref<boolean>(false)
 
@@ -45,6 +51,15 @@ const errorMessage = ref<string>('')
 
 /** 当前搜索结果。 */
 const result = ref<Extract<MusicReadResult, { kind: 'search' }> | null>(null)
+
+/** 当前等待选择目标歌单的歌曲。 */
+const playlistTarget = ref<StandardSong | null>(null)
+
+/** 当前账户可写入的自建歌单。 */
+const ownedPlaylists = ref<StandardPlaylist[]>([])
+
+/** 目标歌单加载状态。 */
+const playlistsLoading = ref<boolean>(false)
 
 /** 最近一次请求 ID，用于取消和丢弃迟到响应。 */
 let latestRequestId = ''
@@ -93,7 +108,7 @@ async function loadSearchResults(): Promise<void> {
       return
     }
     if (response.data.kind !== 'search') {
-      errorMessage.value = '搜索响应类型不匹配。'
+      errorMessage.value = t('music.search.mismatch')
       return
     }
     result.value = response.data
@@ -128,7 +143,7 @@ async function likeSong(song: StandardSong): Promise<void> {
     showToast(response.error.message, 'warning')
     return
   }
-  showToast(`已收藏《${song.name}》。`, 'success')
+  showToast(t('music.search.liked', { song: song.name }), 'success')
 }
 
 /** 打开专辑详情。 */
@@ -139,6 +154,69 @@ function openAlbum(album: StandardAlbum): void {
 /** 打开歌单详情。 */
 function openPlaylist(playlist: StandardPlaylist): void {
   void router.push({ name: 'playlist-detail', params: { playlistId: playlist.id } })
+}
+
+/** 打开正式歌曲详情路由。 */
+function openSongDetails(song: StandardSong): void {
+  void router.push({ name: 'song-detail', params: { songId: song.id } })
+}
+
+/** 将歌曲上下文交给 Agent 正式入口。 */
+function giveSongToAgent(song: StandardSong): void {
+  void router.push({
+    name: 'agent',
+    query: { intent: 'track', trackId: song.id, title: song.name }
+  })
+}
+
+/** 校验写权限，并打开自建歌单选择对话框。 */
+async function openAddToPlaylist(song: StandardSong): Promise<void> {
+  const snapshot = account.snapshot.value ?? await account.refresh()
+  if (!snapshot.canMutateMusic || snapshot.activeAccount.kind !== 'netease') {
+    showToast(t('music.search.loginForPlaylist'), 'warning')
+    return
+  }
+
+  playlistTarget.value = song
+  ownedPlaylists.value = []
+  playlistsLoading.value = true
+  const response = await window.ncx.runtime.getUserPlaylists({
+    userId: snapshot.activeAccount.neteaseUserId,
+    limit: 100
+  })
+  playlistsLoading.value = false
+  if (!response.ok) {
+    playlistTarget.value = null
+    showToast(response.error.message, 'warning')
+    return
+  }
+  if (response.data.kind !== 'playlistCollection' || response.data.collection !== 'user') {
+    playlistTarget.value = null
+    showToast(t('music.search.playlistMismatch'), 'warning')
+    return
+  }
+  ownedPlaylists.value = response.data.playlists.filter((playlist) => playlist.owned)
+}
+
+/** 将待处理歌曲添加到指定自建歌单。 */
+async function addSongToPlaylist(playlist: StandardPlaylist): Promise<void> {
+  const song = playlistTarget.value
+  if (!song) return
+  const response = await mutateMusic({
+    operation: 'updatePlaylistTracks',
+    playlistId: playlist.id,
+    trackIds: [song.id],
+    action: 'add'
+  })
+  if (!response.ok) {
+    showToast(response.error.message, 'warning')
+    return
+  }
+  playlistTarget.value = null
+  showToast(t('music.search.addedToPlaylist', {
+    song: song.name,
+    playlist: playlist.name
+  }), 'success')
 }
 
 // ========= 生命周期 =========
@@ -194,6 +272,9 @@ watch(query, () => {
           @enqueue="enqueueSong"
           @play-next="playSongNext($event, { kind: 'search' })"
           @like="likeSong"
+          @add-to-playlist="openAddToPlaylist"
+          @details="openSongDetails"
+          @give-agent="giveSongToAgent"
         />
       </section>
 
@@ -237,6 +318,33 @@ watch(query, () => {
         </div>
       </section>
     </div>
+
+    <CommonDialog
+      :visible="Boolean(playlistTarget)"
+      title="添加到歌单"
+      :subtitle="playlistTarget?.name ?? ''"
+      @close="playlistTarget = null"
+    >
+      <div v-if="playlistsLoading" class="playlist-picker-status">
+        <CommonSpinner label="正在读取歌单" />
+      </div>
+      <CommonEmptyState
+        v-else-if="ownedPlaylists.length === 0"
+        title="暂无自建歌单"
+        description="请先创建一个歌单。"
+      />
+      <div v-else class="playlist-picker-list">
+        <button
+          v-for="playlist in ownedPlaylists"
+          :key="playlist.id"
+          type="button"
+          @click="addSongToPlaylist(playlist)"
+        >
+          <Cover :src="playlist.artworkUrl" :alt="playlist.name" size="thumbnail" />
+          <span>{{ playlist.name }}</span>
+        </button>
+      </div>
+    </CommonDialog>
   </section>
 </template>
 
@@ -335,4 +443,21 @@ watch(query, () => {
   color: var(--ncx-color-text-secondary);
   font-size: 12px;
 }
+
+.playlist-picker-status { display: grid; min-height: 120px; place-items: center; }
+.playlist-picker-list { display: grid; gap: var(--ncx-space-1); }
+.playlist-picker-list button {
+  display: flex;
+  padding: var(--ncx-space-2);
+  border: 0;
+  border-radius: var(--ncx-radius-md);
+  align-items: center;
+  gap: var(--ncx-space-3);
+  color: var(--ncx-color-text-primary);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+.playlist-picker-list button:hover,
+.playlist-picker-list button:focus-visible { background: var(--ncx-color-surface-raised); }
 </style>

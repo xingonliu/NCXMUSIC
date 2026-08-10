@@ -1,5 +1,6 @@
 import type { RuntimeConnectionMetadata } from '../shared/contracts/control-plane'
 import {
+  AccountDataRequestEnvelopeSchema,
   HelloEnvelopeSchema,
   ExecuteShellRequestEnvelopeSchema,
   MusicMutationRequestEnvelopeSchema,
@@ -13,6 +14,7 @@ import {
   SnapshotRequestEnvelopeSchema,
   messageBase,
   type CancelEnvelope,
+  type AccountDataRequestEnvelope,
   type ExecuteShellRequestEnvelope,
   type MusicMutationRequestEnvelope,
   type MusicReadRequestEnvelope,
@@ -43,6 +45,7 @@ type RuntimeCapability =
   | 'music.read'
   | 'music.mutate'
   | 'music.resolve-url'
+  | 'account.data'
   | 'playback.snapshot.load'
   | 'playback.snapshot.save'
   | 'shell.execute'
@@ -79,6 +82,12 @@ export interface PlaybackSnapshotHandler {
   save(payload: unknown): Promise<unknown>
 }
 
+/** 当前账户数据、偏好、Journal 与缓存操作执行方。 */
+export interface AccountDataHandler {
+  /** 执行已通过协议 Schema 校验的账户数据请求。 */
+  execute(payload: unknown): Promise<unknown>
+}
+
 export interface ShellCommandHandler {
   /** 执行经过策略网关判定的 Shell 命令。 */
   execute(requestId: string, payload: unknown): Promise<unknown>
@@ -92,6 +101,7 @@ type AnyRequestEnvelope =
   | SnapshotRequestEnvelope
   | MusicReadRequestEnvelope
   | MusicMutationRequestEnvelope
+  | AccountDataRequestEnvelope
   | ResolveTrackUrlRequestEnvelope
   | PlaybackSnapshotLoadRequestEnvelope
   | PlaybackSnapshotSaveRequestEnvelope
@@ -103,6 +113,7 @@ type PendingRequest =
   | { name: 'music.read' }
   | { name: 'music.mutate' }
   | { name: 'music.resolve-url' }
+  | { name: 'account.data' }
   | { name: 'playback.snapshot.load' }
   | { name: 'playback.snapshot.save' }
   | { name: 'shell.execute' }
@@ -126,12 +137,14 @@ export class UtilityRuntimeServer {
    * @param shellHandler shell.execute 的执行方；未注入时该能力返回 CAPABILITY_UNAVAILABLE
    * @param musicReadHandler music.read 的执行方；未注入时该能力返回 CAPABILITY_UNAVAILABLE
    * @param playbackSnapshotHandler 播放快照 SQLite 读写执行方
+   * @param accountDataHandler 账户数据、偏好、Journal 与缓存执行方
    */
   constructor(
     private readonly trackUrlHandler?: TrackUrlHandler,
     private readonly shellHandler?: ShellCommandHandler | ShellExecutor,
     private readonly musicReadHandler?: MusicReadHandler,
-    private readonly playbackSnapshotHandler?: PlaybackSnapshotHandler
+    private readonly playbackSnapshotHandler?: PlaybackSnapshotHandler,
+    private readonly accountDataHandler?: AccountDataHandler
   ) {}
 
   // ── 生命周期区 ──
@@ -171,6 +184,7 @@ export class UtilityRuntimeServer {
     ]
     if (this.musicReadHandler) base.push('music.read', 'music.mutate')
     if (this.trackUrlHandler) base.push('music.resolve-url')
+    if (this.accountDataHandler) base.push('account.data')
     if (this.playbackSnapshotHandler) {
       base.push('playback.snapshot.load', 'playback.snapshot.save')
     }
@@ -237,6 +251,11 @@ export class UtilityRuntimeServer {
 
     if (envelope.name === 'playback.snapshot.load') {
       void this.loadPlaybackSnapshot(PlaybackSnapshotLoadRequestEnvelopeSchema.parse(envelope))
+      return
+    }
+
+    if (envelope.name === 'account.data') {
+      void this.handleAccountData(AccountDataRequestEnvelopeSchema.parse(envelope))
       return
     }
 
@@ -410,6 +429,41 @@ export class UtilityRuntimeServer {
     )
   }
 
+  /** 通过 Utility 单写者执行账户数据操作。 */
+  private async handleAccountData(request: AccountDataRequestEnvelope): Promise<void> {
+    const handler = this.accountDataHandler
+    if (!handler) {
+      this.respondError(request, {
+        code: 'CAPABILITY_UNAVAILABLE',
+        message: '当前运行时未启用账户数据服务。',
+        retryable: false
+      })
+      return
+    }
+    if (this.pending.has(request.requestId)) {
+      this.respondError(request, {
+        code: 'PROTOCOL_INVALID_MESSAGE',
+        message: 'requestId 已在使用。',
+        retryable: false
+      })
+      return
+    }
+    const connectionId = request.connectionId
+    this.pending.set(request.requestId, { name: 'account.data' })
+    try {
+      const data = await handler.execute(request.payload)
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondSuccess(request, data)
+    } catch (error) {
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondError(request, this.toProtocolError(error))
+    }
+  }
+
   /** 统一执行播放快照请求并处理连接替换与脱敏错误。 */
   private async handlePlaybackSnapshotRequest(
     request: PlaybackSnapshotLoadRequestEnvelope | PlaybackSnapshotSaveRequestEnvelope,
@@ -507,7 +561,7 @@ export class UtilityRuntimeServer {
         retryable: false
       }
     }
-    if (code === 'CONNECTION_REPLACED') {
+    if (code === 'CONNECTION_REPLACED' || code === 'ACCOUNT_STALE') {
       return {
         code: 'CONNECTION_REPLACED',
         message: '账户或运行时连接已切换，请重新读取当前状态。',
@@ -518,12 +572,51 @@ export class UtilityRuntimeServer {
       return { code: 'REQUEST_CANCELLED', message: '请求已取消。', retryable: false }
     }
     if (code === 'UPSTREAM_ERROR') {
+      /** 网易云 HTTP 状态。 */
+      const httpStatus = rawError && typeof rawError['httpStatus'] === 'number'
+        ? rawError['httpStatus']
+        : undefined
+      /** 网易云业务 code。 */
+      const upstreamCode = rawError && typeof rawError['upstreamCode'] === 'number'
+        ? rawError['upstreamCode']
+        : undefined
       const retryable =
         rawError && 'retryable' in rawError ? Boolean(rawError['retryable']) : true
+      /** 只包含离散数值的安全错误详情。 */
+      const details = {
+        runtimeCode: code,
+        ...(httpStatus !== undefined ? { httpStatus } : {}),
+        ...(upstreamCode !== undefined ? { upstreamCode } : {})
+      }
+      if (upstreamCode === 301 || httpStatus === 301) {
+        return {
+          code: 'AUTH_REQUIRED',
+          message: '登录状态已失效，请重新登录。',
+          retryable: false,
+          details
+        }
+      }
+      if (upstreamCode === -2) {
+        return {
+          code: 'ALREADY_COMPLETED',
+          message: '今日已签到。',
+          retryable: false,
+          details
+        }
+      }
+      if (httpStatus === 429 || (httpStatus !== undefined && httpStatus >= 500)) {
+        return {
+          code: 'SERVICE_UNAVAILABLE',
+          message: '网易云服务暂不可用，请稍后再试。',
+          retryable: true,
+          details
+        }
+      }
       return {
         code: 'UPSTREAM_ERROR',
         message: errorMessage || '网易云服务请求失败，请稍后重试或检查登录状态。',
-        retryable
+        retryable,
+        details
       }
     }
     if (code === 'NO_ACTIVE_LEASE') {
@@ -559,20 +652,31 @@ export class UtilityRuntimeServer {
         return {
           code: 'AUTH_REQUIRED',
           message: msg || '登录状态已失效，请重新登录。',
-          retryable: false
+          retryable: false,
+          details: {
+            runtimeCode: code || 'UPSTREAM_RESPONSE',
+            ...(typeof rawError['status'] === 'number' ? { httpStatus: rawError['status'] } : {}),
+            ...(typeof upstreamCode === 'number' ? { upstreamCode } : {})
+          }
         }
       }
       if (upstreamCode === -2) {
         return {
-          code: 'UPSTREAM_ERROR',
-          message: msg || '今日已重复签到。',
-          retryable: false
+          code: 'ALREADY_COMPLETED',
+          message: msg || '今日已签到。',
+          retryable: false,
+          details: { runtimeCode: code || 'UPSTREAM_RESPONSE', upstreamCode: -2 }
         }
       }
       return {
         code: 'UPSTREAM_ERROR',
         message: msg || '网易云服务请求失败，请稍后重试或检查登录状态。',
-        retryable: rawError['status'] === 429 || (typeof rawError['status'] === 'number' && rawError['status'] >= 500)
+        retryable: rawError['status'] === 429 || (typeof rawError['status'] === 'number' && rawError['status'] >= 500),
+        details: {
+          runtimeCode: code || 'UPSTREAM_RESPONSE',
+          ...(typeof rawError['status'] === 'number' ? { httpStatus: rawError['status'] } : {}),
+          ...(typeof upstreamCode === 'number' ? { upstreamCode } : {})
+        }
       }
     }
 

@@ -226,6 +226,18 @@ describe('PlaybackEngine', () => {
       expect(engine.getSnapshot().status).toBe('ready')
     })
 
+    it('忽略旧 source generation 的迟到媒体事件', () => {
+      engine.load(loadInput('1', false))
+      engine.load(loadInput('2', false))
+
+      media.emit({ type: 'canplay', sourceGeneration: 1 })
+      expect(engine.getSnapshot().status).toBe('loading')
+      expect(engine.getSnapshot().track?.trackId).toBe('2')
+
+      media.emit({ type: 'canplay', sourceGeneration: 2 })
+      expect(engine.getSnapshot().status).toBe('ready')
+    })
+
     it('pause() 立即改意图，状态等媒体事件确认', () => {
       engine.load(loadInput('1', true))
       media.emit({ type: 'canplay' })

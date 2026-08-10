@@ -55,6 +55,8 @@ export const AccountSessionSnapshotSchema = z.strictObject({
   canLogin: z.boolean(),
   canLogout: z.boolean(),
   canSwitchAccount: z.boolean(),
+  /** 账户空间与正式凭据租约均已就绪，允许执行不可重试的写操作。 */
+  canMutateMusic: z.boolean(),
   rendererCanReadSecrets: z.literal(false)
 })
 

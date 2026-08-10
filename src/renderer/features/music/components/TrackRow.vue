@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Heart, ListPlus, Play } from '@lucide/vue'
+import { FolderPlus, Heart, ListPlus, Play } from '@lucide/vue'
 import { computed } from 'vue'
 
 import type { StandardSong } from '../../../../shared/schemas/music'
@@ -9,6 +9,7 @@ import {
   type CommonMenuItem
 } from '../../../design-system/components'
 import { formatMusicDuration } from '../music-entity'
+import { copyText } from '../../foundation/clipboard'
 import MediaArtwork from './MediaArtwork.vue'
 
 // ========= 属性与事件 =========
@@ -34,6 +35,9 @@ const emit = defineEmits<{
   (event: 'enqueue', song: StandardSong): void
   (event: 'play-next', song: StandardSong): void
   (event: 'like', song: StandardSong): void
+  (event: 'add-to-playlist', song: StandardSong): void
+  (event: 'details', song: StandardSong): void
+  (event: 'give-agent', song: StandardSong): void
 }>()
 
 // ========= 变量 =========
@@ -62,6 +66,9 @@ const contextMenuItems = computed<CommonMenuItem[]>(() => [
   { value: 'enqueue', label: '添加到队列末尾' },
   { value: 'separator-a', type: 'separator' },
   { value: 'like', label: '收藏' },
+  { value: 'add-to-playlist', label: '添加到歌单' },
+  { value: 'details', label: '查看歌曲详情' },
+  { value: 'give-agent', label: '交给 Agent' },
   { value: 'copy-link', label: '复制网易云歌曲链接' }
 ])
 
@@ -85,8 +92,14 @@ function handleContextAction(value: string | number): void {
   else if (action === 'play-next') emit('play-next', props.song)
   else if (action === 'enqueue') emit('enqueue', props.song)
   else if (action === 'like') emit('like', props.song)
+  else if (action === 'add-to-playlist') emit('add-to-playlist', props.song)
+  else if (action === 'details') emit('details', props.song)
+  else if (action === 'give-agent') emit('give-agent', props.song)
   else if (action === 'copy-link') {
-    void navigator.clipboard.writeText(`https://music.163.com/song?id=${props.song.id}`)
+    void copyText(
+      `https://music.163.com/song?id=${props.song.id}`,
+      '歌曲链接已复制。'
+    )
   }
 }
 </script>
@@ -167,6 +180,14 @@ function handleContextAction(value: string | number): void {
           @click.stop="emit('like', props.song)"
         >
           <Heart :size="13" />
+        </CommonIconButton>
+        <CommonIconButton
+          size="compact"
+          variant="ghost"
+          label="添加到歌单"
+          @click.stop="emit('add-to-playlist', props.song)"
+        >
+          <FolderPlus :size="13" />
         </CommonIconButton>
       </div>
     </article>

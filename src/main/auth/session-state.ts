@@ -15,6 +15,8 @@ export interface AuthSessionSnapshot {
   accountGeneration: number
   hasCredentialLease: boolean
   accountFingerprint?: string
+  displayName?: string
+  avatarUrl?: string
 }
 
 export class AuthSessionMachine {
@@ -22,12 +24,17 @@ export class AuthSessionMachine {
   private accountGeneration = 0
   private accountId: string | undefined
   private hasCredentialLease = false
+  /** 最近一次经 Utility 用户详情接口验证的昵称。 */
+  private displayName: string | undefined
+  /** 最近一次经 Utility 用户详情接口验证的头像。 */
+  private avatarUrl: string | undefined
 
   beginLogin(accountSwitch = false): AuthSessionSnapshot {
     if (accountSwitch || this.state === 'authenticated') {
       this.advanceGeneration()
       this.accountId = undefined
       this.hasCredentialLease = false
+      this.clearPublicProfile()
     }
     this.state = 'opening_official_login'
     return this.snapshot()
@@ -44,10 +51,15 @@ export class AuthSessionMachine {
     return this.snapshot()
   }
 
-  acceptAccount(accountId: string): AuthSessionSnapshot {
+  acceptAccount(
+    accountId: string,
+    profile: { displayName?: string; avatarUrl?: string } = {}
+  ): AuthSessionSnapshot {
     if (this.accountId && this.accountId !== accountId) this.advanceGeneration()
     this.accountGeneration = Math.max(1, this.accountGeneration)
     this.accountId = accountId
+    this.displayName = profile.displayName
+    this.avatarUrl = profile.avatarUrl
     this.state = 'authenticated'
     return this.snapshot()
   }
@@ -66,6 +78,7 @@ export class AuthSessionMachine {
   expire(): AuthSessionSnapshot {
     this.advanceGeneration()
     this.accountId = undefined
+    this.clearPublicProfile()
     this.hasCredentialLease = false
     this.state = 'session_expired'
     return this.snapshot()
@@ -76,6 +89,7 @@ export class AuthSessionMachine {
       this.advanceGeneration()
     }
     this.accountId = undefined
+    this.clearPublicProfile()
     this.hasCredentialLease = false
     this.state = 'logged_out'
     return this.snapshot()
@@ -115,11 +129,19 @@ export class AuthSessionMachine {
               .digest('hex')
               .slice(0, 12)
           }
-        : {})
+        : {}),
+      ...(this.displayName ? { displayName: this.displayName } : {}),
+      ...(this.avatarUrl ? { avatarUrl: this.avatarUrl } : {})
     }
   }
 
   private advanceGeneration(): void {
     this.accountGeneration = Math.max(1, this.accountGeneration + 1)
+  }
+
+  /** 清除仅属于已验证正式账户的公开资料缓存。 */
+  private clearPublicProfile(): void {
+    this.displayName = undefined
+    this.avatarUrl = undefined
   }
 }

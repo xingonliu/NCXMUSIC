@@ -1,4 +1,5 @@
 import type { RuntimeStatus } from '../schemas/control-plane'
+import type { AccountDataRequest, AccountDataResult } from '../schemas/account-data'
 import type { PingResult, RuntimeResult, UtilitySnapshot } from '../schemas/runtime'
 import type {
   AlbumId,
@@ -77,4 +78,6 @@ export interface NcxRuntimeBridge {
   savePlaybackSnapshot(
     snapshot: PersistedPlaybackSnapshot
   ): Promise<RuntimeResult<{ savedAt: number }>>
+  /** 访问当前账户偏好、Journal、统计与可重建缓存。 */
+  accountData(input: AccountDataRequest): Promise<RuntimeResult<AccountDataResult>>
 }

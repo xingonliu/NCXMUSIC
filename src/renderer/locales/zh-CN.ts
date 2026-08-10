@@ -13,11 +13,55 @@ export const zhCN = {
     'routes.login': '登录',
     'routes.onboarding': '首次引导',
     'routes.playlistDetail': '歌单详情',
+    'routes.playerDetail': '播放详情',
+    'routes.immersiveLyrics': '沉浸歌词',
+    'routes.songDetail': '歌曲详情',
     'routes.profile': '个人资料',
     'routes.search': '搜索',
     'routes.searchResults': '搜索结果',
     'routes.songCollection': '歌曲集合',
     'routes.settings': '设置'
+  },
+  common: {
+    cancel: '取消',
+    close: '关闭',
+    loading: '加载中',
+    retry: '重试',
+    unknownArtist: '未知歌手',
+    unknownAlbum: '未知专辑'
+  },
+  navigation: {
+    discover: '发现音乐',
+    search: '搜索',
+    agent: '小云',
+    designSystem: '通用组件',
+    myMusic: '我的音乐',
+    liked: '我喜欢',
+    profile: '个人资料',
+    settings: '设置'
+  },
+  music: {
+    signin: {
+      loginExpired: '登录已失效，请重新登录后签到。',
+      alreadyCompleted: '今日已签到，无需重复操作。',
+      serviceUnavailable: '签到服务暂不可用，请稍后再试。',
+      rejected: '网易云未接受本次签到。',
+      preparing: '账户正在准备写操作，请稍候。',
+      loginRequired: '请先登录网易云账户。',
+      signing: '正在签到…',
+      succeeded: '签到成功。'
+    },
+    clipboard: {
+      succeeded: '已复制到系统剪贴板。',
+      failed: '无法写入系统剪贴板。'
+    },
+    search: {
+      mismatch: '搜索响应类型不匹配。',
+      loginForPlaylist: '请先登录网易云账户，再将歌曲添加到歌单。',
+      playlistMismatch: '歌单响应类型不匹配。',
+      liked: '已收藏《{song}》。',
+      addedToPlaylist: '已将《{song}》添加到“{playlist}”。'
+    }
   },
   foundation: {
     eyebrow: 'Foundation 0.1',

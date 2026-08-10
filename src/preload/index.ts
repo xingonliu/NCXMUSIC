@@ -1,8 +1,18 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
 import { ACCOUNT_CHANNELS, type AccountBridge } from '../shared/contracts/account-bridge'
+import {
+  CLIPBOARD_CHANNELS,
+  MAX_CLIPBOARD_TEXT_LENGTH,
+  type ClipboardBridge
+} from '../shared/contracts/clipboard-bridge'
 import { CONTROL_CHANNELS, type RuntimeStatus } from '../shared/contracts/control-plane'
 import type { DesktopBridge } from '../shared/contracts/desktop-bridge'
+import {
+  LIFECYCLE_CHANNELS,
+  type LifecycleBridge,
+  type LifecycleFlushRequest
+} from '../shared/contracts/lifecycle-bridge'
 import type { NcxRuntimeBridge } from '../shared/contracts/runtime-bridge'
 import {
   WINDOW_CONTROL_CHANNELS,
@@ -21,6 +31,8 @@ const gateway = new RuntimeGateway()
 const statusListeners = new Set<(status: RuntimeStatus) => void>()
 const windowSnapshotListeners = new Set<(snapshot: WindowSnapshot) => void>()
 const accountSnapshotListeners = new Set<(snapshot: AccountSessionSnapshot) => void>()
+/** Renderer 注册的退出前异步刷新处理器。 */
+const lifecycleFlushHandlers = new Set<() => Promise<void>>()
 let latestStatus: RuntimeStatus = {
   state: 'starting',
   generation: 0,
@@ -184,6 +196,7 @@ const runtimeBridge: NcxRuntimeBridge = {
   resolveTrackUrl: (input) => gateway.resolveTrackUrl(input),
   loadPlaybackSnapshot: (input) => gateway.loadPlaybackSnapshot(input),
   savePlaybackSnapshot: (snapshot) => gateway.savePlaybackSnapshot(snapshot),
+  accountData: (input) => gateway.accountData(input),
   retryUtility: async () => {
     const result = await ipcRenderer.invoke(CONTROL_CHANNELS.retry)
     return RuntimeStatusSchema.parse(result)
@@ -218,6 +231,24 @@ const accountBridge: AccountBridge = {
   }
 }
 
+/** 仅允许写入受限纯文本的系统剪贴板桥。 */
+const clipboardBridge: ClipboardBridge = {
+  writeText: async (text) => {
+    if (typeof text !== 'string' || text.length === 0 || text.length > MAX_CLIPBOARD_TEXT_LENGTH) {
+      throw new Error('剪贴板文本不合法。')
+    }
+    await ipcRenderer.invoke(CLIPBOARD_CHANNELS.writeText, text)
+  }
+}
+
+/** Renderer 可注册异步刷新任务的应用生命周期桥。 */
+const lifecycleBridge: LifecycleBridge = {
+  onFlushRequest: (handler) => {
+    lifecycleFlushHandlers.add(handler)
+    return () => lifecycleFlushHandlers.delete(handler)
+  }
+}
+
 const windowControlBridge: WindowControlBridge = {
   snapshot: async () => ipcRenderer.invoke(WINDOW_CONTROL_CHANNELS.snapshot) as Promise<WindowSnapshot>,
   send: async (command: WindowCommand) =>
@@ -238,6 +269,19 @@ ipcRenderer.on(ACCOUNT_CHANNELS.status, (_event, rawSnapshot) => {
   publishAccountSnapshot(snapshot.data)
 })
 
+ipcRenderer.on(LIFECYCLE_CHANNELS.flushRequest, (_event, rawRequest: unknown) => {
+  /** Main 发来的退出刷新请求。 */
+  const request = rawRequest as Partial<LifecycleFlushRequest> | null
+  if (!request || typeof request.requestId !== 'string' || !/^[0-9a-f-]{36}$/iu.test(request.requestId)) {
+    return
+  }
+  /** 当前已注册刷新处理器的稳定快照。 */
+  const handlers = [...lifecycleFlushHandlers]
+  void Promise.allSettled(handlers.map((handler) => handler())).finally(() => {
+    ipcRenderer.send(LIFECYCLE_CHANNELS.flushAck, request.requestId)
+  })
+})
+
 const bridge: DesktopBridge = Object.freeze({
   platform: process.platform,
   versions: Object.freeze({
@@ -246,6 +290,8 @@ const bridge: DesktopBridge = Object.freeze({
     node: process.versions.node
   }),
   account: accountBridge,
+  clipboard: clipboardBridge,
+  lifecycle: lifecycleBridge,
   runtime: runtimeBridge,
   windowControls: windowControlBridge
 })

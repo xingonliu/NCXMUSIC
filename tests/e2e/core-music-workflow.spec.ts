@@ -24,6 +24,9 @@ import { PlaybackSnapshotService } from '../../src/utility/playback-snapshot-ser
 /** E2E 创建的临时目录，测试完成后清理。 */
 const temporaryDirectories: string[] = []
 
+/** E2E 中已经打开、需要在清理目录前关闭的 SQLite 单写者。 */
+const openAccountStores: UtilityAccountStore[] = []
+
 // ========= 函数 =========
 
 /** 创建可控的网易云搜索 API。 */
@@ -83,18 +86,20 @@ function playerSnapshot(queue: ReturnType<QueueController['getSnapshot']>): Play
 
 // ========= 测试区 =========
 
-test.afterEach(() => {
+test.afterEach(async () => {
+  for (const store of openAccountStores.splice(0)) await store.close()
   for (const directory of temporaryDirectories.splice(0)) {
     rmSync(directory, { recursive: true, force: true })
   }
 })
 
-test('登录、搜索、播放、切歌、账户切换和重启恢复保持账户隔离', async () => {
+test('登录、搜索、播放、切歌、账户切换和重启按 generation 保持账户隔离', async () => {
   /** 本次流程的真实临时账户数据根目录。 */
   const dataRoot = mkdtempSync(join(tmpdir(), 'ncx-e2e-'))
   temporaryDirectories.push(dataRoot)
   /** Utility 账户 SQLite 单写者。 */
   const accountStore = new UtilityAccountStore({ dataRoot })
+  openAccountStores.push(accountStore)
   await accountStore.open('netease:10001', 1)
   expect(accountStore.current()?.accountId).toBe('netease:10001')
   /** Utility SQLite 播放快照服务。 */
@@ -159,11 +164,9 @@ test('登录、搜索、播放、切歌、账户切换和重启恢复保持账�
 
   /** 模拟应用重启后的新 Renderer 存储实例。 */
   const restartedRenderer = new PlaybackStore({ persistence })
-  /** A 账户跨 generation 恢复的播放状态。 */
+  /** A 账户旧 generation 的播放状态按冻结契约丢弃。 */
   const restored = await restartedRenderer.load({ accountId: 'netease:10001', accountGeneration: 3 })
-  expect(restored?.queue.items).toHaveLength(2)
-  expect(restored?.queue.items[1]?.track.trackId).toBe('2')
-  expect(restored?.positionMs).toBe(12_000)
+  expect(restored).toBeNull()
 
   await accountStore.close()
 })

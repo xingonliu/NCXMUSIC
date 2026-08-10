@@ -4,6 +4,9 @@ import { computed, ref } from 'vue'
 
 import { adaptArtworkUrl, type MediaArtworkSize } from '../music-entity'
 
+/** 为单词文件名提供符合 Vue 规范的多词组件名。 */
+defineOptions({ name: 'MusicCover' })
+
 // ========= 类型与属性 =========
 
 /** 封面组件属性。 */

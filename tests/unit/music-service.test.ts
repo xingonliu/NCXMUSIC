@@ -32,6 +32,7 @@ const songResult: MusicReadResult = {
 function credentialLease(active: boolean): CredentialLeaseService {
   return {
     hasActiveLease: vi.fn(() => active),
+    hasAuthenticatedLease: vi.fn(() => active),
     executeWithCookie: vi.fn(async (operation: (cookie: string) => Promise<string>) =>
       operation('MUSIC_U=secret')
     )

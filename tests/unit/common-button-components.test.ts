@@ -110,7 +110,7 @@ describe('macOS HIG & WWDC25 按钮族组件规范测试', () => {
         expect(document.querySelector('.ncx-common-tooltip-panel')).toBeNull()
 
         await wrapper.trigger('mouseenter')
-        await vi.advanceTimersByTimeAsync(300)
+        await vi.advanceTimersByTimeAsync(1_500)
         await nextTick()
         await nextTick()
 
@@ -280,7 +280,7 @@ describe('macOS HIG & WWDC25 按钮族组件规范测试', () => {
       await wrapper.trigger('mouseenter')
       expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(false)
 
-      vi.advanceTimersByTime(300)
+      vi.advanceTimersByTime(1_500)
       await nextTick()
       expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(true)
       expect(wrapper.find('.ncx-common-tooltip-content').text()).toBe('搜索内容')
@@ -333,7 +333,7 @@ describe('macOS HIG & WWDC25 按钮族组件规范测试', () => {
 
       // 测试第一个按钮 Hover 显示 Tip
       await item0.trigger('mouseenter')
-      vi.advanceTimersByTime(300)
+      vi.advanceTimersByTime(1_500)
       await nextTick()
       expect(item0.find('.ncx-common-tooltip-panel').exists()).toBe(true)
       expect(item0.find('.ncx-common-tooltip-content').text()).toBe('最小化')

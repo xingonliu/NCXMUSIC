@@ -34,6 +34,7 @@ import {
   CommonHeaderGroupItem
 } from '../components'
 import PlaylistNavigation from '../../features/music/components/PlaylistNavigation.vue'
+import { useAccountSessionStore } from '../../features/account/account-session-store'
 
 // ========= 变量 =========
 
@@ -42,6 +43,9 @@ const route = useRoute()
 
 /** Router 实例，提供页面切换与统一返回。 */
 const router = useRouter()
+
+/** 应用账户公开状态。 */
+const account = useAccountSessionStore()
 
 /** Main 进程推送的真实窗口快照。 */
 const windowSnapshot = ref<WindowSnapshot>({
@@ -68,6 +72,12 @@ let unsubscribeWindowSnapshot = (): void => {}
 
 /** 当前路由页面刷新代次，只重挂 RouterView 叶子组件。 */
 const routeRefreshKey = ref<number>(0)
+
+/** 当前是否为不可点击的游客账户。 */
+const isGuestAccount = computed<boolean>(() => account.snapshot.value?.activeAccount.kind !== 'netease')
+
+/** 侧栏账户展示名。 */
+const accountDisplayName = computed<string>(() => account.snapshot.value?.activeAccount.displayName ?? '游客')
 
 // ========= 函数 =========
 
@@ -113,6 +123,7 @@ function refreshCurrentPage(): void {
 // ========= 生命周期 =========
 
 onMounted(async () => {
+  await account.initialize()
   unsubscribeWindowSnapshot = window.ncx.windowControls.onSnapshot((snapshot) => {
     windowSnapshot.value = snapshot
   })
@@ -239,7 +250,16 @@ onBeforeUnmount(() => {
         class="ncx-account-nav"
         aria-label="账户和设置"
       >
+        <div
+          v-if="isGuestAccount"
+          class="ncx-nav-item ncx-nav-item--disabled"
+          aria-label="游客账户"
+        >
+          <UserRound :size="17" :stroke-width="1.9" />
+          <span>{{ accountDisplayName }}</span>
+        </div>
         <RouterLink
+          v-else
           class="ncx-nav-item"
           :class="{ 'ncx-nav-item--active': isNavigationActive(appAccountNavigationItem) }"
           :to="{ name: appAccountNavigationItem.routeName }"
@@ -249,7 +269,7 @@ onBeforeUnmount(() => {
             :size="17"
             :stroke-width="1.9"
           />
-          <span>{{ appAccountNavigationItem.label }}</span>
+          <span>{{ accountDisplayName }}</span>
         </RouterLink>
         <RouterLink
           class="ncx-nav-item"

@@ -2,7 +2,7 @@
 
 > 文档状态：Baseline 0.1
 > 建立日期：2026-08-04
-> 最后更新：2026-08-05
+> 最后更新：2026-08-10
 > 关联决策：A-005、D-012、D-105、D-108、D-305、D-307、D-308、D-309、D-605
 
 ## 1. 基本原则
@@ -94,18 +94,19 @@ guest/local
 netease/<userId>
    ├─ logout → close store → revoke credential lease → guest/local
    ├─ switch account → close store → increment accountGeneration → open target
-   └─ delete local data → close store → delete exact account directory → guest/local
+   └─ delete local data → validate accountId/generation → close store → delete exact account directory → reopen empty store
 ```
 
 - 退出登录默认保留 `netease/<userId>`，再次登录同一 ID 时恢复画像、记忆和聊天。
 - 游客数据不自动并入正式账号，避免将错误身份下的会话写入用户长期记忆。
 - 切换账号会递增 `accountGeneration`；旧账号的迟到请求、后台画像任务和写入必须拒绝。
-- 删除账号本地数据必须展示准确目录内的数据类别与不可恢复提示，并先关闭数据库、取消任务和撤销凭据租约。
+- 删除账号本地数据必须展示准确目录内的数据类别与不可恢复提示，并先校验当前 accountId/generation、关闭数据库和取消账户任务；该操作不撤销 Main 持有的登录 Cookie。
 - 删除账户空间不等于删除网易云账号、歌单或云端数据。
 
 ## 6. SQLite 与文件快照
 
 - 每个账户使用单一 `account.sqlite`，避免多个数据库之间的事务和迁移不一致。
+- 当前账户 SQLite Schema v2 包含 `action_journal`、`playback_snapshot` 与 `account_preferences`；偏好值通过 JSON Schema 和 20KB 上限校验。
 - SQLite 由 Utility Process 单写者持有，开启 WAL、外键和 Busy Timeout；Main 与 Renderer 不并发打开。
 - Schema 使用递增 Migration Version。升级前创建可恢复备份或事务检查点，失败时停止写入并提示修复，不能以空库覆盖旧库。
 - 对话、消息块、摘要和画像结构化数据写入 SQLite；首版使用 SQLite FTS5 索引会话块摘要、可检索正文、关键词和必要原文，不创建本地向量索引，也不依赖云端 Embedding。
@@ -155,6 +156,7 @@ netease/<userId>
 - 用户可以查看每个账户空间的最后使用时间、数据库大小、画像版本和聊天数量。
 - 导出必须默认排除 Cookie、API Key、MCP Secret、原始日志和临时缓存。
 - “清理缓存”与“删除账户本地数据”是两个独立操作，名称和影响范围不能混淆。
+- `account.data` Runtime 能力只接受当前 accountId/generation；缓存清理仅处理 `artwork`、`api`、`media-temp` 三个冻结目录，账户删除仅处理解析后的单一账户目录。
 - 画像、聊天正文、会话块、摘要、Working Memory 和基础资料不自动过期；退出登录不触发删除，只有用户显式删除对应账户空间时清除。
 - Action Journal 按账户保留最近 30 天或 10,000 条语义事件，任一上限到达即在事务中删除最旧记录；高频播放进度不得写入该表。该滚动清理不能连带删除聊天、摘要或画像数据。
 - 调试日志和临时缓存使用各自的短期滚动策略，不能依赖用户手动清理，也不能复用 Action Journal 的业务保留规则。

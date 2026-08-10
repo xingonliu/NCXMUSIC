@@ -246,6 +246,7 @@ export class QueueController {
       if (current) this.failedItemIds.add(current)
       // 全部项都已失败：停止，避免无限跳转
       if (this.failedItemIds.size >= this.items.length) {
+        this.currentItemId = null
         return this.effect(null, false, false)
       }
     }

@@ -27,7 +27,7 @@ const FORWARDED_EVENTS = [
 /** MediaError.code → 领域错误码映射 */
 const MEDIA_ERROR_CODES: Record<number, PlaybackError['code']> = {
   1: 'aborted', // MEDIA_ERR_ABORTED
-  2: 'network-error', // MEDIA_ERR_NETWORK
+  2: 'source-expired', // MEDIA_ERR_NETWORK：短期 URL 续传失败时先重新解析一次
   3: 'decode-error', // MEDIA_ERR_DECODE
   4: 'media-unsupported' // MEDIA_ERR_SRC_NOT_SUPPORTED
 }
@@ -58,6 +58,12 @@ export class HtmlAudioAdapter implements MediaElementPort {
   /** 已注册的原生监听器，dispose 时逐个解绑，防止监听器增长 */
   private readonly boundHandlers = new Map<string, (event: Event) => void>()
 
+  /** 当前媒体源 generation。 */
+  private sourceGeneration = 0
+
+  /** 换源后延迟绑定原生事件的计时器。 */
+  private attachTimer: ReturnType<typeof setTimeout> | undefined
+
   /**
    * @param element 可选的既有 audio 元素；省略时自行创建一个游离元素
    */
@@ -77,14 +83,18 @@ export class HtmlAudioAdapter implements MediaElementPort {
    * 设置媒体源并触发加载。
    * 换源前先 pause 并清空旧源，确保不会出现两路音频同时出声。
    */
-  setSource(url: string): void {
+  setSource(url: string, sourceGeneration = this.sourceGeneration + 1): void {
+    this.detachNativeListeners()
     this.element.pause()
+    this.sourceGeneration = sourceGeneration
     this.element.src = url
     this.element.load()
+    this.scheduleNativeListeners(sourceGeneration)
   }
 
   /** 清空源并释放底层缓冲 */
   clearSource(): void {
+    this.detachNativeListeners()
     this.element.pause()
     this.element.removeAttribute('src')
     // load() 使元素回到 HAVE_NOTHING，真正释放已缓冲数据
@@ -134,10 +144,7 @@ export class HtmlAudioAdapter implements MediaElementPort {
 
   /** 解绑全部原生监听器并释放媒体资源 */
   dispose(): void {
-    for (const [name, handler] of this.boundHandlers) {
-      this.element.removeEventListener(name, handler)
-    }
-    this.boundHandlers.clear()
+    this.detachNativeListeners()
     this.listeners.clear()
     this.element.pause()
     this.element.removeAttribute('src')
@@ -157,19 +164,41 @@ export class HtmlAudioAdapter implements MediaElementPort {
   }
 
   /** 一次性注册所有需要转发的原生事件 */
-  private attachNativeListeners(): void {
+  private attachNativeListeners(sourceGeneration = this.sourceGeneration): void {
     for (const name of FORWARDED_EVENTS) {
-      const handler = (): void => this.translateAndEmit(name)
+      const handler = (): void => this.translateAndEmit(name, sourceGeneration)
       this.boundHandlers.set(name, handler)
       this.element.addEventListener(name, handler)
     }
   }
 
   /** 把原生事件翻译为领域事件并广播 */
-  private translateAndEmit(name: (typeof FORWARDED_EVENTS)[number]): void {
+  private translateAndEmit(
+    name: (typeof FORWARDED_EVENTS)[number],
+    sourceGeneration: number
+  ): void {
     const event = this.translate(name)
     if (!event) return
-    for (const listener of this.listeners) listener(event)
+    for (const listener of this.listeners) listener({ ...event, sourceGeneration })
+  }
+
+  /** 解绑当前 source 的全部原生事件监听器。 */
+  private detachNativeListeners(): void {
+    if (this.attachTimer) clearTimeout(this.attachTimer)
+    this.attachTimer = undefined
+    for (const [name, handler] of this.boundHandlers) {
+      this.element.removeEventListener(name, handler)
+    }
+    this.boundHandlers.clear()
+  }
+
+  /** 等旧 source 已排队事件清空后，为新 source 绑定携带 generation 的监听器。 */
+  private scheduleNativeListeners(sourceGeneration: number): void {
+    this.attachTimer = setTimeout(() => {
+      this.attachTimer = undefined
+      if (sourceGeneration !== this.sourceGeneration) return
+      this.attachNativeListeners(sourceGeneration)
+    }, 0)
   }
 
   /** 单个原生事件的翻译规则；返回 undefined 表示不转发 */

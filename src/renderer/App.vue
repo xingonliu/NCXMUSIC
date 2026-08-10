@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import AppShell from './design-system/patterns/AppShell.vue'
@@ -24,6 +24,13 @@ const isImmersivePlayerOpen = immersivePlayer.isOpen
 
 /** 当前页面是否展示通用 PlayerBar。 */
 const showPlayerBar = computed<boolean>(() => route.meta.playerBar === 'show')
+
+/** 正式路由直接访问与浏览器历史变化同步到根层沉浸展示。 */
+watch(
+  () => route.meta.presentation === 'immersive',
+  (open) => void immersivePlayer.syncFromRoute(open),
+  { immediate: true }
+)
 </script>
 
 <template>

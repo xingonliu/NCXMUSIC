@@ -46,4 +46,14 @@ describe('TrackUrlResolver', () => {
     })
     expect(result.url).toBe('https://m8.music.126.net/example.mp3')
   })
+
+  it('上游实际档位低于请求档位时返回降级标记与原因', async () => {
+    const resolver = new TrackUrlResolver(apiFixture())
+    const result = await resolver.resolve('457264737', 'higher', '')
+
+    expect(result.requestedQuality).toBe('higher')
+    expect(result.actualQuality).toBe('standard')
+    expect(result.downgraded).toBe(true)
+    expect(result.downgradeReason).toBe('upstream-fallback')
+  })
 })

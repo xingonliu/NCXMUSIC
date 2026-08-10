@@ -145,7 +145,7 @@ export class PlaybackEngine {
     // 换源前先停旧媒体：保证快速连续切歌时不会出现两路音频同时出声。
     // 该保证放在领域层而非适配器，任何 MediaElementPort 实现都能得到它。
     this.media.pause()
-    this.media.setSource(input.source.url)
+    this.media.setSource(input.source.url, this.generation)
     this.emitSnapshot()
   }
 
@@ -335,6 +335,10 @@ export class PlaybackEngine {
 
   /** 处理媒体元素上报的原始事件 */
   private handleMediaEvent(event: MediaElementEvent): void {
+    if (
+      event.sourceGeneration !== undefined &&
+      event.sourceGeneration !== this.generation
+    ) return
     switch (event.type) {
       case 'loadedmetadata':
         // API 未提供时长时以媒体元素读数补齐

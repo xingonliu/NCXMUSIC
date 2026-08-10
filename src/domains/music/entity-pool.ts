@@ -86,10 +86,12 @@ function mergeRecord(current: EntityRecord, incoming: EntityRecord): EntityRecor
 /** 按标准实体字段合并，后到的非空字段补齐已有实体。 */
 function mergeEntity(current: StandardMusicEntity, incoming: StandardMusicEntity): StandardMusicEntity {
   if (current.kind !== incoming.kind || current.id !== incoming.id) return incoming
-  const merged = mergeRecord(
-    current as unknown as EntityRecord,
-    incoming as unknown as EntityRecord
-  )
+  /** 新鲜实体优先覆盖标量，较旧实体只用于补齐缺失字段。 */
+  const incomingIsFresh = incoming.updatedAt >= current.updatedAt
+  /** 按字段新鲜度策略合并后的普通对象。 */
+  const merged = incomingIsFresh
+    ? mergeRecord(current as unknown as EntityRecord, incoming as unknown as EntityRecord)
+    : mergeRecord(incoming as unknown as EntityRecord, current as unknown as EntityRecord)
   if (current.kind === 'song' && incoming.kind === 'song') {
     merged['access'] = {
       badges: [...new Set([...current.access.badges, ...incoming.access.badges])],
@@ -135,5 +137,10 @@ export class StandardEntityPool {
     return {
       entities: [...this.entities.values()]
     }
+  }
+
+  /** 清空当前账户实体，防止账户专属字段跨账户混用。 */
+  clear(): void {
+    this.entities.clear()
   }
 }

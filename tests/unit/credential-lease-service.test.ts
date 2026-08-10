@@ -154,4 +154,24 @@ describe('Utility credential leases', () => {
     })
     log.mockRestore()
   })
+
+  it('接受独立 MUSIC_A 游客租约但不开放登录写能力', async () => {
+    const events: CredentialControlEvent[] = []
+    const service = new CredentialLeaseService((event) => events.push(event), async () => api())
+    const leaseId = crypto.randomUUID()
+    await service.handle({
+      kind: 'auth.guest-lease.grant',
+      requestId: crypto.randomUUID(),
+      leaseId,
+      accountId: 'guest:local',
+      accountGeneration: 0,
+      expiresAt: Date.now() + 60_000,
+      cookieHeader: `MUSIC_A=${'g'.repeat(64)}`
+    })
+
+    expect(events.at(-1)).toMatchObject({ kind: 'auth.lease.ack', accepted: true, leaseId })
+    expect(service.hasActiveLease()).toBe(true)
+    expect(service.hasAuthenticatedLease()).toBe(false)
+    service.shutdown()
+  })
 })

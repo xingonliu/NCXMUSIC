@@ -10,10 +10,11 @@ import {
   Sun,
   UserRound
 } from '@lucide/vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 import type { MusicQualityPreference } from '../../../domains/player/types'
 import type { AccountSessionSnapshot } from '../../../shared/schemas/account'
+import type { AccountDataResult } from '../../../shared/schemas/account-data'
 import type { AppTheme } from '../../../shared/schemas/storage'
 import {
   CommonAlertDialog,
@@ -60,6 +61,15 @@ const busyAction = ref<AccountAction | null>(null)
 
 /** 清理缓存确认框显示状态。 */
 const clearCacheDialogVisible = ref<boolean>(false)
+
+/** 删除当前账户本地业务数据确认框显示状态。 */
+const deleteLocalDataDialogVisible = ref<boolean>(false)
+
+/** 当前账户数据库、缓存与 Journal 统计。 */
+const dataStats = ref<Extract<AccountDataResult, { operation: 'getStats' }> | null>(null)
+
+/** 账户数据操作是否正在执行。 */
+const dataBusy = ref<boolean>(false)
 
 /** 设置标签选项。 */
 const tabOptions: CommonOption[] = [
@@ -131,17 +141,63 @@ async function runAccountAction(action: AccountAction): Promise<void> {
 
 /** 设置播放器全局音质偏好。 */
 function setPlaybackQuality(value: string | number): void {
-  void player.setQuality(String(value) as MusicQualityPreference)
+  const quality = String(value) as MusicQualityPreference
+  void player.setQuality(quality)
+  persistAccountPreference('playback.quality', quality)
 }
 
 /** 设置应用主题。 */
 function setTheme(theme: AppTheme): void {
   appPreferences.setTheme(theme)
+  persistAccountPreference('appearance.theme', theme)
 }
 
 /** 设置是否展示歌词翻译。 */
 function setLyricTranslation(value: boolean): void {
   appPreferences.setShowLyricTranslation(value)
+  persistAccountPreference('lyrics.showTranslation', value)
+}
+
+/** 将单个用户偏好写入当前账户 SQLite；账户切换后的迟到写入由 Utility 拒绝。 */
+function persistAccountPreference(key: string, value: string | boolean): void {
+  const snapshot = accountSnapshot.value
+  if (!snapshot) return
+  void window.ncx.runtime.accountData({
+    operation: 'setPreference',
+    accountId: snapshot.activeAccount.accountId,
+    accountGeneration: snapshot.accountGeneration,
+    key,
+    value
+  })
+}
+
+/** 从账户 SQLite 恢复主题、歌词翻译与音质偏好。 */
+async function loadAccountPreferences(): Promise<void> {
+  const snapshot = accountSnapshot.value
+  if (!snapshot) return
+  const response = await window.ncx.runtime.accountData({
+    operation: 'getPreferences',
+    accountId: snapshot.activeAccount.accountId,
+    accountGeneration: snapshot.accountGeneration
+  })
+  if (!response.ok || response.data.operation !== 'getPreferences') return
+  /** 当前账户持久偏好字典。 */
+  const preferences = response.data.preferences
+  /** 已校验的账户主题偏好。 */
+  const theme = preferences['appearance.theme']
+  if (theme === 'system' || theme === 'light' || theme === 'dark') {
+    appPreferences.hydrateTheme(theme)
+  }
+  /** 已校验的歌词翻译显示偏好。 */
+  const showTranslation = preferences['lyrics.showTranslation']
+  if (typeof showTranslation === 'boolean') {
+    appPreferences.hydrateShowLyricTranslation(showTranslation)
+  }
+  /** 已校验的账户播放音质偏好。 */
+  const quality = preferences['playback.quality']
+  if (typeof quality === 'string' && qualityOptions.some((option) => option.value === quality)) {
+    await player.setQuality(quality as MusicQualityPreference)
+  }
 }
 
 /** 设置主窗口关闭行为并通知 Main。 */
@@ -152,10 +208,68 @@ function setCloseBehavior(value: string | number): void {
 }
 
 /** 清理可重建缓存并保留应用偏好。 */
-function clearCache(): void {
+async function clearCache(): Promise<void> {
   clearCacheDialogVisible.value = false
+  const snapshot = accountSnapshot.value
+  if (!snapshot) return
+  dataBusy.value = true
+  const response = await window.ncx.runtime.accountData({
+    operation: 'clearCache',
+    accountId: snapshot.activeAccount.accountId,
+    accountGeneration: snapshot.accountGeneration
+  })
   appPreferences.clearRendererCache()
-  showToast('可重建缓存已清理。', 'success')
+  dataBusy.value = false
+  if (!response.ok) {
+    showToast(response.error.message, 'warning')
+    return
+  }
+  if (response.data.operation !== 'clearCache') {
+    showToast('缓存清理响应类型不匹配。', 'warning')
+    return
+  }
+  showToast(`已清理 ${formatBytes(response.data.clearedBytes)} 可重建缓存。`, 'success')
+  await loadDataStats()
+}
+
+/** 读取当前账户数据统计。 */
+async function loadDataStats(): Promise<void> {
+  const snapshot = accountSnapshot.value
+  if (!snapshot) return
+  const response = await window.ncx.runtime.accountData({
+    operation: 'getStats',
+    accountId: snapshot.activeAccount.accountId,
+    accountGeneration: snapshot.accountGeneration
+  })
+  dataStats.value = response.ok && response.data.operation === 'getStats' ? response.data : null
+}
+
+/** 删除当前账户业务目录并保留 Main 持有的登录 Cookie。 */
+async function deleteCurrentLocalData(): Promise<void> {
+  deleteLocalDataDialogVisible.value = false
+  const snapshot = accountSnapshot.value
+  if (!snapshot) return
+  dataBusy.value = true
+  const response = await window.ncx.runtime.accountData({
+    operation: 'deleteLocalData',
+    accountId: snapshot.activeAccount.accountId,
+    accountGeneration: snapshot.accountGeneration
+  })
+  if (response.ok) await player.clear()
+  dataBusy.value = false
+  if (!response.ok) {
+    showToast(response.error.message, 'warning')
+    return
+  }
+  showToast('当前账户本地数据已删除，登录状态保持不变。', 'success')
+  await loadDataStats()
+}
+
+/** 将字节数格式化为易读文本。 */
+function formatBytes(bytes: number): string {
+  if (bytes < 1_024) return `${bytes} B`
+  if (bytes < 1_048_576) return `${(bytes / 1_024).toFixed(1)} KB`
+  return `${(bytes / 1_048_576).toFixed(1)} MB`
 }
 
 /** 切换设置标签。 */
@@ -167,9 +281,22 @@ function setActiveTab(value: string | number): void {
 
 onMounted(async () => {
   await account.initialize()
-  const behavior = appPreferences.preferences.value.closeWindowBehavior
-  await window.ncx.windowControls.send({ type: 'window.setCloseBehavior', behavior })
+  /** Main 持久化并在启动时恢复的权威关闭行为。 */
+  const snapshot = await window.ncx.windowControls.snapshot()
+  if (snapshot.closeBehavior) {
+    appPreferences.hydrateCloseWindowBehavior(snapshot.closeBehavior)
+  }
 })
+
+/** 账户切换后刷新隔离空间统计。 */
+watch(
+  () => [accountSnapshot.value?.activeAccount.accountId, accountSnapshot.value?.accountGeneration],
+  () => {
+    void loadDataStats()
+    void loadAccountPreferences()
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
@@ -295,16 +422,24 @@ onMounted(async () => {
         <span class="settings-row-icon"><Database :size="19" /></span>
         <div class="settings-row-copy">
           <h2>账户数据</h2>
-          <p>当前空间 {{ accountReference }}，Action Journal 保留 30 天或 10,000 条。</p>
+          <p>
+            当前空间 {{ accountReference }} · 数据库 {{ formatBytes(dataStats?.databaseBytes ?? 0) }} ·
+            Journal {{ dataStats?.journalEvents ?? 0 }} 条
+          </p>
         </div>
+        <CommonButton
+          variant="danger"
+          :loading="dataBusy"
+          @click="deleteLocalDataDialogVisible = true"
+        >删除本地数据</CommonButton>
       </section>
       <section class="settings-row">
         <span class="settings-row-icon"><Database :size="19" /></span>
         <div class="settings-row-copy">
           <h2>可重建缓存</h2>
-          <p>清理搜索历史和临时界面缓存，不删除账户数据库或播放快照。</p>
+          <p>当前 {{ formatBytes(dataStats?.cacheBytes ?? 0) }}；清理后不删除账户数据库、Cookie 或播放快照。</p>
         </div>
-        <CommonButton variant="danger" @click="clearCacheDialogVisible = true">清理缓存</CommonButton>
+        <CommonButton variant="danger" :loading="dataBusy" @click="clearCacheDialogVisible = true">清理缓存</CommonButton>
       </section>
     </div>
 
@@ -316,6 +451,15 @@ onMounted(async () => {
       confirm-text="清理"
       @cancel="clearCacheDialogVisible = false"
       @confirm="clearCache"
+    />
+
+    <CommonAlertDialog
+      :visible="deleteLocalDataDialogVisible"
+      title="删除当前账户本地数据？"
+      description="将删除当前账户的 SQLite、播放快照、偏好与 Action Journal，但不会删除登录 Cookie。此操作无法撤销。"
+      confirm-text="删除本地数据"
+      @cancel="deleteLocalDataDialogVisible = false"
+      @confirm="deleteCurrentLocalData"
     />
   </section>
 </template>

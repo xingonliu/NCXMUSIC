@@ -67,13 +67,28 @@ function setTheme(theme: AppTheme): void {
   savePreferences({ ...preferences.value, theme })
 }
 
+/** 使用账户 SQLite 权威值同步主题展示镜像。 */
+function hydrateTheme(theme: AppTheme): void {
+  savePreferences({ ...preferences.value, theme })
+}
+
 /** 更新歌词翻译显示偏好。 */
 function setShowLyricTranslation(showLyricTranslation: boolean): void {
   savePreferences({ ...preferences.value, showLyricTranslation })
 }
 
+/** 使用账户 SQLite 权威值同步歌词翻译展示镜像。 */
+function hydrateShowLyricTranslation(showLyricTranslation: boolean): void {
+  savePreferences({ ...preferences.value, showLyricTranslation })
+}
+
 /** 更新关闭窗口行为偏好。 */
 function setCloseWindowBehavior(closeWindowBehavior: 'minimize' | 'quit'): void {
+  savePreferences({ ...preferences.value, closeWindowBehavior })
+}
+
+/** 使用 Main 权威值同步 Renderer 展示镜像，不向 Main 反向写入。 */
+function hydrateCloseWindowBehavior(closeWindowBehavior: 'minimize' | 'quit'): void {
   savePreferences({ ...preferences.value, closeWindowBehavior })
 }
 
@@ -91,15 +106,21 @@ applyTheme(preferences.value.theme)
 export function useAppPreferences(): {
   preferences: Readonly<Ref<AppPreferences>>
   setTheme: (theme: AppTheme) => void
+  hydrateTheme: (theme: AppTheme) => void
   setShowLyricTranslation: (value: boolean) => void
+  hydrateShowLyricTranslation: (value: boolean) => void
   setCloseWindowBehavior: (value: 'minimize' | 'quit') => void
+  hydrateCloseWindowBehavior: (value: 'minimize' | 'quit') => void
   clearRendererCache: () => void
 } {
   return {
     preferences: readonly(preferences),
     setTheme,
+    hydrateTheme,
     setShowLyricTranslation,
+    hydrateShowLyricTranslation,
     setCloseWindowBehavior,
+    hydrateCloseWindowBehavior,
     clearRendererCache
   }
 }

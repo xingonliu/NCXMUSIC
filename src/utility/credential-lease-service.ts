@@ -30,6 +30,8 @@ interface ValidatedProbe {
 }
 
 interface ActiveLease {
+  /** 凭据槽位类型；匿名凭据不能用于写操作。 */
+  kind: 'guest' | 'authenticated'
   leaseId: string
   accountId: string
   accountGeneration: number
@@ -73,6 +75,28 @@ function accountIdFrom(value: unknown): string | undefined {
     if (id) return id
   }
   return undefined
+}
+
+/** 从已验证的用户详情中读取安全昵称与头像。 */
+function publicProfileFrom(value: unknown): { displayName?: string; avatarUrl?: string } {
+  /** 用户详情响应体。 */
+  const body = bodyOf(value)
+  /** 网易云用户公开资料对象。 */
+  const profile = record(body?.['profile']) ?? record(record(body?.['data'])?.['profile'])
+  /** 经过长度限制的昵称。 */
+  const displayName = typeof profile?.['nickname'] === 'string'
+    ? profile['nickname'].trim().slice(0, 80)
+    : ''
+  /** 经过 URL 校验的头像地址。 */
+  const rawAvatarUrl = typeof profile?.['avatarUrl'] === 'string'
+    ? profile['avatarUrl'].trim()
+    : ''
+  /** 可安全公开的头像地址。 */
+  const avatarUrl = rawAvatarUrl && URL.canParse(rawAvatarUrl) ? rawAvatarUrl : undefined
+  return {
+    ...(displayName ? { displayName } : {}),
+    ...(avatarUrl ? { avatarUrl } : {})
+  }
 }
 
 function responseCode(value: unknown): number | undefined {
@@ -159,6 +183,10 @@ export class CredentialLeaseService {
       this.grant(command)
       return
     }
+    if (command.kind === 'auth.guest-lease.grant') {
+      this.grantGuest(command)
+      return
+    }
     if (command.kind === 'auth.lease.revoke') {
       if (
         command.leaseId &&
@@ -191,6 +219,15 @@ export class CredentialLeaseService {
 
   hasActiveLease(): boolean {
     return Boolean(this.activeLease && this.activeLease.expiresAt > this.now())
+  }
+
+  /** 当前是否持有可执行登录写操作的正式账户租约。 */
+  hasAuthenticatedLease(): boolean {
+    return Boolean(
+      this.activeLease &&
+      this.activeLease.kind === 'authenticated' &&
+      this.activeLease.expiresAt > this.now()
+    )
   }
 
   /**
@@ -274,6 +311,7 @@ export class CredentialLeaseService {
         valid: true,
         accountId,
         detailVerified: true,
+        ...publicProfileFrom(detail),
         reason: 'authenticated'
       })
     } catch {
@@ -318,6 +356,51 @@ export class CredentialLeaseService {
     command.cookieHeader = ''
     const expiryTimer = setTimeout(() => this.revoke(), command.expiresAt - now)
     this.activeLease = {
+      kind: 'authenticated',
+      leaseId: command.leaseId,
+      accountId: command.accountId,
+      accountGeneration: command.accountGeneration,
+      expiresAt: command.expiresAt,
+      secret,
+      expiryTimer
+    }
+    this.emit({
+      kind: 'auth.lease.ack',
+      requestId: command.requestId,
+      leaseId: command.leaseId,
+      accepted: true
+    })
+  }
+
+  /** 接受 Main 从独立持久匿名 Session 发放的游客租约。 */
+  private grantGuest(
+    command: Extract<CredentialControlCommand, { kind: 'auth.guest-lease.grant' }>
+  ): void {
+    /** 当前时间戳，用于验证匿名租约边界。 */
+    const now = this.now()
+    /** 匿名 Cookie 必须只包含可识别的 MUSIC_A，且继续受五分钟租约约束。 */
+    const accepted =
+      command.expiresAt > now &&
+      command.expiresAt - now <= MAX_LEASE_LIFETIME_MS &&
+      /(?:^|;\s*)MUSIC_A=[^;\s]{16,4096}(?:;|$)/u.test(command.cookieHeader)
+    if (!accepted) {
+      command.cookieHeader = ''
+      this.emit({
+        kind: 'auth.lease.ack',
+        requestId: command.requestId,
+        accepted: false
+      })
+      return
+    }
+
+    this.revoke()
+    /** 仅保存在 Utility 内存中的匿名凭据缓冲区。 */
+    const secret = Buffer.from(command.cookieHeader, 'utf8')
+    command.cookieHeader = ''
+    /** 到期后主动清零匿名凭据的计时器。 */
+    const expiryTimer = setTimeout(() => this.revoke(), command.expiresAt - now)
+    this.activeLease = {
+      kind: 'guest',
       leaseId: command.leaseId,
       accountId: command.accountId,
       accountGeneration: command.accountGeneration,
@@ -339,6 +422,7 @@ export class CredentialLeaseService {
     const lease = this.activeLease
     if (
       !lease ||
+      lease.kind !== 'authenticated' ||
       lease.leaseId !== command.leaseId ||
       lease.accountGeneration !== command.accountGeneration ||
       lease.expiresAt <= this.now()

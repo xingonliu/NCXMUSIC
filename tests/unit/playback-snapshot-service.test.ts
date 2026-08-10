@@ -46,7 +46,7 @@ afterEach(() => {
 })
 
 describe('PlaybackSnapshotService', () => {
-  it('persists through Utility SQLite and restores across account generations', async () => {
+  it('discards a persisted snapshot after the account generation changes', async () => {
     /** Utility 账户 SQLite 单写者。 */
     const store = new UtilityAccountStore({ dataRoot: dataRoot() })
     await store.open('netease:10001', 1)
@@ -58,7 +58,7 @@ describe('PlaybackSnapshotService', () => {
     await store.switchAccount('netease:10001', 3)
 
     const restored = await service.load({ accountId: 'netease:10001', accountGeneration: 3 })
-    expect(restored.snapshot?.accountGeneration).toBe(1)
+    expect(restored.snapshot).toBeNull()
     await store.close()
   })
 

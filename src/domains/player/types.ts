@@ -120,7 +120,7 @@ export type PlaybackEvent =
  */
 export interface MediaElementPort {
   /** 设置媒体源地址并触发加载 */
-  setSource(url: string): void
+  setSource(url: string, sourceGeneration?: number): void
   /** 清空源并释放底层缓冲 */
   clearSource(): void
   /** 请求播放；被浏览器策略拒绝时 reject */
@@ -140,7 +140,7 @@ export interface MediaElementPort {
 }
 
 /** 由媒体元素上报的原始事件 */
-export type MediaElementEvent =
+export type MediaElementEvent = (
   | { type: 'loadedmetadata'; durationMs: number | null }
   | { type: 'canplay' }
   | { type: 'playing' }
@@ -152,6 +152,10 @@ export type MediaElementEvent =
   | { type: 'seeked'; positionMs: number }
   | { type: 'ended' }
   | { type: 'error'; code: PlaybackError['code'] }
+) & {
+  /** 产生事件的媒体 source generation；生产适配器始终提供。 */
+  sourceGeneration?: number
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 队列

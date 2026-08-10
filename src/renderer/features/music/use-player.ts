@@ -2,6 +2,7 @@ import { readonly, ref, type Ref } from 'vue'
 
 import { PlaybackCoordinator } from '../../../domains/player/playback-coordinator'
 import { PlaybackEngine } from '../../../domains/player/playback-engine'
+import { PlayerCommandGateway } from '../../../domains/player/player-command-gateway'
 import { QueueController } from '../../../domains/player/queue-controller'
 import type { PlayerSnapshot } from '../../../domains/player/playback-coordinator'
 import type { PlayContext } from '../../../domains/player/queue-controller'
@@ -13,6 +14,7 @@ import type {
 } from '../../../domains/player/types'
 import type { DesktopBridge } from '../../../shared/contracts/desktop-bridge'
 import type { AccountSessionSnapshot } from '../../../shared/schemas/account'
+import type { PlayerCommandAction } from '../../../shared/schemas/player-command'
 import { HtmlAudioAdapter } from './html-audio-adapter'
 import { IpcTrackResolver } from './ipc-track-resolver'
 import {
@@ -37,6 +39,8 @@ import {
 interface PlayerRuntime {
   /** 唯一播放编排器，所有播放命令都必须经过它。 */
   coordinator: PlaybackCoordinator
+  /** 所有外部播放入口共用的唯一命令 Gateway。 */
+  gateway: PlayerCommandGateway
   /** 唯一播放引擎，持有媒体状态事实源。 */
   engine: PlaybackEngine
   /** 唯一 HTMLAudioElement 适配器。 */
@@ -53,6 +57,29 @@ interface PlayerRuntime {
 
 let runtime: PlayerRuntime | undefined
 
+/** 最近一次 Main 公布的账户数据隔离上下文。 */
+let journalAccountContext: PlaybackStoreAccountContext | undefined
+
+/** 允许写入 Action Journal 的低频语义命令；排除 Seek 与音量滑动等高频事件。 */
+const JOURNALED_PLAYER_COMMANDS = new Set<PlayerCommandAction['type']>([
+  'player.play-context',
+  'player.play-track',
+  'player.play-queue-item',
+  'player.play',
+  'player.pause',
+  'player.toggle',
+  'player.next',
+  'player.previous',
+  'player.set-muted',
+  'player.set-mode',
+  'player.set-quality',
+  'player.enqueue',
+  'player.play-next',
+  'player.reorder',
+  'player.remove',
+  'player.clear'
+])
+
 // ─────────────────────────────────────────────────────────────────────────────
 // 函数区
 // ─────────────────────────────────────────────────────────────────────────────
@@ -64,7 +91,17 @@ function createRuntime(): PlayerRuntime {
   const queue = new QueueController()
   const resolver = new IpcTrackResolver()
   const coordinator = new PlaybackCoordinator(queue, engine, resolver)
-  const systemMedia = createSystemMediaSessionBridge(coordinator)
+  const gateway = new PlayerCommandGateway(coordinator)
+  /** 通过统一 Gateway 执行系统媒体命令。 */
+  const runSystemCommand = (action: PlayerCommandAction): Promise<void> =>
+    executeAppliedCommand(coordinator, gateway, action)
+  const systemMedia = createSystemMediaSessionBridge(coordinator, {
+    play: () => runSystemCommand({ type: 'player.play' }),
+    pause: () => { void runSystemCommand({ type: 'player.pause' }) },
+    next: () => runSystemCommand({ type: 'player.next' }),
+    previous: () => runSystemCommand({ type: 'player.previous' }),
+    seek: (positionMs) => { void runSystemCommand({ type: 'player.seek', positionMs }) }
+  })
 
   const snapshot = ref<PlayerSnapshot>(coordinator.getSnapshot())
   const notice = ref<string | null>(null)
@@ -77,10 +114,50 @@ function createRuntime(): PlayerRuntime {
     notice.value = event.message
   })
 
-  const partialRuntime = { coordinator, engine, adapter, systemMedia, snapshot, notice }
+  const partialRuntime = { coordinator, gateway, engine, adapter, systemMedia, snapshot, notice }
   const disposePersistence = installPlaybackPersistence(partialRuntime)
 
   return { ...partialRuntime, disposePersistence }
+}
+
+/** 生成带 commandId、expectedRevision 与有限超时的命令并等待真实回执。 */
+async function executeAppliedCommand(
+  coordinator: PlaybackCoordinator,
+  gateway: PlayerCommandGateway,
+  action: PlayerCommandAction
+): Promise<void> {
+  /** 当前命令执行前读取的队列修订号。 */
+  const expectedRevision = coordinator.getSnapshot().queue.revision
+  /** 统一 Gateway 返回的真实执行回执。 */
+  const result = await gateway.execute({
+    commandId: crypto.randomUUID(),
+    expectedRevision,
+    issuedAt: Date.now(),
+    timeoutMs: 5_000,
+    action
+  })
+  if (!result.ok) {
+    throw Object.assign(new Error(`播放器命令失败：${result.code}`), { code: result.code })
+  }
+  void appendPlayerCommandJournal(action.type, result.commandId, result.latestRevision)
+}
+
+/** 将成功应用的 PlayerCommand 作为语义事件写入当前账户 Journal。 */
+async function appendPlayerCommandJournal(
+  commandType: PlayerCommandAction['type'],
+  commandId: string,
+  latestRevision: number
+): Promise<void> {
+  const bridge = readDesktopBridge()
+  const account = journalAccountContext
+  if (!bridge || !account || !JOURNALED_PLAYER_COMMANDS.has(commandType)) return
+  await bridge.runtime.accountData({
+    operation: 'appendJournal',
+    accountId: account.accountId,
+    accountGeneration: account.accountGeneration,
+    eventType: 'player.command',
+    payload: { commandType, commandId, latestRevision }
+  })
 }
 
 /** 读取可能存在的桌面 Bridge，测试环境缺失时返回 undefined。 */
@@ -153,13 +230,21 @@ function installPlaybackPersistence(
       (account.accountId !== nextAccount.accountId ||
         account.accountGeneration !== nextAccount.accountGeneration)
     account = nextAccount
+    journalAccountContext = nextAccount
     if (hasRestoredInitialSnapshot && accountChanged) {
       void restoreForAccount(nextAccount, true)
     }
   })
 
+  /** Main 退出前请求的可等待播放快照刷新。 */
+  const unsubscribeLifecycle = bridge.lifecycle.onFlushRequest(async () => {
+    flushCurrentSnapshot()
+    await store.settled()
+  })
+
   void bridge.account.snapshot().then(async (snapshot) => {
     account = toAccountContext(snapshot)
+    journalAccountContext = account
     await restoreForAccount(account, false)
     hasRestoredInitialSnapshot = true
   })
@@ -172,10 +257,12 @@ function installPlaybackPersistence(
     flushCurrentSnapshot()
     unsubscribePlayer()
     unsubscribeAccount()
+    unsubscribeLifecycle()
     window.removeEventListener('beforeunload', flushCurrentSnapshot)
     window.removeEventListener('pagehide', flushCurrentSnapshot)
     document.removeEventListener('visibilitychange', handleVisibilityChange)
     store.dispose()
+    journalAccountContext = undefined
   }
 }
 
@@ -215,24 +302,33 @@ export function usePlayer(): {
   return {
     snapshot: readonly(active.snapshot) as Readonly<Ref<PlayerSnapshot>>,
     notice: readonly(active.notice) as Readonly<Ref<string | null>>,
-    playContext: (context) => active.coordinator.playContext(context),
-    playTrack: (track, source) => active.coordinator.playTrack(track, source),
-    playQueueItem: (queueItemId) => active.coordinator.playQueueItem(queueItemId),
-    play: () => active.coordinator.play(),
-    pause: () => active.coordinator.pause(),
-    toggle: () => active.coordinator.toggle(),
-    next: () => active.coordinator.next(),
-    previous: () => active.coordinator.previous(),
-    seek: (positionMs) => active.coordinator.seek(positionMs),
-    setVolume: (volume) => active.coordinator.setVolume(volume),
-    setMuted: (muted) => active.coordinator.setMuted(muted),
-    setMode: (mode) => active.coordinator.setMode(mode),
-    setQuality: (quality) => active.coordinator.setQuality(quality),
-    enqueue: (tracks, source) => active.coordinator.enqueue(tracks, source),
-    playNext: (tracks, source) => active.coordinator.playNext(tracks, source),
-    reorder: (queueItemId, toIndex) => active.coordinator.reorder(queueItemId, toIndex),
-    remove: (queueItemId) => active.coordinator.remove(queueItemId),
-    clear: () => active.coordinator.clear(),
+    playContext: (context) => executeAppliedCommand(active.coordinator, active.gateway, {
+      type: 'player.play-context',
+      tracks: context.tracks,
+      source: context.source,
+      ...(context.startIndex !== undefined ? { startIndex: context.startIndex } : {})
+    }),
+    playTrack: (track, source) => executeAppliedCommand(active.coordinator, active.gateway, {
+      type: 'player.play-track', track, source
+    }),
+    playQueueItem: (queueItemId) => executeAppliedCommand(active.coordinator, active.gateway, {
+      type: 'player.play-queue-item', queueItemId
+    }),
+    play: () => executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.play' }),
+    pause: () => { void executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.pause' }) },
+    toggle: () => executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.toggle' }),
+    next: () => executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.next' }),
+    previous: () => executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.previous' }),
+    seek: (positionMs) => { void executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.seek', positionMs }) },
+    setVolume: (volume) => { void executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.set-volume', volume }) },
+    setMuted: (muted) => { void executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.set-muted', muted }) },
+    setMode: (mode) => executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.set-mode', mode }),
+    setQuality: (quality) => executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.set-quality', quality }),
+    enqueue: (tracks, source) => { void executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.enqueue', tracks, source }) },
+    playNext: (tracks, source) => { void executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.play-next', tracks, source }) },
+    reorder: (queueItemId, toIndex) => { void executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.reorder', queueItemId, toIndex }) },
+    remove: (queueItemId) => executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.remove', queueItemId }),
+    clear: () => executeAppliedCommand(active.coordinator, active.gateway, { type: 'player.clear' }),
     dismissNotice: () => {
       active.notice.value = null
     }

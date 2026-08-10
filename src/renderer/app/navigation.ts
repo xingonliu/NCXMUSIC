@@ -1,5 +1,7 @@
 import type { RouteRecordName } from 'vue-router'
 
+import { t } from '../i18n'
+
 // ========= 类型 =========
 
 /** 侧边栏导航条目的渲染数据。 */
@@ -25,10 +27,10 @@ export const appPrimaryNavigationSections: readonly AppNavigationSection[] = [
   {
     label: '',
     items: [
-      { label: '发现音乐', routeName: 'discover', icon: 'discover' },
-      { label: '搜索', routeName: 'search', icon: 'search' },
-      { label: '小云', routeName: 'agent', icon: 'agent' },
-      { label: '通用组件', routeName: 'design-system-lab', icon: 'settings' }
+      { label: t('navigation.discover'), routeName: 'discover', icon: 'discover' },
+      { label: t('navigation.search'), routeName: 'search', icon: 'search' },
+      { label: t('navigation.agent'), routeName: 'agent', icon: 'agent' },
+      { label: t('navigation.designSystem'), routeName: 'design-system-lab', icon: 'settings' }
     ]
   }
 ] as const
@@ -36,21 +38,21 @@ export const appPrimaryNavigationSections: readonly AppNavigationSection[] = [
 /** AppShell 中部歌单次导航结构，后续歌单数据接入后继续扩展。 */
 export const appPlaylistNavigationSections: readonly AppNavigationSection[] = [
   {
-    label: '我的音乐',
-    items: [{ label: '我喜欢', routeName: 'liked-songs', icon: 'liked' }]
+    label: t('navigation.myMusic'),
+    items: [{ label: t('navigation.liked'), routeName: 'liked-songs', icon: 'liked' }]
   }
 ] as const
 
 /** 底部账户行入口，保持与设置行分离。 */
 export const appAccountNavigationItem: AppNavigationItem = {
-  label: '个人资料',
+  label: t('navigation.profile'),
   routeName: 'profile',
   icon: 'profile'
 }
 
 /** 底部第二行设置入口，仍复用普通页面激活样式。 */
 export const appSettingsNavigationItem: AppNavigationItem = {
-  label: '设置',
+  label: t('navigation.settings'),
   routeName: 'settings',
   icon: 'settings'
 }

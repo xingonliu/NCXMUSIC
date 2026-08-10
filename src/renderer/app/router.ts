@@ -6,8 +6,10 @@ import CollectionDetailPage from '../features/music/CollectionDetailPage.vue'
 import ArtistDetailPage from '../features/music/ArtistDetailPage.vue'
 import DiscoverPage from '../features/music/DiscoverPage.vue'
 import LikedSongsPage from '../features/music/LikedSongsPage.vue'
+import PlaybackDetailPage from '../features/music/PlaybackDetailPage.vue'
 import SearchPage from '../features/music/SearchPage.vue'
 import SearchResultsPage from '../features/music/SearchResultsPage.vue'
+import SongDetailPage from '../features/music/SongDetailPage.vue'
 import SongCollectionPage from '../features/music/SongCollectionPage.vue'
 import SettingsPage from '../features/settings/SettingsPage.vue'
 import ProfilePage from '../features/profile/ProfilePage.vue'
@@ -103,6 +105,39 @@ const routes: RouteRecordRaw[] = [
       pageLevel: 1,
       title: 'routes.likedSongs',
       playerBar: 'show'
+    }
+  },
+  {
+    path: '/player',
+    name: 'player-detail',
+    component: PlaybackDetailPage,
+    meta: {
+      pageLevel: 1,
+      title: 'routes.playerDetail',
+      playerBar: 'hide'
+    }
+  },
+  {
+    path: '/player/lyrics',
+    name: 'immersive-lyrics',
+    component: RouteSkeletonView,
+    meta: {
+      pageLevel: 2,
+      title: 'routes.immersiveLyrics',
+      playerBar: 'hide',
+      presentation: 'immersive',
+      fallbackRoute: 'player-detail'
+    }
+  },
+  {
+    path: '/songs/:songId',
+    name: 'song-detail',
+    component: SongDetailPage,
+    meta: {
+      pageLevel: 2,
+      title: 'routes.songDetail',
+      playerBar: 'show',
+      fallbackRoute: 'search'
     }
   },
   {

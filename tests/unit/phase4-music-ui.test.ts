@@ -68,13 +68,14 @@ describe('Phase 4 music UI primitives', () => {
     expect(wrapper.find('img').attributes('loading')).toBe('eager')
   })
 
-  it('renders the complete collection for the page-level scrollbar', () => {
+  it('只挂载真实可视窗口和 overscan 行', () => {
     /** 两百首歌曲的长列表。 */
     const songs = Array.from({ length: 200 }, (_, index) => song(index))
     /** 直接交给页面主滚动容器的歌曲列表。 */
     const wrapper = mount(VirtualTrackList, { props: { songs } })
 
-    expect(wrapper.findAll('.track-row')).toHaveLength(200)
-    expect(wrapper.find('.virtual-track-list').attributes('style')).toBeUndefined()
+    expect(wrapper.findAll('.track-row').length).toBeLessThan(200)
+    expect(wrapper.find('.virtual-track-list').attributes('style')).toContain('height: 520px')
+    expect(wrapper.find('.virtual-track-list-spacer').attributes('style')).toContain('height: 12000px')
   })
 })

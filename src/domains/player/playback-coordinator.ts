@@ -69,6 +69,9 @@ export class PlaybackCoordinator {
   /** 发起当前解析时的引擎代次 */
   private activeResolveGeneration = -1
 
+  /** 已对播放地址过期执行过一次重新解析的队列项。 */
+  private sourceExpiryRetryItemId: string | undefined
+
   private quality: MusicQualityPreference
 
   private readonly listeners = new Set<(event: PlayerEvent) => void>()
@@ -292,10 +295,12 @@ export class PlaybackCoordinator {
   private async switchTo(
     item: QueueItem,
     autoplay: boolean,
-    startPositionMs = 0
+    startPositionMs = 0,
+    sourceExpiryRetry = false
   ): Promise<void> {
     // 取消上一次解析，避免旧结果覆盖新装载
     this.abortActiveResolve()
+    if (!sourceExpiryRetry) this.sourceExpiryRetryItemId = undefined
 
     const controller = new AbortController()
     this.activeResolve = controller
@@ -372,6 +377,20 @@ export class PlaybackCoordinator {
     if (event.error.code === 'autoplay-blocked' || event.error.code === 'aborted') return
 
     const current = this.queue.getCurrentItem()
+    if (
+      event.error.code === 'source-expired' &&
+      current &&
+      this.sourceExpiryRetryItemId !== current.queueItemId
+    ) {
+      this.sourceExpiryRetryItemId = current.queueItemId
+      this.emit({
+        type: 'track-unplayable',
+        trackId: current.track.trackId,
+        message: `《${current.track.name}》播放地址已过期，正在重新获取。`
+      })
+      void this.switchTo(current, true, this.engine.getSnapshot().positionMs, true)
+      return
+    }
     if (current) {
       this.emit({
         type: 'track-unplayable',

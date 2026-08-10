@@ -1,6 +1,6 @@
-import { copyFileSync, existsSync, mkdirSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, rmSync } from 'node:fs'
 import { DatabaseSync } from 'node:sqlite'
-import { join, normalize } from 'node:path'
+import { posix, win32, type PlatformPath } from 'node:path'
 
 import { AccountIdSchema, type AccountId, type NeteaseUserId } from '../../shared/schemas/account'
 import { ACCOUNT_SQLITE_SCHEMA_VERSION } from '../../shared/schemas/storage'
@@ -65,16 +65,23 @@ export const DEFAULT_ACTION_JOURNAL_RETENTION: ActionJournalRetentionPolicy = {
   maxEvents: 10_000
 }
 
+/** 按输入根目录风格选择路径实现，使 Windows 上的跨平台路径单测不被反斜杠污染。 */
+function pathApi(rootDir: string): PlatformPath {
+  return rootDir.includes('\\') || /^[A-Za-z]:/u.test(rootDir) ? win32 : posix
+}
+
 // ========= 函数 =========
 
 /** 解析持久业务数据根目录。 */
 export function resolveNcxDataRoot(userDataPath: string): string {
-  return join(normalize(userDataPath), 'ncx-data')
+  const path = pathApi(userDataPath)
+  return path.join(path.normalize(userDataPath), 'ncx-data')
 }
 
 /** 解析可清理缓存根目录。 */
 export function resolveNcxCacheRoot(cachePath: string): string {
-  return join(normalize(cachePath), 'NcxMusic')
+  const path = pathApi(cachePath)
+  return path.join(path.normalize(cachePath), 'NcxMusic')
 }
 
 /** 将网易云数字用户 ID 转成应用内部账户引用。 */
@@ -85,39 +92,41 @@ export function toNeteaseAccountId(userId: NeteaseUserId): AccountId {
 /** 根据应用内部账户引用解析账户空间路径。 */
 export function resolveAccountSpace(rootDir: string, input: AccountSpaceInput): AccountSpaceDescriptor {
   const accountId = AccountIdSchema.parse(input.accountId)
-  const root = normalize(rootDir)
+  const path = pathApi(rootDir)
+  const root = path.normalize(rootDir)
 
   if (accountId === 'guest:local') {
-    const guestRoot = join(root, 'accounts', 'guest', 'local')
+    const guestRoot = path.join(root, 'accounts', 'guest', 'local')
     return {
       kind: 'guest',
       accountId,
       rootDir: guestRoot,
-      sqlitePath: join(guestRoot, 'account.sqlite'),
-      workingMemoryPath: join(guestRoot, 'working-memory.json')
+      sqlitePath: path.join(guestRoot, 'account.sqlite'),
+      workingMemoryPath: path.join(guestRoot, 'working-memory.json')
     }
   }
 
   const neteaseUserId = accountId.slice('netease:'.length)
-  const accountRoot = join(root, 'accounts', 'netease', neteaseUserId)
+  const accountRoot = path.join(root, 'accounts', 'netease', neteaseUserId)
   return {
     kind: 'netease',
     accountId,
     rootDir: accountRoot,
-    sqlitePath: join(accountRoot, 'account.sqlite'),
-    accountJsonPath: join(accountRoot, 'account.json'),
-    profileJsonPath: join(accountRoot, 'profile.json'),
-    workingMemoryPath: join(accountRoot, 'working-memory.json')
+    sqlitePath: path.join(accountRoot, 'account.sqlite'),
+    accountJsonPath: path.join(accountRoot, 'account.json'),
+    profileJsonPath: path.join(accountRoot, 'profile.json'),
+    workingMemoryPath: path.join(accountRoot, 'working-memory.json')
   }
 }
 
 /** 解析可重新生成缓存目录。 */
 export function resolveCacheSpace(cacheRoot: string): CacheSpaceDescriptor {
-  const root = normalize(cacheRoot)
+  const path = pathApi(cacheRoot)
+  const root = path.normalize(cacheRoot)
   return {
-    artworkDir: join(root, 'artwork'),
-    apiDir: join(root, 'api'),
-    mediaTempDir: join(root, 'media-temp')
+    artworkDir: path.join(root, 'artwork'),
+    apiDir: path.join(root, 'api'),
+    mediaTempDir: path.join(root, 'media-temp')
   }
 }
 
@@ -159,6 +168,19 @@ export const ACCOUNT_SQLITE_MIGRATIONS: readonly SQLiteMigration[] = [
           account_generation INTEGER NOT NULL,
           saved_at INTEGER NOT NULL,
           snapshot_json TEXT NOT NULL
+        );
+      `)
+    }
+  },
+  {
+    version: 2,
+    description: '建立账户级持久偏好表',
+    up: (database): void => {
+      database.exec?.(`
+        CREATE TABLE IF NOT EXISTS account_preferences (
+          preference_key TEXT PRIMARY KEY,
+          value_json TEXT NOT NULL,
+          updated_at INTEGER NOT NULL
         );
       `)
     }
@@ -240,7 +262,7 @@ export class UtilityAccountStore {
   private lifecycleTail: Promise<void> = Promise.resolve()
 
   constructor(options: AccountStoreOptions) {
-    this.dataRoot = normalize(options.dataRoot)
+    this.dataRoot = pathApi(options.dataRoot).normalize(options.dataRoot)
     this.migrations = options.migrations ?? ACCOUNT_SQLITE_MIGRATIONS
   }
 
@@ -304,6 +326,31 @@ export class UtilityAccountStore {
   /** 返回 Utility 当前账户 generation。 */
   currentGeneration(): number {
     return this.accountGeneration
+  }
+
+  /** 删除当前账户本地业务空间后，以同一 generation 重建空数据库。 */
+  async deleteCurrentData(accountId: AccountId, accountGeneration: number): Promise<AccountSpaceDescriptor> {
+    const run = this.lifecycleTail.then(async () => {
+      const account = this.currentAccount
+      if (!account || account.accountId !== accountId || this.accountGeneration !== accountGeneration) {
+        throw Object.assign(new Error('账户已切换，拒绝删除迟到请求。'), { code: 'ACCOUNT_STALE' })
+      }
+
+      /** 使用规范化后的 accounts 根目录约束递归删除目标。 */
+      const path = pathApi(this.dataRoot)
+      const accountsRoot = path.resolve(this.dataRoot, 'accounts')
+      const targetRoot = path.resolve(account.rootDir)
+      const relativeTarget = path.relative(accountsRoot, targetRoot)
+      if (!relativeTarget || relativeTarget.startsWith('..') || path.isAbsolute(relativeTarget)) {
+        throw new Error('账户数据删除目标不在受控 accounts 目录内。')
+      }
+
+      await this.closeNow()
+      rmSync(targetRoot, { recursive: true, force: true })
+      return this.openNow(accountId, accountGeneration)
+    })
+    this.lifecycleTail = run.then(() => undefined, () => undefined)
+    return run
   }
 
   /** 等待已排队的账户打开或关闭操作完成。 */

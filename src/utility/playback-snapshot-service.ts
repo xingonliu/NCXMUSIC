@@ -27,7 +27,7 @@ export class PlaybackSnapshotService {
   async load(rawPayload: unknown): Promise<PlaybackSnapshotLoadResult> {
     const payload = PlaybackSnapshotLoadPayloadSchema.parse(rawPayload)
     await this.accountStore.settled()
-    this.assertCurrentAccount(payload.accountId)
+    this.assertCurrentAccount(payload.accountId, payload.accountGeneration)
     return this.accountStore.write((database) => {
       const row = database
         .prepare('SELECT snapshot_json FROM playback_snapshot WHERE account_id = ?')
@@ -35,6 +35,9 @@ export class PlaybackSnapshotService {
       if (!row) return PlaybackSnapshotLoadResultSchema.parse({ snapshot: null })
       const decoded = JSON.parse(row.snapshot_json) as unknown
       const snapshot = PersistedPlaybackSnapshotSchema.parse(decoded)
+      if (snapshot.accountGeneration !== payload.accountGeneration) {
+        return PlaybackSnapshotLoadResultSchema.parse({ snapshot: null })
+      }
       return PlaybackSnapshotLoadResultSchema.parse({ snapshot })
     })
   }

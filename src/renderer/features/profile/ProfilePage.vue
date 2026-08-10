@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CalendarCheck, Database, LogIn, LogOut, Music2, Trash2 } from '@lucide/vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 import type { MusicReadResult, StandardUser } from '../../../shared/schemas/music'
 import {
@@ -13,13 +13,16 @@ import {
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
-import { mutateMusic } from '../music/music-actions'
+import { useDailySignin } from '../music/daily-signin'
 import { useAppPreferences } from '../settings/app-preferences'
 
 // ========= 变量 =========
 
 /** 应用账户公开状态。 */
 const account = useAccountSessionStore()
+
+/** 个人资料页与发现页共享的每日签到控制器。 */
+const dailySignin = useDailySignin()
 
 /** 应用界面偏好与可重建缓存控制。 */
 const appPreferences = useAppPreferences()
@@ -36,6 +39,9 @@ const errorMessage = ref<string>('')
 /** 退出登录确认框状态。 */
 const logoutDialogVisible = ref<boolean>(false)
 
+/** 最近一次资料请求 ID，用于丢弃旧账户迟到响应。 */
+let latestProfileRequestId = ''
+
 /** 当前网易云用户 ID。 */
 const userId = computed<string | null>(() => {
   const active = account.snapshot.value?.activeAccount
@@ -43,7 +49,13 @@ const userId = computed<string | null>(() => {
 })
 
 /** 页面展示名称。 */
-const displayName = computed<string>(() => user.value?.nickname ?? account.snapshot.value?.activeAccount.displayName ?? '游客')
+const displayName = computed<string>(() => {
+  const snapshot = account.snapshot.value
+  if (snapshot?.activeAccount.kind === 'netease') {
+    return user.value?.nickname ?? snapshot.activeAccount.displayName ?? '正在加载账户资料'
+  }
+  return '游客'
+})
 
 /** 页面头像地址。 */
 const avatarUrl = computed<string>(() => {
@@ -55,14 +67,28 @@ const avatarUrl = computed<string>(() => {
 
 /** 读取当前网易云用户公开资料。 */
 async function loadProfile(): Promise<void> {
+  /** 发起请求时绑定的账户快照。 */
+  const snapshot = account.snapshot.value
+  /** 发起请求时绑定的网易云账户。 */
+  const active = snapshot?.activeAccount
+  /** 当前资料请求唯一 ID。 */
+  const requestId = crypto.randomUUID()
+  latestProfileRequestId = requestId
   user.value = null
   errorMessage.value = ''
-  if (!userId.value) {
+  if (!snapshot || snapshot.state !== 'authenticated' || active?.kind !== 'netease') {
     loading.value = false
     return
   }
   loading.value = true
-  const response = await window.ncx.runtime.getUser({ id: userId.value })
+  const response = await window.ncx.runtime.getUser({ id: active.neteaseUserId, requestId })
+  /** 响应到达时的最新账户快照。 */
+  const current = account.snapshot.value
+  if (
+    requestId !== latestProfileRequestId ||
+    current?.activeAccount.accountId !== active.accountId ||
+    current.accountGeneration !== snapshot.accountGeneration
+  ) return
   loading.value = false
   if (!response.ok) {
     errorMessage.value = response.error.message
@@ -83,16 +109,24 @@ async function login(): Promise<void> {
 
 /** 执行每日签到。 */
 async function signin(): Promise<void> {
-  const response = await mutateMusic({ operation: 'dailySignin' })
-  if (response.ok) {
-    showToast('签到完成。', 'success')
-  } else {
-    showToast(response.error.message, 'danger')
-  }
+  await dailySignin.signin()
 }
 
-/** 清理可重建的 Renderer 缓存。 */
-function clearCache(): void {
+/** 清理 Utility 冻结缓存目录与无敏感性的 Renderer UI 缓存。 */
+async function clearCache(): Promise<void> {
+  /** 当前账户隔离上下文。 */
+  const snapshot = account.snapshot.value
+  if (!snapshot) return
+  /** Utility 可重建缓存清理结果。 */
+  const response = await window.ncx.runtime.accountData({
+    operation: 'clearCache',
+    accountId: snapshot.activeAccount.accountId,
+    accountGeneration: snapshot.accountGeneration
+  })
+  if (!response.ok) {
+    showToast(response.error.message, 'warning')
+    return
+  }
   appPreferences.clearRendererCache()
   showToast('可重建缓存已清理。', 'success')
 }
@@ -109,8 +143,19 @@ async function confirmLogout(): Promise<void> {
 
 onMounted(async () => {
   await account.initialize()
-  await loadProfile()
 })
+
+watch(
+  () => [
+    account.snapshot.value?.state,
+    account.snapshot.value?.activeAccount.accountId,
+    account.snapshot.value?.accountGeneration
+  ] as const,
+  () => {
+    void loadProfile()
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
@@ -146,9 +191,14 @@ onMounted(async () => {
           <h1 id="profile-title">{{ displayName }}</h1>
           <span>{{ user?.signature || '网易云音乐用户' }}</span>
         </div>
-        <CommonButton variant="secondary" @click="signin">
+        <CommonButton
+          variant="secondary"
+          :loading="dailySignin.state.value === 'signing'"
+          :disabled="!account.snapshot.value?.canMutateMusic"
+          @click="signin"
+        >
           <CalendarCheck :size="14" />
-          签到
+          {{ dailySignin.state.value === 'already-signed' ? '今日已签到' : '签到' }}
         </CommonButton>
       </header>
 

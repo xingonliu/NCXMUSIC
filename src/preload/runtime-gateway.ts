@@ -1,5 +1,11 @@
 import type { RuntimeConnectionMetadata } from '../shared/contracts/control-plane'
 import {
+  AccountDataRequestSchema,
+  AccountDataResultSchema,
+  type AccountDataRequest,
+  type AccountDataResult
+} from '../shared/schemas/account-data'
+import {
   MusicMutationPayloadSchema,
   MusicMutationResultSchema,
   MusicReadPayloadSchema,
@@ -90,6 +96,7 @@ export class RuntimeGateway {
             'music.read',
             'music.mutate',
             'music.resolve-url',
+            'account.data',
             'playback.snapshot.load',
             'playback.snapshot.save'
           ]
@@ -273,6 +280,25 @@ export class RuntimeGateway {
     return parsed.success
       ? { ok: true, data: parsed.data }
       : protocolFailure('PROTOCOL_INVALID_MESSAGE', '播放快照保存响应不符合契约。')
+  }
+
+  /** 通过 Utility 单写者访问当前账户业务数据。 */
+  async accountData(input: AccountDataRequest): Promise<RuntimeResult<AccountDataResult>> {
+    const payload = AccountDataRequestSchema.safeParse(input)
+    if (!payload.success) {
+      return protocolFailure('PROTOCOL_INVALID_MESSAGE', '账户数据请求参数不合法。')
+    }
+    const result = await this.request(
+      'account.data',
+      payload.data,
+      crypto.randomUUID(),
+      contractRegistry['account.data'].defaultTimeoutMs
+    )
+    if (!result.ok) return result
+    const parsed = AccountDataResultSchema.safeParse(result.data)
+    return parsed.success
+      ? { ok: true, data: parsed.data }
+      : protocolFailure('PROTOCOL_INVALID_MESSAGE', '账户数据响应不符合契约。')
   }
 
   cancel(requestId: string): boolean {

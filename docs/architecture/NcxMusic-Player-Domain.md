@@ -374,6 +374,7 @@ interface PlaybackResumeSnapshot {
 - 不保存媒体 URL、Cookie 或签名 Header；恢复当前项时通过 `TrackResolver` 按歌曲 ID 获取新 URL。
 - 启动恢复始终以 `autoplay=false` 装载。`loadedmetadata` 后执行 seek，状态保持 `ready/paused`；只有新的用户或 Agent 播放命令才能出声。
 - 快照按账户隔离、带 Schema 版本并原子写入。队列项保存稳定 ID 和必要展示摘要，不能只依赖可能失效的 `sourceRef` 重建。
+- 当前冻结语义为 account generation 不一致即丢弃快照，不能跨本次登录 generation 恢复旧现场。
 - 当前歌曲已不可播放时保留队列现场并展示原因，不在应用启动阶段静默跳歌。
 - 队列、当前项、模式、音量和静音等语义变化后短防抖原子写入；播放进度每 5 秒节流，并在 pause、seek 完成、窗口最小化和退出前刷新。快照不按时间过期，Schema 不兼容或账户 generation 不匹配时丢弃。
 
@@ -392,6 +393,7 @@ AppShell（应用生命周期）
 - `PlayerBar` 只订阅 snapshot 并发送 `PlaybackCommand`，不创建或拥有播放引擎。
 - 隐藏 PlayerBar 不改变播放 intent、队列、音量或当前歌曲，也不能顺带销毁订阅之外的资源。
 - Vue Router 使用类型化 `RouteMeta.playerBar: 'show' | 'hide'`。`route.meta` 会合并匹配到的父子路由元数据，父布局可定义默认值，叶子路由显式覆盖。
+- 播放详情、沉浸歌词与单曲详情的正式路径分别为 `/player`、`/player/lyrics`、`/songs/:songId`；沉浸页同时使用 `RouteMeta.presentation = 'immersive'` 驱动根层覆盖与历史返回。
 - 设置页和个人信息页使用 `hide`；主导航、歌单次导航以及歌单/歌手/专辑列表与详情页使用 `show`；其他页面等待产品确认后逐项填写，不能依赖 URL 字符串猜测。
 - PlayerBar 隐藏时页面移除底部安全区，显示时由 AppShell 统一提供 `PlayerSafeArea`，避免歌曲列表末项被遮挡。
 - Vue 适配层负责把 snapshot 转为响应式只读状态，并在自身销毁时解除订阅；领域对象生命周期不跟随适配组件。

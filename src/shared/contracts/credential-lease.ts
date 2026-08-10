@@ -1,7 +1,10 @@
 import { z } from 'zod'
 
 const RequestIdSchema = z.uuid()
-const AccountIdSchema = z.string().regex(/^\d{1,32}$/u)
+const AccountIdSchema = z.union([
+  z.literal('guest:local'),
+  z.string().regex(/^\d{1,32}$/u)
+])
 const AccountGenerationSchema = z.number().int().positive()
 const CookieHeaderSchema = z
   .string()
@@ -26,6 +29,17 @@ export const CredentialLeaseGrantCommandSchema = z.strictObject({
   cookieHeader: CookieHeaderSchema
 })
 
+/** Main → Utility：发放独立匿名凭据槽位，不需要正式账户探测。 */
+export const GuestCredentialLeaseGrantCommandSchema = z.strictObject({
+  kind: z.literal('auth.guest-lease.grant'),
+  requestId: RequestIdSchema,
+  leaseId: z.uuid(),
+  accountId: z.literal('guest:local'),
+  accountGeneration: z.number().int().nonnegative(),
+  expiresAt: z.number().int().positive(),
+  cookieHeader: CookieHeaderSchema
+})
+
 export const CredentialLeaseRevokeCommandSchema = z.strictObject({
   kind: z.literal('auth.lease.revoke'),
   requestId: RequestIdSchema,
@@ -43,6 +57,7 @@ export const CredentialLogoutCommandSchema = z.strictObject({
 export const CredentialControlCommandSchema = z.discriminatedUnion('kind', [
   CredentialProbeCommandSchema,
   CredentialLeaseGrantCommandSchema,
+  GuestCredentialLeaseGrantCommandSchema,
   CredentialLeaseRevokeCommandSchema,
   CredentialLogoutCommandSchema
 ])
@@ -55,6 +70,8 @@ export const CredentialProbeResultSchema = z.strictObject({
   valid: z.boolean(),
   accountId: AccountIdSchema.optional(),
   detailVerified: z.boolean(),
+  displayName: z.string().min(1).max(80).optional(),
+  avatarUrl: z.string().url().optional(),
   reason: z.enum(['authenticated', 'missing-account', 'remote-unavailable']).optional()
 })
 
