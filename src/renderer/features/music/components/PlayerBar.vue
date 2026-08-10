@@ -193,7 +193,6 @@ function openImmersivePlayer(event: MouseEvent): void {
               :alt="track?.name ?? text.emptyTrack"
               size="thumbnail"
               class="player-track-cover"
-              data-immersive-artwork-target
               :style="{
                 viewTransitionName: isImmersivePlayerOpen ? 'none' : 'ncx-now-playing-artwork'
               }"

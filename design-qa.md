@@ -1,66 +1,61 @@
-# 沉浸歌词页下拉手势 Design QA
+# 沉浸歌词页顶部关闭短杆 Design QA
 
 **Source Visual Truth**
 
-- Path: conversation attachment `Image #1`（原始本地临时路径未写入仓库）。
+- Path: `C:\Users\Administrator\AppData\Local\Temp\企业微信截图_17863332221714.png`。
 - Pixels: 1280 × 800。
-- CSS size / density: 参考图未提供设备缩放信息，按 1280 × 800、1x 视觉基准记录。
-- State: 沉浸歌词页已播放歌曲，短杆静止；用户补充要求覆盖短杆 Hover 和下拉关闭状态。
+- CSS size / density: 1280 × 800、1x 视觉基准。
+- State: 沉浸歌词页播放《失眠》，白色短杆位于页面最上方；红框标注新的顶部中央目标位置，中心约为 `x=640px, y=69px`。
 
 **Implementation Evidence**
 
-- Screenshot path: conversation attachment `Image #1`（用户于本轮提供的 1280 × 800 拖拽中截图；原始临时路径未写入仓库）。
-- Target viewport: 1280 × 800。
-- Automated state evidence: `tests/unit/immersive-player.test.ts` 覆盖辅助元素渐隐、源目标封面几何插值、距离与速度阈值、单根 SVG 横线、达到阈值后在当前拖拽位置直接请求共享元素关闭，以及共享元素开合方向标记在动画期间保持并在结束后清理。
-- Primary interactions tested: 下拉进度、封面向 PlayerBar 的位置/尺寸/圆角插值、回弹判定、快速下甩、阈值关闭请求、单线 SVG 结构。
-- Console errors checked: unavailable；当前 Electron 应用没有可用的匹配播放状态截图通道。
+- Screenshot path: `C:\Users\Administrator\AppData\Local\Temp\ncxmusic-immersive-click-only-restored.png`。
+- Comparison path: `C:\Users\Administrator\AppData\Local\Temp\ncxmusic-immersive-handle-comparison.png`。
+- Pixels: 原始窗口捕获 1296 × 808；去除 8px 外框后按 1280 × 800 与参考图并排比较。
+- CSS size / density: 应用内容 1280 × 800、1x。
+- State: 与参考图相同的歌曲、歌词、窗口尺寸和静止交互状态。
+- Primary interactions tested: Pointer 按下、移动和释放不触发关闭；点击唯一短杆触发一次 `close`；既有共享元素开合方向和动画生命周期测试继续通过。
+- Console errors checked: Windows 窗口捕获接口不提供 Renderer Console；专项组件测试覆盖本次交互路径。
 
 **Full-view Comparison Evidence**
 
-- 参考图已打开并核对 1280 × 800 构图。
-- 用户提供的实现截图显示旧实现把整个沉浸内容纵向平移：短杆与大封面沿同一 X 轴下落，大封面在底部被窗口裁切，没有在拖动中横向靠近 PlayerBar 封面。
+- 已把参考图和修正后实机截图合成为同一张 2560 × 800 对照图查看。
+- 封面、歌曲信息、播放控制、歌词列、窗口控制和队列按钮的位置与修正前一致，没有因短杆提升到根层而发生布局偏移。
+- 修正后短杆保持页面水平中心，视觉中心约为 `x=640px, y=69px`，与红框目标中心一致。
 
 **Focused Region Comparison Evidence**
 
-- 目标区域为左侧封面上方短杆、封面本体和底部 PlayerBar 封面终点。
-- 已确认旧实现的封面缩放停留在大尺寸且只向下移动；修正后的同状态截图或录屏仍缺失，因此无法完成修正后聚焦区域的并排复核。
+- 聚焦区域为页面顶部中央 68 × 32px 关闭按钮命中区。
+- 参考图红框覆盖约 `x=609–678px, y=62–76px`；实现中的白色横线覆盖约 `x=630–666px, y=66–72px`，完整落在目标框内并保持原有长度、粗细和圆头。
 
 **Findings**
 
-- [P1] 缺少同状态渲染证据
-  - Location: 沉浸歌词页短杆、封面与 PlayerBar 共享元素过渡。
-  - Evidence: 用户截图证明旧实现存在垂直下坠问题，但当前环境仍无法捕获修正后带真实播放曲目的 Electron 状态；Windows 自动化接口的文档入口不可用，无法安全继续控制应用。
-  - Impact: 代码和组件测试可证明交互路径，但不能替代对泛光强度、缩放观感和共享元素终点的视觉确认。
-  - Fix: 在可用的 Electron 播放状态下捕获 1280 × 800 静止、Hover、拖拽中和释放后四个状态，再与参考图并排复核。
+- 没有剩余 P0、P1 或 P2 视觉差异。
+- [P3] Renderer Console 未由窗口捕获通道直接读取；本次属于验证工具限制，不影响可见结果或点击交互测试。
 
 **Required Fidelity Surfaces**
 
-- Fonts and typography: 本次未改字体、字号、行高、字重或文案层级；缺少实现截图，视觉复核阻塞。
-- Spacing and layout rhythm: 短杆 SVG 从 56px 双线结构收敛为 44px 视框内 30px 单线，命中区仍为 68 × 32；缺少实现截图，实际视觉节奏复核阻塞。
-- Colors and visual tokens: Hover 使用白色双层 `drop-shadow` 泛光且背景保持透明；缺少实现截图，强度复核阻塞。
-- Image quality and asset fidelity: 沿用真实歌曲封面与既有 `MediaArtwork`，没有新增或替换位图资产；旧实现截图中封面保持清晰，修正后连续缩放清晰度仍待复核。
-- Copy and content: 未改歌曲、歌手、歌词或控制器文案。
+- Fonts and typography: 本次未修改字体、字重、字号、行高、字距或歌词层级；并排图中无变化。
+- Spacing and layout rhythm: 短杆从封面列移到根层顶部中央，`top: 53px` 配合 32px 命中区让横线中心落在 `y=69px`；其他页面间距保持不变。
+- Colors and visual tokens: 保留白色短杆、透明背景和既有 Hover 泛光，没有新增底色或状态颜色。
+- Image quality and asset fidelity: 沿用原歌曲封面、模糊背景和现有矢量短杆，没有新增或替换图像资产；并排图中封面清晰度与裁切一致。
+- Copy and content: 歌曲、歌手、歌词、按钮标签和辅助功能文案均未改变。
 
 **Comparison History**
 
-1. Earlier finding: 首版达到阈值后先把内容滑出视口，再触发关闭，封面无法从沉浸页当前位置自然过渡到 PlayerBar。
-2. Fix made: 删除滑出视口的提交动画和等待定时器；阈值成立时保留当前拖拽位移并立即发出关闭请求，由既有 `ncx-now-playing-artwork` View Transition 完成封面到 PlayerBar 的共享元素过渡。
-3. Second finding: 用户提供的 1280 × 800 拖拽中截图显示整个沉浸内容仍直线向下，封面没有在手势过程中向 PlayerBar 目标移动。
-4. Second fix made: 移除 `.immersive-content` 整体 Y 轴平移；按下时读取沉浸封面与 PlayerBar 封面的真实矩形，拖动中让封面沿纵向跟手、横向平滑收拢，并同步插值尺寸和视觉圆角。短杆单独跟手，其他元素只渐隐。
-5. Third finding: 用户指出封面到达 PlayerBar 的一瞬间仍会抖动，观感接近圆角或尺寸在共享元素快照销毁时没有对齐。
-6. Third fix made: 删除无法通过 DOM 后代关系判断 View Transition 关闭方向的 `:has(::view-transition-old(...))` 规则；控制器改为在根节点显式写入 `opening` 或 `closing`，共享元素的 image-pair 裁切层在关闭的 360ms 内从 16px 连续收敛到 PlayerBar 实际 `--ncx-radius-md`（当前 14px），与原生 40 × 40px 终点几何在同一帧完成。
-7. Post-fix evidence: 8 个专项测试通过，其中几何测试确认代表性 1280 × 800 布局在半程同时产生 136.5px 横向移动、273.5px 纵向移动和约 0.556 倍缩放，方向测试确认开合标记覆盖完整动画生命周期；修正后渲染截图仍不可用。
+1. Earlier finding: 第一版把短杆从封面列提升到根层后中心位于约 `y=20px`，高于用户第二张截图的红框目标。
+2. Fix made: 将根层绝对定位从 `top: 4px` 调整为 `top: 53px`，保持 `left: 50%` 和 `translateX(-50%)`。
+3. Post-fix evidence: 1280 × 800 实机捕获显示横线中心约为 `y=69px`，完整位于参考图红框内；全页其他内容无位移。
 
 **Implementation Checklist**
 
-- 在带播放曲目的 Electron 窗口中检查短杆 Hover 泛光且无底色。
-- 慢速下拉检查封面连续缩小、其余元素连续渐隐和未达阈值回弹。
-- 达到阈值释放，检查封面从当前拖拽位置落到 PlayerBar 封面，而非直接向下离场。
-- 放慢观察落点最后一帧，确认 40 × 40px 尺寸与 14px 圆角在共享元素消失前已经对齐，不再出现一次性收缩或圆角跳变。
-- 检查动画期间无控制器闪烁、背景跳变或浏览器控制台错误。
+- 顶部中央只渲染一个关闭短杆。
+- Pointer 拖动不会移动短杆、封面或其他元素，也不会触发关闭。
+- 点击短杆继续触发现有共享元素关闭动画。
+- Hover 保持透明背景与白色泛光。
 
 **Follow-up Polish**
 
-- 可在真实屏幕观感确认后微调泛光半径和 220px 关闭阈值。
+- 无需额外视觉调整。
 
-final result: blocked
+final result: passed

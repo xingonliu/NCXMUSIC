@@ -192,7 +192,7 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
 
     expect(coverButton.attributes('aria-label')).toContain('Immersive Song')
     expect(wrapper.find('.player-track').attributes('role')).toBeUndefined()
-    expect(wrapper.find('[data-immersive-artwork-target]').exists()).toBe(true)
+    expect(wrapper.find('.player-track-cover').exists()).toBe(true)
 
     await coverButton.trigger('click')
     await vi.waitFor(() => expect(immersivePlayer.isOpen.value).toBe(true))

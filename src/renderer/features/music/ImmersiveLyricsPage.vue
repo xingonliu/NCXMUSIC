@@ -25,14 +25,6 @@ import LyricsPanel from './components/LyricsPanel.vue'
 import MediaArtwork from './components/MediaArtwork.vue'
 import PlaybackControls from './components/PlaybackControls.vue'
 import QueueDrawer from './components/QueueDrawer.vue'
-import {
-  calculateImmersiveArtworkTransform,
-  calculateImmersiveDismissVisualState,
-  clampImmersiveDismissOffset,
-  type ImmersiveArtworkGeometry,
-  type ImmersiveArtworkRect,
-  shouldCompleteImmersiveDismiss
-} from './immersive-dismiss-gesture'
 import { mutateMusic } from './music-actions'
 import { usePlayer } from './use-player'
 
@@ -75,76 +67,11 @@ const backdropStyle = computed<Record<string, string>>(() => {
   return artworkUrl.value ? { backgroundImage: `url("${artworkUrl.value}")` } : {}
 })
 
-/** 短杆下拉手势当前产生的纵向位移。 */
-const dismissDragOffsetY = ref<number>(0)
-
-/** 用户是否正在拖动沉浸页关闭短杆。 */
-const isDismissDragging = ref<boolean>(false)
-
-/** 本次下拉开始时捕获的沉浸封面与 PlayerBar 封面矩形。 */
-const dismissArtworkGeometry = ref<ImmersiveArtworkGeometry | null>(null)
-
-/** 当前下拉位移对应的封面缩放与渐隐状态。 */
-const dismissVisualState = computed(() => {
-  return calculateImmersiveDismissVisualState(dismissDragOffsetY.value)
-})
-
-/** 当前下拉位移对应的封面源目标插值变换。 */
-const dismissArtworkTransform = computed(() => {
-  return calculateImmersiveArtworkTransform(
-    dismissDragOffsetY.value,
-    dismissArtworkGeometry.value
-  )
-})
-
-/** 注入沉浸页样式的连续下拉手势变量。 */
-const dismissGestureStyle = computed<Record<string, string>>(() => {
-  /** 当前下拉视觉状态。 */
-  const visualState = dismissVisualState.value
-  /** 当前封面向 PlayerBar 靠拢的几何变换。 */
-  const artworkTransform = dismissArtworkTransform.value
-
-  return {
-    '--immersive-drag-offset-y': `${dismissDragOffsetY.value}px`,
-    '--immersive-artwork-translate-x': `${artworkTransform.translateX}px`,
-    '--immersive-artwork-translate-y': `${artworkTransform.translateY}px`,
-    '--immersive-artwork-scale': String(artworkTransform.scale),
-    '--immersive-artwork-radius': `${artworkTransform.borderRadius}px`,
-    '--immersive-supporting-opacity': String(visualState.supportingOpacity),
-    '--immersive-backdrop-opacity': String(visualState.backdropOpacity),
-    '--immersive-surface-opacity': String(visualState.surfaceOpacity)
-  }
-})
-
 /** 当前曲目是否已在本次沉浸会话中完成收藏。 */
 const isLiked = ref<boolean>(false)
 
 /** 沉浸页播放队列抽屉是否打开。 */
 const isQueueOpen = ref<boolean>(false)
-
-/** 当前下拉手势占用的指针 ID。 */
-let dismissPointerId: number | null = null
-
-/** 当前下拉手势执行指针捕获的短杆元素。 */
-let dismissCaptureElement: HTMLElement | null = null
-
-/** 当前下拉手势按下时的纵向坐标。 */
-let dismissDragStartY = 0
-
-/** 最近一次手势采样的纵向坐标。 */
-let dismissDragLastY = 0
-
-/** 最近一次手势采样的事件时间戳。 */
-let dismissDragLastTimestamp = 0
-
-/** 最近一次手势采样计算出的纵向速度。 */
-let dismissDragVelocityY = 0
-
-/** 当前指针序列结束后是否需要忽略浏览器合成的点击。 */
-let suppressNextCloseClick = false
-
-/** 清除点击抑制标记的零延时定时器。 */
-let closeClickResetTimer: number | undefined
 
 /** Main 进程推送的真实窗口快照。 */
 const windowSnapshot = ref<WindowSnapshot>({
@@ -162,221 +89,9 @@ let unsubscribeWindowSnapshot = (): void => {}
 
 // ========= 函数 =========
 
-/**
- * 读取封面元素参与拖拽插值所需的视口矩形和圆角。
- *
- * @param element 需要测量的封面根元素
- */
-function measureArtworkRect(element: HTMLElement): ImmersiveArtworkRect {
-  /** 元素当前未开始拖拽时的视口矩形。 */
-  const rect = element.getBoundingClientRect()
-  /** 元素当前计算样式，用于取得设计系统实际圆角。 */
-  const styles = window.getComputedStyle(element)
-  /** 左上圆角的像素值，无法解析时安全回退为 0。 */
-  const borderRadius = Number.parseFloat(styles.borderTopLeftRadius) || 0
-
-  return {
-    left: rect.left,
-    top: rect.top,
-    width: rect.width,
-    height: rect.height,
-    borderRadius
-  }
-}
-
-/** 捕获沉浸大封面到 PlayerBar 小封面的实时几何关系。 */
-function captureDismissArtworkGeometry(): ImmersiveArtworkGeometry | null {
-  /** 沉浸歌词页中正在展示的大封面。 */
-  const sourceArtwork = pageRoot.value?.querySelector<HTMLElement>(
-    '[data-immersive-artwork-source]'
-  )
-  /** 沉浸层下方 PlayerBar 中的封面过渡终点。 */
-  const targetArtwork = document.querySelector<HTMLElement>(
-    '[data-immersive-artwork-target]'
-  )
-
-  if (!sourceArtwork || !targetArtwork) return null
-
-  return {
-    source: measureArtworkRect(sourceArtwork),
-    target: measureArtworkRect(targetArtwork)
-  }
-}
-
-/** 清理沉浸页下拉手势注册的全局指针监听。 */
-function cleanupDismissPointerListeners(): void {
-  window.removeEventListener('pointermove', handleDismissPointerMove)
-  window.removeEventListener('pointerup', handleDismissPointerUp)
-  window.removeEventListener('pointercancel', handleDismissPointerCancel)
-}
-
-/** 释放当前短杆持有的指针捕获。 */
-function releaseDismissPointerCapture(): void {
-  if (!dismissCaptureElement || dismissPointerId === null) return
-
-  try {
-    if (dismissCaptureElement.hasPointerCapture(dismissPointerId)) {
-      dismissCaptureElement.releasePointerCapture(dismissPointerId)
-    }
-  } catch {
-    // 忽略窗口切换或元素卸载导致的指针捕获释放失败。
-  }
-}
-
-/** 在当前指针序列结束后短暂忽略浏览器合成的点击事件。 */
-function suppressSyntheticCloseClick(): void {
-  suppressNextCloseClick = true
-  window.clearTimeout(closeClickResetTimer)
-  closeClickResetTimer = window.setTimeout(() => {
-    suppressNextCloseClick = false
-    closeClickResetTimer = undefined
-  }, 0)
-}
-
-/** 清空下拉手势的临时状态并让界面回弹到初始位置。 */
-function resetDismissGesture(): void {
-  dismissDragOffsetY.value = 0
-  dismissDragVelocityY = 0
-  dismissArtworkGeometry.value = null
-  isDismissDragging.value = false
-}
-
-/** 清空当前活跃指针并移除全局手势监听。 */
-function finishDismissPointerTracking(): void {
-  releaseDismissPointerCapture()
-  cleanupDismissPointerListeners()
-  dismissPointerId = null
-  dismissCaptureElement = null
-  isDismissDragging.value = false
-}
-
-/**
- * 使用最新指针坐标更新下拉位移和瞬时速度。
- *
- * @param event 当前活跃指针的移动或释放事件
- */
-function updateDismissGesture(event: PointerEvent): void {
-  /** 本次指针采样距离上一采样的时间。 */
-  const elapsedMs = event.timeStamp - dismissDragLastTimestamp
-
-  if (elapsedMs > 0) {
-    dismissDragVelocityY = (event.clientY - dismissDragLastY) / elapsedMs
-  }
-
-  dismissDragLastY = event.clientY
-  dismissDragLastTimestamp = event.timeStamp
-
-  /** 指针相对按下位置产生的原始纵向位移。 */
-  const rawOffsetY = event.clientY - dismissDragStartY
-  dismissDragOffsetY.value = clampImmersiveDismissOffset(
-    rawOffsetY,
-    window.innerHeight
-  )
-}
-
-/**
- * 按下沉浸页短杆后开始跟踪下拉关闭手势。
- *
- * @param event 短杆收到的指针按下事件
- */
-function handleDismissPointerDown(event: PointerEvent): void {
-  if (event.button !== 0 || dismissPointerId !== null) return
-  event.preventDefault()
-
-  dismissPointerId = event.pointerId
-  dismissCaptureElement = event.currentTarget as HTMLElement
-  dismissDragStartY = event.clientY
-  dismissDragLastY = event.clientY
-  dismissDragLastTimestamp = event.timeStamp
-  dismissDragVelocityY = 0
-  dismissDragOffsetY.value = 0
-  dismissArtworkGeometry.value = captureDismissArtworkGeometry()
-  isDismissDragging.value = true
-
-  try {
-    dismissCaptureElement.setPointerCapture(event.pointerId)
-  } catch {
-    // 指针捕获不可用时继续依赖窗口级监听。
-  }
-
-  window.addEventListener('pointermove', handleDismissPointerMove, { passive: false })
-  window.addEventListener('pointerup', handleDismissPointerUp)
-  window.addEventListener('pointercancel', handleDismissPointerCancel)
-}
-
-/**
- * 处理短杆拖动并连续刷新封面缩放和其他元素透明度。
- *
- * @param event 窗口级指针移动事件
- */
-function handleDismissPointerMove(event: PointerEvent): void {
-  if (event.pointerId !== dismissPointerId || !isDismissDragging.value) return
-  event.preventDefault()
-  updateDismissGesture(event)
-}
-
-/**
- * 释放短杆后根据距离和速度决定完成收起或回弹。
- *
- * @param event 窗口级指针释放事件
- */
-function handleDismissPointerUp(event: PointerEvent): void {
-  if (event.pointerId !== dismissPointerId || !isDismissDragging.value) return
-  updateDismissGesture(event)
-
-  /** 本次交互是否已经形成可感知拖动。 */
-  const movedBeyondClickTolerance = dismissDragOffsetY.value > 4
-  /** 释放时是否满足距离或下甩速度阈值。 */
-  const shouldDismiss = shouldCompleteImmersiveDismiss(
-    dismissDragOffsetY.value,
-    dismissDragVelocityY
-  )
-
-  finishDismissPointerTracking()
-  if (movedBeyondClickTolerance) suppressSyntheticCloseClick()
-
-  if (shouldDismiss) {
-    closeImmersivePlayer()
-    return
-  }
-
-  resetDismissGesture()
-}
-
-/**
- * 指针被系统取消时终止手势并让沉浸页回弹。
- *
- * @param event 窗口级指针取消事件
- */
-function handleDismissPointerCancel(event: PointerEvent): void {
-  if (event.pointerId !== dismissPointerId) return
-
-  /** 取消前是否已经形成可感知拖动。 */
-  const movedBeyondClickTolerance = dismissDragOffsetY.value > 4
-  finishDismissPointerTracking()
-  if (movedBeyondClickTolerance) suppressSyntheticCloseClick()
-  resetDismissGesture()
-}
-
 /** 请求关闭沉浸播放展示层。 */
 function closeImmersivePlayer(): void {
-  cleanupDismissPointerListeners()
   emit('close')
-}
-
-/**
- * 点击短杆后请求关闭沉浸页。
- *
- * @param event 短杆按钮合成的点击事件
- */
-function handleCloseClick(event: MouseEvent): void {
-  if (suppressNextCloseClick) {
-    event.preventDefault()
-    suppressNextCloseClick = false
-    return
-  }
-
-  closeImmersivePlayer()
 }
 
 /** 打开或关闭沉浸页播放队列。 */
@@ -439,7 +154,6 @@ function handleWindowKeydown(event: KeyboardEvent): void {
     isQueueOpen.value = false
     return
   }
-  finishDismissPointerTracking()
   closeImmersivePlayer()
 }
 
@@ -489,8 +203,6 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleWindowKeydown)
-  cleanupDismissPointerListeners()
-  window.clearTimeout(closeClickResetTimer)
   unsubscribeWindowSnapshot()
 })
 </script>
@@ -501,10 +213,8 @@ onBeforeUnmount(() => {
     class="immersive-lyrics-page"
     :class="[
       isWindows ? 'immersive-lyrics-page--windows' : 'immersive-lyrics-page--macos',
-      windowSnapshot.fullscreen ? 'immersive-lyrics-page--fullscreen' : '',
-      isDismissDragging ? 'immersive-lyrics-page--dragging' : ''
+      windowSnapshot.fullscreen ? 'immersive-lyrics-page--fullscreen' : ''
     ]"
-    :style="dismissGestureStyle"
     role="dialog"
     aria-modal="true"
     aria-labelledby="immersive-lyrics-title"
@@ -520,6 +230,33 @@ onBeforeUnmount(() => {
       />
       <div class="immersive-backdrop-veil" />
     </div>
+
+    <button
+      type="button"
+      class="immersive-close-handle"
+      aria-label="收起沉浸播放页"
+      @click="closeImmersivePlayer"
+    >
+      <svg
+        class="immersive-close-svg"
+        width="44"
+        height="18"
+        viewBox="0 0 44 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <line
+          x1="7"
+          y1="9"
+          x2="37"
+          y2="9"
+          stroke="currentColor"
+          stroke-width="6"
+          stroke-linecap="round"
+        />
+      </svg>
+    </button>
 
     <header class="immersive-toolbar">
       <div class="immersive-toolbar-output">
@@ -565,34 +302,6 @@ onBeforeUnmount(() => {
         class="immersive-now-playing"
         aria-label="正在播放"
       >
-        <button
-          type="button"
-          class="immersive-close-handle"
-          aria-label="收起沉浸播放页"
-          @click="handleCloseClick"
-          @pointerdown="handleDismissPointerDown"
-        >
-          <svg
-            class="immersive-close-svg"
-            width="44"
-            height="18"
-            viewBox="0 0 44 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <line
-              x1="7"
-              y1="9"
-              x2="37"
-              y2="9"
-              stroke="currentColor"
-              stroke-width="6"
-              stroke-linecap="round"
-            />
-          </svg>
-        </button>
-
         <MediaArtwork
           :src="displayArtworkUrl"
           :alt="track.name"
@@ -600,7 +309,6 @@ onBeforeUnmount(() => {
           :adapt-source="false"
           loading="eager"
           class="immersive-artwork"
-          data-immersive-artwork-source
           :style="{ viewTransitionName: 'ncx-now-playing-artwork' }"
         />
 
@@ -655,33 +363,6 @@ onBeforeUnmount(() => {
       v-else
       class="immersive-empty-state"
     >
-      <button
-        type="button"
-        class="immersive-close-handle"
-        aria-label="收起沉浸播放页"
-        @click="handleCloseClick"
-        @pointerdown="handleDismissPointerDown"
-      >
-        <svg
-          class="immersive-close-svg"
-          width="44"
-          height="18"
-          viewBox="0 0 44 18"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <line
-            x1="7"
-            y1="9"
-            x2="37"
-            y2="9"
-            stroke="currentColor"
-            stroke-width="6"
-            stroke-linecap="round"
-          />
-        </svg>
-      </button>
       <h1 id="immersive-lyrics-title">
         还没有播放内容
       </h1>
@@ -717,7 +398,7 @@ onBeforeUnmount(() => {
   flex-direction: column;
   border-radius: 16px;
   color: white;
-  background: rgb(17 23 25 / var(--immersive-surface-opacity, 1));
+  background: rgb(17 23 25);
   isolation: isolate;
   outline: none;
   view-transition-name: ncx-immersive-player;
@@ -746,8 +427,6 @@ onBeforeUnmount(() => {
   z-index: -1;
   overflow: hidden;
   background: #111719;
-  opacity: var(--immersive-backdrop-opacity, 1);
-  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-backdrop-artwork {
@@ -785,9 +464,7 @@ onBeforeUnmount(() => {
   justify-content: flex-end;
   gap: var(--ncx-space-4);
   padding: 8px 18px 0 18px;
-  opacity: var(--immersive-supporting-opacity, 1);
   -webkit-app-region: drag;
-  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-toolbar-output {
@@ -806,32 +483,25 @@ onBeforeUnmount(() => {
 .immersive-close-handle {
   --immersive-handle-press-scale: 1;
 
+  position: absolute;
+  z-index: 3;
+  top: 53px;
+  left: 50%;
   display: inline-flex;
   width: 68px;
   height: 32px;
   align-items: center;
   justify-content: center;
-  align-self: center;
-  margin-bottom: 4px;
   padding: 0;
   border: 0;
   border-radius: 999px;
   color: #ffffff;
   background: transparent;
-  opacity: 1;
-  cursor: grab;
-  touch-action: none;
+  cursor: pointer;
   user-select: none;
   -webkit-app-region: no-drag;
-  transform:
-    translate3d(0, var(--immersive-drag-offset-y, 0), 0)
-    scale(var(--immersive-handle-press-scale));
-  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
-}
-
-.immersive-lyrics-page--dragging .immersive-close-handle {
-  cursor: grabbing;
+  transform: translateX(-50%) scale(var(--immersive-handle-press-scale));
+  transition: transform 180ms ease;
 }
 
 .immersive-close-handle:hover,
@@ -852,8 +522,7 @@ onBeforeUnmount(() => {
 }
 
 .immersive-close-handle:hover .immersive-close-svg,
-.immersive-close-handle:focus-visible .immersive-close-svg,
-.immersive-lyrics-page--dragging .immersive-close-svg {
+.immersive-close-handle:focus-visible .immersive-close-svg {
   filter:
     drop-shadow(0 0 4px rgb(255 255 255 / 82%))
     drop-shadow(0 0 10px rgb(255 255 255 / 48%));
@@ -886,20 +555,8 @@ onBeforeUnmount(() => {
   min-height: 0;
   aspect-ratio: 1;
   z-index: 2;
-  border-radius: var(--immersive-artwork-radius, 16px);
+  border-radius: 16px;
   box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
-  transform:
-    translate3d(
-      var(--immersive-artwork-translate-x, 0),
-      var(--immersive-artwork-translate-y, 0),
-      0
-    )
-    scale(var(--immersive-artwork-scale, 1));
-  transform-origin: top left;
-  transition:
-    border-radius 240ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
 }
 
 .immersive-track-row {
@@ -909,14 +566,10 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: space-between;
   gap: var(--ncx-space-4);
-  opacity: var(--immersive-supporting-opacity, 1);
-  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-now-playing :deep(.playback-controls) {
   width: 100%;
-  opacity: var(--immersive-supporting-opacity, 1);
-  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-track-copy {
@@ -961,17 +614,13 @@ onBeforeUnmount(() => {
 .immersive-lyrics-panel {
   height: min(630px, calc(100vh - 138px));
   min-height: 0;
-  opacity: var(--immersive-supporting-opacity, 1);
-  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-empty-state {
   display: grid;
   flex: 1;
   place-content: center;
-  opacity: var(--immersive-supporting-opacity, 1);
   text-align: center;
-  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-empty-state h1,
@@ -988,21 +637,7 @@ onBeforeUnmount(() => {
   position: absolute;
   right: 20px;
   bottom: 18px;
-  opacity: var(--immersive-supporting-opacity, 1);
   -webkit-app-region: no-drag;
-  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.immersive-lyrics-page--dragging .immersive-backdrop,
-.immersive-lyrics-page--dragging .immersive-toolbar,
-.immersive-lyrics-page--dragging .immersive-close-handle,
-.immersive-lyrics-page--dragging .immersive-artwork,
-.immersive-lyrics-page--dragging .immersive-track-row,
-.immersive-lyrics-page--dragging .immersive-now-playing :deep(.playback-controls),
-.immersive-lyrics-page--dragging .immersive-lyrics-panel,
-.immersive-lyrics-page--dragging .immersive-empty-state,
-.immersive-lyrics-page--dragging .immersive-footer {
-  transition: none;
 }
 
 @media (width < 1080px) {
