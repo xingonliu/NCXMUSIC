@@ -25,6 +25,11 @@ import LyricsPanel from './components/LyricsPanel.vue'
 import MediaArtwork from './components/MediaArtwork.vue'
 import PlaybackControls from './components/PlaybackControls.vue'
 import QueueDrawer from './components/QueueDrawer.vue'
+import {
+  calculateImmersiveDismissVisualState,
+  clampImmersiveDismissOffset,
+  shouldCompleteImmersiveDismiss
+} from './immersive-dismiss-gesture'
 import { mutateMusic } from './music-actions'
 import { usePlayer } from './use-player'
 
@@ -67,14 +72,60 @@ const backdropStyle = computed<Record<string, string>>(() => {
   return artworkUrl.value ? { backgroundImage: `url("${artworkUrl.value}")` } : {}
 })
 
+/** 短杆下拉手势当前产生的纵向位移。 */
+const dismissDragOffsetY = ref<number>(0)
+
+/** 用户是否正在拖动沉浸页关闭短杆。 */
+const isDismissDragging = ref<boolean>(false)
+
+/** 当前下拉位移对应的封面缩放与渐隐状态。 */
+const dismissVisualState = computed(() => {
+  return calculateImmersiveDismissVisualState(dismissDragOffsetY.value)
+})
+
+/** 注入沉浸页样式的连续下拉手势变量。 */
+const dismissGestureStyle = computed<Record<string, string>>(() => {
+  /** 当前下拉视觉状态。 */
+  const visualState = dismissVisualState.value
+
+  return {
+    '--immersive-drag-offset-y': `${dismissDragOffsetY.value}px`,
+    '--immersive-artwork-scale': String(visualState.artworkScale),
+    '--immersive-supporting-opacity': String(visualState.supportingOpacity),
+    '--immersive-backdrop-opacity': String(visualState.backdropOpacity),
+    '--immersive-surface-opacity': String(visualState.surfaceOpacity)
+  }
+})
+
 /** 当前曲目是否已在本次沉浸会话中完成收藏。 */
 const isLiked = ref<boolean>(false)
 
 /** 沉浸页播放队列抽屉是否打开。 */
 const isQueueOpen = ref<boolean>(false)
 
-/** 沉浸页关闭按钮是否处于按下/活动状态。 */
-const isClosePressed = ref<boolean>(false)
+/** 当前下拉手势占用的指针 ID。 */
+let dismissPointerId: number | null = null
+
+/** 当前下拉手势执行指针捕获的短杆元素。 */
+let dismissCaptureElement: HTMLElement | null = null
+
+/** 当前下拉手势按下时的纵向坐标。 */
+let dismissDragStartY = 0
+
+/** 最近一次手势采样的纵向坐标。 */
+let dismissDragLastY = 0
+
+/** 最近一次手势采样的事件时间戳。 */
+let dismissDragLastTimestamp = 0
+
+/** 最近一次手势采样计算出的纵向速度。 */
+let dismissDragVelocityY = 0
+
+/** 当前指针序列结束后是否需要忽略浏览器合成的点击。 */
+let suppressNextCloseClick = false
+
+/** 清除点击抑制标记的零延时定时器。 */
+let closeClickResetTimer: number | undefined
 
 /** Main 进程推送的真实窗口快照。 */
 const windowSnapshot = ref<WindowSnapshot>({
@@ -92,14 +143,177 @@ let unsubscribeWindowSnapshot = (): void => {}
 
 // ========= 函数 =========
 
+/** 清理沉浸页下拉手势注册的全局指针监听。 */
+function cleanupDismissPointerListeners(): void {
+  window.removeEventListener('pointermove', handleDismissPointerMove)
+  window.removeEventListener('pointerup', handleDismissPointerUp)
+  window.removeEventListener('pointercancel', handleDismissPointerCancel)
+}
+
+/** 释放当前短杆持有的指针捕获。 */
+function releaseDismissPointerCapture(): void {
+  if (!dismissCaptureElement || dismissPointerId === null) return
+
+  try {
+    if (dismissCaptureElement.hasPointerCapture(dismissPointerId)) {
+      dismissCaptureElement.releasePointerCapture(dismissPointerId)
+    }
+  } catch {
+    // 忽略窗口切换或元素卸载导致的指针捕获释放失败。
+  }
+}
+
+/** 在当前指针序列结束后短暂忽略浏览器合成的点击事件。 */
+function suppressSyntheticCloseClick(): void {
+  suppressNextCloseClick = true
+  window.clearTimeout(closeClickResetTimer)
+  closeClickResetTimer = window.setTimeout(() => {
+    suppressNextCloseClick = false
+    closeClickResetTimer = undefined
+  }, 0)
+}
+
+/** 清空下拉手势的临时状态并让界面回弹到初始位置。 */
+function resetDismissGesture(): void {
+  dismissDragOffsetY.value = 0
+  dismissDragVelocityY = 0
+  isDismissDragging.value = false
+}
+
+/** 清空当前活跃指针并移除全局手势监听。 */
+function finishDismissPointerTracking(): void {
+  releaseDismissPointerCapture()
+  cleanupDismissPointerListeners()
+  dismissPointerId = null
+  dismissCaptureElement = null
+  isDismissDragging.value = false
+}
+
+/**
+ * 使用最新指针坐标更新下拉位移和瞬时速度。
+ *
+ * @param event 当前活跃指针的移动或释放事件
+ */
+function updateDismissGesture(event: PointerEvent): void {
+  /** 本次指针采样距离上一采样的时间。 */
+  const elapsedMs = event.timeStamp - dismissDragLastTimestamp
+
+  if (elapsedMs > 0) {
+    dismissDragVelocityY = (event.clientY - dismissDragLastY) / elapsedMs
+  }
+
+  dismissDragLastY = event.clientY
+  dismissDragLastTimestamp = event.timeStamp
+
+  /** 指针相对按下位置产生的原始纵向位移。 */
+  const rawOffsetY = event.clientY - dismissDragStartY
+  dismissDragOffsetY.value = clampImmersiveDismissOffset(
+    rawOffsetY,
+    window.innerHeight
+  )
+}
+
+/**
+ * 按下沉浸页短杆后开始跟踪下拉关闭手势。
+ *
+ * @param event 短杆收到的指针按下事件
+ */
+function handleDismissPointerDown(event: PointerEvent): void {
+  if (event.button !== 0 || dismissPointerId !== null) return
+  event.preventDefault()
+
+  dismissPointerId = event.pointerId
+  dismissCaptureElement = event.currentTarget as HTMLElement
+  dismissDragStartY = event.clientY
+  dismissDragLastY = event.clientY
+  dismissDragLastTimestamp = event.timeStamp
+  dismissDragVelocityY = 0
+  dismissDragOffsetY.value = 0
+  isDismissDragging.value = true
+
+  try {
+    dismissCaptureElement.setPointerCapture(event.pointerId)
+  } catch {
+    // 指针捕获不可用时继续依赖窗口级监听。
+  }
+
+  window.addEventListener('pointermove', handleDismissPointerMove, { passive: false })
+  window.addEventListener('pointerup', handleDismissPointerUp)
+  window.addEventListener('pointercancel', handleDismissPointerCancel)
+}
+
+/**
+ * 处理短杆拖动并连续刷新封面缩放和其他元素透明度。
+ *
+ * @param event 窗口级指针移动事件
+ */
+function handleDismissPointerMove(event: PointerEvent): void {
+  if (event.pointerId !== dismissPointerId || !isDismissDragging.value) return
+  event.preventDefault()
+  updateDismissGesture(event)
+}
+
+/**
+ * 释放短杆后根据距离和速度决定完成收起或回弹。
+ *
+ * @param event 窗口级指针释放事件
+ */
+function handleDismissPointerUp(event: PointerEvent): void {
+  if (event.pointerId !== dismissPointerId || !isDismissDragging.value) return
+  updateDismissGesture(event)
+
+  /** 本次交互是否已经形成可感知拖动。 */
+  const movedBeyondClickTolerance = dismissDragOffsetY.value > 4
+  /** 释放时是否满足距离或下甩速度阈值。 */
+  const shouldDismiss = shouldCompleteImmersiveDismiss(
+    dismissDragOffsetY.value,
+    dismissDragVelocityY
+  )
+
+  finishDismissPointerTracking()
+  if (movedBeyondClickTolerance) suppressSyntheticCloseClick()
+
+  if (shouldDismiss) {
+    closeImmersivePlayer()
+    return
+  }
+
+  resetDismissGesture()
+}
+
+/**
+ * 指针被系统取消时终止手势并让沉浸页回弹。
+ *
+ * @param event 窗口级指针取消事件
+ */
+function handleDismissPointerCancel(event: PointerEvent): void {
+  if (event.pointerId !== dismissPointerId) return
+
+  /** 取消前是否已经形成可感知拖动。 */
+  const movedBeyondClickTolerance = dismissDragOffsetY.value > 4
+  finishDismissPointerTracking()
+  if (movedBeyondClickTolerance) suppressSyntheticCloseClick()
+  resetDismissGesture()
+}
+
 /** 请求关闭沉浸播放展示层。 */
 function closeImmersivePlayer(): void {
+  cleanupDismissPointerListeners()
   emit('close')
 }
 
-/** 点击关闭按钮，触发下箭头图标并请求关闭沉浸页。 */
-function handleCloseClick(): void {
-  isClosePressed.value = true
+/**
+ * 点击短杆后请求关闭沉浸页。
+ *
+ * @param event 短杆按钮合成的点击事件
+ */
+function handleCloseClick(event: MouseEvent): void {
+  if (suppressNextCloseClick) {
+    event.preventDefault()
+    suppressNextCloseClick = false
+    return
+  }
+
   closeImmersivePlayer()
 }
 
@@ -163,6 +377,7 @@ function handleWindowKeydown(event: KeyboardEvent): void {
     isQueueOpen.value = false
     return
   }
+  finishDismissPointerTracking()
   closeImmersivePlayer()
 }
 
@@ -212,6 +427,8 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleWindowKeydown)
+  cleanupDismissPointerListeners()
+  window.clearTimeout(closeClickResetTimer)
   unsubscribeWindowSnapshot()
 })
 </script>
@@ -222,8 +439,10 @@ onBeforeUnmount(() => {
     class="immersive-lyrics-page"
     :class="[
       isWindows ? 'immersive-lyrics-page--windows' : 'immersive-lyrics-page--macos',
-      windowSnapshot.fullscreen ? 'immersive-lyrics-page--fullscreen' : ''
+      windowSnapshot.fullscreen ? 'immersive-lyrics-page--fullscreen' : '',
+      isDismissDragging ? 'immersive-lyrics-page--dragging' : ''
     ]"
+    :style="dismissGestureStyle"
     role="dialog"
     aria-modal="true"
     aria-labelledby="immersive-lyrics-title"
@@ -287,37 +506,26 @@ onBeforeUnmount(() => {
         <button
           type="button"
           class="immersive-close-handle"
-          :class="{ 'immersive-close-handle--active': isClosePressed }"
           aria-label="收起沉浸播放页"
           @click="handleCloseClick"
-          @mousedown="isClosePressed = true"
+          @pointerdown="handleDismissPointerDown"
         >
           <svg
             class="immersive-close-svg"
-            width="56"
+            width="44"
             height="18"
-            viewBox="0 0 56 18"
+            viewBox="0 0 44 18"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
           >
             <line
-              class="immersive-close-line immersive-close-line--left"
-              x1="5"
+              x1="7"
               y1="9"
-              x2="28"
+              x2="37"
               y2="9"
               stroke="currentColor"
-              stroke-width="5.5"
-              stroke-linecap="round"
-            />
-            <line
-              class="immersive-close-line immersive-close-line--right"
-              x1="28"
-              y1="9"
-              x2="51"
-              y2="9"
-              stroke="currentColor"
-              stroke-width="5.5"
+              stroke-width="6"
               stroke-linecap="round"
             />
           </svg>
@@ -387,37 +595,26 @@ onBeforeUnmount(() => {
       <button
         type="button"
         class="immersive-close-handle"
-        :class="{ 'immersive-close-handle--active': isClosePressed }"
         aria-label="收起沉浸播放页"
         @click="handleCloseClick"
-        @mousedown="isClosePressed = true"
+        @pointerdown="handleDismissPointerDown"
       >
         <svg
           class="immersive-close-svg"
-          width="56"
+          width="44"
           height="18"
-          viewBox="0 0 56 18"
+          viewBox="0 0 44 18"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
         >
           <line
-            class="immersive-close-line immersive-close-line--left"
-            x1="5"
+            x1="7"
             y1="9"
-            x2="28"
+            x2="37"
             y2="9"
             stroke="currentColor"
-            stroke-width="5.5"
-            stroke-linecap="round"
-          />
-          <line
-            class="immersive-close-line immersive-close-line--right"
-            x1="28"
-            y1="9"
-            x2="51"
-            y2="9"
-            stroke="currentColor"
-            stroke-width="5.5"
+            stroke-width="6"
             stroke-linecap="round"
           />
         </svg>
@@ -457,7 +654,7 @@ onBeforeUnmount(() => {
   flex-direction: column;
   border-radius: 16px;
   color: white;
-  background: #111719;
+  background: rgb(17 23 25 / var(--immersive-surface-opacity, 1));
   isolation: isolate;
   outline: none;
   view-transition-name: ncx-immersive-player;
@@ -486,6 +683,8 @@ onBeforeUnmount(() => {
   z-index: -1;
   overflow: hidden;
   background: #111719;
+  opacity: var(--immersive-backdrop-opacity, 1);
+  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-backdrop-artwork {
@@ -523,7 +722,9 @@ onBeforeUnmount(() => {
   justify-content: flex-end;
   gap: var(--ncx-space-4);
   padding: 8px 18px 0 18px;
+  opacity: var(--immersive-supporting-opacity, 1);
   -webkit-app-region: drag;
+  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-toolbar-output {
@@ -553,18 +754,21 @@ onBeforeUnmount(() => {
   color: #ffffff;
   background: transparent;
   opacity: 1;
-  cursor: pointer;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
   -webkit-app-region: no-drag;
-  transition:
-    color 0.25s ease,
-    background-color 0.25s ease,
-    transform 0.15s ease;
+  transition: transform 0.15s ease;
+}
+
+.immersive-lyrics-page--dragging .immersive-close-handle {
+  cursor: grabbing;
 }
 
 .immersive-close-handle:hover,
 .immersive-close-handle:focus-visible {
-  color: #ffffff;
-  background: rgb(255 255 255 / 18%);
+  background: transparent;
+  outline: none;
 }
 
 .immersive-close-handle:active {
@@ -574,21 +778,16 @@ onBeforeUnmount(() => {
 .immersive-close-svg {
   display: block;
   overflow: visible;
+  filter: drop-shadow(0 0 0 rgb(255 255 255 / 0%));
+  transition: filter 180ms ease;
 }
 
-.immersive-close-line {
-  transform-origin: 28px 9px;
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.immersive-close-handle:hover .immersive-close-line--left,
-.immersive-close-handle--active .immersive-close-line--left {
-  transform: rotate(25deg);
-}
-
-.immersive-close-handle:hover .immersive-close-line--right,
-.immersive-close-handle--active .immersive-close-line--right {
-  transform: rotate(-25deg);
+.immersive-close-handle:hover .immersive-close-svg,
+.immersive-close-handle:focus-visible .immersive-close-svg,
+.immersive-lyrics-page--dragging .immersive-close-svg {
+  filter:
+    drop-shadow(0 0 4px rgb(255 255 255 / 82%))
+    drop-shadow(0 0 10px rgb(255 255 255 / 48%));
 }
 
 .immersive-content {
@@ -601,6 +800,9 @@ onBeforeUnmount(() => {
   align-items: center;
   align-self: center;
   padding: 10px 0 30px;
+  transform: translate3d(0, var(--immersive-drag-offset-y, 0), 0);
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
 .immersive-now-playing {
@@ -619,6 +821,10 @@ onBeforeUnmount(() => {
   aspect-ratio: 1;
   border-radius: 16px;
   box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
+  transform: scale(var(--immersive-artwork-scale, 1));
+  transform-origin: top center;
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
 .immersive-track-row {
@@ -628,10 +834,14 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: space-between;
   gap: var(--ncx-space-4);
+  opacity: var(--immersive-supporting-opacity, 1);
+  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-now-playing :deep(.playback-controls) {
   width: 100%;
+  opacity: var(--immersive-supporting-opacity, 1);
+  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-track-copy {
@@ -676,13 +886,20 @@ onBeforeUnmount(() => {
 .immersive-lyrics-panel {
   height: min(630px, calc(100vh - 138px));
   min-height: 0;
+  opacity: var(--immersive-supporting-opacity, 1);
+  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-empty-state {
   display: grid;
   flex: 1;
   place-content: center;
+  opacity: var(--immersive-supporting-opacity, 1);
   text-align: center;
+  transform: translate3d(0, var(--immersive-drag-offset-y, 0), 0);
+  transition:
+    opacity 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-empty-state h1,
@@ -699,7 +916,21 @@ onBeforeUnmount(() => {
   position: absolute;
   right: 20px;
   bottom: 18px;
+  opacity: var(--immersive-supporting-opacity, 1);
   -webkit-app-region: no-drag;
+  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.immersive-lyrics-page--dragging .immersive-backdrop,
+.immersive-lyrics-page--dragging .immersive-toolbar,
+.immersive-lyrics-page--dragging .immersive-content,
+.immersive-lyrics-page--dragging .immersive-artwork,
+.immersive-lyrics-page--dragging .immersive-track-row,
+.immersive-lyrics-page--dragging .immersive-now-playing :deep(.playback-controls),
+.immersive-lyrics-page--dragging .immersive-lyrics-panel,
+.immersive-lyrics-page--dragging .immersive-empty-state,
+.immersive-lyrics-page--dragging .immersive-footer {
+  transition: none;
 }
 
 @media (width < 1080px) {
