@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import LyricsPanel from '../../src/renderer/features/music/components/LyricsPanel.vue'
 import ImmersiveLyricsPage from '../../src/renderer/features/music/ImmersiveLyricsPage.vue'
 import {
+  calculateImmersiveArtworkTransform,
   calculateImmersiveDismissVisualState,
   clampImmersiveDismissOffset,
   IMMERSIVE_DISMISS_DISTANCE_PX,
@@ -68,7 +69,7 @@ afterEach(async () => {
 // ========= 测试 =========
 
 describe('应用级沉浸播放展示', () => {
-  it('下拉短杆时连续缩小封面并降低其他元素不透明度', () => {
+  it('下拉短杆时连续降低辅助元素和背景不透明度', () => {
     /** 下拉关闭阈值一半位置对应的视觉状态。 */
     const halfwayState = calculateImmersiveDismissVisualState(
       IMMERSIVE_DISMISS_DISTANCE_PX / 2
@@ -79,11 +80,43 @@ describe('应用级沉浸播放展示', () => {
     )
 
     expect(halfwayState.progress).toBe(0.5)
-    expect(halfwayState.artworkScale).toBeCloseTo(0.93)
     expect(halfwayState.supportingOpacity).toBeCloseTo(0.56)
     expect(completedState.progress).toBe(1)
-    expect(completedState.artworkScale).toBe(0.86)
     expect(completedState.supportingOpacity).toBe(0.12)
+  })
+
+  it('拖动中让封面沿源目标几何连续靠近 PlayerBar 而不是垂直下落', () => {
+    /** 1280×800 窗口下大封面与 PlayerBar 小封面的代表性矩形。 */
+    const geometry = {
+      source: {
+        left: 70,
+        top: 188,
+        width: 360,
+        height: 360,
+        borderRadius: 16
+      },
+      target: {
+        left: 343,
+        top: 735,
+        width: 40,
+        height: 40,
+        borderRadius: 8
+      }
+    }
+    /** 封面纵向行程一半位置的连续变换。 */
+    const halfwayTransform = calculateImmersiveArtworkTransform(273.5, geometry)
+    /** 封面到达 PlayerBar 位置后的最终变换。 */
+    const completedTransform = calculateImmersiveArtworkTransform(547, geometry)
+
+    expect(halfwayTransform.progress).toBe(0.5)
+    expect(halfwayTransform.translateX).toBeCloseTo(136.5)
+    expect(halfwayTransform.translateY).toBeCloseTo(273.5)
+    expect(halfwayTransform.scale).toBeCloseTo(5 / 9)
+    expect(halfwayTransform.borderRadius).toBeCloseTo(21.6)
+    expect(completedTransform.translateX).toBe(273)
+    expect(completedTransform.translateY).toBe(547)
+    expect(completedTransform.scale).toBeCloseTo(1 / 9)
+    expect(completedTransform.borderRadius).toBeCloseTo(72)
   })
 
   it('只允许向下拖动并按距离或下甩速度决定是否收起', () => {

@@ -26,8 +26,11 @@ import MediaArtwork from './components/MediaArtwork.vue'
 import PlaybackControls from './components/PlaybackControls.vue'
 import QueueDrawer from './components/QueueDrawer.vue'
 import {
+  calculateImmersiveArtworkTransform,
   calculateImmersiveDismissVisualState,
   clampImmersiveDismissOffset,
+  type ImmersiveArtworkGeometry,
+  type ImmersiveArtworkRect,
   shouldCompleteImmersiveDismiss
 } from './immersive-dismiss-gesture'
 import { mutateMusic } from './music-actions'
@@ -78,19 +81,35 @@ const dismissDragOffsetY = ref<number>(0)
 /** 用户是否正在拖动沉浸页关闭短杆。 */
 const isDismissDragging = ref<boolean>(false)
 
+/** 本次下拉开始时捕获的沉浸封面与 PlayerBar 封面矩形。 */
+const dismissArtworkGeometry = ref<ImmersiveArtworkGeometry | null>(null)
+
 /** 当前下拉位移对应的封面缩放与渐隐状态。 */
 const dismissVisualState = computed(() => {
   return calculateImmersiveDismissVisualState(dismissDragOffsetY.value)
+})
+
+/** 当前下拉位移对应的封面源目标插值变换。 */
+const dismissArtworkTransform = computed(() => {
+  return calculateImmersiveArtworkTransform(
+    dismissDragOffsetY.value,
+    dismissArtworkGeometry.value
+  )
 })
 
 /** 注入沉浸页样式的连续下拉手势变量。 */
 const dismissGestureStyle = computed<Record<string, string>>(() => {
   /** 当前下拉视觉状态。 */
   const visualState = dismissVisualState.value
+  /** 当前封面向 PlayerBar 靠拢的几何变换。 */
+  const artworkTransform = dismissArtworkTransform.value
 
   return {
     '--immersive-drag-offset-y': `${dismissDragOffsetY.value}px`,
-    '--immersive-artwork-scale': String(visualState.artworkScale),
+    '--immersive-artwork-translate-x': `${artworkTransform.translateX}px`,
+    '--immersive-artwork-translate-y': `${artworkTransform.translateY}px`,
+    '--immersive-artwork-scale': String(artworkTransform.scale),
+    '--immersive-artwork-radius': `${artworkTransform.borderRadius}px`,
     '--immersive-supporting-opacity': String(visualState.supportingOpacity),
     '--immersive-backdrop-opacity': String(visualState.backdropOpacity),
     '--immersive-surface-opacity': String(visualState.surfaceOpacity)
@@ -143,6 +162,47 @@ let unsubscribeWindowSnapshot = (): void => {}
 
 // ========= 函数 =========
 
+/**
+ * 读取封面元素参与拖拽插值所需的视口矩形和圆角。
+ *
+ * @param element 需要测量的封面根元素
+ */
+function measureArtworkRect(element: HTMLElement): ImmersiveArtworkRect {
+  /** 元素当前未开始拖拽时的视口矩形。 */
+  const rect = element.getBoundingClientRect()
+  /** 元素当前计算样式，用于取得设计系统实际圆角。 */
+  const styles = window.getComputedStyle(element)
+  /** 左上圆角的像素值，无法解析时安全回退为 0。 */
+  const borderRadius = Number.parseFloat(styles.borderTopLeftRadius) || 0
+
+  return {
+    left: rect.left,
+    top: rect.top,
+    width: rect.width,
+    height: rect.height,
+    borderRadius
+  }
+}
+
+/** 捕获沉浸大封面到 PlayerBar 小封面的实时几何关系。 */
+function captureDismissArtworkGeometry(): ImmersiveArtworkGeometry | null {
+  /** 沉浸歌词页中正在展示的大封面。 */
+  const sourceArtwork = pageRoot.value?.querySelector<HTMLElement>(
+    '[data-immersive-artwork-source]'
+  )
+  /** 沉浸层下方 PlayerBar 中的封面过渡终点。 */
+  const targetArtwork = document.querySelector<HTMLElement>(
+    '[data-immersive-artwork-target]'
+  )
+
+  if (!sourceArtwork || !targetArtwork) return null
+
+  return {
+    source: measureArtworkRect(sourceArtwork),
+    target: measureArtworkRect(targetArtwork)
+  }
+}
+
 /** 清理沉浸页下拉手势注册的全局指针监听。 */
 function cleanupDismissPointerListeners(): void {
   window.removeEventListener('pointermove', handleDismissPointerMove)
@@ -177,6 +237,7 @@ function suppressSyntheticCloseClick(): void {
 function resetDismissGesture(): void {
   dismissDragOffsetY.value = 0
   dismissDragVelocityY = 0
+  dismissArtworkGeometry.value = null
   isDismissDragging.value = false
 }
 
@@ -229,6 +290,7 @@ function handleDismissPointerDown(event: PointerEvent): void {
   dismissDragLastTimestamp = event.timeStamp
   dismissDragVelocityY = 0
   dismissDragOffsetY.value = 0
+  dismissArtworkGeometry.value = captureDismissArtworkGeometry()
   isDismissDragging.value = true
 
   try {
@@ -538,6 +600,7 @@ onBeforeUnmount(() => {
           :adapt-source="false"
           loading="eager"
           class="immersive-artwork"
+          data-immersive-artwork-source
           :style="{ viewTransitionName: 'ncx-now-playing-artwork' }"
         />
 
@@ -741,6 +804,8 @@ onBeforeUnmount(() => {
 }
 
 .immersive-close-handle {
+  --immersive-handle-press-scale: 1;
+
   display: inline-flex;
   width: 68px;
   height: 32px;
@@ -758,7 +823,11 @@ onBeforeUnmount(() => {
   touch-action: none;
   user-select: none;
   -webkit-app-region: no-drag;
-  transition: transform 0.15s ease;
+  transform:
+    translate3d(0, var(--immersive-drag-offset-y, 0), 0)
+    scale(var(--immersive-handle-press-scale));
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
 .immersive-lyrics-page--dragging .immersive-close-handle {
@@ -772,7 +841,7 @@ onBeforeUnmount(() => {
 }
 
 .immersive-close-handle:active {
-  transform: scale(0.94);
+  --immersive-handle-press-scale: 0.94;
 }
 
 .immersive-close-svg {
@@ -800,9 +869,6 @@ onBeforeUnmount(() => {
   align-items: center;
   align-self: center;
   padding: 10px 0 30px;
-  transform: translate3d(0, var(--immersive-drag-offset-y, 0), 0);
-  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
 }
 
 .immersive-now-playing {
@@ -819,11 +885,20 @@ onBeforeUnmount(() => {
   min-width: 0;
   min-height: 0;
   aspect-ratio: 1;
-  border-radius: 16px;
+  z-index: 2;
+  border-radius: var(--immersive-artwork-radius, 16px);
   box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
-  transform: scale(var(--immersive-artwork-scale, 1));
-  transform-origin: top center;
-  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform:
+    translate3d(
+      var(--immersive-artwork-translate-x, 0),
+      var(--immersive-artwork-translate-y, 0),
+      0
+    )
+    scale(var(--immersive-artwork-scale, 1));
+  transform-origin: top left;
+  transition:
+    border-radius 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
@@ -896,10 +971,7 @@ onBeforeUnmount(() => {
   place-content: center;
   opacity: var(--immersive-supporting-opacity, 1);
   text-align: center;
-  transform: translate3d(0, var(--immersive-drag-offset-y, 0), 0);
-  transition:
-    opacity 240ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .immersive-empty-state h1,
@@ -923,7 +995,7 @@ onBeforeUnmount(() => {
 
 .immersive-lyrics-page--dragging .immersive-backdrop,
 .immersive-lyrics-page--dragging .immersive-toolbar,
-.immersive-lyrics-page--dragging .immersive-content,
+.immersive-lyrics-page--dragging .immersive-close-handle,
 .immersive-lyrics-page--dragging .immersive-artwork,
 .immersive-lyrics-page--dragging .immersive-track-row,
 .immersive-lyrics-page--dragging .immersive-now-playing :deep(.playback-controls),
