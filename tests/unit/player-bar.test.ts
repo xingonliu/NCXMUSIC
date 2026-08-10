@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinator'
 import PlayerBar from '../../src/renderer/features/music/components/PlayerBar.vue'
+import playerBarSource from '../../src/renderer/features/music/components/PlayerBar.vue?raw'
 import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
 import { disposePlayer, usePlayer, usePlayerRuntime } from '../../src/renderer/features/music/use-player'
 
@@ -52,6 +53,11 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
 
     expect(wrapper.find('.player-bar-glass').exists()).toBe(true)
     expect(wrapper.find('.effect .filter').exists()).toBe(true)
+  })
+
+  it('紧凑窗口仍保留 Liquid Glass 位移滤镜', () => {
+    expect(playerBarSource).toContain('@media (width < 1100px)')
+    expect(playerBarSource).not.toContain('backdrop-filter: none !important')
   })
 
   it('播放/暂停 icon 按钮具有 prominent 尺寸与 primary 变体', () => {

@@ -601,12 +601,6 @@ function openImmersivePlayer(event: MouseEvent): void {
 }
 
 @media (width < 1100px) {
-  :deep(.player-bar-glass.effect),
-  .player-bar-glass {
-    backdrop-filter: none !important;
-    background: color-mix(in srgb, var(--ncx-color-surface) 94%, transparent) !important;
-  }
-
   .player-bar-content {
     grid-template-areas: "track transport progress";
     grid-template-columns: minmax(150px, 1fr) auto minmax(150px, 1.2fr);
