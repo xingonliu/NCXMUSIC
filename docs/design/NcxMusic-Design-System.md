@@ -319,7 +319,7 @@ interface PageRouteMeta {
 - 小云只存在于一级路由页面，没有全局 Agent 侧边栏、覆盖形态、拖拽宽度或相应偏好。
 - macOS 使用隐藏标题栏下的系统原生交通灯，并通过 Electron 的窗口按钮位置能力与左侧导航顶区对齐。Renderer 不绘制仿制交通灯，也不接管其 Hover、全屏或辅助功能行为。
 - Windows 使用 Header 最右侧常驻的 `WindowControlGroup`，三个合并按钮依次为最小化、最大化/还原、关闭；中间按钮不等价于应用全屏。最大化状态由 Main 推送的窗口快照驱动，不能由 Renderer 猜测。
-- Windows 窗口按钮经 Preload 的类型化命令调用 Main；关闭按钮遵守“关闭窗口：最小化 / 退出应用”设置。Renderer 不获得通用 IPC、BrowserWindow 或 `webContents` 能力。
+- Windows 窗口按钮经 Preload 的类型化命令调用 Main；关闭按钮遵守“关闭窗口：关闭到托盘并继续播放 / 退出应用”设置。前者隐藏主窗口并从任务栏移除，不等同于独立最小化按钮。Renderer 不获得通用 IPC、BrowserWindow 或 `webContents` 能力。
 - Windows 自绘按钮不实现系统 Snap Layout 悬停面板，但不得破坏 `Win+Z`、拖拽贴边和系统快捷键。若未来必须支持按钮 Hover Snap Layout，只能切换原生 `titleBarOverlay` 并重新验收视觉。
 - Header 的可拖动区域使用显式 drag region；所有按钮、输入框、菜单触发器和可交互控件必须标记为 no-drag。右侧布局始终预留窗口控制组宽度，标题和页面操作不得进入该区域。
 - 普通与最大化状态保持窗口控件可见。全屏状态隐藏窗口控件；指针进入顶部导航感应区后，以渐变模糊与 Liquid Glass 显示，离开后按动效 Token 收起。

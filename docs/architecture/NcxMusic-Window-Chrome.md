@@ -31,7 +31,7 @@ Windows 不使用 `titleBarOverlay`，因为原生 Caption Buttons 的外观和�
 | --- | --- | --- |
 | 最小化 | `window.minimize` | `win.minimize()` |
 | 最大化/还原 | `window.toggleMaximize` | 根据真实窗口状态调用 `win.maximize()` 或 `win.unmaximize()` |
-| 关闭 | `window.requestClose` | 按“关闭窗口”设置执行最小化或退出应用 |
+| 关闭 | `window.requestClose` | 按“关闭窗口”设置隐藏主窗口并驻留系统托盘，或退出应用 |
 
 中间按钮表示最大化/还原，不表示应用全屏。图标由 Main 推送的窗口快照驱动，不允许 Renderer 只切换本地 CSS 类猜测窗口状态。
 
@@ -81,7 +81,8 @@ WindowControlGroup、Header 浮动按钮和全屏顶部显现层使用统一 `gl
 - Windows 10、Windows 11；macOS 当前支持的最低版本与最新稳定版本。
 - 100%、125%、150%、200% 显示缩放，多显示器和主屏切换。
 - 普通、最大化、还原、全屏、退出全屏、最小化、失焦和重新聚焦。
-- “关闭窗口 → 最小化”与“关闭窗口 → 退出应用”两种设置。
+- “关闭窗口 → 驻留系统托盘并继续播放”与“关闭窗口 → 退出应用”两种设置；前者不得让窗口继续占用任务栏。
+- 托盘单击与“显示主窗口”、二次启动及 macOS 激活均恢复并聚焦现有主窗口；托盘“退出应用”进入完整退出流程。
 - Windows `Win+Z`、拖拽贴边；macOS 原生交通灯 Hover、Option 点击和全屏行为。
 - Header 拖动、双击、所有 no-drag 控件、键盘 Focus、可访问名称和减少动画/透明度降级。
 

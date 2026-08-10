@@ -84,7 +84,7 @@ const qualityOptions: CommonOption[] = [
 
 /** 关闭窗口行为选项。 */
 const closeBehaviorOptions: CommonOption[] = [
-  { label: '最小化并继续播放', value: 'minimize' },
+  { label: '关闭到托盘并继续播放', value: 'minimize' },
   { label: '退出应用', value: 'quit' }
 ]
 
@@ -301,7 +301,7 @@ watch(
         <span class="settings-row-icon"><Headphones :size="19" /></span>
         <div class="settings-row-copy">
           <h2>关闭窗口</h2>
-          <p>最小化时 AudioHost 与播放队列保持运行。</p>
+          <p>关闭到托盘时主窗口隐藏，AudioHost 与播放队列保持运行。</p>
         </div>
         <CommonSelect
           class="settings-control"

@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
-import { createMainWindowOptions, createWindowSnapshot } from '../../src/main/window-chrome'
+import {
+  createMainWindowOptions,
+  createWindowSnapshot,
+  resolveCloseWindowAction,
+  showMainWindow
+} from '../../src/main/window-chrome'
 
 // ========= 变量 =========
 
@@ -12,6 +17,18 @@ const snapshotWindow = {
   isMaximized: () => true,
   isFullScreen: () => false,
   isFocused: () => true
+}
+
+/** 记录窗口恢复动作的测试状态。 */
+const revealCalls: string[] = []
+
+/** 已隐藏且未最小化的主窗口桩。 */
+const hiddenWindow = {
+  isMinimized: () => false,
+  restore: () => revealCalls.push('restore'),
+  isVisible: () => false,
+  show: () => revealCalls.push('show'),
+  focus: () => revealCalls.push('focus')
 }
 
 // ========= 生命周期 =========
@@ -43,5 +60,34 @@ describe('WindowChrome options', () => {
       fullscreen: false,
       focused: true
     })
+  })
+
+  it('把继续播放偏好映射为隐藏到系统托盘而不是最小化', () => {
+    expect(resolveCloseWindowAction({
+      closeWindowBehavior: 'minimize',
+      appIsQuitting: false,
+      isSmokeTest: false
+    })).toBe('hide-to-tray')
+  })
+
+  it('把退出偏好映射为应用退出，并在真实退出阶段允许窗口关闭', () => {
+    expect(resolveCloseWindowAction({
+      closeWindowBehavior: 'quit',
+      appIsQuitting: false,
+      isSmokeTest: false
+    })).toBe('quit')
+    expect(resolveCloseWindowAction({
+      closeWindowBehavior: 'minimize',
+      appIsQuitting: true,
+      isSmokeTest: false
+    })).toBe('allow-close')
+  })
+
+  it('从系统托盘恢复隐藏窗口并聚焦', () => {
+    revealCalls.length = 0
+
+    showMainWindow(hiddenWindow as never)
+
+    expect(revealCalls).toEqual(['show', 'focus'])
   })
 })

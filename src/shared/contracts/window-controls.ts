@@ -23,6 +23,7 @@ export type WindowCommand =
   | { readonly type: Exclude<WindowCommandType, 'window.setCloseBehavior'> }
   | {
       readonly type: 'window.setCloseBehavior'
+      /** `minimize` 为兼容旧配置的关闭到托盘行为。 */
       readonly behavior: 'minimize' | 'quit'
     }
 
@@ -32,6 +33,7 @@ export interface WindowSnapshot {
   readonly maximized: boolean
   readonly fullscreen: boolean
   readonly focused: boolean
+  /** `minimize` 为兼容旧配置的关闭到托盘行为。 */
   readonly closeBehavior?: 'minimize' | 'quit'
 }
 

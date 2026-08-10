@@ -5,6 +5,7 @@ import {
   BrowserWindow,
   clipboard,
   ipcMain,
+  type Tray,
   session,
   type IpcMainEvent,
   type IpcMainInvokeEvent,
@@ -40,8 +41,14 @@ import { CredentialLeaseCoordinator } from './auth/credential-lease-coordinator'
 import { NETEASE_AUTH_PARTITION } from './auth/navigation-policy'
 import { ConnectionBroker } from './connection-broker'
 import { AppConfigStore } from './app-config-store'
+import { createApplicationTray } from './app-tray'
 import { UtilitySupervisor } from './utility-supervisor'
-import { createMainWindowOptions, createWindowSnapshot } from './window-chrome'
+import {
+  createMainWindowOptions,
+  createWindowSnapshot,
+  resolveCloseWindowAction,
+  showMainWindow
+} from './window-chrome'
 
 const isSmokeTest = process.env['NCX_SMOKE_TEST'] === '1'
 const isLoginSpike = process.env['NCX_T02_SPIKE'] === '1'
@@ -54,8 +61,11 @@ let accountStoreCoordinator: AccountStoreCoordinator | undefined
 /** Main 持有的应用配置唯一权威来源。 */
 let appConfigStore: AppConfigStore | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
-/** 主窗口关闭按钮行为。 */
+/** 主窗口关闭按钮行为；`minimize` 为兼容旧配置的托盘驻留值。 */
 let closeWindowBehavior: 'minimize' | 'quit' = 'minimize'
+
+/** 应用会话期间常驻且防止被垃圾回收的系统托盘。 */
+let applicationTray: Tray | undefined
 
 /** 应用是否已经进入真实退出流程。 */
 let appIsQuitting = false
@@ -479,6 +489,8 @@ function shutdownApplicationServices(): void {
     pending.resolve()
   }
   pendingLifecycleFlushes.clear()
+  applicationTray?.destroy()
+  applicationTray = undefined
   authController?.shutdown()
   accountStoreCoordinator?.shutdown()
   supervisor?.shutdown()
@@ -517,13 +529,19 @@ async function createMainWindow(): Promise<void> {
   mainWindow = window
 
   window.on('close', (event) => {
-    if (appIsQuitting || isSmokeTest) return
+    /** 当前关闭请求对应的真实窗口生命周期动作。 */
+    const action = resolveCloseWindowAction({
+      closeWindowBehavior,
+      appIsQuitting,
+      isSmokeTest
+    })
+    if (action === 'allow-close') return
     event.preventDefault()
-    if (closeWindowBehavior === 'quit') {
+    if (action === 'quit') {
       app.quit()
       return
     }
-    window.minimize()
+    window.hide()
   })
 
   if (!isSmokeTest) window.once('ready-to-show', () => window.show())
@@ -558,10 +576,10 @@ if (!hasSingleInstanceLock) {
   app.quit()
 } else {
   app.on('second-instance', () => {
+    /** 已存在且需要从托盘或最小化状态恢复的主窗口。 */
     const window = mainWindow
     if (!window || window.isDestroyed()) return
-    if (window.isMinimized()) window.restore()
-    window.focus()
+    showMainWindow(window)
   })
 
   app.whenReady()
@@ -597,6 +615,17 @@ if (!hasSingleInstanceLock) {
         return
       }
       await createMainWindow()
+      if (!isSmokeTest) {
+        applicationTray = await createApplicationTray({
+          showMainWindow: () => {
+            /** 托盘入口当前可恢复的主窗口。 */
+            const window = mainWindow
+            if (!window || window.isDestroyed()) return
+            showMainWindow(window)
+          },
+          quitApplication: () => app.quit()
+        })
+      }
       publishAccountSnapshot()
       if (!isSmokeTest) {
         void waitForUtilityReady()
@@ -605,7 +634,13 @@ if (!hasSingleInstanceLock) {
       }
 
       app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) void createMainWindow()
+        /** 平台激活事件发生时的现有主窗口。 */
+        const window = mainWindow
+        if (!window || window.isDestroyed()) {
+          void createMainWindow()
+          return
+        }
+        showMainWindow(window)
       })
     })
     .catch((error) => {

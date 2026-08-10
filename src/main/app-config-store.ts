@@ -45,7 +45,7 @@ export class AppConfigStore {
     return { ...this.config, window: { ...this.config.window } }
   }
 
-  /** 持久化主窗口关闭行为。 */
+  /** 持久化主窗口关闭行为；`minimize` 为兼容旧配置的关闭到托盘值。 */
   setCloseWindowBehavior(closeWindowBehavior: 'minimize' | 'quit'): AppConfig {
     this.config = { ...this.config, closeWindowBehavior }
     this.persist()

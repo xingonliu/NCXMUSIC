@@ -70,7 +70,7 @@ queued
   └─ limit_reached → finalizing → completed
 ```
 
-同一会话只有一个 Active Turn。离开小云路由、折叠主导航、最小化窗口或语音悬浮组件消失不会取消 Turn。点击停止、退出应用、账号切换或 Runtime 故障触发相应取消/失败规则；用户在 Active Turn 中发送新消息时，旧 Turn 以 `superseded_by_user_message` 取消，再立即用新消息创建 Turn。
+同一会话只有一个 Active Turn。离开小云路由、折叠主导航、最小化窗口、关闭到托盘或语音悬浮组件消失不会取消 Turn。点击停止、退出应用、账号切换或 Runtime 故障触发相应取消/失败规则；用户在 Active Turn 中发送新消息时，旧 Turn 以 `superseded_by_user_message` 取消，再立即用新消息创建 Turn。
 
 ## 4. Tool Call 状态机
 
@@ -144,7 +144,7 @@ Shell Tool、`mcp_manager`、已连接 MCP Tool 和 Dynamic Skill Tool 根据功
 
 该 Tool 进入 `awaiting_user_selection` 后暂停自己的结果返回，但不产生业务副作用，也不走 M/S 审批。单选点击即提交且结果长度为 1；多选允许选择 1~5 项，在点击“完成”后提交。两种模式统一返回 `selectedOptionKeys`，实体选项另汇总到 `selectedRefs`；这个结果仅等价于用户回答了问题。点击“取消”返回 `SELECTION_CANCELLED`，固定等待 10 分钟后返回 `SELECTION_EXPIRED`。随后是否调用播放、收藏或歌单工具由模型下一轮重新决定，新的业务 Tool Call 必须重新经过能力校验和 Policy。Selection Tool 不保存待执行回调、业务 Tool 名称或参数模板，`optionKey` 也不能被 Executor 当作命令分派键。
 
-同一 Active Turn 最多存在一个 `awaiting_user_selection` Tool Call；同批次其他交互调用保持排队，避免同时出现多个选择卡。选择工具计入 24 次 Tool Call 上限。离开页面、收起侧栏和最小化窗口不改变状态；Renderer 重载从 Snapshot 恢复剩余时间。用户发送新消息时取消旧选择和旧 Turn，再创建新 Turn。应用退出、账号切换或 Runtime 故障取消选择，不跨应用恢复。
+同一 Active Turn 最多存在一个 `awaiting_user_selection` Tool Call；同批次其他交互调用保持排队，避免同时出现多个选择卡。选择工具计入 24 次 Tool Call 上限。离开页面、收起侧栏、最小化窗口和关闭到托盘不改变状态；Renderer 重载从 Snapshot 恢复剩余时间。用户发送新消息时取消旧选择和旧 Turn，再创建新 Turn。应用退出、账号切换或 Runtime 故障取消选择，不跨应用恢复。
 
 ## 6. 调度规则
 
@@ -211,7 +211,7 @@ Policy Engine 先把音乐 Tool Call 归一化为稳定动作类别，再用用�
 
 - Policy 返回 `require_approval` 后创建稳定 `approvalId`，Tool Call 进入 `awaiting_approval`。
 - ApprovalCard 只显示“批准”“拒绝”两个按钮；不提供“批准本次”“本会话允许”“总是允许”或其他授权范围。
-- ApprovalCard 不提供关闭按钮，并在创建 5 分钟后固定过期。离开小云页面、折叠主导航或最小化窗口不会处理审批；Renderer 重载从 Snapshot 恢复卡片和剩余时间。
+- ApprovalCard 不提供关闭按钮，并在创建 5 分钟后固定过期。离开小云页面、折叠主导航、最小化窗口或关闭到托盘不会处理审批；Renderer 重载从 Snapshot 恢复卡片和剩余时间。
 - 用户拒绝映射为 `USER_REJECTED`，过期映射为 `APPROVAL_EXPIRED`，应用退出、账号切换、Utility Process 故障或 Turn 取消映射为 `APPROVAL_CANCELLED`；面向模型返回裁剪后的结构化结果。
 - 用户批准只解除当前规范化 Tool Call 的挂起，不代表相同工具、参数或后续调用获得会话级或永久授权。工具、参数、目标账号、账户 generation 或 `commandId` 改变后必须重新判断。
 - 审批过程中不能预执行底层副作用、预启动 Shell/MCP 进程或提前写配置。

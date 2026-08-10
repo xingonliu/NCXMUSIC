@@ -10,7 +10,7 @@ export interface AppPreferences {
   theme: AppTheme
   /** 是否展示歌词翻译。 */
   showLyricTranslation: boolean
-  /** 关闭主窗口时是否退出应用。 */
+  /** 关闭主窗口时驻留托盘或退出应用；`minimize` 为兼容旧配置的驻留值。 */
   closeWindowBehavior: 'minimize' | 'quit'
 }
 
