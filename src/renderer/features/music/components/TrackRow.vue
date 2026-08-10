@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronDown, ChevronUp, FolderPlus, Heart, ListPlus, Play, Trash2 } from '@lucide/vue'
+import { FolderPlus, Heart, ListPlus, Play, Trash2 } from '@lucide/vue'
 import { computed } from 'vue'
 
 import type { StandardSong } from '../../../../shared/schemas/music'
@@ -246,24 +246,6 @@ function handleContextAction(value: string | number): void {
           <CommonIconButton
             size="compact"
             variant="ghost"
-            label="上移一位"
-            :disabled="props.managementBusy || props.firstInPlaylist"
-            @click.stop="emit('move-up', props.song)"
-          >
-            <ChevronUp :size="13" />
-          </CommonIconButton>
-          <CommonIconButton
-            size="compact"
-            variant="ghost"
-            label="下移一位"
-            :disabled="props.managementBusy || props.lastInPlaylist"
-            @click.stop="emit('move-down', props.song)"
-          >
-            <ChevronDown :size="13" />
-          </CommonIconButton>
-          <CommonIconButton
-            size="compact"
-            variant="ghost"
             label="从当前歌单移除"
             :disabled="props.managementBusy"
             @click.stop="emit('remove', props.song)"
@@ -292,7 +274,7 @@ function handleContextAction(value: string | number): void {
 }
 
 .track-row--manageable {
-  grid-template-columns: 32px auto minmax(150px, 1.5fr) minmax(100px, 1fr) 54px 164px;
+  grid-template-columns: 32px auto minmax(150px, 1.5fr) minmax(100px, 1fr) 54px 116px;
 }
 
 .track-row-context {

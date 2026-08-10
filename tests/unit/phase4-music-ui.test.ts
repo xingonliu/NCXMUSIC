@@ -87,7 +87,7 @@ describe('Phase 4 music UI primitives', () => {
     expect(wrapper.find('.virtual-track-list-spacer').attributes('style')).toContain('height: 12000px')
   })
 
-  it('exposes keyboard-reachable playlist ordering and removal controls', async () => {
+  it('exposes keyboard-reachable playlist removal controls and context actions', async () => {
     /** 两首可管理的自建歌单歌曲。 */
     const songs = [song(0), song(1)]
     /** 开启歌单管理能力的虚拟歌曲列表。 */
@@ -95,13 +95,9 @@ describe('Phase 4 music UI primitives', () => {
       props: { songs, playlistManagement: true }
     })
 
-    const moveDown = wrapper.find('button[aria-label="下移一位"]')
     const remove = wrapper.find('button[aria-label="从当前歌单移除"]')
-    expect(moveDown.exists()).toBe(true)
     expect(remove.exists()).toBe(true)
-    await moveDown.trigger('click')
     await remove.trigger('click')
-    expect(wrapper.emitted('move-down')?.[0]).toEqual([songs[0]])
     expect(wrapper.emitted('remove')?.[0]).toEqual([songs[0]])
     await wrapper.find('.track-row').trigger('keydown', { key: 'F10', shiftKey: true })
     await flushPromises()
