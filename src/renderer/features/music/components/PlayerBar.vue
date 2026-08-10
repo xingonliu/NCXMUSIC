@@ -166,7 +166,7 @@ function openImmersivePlayer(event: MouseEvent): void {
       :g-offset="5"
       :b-offset="8"
       :blur="10"
-      :frost="0.12"
+      :frost="0.52"
       :lightness="72"
       :alpha="0.9"
       :style="{
