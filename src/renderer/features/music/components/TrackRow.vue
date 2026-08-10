@@ -199,60 +199,62 @@ function handleContextAction(value: string | number): void {
         {{ albumText }}
       </p>
 
-      <span class="track-row-duration">
-        {{ durationText }}
-      </span>
-
-      <div class="track-row-actions">
-        <CommonIconButton
-          size="compact"
-          variant="ghost"
-          label="播放"
-          @click.stop="handlePlay"
-        >
-          <Play
-            :size="13"
-            fill="currentColor"
-          />
-        </CommonIconButton>
-        <CommonIconButton
-          size="compact"
-          variant="ghost"
-          label="加入队列"
-          @click="handleEnqueue"
-        >
-          <ListPlus :size="13" />
-        </CommonIconButton>
-        <CommonIconButton
-          size="compact"
-          variant="ghost"
-          :label="props.liked ? '取消收藏' : '收藏'"
-          @click.stop="emit('like', props.song)"
-        >
-          <Heart
-            :size="13"
-            :fill="props.liked ? 'currentColor' : 'none'"
-          />
-        </CommonIconButton>
-        <CommonIconButton
-          size="compact"
-          variant="ghost"
-          label="添加到歌单"
-          @click.stop="emit('add-to-playlist', props.song)"
-        >
-          <FolderPlus :size="13" />
-        </CommonIconButton>
-        <template v-if="props.playlistManagement">
+      <div class="track-row-right">
+        <div class="track-row-actions">
           <CommonIconButton
             size="compact"
             variant="ghost"
-            label="从当前歌单移除"
-            :disabled="props.managementBusy"
-            @click.stop="emit('remove', props.song)"
+            label="播放"
+            @click.stop="handlePlay"
           >
-            <Trash2 :size="13" />
+            <Play
+              :size="13"
+              fill="currentColor"
+            />
           </CommonIconButton>
-        </template>
+          <CommonIconButton
+            size="compact"
+            variant="ghost"
+            label="加入队列"
+            @click="handleEnqueue"
+          >
+            <ListPlus :size="13" />
+          </CommonIconButton>
+          <CommonIconButton
+            size="compact"
+            variant="ghost"
+            :label="props.liked ? '取消收藏' : '收藏'"
+            @click.stop="emit('like', props.song)"
+          >
+            <Heart
+              :size="13"
+              :fill="props.liked ? 'currentColor' : 'none'"
+            />
+          </CommonIconButton>
+          <CommonIconButton
+            size="compact"
+            variant="ghost"
+            label="添加到歌单"
+            @click.stop="emit('add-to-playlist', props.song)"
+          >
+            <FolderPlus :size="13" />
+          </CommonIconButton>
+          <template v-if="props.playlistManagement">
+            <CommonIconButton
+              size="compact"
+              variant="ghost"
+              label="从当前歌单移除"
+              :disabled="props.managementBusy"
+              @click.stop="emit('remove', props.song)"
+            >
+              <Trash2 :size="13" />
+            </CommonIconButton>
+          </template>
+        </div>
+
+        <span class="track-row-duration">
+          {{ durationText }}
+        </span>
       </div>
     </article>
   </CommonContextMenu>
@@ -263,7 +265,7 @@ function handleContextAction(value: string | number): void {
   display: grid;
   min-height: 56px;
   align-items: center;
-  grid-template-columns: 32px auto minmax(180px, 1.5fr) minmax(120px, 1fr) 54px 92px;
+  grid-template-columns: 32px auto minmax(160px, 1.5fr) minmax(120px, 1fr) auto;
   gap: var(--ncx-space-3);
   padding: var(--ncx-space-2) var(--ncx-space-3);
   border-radius: var(--ncx-radius-md);
@@ -274,7 +276,7 @@ function handleContextAction(value: string | number): void {
 }
 
 .track-row--manageable {
-  grid-template-columns: 32px auto minmax(150px, 1.5fr) minmax(100px, 1fr) 54px 116px;
+  grid-template-columns: 32px auto minmax(140px, 1.5fr) minmax(100px, 1fr) auto;
 }
 
 .track-row-context {
@@ -301,10 +303,25 @@ function handleContextAction(value: string | number): void {
   white-space: nowrap;
 }
 
-.track-row-index,
-.track-row-duration {
+.track-row-index {
   font-variant-numeric: tabular-nums;
   text-align: right;
+}
+
+.track-row-right {
+  display: flex;
+  min-width: 52px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ncx-space-3);
+  margin-left: auto;
+}
+
+.track-row-duration {
+  min-width: 44px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  flex-shrink: 0;
 }
 
 .track-row-main {
@@ -359,6 +376,7 @@ function handleContextAction(value: string | number): void {
 
 .track-row-actions {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   gap: var(--ncx-space-1);
   opacity: 0;

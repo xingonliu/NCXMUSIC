@@ -114,7 +114,7 @@ function guardDisabledClick(event: MouseEvent, disabled: boolean): boolean {
 }
 
 /** 气泡显隐交互状态：统一鼠标悬浮/聚焦显隐逻辑（含延迟），供 Tooltip 与 IconButton 复用。 */
-function useTooltipInteraction(disabled: () => boolean, delay = 1_500) {
+function useTooltipInteraction(disabled: () => boolean, delay = 200) {
   /** 气泡是否处于显示状态。 */
   const visible = ref(false)
   /** 延迟显示计时器。 */
@@ -289,13 +289,19 @@ export const CommonIconButton = defineComponent({
     tooltipPlacement: {
       type: String as PropType<CommonTooltipPlacement>,
       default: undefined
+    },
+    /** 可选气泡延迟显示时间 (毫秒)，默认 200ms。 */
+    tooltipDelay: {
+      type: Number,
+      default: 200
     }
   },
   emits: ['click'],
   setup(props, { emit, slots }) {
     /** 气泡显隐交互状态。 */
     const { visible, handleMouseEnter, handleMouseLeave, handleFocusIn, handleFocusOut } = useTooltipInteraction(
-      () => props.disabled
+      () => props.disabled,
+      props.tooltipDelay
     )
 
     /** 图标按钮 DOM 引用，用于读取视口位置。 */
@@ -2161,7 +2167,7 @@ export const CommonTooltip = defineComponent({
     /** 弹出位置：top | bottom | left | right */
     placement: { type: String as PropType<'top' | 'bottom' | 'left' | 'right'>, default: 'top' },
     /** 延迟显示时间 (毫秒)。 */
-    delay: { type: Number, default: 1_500 },
+    delay: { type: Number, default: 200 },
     /** 是否禁用提示。 */
     disabled: { type: Boolean, default: false }
   },
