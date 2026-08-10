@@ -3382,6 +3382,81 @@
   gap: var(--ncx-space-3);
 }
 
+/* ========= 音乐内容页上下文材质与动效 ========= */
+
+.music-content-page .ncx-common-button {
+  transition:
+    background-color var(--ncx-motion-fast) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--ncx-motion-fast) cubic-bezier(0.2, 0.8, 0.2, 1),
+    color var(--ncx-motion-fast) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--ncx-motion-fast) cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform var(--ncx-motion-instant) cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.music-content-page .ncx-common-button-primary {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--ncx-color-on-accent) 22%, transparent),
+    var(--ncx-shadow-elevation-1);
+}
+
+.music-content-page .ncx-common-button-primary:hover:not(:disabled) {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--ncx-color-on-accent) 28%, transparent),
+    var(--ncx-shadow-elevation-2);
+}
+
+.music-content-page .ncx-common-button-secondary {
+  background: color-mix(
+    in srgb,
+    var(--ncx-color-surface-raised) 94%,
+    var(--ncx-color-text-primary)
+  );
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent),
+    0 1px 2px color-mix(in srgb, var(--ncx-color-text-primary) 5%, transparent);
+}
+
+.music-content-page .ncx-common-button-secondary:hover:not(:disabled) {
+  background: var(--ncx-color-control-hover);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 11%, transparent);
+}
+
+.music-content-page .ncx-common-search {
+  background: color-mix(
+    in srgb,
+    var(--ncx-color-surface-raised) 94%,
+    var(--ncx-color-canvas)
+  );
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent),
+    0 1px 2px color-mix(in srgb, var(--ncx-color-text-primary) 5%, transparent);
+  transition:
+    background-color var(--ncx-motion-fast) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--ncx-motion-fast) cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform var(--ncx-motion-instant) cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.music-content-page .ncx-common-search:focus-within {
+  background: var(--ncx-color-surface-raised);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-accent) 38%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
+}
+
+.music-content-page .ncx-common-empty,
+.music-content-page .ncx-common-error {
+  background: color-mix(
+    in srgb,
+    var(--ncx-color-surface) 94%,
+    var(--ncx-color-canvas)
+  );
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
+}
+
+.music-content-page .ncx-common-error-icon-wrapper {
+  background: color-mix(in srgb, var(--ncx-color-danger) 10%, var(--ncx-color-surface));
+}
+
 @keyframes ncx-common-spin {
   to {
     transform: rotate(360deg);

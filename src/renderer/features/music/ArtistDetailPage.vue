@@ -25,6 +25,7 @@ import {
   standardSongToTrackSummary,
   standardSongsToTrackSummaries
 } from './music-entity'
+import './music-content-pages.css'
 import { usePlayer } from './use-player'
 
 // ========= 类型 =========
@@ -189,161 +190,145 @@ watch(artistId, () => {
 </script>
 
 <template>
-  <section class="artist-page" aria-labelledby="artist-title">
-    <div v-if="loading" class="artist-loading">
-      <CommonSpinner label="正在加载歌手" />
-      <span>正在加载歌手</span>
-    </div>
-    <CommonErrorState
-      v-else-if="errorMessage"
-      title="歌手读取失败"
-      :description="errorMessage"
-      @retry="loadArtist"
-    />
-    <CommonEmptyState
-      v-else-if="!artist"
-      title="没有找到歌手"
-      description="该歌手暂时不可用。"
-    />
+  <section
+    class="artist-page music-content-page"
+    aria-labelledby="artist-title"
+  >
+    <Transition
+      name="music-page-state"
+      mode="out-in"
+    >
+      <div
+        v-if="loading"
+        key="loading"
+        class="artist-page-state artist-loading"
+      >
+        <CommonSpinner label="正在加载歌手" />
+        <span>正在加载歌手</span>
+      </div>
 
-    <template v-else>
-      <header class="artist-hero">
-        <Cover
-          :src="artist.artworkUrl"
-          :alt="artist.name"
-          size="hero"
-          shape="circle"
-          always-show-shadow
-          :show-play-button="false"
+      <div
+        v-else-if="errorMessage"
+        key="error"
+        class="artist-page-state"
+      >
+        <CommonErrorState
+          title="歌手读取失败"
+          :description="errorMessage"
+          @retry="loadArtist"
         />
-        <div class="artist-hero-copy">
-          <p class="music-page-eyebrow"><Radio :size="13" /> 歌手</p>
-          <h1 id="artist-title">{{ artist.name }}</h1>
-          <p>{{ artist.alias.join(' / ') || artist.description || '网易云音乐歌手' }}</p>
-          <small>{{ artist.songCount ?? hotSongs.length }} 首歌曲 · {{ artist.albumCount ?? albumsSection.items.length }} 张专辑</small>
-          <CommonButton variant="primary" :disabled="hotSongs.length === 0" @click="playAll">
-            <Play :size="15" fill="currentColor" />
-            播放热门歌曲
-          </CommonButton>
-        </div>
-      </header>
+      </div>
 
-      <MusicSection
-        section-id="artist-hot-songs"
-        title="热门歌曲"
-        :state="hotSongs.length > 0 ? 'ready' : 'empty'"
-        empty-text="暂时没有热门歌曲。"
+      <div
+        v-else-if="!artist"
+        key="empty"
+        class="artist-page-state"
       >
-        <VirtualTrackList
-          :songs="hotSongs"
-          :active-track-id="activeTrackId"
-          @play="playSong"
-          @enqueue="enqueueSong"
-          @play-next="playSongNext($event, { kind: 'artist', artistId })"
-          @like="likeSong"
+        <CommonEmptyState
+          title="没有找到歌手"
+          description="该歌手暂时不可用。"
         />
-      </MusicSection>
+      </div>
 
-      <MusicSection
-        section-id="artist-albums"
-        title="专辑"
-        :state="albumsSection.state"
-        :error-text="albumsSection.error"
-        empty-text="暂时没有专辑。"
-        @retry="loadArtistAlbums"
+      <div
+        v-else
+        key="content"
+        class="artist-page-content"
       >
-        <div class="artist-card-grid">
-          <EntityCard
-            v-for="album in albumsSection.items"
-            :key="album.id"
-            :title="album.name"
-            :subtitle="album.publishTime ? new Date(album.publishTime).getFullYear().toString() : '专辑'"
-            :artwork-url="album.artworkUrl"
-            @activate="openAlbum(album)"
+        <header class="music-detail-hero music-surface">
+          <Cover
+            :src="artist.artworkUrl"
+            :alt="artist.name"
+            size="hero"
+            shape="circle"
+            :hover-effect="false"
+            :show-play-button="false"
           />
-        </div>
-      </MusicSection>
+          <div class="music-detail-hero-copy">
+            <p class="music-page-eyebrow">
+              <Radio :size="13" /> 歌手
+            </p>
+            <h1 id="artist-title">
+              {{ artist.name }}
+            </h1>
+            <p class="music-detail-description">
+              {{ artist.alias.join(' / ') || artist.description || '网易云音乐歌手' }}
+            </p>
+            <p class="music-detail-meta">
+              {{ artist.songCount ?? hotSongs.length }} 首歌曲 · {{ artist.albumCount ?? albumsSection.items.length }} 张专辑
+            </p>
+            <div class="music-detail-actions">
+              <CommonButton
+                variant="primary"
+                :disabled="hotSongs.length === 0"
+                @click="playAll"
+              >
+                <Play
+                  :size="15"
+                  fill="currentColor"
+                />
+                播放热门歌曲
+              </CommonButton>
+            </div>
+          </div>
+        </header>
 
-      <MusicSection
-        section-id="similar-artists"
-        title="相似歌手"
-        :state="similarSection.state"
-        :error-text="similarSection.error"
-        empty-text="暂时没有相似歌手。"
-        @retry="loadSimilarArtists"
-      >
-        <div class="artist-card-grid">
-          <EntityCard
-            v-for="item in similarSection.items"
-            :key="item.id"
-            :title="item.name"
-            :subtitle="item.alias.join(' / ') || '歌手'"
-            :artwork-url="item.artworkUrl"
-            @activate="openArtist(item)"
+        <MusicSection
+          section-id="artist-hot-songs"
+          title="热门歌曲"
+          :state="hotSongs.length > 0 ? 'ready' : 'empty'"
+          empty-text="暂时没有热门歌曲。"
+        >
+          <VirtualTrackList
+            :songs="hotSongs"
+            :active-track-id="activeTrackId"
+            @play="playSong"
+            @enqueue="enqueueSong"
+            @play-next="playSongNext($event, { kind: 'artist', artistId })"
+            @like="likeSong"
           />
-        </div>
-      </MusicSection>
-    </template>
+        </MusicSection>
+
+        <MusicSection
+          section-id="artist-albums"
+          title="专辑"
+          :state="albumsSection.state"
+          :error-text="albumsSection.error"
+          empty-text="暂时没有专辑。"
+          @retry="loadArtistAlbums"
+        >
+          <div class="artist-card-grid">
+            <EntityCard
+              v-for="album in albumsSection.items"
+              :key="album.id"
+              :title="album.name"
+              :subtitle="album.publishTime ? new Date(album.publishTime).getFullYear().toString() : '专辑'"
+              :artwork-url="album.artworkUrl"
+              @activate="openAlbum(album)"
+            />
+          </div>
+        </MusicSection>
+
+        <MusicSection
+          section-id="similar-artists"
+          title="相似歌手"
+          :state="similarSection.state"
+          :error-text="similarSection.error"
+          empty-text="暂时没有相似歌手。"
+          @retry="loadSimilarArtists"
+        >
+          <div class="artist-card-grid">
+            <EntityCard
+              v-for="item in similarSection.items"
+              :key="item.id"
+              :title="item.name"
+              :subtitle="item.alias.join(' / ') || '歌手'"
+              :artwork-url="item.artworkUrl"
+              @activate="openArtist(item)"
+            />
+          </div>
+        </MusicSection>
+      </div>
+    </Transition>
   </section>
 </template>
-
-<style scoped>
-.artist-page {
-  display: grid;
-  width: min(1120px, calc(100% - 32px));
-  gap: var(--ncx-space-12);
-  margin: 0 auto;
-  padding: 52px 0 132px;
-}
-
-.artist-loading {
-  display: flex;
-  align-items: center;
-  gap: var(--ncx-space-2);
-  color: var(--ncx-color-text-secondary);
-}
-
-.artist-hero {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--ncx-space-10);
-  align-items: end;
-}
-
-.artist-hero-copy {
-  display: grid;
-  gap: var(--ncx-space-3);
-  justify-items: start;
-}
-
-.artist-hero-copy h1,
-.artist-hero-copy p,
-.artist-hero-copy small {
-  margin: 0;
-}
-
-.artist-hero-copy h1 {
-  font-size: 46px;
-  line-height: 1.08;
-}
-
-.artist-hero-copy p:not(.music-page-eyebrow),
-.artist-hero-copy small {
-  color: var(--ncx-color-text-secondary);
-}
-
-.music-page-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: var(--ncx-space-1);
-  color: var(--ncx-color-accent);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.artist-card-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: var(--ncx-space-5);
-}
-</style>

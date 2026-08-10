@@ -18,6 +18,7 @@ import {
   standardSongToTrackSummary,
   standardSongsToTrackSummaries
 } from './music-entity'
+import './music-content-pages.css'
 import { usePlayer } from './use-player'
 
 // ========= 类型 =========
@@ -140,104 +141,107 @@ watch(collection, async () => {
 </script>
 
 <template>
-  <section class="song-collection-page" aria-labelledby="song-collection-title">
-    <header class="song-collection-heading">
+  <section
+    class="song-collection-page music-content-page"
+    aria-labelledby="song-collection-title"
+  >
+    <header class="music-list-hero music-surface">
       <div>
-        <p class="music-page-eyebrow"><ListMusic :size="13" /> 歌曲集合</p>
-        <h1 id="song-collection-title">{{ pageTitle }}</h1>
-        <p>{{ pageDescription }}</p>
+        <p class="music-page-eyebrow">
+          <ListMusic :size="13" /> 歌曲集合
+        </p>
+        <h1 id="song-collection-title">
+          {{ pageTitle }}
+        </h1>
+        <p class="music-page-description">
+          {{ pageDescription }}
+        </p>
       </div>
       <CommonButton
         variant="primary"
         :disabled="songs.length === 0"
         @click="playAll"
       >
-        <Play :size="15" fill="currentColor" />
+        <Play
+          :size="15"
+          fill="currentColor"
+        />
         播放全部
       </CommonButton>
     </header>
 
-    <div v-if="loading" class="song-collection-loading">
-      <CommonSpinner label="正在加载歌曲" />
-      <span>正在加载</span>
-    </div>
-    <CommonEmptyState
-      v-else-if="collection === 'daily' && !isAuthenticated"
-      title="登录后查看每日推荐"
-      description="游客不会读取网易云账户的每日推荐歌曲。"
+    <Transition
+      name="music-page-state"
+      mode="out-in"
     >
-      <CommonButton variant="primary" @click="login">登录网易云</CommonButton>
-    </CommonEmptyState>
-    <CommonErrorState
-      v-else-if="errorMessage"
-      title="歌曲读取失败"
-      :description="errorMessage"
-      @retry="loadSongs"
-    />
-    <CommonEmptyState
-      v-else-if="songs.length === 0"
-      title="暂无歌曲"
-      description="当前集合暂时没有可展示的歌曲。"
-    />
-    <VirtualTrackList
-      v-else
-      :songs="songs"
-      :active-track-id="activeTrackId"
-      @play="playSong"
-      @enqueue="enqueueSong"
-      @play-next="playSongNext($event, { kind: 'discover' })"
-      @like="likeSong"
-    />
+      <div
+        v-if="loading"
+        key="loading"
+        class="song-collection-state song-collection-loading"
+      >
+        <CommonSpinner label="正在加载歌曲" />
+        <span>正在加载</span>
+      </div>
+
+      <div
+        v-else-if="collection === 'daily' && !isAuthenticated"
+        key="login"
+        class="song-collection-state"
+      >
+        <CommonEmptyState
+          title="登录后查看每日推荐"
+          description="游客不会读取网易云账户的每日推荐歌曲。"
+        >
+          <CommonButton
+            variant="primary"
+            @click="login"
+          >
+            登录网易云
+          </CommonButton>
+        </CommonEmptyState>
+      </div>
+
+      <div
+        v-else-if="errorMessage"
+        key="error"
+        class="song-collection-state"
+      >
+        <CommonErrorState
+          title="歌曲读取失败"
+          :description="errorMessage"
+          @retry="loadSongs"
+        />
+      </div>
+
+      <div
+        v-else-if="songs.length === 0"
+        key="empty"
+        class="song-collection-state"
+      >
+        <CommonEmptyState
+          title="暂无歌曲"
+          description="当前集合暂时没有可展示的歌曲。"
+        />
+      </div>
+
+      <div
+        v-else
+        key="content"
+        class="music-track-surface music-surface"
+      >
+        <header class="music-section-heading">
+          <h2>歌曲</h2>
+          <span>{{ songs.length }} 首</span>
+        </header>
+        <VirtualTrackList
+          :songs="songs"
+          :active-track-id="activeTrackId"
+          @play="playSong"
+          @enqueue="enqueueSong"
+          @play-next="playSongNext($event, { kind: 'discover' })"
+          @like="likeSong"
+        />
+      </div>
+    </Transition>
   </section>
 </template>
-
-<style scoped>
-.song-collection-page {
-  display: grid;
-  width: min(1120px, calc(100% - 32px));
-  gap: var(--ncx-space-8);
-  margin: 0 auto;
-  padding: 52px 0 132px;
-}
-
-.song-collection-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: var(--ncx-space-5);
-}
-
-.song-collection-heading h1,
-.song-collection-heading p {
-  margin: 0;
-}
-
-.song-collection-heading h1 {
-  margin-top: var(--ncx-space-2);
-  font-size: 36px;
-}
-
-.song-collection-heading > div > p:last-child {
-  margin-top: var(--ncx-space-2);
-  color: var(--ncx-color-text-secondary);
-  font-size: 13px;
-}
-
-.music-page-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: var(--ncx-color-accent);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.song-collection-loading {
-  display: flex;
-  min-height: 240px;
-  align-items: center;
-  justify-content: center;
-  gap: var(--ncx-space-2);
-  color: var(--ncx-color-text-secondary);
-}
-</style>

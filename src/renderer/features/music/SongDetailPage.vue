@@ -13,6 +13,7 @@ import { showToast } from '../../design-system/use-toast'
 import Cover from './components/Cover.vue'
 import { mutateMusic } from './music-actions'
 import { formatMusicDuration, standardSongToTrackSummary } from './music-entity'
+import './music-content-pages.css'
 import { usePlayer } from './use-player'
 
 // ========= 变量 =========
@@ -97,48 +98,84 @@ watch(songId, () => void loadSong(), { immediate: true })
 </script>
 
 <template>
-  <section class="song-detail-page" aria-labelledby="song-detail-title">
-    <div v-if="loading" class="song-detail-status"><CommonSpinner label="正在加载歌曲" /></div>
-    <CommonErrorState
-      v-else-if="errorMessage"
-      title="歌曲加载失败"
-      :description="errorMessage"
-      @retry="loadSong"
-    />
-    <template v-else-if="song">
-      <Cover :src="song.album?.artworkUrl" :alt="song.name" size="hero" />
-      <div class="song-detail-copy">
-        <p>歌曲</p>
-        <h1 id="song-detail-title">{{ song.name }}</h1>
-        <h2>{{ artistText }}</h2>
-        <span>{{ song.album?.name ?? '未知专辑' }} · {{ formatMusicDuration(song.durationMs) }}</span>
-        <div class="song-detail-actions">
-          <CommonButton variant="primary" @click="playSong"><Play :size="15" fill="currentColor" />播放</CommonButton>
-          <CommonButton variant="secondary" @click="enqueueSong"><ListPlus :size="15" />加入队列</CommonButton>
-          <CommonButton variant="secondary" @click="likeSong"><Heart :size="15" />收藏</CommonButton>
-        </div>
+  <section
+    class="song-detail-page music-content-page"
+    aria-labelledby="song-detail-title"
+  >
+    <Transition
+      name="music-page-state"
+      mode="out-in"
+    >
+      <div
+        v-if="loading"
+        key="loading"
+        class="song-detail-state song-detail-status"
+      >
+        <CommonSpinner label="正在加载歌曲" />
       </div>
-    </template>
+
+      <div
+        v-else-if="errorMessage"
+        key="error"
+        class="song-detail-state"
+      >
+        <CommonErrorState
+          title="歌曲加载失败"
+          :description="errorMessage"
+          @retry="loadSong"
+        />
+      </div>
+
+      <header
+        v-else-if="song"
+        key="content"
+        class="music-detail-hero music-surface"
+      >
+        <Cover
+          :src="song.album?.artworkUrl"
+          :alt="song.name"
+          size="hero"
+          :hover-effect="false"
+          :show-play-button="false"
+        />
+        <div class="music-detail-hero-copy">
+          <p class="music-page-eyebrow">
+            歌曲
+          </p>
+          <h1 id="song-detail-title">
+            {{ song.name }}
+          </h1>
+          <p class="song-detail-artist">
+            {{ artistText }}
+          </p>
+          <p class="music-detail-meta">
+            {{ song.album?.name ?? '未知专辑' }} · {{ formatMusicDuration(song.durationMs) }}
+          </p>
+          <div class="music-detail-actions">
+            <CommonButton
+              variant="primary"
+              @click="playSong"
+            >
+              <Play
+                :size="15"
+                fill="currentColor"
+              />播放
+            </CommonButton>
+            <CommonButton
+              variant="secondary"
+              @click="enqueueSong"
+            >
+              <ListPlus :size="15" />加入队列
+            </CommonButton>
+            <CommonButton
+              variant="secondary"
+              @click="likeSong"
+            >
+              <Heart :size="15" />收藏
+            </CommonButton>
+          </div>
+        </div>
+      </header>
+    </Transition>
   </section>
 </template>
-
-<style scoped>
-.song-detail-page {
-  display: grid;
-  width: min(920px, calc(100% - 48px));
-  min-height: calc(100vh - 180px);
-  margin: 0 auto;
-  padding: 84px 0 144px;
-  align-items: center;
-  grid-template-columns: minmax(260px, 420px) minmax(280px, 1fr);
-  gap: clamp(32px, 7vw, 88px);
-}
-.song-detail-copy { display: grid; gap: var(--ncx-space-3); }
-.song-detail-copy p, .song-detail-copy h1, .song-detail-copy h2 { margin: 0; }
-.song-detail-copy p { color: var(--ncx-color-accent); font-size: 12px; font-weight: 700; }
-.song-detail-copy h1 { font-size: clamp(32px, 5vw, 56px); }
-.song-detail-copy h2, .song-detail-copy span { color: var(--ncx-color-text-secondary); }
-.song-detail-actions { display: flex; flex-wrap: wrap; gap: var(--ncx-space-2); margin-top: var(--ncx-space-3); }
-.song-detail-status { display: grid; place-items: center; grid-column: 1 / -1; }
-@media (max-width: 720px) { .song-detail-page { grid-template-columns: 1fr; } }
-</style>

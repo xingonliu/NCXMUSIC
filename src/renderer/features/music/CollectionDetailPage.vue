@@ -25,6 +25,7 @@ import {
   standardSongsToTrackSummaries,
   type PlayableCollection
 } from './music-entity'
+import './music-content-pages.css'
 import { usePlayer } from './use-player'
 
 // ========= 类型 =========
@@ -180,131 +181,130 @@ watch([collectionKind, collectionId], () => {
 </script>
 
 <template>
-  <section class="collection-detail-page" aria-labelledby="collection-title">
-    <div v-if="loading" class="collection-loading">
-      <CommonSpinner label="正在加载集合" />
-      <span>正在加载集合</span>
-    </div>
+  <section
+    class="collection-detail-page music-content-page"
+    aria-labelledby="collection-title"
+  >
+    <Transition
+      name="music-page-state"
+      mode="out-in"
+    >
+      <div
+        v-if="loading"
+        key="loading"
+        class="collection-detail-state collection-loading"
+      >
+        <CommonSpinner label="正在加载集合" />
+        <span>正在加载集合</span>
+      </div>
 
-    <CommonErrorState
-      v-else-if="errorMessage"
-      title="集合读取失败"
-      :description="errorMessage"
-      @retry="loadCollection"
-    />
-
-    <CommonEmptyState
-      v-else-if="!collection"
-      title="没有找到集合"
-      description="该专辑或歌单暂时不可用。"
-    />
-
-    <template v-else>
-      <header class="collection-hero">
-        <Cover
-          :src="collection.artworkUrl"
-          :alt="collection.name"
-          size="hero"
-          always-show-shadow
-          :show-play-button="false"
+      <div
+        v-else-if="errorMessage"
+        key="error"
+        class="collection-detail-state"
+      >
+        <CommonErrorState
+          title="集合读取失败"
+          :description="errorMessage"
+          @retry="loadCollection"
         />
-        <div class="collection-hero-copy">
-          <p class="music-page-eyebrow">{{ collection.kind === 'album' ? '专辑' : '歌单' }}</p>
-          <h1 id="collection-title">{{ collection.name }}</h1>
-          <p>{{ subtitle }} · {{ songs.length }} 首</p>
-          <p v-if="collection.description" class="collection-description">{{ collection.description }}</p>
-          <div class="collection-actions">
-            <CommonButton variant="primary" :disabled="songs.length === 0" @click="playAll">
-              <Play :size="15" fill="currentColor" />
-              播放全部
-            </CommonButton>
-            <CommonButton variant="secondary" :disabled="songs.length === 0" @click="enqueueAll">
-              <ListPlus :size="15" />
-              加入队列
-            </CommonButton>
-            <CommonButton variant="secondary" @click="toggleSubscription">
-              <Heart :size="15" :fill="collection.subscribed ? 'currentColor' : 'none'" />
-              {{ collection.subscribed ? '已收藏' : '收藏' }}
-            </CommonButton>
-          </div>
-        </div>
-      </header>
+      </div>
 
-      <VirtualTrackList
-        class="track-list"
-        :songs="songs"
-        :active-track-id="activeTrackId"
-        @play="playFromSong"
-        @enqueue="enqueueSong"
-        @play-next="playSongNext($event, collectionKind === 'album' ? { kind: 'album', albumId: collectionId } : { kind: 'playlist', playlistId: collectionId })"
-        @like="likeSong"
-      />
-    </template>
+      <div
+        v-else-if="!collection"
+        key="empty"
+        class="collection-detail-state"
+      >
+        <CommonEmptyState
+          title="没有找到集合"
+          description="该专辑或歌单暂时不可用。"
+        />
+      </div>
+
+      <div
+        v-else
+        key="content"
+        class="collection-detail-content"
+      >
+        <header class="music-detail-hero music-surface">
+          <Cover
+            :src="collection.artworkUrl"
+            :alt="collection.name"
+            size="hero"
+            :hover-effect="false"
+            :show-play-button="false"
+          />
+          <div class="music-detail-hero-copy">
+            <p class="music-page-eyebrow">
+              {{ collection.kind === 'album' ? '专辑' : '歌单' }}
+            </p>
+            <h1 id="collection-title">
+              {{ collection.name }}
+            </h1>
+            <p class="music-detail-meta">
+              {{ subtitle }} · {{ songs.length }} 首
+            </p>
+            <p
+              v-if="collection.description"
+              class="music-detail-description"
+            >
+              {{ collection.description }}
+            </p>
+            <div class="music-detail-actions">
+              <CommonButton
+                variant="primary"
+                :disabled="songs.length === 0"
+                @click="playAll"
+              >
+                <Play
+                  :size="15"
+                  fill="currentColor"
+                />
+                播放全部
+              </CommonButton>
+              <CommonButton
+                variant="secondary"
+                :disabled="songs.length === 0"
+                @click="enqueueAll"
+              >
+                <ListPlus :size="15" />
+                加入队列
+              </CommonButton>
+              <CommonButton
+                variant="secondary"
+                @click="toggleSubscription"
+              >
+                <Heart
+                  :size="15"
+                  :fill="collection.subscribed ? 'currentColor' : 'none'"
+                />
+                {{ collection.subscribed ? '已收藏' : '收藏' }}
+              </CommonButton>
+            </div>
+          </div>
+        </header>
+
+        <section
+          class="music-track-surface music-surface"
+          aria-labelledby="collection-tracks-title"
+        >
+          <header class="music-section-heading">
+            <h2 id="collection-tracks-title">
+              歌曲
+            </h2>
+            <span>{{ songs.length }} 首</span>
+          </header>
+          <VirtualTrackList
+            class="track-list"
+            :songs="songs"
+            :active-track-id="activeTrackId"
+            @play="playFromSong"
+            @enqueue="enqueueSong"
+            @play-next="playSongNext($event, collectionKind === 'album' ? { kind: 'album', albumId: collectionId } : { kind: 'playlist', playlistId: collectionId })"
+            @like="likeSong"
+          />
+        </section>
+      </div>
+    </Transition>
   </section>
 </template>
-
-<style scoped>
-.collection-detail-page {
-  width: min(1120px, calc(100% - 48px));
-  margin: 0 auto;
-  padding: 72px 0 132px;
-}
-
-.collection-loading {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--ncx-space-2);
-  color: var(--ncx-color-text-secondary);
-}
-
-.collection-hero {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--ncx-space-8);
-  align-items: end;
-}
-
-.collection-hero-copy {
-  display: grid;
-  gap: var(--ncx-space-3);
-  justify-items: start;
-}
-
-.music-page-eyebrow {
-  margin: 0;
-  color: var(--ncx-color-accent);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-}
-
-.collection-hero h1 {
-  margin: 0;
-  font-size: 44px;
-  line-height: 1.08;
-}
-
-.collection-hero p:not(.music-page-eyebrow) {
-  margin: 0;
-  color: var(--ncx-color-text-secondary);
-}
-
-.collection-description {
-  display: -webkit-box;
-  max-width: 680px;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-height: 1.55;
-}
-
-.collection-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ncx-space-2);
-}
-
-.track-list {
-  margin-top: var(--ncx-space-10);
-}
-</style>

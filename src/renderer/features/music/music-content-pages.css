@@ -1,0 +1,683 @@
+/* stylelint-disable custom-property-pattern, no-descending-specificity */
+
+/* ========= 音乐内容页基础材质 ========= */
+
+.music-content-page {
+  --music-page-surface: color-mix(
+    in srgb,
+    var(--ncx-color-surface) 94%,
+    var(--ncx-color-canvas)
+  );
+  --music-page-surface-subtle: color-mix(
+    in srgb,
+    var(--ncx-color-surface-raised) 88%,
+    var(--ncx-color-canvas)
+  );
+  --music-page-edge: color-mix(
+    in srgb,
+    var(--ncx-color-text-primary) 7%,
+    transparent
+  );
+  --music-page-edge-strong: color-mix(
+    in srgb,
+    var(--ncx-color-text-primary) 12%,
+    transparent
+  );
+  --music-page-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  color: var(--ncx-color-text-primary);
+}
+
+.music-content-page .music-page-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ncx-space-1-5);
+  margin: 0;
+  color: var(--ncx-color-text-tertiary);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+}
+
+.music-page-heading h1,
+.music-detail-hero h1,
+.music-list-hero h1 {
+  margin: var(--ncx-space-2) 0 0;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.music-page-description {
+  max-width: 640px;
+  margin: var(--ncx-space-3) 0 0;
+  color: var(--ncx-color-text-secondary);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.music-surface {
+  border-radius: var(--ncx-radius-xl);
+  background: var(--music-page-surface);
+  box-shadow:
+    inset 0 0 0 1px var(--music-page-edge),
+    var(--ncx-shadow-elevation-1);
+}
+
+/* ========= 搜索入口 ========= */
+
+.music-search-page {
+  width: min(720px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 108px 0 132px;
+}
+
+.music-search-intro {
+  max-width: 600px;
+}
+
+.music-search-intro h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.music-search-box {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--ncx-space-3);
+  margin-top: var(--ncx-space-6);
+}
+
+.music-search-suggestion-section {
+  margin-top: var(--ncx-space-5);
+}
+
+.music-search-suggestion-section header,
+.music-search-suggestion-section header button,
+.music-search-suggestions button {
+  display: flex;
+  align-items: center;
+}
+
+.music-search-suggestion-section header {
+  justify-content: space-between;
+}
+
+.music-search-suggestion-section h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.music-search-suggestion-section header button {
+  gap: var(--ncx-space-1);
+  padding: 4px 6px;
+  border: 0;
+  border-radius: var(--ncx-radius-sm);
+  color: var(--ncx-color-text-tertiary);
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  transition:
+    color var(--ncx-motion-fast) var(--music-page-easing),
+    background-color var(--ncx-motion-fast) var(--music-page-easing),
+    transform var(--ncx-motion-instant) var(--music-page-easing);
+}
+
+.music-search-suggestion-section header button:hover {
+  color: var(--ncx-color-text-primary);
+  background: var(--ncx-color-control-hover);
+}
+
+.music-search-suggestion-section header button:active {
+  transform: scale(0.97);
+}
+
+.music-search-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ncx-space-2);
+  margin-top: var(--ncx-space-3);
+}
+
+.music-search-suggestions button {
+  gap: var(--ncx-space-1);
+  height: 30px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--ncx-radius-full);
+  color: var(--ncx-color-text-secondary);
+  background: var(--music-page-surface-subtle);
+  box-shadow: inset 0 0 0 1px var(--music-page-edge);
+  cursor: pointer;
+  transition:
+    color var(--ncx-motion-fast) var(--music-page-easing),
+    background-color var(--ncx-motion-fast) var(--music-page-easing),
+    box-shadow var(--ncx-motion-fast) var(--music-page-easing),
+    transform var(--ncx-motion-instant) var(--music-page-easing);
+}
+
+.music-search-suggestions button:hover {
+  color: var(--ncx-color-text-primary);
+  background: var(--ncx-color-surface-raised);
+  box-shadow: inset 0 0 0 1px var(--music-page-edge-strong);
+}
+
+.music-search-suggestions button:active {
+  transform: scale(0.97);
+}
+
+/* ========= 搜索结果 ========= */
+
+.search-results-page,
+.song-collection-page,
+.collection-detail-page,
+.artist-page {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 52px 0 132px;
+}
+
+.search-results-header,
+.music-list-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--ncx-space-5);
+}
+
+.search-results-header h1,
+.music-list-hero h1 {
+  font-size: 36px;
+}
+
+.search-results-summary {
+  margin: var(--ncx-space-2) 0 0;
+  color: var(--ncx-color-text-secondary);
+  font-size: 13px;
+}
+
+.search-results-state,
+.song-collection-state,
+.collection-detail-state,
+.artist-page-state,
+.song-detail-state {
+  min-height: 260px;
+}
+
+.search-results-loading,
+.song-collection-loading,
+.collection-loading,
+.artist-loading,
+.song-detail-status {
+  display: flex;
+  min-height: 240px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ncx-space-2);
+  color: var(--ncx-color-text-secondary);
+}
+
+.search-results-content {
+  display: grid;
+  gap: var(--ncx-space-6);
+  margin-top: var(--ncx-space-8);
+}
+
+.music-result-section,
+.music-track-surface,
+.artist-page .music-section-shell {
+  padding: var(--ncx-space-5);
+}
+
+.music-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ncx-space-4);
+  margin-bottom: var(--ncx-space-4);
+}
+
+.music-section-heading h2 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.music-section-heading span {
+  color: var(--ncx-color-text-tertiary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: var(--ncx-space-5);
+}
+
+.collection-card {
+  display: grid;
+  min-width: 0;
+  gap: var(--ncx-space-2);
+  padding: 0;
+  border: 0;
+  border-radius: var(--ncx-radius-lg);
+  color: var(--ncx-color-text-primary);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    color var(--ncx-motion-fast) var(--music-page-easing),
+    transform var(--ncx-motion-instant) var(--music-page-easing);
+}
+
+.collection-card:hover {
+  color: var(--ncx-color-text-primary);
+  transform: translateY(-1px);
+}
+
+.collection-card:active {
+  transform: scale(0.985);
+}
+
+.collection-card strong {
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.collection-card span,
+.artist-card-copy > span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ncx-space-1);
+  color: var(--ncx-color-text-tertiary);
+  font-size: 11px;
+}
+
+.artist-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: var(--ncx-space-3);
+}
+
+.artist-card {
+  display: grid;
+  min-width: 0;
+  align-items: center;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--ncx-space-3);
+  padding: var(--ncx-space-2);
+  border: 0;
+  border-radius: var(--ncx-radius-lg);
+  color: var(--ncx-color-text-primary);
+  background: var(--music-page-surface-subtle);
+  box-shadow: inset 0 0 0 1px var(--music-page-edge);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background-color var(--ncx-motion-fast) var(--music-page-easing),
+    box-shadow var(--ncx-motion-fast) var(--music-page-easing),
+    transform var(--ncx-motion-instant) var(--music-page-easing);
+}
+
+.artist-card:hover {
+  background: var(--ncx-color-surface-raised);
+  box-shadow: inset 0 0 0 1px var(--music-page-edge-strong);
+}
+
+.artist-card:active {
+  transform: scale(0.985);
+}
+
+.artist-card-copy {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.artist-card-copy strong {
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.playlist-picker-status {
+  display: grid;
+  min-height: 120px;
+  place-items: center;
+}
+
+.playlist-picker-list {
+  display: grid;
+  gap: var(--ncx-space-1);
+}
+
+.playlist-picker-list button {
+  display: flex;
+  padding: var(--ncx-space-2);
+  border: 0;
+  border-radius: var(--ncx-radius-md);
+  align-items: center;
+  gap: var(--ncx-space-3);
+  color: var(--ncx-color-text-primary);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background-color var(--ncx-motion-fast) var(--music-page-easing),
+    transform var(--ncx-motion-instant) var(--music-page-easing);
+}
+
+.playlist-picker-list button:hover,
+.playlist-picker-list button:focus-visible {
+  background: var(--ncx-color-surface-raised);
+}
+
+.playlist-picker-list button:active {
+  transform: scale(0.99);
+}
+
+/* ========= 列表与详情页 ========= */
+
+.song-collection-page,
+.artist-page {
+  display: grid;
+  gap: var(--ncx-space-8);
+}
+
+.music-list-hero {
+  padding: var(--ncx-space-6);
+}
+
+.music-detail-hero {
+  display: grid;
+  align-items: end;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--ncx-space-8);
+  padding: var(--ncx-space-6);
+}
+
+.music-detail-hero-copy {
+  display: grid;
+  gap: var(--ncx-space-3);
+  justify-items: start;
+  min-width: 0;
+}
+
+.music-detail-hero h1 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: clamp(34px, 4.6vw, 48px);
+}
+
+.music-detail-meta {
+  margin: 0;
+  color: var(--ncx-color-text-secondary);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.music-detail-description {
+  display: -webkit-box;
+  max-width: 680px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--ncx-color-text-secondary);
+  font-size: 13px;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.music-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ncx-space-2);
+  margin-top: var(--ncx-space-1);
+}
+
+.collection-detail-page {
+  display: grid;
+  gap: var(--ncx-space-8);
+}
+
+.collection-detail-content,
+.artist-page-content {
+  display: grid;
+  gap: var(--ncx-space-8);
+}
+
+.artist-page {
+  gap: var(--ncx-space-8);
+}
+
+.artist-page .music-section-shell {
+  border-radius: var(--ncx-radius-xl);
+  background: var(--music-page-surface);
+  box-shadow:
+    inset 0 0 0 1px var(--music-page-edge),
+    var(--ncx-shadow-elevation-1);
+}
+
+.artist-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: var(--ncx-space-5);
+}
+
+.song-detail-page {
+  display: grid;
+  width: min(980px, calc(100% - 48px));
+  min-height: calc(100vh - 180px);
+  margin: 0 auto;
+  padding: 52px 0 132px;
+  align-items: center;
+}
+
+.song-detail-page .music-detail-hero {
+  width: 100%;
+  grid-template-columns: minmax(220px, 340px) minmax(280px, 1fr);
+}
+
+.song-detail-page .music-detail-hero > .ncx-cover {
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 1;
+}
+
+.song-detail-artist {
+  margin: 0;
+  color: var(--ncx-color-text-primary);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+
+/* ========= 内容页通用组件材质 ========= */
+
+.music-content-page .virtual-track-list {
+  scrollbar-color: color-mix(in srgb, var(--ncx-color-text-primary) 18%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+.music-content-page .track-row {
+  background: transparent;
+  transition:
+    background-color var(--ncx-motion-fast) var(--music-page-easing),
+    box-shadow var(--ncx-motion-fast) var(--music-page-easing),
+    color var(--ncx-motion-fast) var(--music-page-easing),
+    transform var(--ncx-motion-instant) var(--music-page-easing);
+}
+
+.music-content-page .track-row:hover,
+.music-content-page .track-row:focus-visible {
+  background: var(--music-page-surface-subtle);
+  box-shadow: inset 0 0 0 1px var(--music-page-edge);
+}
+
+.music-content-page .track-row:active {
+  transform: scale(0.995);
+}
+
+.music-content-page .track-row--active {
+  background: var(--ncx-color-control-selected);
+  box-shadow: inset 3px 0 0 var(--ncx-color-accent);
+}
+
+.music-content-page .ncx-cover-media,
+.music-content-page .media-artwork {
+  box-shadow:
+    inset 0 0 0 1px var(--music-page-edge),
+    var(--ncx-shadow-elevation-1);
+}
+
+.music-content-page .ncx-cover-shadow {
+  filter: blur(20px) saturate(0.55) opacity(0.34);
+}
+
+.music-content-page .ncx-cover.always-show-shadow .ncx-cover-media,
+.music-content-page .ncx-cover.has-hover-effect:hover .ncx-cover-media {
+  transform: translateY(-1px);
+}
+
+.music-content-page .ncx-cover.always-show-shadow .ncx-cover-shadow,
+.music-content-page .ncx-cover.has-hover-effect:hover .ncx-cover-shadow {
+  filter: blur(22px) saturate(0.6) opacity(0.42);
+  transform: scale(0.95, 0.97) translateY(6px);
+}
+
+/* ========= 连续状态动效 ========= */
+
+.music-page-state-enter-active,
+.music-page-state-leave-active {
+  transition:
+    opacity var(--ncx-motion-normal) var(--music-page-easing),
+    transform var(--ncx-motion-slow) var(--music-page-easing);
+  will-change: opacity, transform;
+}
+
+.music-page-state-enter-from {
+  opacity: 0;
+  transform: translateY(8px) scale(0.995);
+}
+
+.music-page-state-leave-to {
+  opacity: 0;
+  transform: translateY(-4px) scale(0.998);
+}
+
+.music-chip-list-enter-active,
+.music-chip-list-leave-active,
+.music-chip-list-move {
+  transition:
+    opacity var(--ncx-motion-normal) var(--music-page-easing),
+    transform var(--ncx-motion-normal) var(--music-page-easing);
+}
+
+.music-chip-list-enter-from,
+.music-chip-list-leave-to {
+  opacity: 0;
+  transform: scale(0.94);
+}
+
+.music-chip-list-leave-active {
+  position: absolute;
+}
+
+/* ========= 紧凑窗口 ========= */
+
+@media (width < 1100px) {
+  .music-search-page,
+  .search-results-page,
+  .song-collection-page,
+  .collection-detail-page,
+  .artist-page,
+  .song-detail-page {
+    width: calc(100% - 32px);
+    padding-top: 44px;
+  }
+
+  .music-search-page {
+    width: min(680px, calc(100% - 48px));
+    padding-top: 88px;
+  }
+
+  .music-detail-hero,
+  .music-list-hero,
+  .music-result-section,
+  .music-track-surface,
+  .artist-page .music-section-shell {
+    padding: var(--ncx-space-4);
+  }
+
+  .music-detail-hero {
+    gap: var(--ncx-space-6);
+  }
+
+  .music-detail-hero h1 {
+    font-size: 36px;
+  }
+
+  .artist-card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--ncx-space-4);
+  }
+}
+
+/* ========= 辅助功能降级 ========= */
+
+@media (prefers-reduced-motion: reduce) {
+  .music-page-state-enter-active,
+  .music-page-state-leave-active {
+    transition: opacity 120ms linear;
+  }
+
+  .music-page-state-enter-from,
+  .music-page-state-leave-to,
+  .music-chip-list-enter-from,
+  .music-chip-list-leave-to,
+  .music-content-page .collection-card:hover,
+  .music-content-page .collection-card:active,
+  .music-content-page .artist-card:active,
+  .music-content-page .track-row:active,
+  .music-content-page .ncx-cover.always-show-shadow .ncx-cover-media,
+  .music-content-page .ncx-cover.has-hover-effect:hover .ncx-cover-media {
+    transform: none;
+  }
+
+  .music-chip-list-enter-active,
+  .music-chip-list-leave-active,
+  .music-chip-list-move {
+    transition: opacity 120ms linear;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .music-content-page .ncx-cover-play-btn {
+    backdrop-filter: none;
+    background: color-mix(in srgb, var(--ncx-color-text-primary) 86%, transparent);
+  }
+}
+
+@media (prefers-contrast: more) {
+  .music-surface,
+  .music-result-section,
+  .music-track-surface,
+  .artist-page .music-section-shell,
+  .music-content-page .artist-card,
+  .music-content-page .music-search-suggestions button {
+    box-shadow: inset 0 0 0 1px var(--music-page-edge-strong);
+  }
+}
