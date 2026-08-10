@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Disc3, ListMusic, Play, UserRound } from '@lucide/vue'
+import { Disc3, ListMusic, Play, Search, UserRound } from '@lucide/vue'
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -14,6 +14,7 @@ import {
   CommonButton,
   CommonEmptyState,
   CommonErrorState,
+  CommonSearchInput,
   CommonSpinner
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
@@ -30,6 +31,9 @@ import './music-content-pages.css'
 import { usePlayer } from './use-player'
 
 // ========= 变量 =========
+
+/** 搜索结果分类标签。 */
+type SearchCategory = 'all' | 'songs' | 'artists' | 'albums' | 'playlists' | 'lyrics'
 
 /** 当前路由对象，用于读取搜索词。 */
 const route = useRoute()
@@ -52,6 +56,22 @@ const result = ref<Extract<MusicReadResult, { kind: 'search' }> | null>(null)
 /** 当前等待选择目标歌单的歌曲。 */
 const playlistTarget = ref<StandardSong | null>(null)
 
+/** 当前搜索分类。 */
+const activeCategory = ref<SearchCategory>('all')
+
+/** 结果页顶部搜索框草稿。 */
+const draftQuery = ref<string>('')
+
+/** 搜索分类标签配置。 */
+const searchTabs: ReadonlyArray<{ value: SearchCategory; label: string }> = [
+  { value: 'all', label: '全部' },
+  { value: 'songs', label: '歌曲' },
+  { value: 'artists', label: '歌手' },
+  { value: 'albums', label: '专辑' },
+  { value: 'playlists', label: '歌单' },
+  { value: 'lyrics', label: '歌词' }
+]
+
 /** 最近一次请求 ID，用于取消和丢弃迟到响应。 */
 let latestRequestId = ''
 
@@ -70,17 +90,20 @@ const albums = computed<StandardAlbum[]>(() => result.value?.albums ?? [])
 /** 当前搜索歌单结果。 */
 const playlists = computed<StandardPlaylist[]>(() => result.value?.playlists ?? [])
 
+/** 当前歌词搜索结果。 */
+const lyrics = computed<StandardSong[]>(() => result.value?.lyrics ?? [])
+
 /** 当前播放曲目 ID。 */
 const activeTrackId = computed<string | null>(() => player.snapshot.value.playback.track?.trackId ?? null)
 
 /** 是否完全没有搜索结果。 */
 const isEmpty = computed<boolean>(() => {
-  return songs.value.length + artists.value.length + albums.value.length + playlists.value.length === 0
+  return songs.value.length + artists.value.length + albums.value.length + playlists.value.length + lyrics.value.length === 0
 })
 
 /** 当前结果中全部内容实体的数量。 */
 const resultCount = computed<number>(() => {
-  return songs.value.length + artists.value.length + albums.value.length + playlists.value.length
+  return songs.value.length + artists.value.length + albums.value.length + playlists.value.length + lyrics.value.length
 })
 
 // ========= 函数 =========
@@ -97,7 +120,12 @@ async function loadSearchResults(): Promise<void> {
   loading.value = true
 
   try {
-    const response = await window.ncx.runtime.searchMusic({ query: query.value, limit: 20, requestId })
+    const response = await window.ncx.runtime.searchMusic({
+      query: query.value,
+      category: activeCategory.value,
+      limit: 20,
+      requestId
+    })
     if (requestId !== latestRequestId) return
     if (!response.ok) {
       errorMessage.value = response.error.message
@@ -111,6 +139,14 @@ async function loadSearchResults(): Promise<void> {
   } finally {
     if (requestId === latestRequestId) loading.value = false
   }
+}
+
+/** 提交结果页顶部搜索框。 */
+function submitDraftSearch(): void {
+  /** 清理后的新搜索词。 */
+  const value = draftQuery.value.trim()
+  if (!value) return
+  void router.replace({ name: 'search-results', query: { q: value } })
 }
 
 /** 播放单首搜索结果。 */
@@ -177,7 +213,8 @@ function openAddToPlaylist(song: StandardSong): void {
 
 // ========= 生命周期 =========
 
-watch(query, () => {
+watch([query, activeCategory], () => {
+  draftQuery.value = query.value
   void loadSearchResults()
 }, { immediate: true })
 </script>
@@ -187,6 +224,27 @@ watch(query, () => {
     class="search-results-page music-content-page"
     aria-labelledby="search-results-title"
   >
+    <form class="search-results-input" @submit.prevent="submitDraftSearch">
+      <CommonSearchInput
+        v-model="draftQuery"
+        size="prominent"
+        placeholder="搜索歌曲、歌手、专辑、歌单或歌词"
+        aria-label="搜索音乐"
+        @search="submitDraftSearch"
+      />
+      <CommonButton variant="primary" size="prominent" type="submit"><Search :size="16" />搜索</CommonButton>
+    </form>
+
+    <nav class="search-category-tabs" aria-label="搜索结果分类">
+      <button
+        v-for="tab in searchTabs"
+        :key="tab.value"
+        type="button"
+        :class="{ active: activeCategory === tab.value }"
+        @click="activeCategory = tab.value"
+      >{{ tab.label }}</button>
+    </nav>
+
     <div class="search-results-header">
       <div class="music-page-heading">
         <p class="music-page-eyebrow">
@@ -196,7 +254,7 @@ watch(query, () => {
           {{ query || '搜索' }}
         </h1>
         <p class="search-results-summary">
-          {{ result ? `已整理 ${resultCount} 项内容` : '歌曲、歌手、专辑和歌单会按类型整理' }}
+          {{ result ? `已整理 ${resultCount} 项内容` : '结果会按歌曲、歌手、专辑、歌单与歌词分类' }}
         </p>
       </div>
       <CommonButton
@@ -254,7 +312,7 @@ watch(query, () => {
         class="search-results-content"
       >
         <section
-          v-if="songs.length > 0"
+          v-if="songs.length > 0 && (activeCategory === 'all' || activeCategory === 'songs')"
           class="music-result-section music-surface"
         >
           <header class="music-section-heading">
@@ -276,7 +334,7 @@ watch(query, () => {
         </section>
 
         <section
-          v-if="albums.length > 0 || playlists.length > 0"
+          v-if="(albums.length > 0 && (activeCategory === 'all' || activeCategory === 'albums')) || (playlists.length > 0 && (activeCategory === 'all' || activeCategory === 'playlists'))"
           class="music-result-section music-surface"
         >
           <header class="music-section-heading">
@@ -285,7 +343,7 @@ watch(query, () => {
           </header>
           <div class="collection-grid">
             <button
-              v-for="album in albums"
+              v-for="album in activeCategory === 'playlists' ? [] : albums"
               :key="`album-${album.id}`"
               class="collection-card"
               type="button"
@@ -301,7 +359,7 @@ watch(query, () => {
             </button>
 
             <button
-              v-for="playlist in playlists"
+              v-for="playlist in activeCategory === 'albums' ? [] : playlists"
               :key="`playlist-${playlist.id}`"
               class="collection-card"
               type="button"
@@ -319,7 +377,7 @@ watch(query, () => {
         </section>
 
         <section
-          v-if="artists.length > 0"
+          v-if="artists.length > 0 && (activeCategory === 'all' || activeCategory === 'artists')"
           class="music-result-section music-surface"
         >
           <header class="music-section-heading">
@@ -347,6 +405,28 @@ watch(query, () => {
             </button>
           </div>
         </section>
+
+        <section
+          v-if="lyrics.length > 0 && activeCategory === 'lyrics'"
+          class="music-result-section music-surface"
+        >
+          <header class="music-section-heading">
+            <h2>歌词</h2>
+            <span>{{ lyrics.length }} 首含关键词</span>
+          </header>
+          <VirtualTrackList
+            class="track-list"
+            :songs="lyrics"
+            :active-track-id="activeTrackId"
+            @play="playSong"
+            @enqueue="enqueueSong"
+            @play-next="playSongNext($event, { kind: 'search' })"
+            @like="likeSong"
+            @add-to-playlist="openAddToPlaylist"
+            @details="openSongDetails"
+            @give-agent="giveSongToAgent"
+          />
+        </section>
       </div>
     </Transition>
 
@@ -356,3 +436,56 @@ watch(query, () => {
     />
   </section>
 </template>
+
+<style scoped>
+.search-results-input {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.search-category-tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  padding: 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ncx-color-surface) 82%, transparent);
+}
+
+.search-category-tabs button {
+  flex: 0 0 auto;
+  padding: 9px 15px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--ncx-color-text-secondary);
+  background: transparent;
+  cursor: pointer;
+}
+
+.search-category-tabs button:hover,
+.search-category-tabs button.active {
+  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
+}
+
+.search-category-tabs button:active {
+  transform: scale(.96);
+}
+
+@media (width < 640px) {
+  .search-results-input {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-category-tabs button {
+    transition: none !important;
+  }
+
+  .search-category-tabs button:active {
+    transform: none;
+  }
+}
+</style>

@@ -5,6 +5,9 @@ import DesignSystemLabPage from '../features/design-system/DesignSystemLabPage.v
 import CollectionDetailPage from '../features/music/CollectionDetailPage.vue'
 import ArtistDetailPage from '../features/music/ArtistDetailPage.vue'
 import DiscoverPage from '../features/music/DiscoverPage.vue'
+import BrowsePage from '../features/music/BrowsePage.vue'
+import BrowseRankingsPage from '../features/music/BrowseRankingsPage.vue'
+import ArtistExplorePage from '../features/music/ArtistExplorePage.vue'
 import LikedSongsPage from '../features/music/LikedSongsPage.vue'
 import PlaybackDetailPage from '../features/music/PlaybackDetailPage.vue'
 import SearchPage from '../features/music/SearchPage.vue'
@@ -66,6 +69,38 @@ const routes: RouteRecordRaw[] = [
       pageLevel: 1,
       title: 'routes.search',
       playerBar: 'show'
+    }
+  },
+  {
+    path: '/browse',
+    name: 'browse',
+    component: BrowsePage,
+    meta: {
+      pageLevel: 1,
+      title: 'routes.browse',
+      playerBar: 'show'
+    }
+  },
+  {
+    path: '/browse/rankings',
+    name: 'browse-rankings',
+    component: BrowseRankingsPage,
+    meta: {
+      pageLevel: 2,
+      title: 'routes.browseRankings',
+      playerBar: 'show',
+      fallbackRoute: 'browse'
+    }
+  },
+  {
+    path: '/browse/artists',
+    name: 'browse-artists',
+    component: ArtistExplorePage,
+    meta: {
+      pageLevel: 2,
+      title: 'routes.browseArtists',
+      playerBar: 'show',
+      fallbackRoute: 'browse'
     }
   },
   {

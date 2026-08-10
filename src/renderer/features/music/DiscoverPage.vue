@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import { CalendarCheck, ChevronRight, Play } from '@lucide/vue'
+import { CalendarCheck, ChevronRight, Play, Radio, Sparkles } from '@lucide/vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type {
   MusicReadResult,
+  StandardArtist,
   StandardPlaylist,
   StandardSong
 } from '../../../shared/schemas/music'
 import { CommonButton } from '../../design-system/components'
-import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
 import EntityCard from './components/EntityCard.vue'
-import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
+import Cover from './components/Cover.vue'
 import MusicSection from './components/MusicSection.vue'
-import VirtualTrackList from './components/VirtualTrackList.vue'
 import { useDailySignin } from './daily-signin'
-import { mutateMusic, playSongNext } from './music-actions'
 import {
   standardSongToTrackSummary,
   standardSongsToTrackSummaries
@@ -70,20 +68,31 @@ const dailySection = ref<SectionState<StandardSong[]>>({
   error: ''
 })
 
-/** 当前等待选择目标歌单的歌曲。 */
-const playlistTarget = ref<StandardSong | null>(null)
+/** 私人 FM Section。 */
+const personalFmSection = ref<SectionState<StandardSong[]>>({
+  state: 'loading',
+  data: [],
+  error: ''
+})
+
+/** 首页推荐歌手 Section。 */
+const artistsSection = ref<SectionState<StandardArtist[]>>({
+  state: 'loading',
+  data: [],
+  error: ''
+})
 
 /** 当前账户是否为登录账户。 */
 const isAuthenticated = computed<boolean>(() => account.snapshot.value?.state === 'authenticated')
 
-/** 当前播放歌曲 ID。 */
-const activeTrackId = computed<string | null>(() => player.snapshot.value.playback.track?.trackId ?? null)
+/** 发现页每日推荐堆叠卡片歌曲。 */
+const dailyPreviewSongs = computed<StandardSong[]>(() => dailySection.value.data.slice(0, 3))
 
-/** 发现页每日推荐预览歌曲。 */
-const dailyPreviewSongs = computed<StandardSong[]>(() => dailySection.value.data.slice(0, 5))
+/** 发现页新歌速递十首预览歌曲。 */
+const newSongsPreview = computed<StandardSong[]>(() => newSongsSection.value.data.slice(0, 10))
 
-/** 发现页新歌速递预览歌曲。 */
-const newSongsPreview = computed<StandardSong[]>(() => newSongsSection.value.data.slice(0, 5))
+/** 私人 FM 当前主卡片歌曲；游客模式优雅回退到新歌。 */
+const personalFmSong = computed<StandardSong | null>(() => personalFmSection.value.data[0] ?? newSongsSection.value.data[0] ?? null)
 
 // ========= 函数 =========
 
@@ -149,9 +158,50 @@ async function loadDailySongs(): Promise<void> {
   settleSection(dailySection.value, result.songs, result.songs.length === 0)
 }
 
+/** 读取登录用户私人 FM。 */
+async function loadPersonalFm(): Promise<void> {
+  if (!isAuthenticated.value) {
+    personalFmSection.value = { state: 'empty', data: [], error: '' }
+    return
+  }
+  personalFmSection.value.state = 'loading'
+  /** 私人 FM 标准响应。 */
+  const response = await window.ncx.runtime.readMusic({ operation: 'getPersonalFm', limit: 3 })
+  if (!response.ok) {
+    failSection(personalFmSection.value, response.error.message)
+    return
+  }
+  if (response.data.kind !== 'songCollection' || response.data.collection !== 'personalFm') {
+    failSection(personalFmSection.value, '私人 FM 响应类型不匹配。')
+    return
+  }
+  settleSection(personalFmSection.value, response.data.songs, response.data.songs.length === 0)
+}
+
+/** 读取首页热门推荐歌手。 */
+async function loadRecommendedArtists(): Promise<void> {
+  artistsSection.value.state = 'loading'
+  /** 推荐歌手标准响应。 */
+  const response = await window.ncx.runtime.readMusic({ operation: 'getRecommendedArtists', limit: 12, offset: 0 })
+  if (!response.ok) {
+    failSection(artistsSection.value, response.error.message)
+    return
+  }
+  if (response.data.kind !== 'artistCollection') {
+    failSection(artistsSection.value, '推荐歌手响应类型不匹配。')
+    return
+  }
+  settleSection(artistsSection.value, response.data.artists, response.data.artists.length === 0)
+}
+
 /** 打开指定歌单详情。 */
 function openPlaylist(playlist: StandardPlaylist): void {
   void router.push({ name: 'playlist-detail', params: { playlistId: playlist.id } })
+}
+
+/** 打开推荐歌手详情。 */
+function openArtist(artist: StandardArtist): void {
+  void router.push({ name: 'artist-detail', params: { artistId: artist.id } })
 }
 
 /** 打开歌曲集合二级页。 */
@@ -164,45 +214,12 @@ async function playSong(song: StandardSong): Promise<void> {
   await player.playTrack(standardSongToTrackSummary(song), { kind: 'discover' })
 }
 
-/** 把发现页歌曲追加到队列。 */
-function enqueueSong(song: StandardSong): void {
-  player.enqueue([standardSongToTrackSummary(song)], { kind: 'discover' })
-}
-
 /** 从可见集合首项播放全部歌曲。 */
 async function playAll(songs: StandardSong[]): Promise<void> {
   if (songs.length === 0) return
   await player.playContext({
     tracks: standardSongsToTrackSummaries(songs),
     source: { kind: 'discover' }
-  })
-}
-
-/** 收藏当前歌曲。 */
-async function likeSong(song: StandardSong): Promise<void> {
-  const result = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
-  if (!result.ok) {
-    showToast(result.error.message, 'warning')
-    return
-  }
-  showToast(`已收藏《${song.name}》。`, 'success')
-}
-
-/** 打开共享的自建歌单选择对话框。 */
-function openAddToPlaylist(song: StandardSong): void {
-  playlistTarget.value = song
-}
-
-/** 打开正式歌曲详情页。 */
-function openSongDetails(song: StandardSong): void {
-  void router.push({ name: 'song-detail', params: { songId: song.id } })
-}
-
-/** 将歌曲标准上下文交给小云入口。 */
-function giveSongToAgent(song: StandardSong): void {
-  void router.push({
-    name: 'agent',
-    query: { intent: 'track', trackId: song.id, title: song.name }
   })
 }
 
@@ -215,15 +232,18 @@ async function dailySignin(): Promise<void> {
 
 onMounted(async () => {
   await account.initialize()
-  await Promise.all([loadFeaturedPlaylists(), loadNewSongs()])
-  if (isAuthenticated.value) await loadDailySongs()
+  await Promise.all([loadFeaturedPlaylists(), loadNewSongs(), loadRecommendedArtists()])
+  if (isAuthenticated.value) await Promise.all([loadDailySongs(), loadPersonalFm()])
 })
 
 watch(
   () => [account.snapshot.value?.state, account.snapshot.value?.accountGeneration] as const,
   ([state]) => {
-    if (state === 'authenticated') void loadDailySongs()
-    else dailySection.value = { state: 'empty', data: [], error: '' }
+    if (state === 'authenticated') void Promise.all([loadDailySongs(), loadPersonalFm()])
+    else {
+      dailySection.value = { state: 'empty', data: [], error: '' }
+      personalFmSection.value = { state: 'empty', data: [], error: '' }
+    }
   }
 )
 </script>
@@ -271,46 +291,72 @@ watch(
     </MusicSection>
 
     <MusicSection
-      v-if="isAuthenticated"
-      section-id="daily-songs"
-      title="每日推荐"
-      description="来自当前网易云账户的每日歌曲。"
-      :state="dailySection.state"
-      :error-text="dailySection.error"
-      empty-text="今天的推荐还没有准备好。"
-      @retry="loadDailySongs"
+      section-id="personal-recommendations"
+      title="猜你喜欢"
+      description="每日推荐与私人电台并排呈现，一个适合挑选，一个适合直接开始。"
+      :state="newSongsSection.state === 'loading' && !isAuthenticated ? 'loading' : 'ready'"
+      min-height="260px"
     >
-      <template #actions>
-        <CommonButton
-          variant="ghost"
-          size="compact"
-          :disabled="dailySection.data.length === 0"
-          @click="openSongCollection('daily')"
-        >
-          查看更多
-          <ChevronRight :size="14" />
-        </CommonButton>
-        <CommonButton
-          variant="primary"
-          size="compact"
-          :disabled="dailySection.data.length === 0"
-          @click="playAll(dailySection.data)"
-        >
-          <Play :size="14" fill="currentColor" />
-          播放全部
-        </CommonButton>
-      </template>
-      <VirtualTrackList
-        :songs="dailyPreviewSongs"
-        :active-track-id="activeTrackId"
-        @play="playSong"
-        @enqueue="enqueueSong"
-        @play-next="playSongNext($event, { kind: 'discover' })"
-        @like="likeSong"
-        @add-to-playlist="openAddToPlaylist"
-        @details="openSongDetails"
-        @give-agent="giveSongToAgent"
-      />
+      <div class="discover-personal-grid">
+        <article class="discover-taste-card">
+          <div class="discover-taste-copy">
+            <span><Sparkles :size="14" /> 猜你喜欢</span>
+            <h3>{{ isAuthenticated ? '为今天挑选' : '先从新歌认识你' }}</h3>
+            <p>{{ isAuthenticated ? '根据当前账户的听歌偏好每日更新。' : '登录后会切换为专属每日推荐。' }}</p>
+            <div class="discover-taste-actions">
+              <CommonButton
+                variant="primary"
+                size="compact"
+                :disabled="isAuthenticated ? dailySection.data.length === 0 : newSongsSection.data.length === 0"
+                @click="playAll(isAuthenticated ? dailySection.data : newSongsSection.data)"
+              ><Play :size="14" fill="currentColor" />播放</CommonButton>
+              <CommonButton
+                v-if="isAuthenticated"
+                variant="ghost"
+                size="compact"
+                @click="openSongCollection('daily')"
+              >查看全部<ChevronRight :size="14" /></CommonButton>
+            </div>
+          </div>
+          <div class="discover-cover-stack" aria-label="猜你喜欢歌曲预览">
+            <Cover
+              v-for="(song, index) in (isAuthenticated ? dailyPreviewSongs : newSongsPreview.slice(0, 3))"
+              :key="song.id"
+              :src="song.album?.artworkUrl"
+              :alt="song.name"
+              size="card"
+              :show-play-button="false"
+              :style="{ '--stack-index': index }"
+              @click="playSong(song)"
+            />
+          </div>
+        </article>
+
+        <article class="discover-radio-card">
+          <div class="discover-radio-art">
+            <Cover
+              :src="personalFmSong?.album?.artworkUrl"
+              :alt="personalFmSong?.name || '私人电台'"
+              size="feature"
+              :show-play-button="false"
+              :hover-effect="false"
+            />
+            <span class="discover-radio-badge"><Radio :size="14" /> 个人电台</span>
+          </div>
+          <div class="discover-radio-copy">
+            <span>{{ isAuthenticated ? '私人 FM' : '灵感电台 · 预览' }}</span>
+            <h3>{{ personalFmSong?.name || '电台正在准备' }}</h3>
+            <p>{{ personalFmSong?.artists.map((artist) => artist.name).join(' / ') || '登录后获得不间断的个性播放' }}</p>
+          </div>
+          <button
+            class="discover-radio-play"
+            type="button"
+            :disabled="!personalFmSong"
+            aria-label="播放个人电台"
+            @click="personalFmSong && playSong(personalFmSong)"
+          ><Play :size="19" fill="currentColor" /></button>
+        </article>
+      </div>
     </MusicSection>
 
     <MusicSection
@@ -342,23 +388,38 @@ watch(
           播放全部
         </CommonButton>
       </template>
-      <VirtualTrackList
-        :songs="newSongsPreview"
-        :active-track-id="activeTrackId"
-        @play="playSong"
-        @enqueue="enqueueSong"
-        @play-next="playSongNext($event, { kind: 'discover' })"
-        @like="likeSong"
-        @add-to-playlist="openAddToPlaylist"
-        @details="openSongDetails"
-        @give-agent="giveSongToAgent"
-      />
+      <div class="discover-new-song-grid">
+        <button
+          v-for="song in newSongsPreview"
+          :key="song.id"
+          type="button"
+          @click="playSong(song)"
+        >
+          <Cover :src="song.album?.artworkUrl" :alt="song.name" size="compact" :show-play-button="false" />
+          <span><strong>{{ song.name }}</strong><small>{{ song.artists.map((artist) => artist.name).join(' / ') }}</small></span>
+          <Play :size="14" fill="currentColor" />
+        </button>
+      </div>
     </MusicSection>
 
-    <AddTrackToPlaylistDialog
-      :song="playlistTarget"
-      @close="playlistTarget = null"
-    />
+    <MusicSection
+      section-id="recommended-artists"
+      title="歌手推荐"
+      description="从热门歌手继续延展今天的播放。"
+      :state="artistsSection.state"
+      :error-text="artistsSection.error"
+      empty-text="暂时没有推荐歌手。"
+      @retry="loadRecommendedArtists"
+    >
+      <div class="discover-artist-grid">
+        <button v-for="artist in artistsSection.data.slice(0, 8)" :key="artist.id" type="button" @click="openArtist(artist)">
+          <Cover :src="artist.artworkUrl" :alt="artist.name" size="card" shape="circle" :show-play-button="false" />
+          <strong>{{ artist.name }}</strong>
+          <span>{{ artist.alias.join(' / ') || '歌手' }}</span>
+        </button>
+      </div>
+    </MusicSection>
+
   </section>
 </template>
 
@@ -401,9 +462,314 @@ watch(
   gap: var(--ncx-space-5);
 }
 
+.discover-personal-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, .85fr);
+  gap: var(--ncx-space-5);
+}
+
+.discover-taste-card,
+.discover-radio-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 260px;
+  border-radius: var(--ncx-radius-xl);
+  background: var(--ncx-color-surface);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
+}
+
+.discover-taste-card {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 280px;
+  align-items: center;
+  padding: 30px;
+  background:
+    radial-gradient(circle at 85% 12%, color-mix(in srgb, var(--ncx-color-accent) 28%, transparent), transparent 44%),
+    var(--ncx-color-surface);
+}
+
+.discover-taste-copy > span,
+.discover-radio-copy > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ncx-color-accent);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.discover-taste-copy h3,
+.discover-taste-copy p,
+.discover-radio-copy h3,
+.discover-radio-copy p {
+  margin: 0;
+}
+
+.discover-taste-copy h3 {
+  margin-top: 9px;
+  font-size: 28px;
+  line-height: 1.08;
+  letter-spacing: -.025em;
+}
+
+.discover-taste-copy p {
+  max-width: 34ch;
+  margin-top: 9px;
+  color: var(--ncx-color-text-secondary);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.discover-taste-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.discover-cover-stack {
+  position: relative;
+  width: 250px;
+  height: 166px;
+  justify-self: end;
+}
+
+.discover-cover-stack :deep(.ncx-cover) {
+  position: absolute;
+  top: 22px;
+  left: 0;
+  z-index: calc(5 - var(--stack-index));
+  transform: translateX(calc(var(--stack-index) * 48px)) rotate(calc((var(--stack-index) - 1) * 4deg));
+  transition: transform .34s cubic-bezier(.2, .8, .2, 1);
+}
+
+.discover-cover-stack :deep(.ncx-cover:hover) {
+  transform: translateX(calc(var(--stack-index) * 52px)) translateY(-8px);
+}
+
+.discover-radio-card {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 16px;
+  padding: 22px;
+  background: color-mix(in srgb, var(--ncx-color-surface) 84%, var(--ncx-color-accent) 16%);
+}
+
+.discover-radio-art {
+  position: absolute;
+  inset: 0;
+}
+
+.discover-radio-art::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 10%, color-mix(in srgb, #000 76%, transparent) 100%);
+  content: '';
+}
+
+.discover-radio-art :deep(.ncx-cover),
+.discover-radio-art :deep(.ncx-cover-media) {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+.discover-radio-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(20, 20, 22, .42);
+  backdrop-filter: blur(16px) saturate(160%);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.discover-radio-copy,
+.discover-radio-play {
+  position: relative;
+  z-index: 2;
+}
+
+.discover-radio-copy {
+  grid-column: 1 / 3;
+  min-width: 0;
+  color: #fff;
+}
+
+.discover-radio-copy > span {
+  color: rgba(255, 255, 255, .72);
+}
+
+.discover-radio-copy h3 {
+  margin-top: 6px;
+  overflow: hidden;
+  font-size: 21px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.discover-radio-copy p {
+  margin-top: 4px;
+  overflow: hidden;
+  color: rgba(255, 255, 255, .72);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.discover-radio-play {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--ncx-color-accent);
+  background: rgba(255, 255, 255, .94);
+  cursor: pointer;
+}
+
+.discover-radio-play:active {
+  transform: scale(.93);
+}
+
+.discover-new-song-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 16px;
+}
+
+.discover-new-song-grid > button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border: 0;
+  border-radius: 14px;
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+}
+
+.discover-new-song-grid > button:hover {
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
+}
+
+.discover-new-song-grid > button:active {
+  transform: scale(.985);
+}
+
+.discover-new-song-grid > button > span {
+  display: grid;
+  min-width: 0;
+}
+
+.discover-new-song-grid strong,
+.discover-new-song-grid small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.discover-new-song-grid strong {
+  font-size: 13px;
+}
+
+.discover-new-song-grid small {
+  margin-top: 4px;
+  color: var(--ncx-color-text-secondary);
+  font-size: 11px;
+}
+
+.discover-artist-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.discover-artist-grid > button {
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  text-align: center;
+  background: transparent;
+  cursor: pointer;
+}
+
+.discover-artist-grid strong,
+.discover-artist-grid span {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.discover-artist-grid strong {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.discover-artist-grid span {
+  color: var(--ncx-color-text-secondary);
+  font-size: 11px;
+}
+
 @media (width < 1180px) {
   .discover-card-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .discover-artist-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (width < 920px) {
+  .discover-personal-grid,
+  .discover-taste-card {
+    grid-template-columns: 1fr;
+  }
+
+  .discover-cover-stack {
+    display: none;
+  }
+
+  .discover-artist-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (width < 680px) {
+  .discover-new-song-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .discover-page button,
+  .discover-cover-stack :deep(.ncx-cover) {
+    transition: none !important;
+  }
+
+  .discover-page button:active,
+  .discover-cover-stack :deep(.ncx-cover:hover) {
+    transform: none;
   }
 }
 </style>

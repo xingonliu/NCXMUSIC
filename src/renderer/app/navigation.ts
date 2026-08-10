@@ -11,7 +11,7 @@ export interface AppNavigationItem {
   /** 导航目标路由名称。 */
   readonly routeName: RouteRecordName
   /** 导航条目图标语义。 */
-  readonly icon: 'discover' | 'search' | 'agent' | 'liked' | 'profile' | 'settings'
+  readonly icon: 'discover' | 'browse' | 'search' | 'agent' | 'profile' | 'settings'
 }
 
 /** 侧边栏主导航分组。 */
@@ -28,18 +28,11 @@ export const appPrimaryNavigationSections: readonly AppNavigationSection[] = [
     label: '',
     items: [
       { label: t('navigation.discover'), routeName: 'discover', icon: 'discover' },
+      { label: t('navigation.browse'), routeName: 'browse', icon: 'browse' },
       { label: t('navigation.search'), routeName: 'search', icon: 'search' },
       { label: t('navigation.agent'), routeName: 'agent', icon: 'agent' },
       { label: t('navigation.designSystem'), routeName: 'design-system-lab', icon: 'settings' }
     ]
-  }
-] as const
-
-/** AppShell 中部歌单次导航结构，后续歌单数据接入后继续扩展。 */
-export const appPlaylistNavigationSections: readonly AppNavigationSection[] = [
-  {
-    label: t('navigation.myMusic'),
-    items: [{ label: t('navigation.liked'), routeName: 'liked-songs', icon: 'liked' }]
   }
 ] as const
 

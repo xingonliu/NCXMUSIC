@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronDown, ChevronRight, Heart, ListMusic, Plus } from '@lucide/vue'
+import { Music2, Plus } from '@lucide/vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 
@@ -17,6 +17,7 @@ import { showToast } from '../../../design-system/use-toast'
 import { useAccountSessionStore } from '../../account/account-session-store'
 import { copyText } from '../../foundation/clipboard'
 import { mutateMusic } from '../music-actions'
+import { adaptArtworkUrl } from '../music-entity'
 
 // ========= 变量 =========
 
@@ -25,9 +26,6 @@ const account = useAccountSessionStore()
 
 /** 当前用户的歌单资产。 */
 const playlists = ref<StandardPlaylist[]>([])
-
-/** 收藏歌单分组是否展开。 */
-const collectedExpanded = ref<boolean>(false)
 
 /** 创建歌单对话框是否显示。 */
 const createDialogVisible = ref<boolean>(false)
@@ -53,11 +51,14 @@ const userId = computed<string | null>(() => {
 /** 当前账户是否登录。 */
 const visible = computed<boolean>(() => account.snapshot.value?.state === 'authenticated' && Boolean(userId.value))
 
-/** 当前账户自建歌单，最多展示最近五个。 */
-const ownedPlaylists = computed<StandardPlaylist[]>(() => playlists.value.filter((item) => item.owned).slice(0, 5))
-
-/** 当前账户收藏歌单，最多展示最近五个。 */
-const collectedPlaylists = computed<StandardPlaylist[]>(() => playlists.value.filter((item) => !item.owned).slice(0, 5))
+/** 侧栏展示全部歌单，并确保“我喜欢的音乐”常驻第一位。 */
+const visiblePlaylists = computed<StandardPlaylist[]>(() => [...playlists.value].sort((left, right) => {
+  /** 左侧歌单是否为网易云喜欢歌单。 */
+  const leftLiked = left.name.includes('喜欢的音乐') || left.name.includes('我喜欢')
+  /** 右侧歌单是否为网易云喜欢歌单。 */
+  const rightLiked = right.name.includes('喜欢的音乐') || right.name.includes('我喜欢')
+  return Number(rightLiked) - Number(leftLiked)
+}))
 
 /** 自建歌单右键菜单。 */
 const ownedMenuItems: CommonMenuItem[] = [
@@ -172,11 +173,6 @@ function handlePlaylistAction(playlist: StandardPlaylist, rawAction: string | nu
   }
 }
 
-/** 切换收藏歌单分组显隐。 */
-function toggleCollected(): void {
-  collectedExpanded.value = !collectedExpanded.value
-}
-
 // ========= 生命周期 =========
 
 onMounted(async () => {
@@ -191,17 +187,9 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
 
 <template>
   <nav v-if="visible" class="ncx-playlist-nav" aria-label="歌单导航">
-    <section class="ncx-nav-section">
-      <p class="ncx-nav-section-title">我的音乐</p>
-      <RouterLink class="ncx-nav-item" :to="{ name: 'liked-songs' }">
-        <Heart :size="17" />
-        <span>我喜欢</span>
-      </RouterLink>
-    </section>
-
     <section class="ncx-nav-section ncx-playlist-group">
       <div class="ncx-playlist-group-heading">
-        <p class="ncx-nav-section-title">创建的歌单</p>
+        <p class="ncx-nav-section-title">我的歌单</p>
         <CommonIconButton
           size="compact"
           variant="ghost"
@@ -212,43 +200,27 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
         </CommonIconButton>
       </div>
       <CommonContextMenu
-        v-for="playlist in ownedPlaylists"
+        v-for="playlist in visiblePlaylists"
         :key="playlist.id"
-        :items="ownedMenuItems"
+        :items="playlist.owned ? ownedMenuItems : collectedMenuItems"
         @select="handlePlaylistAction(playlist, $event)"
       >
         <RouterLink
           class="ncx-nav-item"
           :to="{ name: 'playlist-detail', params: { playlistId: playlist.id } }"
         >
-          <ListMusic :size="16" />
+          <span class="ncx-playlist-cover" aria-hidden="true">
+            <img
+              v-if="playlist.artworkUrl"
+              :src="adaptArtworkUrl(playlist.artworkUrl, 'thumbnail')"
+              alt=""
+              loading="lazy"
+            />
+            <Music2 v-else :size="13" />
+          </span>
           <span>{{ playlist.name }}</span>
         </RouterLink>
       </CommonContextMenu>
-    </section>
-
-    <section v-if="collectedPlaylists.length > 0" class="ncx-nav-section ncx-playlist-group">
-      <button class="ncx-playlist-group-heading ncx-playlist-group-toggle" type="button" @click="toggleCollected">
-        <p class="ncx-nav-section-title">收藏的歌单</p>
-        <ChevronDown v-if="collectedExpanded" :size="13" />
-        <ChevronRight v-else :size="13" />
-      </button>
-      <template v-if="collectedExpanded">
-        <CommonContextMenu
-          v-for="playlist in collectedPlaylists"
-          :key="playlist.id"
-          :items="collectedMenuItems"
-          @select="handlePlaylistAction(playlist, $event)"
-        >
-          <RouterLink
-            class="ncx-nav-item"
-            :to="{ name: 'playlist-detail', params: { playlistId: playlist.id } }"
-          >
-            <ListMusic :size="16" />
-            <span>{{ playlist.name }}</span>
-          </RouterLink>
-        </CommonContextMenu>
-      </template>
     </section>
 
     <CommonDialog
@@ -285,3 +257,24 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
     />
   </nav>
 </template>
+
+<style scoped>
+.ncx-playlist-cover {
+  display: inline-flex;
+  overflow: hidden;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  color: var(--ncx-color-text-tertiary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
+}
+
+.ncx-playlist-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>

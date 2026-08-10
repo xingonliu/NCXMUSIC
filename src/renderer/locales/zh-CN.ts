@@ -7,6 +7,9 @@ export const zhCN = {
     'routes.agent': 'AI 助手',
     'routes.albumDetail': '专辑详情',
     'routes.artistDetail': '艺人详情',
+    'routes.browse': '浏览',
+    'routes.browseArtists': '歌手探索',
+    'routes.browseRankings': '排行榜',
     'routes.discover': '发现音乐',
     'routes.designSystemLab': '通用组件',
     'routes.likedSongs': '喜欢的音乐',
@@ -32,6 +35,7 @@ export const zhCN = {
   },
   navigation: {
     discover: '发现音乐',
+    browse: '浏览',
     search: '搜索',
     agent: '小云',
     designSystem: '通用组件',

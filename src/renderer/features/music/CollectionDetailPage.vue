@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Heart, ListPlus, Play } from '@lucide/vue'
+import { Download, Ellipsis, Heart, Play, Plus, Shuffle } from '@lucide/vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -11,9 +11,11 @@ import type {
 } from '../../../shared/schemas/music'
 import {
   CommonButton,
+  CommonDropdownMenu,
   CommonEmptyState,
   CommonErrorState,
-  CommonSpinner
+  CommonSpinner,
+  type CommonMenuItem
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import Cover from './components/Cover.vue'
@@ -21,6 +23,7 @@ import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import MusicCommentsSection from './components/MusicCommentsSection.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
 import { useAccountSessionStore } from '../account/account-session-store'
+import { copyText } from '../foundation/clipboard'
 import { mutateMusic, playSongNext } from './music-actions'
 import {
   collectionSongs,
@@ -68,6 +71,9 @@ const reorderBusy = ref<boolean>(false)
 /** 正在移除的歌单歌曲 ID。 */
 const removingTrackId = ref<string | null>(null)
 
+/** 当前集合下载状态。 */
+const downloadBusy = ref<boolean>(false)
+
 /** 当前等待选择目标歌单的歌曲。 */
 const playlistTarget = ref<StandardSong | null>(null)
 
@@ -105,6 +111,25 @@ const isOwnedPlaylist = computed<boolean>(() => {
     active?.kind === 'netease' &&
     current.creator?.id === active.neteaseUserId
 })
+
+/** 当前集合发行或更新时间。 */
+const collectionDateLabel = computed<string>(() => {
+  /** 当前集合实体。 */
+  const current = collection.value
+  if (!current) return ''
+  /** 专辑发行时间或歌单更新时间。 */
+  const timestamp = current.kind === 'album' ? current.publishTime : current.updateTime
+  if (!timestamp) return ''
+  return current.kind === 'album'
+    ? String(new Date(timestamp).getFullYear())
+    : new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' }).format(timestamp)
+})
+
+/** 当前集合更多菜单。 */
+const moreMenuItems: CommonMenuItem[] = [
+  { value: 'copy-link', label: '复制网易云链接' },
+  { value: 'give-agent', label: '交给小云' }
+]
 
 // ========= 函数 =========
 
@@ -160,6 +185,28 @@ async function playAll(): Promise<void> {
   await playFromSong(songs.value[0] as StandardSong)
 }
 
+/** 随机打乱当前集合并从第一首开始播放。 */
+async function shuffleAll(): Promise<void> {
+  if (songs.value.length === 0) return
+  /** Fisher-Yates 打乱使用的歌曲副本。 */
+  const shuffled = [...songs.value]
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    /** 当前索引前随机选中的交换位置。 */
+    const targetIndex = Math.floor(Math.random() * (index + 1))
+    /** 当前交换位置的歌曲。 */
+    const target = shuffled[targetIndex]
+    if (!target) continue
+    shuffled[targetIndex] = shuffled[index] as StandardSong
+    shuffled[index] = target
+  }
+  await player.playContext({
+    tracks: standardSongsToTrackSummaries(shuffled),
+    source: collectionKind.value === 'album'
+      ? { kind: 'album', albumId: collectionId.value }
+      : { kind: 'playlist', playlistId: collectionId.value }
+  })
+}
+
 /** 把歌曲追加到队列。 */
 function enqueueSong(song: StandardSong): void {
   player.enqueue([standardSongToTrackSummary(song)], collectionKind.value === 'album'
@@ -167,13 +214,27 @@ function enqueueSong(song: StandardSong): void {
     : { kind: 'playlist', playlistId: collectionId.value })
 }
 
-/** 把当前集合全部歌曲追加到队列末尾。 */
-function enqueueAll(): void {
-  if (songs.value.length === 0) return
-  player.enqueue(standardSongsToTrackSummaries(songs.value), collectionKind.value === 'album'
-    ? { kind: 'album', albumId: collectionId.value }
-    : { kind: 'playlist', playlistId: collectionId.value })
-  showToast(`已添加 ${songs.value.length} 首歌曲到队列。`, 'info')
+/** 下载当前集合的可播放歌曲；短期 URL 只在当前点击链路中使用。 */
+async function downloadCollection(): Promise<void> {
+  if (downloadBusy.value || songs.value.length === 0) return
+  downloadBusy.value = true
+  /** 下载成功的歌曲数量。 */
+  let succeeded = 0
+  for (const song of songs.value) {
+    /** 当前歌曲的短期播放源。 */
+    const response = await window.ncx.runtime.resolveTrackUrl({ trackId: song.id, quality: 'auto' })
+    if (!response.ok) continue
+    /** 只存在于当前循环的临时下载链接。 */
+    const anchor = document.createElement('a')
+    anchor.href = response.data.url
+    anchor.download = `${song.name.replace(/[\\/:*?"<>|]/gu, '_')}.${response.data.format ?? 'mp3'}`
+    anchor.rel = 'noopener'
+    anchor.click()
+    succeeded += 1
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
+  }
+  downloadBusy.value = false
+  showToast(succeeded > 0 ? `已提交 ${succeeded} 首歌曲下载。` : '当前集合没有可下载的歌曲。', succeeded > 0 ? 'success' : 'warning')
 }
 
 /** 收藏当前集合或取消收藏。 */
@@ -286,6 +347,29 @@ function giveSongToAgent(song: StandardSong): void {
   })
 }
 
+/** 处理集合更多菜单动作。 */
+function handleMoreAction(rawAction: string | number): void {
+  /** 标准化后的菜单动作。 */
+  const action = String(rawAction)
+  /** 当前集合实体快照。 */
+  const current = collection.value
+  if (!current) return
+  if (action === 'copy-link') {
+    /** 当前集合网易云网页链接。 */
+    const url = current.kind === 'album'
+      ? `https://music.163.com/album?id=${current.id}`
+      : `https://music.163.com/playlist?id=${current.id}`
+    void copyText(url, '集合链接已复制。')
+    return
+  }
+  if (action === 'give-agent') {
+    void router.push({
+      name: 'agent',
+      query: { intent: current.kind, resourceId: current.id, title: current.name }
+    })
+  }
+}
+
 // ========= 生命周期 =========
 
 watch([collectionKind, collectionId], () => {
@@ -359,7 +443,7 @@ onMounted(() => {
               {{ collection.name }}
             </h1>
             <p class="music-detail-meta">
-              {{ subtitle }} · {{ songs.length }} 首
+              {{ subtitle }}<template v-if="collectionDateLabel"> · {{ collection.kind === 'album' ? '发行于' : '更新于' }} {{ collectionDateLabel }}</template> · {{ songs.length }} 首
             </p>
             <p
               v-if="collection.description"
@@ -370,6 +454,7 @@ onMounted(() => {
             <div class="music-detail-actions">
               <CommonButton
                 variant="primary"
+                size="prominent"
                 :disabled="songs.length === 0"
                 @click="playAll"
               >
@@ -381,23 +466,33 @@ onMounted(() => {
               </CommonButton>
               <CommonButton
                 variant="secondary"
+                size="prominent"
                 :disabled="songs.length === 0"
-                @click="enqueueAll"
+                @click="shuffleAll"
               >
-                <ListPlus :size="15" />
-                加入队列
+                <Shuffle :size="16" />
+                随机播放
               </CommonButton>
               <CommonButton
                 v-if="collection.kind === 'album' || !isOwnedPlaylist"
                 variant="secondary"
                 @click="toggleSubscription"
               >
-                <Heart
-                  :size="15"
-                  :fill="collection.subscribed ? 'currentColor' : 'none'"
-                />
-                {{ collection.subscribed ? '已收藏' : '收藏' }}
+                <Heart v-if="collection.subscribed" :size="15" fill="currentColor" />
+                <Plus v-else :size="15" />
+                {{ collection.subscribed ? '已在资料库' : '添加至资料库' }}
               </CommonButton>
+              <CommonButton
+                variant="secondary"
+                :loading="downloadBusy"
+                :disabled="songs.length === 0"
+                @click="downloadCollection"
+              ><Download :size="15" />下载</CommonButton>
+              <CommonDropdownMenu :items="moreMenuItems" placement="bottom-end" @select="handleMoreAction">
+                <template #trigger="{ toggle }">
+                  <CommonButton variant="ghost" aria-label="更多操作" @click="toggle"><Ellipsis :size="17" /></CommonButton>
+                </template>
+              </CommonDropdownMenu>
             </div>
           </div>
         </header>

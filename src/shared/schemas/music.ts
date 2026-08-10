@@ -112,6 +112,8 @@ export const StandardSongSchema = z.strictObject({
   artists: z.array(StandardArtistSummarySchema).default([]),
   album: StandardAlbumSummarySchema.optional(),
   durationMs: z.number().int().nonnegative().optional(),
+  /** 当前用户在指定统计周期内的听歌次数，仅听歌排行响应提供。 */
+  listeningCount: z.number().int().nonnegative().optional(),
   access: TrackAccessMetaSchema.default({ badges: [], playableKnown: false }),
   sources: z.array(MusicEntitySourceSchema).min(1),
   updatedAt: EntityUpdatedAtSchema
@@ -142,6 +144,10 @@ export const StandardArtistSchema = z.strictObject({
   name: z.string().min(1).max(160),
   alias: z.array(z.string().min(1).max(160)).default([]),
   artworkUrl: z.string().url().optional(),
+  /** 歌手详情页主视觉封面；缺失时回退到头像写真。 */
+  coverUrl: z.string().url().optional(),
+  /** 当前账户是否已关注歌手。 */
+  followed: z.boolean().optional(),
   songCount: z.number().int().nonnegative().optional(),
   albumCount: z.number().int().nonnegative().optional(),
   description: z.string().max(5_000).optional(),
@@ -175,6 +181,10 @@ export const StandardPlaylistSchema = z.strictObject({
   artworkUrl: z.string().url().optional(),
   trackCount: z.number().int().nonnegative().optional(),
   playCount: z.number().int().nonnegative().optional(),
+  subscribedCount: z.number().int().nonnegative().optional(),
+  updateTime: z.number().int().nonnegative().optional(),
+  privacy: z.number().int().nonnegative().optional(),
+  updateFrequency: z.string().max(80).optional(),
   subscribed: z.boolean().optional(),
   description: z.string().max(5_000).optional(),
   owned: z.boolean().optional(),
@@ -189,9 +199,17 @@ export const StandardUserSchema = z.strictObject({
   id: MusicUserIdSchema,
   nickname: z.string().min(1).max(160),
   avatarUrl: z.string().url().optional(),
+  backgroundUrl: z.string().url().optional(),
   signature: z.string().max(400).optional(),
   followeds: z.number().int().nonnegative().optional(),
   follows: z.number().int().nonnegative().optional(),
+  level: z.number().int().nonnegative().optional(),
+  listenSongs: z.number().int().nonnegative().optional(),
+  createTime: z.number().int().nonnegative().optional(),
+  birthday: z.number().int().nonnegative().optional(),
+  gender: z.number().int().min(0).max(2).optional(),
+  vipType: z.number().int().nonnegative().optional(),
+  location: z.string().max(80).optional(),
   sources: z.array(MusicEntitySourceSchema).min(1),
   updatedAt: EntityUpdatedAtSchema
 })
@@ -213,6 +231,7 @@ export const StandardMusicEntitySchema = z.discriminatedUnion('kind', [
 export const MusicSearchPayloadSchema = z.strictObject({
   operation: z.literal('search'),
   query: z.string().min(1).max(120),
+  category: z.enum(['all', 'songs', 'artists', 'albums', 'playlists', 'lyrics']).optional(),
   limit: z.number().int().min(1).max(50).default(20),
   offset: z.number().int().min(0).max(5_000).default(0)
 })
@@ -300,6 +319,78 @@ export const GetSimilarArtistsPayloadSchema = z.strictObject({
   artistId: ArtistIdSchema
 })
 
+/** 读取私人 FM 歌曲请求。 */
+export const GetPersonalFmPayloadSchema = z.strictObject({
+  operation: z.literal('getPersonalFm'),
+  limit: z.number().int().min(1).max(20).default(3)
+})
+
+/** 读取热门推荐歌手请求。 */
+export const GetRecommendedArtistsPayloadSchema = z.strictObject({
+  operation: z.literal('getRecommendedArtists'),
+  limit: z.number().int().min(1).max(50).default(12),
+  offset: z.number().int().min(0).max(5_000).default(0)
+})
+
+/** 读取最新专辑请求。 */
+export const GetNewAlbumsPayloadSchema = z.strictObject({
+  operation: z.literal('getNewAlbums'),
+  area: z.enum(['ALL', 'ZH', 'EA', 'KR', 'JP']).default('ALL'),
+  limit: z.number().int().min(1).max(50).default(20),
+  offset: z.number().int().min(0).max(5_000).default(0)
+})
+
+/** 读取全部公开榜单摘要请求。 */
+export const GetChartsPayloadSchema = z.strictObject({
+  operation: z.literal('getCharts')
+})
+
+/** 按网易云歌单分类读取内容请求。 */
+export const GetCategoryPlaylistsPayloadSchema = z.strictObject({
+  operation: z.literal('getCategoryPlaylists'),
+  category: z.string().trim().min(1).max(40),
+  limit: z.number().int().min(1).max(50).default(24)
+})
+
+/** 按地区、类型和首字母筛选歌手请求。 */
+export const GetArtistsPayloadSchema = z.strictObject({
+  operation: z.literal('getArtists'),
+  area: z.string().regex(/^-?\d{1,3}$/u).default('-1'),
+  artistType: z.string().regex(/^-?\d{1,3}$/u).default('-1'),
+  initial: z.string().regex(/^(?:[A-Za-z]|-1)$/u).optional(),
+  limit: z.number().int().min(1).max(50).default(30),
+  offset: z.number().int().min(0).max(5_000).default(0)
+})
+
+/** 读取实时搜索建议请求。 */
+export const GetSearchSuggestionsPayloadSchema = z.strictObject({
+  operation: z.literal('getSearchSuggestions'),
+  query: z.string().trim().min(1).max(120),
+  limit: z.number().int().min(1).max(20).default(8)
+})
+
+/** 读取用户听歌排行请求。 */
+export const GetListeningHistoryPayloadSchema = z.strictObject({
+  operation: z.literal('getListeningHistory'),
+  userId: MusicUserIdSchema,
+  period: z.enum(['week', 'all']),
+  limit: z.number().int().min(1).max(100).default(100)
+})
+
+/** 读取歌手按热度或时间排序的全部作品请求。 */
+export const GetArtistSongsPayloadSchema = z.strictObject({
+  operation: z.literal('getArtistSongs'),
+  artistId: ArtistIdSchema,
+  order: z.enum(['hot', 'time']).default('time'),
+  limit: z.number().int().min(1).max(100).default(50),
+  offset: z.number().int().min(0).max(5_000).default(0)
+})
+
+/** 读取浏览页由 API 能力层公布的动态筛选项请求。 */
+export const GetBrowseFacetsPayloadSchema = z.strictObject({
+  operation: z.literal('getBrowseFacets')
+})
+
 /** 读取歌曲、专辑或歌单评论请求。 */
 export const GetMusicCommentsPayloadSchema = z.strictObject({
   operation: z.literal('getComments'),
@@ -325,6 +416,16 @@ export const MusicReadPayloadSchema = z.discriminatedUnion('operation', [
   GetLikedSongsPayloadSchema,
   GetArtistAlbumsPayloadSchema,
   GetSimilarArtistsPayloadSchema,
+  GetPersonalFmPayloadSchema,
+  GetRecommendedArtistsPayloadSchema,
+  GetNewAlbumsPayloadSchema,
+  GetChartsPayloadSchema,
+  GetCategoryPlaylistsPayloadSchema,
+  GetArtistsPayloadSchema,
+  GetSearchSuggestionsPayloadSchema,
+  GetListeningHistoryPayloadSchema,
+  GetArtistSongsPayloadSchema,
+  GetBrowseFacetsPayloadSchema,
   GetMusicCommentsPayloadSchema
 ])
 
@@ -332,7 +433,9 @@ export const MusicReadPayloadSchema = z.discriminatedUnion('operation', [
 export const MusicSearchResultSchema = z.strictObject({
   kind: z.literal('search'),
   query: z.string().min(1).max(120),
+  category: z.enum(['all', 'songs', 'artists', 'albums', 'playlists', 'lyrics', 'suggestions']).default('all'),
   songs: z.array(StandardSongSchema).default([]),
+  lyrics: z.array(StandardSongSchema).default([]),
   artists: z.array(StandardArtistSchema).default([]),
   albums: z.array(StandardAlbumSchema).default([]),
   playlists: z.array(StandardPlaylistSchema).default([]),
@@ -352,17 +455,33 @@ export const MusicEntityResultSchema = z.discriminatedUnion('kind', [
 /** 标准歌曲集合响应。 */
 export const MusicSongCollectionResultSchema = z.strictObject({
   kind: z.literal('songCollection'),
-  collection: z.enum(['new', 'daily', 'liked']),
+  collection: z.enum(['new', 'daily', 'liked', 'personalFm', 'historyWeek', 'historyAll', 'artistWorks']),
   ownerId: MusicUserIdSchema.optional(),
+  artistId: ArtistIdSchema.optional(),
   songs: z.array(StandardSongSchema).default([]),
   updatedAt: EntityUpdatedAtSchema
+})
+
+/** 浏览页单个动态筛选选项。 */
+export const MusicBrowseFacetOptionSchema = z.strictObject({
+  value: z.string().min(1).max(80),
+  label: z.string().min(1).max(80)
+})
+
+/** 浏览页动态筛选分组。 */
+export const MusicBrowseFacetGroupSchema = z.strictObject({
+  key: z.enum(['playlist-language', 'playlist-style', 'playlist-scene', 'playlist-mood', 'playlist-theme', 'artist-area', 'artist-type', 'artist-initial']),
+  label: z.string().min(1).max(80),
+  options: z.array(MusicBrowseFacetOptionSchema).default([])
 })
 
 /** 标准歌单集合响应。 */
 export const MusicPlaylistCollectionResultSchema = z.strictObject({
   kind: z.literal('playlistCollection'),
-  collection: z.enum(['featured', 'user']),
+  collection: z.enum(['featured', 'user', 'charts', 'category', 'facets']),
   ownerId: MusicUserIdSchema.optional(),
+  category: z.string().max(40).optional(),
+  facets: z.array(MusicBrowseFacetGroupSchema).default([]),
   playlists: z.array(StandardPlaylistSchema).default([]),
   updatedAt: EntityUpdatedAtSchema
 })
@@ -370,8 +489,9 @@ export const MusicPlaylistCollectionResultSchema = z.strictObject({
 /** 标准专辑集合响应。 */
 export const MusicAlbumCollectionResultSchema = z.strictObject({
   kind: z.literal('albumCollection'),
-  collection: z.literal('artist'),
-  artistId: ArtistIdSchema,
+  collection: z.enum(['artist', 'new']),
+  artistId: ArtistIdSchema.optional(),
+  area: z.enum(['ALL', 'ZH', 'EA', 'KR', 'JP']).optional(),
   albums: z.array(StandardAlbumSchema).default([]),
   updatedAt: EntityUpdatedAtSchema
 })
@@ -379,8 +499,11 @@ export const MusicAlbumCollectionResultSchema = z.strictObject({
 /** 标准歌手集合响应。 */
 export const MusicArtistCollectionResultSchema = z.strictObject({
   kind: z.literal('artistCollection'),
-  collection: z.literal('similar'),
-  artistId: ArtistIdSchema,
+  collection: z.enum(['similar', 'recommended', 'browse']),
+  artistId: ArtistIdSchema.optional(),
+  area: z.string().max(8).optional(),
+  artistType: z.string().max(8).optional(),
+  initial: z.string().max(1).optional(),
   artists: z.array(StandardArtistSchema).default([]),
   updatedAt: EntityUpdatedAtSchema
 })
@@ -430,6 +553,13 @@ export const SubscribePlaylistMutationSchema = z.strictObject({
 export const SubscribeAlbumMutationSchema = z.strictObject({
   operation: z.literal('subscribeAlbum'),
   albumId: AlbumIdSchema,
+  subscribed: z.boolean()
+})
+
+/** 关注或取消关注歌手请求。 */
+export const SubscribeArtistMutationSchema = z.strictObject({
+  operation: z.literal('subscribeArtist'),
+  artistId: ArtistIdSchema,
   subscribed: z.boolean()
 })
 
@@ -503,6 +633,7 @@ export const MusicMutationPayloadSchema = z.discriminatedUnion('operation', [
   LikeTrackMutationSchema,
   SubscribePlaylistMutationSchema,
   SubscribeAlbumMutationSchema,
+  SubscribeArtistMutationSchema,
   CreatePlaylistMutationSchema,
   RenamePlaylistMutationSchema,
   DeletePlaylistMutationSchema,
@@ -520,6 +651,7 @@ export const MusicMutationResultSchema = z.strictObject({
     'likeTrack',
     'subscribePlaylist',
     'subscribeAlbum',
+    'subscribeArtist',
     'createPlaylist',
     'renamePlaylist',
     'deletePlaylist',
@@ -601,6 +733,8 @@ export type StandardArtist = z.infer<typeof StandardArtistSchema>
 export type StandardAlbum = z.infer<typeof StandardAlbumSchema>
 export type StandardPlaylist = z.infer<typeof StandardPlaylistSchema>
 export type StandardUser = z.infer<typeof StandardUserSchema>
+export type MusicBrowseFacetOption = z.infer<typeof MusicBrowseFacetOptionSchema>
+export type MusicBrowseFacetGroup = z.infer<typeof MusicBrowseFacetGroupSchema>
 export type StandardMusicEntity = z.infer<typeof StandardMusicEntitySchema>
 export type MusicReadPayload = z.infer<typeof MusicReadPayloadSchema>
 export type MusicReadResult = z.infer<typeof MusicReadResultSchema>

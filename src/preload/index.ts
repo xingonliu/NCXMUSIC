@@ -114,6 +114,7 @@ const runtimeBridge: NcxRuntimeBridge = {
     gateway.readMusic({
       operation: 'search',
       query: input.query,
+      category: input.category ?? 'all',
       limit: input.limit ?? 20,
       offset: input.offset ?? 0,
       ...(input.requestId ? { requestId: input.requestId } : {})

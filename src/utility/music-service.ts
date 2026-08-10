@@ -111,6 +111,7 @@ export class MusicService {
       return MusicReadResultSchema.parse({
         ...result,
         songs: result.songs.map((entity) => this.entityPool.upsert(entity)),
+        lyrics: result.lyrics.map((entity) => this.entityPool.upsert(entity)),
         artists: result.artists.map((entity) => this.entityPool.upsert(entity)),
         albums: result.albums.map((entity) => this.entityPool.upsert(entity)),
         playlists: result.playlists.map((entity) => this.entityPool.upsert(entity))

@@ -9,6 +9,7 @@ import {
   MusicReadResultSchema,
   type MusicMutationPayload,
   type MusicMutationResult,
+  type MusicBrowseFacetGroup,
   type MusicCommentResourceType,
   type MusicReadPayload,
   type MusicReadResult,
@@ -58,6 +59,16 @@ export interface NeteaseMusicApi {
   album(params: Record<string, unknown>): Promise<NeteaseResponse>
   playlist_detail(params: Record<string, unknown>): Promise<NeteaseResponse>
   user_detail(params: Record<string, unknown>): Promise<NeteaseResponse>
+  search_suggest?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  personal_fm?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  top_artists?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  top_album?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  toplist?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  top_playlist?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  playlist_catlist?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  artist_list?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  user_record?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  artist_songs?(params: Record<string, unknown>): Promise<NeteaseResponse>
   personalized?(params: Record<string, unknown>): Promise<NeteaseResponse>
   personalized_newsong?(params: Record<string, unknown>): Promise<NeteaseResponse>
   recommend_songs?(params: Record<string, unknown>): Promise<NeteaseResponse>
@@ -68,6 +79,7 @@ export interface NeteaseMusicApi {
   like?(params: Record<string, unknown>): Promise<NeteaseResponse>
   playlist_subscribe?(params: Record<string, unknown>): Promise<NeteaseResponse>
   album_sub?(params: Record<string, unknown>): Promise<NeteaseResponse>
+  artist_sub?(params: Record<string, unknown>): Promise<NeteaseResponse>
   playlist_create?(params: Record<string, unknown>): Promise<NeteaseResponse>
   playlist_name_update?(params: Record<string, unknown>): Promise<NeteaseResponse>
   playlist_delete?(params: Record<string, unknown>): Promise<NeteaseResponse>
@@ -108,8 +120,36 @@ const SEARCH_TYPES = {
   songs: '1',
   artists: '100',
   albums: '10',
-  playlists: '1000'
+  playlists: '1000',
+  lyrics: '1006'
 } as const
+
+/** artist_list API 当前版本公开的地区 facet。 */
+const ARTIST_AREA_FACETS = [
+  { value: '-1', label: '全部' },
+  { value: '7', label: '华语' },
+  { value: '96', label: '欧美' },
+  { value: '8', label: '日本' },
+  { value: '16', label: '韩国' },
+  { value: '0', label: '其他' }
+] as const
+
+/** artist_list API 当前版本公开的歌手类型 facet。 */
+const ARTIST_TYPE_FACETS = [
+  { value: '-1', label: '全部类型' },
+  { value: '1', label: '男歌手' },
+  { value: '2', label: '女歌手' },
+  { value: '3', label: '乐队 / 组合' }
+] as const
+
+/** artist_list API 支持的 A-Z 首字母 facet，由能力层生成而非页面写死。 */
+const ARTIST_INITIAL_FACETS = [
+  { value: '-1', label: '#' },
+  ...Array.from({ length: 26 }, (_, index) => ({
+    value: String.fromCharCode(65 + index),
+    label: String.fromCharCode(65 + index)
+  }))
+]
 
 /** 标准评论资源类型到网易云数字类型的稳定映射。 */
 const COMMENT_RESOURCE_TYPES: Record<MusicCommentResourceType, number> = {
@@ -476,6 +516,7 @@ function normalizeSong(rawValue: unknown, api: string, observedAt: string): Stan
     artists,
     ...(album ? { album } : {}),
     ...(numberValue(raw['dt'] ?? raw['duration']) !== undefined ? { durationMs: numberValue(raw['dt'] ?? raw['duration']) } : {}),
+    ...(numberValue(raw['listeningCount']) !== undefined ? { listeningCount: numberValue(raw['listeningCount']) } : {}),
     access: normalizeAccess(raw),
     sources: source(api, observedAt),
     updatedAt: observedAt
@@ -498,6 +539,8 @@ function normalizeArtist(
     name: summary.name,
     alias: summary.alias,
     ...(summary.artworkUrl ? { artworkUrl: summary.artworkUrl } : {}),
+    ...(urlValue(raw['cover'] ?? raw['coverUrl']) ? { coverUrl: urlValue(raw['cover'] ?? raw['coverUrl']) } : {}),
+    ...(booleanValue(raw['followed']) !== undefined ? { followed: booleanValue(raw['followed']) } : {}),
     ...(numberValue(raw['musicSize'] ?? raw['songSize']) !== undefined ? { songCount: numberValue(raw['musicSize'] ?? raw['songSize']) } : {}),
     ...(numberValue(raw['albumSize']) !== undefined ? { albumCount: numberValue(raw['albumSize']) } : {}),
     ...(stringValue(raw['briefDesc'] ?? raw['desc']) ? { description: stringValue(raw['briefDesc'] ?? raw['desc']) } : {}),
@@ -553,6 +596,10 @@ function normalizePlaylist(
     ...(urlValue(raw['coverImgUrl'] ?? raw['picUrl']) ? { artworkUrl: urlValue(raw['coverImgUrl'] ?? raw['picUrl']) } : {}),
     ...(numberValue(raw['trackCount']) !== undefined ? { trackCount: numberValue(raw['trackCount']) } : {}),
     ...(numberValue(raw['playCount']) !== undefined ? { playCount: numberValue(raw['playCount']) } : {}),
+    ...(numberValue(raw['subscribedCount']) !== undefined ? { subscribedCount: numberValue(raw['subscribedCount']) } : {}),
+    ...(numberValue(raw['updateTime']) !== undefined ? { updateTime: numberValue(raw['updateTime']) } : {}),
+    ...(numberValue(raw['privacy']) !== undefined ? { privacy: numberValue(raw['privacy']) } : {}),
+    ...(stringValue(raw['updateFrequency']) ? { updateFrequency: stringValue(raw['updateFrequency']) } : {}),
     ...(typeof raw['subscribed'] === 'boolean' ? { subscribed: raw['subscribed'] } : {}),
     ...(stringValue(raw['description']) ? { description: stringValue(raw['description']) } : {}),
     ...(ownerId && creator ? { owned: creator.id === ownerId } : {}),
@@ -563,18 +610,34 @@ function normalizePlaylist(
 }
 
 /** 归一化用户实体。 */
-function normalizeUser(rawValue: unknown, api: string, observedAt: string): StandardUser | undefined {
+function normalizeUser(
+  rawValue: unknown,
+  api: string,
+  observedAt: string,
+  detailValue: unknown = {}
+): StandardUser | undefined {
   const summary = normalizeUserSummary(rawValue)
   const raw = record(rawValue)
+  const detail = record(detailValue) ?? {}
   if (!summary || !raw) return undefined
+  /** API 可能直接返回属地字符串，也可能返回 ipLocation 对象。 */
+  const location = stringValue(raw['location'] ?? record(raw['ipLocation'])?.['location'])
   return {
     kind: 'user',
     id: summary.id,
     nickname: summary.nickname,
     ...(summary.avatarUrl ? { avatarUrl: summary.avatarUrl } : {}),
+    ...(urlValue(raw['backgroundUrl']) ? { backgroundUrl: urlValue(raw['backgroundUrl']) } : {}),
     ...(stringValue(raw['signature']) ? { signature: stringValue(raw['signature']) } : {}),
     ...(numberValue(raw['followeds']) !== undefined ? { followeds: numberValue(raw['followeds']) } : {}),
     ...(numberValue(raw['follows']) !== undefined ? { follows: numberValue(raw['follows']) } : {}),
+    ...(numberValue(detail['level'] ?? raw['level']) !== undefined ? { level: numberValue(detail['level'] ?? raw['level']) } : {}),
+    ...(numberValue(detail['listenSongs'] ?? raw['listenSongs']) !== undefined ? { listenSongs: numberValue(detail['listenSongs'] ?? raw['listenSongs']) } : {}),
+    ...(numberValue(raw['createTime']) !== undefined ? { createTime: numberValue(raw['createTime']) } : {}),
+    ...(numberValue(raw['birthday']) !== undefined ? { birthday: numberValue(raw['birthday']) } : {}),
+    ...(numberValue(raw['gender']) !== undefined ? { gender: numberValue(raw['gender']) } : {}),
+    ...(numberValue(raw['vipType']) !== undefined ? { vipType: numberValue(raw['vipType']) } : {}),
+    ...(location ? { location } : {}),
     sources: source(api, observedAt),
     updatedAt: observedAt
   }
@@ -649,6 +712,38 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
     if (parsed.operation === 'getSimilarArtists') {
       return this.getSimilarArtists(parsed.artistId, cookie, signal)
     }
+    if (parsed.operation === 'getPersonalFm') return this.getPersonalFm(parsed.limit, cookie, signal)
+    if (parsed.operation === 'getRecommendedArtists') {
+      return this.getRecommendedArtists(parsed.limit, parsed.offset, cookie, signal)
+    }
+    if (parsed.operation === 'getNewAlbums') {
+      return this.getNewAlbums(parsed.area, parsed.limit, parsed.offset, cookie, signal)
+    }
+    if (parsed.operation === 'getCharts') return this.getCharts(cookie, signal)
+    if (parsed.operation === 'getCategoryPlaylists') {
+      return this.getCategoryPlaylists(parsed.category, parsed.limit, cookie, signal)
+    }
+    if (parsed.operation === 'getArtists') {
+      return this.getArtists(
+        parsed.area,
+        parsed.artistType,
+        parsed.initial,
+        parsed.limit,
+        parsed.offset,
+        cookie,
+        signal
+      )
+    }
+    if (parsed.operation === 'getSearchSuggestions') {
+      return this.getSearchSuggestions(parsed.query, parsed.limit, cookie, signal)
+    }
+    if (parsed.operation === 'getListeningHistory') {
+      return this.getListeningHistory(parsed.userId, parsed.period, parsed.limit, cookie, signal)
+    }
+    if (parsed.operation === 'getArtistSongs') {
+      return this.getArtistSongs(parsed.artistId, parsed.order, parsed.limit, parsed.offset, cookie, signal)
+    }
+    if (parsed.operation === 'getBrowseFacets') return this.getBrowseFacets(cookie, signal)
     return this.getComments(
       parsed.resourceType,
       parsed.resourceId,
@@ -695,6 +790,14 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
         timeout: NETEASE_API_TIMEOUT_MS
       }))
       entityId = parsed.albumId
+    } else if (parsed.operation === 'subscribeArtist') {
+      response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'artist_sub')({
+        id: parsed.artistId,
+        t: parsed.subscribed ? 1 : 0,
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))
+      entityId = parsed.artistId
     } else if (parsed.operation === 'createPlaylist') {
       response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'playlist_create')({
         name: parsed.name,
@@ -789,7 +892,7 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
     return this.api
   }
 
-  /** 执行搜索并归一化歌曲、歌手、专辑、歌单候选。 */
+  /** 执行搜索并按当前分类归一化候选；“全部”并行读取全部内容类型。 */
   private async search(
     payload: Extract<MusicReadPayload, { operation: 'search' }>,
     cookie: string,
@@ -814,16 +917,27 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
       signal?.throwIfAborted()
       return record(bodyRecord(response)['result']) ?? {}
     }
-    const [songResult, artistResult, albumResult, playlistResult] = await Promise.all([
-      callSearch(SEARCH_TYPES.songs),
-      callSearch(SEARCH_TYPES.artists),
-      callSearch(SEARCH_TYPES.albums),
-      callSearch(SEARCH_TYPES.playlists)
+    /** 未显式传入分类时保持原有的“全部”搜索语义。 */
+    const searchCategory = payload.category ?? 'all'
+    /** 当前分类未请求的响应使用空对象，保持标准结果结构稳定。 */
+    const emptyResult: UnknownRecord = {}
+    /** 单个分类是否需要向上游读取。 */
+    const needs = (category: Exclude<typeof searchCategory, 'all'>): boolean =>
+      searchCategory === 'all' || searchCategory === category
+    /** 各分类独立响应，防止一个页面 Tab 拉取无关数据。 */
+    const [songResult, artistResult, albumResult, playlistResult, lyricResult] = await Promise.all([
+      needs('songs') ? callSearch(SEARCH_TYPES.songs) : Promise.resolve(emptyResult),
+      needs('artists') ? callSearch(SEARCH_TYPES.artists) : Promise.resolve(emptyResult),
+      needs('albums') ? callSearch(SEARCH_TYPES.albums) : Promise.resolve(emptyResult),
+      needs('playlists') ? callSearch(SEARCH_TYPES.playlists) : Promise.resolve(emptyResult),
+      needs('lyrics') ? callSearch(SEARCH_TYPES.lyrics) : Promise.resolve(emptyResult)
     ])
     return MusicReadResultSchema.parse({
       kind: 'search',
       query: payload.query,
+      category: searchCategory,
       songs: array(songResult['songs']).map((item) => normalizeSong(item, 'ncm.search', observedAt)).filter(Boolean),
+      lyrics: array(lyricResult['songs']).map((item) => normalizeSong(item, 'ncm.search', observedAt)).filter(Boolean),
       artists: array(artistResult['artists']).map((item) => normalizeArtist(item, 'ncm.search', observedAt)).filter(Boolean),
       albums: array(albumResult['albums']).map((item) => normalizeAlbum(item, [], 'ncm.search', observedAt)).filter(Boolean),
       playlists: array(playlistResult['playlists']).map((item) => normalizePlaylist(item, 'ncm.search', observedAt)).filter(Boolean),
@@ -917,7 +1031,10 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
       api.user_detail({ uid: id, cookie, timeout: NETEASE_API_TIMEOUT_MS })
     )
     signal?.throwIfAborted()
-    const entity = normalizeUser(bodyRecord(response)['profile'], 'ncm.user_detail', observedAt)
+    /** 用户详情顶层同时承载等级与累计听歌数。 */
+    const body = bodyRecord(response)
+    /** 个人页标准用户实体。 */
+    const entity = normalizeUser(body['profile'], 'ncm.user_detail', observedAt, body)
     return MusicReadResultSchema.parse({ kind: 'user', entity: entity ?? null })
   }
 
@@ -1124,6 +1241,377 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
       artists: array(bodyRecord(response)['artists'])
         .map((item) => normalizeArtist(item, 'ncm.simi_artist', observedAt))
         .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取登录账户私人 FM，并保持标准歌曲集合语义。 */
+  private async getPersonalFm(
+    limit: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    /** 已加载的网易云 API。 */
+    const api = await this.requiredApi()
+    /** 本次 FM 观测时间。 */
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 私人 FM 上游响应。 */
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'personal_fm')({
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'songCollection',
+      collection: 'personalFm',
+      songs: array(bodyRecord(response)['data'])
+        .slice(0, limit)
+        .map((item) => normalizeSong(item, 'ncm.personal_fm', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取热门歌手作为首页与浏览页的稳定推荐来源。 */
+  private async getRecommendedArtists(
+    limit: number,
+    offset: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    /** 已加载的网易云 API。 */
+    const api = await this.requiredApi()
+    /** 本次歌手推荐观测时间。 */
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 热门歌手上游响应。 */
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'top_artists')({
+      limit,
+      offset,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'artistCollection',
+      collection: 'recommended',
+      artists: array(bodyRecord(response)['artists'])
+        .map((item) => normalizeArtist(item, 'ncm.top_artists', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 按地区读取最新上架专辑。 */
+  private async getNewAlbums(
+    area: 'ALL' | 'ZH' | 'EA' | 'KR' | 'JP',
+    limit: number,
+    offset: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    /** 已加载的网易云 API。 */
+    const api = await this.requiredApi()
+    /** 本次最新专辑观测时间。 */
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 新碟上架上游响应。 */
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'top_album')({
+      area,
+      limit,
+      offset,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    /** 不同地区返回中兼容 albums、monthData 与 weekData 字段。 */
+    const body = bodyRecord(response)
+    /** 统一后的专辑原始数组。 */
+    const albumsValue = body['albums'] ?? body['monthData'] ?? body['weekData']
+    return MusicReadResultSchema.parse({
+      kind: 'albumCollection',
+      collection: 'new',
+      area,
+      albums: array(albumsValue)
+        .slice(0, limit)
+        .map((item) => normalizeAlbum(item, [], 'ncm.top_album', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取全部公开榜单摘要；榜单本身继续复用标准歌单详情页。 */
+  private async getCharts(cookie: string, signal?: AbortSignal): Promise<MusicReadResult> {
+    /** 已加载的网易云 API。 */
+    const api = await this.requiredApi()
+    /** 本次榜单观测时间。 */
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 榜单摘要上游响应。 */
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'toplist')({
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'playlistCollection',
+      collection: 'charts',
+      playlists: array(bodyRecord(response)['list'])
+        .map((item) => normalizePlaylist(item, 'ncm.toplist', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 按音乐风格、场景或情绪分类读取歌单。 */
+  private async getCategoryPlaylists(
+    category: string,
+    limit: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    /** 已加载的网易云 API。 */
+    const api = await this.requiredApi()
+    /** 本次分类歌单观测时间。 */
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 分类歌单上游响应。 */
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'top_playlist')({
+      cat: category,
+      order: 'hot',
+      limit,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'playlistCollection',
+      collection: 'category',
+      category,
+      playlists: array(bodyRecord(response)['playlists'])
+        .map((item) => normalizePlaylist(item, 'ncm.top_playlist', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 按地区、歌手类型与首字母读取歌手探索列表。 */
+  private async getArtists(
+    area: string,
+    artistType: string,
+    initial: string | undefined,
+    limit: number,
+    offset: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    /** 已加载的网易云 API。 */
+    const api = await this.requiredApi()
+    /** 本次歌手探索观测时间。 */
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 分类歌手上游响应。 */
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'artist_list')({
+      area,
+      type: artistType,
+      ...(initial ? { initial } : {}),
+      limit,
+      offset,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'artistCollection',
+      collection: 'browse',
+      area,
+      artistType,
+      ...(initial ? { initial } : {}),
+      artists: array(bodyRecord(response)['artists'])
+        .map((item) => normalizeArtist(item, 'ncm.artist_list', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取网易云实时搜索建议并归一化为轻量搜索结果。 */
+  private async getSearchSuggestions(
+    query: string,
+    limit: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    /** 已加载的网易云 API。 */
+    const api = await this.requiredApi()
+    /** 本次建议观测时间。 */
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 搜索建议上游响应。 */
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'search_suggest')({
+      keywords: query,
+      /** web 响应包含歌曲、歌手、专辑和歌单；mobile 仅返回关键词列表。 */
+      type: 'web',
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    /** 搜索建议结果对象。 */
+    const result = record(bodyRecord(response)['result']) ?? {}
+    return MusicReadResultSchema.parse({
+      kind: 'search',
+      query,
+      category: 'suggestions',
+      songs: array(result['songs']).slice(0, limit).map((item) => normalizeSong(item, 'ncm.search_suggest', observedAt)).filter(Boolean),
+      lyrics: [],
+      artists: array(result['artists']).slice(0, limit).map((item) => normalizeArtist(item, 'ncm.search_suggest', observedAt)).filter(Boolean),
+      albums: array(result['albums']).slice(0, limit).map((item) => normalizeAlbum(item, [], 'ncm.search_suggest', observedAt)).filter(Boolean),
+      playlists: array(result['playlists']).slice(0, limit).map((item) => normalizePlaylist(item, 'ncm.search_suggest', observedAt)).filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取最近一周或所有时间的听歌排行，并保留个人听歌次数。 */
+  private async getListeningHistory(
+    userId: string,
+    period: 'week' | 'all',
+    limit: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    /** 已加载的网易云 API。 */
+    const api = await this.requiredApi()
+    /** 本次听歌排行观测时间。 */
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 听歌排行上游响应。 */
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'user_record')({
+      uid: userId,
+      type: period === 'week' ? 1 : 0,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    /** 当前周期原始排行记录。 */
+    const rows = array(bodyRecord(response)[period === 'week' ? 'weekData' : 'allData']).slice(0, limit)
+    /** 将排行包装字段合并到歌曲输入，避免泄露原始响应。 */
+    const songs = rows
+      .map((item) => {
+        /** 单条听歌排行包装对象。 */
+        const row = record(item)
+        /** 包装内的歌曲对象。 */
+        const song = record(row?.['song'])
+        if (!row || !song) return undefined
+        return normalizeSong(
+          { ...song, listeningCount: numberValue(row['playCount']) ?? 0 },
+          'ncm.user_record',
+          observedAt
+        )
+      })
+      .filter(Boolean)
+    return MusicReadResultSchema.parse({
+      kind: 'songCollection',
+      collection: period === 'week' ? 'historyWeek' : 'historyAll',
+      ownerId: userId,
+      songs,
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取歌手按发布时间或热度排序的作品，用于合作作品优雅降级。 */
+  private async getArtistSongs(
+    artistId: string,
+    order: 'hot' | 'time',
+    limit: number,
+    offset: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    /** 已加载的网易云 API。 */
+    const api = await this.requiredApi()
+    /** 本次歌手作品观测时间。 */
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 歌手作品上游响应。 */
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'artist_songs')({
+      id: artistId,
+      order,
+      limit,
+      offset,
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    return MusicReadResultSchema.parse({
+      kind: 'songCollection',
+      collection: 'artistWorks',
+      artistId,
+      songs: array(bodyRecord(response)['songs'])
+        .map((item) => normalizeSong(item, 'ncm.artist_songs', observedAt))
+        .filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取 API 分类树，并把歌手筛选能力一并公布给页面。 */
+  private async getBrowseFacets(cookie: string, signal?: AbortSignal): Promise<MusicReadResult> {
+    /** 已加载的网易云 API。 */
+    const api = await this.requiredApi()
+    /** 本次 facet 观测时间。 */
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 网易云歌单分类树响应。 */
+    const response = await withoutThirdPartyConsole(() => requiredApiMethod(api, 'playlist_catlist')({
+      cookie,
+      timeout: NETEASE_API_TIMEOUT_MS
+    }))
+    signal?.throwIfAborted()
+    /** 歌单分类树响应体。 */
+    const body = bodyRecord(response)
+    /** 分类编号到标准 facet key 的稳定映射。 */
+    const playlistFacetKeys: Record<string, MusicBrowseFacetGroup['key']> = {
+      '0': 'playlist-language',
+      '1': 'playlist-style',
+      '2': 'playlist-scene',
+      '3': 'playlist-mood',
+      '4': 'playlist-theme'
+    }
+    /** 上游分类编号到显示名称的对象。 */
+    const categoryLabels = record(body['categories']) ?? {}
+    /** 每个分类编号下由 API 返回的真实选项。 */
+    const optionsByCategory = new Map<string, Array<{ value: string; label: string }>>()
+    for (const item of array(body['sub'])) {
+      /** API 返回的单个歌单分类。 */
+      const raw = record(item)
+      /** 分类名称同时作为 top_playlist 的 cat 参数。 */
+      const name = stringValue(raw?.['name'])
+      /** 分类所属分组编号。 */
+      const category = String(numberValue(raw?.['category']) ?? '')
+      if (!name || !playlistFacetKeys[category]) continue
+      /** 当前分类分组已累计的选项。 */
+      const options = optionsByCategory.get(category) ?? []
+      options.push({ value: name, label: name })
+      optionsByCategory.set(category, options)
+    }
+    /** API 返回的歌单分类分组。 */
+    const playlistFacets: MusicBrowseFacetGroup[] = Object.entries(playlistFacetKeys)
+      .map(([category, key]) => ({
+        key,
+        label: stringValue(categoryLabels[category]) ?? key,
+        options: optionsByCategory.get(category) ?? []
+      }))
+      .filter((group) => group.options.length > 0)
+    /** artist_list 参数契约公布的歌手筛选分组。 */
+    const artistFacets: MusicBrowseFacetGroup[] = [
+      { key: 'artist-area', label: '地区', options: [...ARTIST_AREA_FACETS] },
+      { key: 'artist-type', label: '类型', options: [...ARTIST_TYPE_FACETS] },
+      { key: 'artist-initial', label: '首字母', options: ARTIST_INITIAL_FACETS }
+    ]
+    return MusicReadResultSchema.parse({
+      kind: 'playlistCollection',
+      collection: 'facets',
+      facets: [...playlistFacets, ...artistFacets],
+      playlists: [],
       updatedAt: observedAt
     })
   }

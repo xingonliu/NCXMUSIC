@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Clock3, Search, X } from '@lucide/vue'
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
+import type { MusicReadResult } from '../../../shared/schemas/music'
 import { CommonButton, CommonSearchInput } from '../../design-system/components'
 import './music-content-pages.css'
 
@@ -17,8 +18,17 @@ const query = ref<string>('')
 /** 搜索历史本地存储键。 */
 const SEARCH_HISTORY_KEY = 'ncx.search-history.v1'
 
-/** 默认热门搜索建议。 */
-const popularSuggestions = ['周杰伦', '林俊杰', '陈奕迅', '轻音乐']
+/** API 返回的实时搜索建议。 */
+const apiSuggestions = ref<string[]>([])
+
+/** 实时搜索建议加载状态。 */
+const suggestionsLoading = ref<boolean>(false)
+
+/** 搜索建议防抖计时器。 */
+let suggestionTimer: ReturnType<typeof setTimeout> | undefined
+
+/** 最近一次搜索建议请求 ID。 */
+let latestSuggestionRequestId = ''
 
 /** 最近搜索历史。 */
 const searchHistory = ref<string[]>(readSearchHistory())
@@ -26,7 +36,7 @@ const searchHistory = ref<string[]>(readSearchHistory())
 /** 随输入动态收敛的搜索建议。 */
 const suggestions = computed<string[]>(() => {
   const keyword = query.value.trim().toLocaleLowerCase()
-  const candidates = [...searchHistory.value, ...popularSuggestions]
+  const candidates = keyword ? apiSuggestions.value : searchHistory.value
   const unique = [...new Set(candidates)]
   return (keyword ? unique.filter((item) => item.toLocaleLowerCase().includes(keyword)) : unique).slice(0, 8)
 })
@@ -70,6 +80,61 @@ function clearSearchHistory(): void {
   searchHistory.value = []
   localStorage.removeItem(SEARCH_HISTORY_KEY)
 }
+
+/** 从标准搜索建议响应提取去重后的可提交关键词。 */
+function collectSuggestionLabels(result: Extract<MusicReadResult, { kind: 'search' }>): string[] {
+  /** 歌曲、歌手、专辑和歌单候选名称。 */
+  const labels = [
+    ...result.songs.map((item) => item.name),
+    ...result.artists.map((item) => item.name),
+    ...result.albums.map((item) => item.name),
+    ...result.playlists.map((item) => item.name)
+  ]
+  return [...new Set(labels)].slice(0, 8)
+}
+
+/** 读取当前输入对应的网易云实时搜索建议。 */
+async function loadSearchSuggestions(): Promise<void> {
+  /** 发起请求时的关键词快照。 */
+  const keyword = query.value.trim()
+  if (!keyword) {
+    apiSuggestions.value = []
+    suggestionsLoading.value = false
+    return
+  }
+  /** 当前搜索建议请求 ID。 */
+  const requestId = crypto.randomUUID()
+  latestSuggestionRequestId = requestId
+  suggestionsLoading.value = true
+  /** 搜索建议标准响应。 */
+  const response = await window.ncx.runtime.readMusic({
+    operation: 'getSearchSuggestions',
+    query: keyword,
+    limit: 8,
+    requestId
+  })
+  if (requestId !== latestSuggestionRequestId || keyword !== query.value.trim()) return
+  suggestionsLoading.value = false
+  if (!response.ok || response.data.kind !== 'search') {
+    apiSuggestions.value = []
+    return
+  }
+  apiSuggestions.value = collectSuggestionLabels(response.data)
+}
+
+// ========= 生命周期 =========
+
+watch(query, () => {
+  if (suggestionTimer) clearTimeout(suggestionTimer)
+  suggestionTimer = setTimeout(() => {
+    void loadSearchSuggestions()
+  }, 180)
+})
+
+onBeforeUnmount(() => {
+  if (suggestionTimer) clearTimeout(suggestionTimer)
+  if (latestSuggestionRequestId) window.ncx.runtime.cancel(latestSuggestionRequestId)
+})
 </script>
 
 <template>
@@ -112,7 +177,7 @@ function clearSearchHistory(): void {
       class="music-search-suggestion-section"
     >
       <header>
-        <h2>{{ query.trim() ? '建议' : searchHistory.length > 0 ? '最近搜索' : '热门搜索' }}</h2>
+        <h2>{{ query.trim() ? suggestionsLoading ? '正在获取建议' : '实时建议' : '最近搜索' }}</h2>
         <button
           v-if="!query.trim() && searchHistory.length > 0"
           type="button"

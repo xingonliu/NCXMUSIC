@@ -44,7 +44,12 @@ export interface NcxRuntimeBridge {
   /** 低层标准 Music Service 写入入口；调用方必须显式处理失败且不得透明重试。 */
   mutateMusic(input: MusicMutationPayload & CancellableRuntimeInput): Promise<RuntimeResult<MusicMutationResult>>
   /** 搜索歌曲、歌手、专辑和歌单候选 */
-  searchMusic(input: { query: string; limit?: number; offset?: number } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
+  searchMusic(input: {
+    query: string
+    category?: 'all' | 'songs' | 'artists' | 'albums' | 'playlists' | 'lyrics'
+    limit?: number
+    offset?: number
+  } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
   /** 读取标准歌曲实体 */
   getSong(input: { id: TrackId } & CancellableRuntimeInput): Promise<RuntimeResult<MusicReadResult>>
   /** 读取标准歌词实体 */

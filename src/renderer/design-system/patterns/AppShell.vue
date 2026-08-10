@@ -3,7 +3,7 @@ import {
   Bot,
   ChevronLeft,
   Compass,
-  Heart,
+  LayoutGrid,
   Maximize2,
   Minimize2,
   Minus,
@@ -85,8 +85,8 @@ const accountDisplayName = computed<string>(() => account.snapshot.value?.active
 function resolveNavIcon(item: AppNavigationItem) {
   const iconMap = {
     agent: Bot,
+    browse: LayoutGrid,
     discover: Compass,
-    liked: Heart,
     profile: UserRound,
     search: Search,
     settings: Settings
