@@ -11,6 +11,7 @@ import type {
 } from '../../../shared/schemas/music'
 import { CommonButton } from '../../design-system/components'
 import { useAccountSessionStore } from '../account/account-session-store'
+import { useAgentStore } from '../agent/agent-store'
 import EntityCard from './components/EntityCard.vue'
 import Cover from './components/Cover.vue'
 import MusicSection from './components/MusicSection.vue'
@@ -43,6 +44,9 @@ const player = usePlayer()
 
 /** 应用账户公开状态。 */
 const account = useAccountSessionStore()
+
+/** 应用作用域 Agent Store，用于画像就绪后装配推荐 Section。 */
+const agent = useAgentStore()
 
 /** 个人资料页与发现页共享的每日签到控制器。 */
 const signinController = useDailySignin()
@@ -93,6 +97,24 @@ const newSongsPreview = computed<StandardSong[]>(() => newSongsSection.value.dat
 
 /** 私人 FM 当前主卡片歌曲；游客模式优雅回退到新歌。 */
 const personalFmSong = computed<StandardSong | null>(() => personalFmSection.value.data[0] ?? newSongsSection.value.data[0] ?? null)
+
+/** 画像就绪后“小云为你推荐”的可见歌曲集合。 */
+const profileRecommendationSongs = computed<StandardSong[]>(() => rankSongsForProfile(
+  dailySection.value.data,
+  [
+    ...agent.snapshot.value.personalization.recommendationSeeds,
+    ...agent.snapshot.value.personalization.insights.flatMap((insight) => [insight.label, insight.value])
+  ]
+).slice(0, 8))
+
+/** 由画像推荐种子生成的 Section 解释文案。 */
+const profileRecommendationDescription = computed<string>(() => {
+  /** 当前画像推荐种子。 */
+  const seeds = agent.snapshot.value.personalization.recommendationSeeds.slice(0, 3)
+  return seeds.length > 0
+    ? `结合你的画像偏好：${seeds.join('、')}。内容只展示，不会自动播放。`
+    : '结合当前音乐人格画像与每日候选，只展示内容，不会自动播放。'
+})
 
 // ========= 函数 =========
 
@@ -228,10 +250,33 @@ async function dailySignin(): Promise<void> {
   await signinController.signin()
 }
 
+/** 使用画像种子对上游每日候选做稳定重排，同分时保留原始顺序。 */
+function rankSongsForProfile(songs: readonly StandardSong[], rawTerms: readonly string[]): StandardSong[] {
+  /** 去重并裁剪后的画像匹配词。 */
+  const terms = [...new Set(rawTerms
+    .flatMap((term) => term.toLocaleLowerCase('zh-CN').match(/[\p{L}\p{N}]{2,24}/gu) ?? [])
+    .filter((term) => term.length >= 2))]
+    .slice(0, 40)
+  return songs
+    .map((song, index) => {
+      /** 当前候选的可解释文本字段。 */
+      const haystack = [
+        song.name,
+        ...song.artists.map((artist) => artist.name),
+        song.album?.name ?? ''
+      ].join(' ').toLocaleLowerCase('zh-CN')
+      /** 画像词命中数量。 */
+      const score = terms.reduce((total, term) => total + Number(haystack.includes(term)), 0)
+      return { song, index, score }
+    })
+    .sort((left, right) => right.score - left.score || left.index - right.index)
+    .map((item) => item.song)
+}
+
 // ========= 生命周期 =========
 
 onMounted(async () => {
-  await account.initialize()
+  await Promise.all([account.initialize(), agent.initialize()])
   await Promise.all([loadFeaturedPlaylists(), loadNewSongs(), loadRecommendedArtists()])
   if (isAuthenticated.value) await Promise.all([loadDailySongs(), loadPersonalFm()])
 })
@@ -267,6 +312,41 @@ watch(
         {{ signinController.state.value === 'already-signed' ? '今日已签到' : '签到' }}
       </CommonButton>
     </header>
+
+    <MusicSection
+      v-if="agent.snapshot.value.personalization.usable && isAuthenticated"
+      section-id="xiaoyun-profile-recommendations"
+      title="小云为你推荐"
+      :description="profileRecommendationDescription"
+      :state="dailySection.state"
+      :error-text="dailySection.error"
+      empty-text="画像已就绪，但当前没有可展示的推荐歌曲。"
+      @retry="loadDailySongs"
+    >
+      <template #actions>
+        <CommonButton
+          variant="secondary"
+          size="compact"
+          :disabled="profileRecommendationSongs.length === 0"
+          @click="playAll(profileRecommendationSongs)"
+        >
+          <Play :size="14" fill="currentColor" />
+          播放全部
+        </CommonButton>
+      </template>
+      <div class="discover-profile-recommendations">
+        <button
+          v-for="song in profileRecommendationSongs"
+          :key="song.id"
+          type="button"
+          @click="playSong(song)"
+        >
+          <Cover :src="song.album?.artworkUrl" :alt="song.name" size="card" :show-play-button="false" />
+          <strong>{{ song.name }}</strong>
+          <span>{{ song.artists.map((artist) => artist.name).join(' / ') }}</span>
+        </button>
+      </div>
+    </MusicSection>
 
     <MusicSection
       section-id="featured-playlists"
@@ -460,6 +540,41 @@ watch(
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--ncx-space-5);
+}
+
+.discover-profile-recommendations {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.discover-profile-recommendations > button {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+}
+
+.discover-profile-recommendations strong,
+.discover-profile-recommendations span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.discover-profile-recommendations strong {
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.discover-profile-recommendations span {
+  color: var(--ncx-color-text-secondary);
+  font-size: 10px;
 }
 
 .discover-personal-grid {
@@ -738,6 +853,10 @@ watch(
   .discover-artist-grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
+
+  .discover-profile-recommendations {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
 }
 
 @media (width < 920px) {
@@ -751,6 +870,10 @@ watch(
   }
 
   .discover-artist-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .discover-profile-recommendations {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

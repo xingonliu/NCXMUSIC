@@ -39,6 +39,24 @@ export interface AgentStore {
   setCommandSafetyLevel(level: CommandSafetyLevel): Promise<void>
   /** 设置 Shell Tool 开关并持久化当前账户偏好。 */
   setShellToolEnabled(enabled: boolean): Promise<void>
+  /** 用户明确启动初始化、更新或重新生成画像。 */
+  startProfileAnalysis(mode: 'initialize' | 'update' | 'regenerate'): Promise<void>
+  /** 关闭当前画像提示。 */
+  dismissProfilePrompt(): Promise<void>
+  /** 暂停画像更新。 */
+  pauseProfile(): Promise<void>
+  /** 恢复画像更新。 */
+  resumeProfile(): Promise<void>
+  /** 仅删除本地画像与中间证据。 */
+  deleteProfile(): Promise<void>
+  /** 保存用户纠正、隐藏或补充。 */
+  setProfileOverride(input: {
+    readonly kind: 'correction' | 'hidden' | 'supplement'
+    readonly insightId?: string
+    readonly value?: string
+  }): Promise<void>
+  /** 删除单条用户画像修正。 */
+  removeProfileOverride(overrideId: string): Promise<void>
 }
 
 /** 页面交给小云的标准实体上下文。 */
@@ -277,6 +295,18 @@ export function useAgentStore(): AgentStore {
     cancelSelection: async (selectionId) => execute({ operation: 'cancelSelection', selectionId }),
     setMusicSafetyLevel,
     setCommandSafetyLevel,
-    setShellToolEnabled
+    setShellToolEnabled,
+    startProfileAnalysis: async (mode) => execute({ operation: 'startProfileAnalysis', mode }),
+    dismissProfilePrompt: async () => execute({ operation: 'dismissProfilePrompt' }),
+    pauseProfile: async () => execute({ operation: 'pauseProfile' }),
+    resumeProfile: async () => execute({ operation: 'resumeProfile' }),
+    deleteProfile: async () => execute({ operation: 'deleteProfile' }),
+    setProfileOverride: async (input) => execute({
+      operation: 'setProfileOverride',
+      kind: input.kind,
+      ...(input.insightId ? { insightId: input.insightId } : {}),
+      ...(input.value ? { value: input.value } : {})
+    }),
+    removeProfileOverride: async (overrideId) => execute({ operation: 'removeProfileOverride', overrideId })
   }
 }

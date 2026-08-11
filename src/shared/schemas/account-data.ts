@@ -45,7 +45,10 @@ export const AccountDataResultSchema = z.discriminatedUnion('operation', [
     operation: z.literal('getStats'),
     databaseBytes: z.number().int().nonnegative(),
     cacheBytes: z.number().int().nonnegative(),
-    journalEvents: z.number().int().nonnegative()
+    journalEvents: z.number().int().nonnegative(),
+    conversationBlocks: z.number().int().nonnegative().default(0),
+    chatMessages: z.number().int().nonnegative().default(0),
+    profileVersion: z.number().int().nonnegative().default(0)
   }),
   z.strictObject({
     operation: z.literal('getPreferences'),

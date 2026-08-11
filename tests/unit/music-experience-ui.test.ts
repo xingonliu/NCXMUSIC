@@ -80,7 +80,7 @@ describe('十项音乐体验 UI 契约', () => {
     expect(source).not.toContain('slice(0, 5)')
   })
 
-  it('个人页只保留资料、社交数据、听歌排行与两类歌单核心内容', async () => {
+  it('个人页保留音乐核心内容并在 Phase 6 增加音乐人格画像', async () => {
     /** 个人页源码。 */
     const source = await read('src/renderer/features/profile/ProfilePage.vue')
 
@@ -91,7 +91,7 @@ describe('十项音乐体验 UI 契约', () => {
     expect(source).toContain('创建的歌单')
     expect(source).toContain('收藏的歌单')
     expect(source).toContain('暂未公开')
-    expect(source).not.toContain('音乐人格画像')
+    expect(source).toContain('音乐人格画像')
     expect(source).not.toContain('清理缓存')
   })
 

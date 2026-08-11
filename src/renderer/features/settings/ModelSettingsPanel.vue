@@ -256,6 +256,9 @@ onMounted(() => { void loadProfiles() })
 
     <section class="model-profile-editor">
       <header><h2>{{ editor.profileId ? '编辑 Profile' : '新增 Profile' }}</h2><p>兼容服务可自定义地址、模型 ID 与必要 Header。</p></header>
+      <p class="model-profile-data-disclosure">
+        对话时只发送当前消息与上下文选择器选中的必要画像/记忆；画像分析只发送本地聚合特征和有限代表样本。使用云端 Provider 可能产生 Token 费用，不会发送 Cookie、账户数据库或完整歌单文件。
+      </p>
       <div class="model-preset-row">
         <button
           v-for="preset in PROVIDER_PRESETS"

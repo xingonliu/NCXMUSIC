@@ -36,6 +36,15 @@ import {
   PersistedAgentConversationSchema,
   type PersistedAgentConversation
 } from '../../shared/schemas/agent-persistence'
+import {
+  MusicProfileAnalysisSchema,
+  type MusicProfileAnalysis
+} from '../../shared/schemas/personalization'
+import type { AgentMemoryPort } from './memory-port'
+import type {
+  AgentPersonalizationPort,
+  AgentPreparedProfileAnalysis
+} from './personalization-port'
 
 // ========= 类型 =========
 
@@ -124,6 +133,10 @@ export interface AgentRuntimeOptions {
   readonly shellToolEnabled?: boolean
   /** 当前账户连续会话持久化端口。 */
   readonly conversationPersistence?: AgentConversationPersistencePort
+  /** 当前账户会话分块、FTS5 与 Working Memory 端口。 */
+  readonly memory?: AgentMemoryPort
+  /** 当前账户音乐人格画像端口。 */
+  readonly personalization?: AgentPersonalizationPort
 }
 
 /** Provider 已完成 Tool Call。 */
@@ -206,6 +219,35 @@ const PLAYER_STATE_TIMEOUT_MS = 5_000
 
 /** 连续会话流式写入防抖时间。 */
 const CONVERSATION_PERSIST_DEBOUNCE_MS = 250
+
+/** 会话块关闭规则：十分钟无新用户消息。 */
+const CONVERSATION_BLOCK_IDLE_MS = 10 * 60 * 1_000
+
+/** 画像模型结构化输出最大字符数。 */
+const PROFILE_MODEL_OUTPUT_MAX_CHARS = 200_000
+
+/** 画像子流程最多请求的证据页数。 */
+const MAX_PROFILE_EVIDENCE_PAGE_CALLS = 6
+
+/** 画像内部代表证据分页参数。 */
+const ProfileEvidencePageInputSchema = z.strictObject({
+  cursor: z.number().int().min(0).default(0),
+  limit: z.number().int().min(1).max(50).default(20)
+})
+
+/** 仅对当前画像 Job 可见的内部只读工具。 */
+const PROFILE_INTERNAL_TOOLS = [{
+  name: 'get_profile_evidence_page',
+  description: '仅当聚合特征与默认代表样本不足以支撑某项画像结论时，按游标读取当前画像 Job 的下一页归一化音乐证据。',
+  parameters: {
+    type: 'object',
+    properties: {
+      cursor: { type: 'integer', minimum: 0 },
+      limit: { type: 'integer', minimum: 1, maximum: 50 }
+    },
+    additionalProperties: false
+  }
+}] as const
 
 /** 原版优先时识别的版本标记；用户明确点名标记时不降权。 */
 const NON_ORIGINAL_VERSION_PATTERN = /翻唱|cover|伴奏|instrumental|live|现场|remix|混音|dj|片段|铃声/iu
@@ -379,6 +421,15 @@ export class AgentRuntime {
   /** 会话写入串行尾链。 */
   private conversationPersistTail: Promise<void> = Promise.resolve()
 
+  /** 当前会话块的十分钟空闲计时器。 */
+  private conversationBlockTimer: ReturnType<typeof setTimeout> | undefined
+
+  /** 当前后台画像模型请求的取消控制器。 */
+  private profileAnalysisController: AbortController | undefined
+
+  /** 画像状态订阅取消函数。 */
+  private readonly unsubscribePersonalization: (() => void) | undefined
+
   constructor(private readonly options: AgentRuntimeOptions) {
     this.musicSafetyLevel = options.musicSafetyLevel ?? 'M3'
     this.commandSafetyLevel = options.commandSafetyLevel ?? 'S1'
@@ -396,6 +447,9 @@ export class AgentRuntime {
         upsertSnapshot(this.selections, snapshot, (item) => item.selectionId)
         this.publish()
       }
+    })
+    this.unsubscribePersonalization = options.personalization?.subscribe(() => {
+      if (this.conversationRestored) this.publish(false)
     })
   }
 
@@ -420,6 +474,26 @@ export class AgentRuntime {
       this.selectionCoordinator.respond(command.selectionId, command.selectedOptionKeys)
     } else if (command.operation === 'cancelSelection') {
       this.selectionCoordinator.cancel(command.selectionId)
+    } else if (command.operation === 'startProfileAnalysis') {
+      void this.startProfileAnalysis(command.mode)
+    } else if (command.operation === 'dismissProfilePrompt') {
+      await this.options.personalization?.dismissPrompt()
+    } else if (command.operation === 'pauseProfile') {
+      this.cancelProfileAnalysis()
+      await this.options.personalization?.pause()
+    } else if (command.operation === 'resumeProfile') {
+      await this.options.personalization?.resume()
+    } else if (command.operation === 'deleteProfile') {
+      this.cancelProfileAnalysis()
+      await this.options.personalization?.deleteProfile()
+    } else if (command.operation === 'setProfileOverride') {
+      await this.options.personalization?.saveOverride({
+        kind: command.kind,
+        ...(command.insightId ? { insightId: command.insightId } : {}),
+        ...(command.value ? { value: command.value } : {})
+      })
+    } else if (command.operation === 'removeProfileOverride') {
+      await this.options.personalization?.removeOverride(command.overrideId)
     } else if (command.operation === 'setSafety') {
       if (command.musicSafetyLevel) this.musicSafetyLevel = command.musicSafetyLevel
       if (command.commandSafetyLevel) this.commandSafetyLevel = command.commandSafetyLevel
@@ -438,6 +512,8 @@ export class AgentRuntime {
     this.conversationRestored = false
     if (this.conversationPersistTimer) clearTimeout(this.conversationPersistTimer)
     this.conversationPersistTimer = undefined
+    if (this.conversationBlockTimer) clearTimeout(this.conversationBlockTimer)
+    this.conversationBlockTimer = undefined
     this.conversationRestore ??= this.loadConversation().finally(() => {
       this.conversationRestore = undefined
     })
@@ -448,6 +524,7 @@ export class AgentRuntime {
   async flushConversation(): Promise<void> {
     if (this.conversationPersistTimer) clearTimeout(this.conversationPersistTimer)
     this.conversationPersistTimer = undefined
+    await this.options.memory?.archiveIfInactive(this.messages, Date.now()).catch(() => false)
     /** 当前账户持久化端口。 */
     const persistence = this.options.conversationPersistence
     if (!persistence || !this.conversationRestored) return
@@ -469,6 +546,12 @@ export class AgentRuntime {
   /** 账户切换、应用退出或 Utility 生命周期故障时终止旧 Turn。 */
   terminate(reason: Extract<AgentTurnEndReason, 'account_switch' | 'app_exit' | 'runtime_failure'>): void {
     this.cancelActiveTurn(reason)
+    this.cancelProfileAnalysis()
+    if (this.conversationPersistTimer) clearTimeout(this.conversationPersistTimer)
+    this.conversationPersistTimer = undefined
+    if (this.conversationBlockTimer) clearTimeout(this.conversationBlockTimer)
+    this.conversationBlockTimer = undefined
+    if (reason === 'app_exit') this.unsubscribePersonalization?.()
   }
 
   /** 导出 Renderer 重载可恢复快照。 */
@@ -488,6 +571,7 @@ export class AgentRuntime {
       musicSafetyLevel: this.musicSafetyLevel,
       commandSafetyLevel: this.commandSafetyLevel,
       shellToolEnabled: this.shellToolEnabled,
+      personalization: this.options.personalization?.snapshot(Boolean(this.profile)),
       updatedAt: Date.now()
     })
   }
@@ -508,6 +592,7 @@ export class AgentRuntime {
       return
     }
     if (this.turnController) this.cancelActiveTurn('superseded_by_user_message')
+    await this.options.memory?.prepareForTurn(this.messages, content, Date.now()).catch(() => undefined)
     /** 新 Turn 控制器。 */
     const controller = new AbortController()
     this.turnController = controller
@@ -547,14 +632,25 @@ export class AgentRuntime {
         this.turnController = undefined
         this.turnProfile = undefined
       }
+      this.scheduleConversationBlockArchive()
     }
   }
 
   /** 执行多轮 Provider → Tool → Provider 主循环。 */
   private async runLoop(signal: AbortSignal): Promise<void> {
+    /** 仅选择当前目标必要的 Working Memory。 */
+    const memoryContext = this.options.memory?.contextText() ?? ''
+    /** 当前账户可使用的画像片段。 */
+    const personalizationContext = this.options.personalization?.contextText() ?? ''
+    /** 当前 Turn 完整系统 Prompt。 */
+    const systemPrompt = [
+      XIAOYUN_SYSTEM_PROMPT,
+      memoryContext ? `[Working Memory]\n${memoryContext}` : '',
+      personalizationContext ? `[音乐人格画像]\n${personalizationContext}` : ''
+    ].filter(Boolean).join('\n\n')
     /** 发给 Provider 的当前连续会话上下文。 */
     const providerMessages: AgentProviderMessage[] = [
-      { role: 'system', content: XIAOYUN_SYSTEM_PROMPT },
+      { role: 'system', content: systemPrompt },
       ...this.messages
         .filter((message) => message.role !== 'system' && (message.role !== 'assistant' || message.content.trim().length > 0))
         .slice(-24)
@@ -686,7 +782,12 @@ export class AgentRuntime {
     profile: AgentProviderProfile,
     messages: readonly AgentProviderMessage[],
     turnSignal: AbortSignal,
-    exposeTools = true
+    exposeTools = true,
+    toolsOverride?: readonly {
+      readonly name: string
+      readonly description: string
+      readonly parameters: Readonly<Record<string, unknown>>
+    }[]
   ): AsyncGenerator<AgentProviderStreamEvent> {
     /** 当前请求独立取消器。 */
     const attemptController = new AbortController()
@@ -697,7 +798,7 @@ export class AgentRuntime {
     const iterator = this.options.provider.stream({
       profile,
       messages,
-      tools: exposeTools ? this.registry.providerDefinitions() : [],
+      tools: toolsOverride ?? (exposeTools ? this.registry.providerDefinitions() : []),
       signal: attemptController.signal
     })[Symbol.asyncIterator]()
     try {
@@ -845,7 +946,32 @@ export class AgentRuntime {
       ? this.mutateMusic({ operation: 'dailySignin' })
       : { ok: true, code: 'OK', summary: '账户状态由当前 NcxMusic 会话管理。' }
     if (toolName === 'user_profile_memory') {
-      return { ok: true, code: 'PHASE_6_PENDING', summary: '音乐画像与长期记忆将在 Phase 6 启用。' }
+      /** 当前画像与记忆动作。 */
+      const action = String(input['action'])
+      if (action === 'search_memory') {
+        /** 用户自然语言记忆查询。 */
+        const query = String(input['query'] ?? '')
+        /** 当前账户 FTS5 搜索命中。 */
+        const memories = await this.options.memory?.search(query, 5) ?? []
+        return {
+          ok: true,
+          code: 'OK',
+          summary: `找到 ${memories.length} 条相关长期记忆。`,
+          data: memories
+        }
+      }
+      /** 当前长期记忆公开统计。 */
+      const memory = await this.options.memory?.status()
+      /** 当前音乐画像公开快照。 */
+      const profile = this.options.personalization?.snapshot(Boolean(this.profile))
+      return {
+        ok: true,
+        code: 'OK',
+        summary: profile?.usable
+          ? `音乐画像 v${profile.version} 可用，长期记忆已建立 ${memory?.conversationBlocks ?? 0} 个会话块。`
+          : `音乐画像尚未生成，长期记忆已建立 ${memory?.conversationBlocks ?? 0} 个会话块。`,
+        data: { profile, memory }
+      }
     }
     if (toolName === 'request_user_selection') return this.requestSelection(input, toolCallId)
     if (toolName === 'find_music_api_capabilities') return this.findCapabilities(String(input['query']))
@@ -1429,6 +1555,143 @@ export class AgentRuntime {
     if (persistConversation) this.scheduleConversationPersistence()
   }
 
+  /** 后台完成用户明确触发的画像采集与结构化模型分析。 */
+  private async startProfileAnalysis(
+    mode: 'initialize' | 'update' | 'regenerate'
+  ): Promise<void> {
+    /** 当前画像服务。 */
+    const personalization = this.options.personalization
+    /** 当前明确配置的 Provider 快照。 */
+    const profile = this.profile
+    if (!personalization || !profile || this.profileAnalysisController) return
+    /** 独立于普通聊天 Turn 的画像取消控制器。 */
+    const controller = new AbortController()
+    this.profileAnalysisController = controller
+    /** 已完成本地聚合的画像上下文。 */
+    let prepared: AgentPreparedProfileAnalysis | undefined
+    try {
+      prepared = await personalization.prepareAnalysis(this.options.music, mode)
+      if (controller.signal.aborted) return
+      /** 画像模型请求只暴露结构化输入，不暴露主会话 Tool。 */
+      const messages: AgentProviderMessage[] = [
+        {
+          role: 'system',
+          content: '你是 NcxMusic 音乐画像分析器。严格遵守输入中的非诊断、安全与 JSON 输出约束。'
+        },
+        { role: 'user', content: prepared.modelPrompt }
+      ]
+      /** 经严格共享 Schema 校验的模型画像。 */
+      const analysis = await this.requestProfileAnalysis(
+        personalization,
+        profile,
+        messages,
+        controller.signal
+      )
+      await personalization.completeAnalysis(prepared, analysis)
+    } catch (error) {
+      if (!controller.signal.aborted && prepared) {
+        await personalization.failAnalysis(prepared.jobId, readableError(error)).catch(() => undefined)
+      }
+    } finally {
+      if (this.profileAnalysisController === controller) this.profileAnalysisController = undefined
+    }
+  }
+
+  /** 取消画像模型请求和仍在运行的音乐数据请求。 */
+  private cancelProfileAnalysis(): void {
+    this.profileAnalysisController?.abort()
+    this.profileAnalysisController = undefined
+    this.options.personalization?.cancelActiveJob(this.options.music)
+  }
+
+  /** 执行画像专用模型循环，并只允许有限次内部证据分页。 */
+  private async requestProfileAnalysis(
+    personalization: AgentPersonalizationPort,
+    profile: AgentProviderProfile,
+    messages: AgentProviderMessage[],
+    signal: AbortSignal
+  ): Promise<MusicProfileAnalysis> {
+    /** 已执行的内部证据分页次数。 */
+    let evidencePageCalls = 0
+    for (let round = 0; round <= MAX_PROFILE_EVIDENCE_PAGE_CALLS; round += 1) {
+      /** 当前模型轮次的结构化文本。 */
+      let output = ''
+      /** 当前模型轮次的 Tool Call 增量。 */
+      const calls: ToolCallAccumulator[] = []
+      /** 缺少稳定 ID 的参数片段回退目标。 */
+      let currentCall: ToolCallAccumulator | undefined
+      for await (const event of this.streamWithIdleTimeout(
+        profile,
+        messages,
+        signal,
+        false,
+        PROFILE_INTERNAL_TOOLS
+      )) {
+        if (event.type === 'text-delta') {
+          output += event.text
+          if (output.length > PROFILE_MODEL_OUTPUT_MAX_CHARS) {
+            throw Object.assign(new Error('画像模型输出超过 200,000 字符上限。'), { code: 'PROFILE_MODEL_LIMIT' })
+          }
+        } else if (event.type === 'tool-call-delta') {
+          /** 当前内部调用 ID。 */
+          const eventId = event.id || crypto.randomUUID()
+          /** 由稳定 ID 找到的内部调用。 */
+          let targetCall = calls.find((call) => call.id === eventId)
+          if (!targetCall && event.name) {
+            targetCall = { id: eventId, name: event.name, arguments: '' }
+            calls.push(targetCall)
+          }
+          if (targetCall) currentCall = targetCall
+          /** 当前参数增量接收目标。 */
+          const argumentTarget = targetCall ?? currentCall
+          if (event.argumentsDelta && argumentTarget) argumentTarget.arguments += event.argumentsDelta
+        }
+      }
+      if (signal.aborted) throw Object.assign(new Error('画像任务已取消。'), { code: 'PROFILE_CANCELLED' })
+      /** 当前轮次完成的内部 Tool Call。 */
+      const completedCalls: CompletedAgentToolCall[] = calls
+        .filter((call) => call.name.length > 0)
+        .map((call) => ({ id: call.id, name: call.name, arguments: call.arguments || '{}' }))
+      if (completedCalls.length === 0) return parseMusicProfileAnalysis(output)
+      if (completedCalls.some((call) => call.name !== 'get_profile_evidence_page')) {
+        throw new Error('画像模型请求了未注册的内部工具。')
+      }
+      evidencePageCalls += completedCalls.length
+      if (evidencePageCalls > MAX_PROFILE_EVIDENCE_PAGE_CALLS) {
+        throw new Error('画像模型请求代表证据页次数超过上限。')
+      }
+      messages.push({ role: 'assistant', content: output, toolCalls: completedCalls })
+      for (const call of completedCalls) {
+        /** 经严格 Schema 校验的分页参数。 */
+        const input = ProfileEvidencePageInputSchema.parse(JSON.parse(call.arguments) as unknown)
+        /** 当前 Job 的归一化证据页。 */
+        const page = await personalization.evidencePage(input.cursor, input.limit)
+        messages.push({
+          role: 'tool',
+          content: JSON.stringify(page),
+          toolCallId: call.id,
+          toolName: call.name
+        })
+      }
+    }
+    throw new Error('画像模型未在内部证据分页上限内返回最终 JSON。')
+  }
+
+  /** 在最近用户消息满十分钟后归档当前稳定会话块。 */
+  private scheduleConversationBlockArchive(): void {
+    if (!this.options.memory) return
+    if (this.conversationBlockTimer) clearTimeout(this.conversationBlockTimer)
+    /** 最近一条用户消息。 */
+    const latestUserMessage = this.messages.findLast((message) => message.role === 'user')
+    if (!latestUserMessage) return
+    /** 距离十分钟空闲边界的剩余时间。 */
+    const delay = Math.max(0, latestUserMessage.createdAt + CONVERSATION_BLOCK_IDLE_MS - Date.now())
+    this.conversationBlockTimer = setTimeout(() => {
+      this.conversationBlockTimer = undefined
+      void this.options.memory?.archiveIfInactive(this.messages, Date.now()).catch(() => false)
+    }, delay)
+  }
+
   /** 首次命令前确保当前账户会话已经恢复。 */
   private async ensureConversationRestored(): Promise<void> {
     if (this.conversationRestored) return
@@ -1437,6 +1700,10 @@ export class AgentRuntime {
 
   /** 从当前账户 SQLite 恢复消息、工具和交互历史；活动状态统一中止。 */
   private async loadConversation(): Promise<void> {
+    await Promise.all([
+      this.options.memory?.restore(),
+      this.options.personalization?.restore()
+    ])
     /** 当前账户持久化端口。 */
     const persistence = this.options.conversationPersistence
     /** 磁盘连续会话；损坏快照按空会话恢复，不拖垮 Runtime。 */
@@ -1467,6 +1734,8 @@ export class AgentRuntime {
     this.playbackGoalPending = false
     this.conversationRestored = true
     this.publish(false)
+    this.scheduleConversationBlockArchive()
+    void this.options.personalization?.refreshLightweightChangeScore(this.options.music).catch(() => undefined)
   }
 
   /** 合并流式快照写入，避免每个 Token 都触发 SQLite 事务。 */
@@ -1745,6 +2014,22 @@ function upsertSnapshot<T>(target: T[], snapshot: T, key: (item: T) => string): 
 /** 判断未知值是否普通对象。 */
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+/** 从模型文本提取并严格校验音乐画像 JSON。 */
+function parseMusicProfileAnalysis(value: string): MusicProfileAnalysis {
+  /** 去除常见 Markdown JSON fence 的候选文本。 */
+  const unfenced = value.trim()
+    .replace(/^```(?:json)?\s*/iu, '')
+    .replace(/\s*```$/u, '')
+  /** JSON 对象开始位置。 */
+  const start = unfenced.indexOf('{')
+  /** JSON 对象结束位置。 */
+  const end = unfenced.lastIndexOf('}')
+  if (start < 0 || end <= start) throw new Error('模型没有返回有效画像 JSON。')
+  /** 未信任模型 JSON。 */
+  const decoded = JSON.parse(unfenced.slice(start, end + 1)) as unknown
+  return MusicProfileAnalysisSchema.parse(decoded)
 }
 
 /** 构造 Capability Catalog 参数失败结果。 */

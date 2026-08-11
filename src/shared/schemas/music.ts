@@ -114,6 +114,8 @@ export const StandardSongSchema = z.strictObject({
   durationMs: z.number().int().nonnegative().optional(),
   /** 当前用户在指定统计周期内的听歌次数，仅听歌排行响应提供。 */
   listeningCount: z.number().int().nonnegative().optional(),
+  /** 歌曲加入当前歌单的时间，仅歌单详情上下文提供。 */
+  addedAt: z.number().int().nonnegative().optional(),
   access: TrackAccessMetaSchema.default({ badges: [], playableKnown: false }),
   sources: z.array(MusicEntitySourceSchema).min(1),
   updatedAt: EntityUpdatedAtSchema
@@ -302,7 +304,7 @@ export const GetUserPlaylistsPayloadSchema = z.strictObject({
 export const GetLikedSongsPayloadSchema = z.strictObject({
   operation: z.literal('getLikedSongs'),
   userId: MusicUserIdSchema,
-  limit: z.number().int().min(1).max(500).default(200)
+  limit: z.number().int().min(1).max(100_000).default(200)
 })
 
 /** 读取歌手专辑列表请求。 */

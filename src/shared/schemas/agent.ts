@@ -7,6 +7,10 @@ import {
   StandardSongSchema
 } from './music'
 import { PlayerCommandActionSchema, PlayerCommandTrackSchema } from './player-command'
+import {
+  EMPTY_MUSIC_PERSONALIZATION_SNAPSHOT,
+  MusicPersonalizationSnapshotSchema
+} from './personalization'
 
 // ========= 变量 =========
 
@@ -145,6 +149,7 @@ export const AgentSnapshotSchema = z.strictObject({
   musicSafetyLevel: MusicSafetyLevelSchema,
   commandSafetyLevel: CommandSafetyLevelSchema,
   shellToolEnabled: z.boolean(),
+  personalization: MusicPersonalizationSnapshotSchema.default(EMPTY_MUSIC_PERSONALIZATION_SNAPSHOT),
   updatedAt: z.number().int().nonnegative()
 })
 
@@ -190,6 +195,21 @@ export const AgentCommandSchema = z.discriminatedUnion('operation', [
     selectedOptionKeys: z.array(z.string()).min(1).max(5)
   }),
   z.strictObject({ operation: z.literal('cancelSelection'), selectionId: z.uuid() }),
+  z.strictObject({
+    operation: z.literal('startProfileAnalysis'),
+    mode: z.enum(['initialize', 'update', 'regenerate'])
+  }),
+  z.strictObject({ operation: z.literal('dismissProfilePrompt') }),
+  z.strictObject({ operation: z.literal('pauseProfile') }),
+  z.strictObject({ operation: z.literal('resumeProfile') }),
+  z.strictObject({ operation: z.literal('deleteProfile') }),
+  z.strictObject({
+    operation: z.literal('setProfileOverride'),
+    kind: z.enum(['correction', 'hidden', 'supplement']),
+    insightId: z.string().regex(/^[a-z][a-z0-9._-]{1,63}$/u).optional(),
+    value: z.string().trim().min(1).max(500).optional()
+  }),
+  z.strictObject({ operation: z.literal('removeProfileOverride'), overrideId: z.uuid() }),
   z.strictObject({
     operation: z.literal('setSafety'),
     musicSafetyLevel: MusicSafetyLevelSchema.optional(),

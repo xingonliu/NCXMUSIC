@@ -8,7 +8,7 @@ import { z } from 'zod'
 export const APP_CONFIG_SCHEMA_VERSION = 1 as const
 
 /** 账户空间当前 SQLite Schema 版本。 */
-export const ACCOUNT_SQLITE_SCHEMA_VERSION = 3 as const
+export const ACCOUNT_SQLITE_SCHEMA_VERSION = 4 as const
 
 /** 可选主题模式。 */
 export const AppThemeSchema = z.enum(['system', 'light', 'dark'])

@@ -197,6 +197,88 @@ export const ACCOUNT_SQLITE_MIGRATIONS: readonly SQLiteMigration[] = [
         );
       `)
     }
+  },
+  {
+    version: 4,
+    description: '建立 Phase 6 会话记忆、FTS5 与音乐画像表',
+    up: (database): void => {
+      database.exec?.(`
+        CREATE TABLE IF NOT EXISTS agent_conversation_blocks (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          started_at INTEGER NOT NULL,
+          ended_at INTEGER NOT NULL,
+          close_reason TEXT NOT NULL,
+          message_ids_json TEXT NOT NULL,
+          content_text TEXT NOT NULL,
+          summary TEXT NOT NULL,
+          keywords_text TEXT NOT NULL,
+          importance REAL NOT NULL CHECK (importance >= 0 AND importance <= 1)
+        );
+        CREATE INDEX IF NOT EXISTS idx_agent_conversation_blocks_time
+          ON agent_conversation_blocks (ended_at DESC, id DESC);
+
+        CREATE VIRTUAL TABLE IF NOT EXISTS agent_memory_fts USING fts5(
+          summary,
+          content_text,
+          keywords_text,
+          content='agent_conversation_blocks',
+          content_rowid='id',
+          tokenize='unicode61'
+        );
+        CREATE TRIGGER IF NOT EXISTS agent_conversation_blocks_ai AFTER INSERT ON agent_conversation_blocks BEGIN
+          INSERT INTO agent_memory_fts(rowid, summary, content_text, keywords_text)
+          VALUES (new.id, new.summary, new.content_text, new.keywords_text);
+        END;
+        CREATE TRIGGER IF NOT EXISTS agent_conversation_blocks_ad AFTER DELETE ON agent_conversation_blocks BEGIN
+          INSERT INTO agent_memory_fts(agent_memory_fts, rowid, summary, content_text, keywords_text)
+          VALUES ('delete', old.id, old.summary, old.content_text, old.keywords_text);
+        END;
+        CREATE TRIGGER IF NOT EXISTS agent_conversation_blocks_au AFTER UPDATE ON agent_conversation_blocks BEGIN
+          INSERT INTO agent_memory_fts(agent_memory_fts, rowid, summary, content_text, keywords_text)
+          VALUES ('delete', old.id, old.summary, old.content_text, old.keywords_text);
+          INSERT INTO agent_memory_fts(rowid, summary, content_text, keywords_text)
+          VALUES (new.id, new.summary, new.content_text, new.keywords_text);
+        END;
+
+        CREATE TABLE IF NOT EXISTS agent_working_memory (
+          singleton_id INTEGER PRIMARY KEY CHECK (singleton_id = 1),
+          updated_at INTEGER NOT NULL,
+          snapshot_json TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS music_profile_state (
+          singleton_id INTEGER PRIMARY KEY CHECK (singleton_id = 1),
+          status TEXT NOT NULL,
+          version INTEGER NOT NULL DEFAULT 0,
+          updated_at INTEGER,
+          profile_json TEXT,
+          baseline_json TEXT,
+          overrides_json TEXT NOT NULL DEFAULT '[]',
+          active_job_json TEXT,
+          change_score REAL NOT NULL DEFAULT 0,
+          dismissed_at INTEGER,
+          dismissed_score REAL,
+          error_message TEXT
+        );
+        CREATE TABLE IF NOT EXISTS music_profile_evidence (
+          job_id TEXT NOT NULL,
+          ordinal INTEGER NOT NULL,
+          evidence_json TEXT NOT NULL,
+          PRIMARY KEY (job_id, ordinal)
+        );
+        CREATE INDEX IF NOT EXISTS idx_music_profile_evidence_job
+          ON music_profile_evidence (job_id, ordinal);
+
+        CREATE TABLE IF NOT EXISTS account_basic_profile (
+          singleton_id INTEGER PRIMARY KEY CHECK (singleton_id = 1),
+          nickname TEXT NOT NULL,
+          gender INTEGER,
+          birthday INTEGER,
+          source_api TEXT NOT NULL,
+          updated_at INTEGER NOT NULL
+        );
+      `)
+    }
   }
 ]
 

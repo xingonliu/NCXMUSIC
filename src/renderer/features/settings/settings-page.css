@@ -134,6 +134,16 @@
   line-height: 1.45;
 }
 
+.model-profile-data-disclosure {
+  padding: 10px 12px;
+  border: 1px solid var(--ncx-color-border);
+  border-radius: var(--ncx-radius-md);
+  color: var(--ncx-color-text-secondary);
+  background: color-mix(in srgb, var(--ncx-color-accent) 6%, transparent);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
 .model-profile-item {
   display: grid;
   width: 100%;

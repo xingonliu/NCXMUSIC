@@ -587,7 +587,20 @@ function normalizePlaylist(
   const name = stringValue(raw?.['name'])
   if (!raw || !id || !name) return undefined
   const creator = normalizeUserSummary(raw['creator'])
-  const songs = array(raw['tracks']).map((song) => normalizeSong(song, api, observedAt)).filter((item): item is StandardSong => Boolean(item))
+  /** 歌单详情返回的歌曲加入时间，按歌曲 ID 关联标准实体。 */
+  const addedAtBySongId = new Map(array(raw['trackIds'])
+    .map((item) => record(item))
+    .filter((item): item is Record<string, unknown> => Boolean(item))
+    .map((item) => [idValue(item['id']), numberValue(item['at'])] as const)
+    .filter((item): item is readonly [string, number] => item[0] !== undefined && item[1] !== undefined))
+  /** 带当前歌单加入时间的标准歌曲。 */
+  const songs = array(raw['tracks'])
+    .map((song) => normalizeSong(song, api, observedAt))
+    .filter((item): item is StandardSong => Boolean(item))
+    .map((song) => ({
+      ...song,
+      ...(addedAtBySongId.get(song.id) !== undefined ? { addedAt: addedAtBySongId.get(song.id) } : {})
+    }))
   return {
     kind: 'playlist',
     id,
@@ -1162,7 +1175,11 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
       timeout: NETEASE_API_TIMEOUT_MS
     }))
     signal?.throwIfAborted()
-    const ids = array(bodyRecord(likedResponse)['ids']).map(idValue).filter((item): item is string => Boolean(item)).slice(0, limit)
+    /** 接口返回的完整喜欢歌曲 ID，经请求上限裁剪。 */
+    const ids = array(bodyRecord(likedResponse)['ids'])
+      .map(idValue)
+      .filter((item): item is string => Boolean(item))
+      .slice(0, limit)
     if (ids.length === 0) {
       return MusicReadResultSchema.parse({
         kind: 'songCollection',
@@ -1172,19 +1189,31 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
         updatedAt: observedAt
       })
     }
-    const detailResponse = await withoutThirdPartyConsole(() => api.song_detail({
-      ids: ids.join(','),
-      cookie,
-      timeout: NETEASE_API_TIMEOUT_MS
-    }))
-    signal?.throwIfAborted()
+    /** 分批读取歌曲详情，避免大曲库把全部 ID 塞进单次请求。 */
+    const normalizedSongs: StandardSong[] = []
+    for (let offset = 0; offset < ids.length; offset += 2_000) {
+      /** 当前最多四路、每路五百首的详情请求。 */
+      const chunks = [0, 500, 1_000, 1_500]
+        .map((chunkOffset) => ids.slice(offset + chunkOffset, offset + chunkOffset + 500))
+        .filter((chunk) => chunk.length > 0)
+      /** 当前批次的上游详情响应。 */
+      const detailResponses = await Promise.all(chunks.map((chunk) => withoutThirdPartyConsole(() => api.song_detail({
+        ids: chunk.join(','),
+        cookie,
+        timeout: NETEASE_API_TIMEOUT_MS
+      }))))
+      signal?.throwIfAborted()
+      for (const detailResponse of detailResponses) {
+        normalizedSongs.push(...array(bodyRecord(detailResponse)['songs'])
+          .map((item) => normalizeSong(item, 'ncm.song_detail', observedAt))
+          .filter((item): item is StandardSong => Boolean(item)))
+      }
+    }
     return MusicReadResultSchema.parse({
       kind: 'songCollection',
       collection: 'liked',
       ownerId: userId,
-      songs: array(bodyRecord(detailResponse)['songs'])
-        .map((item) => normalizeSong(item, 'ncm.song_detail', observedAt))
-        .filter(Boolean),
+      songs: normalizedSongs,
       updatedAt: observedAt
     })
   }

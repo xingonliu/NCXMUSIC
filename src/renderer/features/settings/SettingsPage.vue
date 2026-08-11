@@ -27,13 +27,14 @@ import { useAccountSessionStore } from '../account/account-session-store'
 import { usePlayer } from '../music/use-player'
 import { useAppPreferences } from './app-preferences'
 import ModelSettingsPanel from './ModelSettingsPanel.vue'
+import PersonalizationSettingsPanel from './PersonalizationSettingsPanel.vue'
 import SecuritySettingsPanel from './SecuritySettingsPanel.vue'
 import './settings-page.css'
 
 // ========= 类型 =========
 
 /** 设置页标签。 */
-type SettingsTab = 'music' | 'models' | 'security' | 'appearance' | 'data'
+type SettingsTab = 'music' | 'models' | 'agent' | 'security' | 'appearance' | 'data'
 
 // ========= 变量 =========
 
@@ -71,6 +72,7 @@ const dataBusy = ref<boolean>(false)
 const tabOptions: CommonOption[] = [
   { label: '音乐', value: 'music' },
   { label: '模型', value: 'models' },
+  { label: '小云', value: 'agent' },
   { label: '安全', value: 'security' },
   { label: '外观', value: 'appearance' },
   { label: '数据', value: 'data' }
@@ -242,6 +244,11 @@ function setActiveTab(value: string | number): void {
   activeTab.value = String(value) as SettingsTab
 }
 
+/** 从小云设置打开当前账户数据与记忆管理。 */
+function openAccountDataSettings(): void {
+  activeTab.value = 'data'
+}
+
 // ========= 生命周期 =========
 
 onMounted(async () => {
@@ -327,6 +334,11 @@ watch(
 
     <ModelSettingsPanel v-else-if="activeTab === 'models'" />
 
+    <PersonalizationSettingsPanel
+      v-else-if="activeTab === 'agent'"
+      @open-data="openAccountDataSettings"
+    />
+
     <SecuritySettingsPanel v-else-if="activeTab === 'security'" />
 
     <div v-else-if="activeTab === 'appearance'" class="settings-list">
@@ -360,7 +372,8 @@ watch(
           <h2>账户数据</h2>
           <p>
             当前空间 {{ accountReference }} · 数据库 {{ formatBytes(dataStats?.databaseBytes ?? 0) }} ·
-            Journal {{ dataStats?.journalEvents ?? 0 }} 条
+            对话 {{ dataStats?.chatMessages ?? 0 }} 条 · 记忆块 {{ dataStats?.conversationBlocks ?? 0 }} 个 ·
+            画像 v{{ dataStats?.profileVersion ?? 0 }} · Journal {{ dataStats?.journalEvents ?? 0 }} 条
           </p>
         </div>
         <CommonButton
@@ -392,7 +405,7 @@ watch(
     <CommonAlertDialog
       :visible="deleteLocalDataDialogVisible"
       title="删除当前账户本地数据？"
-      description="将删除当前账户的 SQLite、播放快照、偏好与 Action Journal，但不会删除登录 Cookie。此操作无法撤销。"
+      description="将删除当前账户的聊天、长期记忆、画像、基础资料、播放快照、偏好、Action Journal 与可重建缓存，但不会删除登录 Cookie 或网易云云端数据。此操作无法撤销。"
       confirm-text="删除本地数据"
       @cancel="deleteLocalDataDialogVisible = false"
       @confirm="deleteCurrentLocalData"

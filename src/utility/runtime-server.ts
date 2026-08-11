@@ -104,6 +104,10 @@ export interface ShellCommandHandler {
 export interface AgentCommandHandler {
   /** 执行已通过共享 Schema 的 Agent 命令。 */
   command(payload: unknown): Promise<unknown>
+  /** 终止当前账户仍在运行的 Turn 与后台任务。 */
+  terminate?(reason: 'account_switch' | 'app_exit' | 'runtime_failure'): void
+  /** 从当前账户空间重新恢复 Agent 的连续会话、记忆与画像。 */
+  restoreConversation?(): Promise<void>
 }
 
 /** 可被响应的请求信封（用于统一 respond* 签名） */
@@ -469,9 +473,13 @@ export class UtilityRuntimeServer {
       return
     }
     const connectionId = request.connectionId
+    /** 删除整份本地数据时，同时清空 Agent 仍持有的当前账户运行态。 */
+    const shouldResetAgent = request.payload.operation === 'deleteLocalData'
+    if (shouldResetAgent) this.agentHandler?.terminate?.('account_switch')
     this.pending.set(request.requestId, { name: 'account.data' })
     try {
       const data = await handler.execute(request.payload)
+      if (shouldResetAgent) await this.agentHandler?.restoreConversation?.()
       if (!this.isCurrentRequest(request.requestId, connectionId)) return
       this.pending.delete(request.requestId)
       this.handledRequests += 1

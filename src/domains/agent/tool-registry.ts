@@ -187,9 +187,14 @@ const AccountManagerInputSchema = z.strictObject({
   action: z.enum(['get_status', 'daily_signin'])
 })
 
-/** Phase 5 只读画像占位输入；正式画像在 Phase 6。 */
+/** Phase 6 画像与长期记忆只读输入。 */
 const UserProfileMemoryInputSchema = z.strictObject({
-  action: z.enum(['get_status'])
+  action: z.enum(['get_status', 'get_profile', 'search_memory']),
+  query: z.string().trim().min(1).max(240).optional()
+}).superRefine((input, context) => {
+  if (input.action === 'search_memory' && !input.query) {
+    context.addIssue({ code: 'custom', path: ['query'], message: 'search_memory 需要 query。' })
+  }
 })
 
 /** SelectionCard 选项输入。 */
@@ -269,9 +274,15 @@ const TOOL_DEFINITIONS: readonly AgentToolDefinition[] = [
   definition('account_manager', '读取登录状态或执行每日签到；不包含支付购买。', AccountManagerInputSchema, {
     type: 'object', properties: { action: { enum: ['get_status', 'daily_signin'] } }, required: ['action'], additionalProperties: false
   }, (input) => input['action'] === 'get_status' ? readOperation('读取账户状态') : ({ effect: 'write', riskAction: 'music.library_playlist', conflictKeys: ['account:profile'], title: '每日签到' })),
-  definition('user_profile_memory', '读取音乐画像与长期记忆能力状态。Phase 5 不生成画像。', UserProfileMemoryInputSchema, {
-    type: 'object', properties: { action: { enum: ['get_status'] } }, required: ['action'], additionalProperties: false
-  }, () => readOperation('读取画像状态')),
+  definition('user_profile_memory', '读取当前账户音乐画像、记忆状态，或使用 SQLite FTS5 搜索与当前目标相关的长期记忆。不得替用户自动生成、更新或删除画像。', UserProfileMemoryInputSchema, {
+    type: 'object',
+    properties: {
+      action: { enum: ['get_status', 'get_profile', 'search_memory'] },
+      query: { type: 'string', description: '仅 search_memory 使用的自然语言检索目标。' }
+    },
+    required: ['action'],
+    additionalProperties: false
+  }, (input) => readOperation(input['action'] === 'search_memory' ? '检索长期记忆' : '读取画像状态')),
   definition('request_user_selection', '只在候选存在实质歧义且无法合理采用最高相关项时展示 2 到 5 个无副作用选项。实体选项必须使用此前工具结果中的 ref；选完歌曲后把 selectedRefs 交给 smart_search_and_play.entityRef 直接播放。', RequestUserSelectionInputSchema, {
     type: 'object',
     properties: {

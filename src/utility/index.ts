@@ -19,7 +19,9 @@ import { PROTOCOL_VERSION } from '../shared/schemas/runtime'
 import { CredentialLeaseService } from './credential-lease-service'
 import { AccountDataService } from './account-data-service'
 import { AgentConversationService } from './agent-conversation-service'
+import { ConversationMemoryService } from './conversation-memory-service'
 import { MusicService } from './music-service'
+import { PersonalizationService } from './personalization-service'
 import { PlaybackSnapshotService } from './playback-snapshot-service'
 import { TrackUrlService } from './track-url-service'
 import { UtilityRuntimeServer, type RuntimePort } from './runtime-server'
@@ -81,6 +83,10 @@ const musicService = new MusicService(
 const playbackSnapshotService = new PlaybackSnapshotService(accountStore)
 /** Agent 当前连续会话服务：在时间分块前持续保存完整消息与工具时间线。 */
 const agentConversationService = new AgentConversationService(accountStore)
+/** Phase 6 会话块、FTS5 与 Working Memory 服务。 */
+const conversationMemoryService = new ConversationMemoryService(accountStore)
+/** Phase 6 音乐人格画像、变化评分与证据分页服务。 */
+const personalizationService = new PersonalizationService(accountStore)
 /** Utility 内单会话 Agent Runtime。 */
 const agentRuntime = new AgentRuntime({
   provider: {
@@ -101,6 +107,8 @@ const agentRuntime = new AgentRuntime({
   },
   music: musicService,
   conversationPersistence: agentConversationService,
+  memory: conversationMemoryService,
+  personalization: personalizationService,
   emit: (event) => runtime.publishAgentEvent(event)
 })
 /** Renderer MessagePort 协议服务。 */

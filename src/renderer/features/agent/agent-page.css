@@ -12,6 +12,91 @@
   font-family: var(--ncx-font-family);
 }
 
+/* ========= Phase 6 音乐画像提示 ========= */
+
+.profile-analysis-banner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  width: min(900px, calc(100% - 32px));
+  margin: 0 auto 10px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--ncx-color-accent) 22%, transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--ncx-color-surface) 92%, var(--ncx-color-accent) 8%);
+}
+
+.profile-analysis-banner.is-failed {
+  border-color: color-mix(in srgb, var(--ncx-color-danger) 28%, transparent);
+}
+
+.profile-analysis-banner-icon {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  color: var(--ncx-color-accent);
+  background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
+}
+
+.profile-analysis-banner.is-failed .profile-analysis-banner-icon {
+  color: var(--ncx-color-danger);
+}
+
+.profile-analysis-banner-copy {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.profile-analysis-banner-copy strong {
+  font-size: 13px;
+}
+
+.profile-analysis-banner-copy p {
+  margin: 0;
+  color: var(--ncx-color-text-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.profile-analysis-progress {
+  overflow: hidden;
+  width: 100%;
+  height: 3px;
+  margin-top: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
+}
+
+.profile-analysis-progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ncx-color-accent);
+  transition: width 240ms ease;
+}
+
+@media (width < 720px) {
+  .profile-analysis-banner {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .profile-analysis-banner > .ncx-common-button {
+    grid-column: 2 / 4;
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-analysis-progress > span {
+    transition: none;
+  }
+}
+
 /* ==========================================================================
    Header Bar (Fixed / Sticky at Top)
    ========================================================================== */
@@ -27,7 +112,6 @@
   padding: 10px 0;
   background: color-mix(in srgb, var(--ncx-color-canvas) 85%, transparent);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
 }
 
 .agent-page-identity {
@@ -435,7 +519,6 @@
   padding: 8px 0 16px;
   background: color-mix(in srgb, var(--ncx-color-canvas) 85%, transparent);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
 }
 
 .agent-composer-context-pill {
@@ -523,7 +606,7 @@
 
 .agent-composer-send-btn svg {
   display: block;
-  stroke: currentColor;
+  stroke: currentcolor;
 }
 
 .agent-composer-send-btn:hover:not(:disabled) {
@@ -541,7 +624,7 @@
 }
 
 .agent-composer-send-btn.is-stop {
-  color: #ffffff;
+  color: #fff;
   background: var(--ncx-color-danger, #ef4444);
 }
 
@@ -560,4 +643,3 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
-

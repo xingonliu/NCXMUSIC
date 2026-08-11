@@ -16,6 +16,7 @@ function createApi(): NeteaseMusicApi {
     album: vi.fn(async () => ({ status: 200, body: { code: 200, album: null, songs: [] } })),
     playlist_detail: vi.fn(async () => ({ status: 200, body: { code: 200, playlist: null } })),
     user_detail: vi.fn(async () => ({ status: 200, body: { code: 200, profile: null } })),
+    likelist: vi.fn(async () => ({ status: 200, body: { code: 200, ids: [] } })),
     playlist_catlist: vi.fn(async () => ({
       status: 200,
       body: {
@@ -120,5 +121,46 @@ describe('浏览与个人页 API 适配', () => {
     }, '')
     expect(history.kind).toBe('songCollection')
     if (history.kind === 'songCollection') expect(history.songs[0]?.listeningCount).toBe(17)
+  })
+
+  it('分批读取超过五百首喜欢歌曲并保留歌单加入时间', async () => {
+    /** 覆盖大喜欢列表与歌单详情的 API 测试替身。 */
+    const api = createApi()
+    /** 五百零一个稳定歌曲 ID。 */
+    const likedIds = Array.from({ length: 501 }, (_, index) => String(index + 1))
+    api.likelist = vi.fn(async () => ({ status: 200, body: { code: 200, ids: likedIds } }))
+    api.song_detail = vi.fn(async (params) => {
+      /** 当前分批请求的歌曲 ID。 */
+      const ids = String(params['ids']).split(',')
+      return {
+        status: 200,
+        body: { code: 200, songs: ids.map((id) => ({ id, name: `歌曲 ${id}`, ar: [] })) }
+      }
+    })
+    api.playlist_detail = vi.fn(async () => ({
+      status: 200,
+      body: {
+        code: 200,
+        playlist: {
+          id: 7001,
+          name: '加入时间歌单',
+          tracks: [{ id: 9, name: '带时间歌曲', ar: [] }],
+          trackIds: [{ id: 9, at: 1_700_000_000_000 }]
+        }
+      }
+    }))
+    /** 标准音乐 API 适配器。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+
+    /** 未截断的喜欢歌曲集合。 */
+    const liked = await adapter.read({ operation: 'getLikedSongs', userId: '1001', limit: 100_000 }, '')
+    expect(liked.kind).toBe('songCollection')
+    if (liked.kind === 'songCollection') expect(liked.songs).toHaveLength(501)
+    expect(api.song_detail).toHaveBeenCalledTimes(2)
+
+    /** 带歌单上下文加入时间的标准详情。 */
+    const playlist = await adapter.read({ operation: 'getPlaylist', id: '7001' }, '')
+    expect(playlist.kind).toBe('playlist')
+    if (playlist.kind === 'playlist') expect(playlist.entity?.songs[0]?.addedAt).toBe(1_700_000_000_000)
   })
 })

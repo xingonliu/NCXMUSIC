@@ -2,7 +2,7 @@
 
 > 文档状态：Baseline 0.1
 > 建立日期：2026-08-04
-> 最后更新：2026-08-10
+> 最后更新：2026-08-11
 > 关联决策：A-005、D-012、D-105、D-108、D-305、D-307、D-308、D-309、D-605
 
 ## 1. 基本原则
@@ -106,7 +106,7 @@ netease/<userId>
 ## 6. SQLite 与文件快照
 
 - 每个账户使用单一 `account.sqlite`，避免多个数据库之间的事务和迁移不一致。
-- 当前账户 SQLite Schema v3 包含 `action_journal`、`playback_snapshot`、`account_preferences` 与 `agent_conversation_snapshot`；偏好值通过 JSON Schema 和 20KB 上限校验。
+- 当前账户 SQLite Schema v4 在 v3 的 `action_journal`、`playback_snapshot`、`account_preferences` 与 `agent_conversation_snapshot` 基础上，新增 `agent_conversation_blocks`、外部内容 FTS5 表 `agent_memory_fts` 及同步 Trigger、`agent_working_memory`、`music_profile_state`、`music_profile_evidence` 与 `account_basic_profile`；偏好值通过 JSON Schema 和 20KB 上限校验。
 - SQLite 由 Utility Process 单写者持有，开启 WAL、外键和 Busy Timeout；Main 与 Renderer 不并发打开。
 - Schema 使用递增 Migration Version。升级前创建可恢复备份或事务检查点，失败时停止写入并提示修复，不能以空库覆盖旧库。
 - 当前 Agent 对话快照在消息、工具、审批或选择状态变化后短防抖写入 `agent_conversation_snapshot`，并在账号切换或退出前刷新；10 分钟无输入只关闭会话块和触发摘要，不延迟当前记录落库。
@@ -115,7 +115,7 @@ netease/<userId>
 - `profile.json` 与 `working-memory.json` 是快速启动快照，不是唯一事实来源；采用临时文件写入、Flush 和同目录原子替换，损坏时从 SQLite 重建。
 - 可重建的 API/封面缓存不进入账户备份，清理缓存不能删除画像或聊天。
 
-基础资料表只接受已经通过 API 字段审计的明确返回值，并保存 `sourceApi` 与 `updatedAt`。称呼、性别、年龄等字段缺失、冲突或无法判断时写为 `unknown`/`null`，存储层不接受模型推断值冒充 API 事实。
+`account_basic_profile` 只接受已经通过 `StandardUserSchema` 审计的用户详情字段，并保存 `source_api` 与 `updated_at`。称呼来自必填的标准用户字段，性别与生日缺失、冲突或无法判断时保存为 `NULL`；该表不接受模型推断值冒充 API 事实，也不进入画像模型 Prompt。
 
 画像变化基线保存上次成功画像对应的喜欢歌曲 ID 集合、自建歌单去重歌曲 ID 集合、快照版本和生成时间。新画像成功前不覆盖旧基线；失败或取消后仍能用同一旧基线重新计算差异。
 
@@ -148,7 +148,7 @@ netease/<userId>
 - NcxMusic 不上传 `account.sqlite`、完整画像文件、歌单缓存目录或 Credential。
 - Context Builder 只选择完成当前请求所需的对话、画像摘要、记忆片段和实体引用，并组成模型请求。
 - 模型配置页、首次画像提示和隐私说明必须展示 Provider、发送数据类别和可能的 Token 费用。
-- 完整本地歌单与聚合特征的具体发送边界仍由 A-009/D-306 决定。
+- 画像完整采集只由用户触发；完整喜欢、歌单和排行在 Utility 本地扫描。当前 Provider 默认只接收聚合覆盖率、歌手/年代分布、变化分与最多 28 个代表样本；如需补充证据，只能在当前画像 Job 内通过 `get_profile_evidence_page` 分页读取，最多 6 次，不能访问其他账户或执行写操作。
 - 选择本地模型时，上述模型上下文可以不离开设备，但 MCP、Skill 或 Shell 自己进行的网络访问仍按各自权限披露。
 
 ## 9. 保留、导出与删除

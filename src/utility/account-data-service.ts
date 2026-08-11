@@ -63,11 +63,25 @@ export class AccountDataService {
     if (!account) throw new Error('账户空间尚未打开。')
     const databaseBytes = existsSync(account.sqlitePath) ? statSync(account.sqlitePath).size : 0
     const cacheBytes = this.cacheDirectories().reduce((total, directory) => total + directoryBytes(directory), 0)
-    const journalEvents = await this.accountStore.write((database) => {
-      const row = database.prepare('SELECT COUNT(*) AS count FROM action_journal').get() as { count: number }
-      return Number(row.count)
+    const statistics = await this.accountStore.write((database) => {
+      /** Action Journal 事件数量。 */
+      const journal = database.prepare('SELECT COUNT(*) AS count FROM action_journal').get() as { count: number }
+      /** 已归档会话块数量。 */
+      const memory = database.prepare('SELECT COUNT(*) AS count FROM agent_conversation_blocks').get() as { count: number }
+      /** 当前连续会话快照。 */
+      const conversation = database.prepare('SELECT snapshot_json FROM agent_conversation_snapshot LIMIT 1').get() as { snapshot_json?: string } | undefined
+      /** 当前画像版本。 */
+      const profile = database.prepare('SELECT version FROM music_profile_state WHERE singleton_id = 1').get() as { version?: number } | undefined
+      /** 当前快照消息数；损坏快照按零统计。 */
+      const chatMessages = readConversationMessageCount(conversation?.snapshot_json)
+      return {
+        journalEvents: Number(journal.count),
+        conversationBlocks: Number(memory.count),
+        chatMessages,
+        profileVersion: Number(profile?.version ?? 0)
+      }
     })
-    return AccountDataResultSchema.parse({ operation: 'getStats', databaseBytes, cacheBytes, journalEvents })
+    return AccountDataResultSchema.parse({ operation: 'getStats', databaseBytes, cacheBytes, ...statistics })
   }
 
   /** 读取当前账户所有持久偏好。 */
@@ -136,4 +150,15 @@ function directoryBytes(directory: string): number {
     const entryPath = `${directory}/${entry.name}`
     return total + (entry.isDirectory() ? directoryBytes(entryPath) : statSync(entryPath).size)
   }, 0)
+}
+
+/** 从未信任会话 JSON 读取消息数量，损坏内容按零统计。 */
+function readConversationMessageCount(snapshotJson: string | undefined): number {
+  try {
+    /** 未信任会话 JSON。 */
+    const decoded = snapshotJson ? JSON.parse(snapshotJson) as { messages?: unknown } : undefined
+    return Array.isArray(decoded?.messages) ? decoded.messages.length : 0
+  } catch {
+    return 0
+  }
 }

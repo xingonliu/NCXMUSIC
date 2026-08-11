@@ -23,6 +23,7 @@ import AgentComposer from './components/AgentComposer.vue'
 import ApprovalCard from './components/ApprovalCard.vue'
 import SelectionCard from './components/SelectionCard.vue'
 import ToolExecutionCard from './components/ToolExecutionCard.vue'
+import ProfileAnalysisBanner from './components/ProfileAnalysisBanner.vue'
 import { useAgentStore, type AgentMessageContext } from './agent-store'
 import './agent-page.css'
 
@@ -367,6 +368,12 @@ watch(
         </template>
       </template>
     </div>
+
+    <ProfileAnalysisBanner
+      :snapshot="agent.snapshot.value"
+      @start="agent.startProfileAnalysis"
+      @dismiss="agent.dismissProfilePrompt"
+    />
 
     <AgentComposer
       :snapshot="agent.snapshot.value"

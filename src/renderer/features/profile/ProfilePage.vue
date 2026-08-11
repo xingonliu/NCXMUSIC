@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Crown, Headphones, ListMusic, LockKeyhole, LogIn, LogOut, Play, UserRound } from '@lucide/vue'
+import { Crown, Headphones, ListMusic, LockKeyhole, LogIn, LogOut, Play, Sparkles, UserRound } from '@lucide/vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -18,6 +18,7 @@ import {
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
+import { useAgentStore } from '../agent/agent-store'
 import Cover from '../music/components/Cover.vue'
 import { standardSongToTrackSummary } from '../music/music-entity'
 import { usePlayer } from '../music/use-player'
@@ -37,6 +38,9 @@ type AccountAction = 'login' | 'logout' | 'switch'
 
 /** 应用账户公开状态。 */
 const account = useAccountSessionStore()
+
+/** 应用作用域 Agent Store，用于展示账户隔离音乐画像。 */
+const agent = useAgentStore()
 
 /** 页面路由实例。 */
 const router = useRouter()
@@ -125,6 +129,9 @@ const genderLabel = computed<string>(() => ({ 1: '男', 2: '女' })[user.value?.
 
 /** 用户星座展示文本。 */
 const zodiacLabel = computed<string>(() => formatZodiac(user.value?.birthday))
+
+/** 当前账户脱敏音乐人格画像。 */
+const musicProfile = computed(() => agent.snapshot.value.personalization)
 
 // ========= 函数 =========
 
@@ -234,10 +241,15 @@ function openPlaylist(playlist: StandardPlaylist): void {
   void router.push({ name: 'playlist-detail', params: { playlistId: playlist.id } })
 }
 
+/** 打开设置页的小云画像管理入口。 */
+function openPersonalizationSettings(): void {
+  void router.push({ name: 'settings', query: { tab: 'agent' } })
+}
+
 // ========= 生命周期 =========
 
 onMounted(async () => {
-  await account.initialize()
+  await Promise.all([account.initialize(), agent.initialize()])
 })
 
 watch(
@@ -297,6 +309,30 @@ watch(
           <div><dt>粉丝</dt><dd>{{ formatCount(user?.followeds) }}</dd></div>
           <div title="网易云公开资料接口暂不提供全站获赞总数"><dt>获赞</dt><dd>暂未公开</dd></div>
         </dl>
+      </section>
+
+      <section class="profile-music-personality" aria-labelledby="profile-music-personality-title">
+        <header>
+          <span><Sparkles :size="16" /></span>
+          <div>
+            <h2 id="profile-music-personality-title">音乐人格画像</h2>
+            <p v-if="musicProfile.usable">v{{ musicProfile.version }} · {{ musicProfile.paused ? '已暂停更新' : '可用于推荐与小云上下文' }}</p>
+            <p v-else>只分析音乐证据支持的偏好，不推断敏感真实人格。</p>
+          </div>
+          <CommonButton variant="secondary" size="compact" @click="openPersonalizationSettings">
+            {{ musicProfile.usable ? '管理画像' : '开始分析' }}
+          </CommonButton>
+        </header>
+        <template v-if="musicProfile.usable">
+          <p class="profile-music-personality-summary">{{ musicProfile.summary }}</p>
+          <div class="profile-music-personality-insights">
+            <article v-for="insight in musicProfile.insights.slice(0, 6)" :key="insight.insightId">
+              <span>{{ insight.category }} · {{ Math.round(insight.confidence * 100) }}%</span>
+              <strong>{{ insight.label }}</strong>
+              <p>{{ insight.value }}</p>
+            </article>
+          </div>
+        </template>
       </section>
 
       <nav class="profile-tabs" aria-label="个人内容">
@@ -409,7 +445,17 @@ watch(
 .profile-playlist-grid strong, .profile-playlist-grid > button > span:not(.profile-playlist-cover), .profile-playlist-grid small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .profile-playlist-grid strong { margin-top: 8px; font-size: 13px; }
 .profile-playlist-grid > button > span:not(.profile-playlist-cover), .profile-playlist-grid small { color: var(--ncx-color-text-secondary); font-size: 11px; }
+.profile-music-personality { display: grid; gap: 14px; padding: 20px; border: 1px solid var(--ncx-color-border); border-radius: var(--ncx-radius-xl); background: var(--ncx-color-surface); }
+.profile-music-personality > header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; }
+.profile-music-personality > header > span { display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 12px; color: var(--ncx-color-accent); background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent); }
+.profile-music-personality h2, .profile-music-personality p { margin: 0; }
+.profile-music-personality > header p, .profile-music-personality-summary { margin-top: 4px; color: var(--ncx-color-text-secondary); font-size: 12px; line-height: 1.55; }
+.profile-music-personality-insights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.profile-music-personality-insights article { display: grid; gap: 4px; padding: 12px; border-radius: 12px; background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent); }
+.profile-music-personality-insights span { color: var(--ncx-color-text-secondary); font-size: 10px; }
+.profile-music-personality-insights strong { font-size: 13px; }
+.profile-music-personality-insights p { color: var(--ncx-color-text-secondary); font-size: 11px; line-height: 1.45; }
 @media (width < 900px) { .profile-summary { grid-template-columns: 1fr; } .profile-playlist-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (width < 680px) { .profile-hero { align-items: start; flex-direction: column; } .profile-identity { align-items: start; flex-direction: column; } .profile-basics dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } .profile-tabs { overflow-x: auto; border-radius: 18px; } .profile-tabs button { flex: 0 0 auto; } .profile-panel-heading { align-items: start; flex-direction: column; } .profile-play-count { display: none; } .profile-history-list > button { grid-template-columns: 24px auto minmax(0, 1fr) 20px; } .profile-playlist-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (width < 680px) { .profile-hero { align-items: start; flex-direction: column; } .profile-identity { align-items: start; flex-direction: column; } .profile-basics dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } .profile-music-personality > header { grid-template-columns: auto 1fr; } .profile-music-personality > header > .ncx-common-button { grid-column: 1 / -1; justify-self: start; } .profile-music-personality-insights { grid-template-columns: 1fr; } .profile-tabs { overflow-x: auto; border-radius: 18px; } .profile-tabs button { flex: 0 0 auto; } .profile-panel-heading { align-items: start; flex-direction: column; } .profile-play-count { display: none; } .profile-history-list > button { grid-template-columns: 24px auto minmax(0, 1fr) 20px; } .profile-playlist-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (prefers-reduced-motion: reduce) { .profile-page button { transition: none !important; } .profile-page button:active { transform: none; } }
 </style>

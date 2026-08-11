@@ -249,6 +249,8 @@ Phase 0 技术门禁
 
 完成门禁是：退出重登恢复相同账号记忆；游客无画像；画像生成和更新均由用户触发；删除画像不误删聊天或网易云数据。
 
+> 执行记录（2026-08-11）：Phase 6 完整范围闭环并标记为 `pass`。Utility 已按 10 分钟空闲边界归档确定性会话摘要，通过账户内 SQLite FTS5 与中文有限召回构建 Working Memory，SQLite 是权威来源且 JSON 快照可损坏重建。画像初始化、更新、重新生成与失败重试均只由用户触发；本地采集喜欢、全部用户歌单详情、周/总排行和 API 明确返回的基础资料，去重聚合后仅向当前 Provider 发送聚合特征与有限代表样本，内部证据 Tool 独立于主会话 10+2 Tool Registry。1.5/1.0/0 权重、30 分阈值、7 天静默与追加 15 分提前提示、override、暂停/恢复和独立删除均已落地。“小云为你推荐”装配在发现页首个内容 Section，画像可用时才展示，稳定重排候选且不自动播放。设置页、画像页、数据统计/删除边界、Action Journal 和整库删除后的 Agent 内存态清空同步完成。类型检查、Lint、417 项单测、10 条 Playwright E2E 和 Electron 构建冒烟通过，验证证据见 `docs/development/reports/Phase-6-personalization-validation.md`。
+
 ## 11. Phase 7：语音、Shell、Dynamic Skill 与 MCP
 
 **功能映射：** VOC-001～012、EXT-001～019、SET-006～008。
