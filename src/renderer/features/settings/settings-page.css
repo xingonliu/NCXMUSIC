@@ -81,8 +81,222 @@
   gap: var(--ncx-space-2);
 }
 
+.settings-inline-actions {
+  display: flex;
+  gap: var(--ncx-space-3);
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
 .settings-control {
   width: 220px;
+}
+
+.settings-workspace-row {
+  align-items: start;
+}
+
+.settings-workspace-list {
+  display: grid;
+  gap: 5px;
+  margin-top: 9px;
+}
+
+.settings-workspace-list > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent);
+}
+
+.settings-workspace-list > span > span {
+  display: grid;
+  min-width: 0;
+}
+
+.settings-workspace-list strong,
+.settings-workspace-list small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+/* 扩展与既有模型面板在同文件交错使用标签选择器，局部关闭顺序误报。 */
+/* stylelint-disable no-descending-specificity */
+.extensions-settings,
+.extensions-section,
+.mcp-editor,
+.mcp-capabilities {
+  display: grid;
+  gap: var(--ncx-space-4);
+}
+
+.extensions-settings {
+  margin-top: var(--ncx-space-6);
+}
+
+.extensions-section {
+  padding: var(--ncx-space-5);
+  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
+  border-radius: var(--ncx-radius-lg);
+  background: var(--ncx-color-surface);
+}
+
+.extensions-section-header,
+.extensions-import-row,
+.extension-card,
+.mcp-editor-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ncx-space-4);
+}
+
+.extensions-section h2,
+.extensions-section p,
+.extension-card-copy strong,
+.extension-card-copy small {
+  margin: 0;
+}
+
+.extensions-section h2 {
+  margin-top: 2px;
+  font-size: 20px;
+}
+
+.extensions-section-header p:not(.settings-eyebrow),
+.extension-card-copy p,
+.extension-card-copy small,
+.extensions-empty {
+  color: var(--ncx-color-text-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.extensions-import-row input,
+.mcp-editor input,
+.mcp-editor textarea,
+.mcp-editor select,
+.mcp-import-box textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 9%, transparent);
+  border-radius: 9px;
+  outline: none;
+  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-background) 58%, transparent);
+  font: inherit;
+  font-size: 11px;
+}
+
+.extensions-import-row input {
+  flex: 1;
+}
+
+.extension-card {
+  padding: var(--ncx-space-3);
+  border-radius: var(--ncx-radius-md);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent);
+}
+
+.extension-card-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.extension-card-copy small {
+  font-weight: 400;
+}
+
+.mcp-settings-layout {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.65fr) minmax(320px, 1.35fr);
+  gap: var(--ncx-space-4);
+}
+
+.mcp-server-list {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+}
+
+.mcp-server-list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: inherit;
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mcp-server-list button.is-active {
+  border-color: color-mix(in srgb, var(--ncx-color-accent) 30%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-accent) 7%, transparent);
+}
+
+.mcp-server-list button span,
+.mcp-server-list button small {
+  display: grid;
+}
+
+.mcp-server-list button small,
+.mcp-server-list button em {
+  color: var(--ncx-color-text-secondary);
+  font-size: 9px;
+  font-style: normal;
+}
+
+.mcp-editor {
+  padding: var(--ncx-space-4);
+  border-radius: var(--ncx-radius-md);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 3%, transparent);
+}
+
+.mcp-editor label {
+  display: grid;
+  grid-template-columns: 95px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  color: var(--ncx-color-text-secondary);
+  font-size: 11px;
+}
+
+.mcp-editor textarea,
+.mcp-import-box textarea {
+  resize: vertical;
+}
+
+.mcp-capabilities {
+  max-height: 180px;
+  overflow: auto;
+  padding: 10px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--ncx-color-background) 55%, transparent);
+  font-size: 10px;
+}
+
+.mcp-capabilities span,
+.mcp-capabilities small {
+  overflow-wrap: anywhere;
+  color: var(--ncx-color-text-secondary);
+}
+
+.mcp-import-box {
+  display: grid;
+  gap: var(--ncx-space-3);
+  padding-top: var(--ncx-space-3);
+  border-top: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
 }
 
 .model-settings-layout {
@@ -279,12 +493,18 @@
   padding-top: 3px;
 }
 
+/* stylelint-enable no-descending-specificity */
+
 @media (width < 1100px) {
   .settings-row {
     grid-template-columns: auto minmax(180px, 1fr) auto;
   }
 
   .model-settings-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .mcp-settings-layout {
     grid-template-columns: 1fr;
   }
 }

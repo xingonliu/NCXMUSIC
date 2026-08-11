@@ -67,6 +67,18 @@ export class ShellWorkspaceRegistry {
     })
   }
 
+  /** 原子替换全部用户授权工作区。 */
+  replace(workspaces: readonly ShellWorkspace[]): void {
+    /** 先在临时 Registry 完成全部验证，避免半应用。 */
+    const validated = new ShellWorkspaceRegistry({
+      defaultWorkspaceRoot: this.defaultWorkspaceRoot,
+      workspaces: [...workspaces],
+      realpath: this.realpath
+    })
+    this.workspaces.clear()
+    for (const workspace of validated.workspaces.values()) this.workspaces.set(workspace.id, workspace)
+  }
+
   /** 解析 Tool 输入中的 workspaceId 和 cwd，并保证结果不逃逸授权根目录。 */
   resolve(workspaceId?: string, cwd?: string): ResolvedShellWorkspace {
     const workspace = workspaceId ? this.workspaces.get(workspaceId) : undefined

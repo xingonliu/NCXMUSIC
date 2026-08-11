@@ -177,7 +177,7 @@ export class NativeZshSyntaxChecker implements ZshSyntaxChecker {
 export class ShellPolicyClassifier {
   // ── 变量区 ──
   private readonly platform: ShellPlatform
-  private readonly safetyLevel: ShellSafetyLevel
+  private safetyLevel: ShellSafetyLevel
   private readonly workspaceRegistry: ShellWorkspaceRegistry
   private readonly powershellAstInspector: PowerShellAstInspector
   private readonly zshSyntaxChecker: ZshSyntaxChecker
@@ -191,6 +191,11 @@ export class ShellPolicyClassifier {
   }
 
   // ── 函数区 ──
+
+  /** 应用 Agent 当前唯一 CommandSafetyControl 等级。 */
+  setSafetyLevel(safetyLevel: ShellSafetyLevel): void {
+    this.safetyLevel = safetyLevel
+  }
 
   /** 对 Shell Tool 输入做确定性分类，返回 allow/ask/deny。 */
   async classify(input: ExecuteShellInput): Promise<ShellPolicyDecision> {

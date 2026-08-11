@@ -9,11 +9,23 @@ import {
 import { CONTROL_CHANNELS, type RuntimeStatus } from '../shared/contracts/control-plane'
 import type { DesktopBridge } from '../shared/contracts/desktop-bridge'
 import {
+  EXTENSION_CHANNELS,
+  type ExtensionBridge
+} from '../shared/contracts/extension-bridge'
+import {
   LIFECYCLE_CHANNELS,
   type LifecycleBridge,
   type LifecycleFlushRequest
 } from '../shared/contracts/lifecycle-bridge'
 import type { NcxRuntimeBridge } from '../shared/contracts/runtime-bridge'
+import {
+  VOICE_SHORTCUT_CHANNELS,
+  type VoiceShortcutBridge
+} from '../shared/contracts/voice-bridge'
+import {
+  SHELL_SETTINGS_CHANNELS,
+  type ShellSettingsBridge
+} from '../shared/contracts/shell-settings-bridge'
 import {
   PROVIDER_PROFILE_CHANNELS,
   type ProviderProfileBridge
@@ -30,15 +42,30 @@ import {
 } from '../shared/contracts/window-controls'
 import { AccountSessionSnapshotSchema, type AccountSessionSnapshot } from '../shared/schemas/account'
 import {
+  ExtensionSettingsRequestSchema,
+  ExtensionSettingsResultSchema
+} from '../shared/schemas/extensions'
+import {
   RuntimeConnectionMetadataSchema,
   RuntimeStatusSchema
 } from '../shared/schemas/control-plane'
+import {
+  VoiceShortcutCommandSchema,
+  VoiceShortcutEventSchema,
+  VoiceShortcutSnapshotSchema
+} from '../shared/schemas/voice'
+import {
+  ShellSettingsRequestSchema,
+  ShellSettingsResultSchema
+} from '../shared/schemas/shell'
 import { RuntimeGateway } from './runtime-gateway'
 
 const gateway = new RuntimeGateway()
 const statusListeners = new Set<(status: RuntimeStatus) => void>()
 const windowSnapshotListeners = new Set<(snapshot: WindowSnapshot) => void>()
 const accountSnapshotListeners = new Set<(snapshot: AccountSessionSnapshot) => void>()
+/** Renderer 订阅的全局语音快捷键事件监听器。 */
+const voiceShortcutListeners = new Set<Parameters<VoiceShortcutBridge['onEvent']>[0]>()
 /** Renderer 注册的退出前异步刷新处理器。 */
 const lifecycleFlushHandlers = new Set<() => Promise<void>>()
 let latestStatus: RuntimeStatus = {
@@ -206,6 +233,7 @@ const runtimeBridge: NcxRuntimeBridge = {
   loadPlaybackSnapshot: (input) => gateway.loadPlaybackSnapshot(input),
   savePlaybackSnapshot: (snapshot) => gateway.savePlaybackSnapshot(snapshot),
   accountData: (input) => gateway.accountData(input),
+  voice: (input) => gateway.voice(input),
   agent: (command) => gateway.agent(command),
   onAgentEvent: (listener) => gateway.onAgentEvent(listener),
   retryUtility: async () => {
@@ -271,6 +299,48 @@ const providerProfileBridge: ProviderProfileBridge = {
   }
 }
 
+/** 只允许 Renderer 通过共享 Schema 调用扩展设置操作。 */
+const extensionBridge: ExtensionBridge = {
+  request: async (input) => {
+    /** 经共享 Schema 校验的扩展设置请求。 */
+    const request = ExtensionSettingsRequestSchema.parse(input)
+    /** Main 返回的不含 Secret 的公开结果。 */
+    const result = await ipcRenderer.invoke(EXTENSION_CHANNELS.request, request)
+    return ExtensionSettingsResultSchema.parse(result)
+  }
+}
+
+/** 只暴露严格语音快捷键命令与最小状态事件。 */
+const voiceShortcutBridge: VoiceShortcutBridge = {
+  snapshot: async () => {
+    /** Main 返回的当前全局快捷键状态。 */
+    const result = await ipcRenderer.invoke(VOICE_SHORTCUT_CHANNELS.command, { operation: 'snapshot' })
+    return VoiceShortcutSnapshotSchema.parse(result)
+  },
+  command: async (rawCommand) => {
+    /** 经共享 Schema 校验的语音快捷键命令。 */
+    const command = VoiceShortcutCommandSchema.parse(rawCommand)
+    /** Main 返回的配置结果。 */
+    const result = await ipcRenderer.invoke(VOICE_SHORTCUT_CHANNELS.command, command)
+    return VoiceShortcutSnapshotSchema.parse(result)
+  },
+  onEvent: (listener) => {
+    voiceShortcutListeners.add(listener)
+    return () => voiceShortcutListeners.delete(listener)
+  }
+}
+
+/** 只允许管理用户通过系统对话框授权的 Shell 工作区。 */
+const shellSettingsBridge: ShellSettingsBridge = {
+  request: async (input) => {
+    /** 经共享 Schema 校验的 Shell 设置请求。 */
+    const request = ShellSettingsRequestSchema.parse(input)
+    /** Main 返回的工作区快照。 */
+    const result = await ipcRenderer.invoke(SHELL_SETTINGS_CHANNELS.request, request)
+    return ShellSettingsResultSchema.parse(result)
+  }
+}
+
 const windowControlBridge: WindowControlBridge = {
   snapshot: async () => ipcRenderer.invoke(WINDOW_CONTROL_CHANNELS.snapshot) as Promise<WindowSnapshot>,
   send: async (command: WindowCommand) =>
@@ -289,6 +359,13 @@ ipcRenderer.on(ACCOUNT_CHANNELS.status, (_event, rawSnapshot) => {
   const snapshot = AccountSessionSnapshotSchema.safeParse(rawSnapshot)
   if (!snapshot.success) return
   publishAccountSnapshot(snapshot.data)
+})
+
+ipcRenderer.on(VOICE_SHORTCUT_CHANNELS.event, (_event, rawEvent: unknown) => {
+  /** Main 发来的已归一化语音事件。 */
+  const event = VoiceShortcutEventSchema.safeParse(rawEvent)
+  if (!event.success) return
+  for (const listener of voiceShortcutListeners) listener(event.data)
 })
 
 ipcRenderer.on(LIFECYCLE_CHANNELS.flushRequest, (_event, rawRequest: unknown) => {
@@ -313,9 +390,12 @@ const bridge: DesktopBridge = Object.freeze({
   }),
   account: accountBridge,
   clipboard: clipboardBridge,
+  extensions: extensionBridge,
   lifecycle: lifecycleBridge,
   providerProfiles: providerProfileBridge,
   runtime: runtimeBridge,
+  shellSettings: shellSettingsBridge,
+  voiceShortcut: voiceShortcutBridge,
   windowControls: windowControlBridge
 })
 

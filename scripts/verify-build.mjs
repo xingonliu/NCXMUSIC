@@ -6,6 +6,7 @@ const projectRoot = fileURLToPath(new URL('..', import.meta.url))
 const requiredArtifacts = [
   'out/main/index.js',
   'out/main/inputHook.js',
+  'out/main/skillHost.js',
   'out/main/utility.js',
   'out/preload/index.js',
   'out/renderer/index.html'

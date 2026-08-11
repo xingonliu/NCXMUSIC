@@ -6,6 +6,7 @@ export const INPUT_HOOK_PROTOCOL_VERSION = 1 as const
 
 /** Host 只允许向 Main 汇报状态转换，不允许跨进程传递原始按键流。 */
 export const InputHookStatusSchema = z.enum([
+  'ready',
   'pressed',
   'released',
   'permission_denied',
@@ -13,8 +14,18 @@ export const InputHookStatusSchema = z.enum([
   'stopped'
 ])
 
-/** Phase 0 固定验证 Alt+Space，先限制为明确白名单按键。 */
-export const InputHookKeySchema = z.enum(['AltLeft', 'AltRight', 'Space'])
+/** Host 仅保留可用于语音组合键的修饰键与 Space，不转发其他输入。 */
+export const InputHookKeySchema = z.enum([
+  'AltLeft',
+  'AltRight',
+  'ControlLeft',
+  'ControlRight',
+  'MetaLeft',
+  'MetaRight',
+  'ShiftLeft',
+  'ShiftRight',
+  'Space'
+])
 
 /** 纯逻辑匹配器可消费的最小原生事件类型。 */
 export const InputHookEventTypeSchema = z.enum(['keydown', 'keyup', 'disconnect'])

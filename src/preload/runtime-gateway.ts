@@ -36,6 +36,12 @@ import {
   type PlaybackSnapshotLoadPayload
 } from '../shared/schemas/playback-persistence'
 import {
+  VoiceRuntimeRequestSchema,
+  VoiceRuntimeResultSchema,
+  type VoiceRuntimeRequest,
+  type VoiceRuntimeResult
+} from '../shared/schemas/voice'
+import {
   HelloEnvelopeSchema,
   AgentEventEnvelopeSchema,
   PingPayloadSchema,
@@ -110,6 +116,7 @@ export class RuntimeGateway {
             'account.data',
             'playback.snapshot.load',
             'playback.snapshot.save',
+            'voice.command',
             'agent.command'
           ]
         }
@@ -311,6 +318,32 @@ export class RuntimeGateway {
     return parsed.success
       ? { ok: true, data: parsed.data }
       : protocolFailure('PROTOCOL_INVALID_MESSAGE', '账户数据响应不符合契约。')
+  }
+
+  /** 查询 ASR 状态或转写一次内存录音。 */
+  async voice(
+    input: VoiceRuntimeRequest & { requestId?: string }
+  ): Promise<RuntimeResult<VoiceRuntimeResult>> {
+    /** 分离只用于协议取消的 requestId。 */
+    const { requestId, ...payloadInput } = input
+    /** 经共享 Schema 校验的语音请求。 */
+    const payload = VoiceRuntimeRequestSchema.safeParse(payloadInput)
+    if (!payload.success) {
+      return protocolFailure('PROTOCOL_INVALID_MESSAGE', '语音请求参数不合法。')
+    }
+    /** Utility 返回的语音请求结果。 */
+    const result = await this.request(
+      'voice.command',
+      payload.data,
+      requestId ?? crypto.randomUUID(),
+      contractRegistry['voice.command'].defaultTimeoutMs
+    )
+    if (!result.ok) return result
+    /** 经共享 Schema 校验的公开语音结果。 */
+    const parsed = VoiceRuntimeResultSchema.safeParse(result.data)
+    return parsed.success
+      ? { ok: true, data: parsed.data }
+      : protocolFailure('PROTOCOL_INVALID_MESSAGE', '语音响应不符合契约。')
   }
 
   /** 发送 Agent 命令并校验完整快照响应。 */

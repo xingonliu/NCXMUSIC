@@ -16,6 +16,7 @@ import {
   ResolvedMediaSourceSchema
 } from './music'
 import { ExecuteShellInputSchema, ExecuteShellResultSchema } from './shell'
+import { VoiceRuntimeRequestSchema, VoiceRuntimeResultSchema } from './voice'
 import {
   PlaybackSnapshotLoadPayloadSchema,
   PlaybackSnapshotLoadResultSchema,
@@ -73,6 +74,7 @@ export const HelloPayloadSchema = z.strictObject({
       'playback.snapshot.load',
       'playback.snapshot.save',
       'shell.execute',
+      'voice.command',
       'agent.command'
     ]))
     .max(12)
@@ -177,6 +179,13 @@ export const ExecuteShellRequestEnvelopeSchema = z.strictObject({
   payload: ExecuteShellInputSchema
 })
 
+/** Renderer → Utility：查询 ASR 状态或转写内存中的一次录音。 */
+export const VoiceCommandRequestEnvelopeSchema = z.strictObject({
+  ...RequestBaseShape,
+  name: z.literal('voice.command'),
+  payload: VoiceRuntimeRequestSchema
+})
+
 /** Renderer → Utility：发送 Agent 命令或拉取快照。 */
 export const AgentCommandRequestEnvelopeSchema = z.strictObject({
   ...RequestBaseShape,
@@ -206,6 +215,7 @@ export const CancelEnvelopeSchema = z.strictObject({
     'playback.snapshot.load',
     'playback.snapshot.save',
     'shell.execute',
+    'voice.command',
     'agent.command'
   ]),
   requestId: z.uuid(),
@@ -235,6 +245,7 @@ export const ResponseEnvelopeSchema = z.strictObject({
     'playback.snapshot.load',
     'playback.snapshot.save',
     'shell.execute',
+    'voice.command',
     'agent.command'
   ]),
   requestId: z.uuid(),
@@ -252,6 +263,7 @@ export const RuntimeInboundEnvelopeSchema = z.union([
   PlaybackSnapshotLoadRequestEnvelopeSchema,
   PlaybackSnapshotSaveRequestEnvelopeSchema,
   ExecuteShellRequestEnvelopeSchema,
+  VoiceCommandRequestEnvelopeSchema,
   AgentCommandRequestEnvelopeSchema,
   CancelEnvelopeSchema
 ])
@@ -271,6 +283,7 @@ export type ResolveTrackUrlRequestEnvelope = z.infer<typeof ResolveTrackUrlReque
 export type PlaybackSnapshotLoadRequestEnvelope = z.infer<typeof PlaybackSnapshotLoadRequestEnvelopeSchema>
 export type PlaybackSnapshotSaveRequestEnvelope = z.infer<typeof PlaybackSnapshotSaveRequestEnvelopeSchema>
 export type ExecuteShellRequestEnvelope = z.infer<typeof ExecuteShellRequestEnvelopeSchema>
+export type VoiceCommandRequestEnvelope = z.infer<typeof VoiceCommandRequestEnvelopeSchema>
 export type AgentCommandRequestEnvelope = z.infer<typeof AgentCommandRequestEnvelopeSchema>
 export type CancelEnvelope = z.infer<typeof CancelEnvelopeSchema>
 
@@ -338,6 +351,14 @@ export const contractRegistry = {
     resultSchema: ExecuteShellResultSchema,
     /** Shell 自身默认超时由执行器读取；协议层保留略长的硬超时。 */
     defaultTimeoutMs: 610_000,
+    retryable: false
+  },
+  'voice.command': {
+    direction: 'renderer-to-utility',
+    payloadSchema: VoiceRuntimeRequestSchema,
+    resultSchema: VoiceRuntimeResultSchema,
+    /** 云端 ASR 上传与转写使用两分钟硬超时。 */
+    defaultTimeoutMs: 120_000,
     retryable: false
   },
   'agent.command': {

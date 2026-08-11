@@ -2,6 +2,7 @@ import type { RuntimeStatus } from '../schemas/control-plane'
 import type { AccountDataRequest, AccountDataResult } from '../schemas/account-data'
 import type { PingResult, RuntimeResult, UtilitySnapshot } from '../schemas/runtime'
 import type { AgentCommand, AgentRuntimeEvent, AgentSnapshot } from '../schemas/agent'
+import type { VoiceRuntimeRequest, VoiceRuntimeResult } from '../schemas/voice'
 import type {
   AlbumId,
   ArtistId,
@@ -90,4 +91,6 @@ export interface NcxRuntimeBridge {
   ): Promise<RuntimeResult<{ savedAt: number }>>
   /** 访问当前账户偏好、Journal、统计与可重建缓存。 */
   accountData(input: AccountDataRequest): Promise<RuntimeResult<AccountDataResult>>
+  /** 查询 ASR 状态或转写一次仅驻留内存的录音。 */
+  voice(input: VoiceRuntimeRequest & CancellableRuntimeInput): Promise<RuntimeResult<VoiceRuntimeResult>>
 }

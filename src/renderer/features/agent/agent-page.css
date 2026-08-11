@@ -396,6 +396,31 @@
   flex-shrink: 0;
 }
 
+.agent-tool-card-details {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--ncx-color-text-secondary);
+  font-size: 10px;
+}
+
+.agent-tool-card-details code,
+.agent-tool-card-details pre {
+  margin: 0;
+  overflow: auto;
+  padding: 8px;
+  border-radius: 8px;
+  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-background) 62%, transparent);
+  font: 10px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.agent-tool-card-details pre {
+  max-height: 220px;
+}
+
 /* Approval & Selection Cards in Codex style */
 .agent-approval-card,
 .agent-selection-card {
@@ -626,6 +651,11 @@
 .agent-composer-send-btn.is-stop {
   color: #fff;
   background: var(--ncx-color-danger, #ef4444);
+}
+
+.agent-composer-right-controls .is-voice-listening {
+  color: var(--ncx-accent);
+  background: color-mix(in srgb, var(--ncx-accent) 14%, transparent);
 }
 
 .agent-safety-control {

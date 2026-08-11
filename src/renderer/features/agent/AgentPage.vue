@@ -114,6 +114,11 @@ function toolsForMessage(message: DeepReadonly<AgentSnapshot['messages'][number]
   return agent.snapshot.value.tools.filter((tool) => toolCallIds.has(tool.toolCallId))
 }
 
+/** 返回 Tool Call 对应的实时 Shell 终端。 */
+function shellTerminalForTool(toolCallId: string) {
+  return agent.snapshot.value.shellTerminals.find((terminal) => terminal.commandId === toolCallId)
+}
+
 function approvalsForMessage(message: DeepReadonly<AgentSnapshot['messages'][number]>) {
   /** 当前消息关联的 Tool Call ID 集合。 */
   const toolCallIds = new Set(message.toolCallIds)
@@ -162,6 +167,7 @@ watch(
     agent.snapshot.value.updatedAt,
     agent.snapshot.value.messages.at(-1)?.content,
     agent.snapshot.value.tools.length,
+    agent.snapshot.value.shellTerminals.at(-1)?.updatedAt,
     agent.snapshot.value.approvals.length,
     agent.snapshot.value.selections.length
   ],
@@ -300,6 +306,7 @@ watch(
                 v-for="tool in toolsForMessage(message)"
                 :key="tool.toolCallId"
                 :card="tool"
+                :shell-terminal="shellTerminalForTool(tool.toolCallId)"
               />
             </section>
 

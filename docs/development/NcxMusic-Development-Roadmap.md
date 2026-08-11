@@ -274,6 +274,8 @@ Phase 0 技术门禁
 
 完成门禁包括恶意/损坏包、崩溃进程、配置变化重审、MCP 工具逐次审批和应用退出零孤儿进程。
 
+> 执行记录（2026-08-11）：Phase 7 完整范围闭环并标记为 `pass`。全局 `Alt+Space` 按住说话已复用独立 InputHookHost 与 `globalShortcut` 冲突检测，应用内麦克风提供权限/冲突回退；录音仅驻内存，录音期使用独立 Audio Focus 把实际输出暂降至 20%，当前 Provider 不支持 ASR 时在上传前阻断。既有 Shell 执行器、S1～S4 分类、授权工作区、输出流与进程树已接入 Agent，继续只使用 CommandSafetyControl 和 ApprovalCard。Dynamic Skill 支持 AppData、文件夹、ZIP 与 HTTPS Git，严格校验 `SKILL.md`、默认禁用、独立受限 Host、更新/单版本回滚/7 天回收；原生模块、lifecycle script、路径逃逸和运行时安装依赖均被拒绝。MCP 锁定官方稳定 SDK v1.x，只接受 `stdio` 与 Streamable HTTP；Secret 加密保存且导出剔除，工具采用 `mcp.<serverId>.<toolName>`，真实 Tool Scope 变化即禁用重批，所有调用逐次审批，连接按需建立、空闲 10 分钟关闭、连续崩溃最多退避重启 3 次且不重放。语音、扩展和 Shell 工作区设置面板同步完成。类型检查、Lint、435 项单测/集成测试、10 条 Playwright E2E 与 Electron 构建冒烟通过；验证证据见 `docs/development/reports/Phase-7-voice-extensions-validation.md`。真实云端 ASR、第三方 MCP、macOS 权限以及签名安装包仍保留在 Phase 8 实机发布矩阵，不以夹具结果冒充实机结论。
+
 ## 12. Phase 8：双平台发布硬化
 
 **功能映射：** PLT-001～010、SET-009～011，以及功能清单中的全部跨平台和故障验收。

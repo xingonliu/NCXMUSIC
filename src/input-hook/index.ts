@@ -57,7 +57,24 @@ function report(config: InputHookConfig, status: InputHookReport['status'], reas
 function normalizeNativeEvent(type: InputHookNativeEvent['type'], event: unknown): InputHookNativeEvent | undefined {
   const code = typeof event === 'object' && event ? Reflect.get(event, 'code') : undefined
   const keycode = typeof event === 'object' && event ? Reflect.get(event, 'keycode') : undefined
-  const key = code === 'AltLeft' || code === 'AltRight' || code === 'Space' ? code : keycode === 56 ? 'AltLeft' : keycode === 57 ? 'Space' : undefined
+  /** uiohook 在不同平台可能只给 keycode；映射表只包含语音快捷键白名单。 */
+  const keycodeMap = new Map<number, InputHookNativeEvent['key']>([
+    [29, 'ControlLeft'],
+    [42, 'ShiftLeft'],
+    [54, 'ShiftRight'],
+    [56, 'AltLeft'],
+    [57, 'Space'],
+    [3613, 'ControlRight'],
+    [3640, 'AltRight'],
+    [3675, 'MetaLeft'],
+    [3676, 'MetaRight']
+  ])
+  /** 优先采用原生物理按键名，再使用受限数字码映射。 */
+  const key = typeof code === 'string'
+    ? InputHookNativeEventSchema.shape.key.safeParse(code).data
+    : typeof keycode === 'number'
+      ? keycodeMap.get(keycode)
+      : undefined
   return InputHookNativeEventSchema.safeParse({ type, key }).data
 }
 
@@ -95,7 +112,7 @@ async function attachNativeHook(config: InputHookConfig): Promise<void> {
   nativeHook.on('keydown', keydownListener)
   nativeHook.on('keyup', keyupListener)
   nativeHook.start()
-  post(report(config, 'stopped'))
+  post(report(config, 'ready'))
 }
 
 /** 应用 Main 下发的新快捷键配置，失败时报告明确禁用原因。 */

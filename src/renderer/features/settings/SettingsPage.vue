@@ -29,12 +29,14 @@ import { useAppPreferences } from './app-preferences'
 import ModelSettingsPanel from './ModelSettingsPanel.vue'
 import PersonalizationSettingsPanel from './PersonalizationSettingsPanel.vue'
 import SecuritySettingsPanel from './SecuritySettingsPanel.vue'
+import VoiceSettingsPanel from './VoiceSettingsPanel.vue'
+import ExtensionsSettingsPanel from './ExtensionsSettingsPanel.vue'
 import './settings-page.css'
 
 // ========= 类型 =========
 
 /** 设置页标签。 */
-type SettingsTab = 'music' | 'models' | 'agent' | 'security' | 'appearance' | 'data'
+type SettingsTab = 'music' | 'models' | 'agent' | 'security' | 'voice' | 'extensions' | 'appearance' | 'data'
 
 // ========= 变量 =========
 
@@ -74,6 +76,8 @@ const tabOptions: CommonOption[] = [
   { label: '模型', value: 'models' },
   { label: '小云', value: 'agent' },
   { label: '安全', value: 'security' },
+  { label: '语音', value: 'voice' },
+  { label: '扩展', value: 'extensions' },
   { label: '外观', value: 'appearance' },
   { label: '数据', value: 'data' }
 ]
@@ -340,6 +344,10 @@ watch(
     />
 
     <SecuritySettingsPanel v-else-if="activeTab === 'security'" />
+
+    <VoiceSettingsPanel v-else-if="activeTab === 'voice'" />
+
+    <ExtensionsSettingsPanel v-else-if="activeTab === 'extensions'" />
 
     <div v-else-if="activeTab === 'appearance'" class="settings-list">
       <section class="settings-row">

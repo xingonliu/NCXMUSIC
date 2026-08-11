@@ -1,11 +1,14 @@
+import { statSync } from 'node:fs'
 import { join } from 'node:path'
 
 import {
   app,
   BrowserWindow,
   clipboard,
+  dialog,
   ipcMain,
   safeStorage,
+  type Session,
   type Tray,
   session,
   type IpcMainEvent,
@@ -24,7 +27,10 @@ import {
   MAX_CLIPBOARD_TEXT_LENGTH
 } from '../shared/contracts/clipboard-bridge'
 import { CONTROL_CHANNELS, type RuntimeStatus } from '../shared/contracts/control-plane'
+import { EXTENSION_CHANNELS } from '../shared/contracts/extension-bridge'
 import { LIFECYCLE_CHANNELS } from '../shared/contracts/lifecycle-bridge'
+import { SHELL_SETTINGS_CHANNELS } from '../shared/contracts/shell-settings-bridge'
+import { VOICE_SHORTCUT_CHANNELS } from '../shared/contracts/voice-bridge'
 import {
   WINDOW_CONTROL_CHANNELS,
   type WindowCommand,
@@ -34,6 +40,9 @@ import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
 import { AccountSessionSnapshotSchema, type AccountSessionSnapshot } from '../shared/schemas/account'
 import { RuntimeStatusSchema } from '../shared/schemas/control-plane'
 import { ProviderProfileRequestSchema } from '../shared/schemas/provider-profile'
+import { ExtensionSettingsRequestSchema } from '../shared/schemas/extensions'
+import { VoiceShortcutCommandSchema, VoiceShortcutEventSchema } from '../shared/schemas/voice'
+import { ShellSettingsRequestSchema } from '../shared/schemas/shell'
 import { ProviderProfileStore } from '../infrastructure/credentials/provider-profile-store'
 import { AuthSessionController, type EstablishResult } from './auth/auth-session-controller'
 import { AccountStoreCoordinator } from './auth/account-store-coordinator'
@@ -46,8 +55,11 @@ import { NETEASE_AUTH_PARTITION } from './auth/navigation-policy'
 import { ConnectionBroker } from './connection-broker'
 import { AppConfigStore } from './app-config-store'
 import { ProviderProfileCoordinator } from './provider-profile-coordinator'
+import { ExtensionCoordinator, selectedSkillSource } from './extension-coordinator'
 import { createApplicationTray } from './app-tray'
 import { UtilitySupervisor } from './utility-supervisor'
+import { VoiceShortcutCoordinator } from './voice-shortcut-coordinator'
+import { ShellSettingsCoordinator } from './shell-settings-coordinator'
 import {
   createMainWindowOptions,
   createWindowSnapshot,
@@ -67,6 +79,12 @@ let accountStoreCoordinator: AccountStoreCoordinator | undefined
 let appConfigStore: AppConfigStore | undefined
 /** Main 独占的 Provider Profile 与安全凭据协调器。 */
 let providerProfileCoordinator: ProviderProfileCoordinator | undefined
+/** Main 独占的 Skill/MCP 配置、Secret 与 Utility 同步协调器。 */
+let extensionCoordinator: ExtensionCoordinator | undefined
+/** Main 独占的全局语音快捷键与 InputHookHost 协调器。 */
+let voiceShortcutCoordinator: VoiceShortcutCoordinator | undefined
+/** Main 独占的 Shell 授权工作区协调器。 */
+let shellSettingsCoordinator: ShellSettingsCoordinator | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
 /** 主窗口关闭按钮行为；`minimize` 为兼容旧配置的托盘驻留值。 */
 let closeWindowBehavior: 'minimize' | 'quit' = 'minimize'
@@ -175,6 +193,14 @@ function utilityEntryPath(): string {
     return join(process.resourcesPath, 'app.asar.unpacked', 'out', 'main', 'utility.js')
   }
   return join(__dirname, 'utility.js')
+}
+
+/** 解析 InputHookHost 构建入口；打包后从 asar 解包目录执行原生模块。 */
+function inputHookEntryPath(): string {
+  if (app.isPackaged) {
+    return join(process.resourcesPath, 'app.asar.unpacked', 'out', 'main', 'inputHook.js')
+  }
+  return join(__dirname, 'inputHook.js')
 }
 
 function createSupervisor(): UtilitySupervisor {
@@ -370,6 +396,15 @@ function broadcastStatus(status: RuntimeStatus): void {
   window.webContents.send(CONTROL_CHANNELS.status, RuntimeStatusSchema.parse(status))
 }
 
+/** 向主窗口发布经共享 Schema 校验的语音快捷键事件。 */
+function publishVoiceShortcutEvent(rawEvent: unknown): void {
+  /** 已校验的最小语音事件。 */
+  const event = VoiceShortcutEventSchema.safeParse(rawEvent)
+  const window = mainWindow
+  if (!event.success || !window || window.isDestroyed()) return
+  window.webContents.send(VOICE_SHORTCUT_CHANNELS.event, event.data)
+}
+
 function registerControlPlane(): void {
   ipcMain.on(LIFECYCLE_CHANNELS.flushAck, (event, requestId: unknown) => {
     if (!isTrustedSender(event) || typeof requestId !== 'string') return
@@ -396,6 +431,37 @@ function registerControlPlane(): void {
     /** Renderer 请求必须先通过共享 Schema。 */
     const request = ProviderProfileRequestSchema.parse(rawRequest)
     return providerProfileCoordinator.handle(request)
+  })
+
+  ipcMain.handle(EXTENSION_CHANNELS.request, async (event, rawRequest: unknown) => {
+    if (!isTrustedSender(event) || !extensionCoordinator) {
+      throw new Error('扩展设置服务不可用。')
+    }
+    /** Renderer 请求必须先通过共享扩展 Schema。 */
+    const request = ExtensionSettingsRequestSchema.parse(rawRequest)
+    return extensionCoordinator.handle(request)
+  })
+
+  ipcMain.handle(VOICE_SHORTCUT_CHANNELS.command, async (event, rawCommand: unknown) => {
+    if (!isTrustedSender(event) || !voiceShortcutCoordinator) {
+      throw new Error('语音快捷键服务不可用。')
+    }
+    /** Renderer 发来的严格语音快捷键命令。 */
+    const command = VoiceShortcutCommandSchema.parse(rawCommand)
+    if (command.operation === 'snapshot') return voiceShortcutCoordinator.snapshot()
+    if (command.operation === 'openPermissionSettings') {
+      return voiceShortcutCoordinator.openPermissionSettings()
+    }
+    return voiceShortcutCoordinator.configure(command.enabled, command.chord)
+  })
+
+  ipcMain.handle(SHELL_SETTINGS_CHANNELS.request, async (event, rawRequest: unknown) => {
+    if (!isTrustedSender(event) || !shellSettingsCoordinator) {
+      throw new Error('Shell 工作区设置服务不可用。')
+    }
+    /** Renderer 发来的严格 Shell 设置请求。 */
+    const request = ShellSettingsRequestSchema.parse(rawRequest)
+    return shellSettingsCoordinator.handle(request)
   })
 
   ipcMain.on(CONTROL_CHANNELS.connect, (event) => {
@@ -509,7 +575,28 @@ function shutdownApplicationServices(): void {
   applicationTray = undefined
   authController?.shutdown()
   accountStoreCoordinator?.shutdown()
+  voiceShortcutCoordinator?.shutdown()
+  extensionCoordinator?.shutdown()
   supervisor?.shutdown()
+}
+
+/** 只允许主窗口为音频录制请求麦克风权限，拒绝视频和其他页面。 */
+function configureMediaPermissions(window: BrowserWindow, targetSession: Session): void {
+  targetSession.setPermissionRequestHandler((webContents, permission, callback, details) => {
+    /** 媒体请求实际声明的媒体轨道；非媒体请求为空。 */
+    const mediaTypes = 'mediaTypes' in details ? details.mediaTypes : undefined
+    /** 是否为主窗口发起的纯音频媒体权限。 */
+    const trustedAudioRequest = webContents === window.webContents
+      && permission === 'media'
+      && (!mediaTypes || mediaTypes.every((type: string) => type === 'audio'))
+    callback(trustedAudioRequest)
+  })
+  targetSession.setPermissionCheckHandler((webContents, permission, _origin, details) => {
+    /** Chromium 权限预检同样只允许当前主窗口纯音频。 */
+    return webContents === window.webContents
+      && permission === 'media'
+      && (!details.mediaType || details.mediaType === 'audio')
+  })
 }
 
 function configureSmokeExit(window: BrowserWindow): void {
@@ -568,9 +655,7 @@ async function createMainWindow(): Promise<void> {
   window.webContents.on('will-navigate', (event, targetUrl) => {
     if (targetUrl !== window.webContents.getURL()) event.preventDefault()
   })
-  window.webContents.session.setPermissionRequestHandler((_webContents, _permission, callback) => {
-    callback(false)
-  })
+  configureMediaPermissions(window, window.webContents.session)
   registerWindowStatePublisher(window)
   configureSmokeExit(window)
 
@@ -610,6 +695,46 @@ if (!hasSingleInstanceLock) {
       })
       providerProfileStore.load()
       providerProfileCoordinator = new ProviderProfileCoordinator(providerProfileStore, supervisor)
+      extensionCoordinator = new ExtensionCoordinator({
+        dataRoot: app.getPath('userData'),
+        protector: {
+          isAvailable: () => safeStorage.isEncryptionAvailable(),
+          encrypt: (value) => safeStorage.encryptString(value),
+          decrypt: (value) => safeStorage.decryptString(value)
+        },
+        supervisor,
+        chooseSkillSource: async (sourceType) => {
+          /** 与来源类型严格对应的系统选择结果。 */
+          const result = await dialog.showOpenDialog({
+            title: sourceType === 'folder' ? '选择 Skill 文件夹' : '选择 Skill ZIP',
+            properties: [sourceType === 'folder' ? 'openDirectory' : 'openFile'],
+            ...(sourceType === 'zip'
+              ? { filters: [{ name: 'Skill ZIP', extensions: ['zip'] }] }
+              : {})
+          })
+          /** 用户选择的首个路径。 */
+          const path = result.canceled ? undefined : result.filePaths[0]
+          if (!path) return undefined
+          return selectedSkillSource(path, statSync(path).isDirectory())
+        }
+      })
+      shellSettingsCoordinator = new ShellSettingsCoordinator({
+        dataRoot: app.getPath('userData'),
+        supervisor,
+        chooseDirectory: async () => {
+          /** 用户明确选择的单个工作区目录。 */
+          const result = await dialog.showOpenDialog({
+            title: '授权 Shell 工作区',
+            properties: ['openDirectory', 'createDirectory']
+          })
+          return result.canceled ? undefined : result.filePaths[0]
+        }
+      })
+      voiceShortcutCoordinator = new VoiceShortcutCoordinator({
+        userDataPath: app.getPath('userData'),
+        hostEntryPath: inputHookEntryPath(),
+        publish: publishVoiceShortcutEvent
+      })
       appConfigStore = new AppConfigStore(app.getPath('userData'))
       closeWindowBehavior = appConfigStore.load().closeWindowBehavior
       accountStoreCoordinator = new AccountStoreCoordinator(supervisor)
@@ -626,12 +751,20 @@ if (!hasSingleInstanceLock) {
       authController.onResult(() => publishAccountSnapshot())
       authController.onLoginWindowClosed(() => publishAccountSnapshot())
       registerControlPlane()
+      voiceShortcutCoordinator.start()
       supervisor.onStatus((status) => {
         broadcastStatus(status)
-        if (status.state === 'ready') providerProfileCoordinator?.syncUtility()
-        void (authController?.handleUtilityStatus(status) ?? Promise.resolve()).finally(() =>
-          publishAccountSnapshot()
-        )
+        if (status.state === 'ready') {
+          providerProfileCoordinator?.syncUtility()
+          extensionCoordinator?.syncUtility()
+          shellSettingsCoordinator?.syncUtility()
+        }
+        void (authController?.handleUtilityStatus(status) ?? Promise.resolve())
+          .catch(() => {
+            // Utility 代次切换可使在途租约被拒绝；下一次 ready 会重新建立，不泄露凭据错误细节。
+            console.warn('Utility 状态切换期间账户租约暂未建立；等待下一次 ready 重试。')
+          })
+          .finally(() => publishAccountSnapshot())
       })
       supervisor.start()
       if (isLoginSpike) {

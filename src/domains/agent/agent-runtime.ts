@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import type { TrackSummary } from '../player/types'
-import { AgentToolRegistry } from './tool-registry'
+import { AgentToolRegistry, type ClassifiedToolOperation } from './tool-registry'
 import { ApprovalCoordinator } from './approval-coordinator'
 import { EntityResolver } from './entity-resolver'
 import { SelectionCoordinator, type SelectionRequestOption } from './selection-coordinator'
@@ -14,6 +14,7 @@ import {
   type AgentPlayerState,
   type AgentRuntimeEvent,
   type AgentSnapshot,
+  type AgentShellTerminalSnapshot,
   type AgentTurnEndReason,
   type AgentTurnStatus,
   type ApprovalSnapshot,
@@ -22,6 +23,7 @@ import {
   type SelectionSnapshot,
   type ToolExecutionCardSnapshot
 } from '../../shared/schemas/agent'
+import type { ShellOutputEvent } from '../../shared/schemas/shell'
 import {
   MusicMutationResultSchema,
   MusicReadResultSchema,
@@ -117,6 +119,42 @@ export interface AgentConversationPersistencePort {
   save(snapshot: PersistedAgentConversation): Promise<void>
 }
 
+/** Shell、Dynamic Skill 与 MCP 的统一外部工具端口。 */
+export interface AgentExternalToolPort {
+  /** 返回当前配置下模型可见的动态定义。 */
+  providerDefinitions(input: {
+    readonly commandSafetyLevel: CommandSafetyLevel
+    readonly shellToolEnabled: boolean
+  }): readonly {
+    readonly name: string
+    readonly description: string
+    readonly parameters: Readonly<Record<string, unknown>>
+  }[]
+  /** 返回启用 Skill 的附加系统提示。 */
+  systemPrompts(): readonly string[]
+  /** 判断名称是否由外部工具网关管理。 */
+  has(name: string): boolean
+  /** 校验参数并执行确定性策略分类。 */
+  resolve(
+    name: string,
+    rawInput: unknown,
+    input: { readonly commandSafetyLevel: CommandSafetyLevel; readonly shellToolEnabled: boolean }
+  ): Promise<{
+    readonly input: Record<string, unknown>
+    readonly operation: ClassifiedToolOperation & {
+      readonly requiresApproval?: string
+      readonly deniedReason?: string
+    }
+  } | undefined>
+  /** 执行已经通过 Registry、策略与必要审批的外部工具。 */
+  execute(
+    name: string,
+    input: Record<string, unknown>,
+    toolCallId: string,
+    signal: AbortSignal
+  ): Promise<AgentToolResult>
+}
+
 /** Agent Runtime 构造参数。 */
 export interface AgentRuntimeOptions {
   /** 三协议统一 Provider 端口。 */
@@ -137,6 +175,8 @@ export interface AgentRuntimeOptions {
   readonly memory?: AgentMemoryPort
   /** 当前账户音乐人格画像端口。 */
   readonly personalization?: AgentPersonalizationPort
+  /** Shell、Dynamic Skill 与 MCP 的正向扩展网关。 */
+  readonly externalTools?: AgentExternalToolPort
 }
 
 /** Provider 已完成 Tool Call。 */
@@ -328,6 +368,9 @@ export class AgentRuntime {
   /** Tool 卡历史。 */
   private readonly tools: ToolExecutionCardSnapshot[] = []
 
+  /** 最近 24 条 Shell Tool 的实时 stdout/stderr。 */
+  private readonly shellTerminals: AgentShellTerminalSnapshot[] = []
+
   /** 审批卡历史。 */
   private readonly approvals: ApprovalSnapshot[] = []
 
@@ -459,6 +502,41 @@ export class AgentRuntime {
     this.publish()
   }
 
+  /** 接收 Phase 0 Shell Supervisor 的有限流式输出并发布给 Agent 页面。 */
+  publishShellOutput(event: ShellOutputEvent): void {
+    /** 当前命令已有终端。 */
+    const existing = this.shellTerminals.find((item) => item.commandId === event.commandId)
+    /** 基于序号丢弃重复或迟到 Chunk。 */
+    if (existing && event.sequence <= existing.lastSequence) return
+    if (existing) {
+      /** 当前流拼接后的有限文本。 */
+      const nextText = `${event.stream === 'stdout' ? existing.stdout : existing.stderr}${event.chunk}`
+        .slice(0, 1_048_576)
+      /** 原位替换不可变快照。 */
+      const index = this.shellTerminals.indexOf(existing)
+      this.shellTerminals.splice(index, 1, {
+        ...existing,
+        ...(event.stream === 'stdout'
+          ? { stdout: nextText, stdoutTruncated: existing.stdoutTruncated || event.truncated }
+          : { stderr: nextText, stderrTruncated: existing.stderrTruncated || event.truncated }),
+        lastSequence: event.sequence,
+        updatedAt: Date.now()
+      })
+    } else {
+      this.shellTerminals.push({
+        commandId: event.commandId,
+        stdout: event.stream === 'stdout' ? event.chunk.slice(0, 1_048_576) : '',
+        stderr: event.stream === 'stderr' ? event.chunk.slice(0, 1_048_576) : '',
+        stdoutTruncated: event.stream === 'stdout' && event.truncated,
+        stderrTruncated: event.stream === 'stderr' && event.truncated,
+        lastSequence: event.sequence,
+        updatedAt: Date.now()
+      })
+      if (this.shellTerminals.length > 24) this.shellTerminals.splice(0, this.shellTerminals.length - 24)
+    }
+    this.publish(false)
+  }
+
   /** 处理 Renderer Agent 命令并返回最新快照。 */
   async command(command: AgentCommand): Promise<AgentSnapshot> {
     await this.ensureConversationRestored()
@@ -564,6 +642,7 @@ export class AgentRuntime {
       ...(this.endReason ? { endReason: this.endReason } : {}),
       messages: this.messages,
       tools: this.tools,
+      shellTerminals: this.shellTerminals,
       approvals: this.approvals,
       selections: this.selections,
       toolRounds: this.toolRounds,
@@ -646,7 +725,8 @@ export class AgentRuntime {
     const systemPrompt = [
       XIAOYUN_SYSTEM_PROMPT,
       memoryContext ? `[Working Memory]\n${memoryContext}` : '',
-      personalizationContext ? `[音乐人格画像]\n${personalizationContext}` : ''
+      personalizationContext ? `[音乐人格画像]\n${personalizationContext}` : '',
+      ...(this.options.externalTools?.systemPrompts() ?? [])
     ].filter(Boolean).join('\n\n')
     /** 发给 Provider 的当前连续会话上下文。 */
     const providerMessages: AgentProviderMessage[] = [
@@ -798,7 +878,13 @@ export class AgentRuntime {
     const iterator = this.options.provider.stream({
       profile,
       messages,
-      tools: toolsOverride ?? (exposeTools ? this.registry.providerDefinitions() : []),
+      tools: toolsOverride ?? (exposeTools ? [
+        ...this.registry.providerDefinitions(),
+        ...(this.options.externalTools?.providerDefinitions({
+          commandSafetyLevel: this.commandSafetyLevel,
+          shellToolEnabled: this.shellToolEnabled
+        }) ?? [])
+      ] : []),
       signal: attemptController.signal
     })[Symbol.asyncIterator]()
     try {
@@ -851,10 +937,14 @@ export class AgentRuntime {
       }
       /** 依据当前明确用户目标纠正模型误用的只读搜歌动作。 */
       const normalizedInput = this.normalizeToolInput(call.name, rawInput)
-      /** Registry 解析结果。 */
+      /** 核心 Registry 或外部正向网关解析结果。 */
       const resolved = this.registry.resolve(call.name, normalizedInput)
+        ?? await this.options.externalTools?.resolve(call.name, normalizedInput, {
+          commandSafetyLevel: this.commandSafetyLevel,
+          shellToolEnabled: this.shellToolEnabled
+        })
       if (!resolved) {
-        return this.registry.has(call.name)
+        return this.registry.has(call.name) || this.options.externalTools?.has(call.name)
           ? this.invalidToolCall(call, 'TOOL_ARGUMENTS_INVALID', '工具参数未通过 Schema 校验，请修正参数后重试。')
           : this.invalidToolCall(call, 'CAPABILITY_UNAVAILABLE', '工具未注册。')
       }
@@ -870,6 +960,14 @@ export class AgentRuntime {
       this.tools.push(card)
       this.publish()
 
+      if ('deniedReason' in resolved.operation && resolved.operation.deniedReason) {
+        return this.finishTool(card, false, 'POLICY_DENIED', resolved.operation.deniedReason)
+      }
+
+      /** 当前工具是否需要一次性用户批准。 */
+      let approvalReason = 'requiresApproval' in resolved.operation
+        ? resolved.operation.requiresApproval
+        : undefined
       if (resolved.operation.riskAction) {
         /** 当前音乐策略结果。 */
         const policy = evaluateMusicPolicy({
@@ -878,7 +976,9 @@ export class AgentRuntime {
           level: this.musicSafetyLevel
         })
         if (policy.decision === 'deny') return this.finishTool(card, false, 'POLICY_DENIED', policy.reason)
-        if (policy.decision === 'ask') {
+        if (policy.decision === 'ask') approvalReason = policy.reason
+      }
+      if (approvalReason) {
           card.status = 'awaiting_approval'
           this.turnStatus = 'awaiting_approval'
           /** 当前 Tool Call 的一次性审批请求。 */
@@ -886,7 +986,7 @@ export class AgentRuntime {
             toolCallId: card.toolCallId,
             title: resolved.operation.title,
             impact: card.parameterSummary,
-            riskReason: policy.reason
+            riskReason: approvalReason
           })
           this.publish()
           /** 审批等待不执行任何底层逻辑。 */
@@ -900,7 +1000,6 @@ export class AgentRuntime {
                 : 'APPROVAL_CANCELLED'
             return this.finishTool(card, false, code, '操作未执行。')
           }
-        }
       }
       card.status = 'running'
       card.startedAt = Date.now()
@@ -911,7 +1010,7 @@ export class AgentRuntime {
           toolCallId: card.toolCallId,
           effect: resolved.operation.effect,
           conflictKeys: resolved.operation.conflictKeys,
-          run: () => this.executeRegisteredTool(call.name, resolved.input, card.toolCallId)
+          run: () => this.executeRegisteredTool(call.name, resolved.input, card.toolCallId, signal)
         }).then((result) => this.finishTool(card, result.ok, result.code, result.summary, result.data))
       } catch (error) {
         return this.finishTool(card, false, errorCode(error), readableError(error))
@@ -933,8 +1032,13 @@ export class AgentRuntime {
   private async executeRegisteredTool(
     toolName: string,
     input: Record<string, unknown>,
-    toolCallId: string
+    toolCallId: string,
+    signal: AbortSignal
   ): Promise<AgentToolResult> {
+    if (!this.registry.has(toolName)) {
+      return this.options.externalTools?.execute(toolName, input, toolCallId, signal)
+        ?? { ok: false, code: 'CAPABILITY_UNAVAILABLE', summary: '外部工具网关不可用。' }
+    }
     if (toolName === 'smart_search_and_play') return this.smartSearchAndPlay(input, toolCallId)
     if (toolName === 'control_player') return this.controlPlayer(input, toolCallId)
     if (toolName === 'queue_manager') return this.manageQueue(input, toolCallId)
@@ -1712,6 +1816,7 @@ export class AgentRuntime {
     this.tools.splice(0, this.tools.length, ...restoreTools(saved?.tools ?? []))
     this.approvals.splice(0, this.approvals.length, ...restoreApprovals(saved?.approvals ?? []))
     this.selections.splice(0, this.selections.length, ...restoreSelections(saved?.selections ?? []))
+    this.shellTerminals.splice(0, this.shellTerminals.length)
     this.entities.clear()
     this.verifiedEntities.clear()
     for (const selection of this.selections) {
@@ -1988,6 +2093,8 @@ function summarizeValue(value: unknown): string {
 
 /** Tool 名映射到卡片类别。 */
 function toolCategory(name: string): ToolExecutionCardSnapshot['category'] {
+  if (name === 'execute_shell' || name === 'manage_skill' || name === 'mcp_manager') return 'gateway'
+  if (name.startsWith('skill.') || name.startsWith('mcp.')) return 'gateway'
   if (name === 'control_player' || name === 'queue_manager' || name === 'smart_search_and_play') return 'player'
   if (name === 'account_manager' || name === 'user_profile_memory') return 'account'
   if (name === 'request_user_selection') return 'interaction'

@@ -2,12 +2,17 @@
 import { ChevronDown, FileText, ListMusic, Play, Search, Wrench } from '@lucide/vue'
 import { computed, ref, type Component } from 'vue'
 
-import type { ToolExecutionCardSnapshot } from '../../../../shared/schemas/agent'
+import type {
+  AgentShellTerminalSnapshot,
+  ToolExecutionCardSnapshot
+} from '../../../../shared/schemas/agent'
 
 // ========= 类型 =========
 
 interface ToolExecutionCardProps {
   readonly card: ToolExecutionCardSnapshot
+  /** execute_shell 对应的实时终端输出。 */
+  readonly shellTerminal: AgentShellTerminalSnapshot | undefined
 }
 
 // ========= 变量 =========
@@ -79,6 +84,12 @@ function toolNameText(toolName: string): string {
     >
       <span>参数明细:</span>
       <code>{{ card.parameterSummary || '无参数' }}</code>
+      <template v-if="card.toolName === 'execute_shell' && shellTerminal">
+        <span>stdout:</span>
+        <pre>{{ shellTerminal.stdout || '—' }}{{ shellTerminal.stdoutTruncated ? '\n…已截断' : '' }}</pre>
+        <span>stderr:</span>
+        <pre>{{ shellTerminal.stderr || '—' }}{{ shellTerminal.stderrTruncated ? '\n…已截断' : '' }}</pre>
+      </template>
     </div>
   </article>
 </template>

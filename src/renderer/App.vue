@@ -10,6 +10,7 @@ import ImmersiveLyricsPage from './features/music/ImmersiveLyricsPage.vue'
 import AudioHost from './features/music/components/AudioHost.vue'
 import PlayerBar from './features/music/components/PlayerBar.vue'
 import { useImmersivePlayerPresentation } from './features/music/immersive-player-presentation'
+import VoiceInputLayer from './features/voice/VoiceInputLayer.vue'
 
 // ========= 变量 =========
 
@@ -45,6 +46,7 @@ watch(
   -->
   <AudioHost />
   <PlayerBar v-if="showPlayerBar" />
+  <VoiceInputLayer />
 
   <!-- 独立于 RouterView 的应用级沉浸播放展示层。 -->
   <ImmersiveLyricsPage

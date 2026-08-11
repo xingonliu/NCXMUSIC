@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ArrowUp, ChevronDown, Folder, Plus, Square } from '@lucide/vue'
+import { ArrowUp, ChevronDown, Folder, Mic, Plus, Square } from '@lucide/vue'
 import { computed, ref, type DeepReadonly } from 'vue'
 
 import type { AgentSnapshot } from '../../../../shared/schemas/agent'
 import { CommonIconButton } from '../../../design-system/components'
 import SafetyControl from './SafetyControl.vue'
+import { useVoiceInput } from '../../voice/use-voice-input'
 
 // ========= 类型 =========
 
@@ -25,6 +26,9 @@ const emit = defineEmits<AgentComposerEmits>()
 
 const content = ref<string>('')
 
+/** 应用作用域语音输入控制器。 */
+const voice = useVoiceInput()
+
 const active = computed<boolean>(() => !['idle', 'completed', 'cancelled', 'failed'].includes(props.snapshot.turnStatus))
 
 const canSend = computed<boolean>(() => content.value.trim().length > 0 && props.snapshot.configured)
@@ -40,6 +44,34 @@ function handleKeydown(event: KeyboardEvent): void {
   if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return
   event.preventDefault()
   submit()
+}
+
+/** 输入区麦克风按下时捕获指针并开始录音。 */
+function handleVoicePointerDown(event: PointerEvent): void {
+  event.preventDefault()
+  ;(event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId)
+  void voice.press('composer-button')
+}
+
+/** 输入区麦克风松开或取消时结束本次录音。 */
+function handleVoicePointerEnd(event: PointerEvent): void {
+  event.preventDefault()
+  ;(event.currentTarget as HTMLElement).releasePointerCapture?.(event.pointerId)
+  voice.release('composer-button')
+}
+
+/** 键盘按住 Space/Enter 时提供等价的按住说话入口。 */
+function handleVoiceKeyDown(event: KeyboardEvent): void {
+  if (event.repeat || (event.key !== ' ' && event.key !== 'Enter')) return
+  event.preventDefault()
+  void voice.press('composer-button')
+}
+
+/** 键盘松开 Space/Enter 时结束录音。 */
+function handleVoiceKeyUp(event: KeyboardEvent): void {
+  if (event.key !== ' ' && event.key !== 'Enter') return
+  event.preventDefault()
+  voice.release('composer-button')
 }
 </script>
 
@@ -87,6 +119,19 @@ function handleKeydown(event: KeyboardEvent): void {
           />
         </div>
         <div class="agent-composer-right-controls">
+          <CommonIconButton
+            label="按住说话"
+            size="default"
+            variant="ghost"
+            :class="{ 'is-voice-listening': voice.state.value === 'listening' }"
+            @pointerdown="handleVoicePointerDown"
+            @pointerup="handleVoicePointerEnd"
+            @pointercancel="handleVoicePointerEnd"
+            @keydown="handleVoiceKeyDown"
+            @keyup="handleVoiceKeyUp"
+          >
+            <Mic :size="16" />
+          </CommonIconButton>
           <span class="agent-model-select-pill">
             NCX Agent 极高
             <ChevronDown :size="12" />
@@ -119,4 +164,3 @@ function handleKeydown(event: KeyboardEvent): void {
     </div>
   </section>
 </template>
-

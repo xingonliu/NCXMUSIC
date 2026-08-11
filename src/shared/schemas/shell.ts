@@ -97,6 +97,32 @@ export const ShellPolicyDecisionSchema = z.strictObject({
   normalizedCommand: z.string().min(1).max(8_192)
 })
 
+/** Renderer 可见的用户授权 Shell 工作区。 */
+export const ShellWorkspaceSnapshotSchema = z.strictObject({
+  id: z.uuid(),
+  name: z.string().trim().min(1).max(120),
+  rootPath: z.string().trim().min(1).max(2_048)
+})
+
+/** Renderer → Main 的 Shell 工作区设置请求。 */
+export const ShellSettingsRequestSchema = z.discriminatedUnion('operation', [
+  z.strictObject({ operation: z.literal('snapshot') }),
+  z.strictObject({ operation: z.literal('chooseWorkspace') }),
+  z.strictObject({ operation: z.literal('removeWorkspace'), workspaceId: z.uuid() })
+])
+
+/** Main 返回的 Shell 工作区设置快照。 */
+export const ShellSettingsResultSchema = z.strictObject({
+  workspaces: z.array(ShellWorkspaceSnapshotSchema).max(64),
+  message: z.string().max(500).optional()
+})
+
+/** Main → Utility：同步用户授权工作区边界。 */
+export const ShellWorkspaceRuntimeSyncSchema = z.strictObject({
+  kind: z.literal('shell.workspace.sync'),
+  workspaces: z.array(ShellWorkspaceSnapshotSchema).max(64)
+})
+
 // ─────────────────────────────────────────────────────────────────────────────
 // 类型区
 // ─────────────────────────────────────────────────────────────────────────────
@@ -109,3 +135,9 @@ export type ExecuteShellInput = z.infer<typeof ExecuteShellInputSchema>
 export type ExecuteShellResult = z.infer<typeof ExecuteShellResultSchema>
 export type ShellOutputEvent = z.infer<typeof ShellOutputEventSchema>
 export type ShellPolicyDecision = z.infer<typeof ShellPolicyDecisionSchema>
+/** 用户授权工作区快照类型。 */
+export type ShellWorkspaceSnapshot = z.infer<typeof ShellWorkspaceSnapshotSchema>
+/** Shell 设置请求类型。 */
+export type ShellSettingsRequest = z.infer<typeof ShellSettingsRequestSchema>
+/** Shell 设置结果类型。 */
+export type ShellSettingsResult = z.infer<typeof ShellSettingsResultSchema>

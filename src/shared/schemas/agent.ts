@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { ShellOutputEventSchema } from './shell'
+
 import {
   StandardAlbumSchema,
   StandardArtistSchema,
@@ -75,7 +77,7 @@ export const ToolExecutionStatusSchema = z.enum([
 /** Renderer 可见的脱敏 Tool 执行卡。 */
 export const ToolExecutionCardSnapshotSchema = z.strictObject({
   toolCallId: z.uuid(),
-  toolName: z.string().min(1).max(80),
+  toolName: z.string().min(1).max(256),
   title: z.string().min(1).max(120),
   category: z.enum(['music', 'player', 'account', 'interaction', 'gateway']),
   status: ToolExecutionStatusSchema,
@@ -86,6 +88,20 @@ export const ToolExecutionCardSnapshotSchema = z.strictObject({
   endedAt: z.number().int().nonnegative().optional(),
   durationMs: z.number().int().nonnegative().optional()
 })
+
+/** Agent 页面可恢复的单条 Shell 终端输出。 */
+export const AgentShellTerminalSnapshotSchema = z.strictObject({
+  commandId: z.uuid(),
+  stdout: z.string().max(1_048_576),
+  stderr: z.string().max(1_048_576),
+  stdoutTruncated: z.boolean(),
+  stderrTruncated: z.boolean(),
+  lastSequence: z.number().int().nonnegative(),
+  updatedAt: z.number().int().nonnegative()
+})
+
+/** Utility 内部接收的 Shell 输出仍复用 Phase 0 契约。 */
+export const AgentShellOutputEventSchema = ShellOutputEventSchema
 
 /** 审批卡快照。 */
 export const ApprovalSnapshotSchema = z.strictObject({
@@ -142,6 +158,7 @@ export const AgentSnapshotSchema = z.strictObject({
   endReason: AgentTurnEndReasonSchema.optional(),
   messages: z.array(AgentMessageSchema),
   tools: z.array(ToolExecutionCardSnapshotSchema),
+  shellTerminals: z.array(AgentShellTerminalSnapshotSchema).max(24).default([]),
   approvals: z.array(ApprovalSnapshotSchema),
   selections: z.array(SelectionSnapshotSchema),
   toolRounds: z.number().int().nonnegative(),
@@ -268,6 +285,8 @@ export type AgentMessage = z.infer<typeof AgentMessageSchema>
 
 /** Agent Tool 卡片类型。 */
 export type ToolExecutionCardSnapshot = z.infer<typeof ToolExecutionCardSnapshotSchema>
+/** Agent Shell 终端输出类型。 */
+export type AgentShellTerminalSnapshot = z.infer<typeof AgentShellTerminalSnapshotSchema>
 
 /** Agent 审批卡类型。 */
 export type ApprovalSnapshot = z.infer<typeof ApprovalSnapshotSchema>

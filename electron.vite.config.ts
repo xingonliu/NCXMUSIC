@@ -14,7 +14,8 @@ export default defineConfig({
         input: {
           index: resolve(__dirname, 'src/main/index.ts'),
           utility: resolve(__dirname, 'src/utility/index.ts'),
-          inputHook: resolve(__dirname, 'src/input-hook/index.ts')
+          inputHook: resolve(__dirname, 'src/input-hook/index.ts'),
+          skillHost: resolve(__dirname, 'src/skill-host/index.ts')
         },
         external: ['uiohook-napi'],
         output: {

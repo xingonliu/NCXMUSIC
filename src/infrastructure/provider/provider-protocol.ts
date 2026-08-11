@@ -226,7 +226,7 @@ const DEFAULT_MAX_TOKENS = 1024
 
 /** ASR 不支持时统一使用的确认文案，避免自动切换供应商。 */
 export const ASR_UNSUPPORTED_MESSAGE =
-  '当前 Provider Profile 不支持语音识别，请更换为已验证支持 ASR 的模型后再试。'
+  '当前大模型不支持语音识别（ASR）。'
 
 /** ASR 能力探测使用的内存哨兵音频，不复用用户原始录音。 */
 const ASR_PROBE_BYTES = new Uint8Array([0])

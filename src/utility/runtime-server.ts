@@ -26,7 +26,9 @@ import {
   type PingRequestEnvelope,
   type ProtocolError,
   type ResolveTrackUrlRequestEnvelope,
-  type SnapshotRequestEnvelope
+  type SnapshotRequestEnvelope,
+  VoiceCommandRequestEnvelopeSchema,
+  type VoiceCommandRequestEnvelope
 } from '../shared/schemas/runtime'
 import type { ShellExecutor } from '../infrastructure/shell/executor'
 import type { AgentRuntimeEvent } from '../shared/schemas/agent'
@@ -53,6 +55,7 @@ type RuntimeCapability =
   | 'playback.snapshot.load'
   | 'playback.snapshot.save'
   | 'shell.execute'
+  | 'voice.command'
   | 'agent.command'
 
 /**
@@ -100,6 +103,14 @@ export interface ShellCommandHandler {
   cancel(requestId: string): void
 }
 
+/** Utility 内云端 ASR 命令入口。 */
+export interface VoiceCommandHandler {
+  /** 查询能力状态或转写一次内存录音。 */
+  execute(requestId: string, payload: unknown): Promise<unknown>
+  /** 取消进行中的 ASR 请求并释放音频。 */
+  cancel(requestId: string): void
+}
+
 /** Utility 内 Agent Runtime 的命令入口。 */
 export interface AgentCommandHandler {
   /** 执行已通过共享 Schema 的 Agent 命令。 */
@@ -121,6 +132,7 @@ type AnyRequestEnvelope =
   | PlaybackSnapshotLoadRequestEnvelope
   | PlaybackSnapshotSaveRequestEnvelope
   | ExecuteShellRequestEnvelope
+  | VoiceCommandRequestEnvelope
   | AgentCommandRequestEnvelope
 
 /** 待处理请求：ping 用定时器，resolve-url 交由 handler 自行取消 */
@@ -133,6 +145,7 @@ type PendingRequest =
   | { name: 'playback.snapshot.load' }
   | { name: 'playback.snapshot.save' }
   | { name: 'shell.execute' }
+  | { name: 'voice.command' }
   | { name: 'agent.command' }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -162,7 +175,8 @@ export class UtilityRuntimeServer {
     private readonly musicReadHandler?: MusicReadHandler,
     private readonly playbackSnapshotHandler?: PlaybackSnapshotHandler,
     private readonly accountDataHandler?: AccountDataHandler,
-    private readonly agentHandler?: AgentCommandHandler
+    private readonly agentHandler?: AgentCommandHandler,
+    private readonly voiceHandler?: VoiceCommandHandler
   ) {}
 
   // ── 生命周期区 ──
@@ -207,6 +221,7 @@ export class UtilityRuntimeServer {
       base.push('playback.snapshot.load', 'playback.snapshot.save')
     }
     if (this.shellHandler) base.push('shell.execute')
+    if (this.voiceHandler) base.push('voice.command')
     if (this.agentHandler) base.push('agent.command')
     return base
   }
@@ -285,6 +300,11 @@ export class UtilityRuntimeServer {
 
     if (envelope.name === 'shell.execute') {
       void this.executeShell(ExecuteShellRequestEnvelopeSchema.parse(envelope))
+      return
+    }
+
+    if (envelope.name === 'voice.command') {
+      void this.handleVoiceCommand(VoiceCommandRequestEnvelopeSchema.parse(envelope))
       return
     }
 
@@ -569,6 +589,44 @@ export class UtilityRuntimeServer {
     }
   }
 
+  /** 执行 voice.command，并在连接替换或取消时隔离迟到响应。 */
+  private async handleVoiceCommand(request: VoiceCommandRequestEnvelope): Promise<void> {
+    /** 当前云端 ASR 处理器。 */
+    const handler = this.voiceHandler
+    if (!handler) {
+      this.respondError(request, {
+        code: 'CAPABILITY_UNAVAILABLE',
+        message: '当前运行时未启用语音识别能力。',
+        retryable: false
+      })
+      return
+    }
+    if (this.pending.has(request.requestId)) {
+      this.respondError(request, {
+        code: 'PROTOCOL_INVALID_MESSAGE',
+        message: 'requestId 已在使用。',
+        retryable: false
+      })
+      return
+    }
+    /** 请求进入时的连接 ID。 */
+    const connectionId = request.connectionId
+    this.pending.set(request.requestId, { name: 'voice.command' })
+    try {
+      /** 已校验的语音公开结果。 */
+      const data = await handler.execute(request.requestId, request.payload)
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondSuccess(request, data)
+    } catch (error) {
+      if (!this.isCurrentRequest(request.requestId, connectionId)) return
+      this.pending.delete(request.requestId)
+      this.handledRequests += 1
+      this.respondError(request, this.toProtocolError(error))
+    }
+  }
+
   /** 执行 Agent 命令；流式内容由独立 agent.event 信封推送。 */
   private async handleAgentCommand(request: AgentCommandRequestEnvelope): Promise<void> {
     const handler = this.agentHandler
@@ -783,6 +841,8 @@ export class UtilityRuntimeServer {
       this.trackUrlHandler?.cancel(envelope.requestId)
     } else if (pending.name === 'shell.execute') {
       this.shellHandler?.cancel(envelope.requestId)
+    } else if (pending.name === 'voice.command') {
+      this.voiceHandler?.cancel(envelope.requestId)
     }
     this.pending.delete(envelope.requestId)
     this.respondError(envelope, {
@@ -836,6 +896,8 @@ export class UtilityRuntimeServer {
         this.trackUrlHandler?.cancel(requestId)
       } else if (request.name === 'shell.execute') {
         this.shellHandler?.cancel(requestId)
+      } else if (request.name === 'voice.command') {
+        this.voiceHandler?.cancel(requestId)
       }
     }
     this.pending.clear()
