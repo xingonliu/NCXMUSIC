@@ -299,6 +299,91 @@ describe('provider protocol fixtures', () => {
       }
     })
   })
+
+  it('HTML 成功响应会提示检查 API Base URL，而不是暴露 JSON 语法错误', async () => {
+    /** 返回前端网页的错误 Provider 客户端。 */
+    const client = new FakeProviderHttpClient([
+      () => ({
+        status: 200,
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+        lines: createLines(['<!doctype html>', '<html></html>'])
+      })
+    ])
+
+    await expect(
+      collectStream(
+        requestProviderTextStream(
+          createProfile(),
+          { messages: [{ role: 'user', content: '测试错误地址' }] },
+          { client }
+        )
+      )
+    ).rejects.toMatchObject({
+      normalized: {
+        code: 'request',
+        message: expect.stringContaining('HTML 页面'),
+        providerType: 'invalid_response_format',
+        retryable: false,
+        status: 200
+      }
+    })
+  })
+
+  it('缺少 Content-Type 时也会安全归一化 HTML 流分片', async () => {
+    /** 没有响应类型头但正文为网页的错误 Provider 客户端。 */
+    const client = new FakeProviderHttpClient([
+      () => ({
+        status: 200,
+        lines: createLines(['<!doctype html>'])
+      })
+    ])
+
+    await expect(
+      collectStream(
+        requestProviderTextStream(
+          createProfile(),
+          { messages: [{ role: 'user', content: '测试无响应头地址' }] },
+          { client }
+        )
+      )
+    ).rejects.toMatchObject({
+      message: expect.stringContaining('HTML 页面'),
+      normalized: {
+        code: 'request',
+        providerType: 'invalid_response_format',
+        retryable: false
+      }
+    })
+  })
+
+  it('2xx 非流式响应会返回稳定的流式协议提示', async () => {
+    /** 忽略 stream 参数并返回普通 JSON 的 Provider 客户端。 */
+    const client = new FakeProviderHttpClient([
+      () => ({
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+        json: { choices: [] }
+      })
+    ])
+
+    await expect(
+      collectStream(
+        requestProviderTextStream(
+          createProfile(),
+          { messages: [{ role: 'user', content: '测试非流式响应' }] },
+          { client }
+        )
+      )
+    ).rejects.toMatchObject({
+      normalized: {
+        code: 'request',
+        message: expect.stringContaining('SSE/JSONL'),
+        providerType: 'invalid_response_format',
+        retryable: false,
+        status: 200
+      }
+    })
+  })
 })
 
 describe('provider ASR support fixtures', () => {

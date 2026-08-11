@@ -29,6 +29,14 @@
 | `pnpm exec eslint src/infrastructure/provider/provider-protocol.ts tests/unit/provider-protocol.test.ts scripts/run-provider-asr-spike.mjs` | pass |
 | `pnpm typecheck` | pass |
 
+## 2026-08-11 HTML 响应回归补充
+
+- 问题根因：文本流请求曾依据请求侧 `Accept: text/event-stream` 读取任意 2xx 正文；当错误 Base URL、反向代理或登录页返回 HTML 时，`<!doctype html>` 会被误送入 JSON 解析器。
+- 修复行为：协议层会优先识别 `text/html` 与 `application/xhtml+xml`，并提示检查 API Base URL 和协议；响应头缺失时，流分片中的 HTML 文档标记也会被安全识别。
+- 非流式保护：2xx 响应未提供 SSE/JSONL 行时，不再静默结束，而是返回稳定的 `invalid_response_format` 请求错误。
+- 回归证据：`tests/unit/provider-protocol.test.ts` 新增 3 条测试，分别覆盖带 HTML Content-Type、缺少 Content-Type 的 HTML 分片，以及 2xx 普通 JSON 非流式响应。
+- 本轮门禁：`pnpm typecheck`、`pnpm lint`、`pnpm test` 全部通过；全量 Vitest 为 399 条通过、6 条既有跳过，Lint 无错误且保留 368 条任务外既有警告。
+
 ## 已验证的 T-08 条件
 
 | 通过条件 | 状态 | 证据 |

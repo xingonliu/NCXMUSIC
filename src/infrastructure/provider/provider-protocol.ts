@@ -234,6 +234,18 @@ const ASR_PROBE_BYTES = new Uint8Array([0])
 /** fetch 请求接受的正文构造器名称集合。 */
 const BODY_INIT_TAGS = new Set(['FormData', 'Blob', 'ArrayBuffer', 'URLSearchParams'])
 
+/** Provider 返回网页而不是模型 API 流时的可操作提示。 */
+const HTML_RESPONSE_MESSAGE =
+  'Provider 返回了 HTML 页面而不是模型 API 流。请检查 Base URL 是否指向 API 根地址，并确认所选协议与服务商一致。'
+
+/** Provider 返回非流式成功响应时的可操作提示。 */
+const NON_STREAM_RESPONSE_MESSAGE =
+  'Provider 未返回 SSE/JSONL 流。请检查 Base URL、所选协议及模型服务的流式响应支持。'
+
+/** Provider 流分片不是合法 JSON 时的可操作提示。 */
+const INVALID_STREAM_JSON_MESSAGE =
+  'Provider 流包含无效 JSON。请检查 Base URL、所选协议及上游代理响应。'
+
 // ─────────────────────────────────────────────────────────────────────────────
 // 错误区
 // ─────────────────────────────────────────────────────────────────────────────
@@ -482,6 +494,11 @@ export async function* requestProviderTextStream(
     const request = buildProviderTextStreamRequest(profile, input)
     /** Provider 返回的 HTTP 响应。 */
     const response = await client.send(request, signal)
+    if (isHtmlResponse(response.headers)) {
+      throw new ProviderProtocolError(
+        unexpectedProviderResponseError(profile.protocol, HTML_RESPONSE_MESSAGE, response.status)
+      )
+    }
     if (response.status < 200 || response.status >= 300) {
       throw new ProviderProtocolError(
         normalizeProviderError({
@@ -494,7 +511,11 @@ export async function* requestProviderTextStream(
 
     /** 响应中的流式文本行。 */
     const lines = response.lines
-    if (!lines) return
+    if (!lines) {
+      throw new ProviderProtocolError(
+        unexpectedProviderResponseError(profile.protocol, NON_STREAM_RESPONSE_MESSAGE, response.status)
+      )
+    }
     /** 将协议分片中的调用槽位关联到首个稳定 Tool Call ID。 */
     const toolCallIds = new Map<number, string>()
     for await (const line of lines) {
@@ -524,7 +545,19 @@ export function parseProviderStreamLine(
   line: string
 ): ProviderStreamEvent[] {
   /** SSE data 行解析后的 JSON payload。 */
-  const payload = parseDataPayload(line)
+  let payload: ReturnType<typeof parseDataPayload>
+  try {
+    payload = parseDataPayload(line)
+  } catch {
+    /** 当前无效分片是否看起来是 HTML 文档。 */
+    const looksLikeHtml = isHtmlText(line)
+    throw new ProviderProtocolError(
+      unexpectedProviderResponseError(
+        protocol,
+        looksLikeHtml ? HTML_RESPONSE_MESSAGE : INVALID_STREAM_JSON_MESSAGE
+      )
+    )
+  }
   if (payload.kind === 'skip') return []
   if (payload.kind === 'done') return [{ type: 'completed', finishReason: 'stop' }]
   if (protocol === 'openai-compatible') return parseOpenAIStreamPayload(payload.value)
@@ -1049,6 +1082,30 @@ function isRetryableProviderError(code: ProviderErrorCode): boolean {
   return code === 'rate-limit' || code === 'server' || code === 'timeout' || code === 'network'
 }
 
+/** 构造响应格式不符合当前流式协议时的归一化错误。 */
+function unexpectedProviderResponseError(
+  protocol: ProviderProtocol,
+  message: string,
+  status?: number
+): NormalizedProviderError {
+  /** 结合真实 HTTP 状态得到的初始错误分类。 */
+  const classifiedCode = classifyProviderError(
+    { protocol, ...(status === undefined ? {} : { status }), body: message },
+    message,
+    'invalid_response_format'
+  )
+  /** 2xx 响应格式错误需要稳定归为请求配置错误。 */
+  const code = classifiedCode === 'unknown' ? 'request' : classifiedCode
+  return {
+    protocol,
+    code,
+    message,
+    ...(status === undefined ? {} : { status }),
+    retryable: isRetryableProviderError(code),
+    providerType: 'invalid_response_format'
+  }
+}
+
 /** 构造取消错误。 */
 function cancelledError(protocol: ProviderProtocol): NormalizedProviderError {
   return {
@@ -1209,6 +1266,20 @@ function getHeaderValue(headers: Readonly<Record<string, string>>, key: string):
   /** 找到的 header 值。 */
   const entry = Object.entries(headers).find(([headerKey]) => headerKey.toLowerCase() === lowerKey)
   return entry?.[1].toLowerCase() ?? ''
+}
+
+/** 判断响应头是否明确表明正文是 HTML 网页。 */
+function isHtmlResponse(headers: Readonly<Record<string, string>> | undefined): boolean {
+  /** 小写后的响应 Content-Type。 */
+  const contentType = getHeaderValue(headers ?? {}, 'content-type')
+  return contentType.includes('text/html') || contentType.includes('application/xhtml+xml')
+}
+
+/** 判断无响应头保护时的流分片是否看起来是 HTML 文档。 */
+function isHtmlText(value: string): boolean {
+  /** 去除开头空白并转小写后的分片。 */
+  const normalized = value.trimStart().toLowerCase()
+  return normalized.startsWith('<!doctype html') || normalized.startsWith('<html')
 }
 
 /** 拼接 Provider base URL 与协议路径。 */
