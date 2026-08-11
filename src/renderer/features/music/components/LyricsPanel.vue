@@ -286,6 +286,13 @@ function smoothstepProgress(progress: number): number {
   return clamped * clamped * (3 - 2 * clamped)
 }
 
+/** 归一化 Cubic Ease-Out 缓动函数，为字符上抬提供高品质的三次减速滑移物理质感。 */
+function easeOutCubicProgress(progress: number): number {
+  const clamped = Math.min(1, Math.max(0, progress))
+  const inverted = 1 - clamped
+  return 1 - inverted * inverted * inverted
+}
+
 /** 返回指定播放时刻下单个字或音节的填充、上抬与泛光状态。 */
 function calculateWordVisualState(
   word: StandardLyricsWord,
@@ -324,12 +331,13 @@ function calculateWordVisualState(
   /**
    * 字符上抬像素 (liftPx)：
    * - 未唱响的字：0px (基线)
-   * - 已唱响或正在唱的字：在 180ms 内平滑上浮至 -2.5px，唱完后保持在上浮位置不回落
+   * - 已唱响或正在唱的字：在 380ms 包含 Ease-Out Cubic 减速曲线内平滑上浮至 -3.2px，唱完后保持在上浮位置不回落
    */
-  const liftProgress = fillProgress > 0
-    ? Math.min(1, elapsedSeconds / 0.18)
+  const liftLinearProgress = fillProgress > 0
+    ? Math.min(1, elapsedSeconds / 0.38)
     : 0
-  const liftPx = -2.5 * liftProgress
+  const liftProgress = easeOutCubicProgress(liftLinearProgress)
+  const liftPx = -3.2 * liftProgress
 
   return {
     state,
