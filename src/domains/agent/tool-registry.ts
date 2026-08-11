@@ -282,16 +282,29 @@ const TOOL_DEFINITIONS: readonly AgentToolDefinition[] = [
         minItems: 2,
         maxItems: 5,
         items: {
-          type: 'object',
-          properties: {
-            kind: { enum: ['entity', 'text'] },
-            optionKey: { type: 'string', pattern: '^[A-Za-z0-9._-]{1,80}$' },
-            entityRef: { type: 'string', pattern: '^(song|artist|album|playlist):\\d{1,20}$', description: 'kind=entity 时必填，必须来自此前工具结果的 ref。' },
-            label: { type: 'string', description: 'kind=text 时必填。' },
-            description: { type: 'string', description: 'kind=text 时可选的补充说明。' }
-          },
-          required: ['kind', 'optionKey'],
-          additionalProperties: false
+          oneOf: [
+            {
+              type: 'object',
+              properties: {
+                kind: { const: 'entity' },
+                optionKey: { type: 'string', pattern: '^[A-Za-z0-9._-]{1,80}$' },
+                entityRef: { type: 'string', pattern: '^(song|artist|album|playlist):\\d{1,20}$', description: '必须来自此前工具结果的 ref。' }
+              },
+              required: ['kind', 'optionKey', 'entityRef'],
+              additionalProperties: false
+            },
+            {
+              type: 'object',
+              properties: {
+                kind: { const: 'text' },
+                optionKey: { type: 'string', pattern: '^[A-Za-z0-9._-]{1,80}$' },
+                label: { type: 'string' },
+                description: { type: 'string', description: '可选的补充说明。' }
+              },
+              required: ['kind', 'optionKey', 'label'],
+              additionalProperties: false
+            }
+          ]
         }
       }
     },
@@ -327,7 +340,12 @@ export class AgentToolRegistry {
     return [...this.definitions.values()].map((item) => item.provider)
   }
 
-  /** 解析并分类 Tool Call；未知名称返回 undefined。 */
+  /** 判断工具名是否已经注册，用于区分未知能力与已知工具参数错误。 */
+  has(name: string): boolean {
+    return this.definitions.has(name as CoreAgentToolName)
+  }
+
+  /** 解析并分类 Tool Call；未知名称或参数错误返回 undefined。 */
   resolve(name: string, rawInput: unknown): {
     readonly definition: AgentToolDefinition
     readonly input: Record<string, unknown>

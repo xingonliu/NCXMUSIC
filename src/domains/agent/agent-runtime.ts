@@ -176,6 +176,11 @@ interface ToolCallAccumulator {
   arguments: string
 }
 
+/** 点播候选的确定性消解结果。 */
+type PlaybackSongResolution =
+  | { readonly status: 'resolved'; readonly song: StandardSong }
+  | { readonly status: 'needs_selection'; readonly candidates: readonly StandardSong[] }
+
 // ========= 变量 =========
 
 /** 单 Turn 最大 Tool Round。 */
@@ -205,12 +210,27 @@ const CONVERSATION_PERSIST_DEBOUNCE_MS = 250
 /** 原版优先时识别的版本标记；用户明确点名标记时不降权。 */
 const NON_ORIGINAL_VERSION_PATTERN = /翻唱|cover|伴奏|instrumental|live|现场|remix|混音|dj|片段|铃声/iu
 
+/** 同名候选低于该领先分时进入代码级用户消歧。 */
+const PLAYBACK_CLEAR_LEAD_MARGIN = 0.18
+
+/** 模型常生成但不适合作为歌曲关键词的随机推荐查询。 */
+const GENERIC_PLAYBACK_QUERY_PATTERN = /^(?:随机(?:推荐|播放)?|随便(?:放|播|来|听)?(?:一|几|点|首)?(?:些)?(?:歌|音乐)?|适合(?:现在|此刻|今天).*(?:歌|音乐)|现在听什么|来点音乐)$/iu
+
+/** 明确要求播放器产生副作用的用户表达。 */
+const PLAYBACK_REQUEST_PATTERN = /(?:播放|播一|播首|放一|放首|放点|放些|听一|听首|听点|来一首|来首|来点).*(?:歌|音乐)?|(?:下一首|上一首|继续播放)/iu
+
+/** 模型声称播放器已经成功执行的自然语言模式。 */
+const PLAYBACK_SUCCESS_CLAIM_PATTERN = /(?:已|已经|成功|正在)(?:经)?(?:为你)?(?:开始)?(?:播放|播出|放上|切换到)/u
+
+/** 连续会话内保留的真实音乐实体上限。 */
+const VERIFIED_ENTITY_LIMIT = 200
+
 /** 小云固定系统规则；安全边界仍由代码策略执行。 */
 const XIAOYUN_SYSTEM_PROMPT = [
   '你是 NcxMusic 的音乐助手“小云”。默认使用简体中文，友好、自然、简洁并优先给出结果。',
   '所有播放、歌单、收藏、评论和账户操作必须通过已注册工具，不能声称尚未收到真实回执的操作已经成功。',
-  '用户表达播放意图时优先调用 smart_search_and_play 的 play 动作并直接播放原唱或最高相关候选；没有实质歧义时禁止追问、禁止展示选择卡。',
-  '只有候选存在会明显改变用户意图的实质歧义时才调用 request_user_selection。选择歌曲后，必须把 selectedRefs 中的 song:ID 作为 smart_search_and_play.entityRef 直接播放，禁止再次按文本搜索。',
+  '用户表达播放意图时必须调用 smart_search_and_play 的 play 动作；该工具会自行完成候选消歧、等待选择并继续播放，不要手工列出 song:ID，也不要为歌曲候选再调用 request_user_selection。',
+  '只有与搜播无关的通用选择才调用 request_user_selection；收到 TOOL_ARGUMENTS_INVALID 时应按工具 Schema 修正参数重试，不能把它描述为工具不可用。',
   '不要猜测网易云实体 ID，不要请求或输出 Cookie、API Key、认证 Header、权限内部判断或未注册能力。',
   '支付、购买、订阅、下单和代购不在可用能力范围。'
 ].join('\n')
@@ -256,6 +276,9 @@ export class AgentRuntime {
 
   /** 本轮统一实体事实池。 */
   private readonly entities = new Map<string, StandardMusicEntity>()
+
+  /** 当前账户连续会话中由真实 Music Service 验证过的有限实体池。 */
+  private readonly verifiedEntities = new Map<string, StandardMusicEntity>()
 
   /** 只从本轮事实池消解名称、ID 与当前实体。 */
   private readonly entityResolver = new EntityResolver(() => ({ entities: [...this.entities.values()] }))
@@ -311,6 +334,18 @@ export class AgentRuntime {
   /** 当前 Tool Call 数。 */
   private toolCalls = 0
 
+  /** 当前 Turn 开始时的工具历史下标。 */
+  private turnToolStartIndex = 0
+
+  /** 当前 Turn 是否要求真实播放器副作用。 */
+  private turnRequiresPlayback = false
+
+  /** 当前 Turn 是否已经收到播放器成功回执。 */
+  private turnPlayerCommandSucceeded = false
+
+  /** 连续多轮澄清期间是否仍有未完成点播目标。 */
+  private playbackGoalPending = false
+
   /** 当前主动运行片段的开始时间。 */
   private activeSegmentStartedAt = 0
 
@@ -356,7 +391,7 @@ export class AgentRuntime {
       }
     })
     this.selectionCoordinator = new SelectionCoordinator({
-      resolveEntity: (entityRef) => this.entities.get(entityRef),
+      resolveEntity: (entityRef) => this.resolveVerifiedEntity(entityRef),
       onChange: (snapshot) => {
         upsertSnapshot(this.selections, snapshot, (item) => item.selectionId)
         this.publish()
@@ -482,6 +517,12 @@ export class AgentRuntime {
     this.endReason = undefined
     this.toolRounds = 0
     this.toolCalls = 0
+    this.turnToolStartIndex = this.tools.length
+    /** 本条消息是否延续上一轮尚未完成的短点播澄清。 */
+    const continuesPlaybackGoal = this.playbackGoalPending && isPlaybackClarification(content)
+    this.turnRequiresPlayback = PLAYBACK_REQUEST_PATTERN.test(content) || continuesPlaybackGoal
+    this.playbackGoalPending = this.turnRequiresPlayback
+    this.turnPlayerCommandSucceeded = false
     this.activeElapsedMs = 0
     this.activeSegmentStartedAt = Date.now()
     this.activeBudgetPaused = false
@@ -538,6 +579,7 @@ export class AgentRuntime {
       assistant.streaming = false
       if (signal.aborted) return
       if (response.toolCalls.length === 0) {
+        this.enforceGroundedPlaybackResponse(assistant)
         this.turnStatus = 'completed'
         this.endReason = 'completed'
         this.publish()
@@ -587,6 +629,7 @@ export class AgentRuntime {
     await this.requestModel(providerMessages, assistant, signal, false)
     assistant.streaming = false
     if (!assistant.content) assistant.content = '本轮已达到安全运行限额，已停止继续调用工具。'
+    this.enforceGroundedPlaybackResponse(assistant)
   }
 
   /** 请求模型并聚合文本与 Tool Call 增量，只对超时重试最多五次。 */
@@ -705,9 +748,15 @@ export class AgentRuntime {
       } catch {
         return this.invalidToolCall(call, 'TOOL_ARGUMENTS_INVALID', '工具参数不是合法 JSON。')
       }
+      /** 依据当前明确用户目标纠正模型误用的只读搜歌动作。 */
+      const normalizedInput = this.normalizeToolInput(call.name, rawInput)
       /** Registry 解析结果。 */
-      const resolved = this.registry.resolve(call.name, rawInput)
-      if (!resolved) return this.invalidToolCall(call, 'CAPABILITY_UNAVAILABLE', '工具或参数未注册。')
+      const resolved = this.registry.resolve(call.name, normalizedInput)
+      if (!resolved) {
+        return this.registry.has(call.name)
+          ? this.invalidToolCall(call, 'TOOL_ARGUMENTS_INVALID', '工具参数未通过 Schema 校验，请修正参数后重试。')
+          : this.invalidToolCall(call, 'CAPABILITY_UNAVAILABLE', '工具未注册。')
+      }
       /** 初始 Tool 卡。 */
       const card: ToolExecutionCardSnapshot = {
         toolCallId: normalizeUuid(call.id),
@@ -772,6 +821,13 @@ export class AgentRuntime {
     }
   }
 
+  /** 根据当前用户的明确播放目标修正模型误发的只读搜歌动作。 */
+  private normalizeToolInput(toolName: string, rawInput: unknown): unknown {
+    if (toolName !== 'smart_search_and_play' || !this.turnRequiresPlayback || !isRecord(rawInput)) return rawInput
+    if (rawInput['action'] !== 'search' || typeof rawInput['query'] !== 'string') return rawInput
+    return { ...rawInput, action: 'play' }
+  }
+
   /** 执行已经通过 Schema、Registry、Policy 与 Scheduler 的 Tool。 */
   private async executeRegisteredTool(
     toolName: string,
@@ -797,13 +853,13 @@ export class AgentRuntime {
     return { ok: false, code: 'CAPABILITY_UNAVAILABLE', summary: '能力未注册。' }
   }
 
-  /** 搜索歌曲，并在唯一候选时请求 Renderer 真实播放。 */
+  /** 搜索歌曲，并由 Runtime 闭环完成必要消歧与真实播放。 */
   private async smartSearchAndPlay(input: Record<string, unknown>, toolCallId: string): Promise<AgentToolResult> {
     /** 选择完成后传回的稳定歌曲引用。 */
     const entityRef = typeof input['entityRef'] === 'string' ? input['entityRef'] : undefined
     if (entityRef) {
-      /** 本轮事实池中已经由真实工具验证的歌曲。 */
-      const selectedSong = this.entities.get(entityRef)
+      /** 当前账户连续会话中已经由真实工具验证的歌曲。 */
+      const selectedSong = this.resolveVerifiedEntity(entityRef)
       if (!selectedSong || selectedSong.kind !== 'song') return entityReferenceUnavailable()
       return this.requestPlayerCommand(toolCallId, {
         type: 'player.play-track',
@@ -811,23 +867,23 @@ export class AgentRuntime {
         source: { kind: 'agent' }
       })
     }
+    /** 模型提供的搜索或推荐查询。 */
+    const query = String(input['query'])
     /** Music Service 请求 ID。 */
     const requestId = crypto.randomUUID()
     this.activeMusicRequests.add(requestId)
     /** 搜索歌曲候选。 */
     let songs: StandardSong[]
     try {
-      /** 标准搜索结果。 */
-      const result = MusicReadResultSchema.parse(await this.options.music.read(requestId, {
-        operation: 'search',
-        query: String(input['query']),
-        limit: 5,
-        offset: 0
-      }))
-      if (result.kind !== 'search') {
-        return { ok: false, code: 'UPSTREAM_ERROR', summary: '音乐搜索返回了不匹配的结果类型。' }
-      }
-      songs = result.songs
+      /** 随机推荐短语不进入关键词搜索，直接读取公开新歌候选。 */
+      const payload: MusicReadPayload = isGenericPlaybackQuery(query)
+        ? { operation: 'getNewSongs', limit: 10 }
+        : { operation: 'search', query, category: 'songs', limit: 5, offset: 0 }
+      /** 标准歌曲搜索或集合结果。 */
+      const result = MusicReadResultSchema.parse(await this.options.music.read(requestId, payload))
+      if (result.kind === 'search') songs = result.songs
+      else if (result.kind === 'songCollection') songs = result.songs
+      else return { ok: false, code: 'UPSTREAM_ERROR', summary: '音乐服务返回了不匹配的歌曲结果类型。' }
     } catch (error) {
       return { ok: false, code: errorCode(error), summary: readableError(error) }
     } finally {
@@ -836,8 +892,30 @@ export class AgentRuntime {
     this.collectEntities(songs)
     if (songs.length === 0) return { ok: false, code: 'NOT_FOUND', summary: '没有找到匹配歌曲。' }
     if (input['action'] === 'play') {
-      /** 搜索排序、原唱特征和显式歌手共同决定的直接播放候选。 */
-      const preferredSong = selectPreferredPlaybackSong(songs, String(input['query']))
+      /** 搜索排序、版本特征和显式歌手共同决定的点播消解结果。 */
+      const resolution = resolvePlaybackSong(songs, query)
+      /** 最终要交给真实播放器的歌曲。 */
+      let preferredSong: StandardSong
+      if (resolution.status === 'resolved') preferredSong = resolution.song
+      else {
+        /** Runtime 从真实候选构造的选择，不依赖模型拼接选项 Schema。 */
+        const selectionResult = await this.requestSelection({
+          prompt: '找到多首同名歌曲，请选择歌手或版本。',
+          mode: 'single',
+          options: resolution.candidates.map((song, index) => ({
+            kind: 'entity',
+            optionKey: `song-${index + 1}`,
+            entityRef: `song:${song.id}`
+          }))
+        }, toolCallId)
+        if (!selectionResult.ok) return selectionResult
+        /** 选择工具返回的唯一真实歌曲引用。 */
+        const selectedRef = selectedEntityRef(selectionResult.data)
+        /** 仍在当前账户验证池中的用户选择。 */
+        const selectedSong = selectedRef ? this.resolveVerifiedEntity(selectedRef) : undefined
+        if (!selectedSong || selectedSong.kind !== 'song') return entityReferenceUnavailable()
+        preferredSong = selectedSong
+      }
       return this.requestPlayerCommand(toolCallId, {
         type: 'player.play-track',
         track: songToTrackSummary(preferredSong),
@@ -847,7 +925,7 @@ export class AgentRuntime {
     /** 基于本轮实体事实池的确定性歌曲消解结果。 */
     const resolution = this.entityResolver.resolve({
       kind: 'song',
-      reference: String(input['query'])
+      reference: query
     })
     if (resolution.status === 'needs_selection') {
       return {
@@ -908,7 +986,7 @@ export class AgentRuntime {
           })
     }
     /** 从本轮事实池解析的歌曲列表。 */
-    const tracks = (input['entityRefs'] as string[] | undefined)?.map((reference) => this.entities.get(reference))
+    const tracks = (input['entityRefs'] as string[] | undefined)?.map((reference) => this.resolveVerifiedEntity(reference))
     if (!tracks?.length || tracks.some((entity) => entity?.kind !== 'song')) {
       return entityReferenceUnavailable()
     }
@@ -1008,10 +1086,20 @@ export class AgentRuntime {
       mode: input['mode'] as 'single' | 'multiple',
       options
     })
+    /** 发起本次选择的 Assistant 消息。 */
+    const ownerMessage = this.messages.findLast((message) =>
+      message.role === 'assistant' && message.toolCallIds.includes(toolCallId))
+    if (ownerMessage && ownerMessage.content.trim().length === 0) {
+      ownerMessage.content = String(input['prompt'])
+    }
+    /** 与当前选择关联的执行卡。 */
+    const card = this.tools.find((item) => item.toolCallId === toolCallId)
+    if (card) card.status = 'awaiting_selection'
     this.turnStatus = 'awaiting_selection'
     this.publish()
     /** 无副作用用户选择结果。 */
     const outcome = await this.waitForUser(selection.outcome)
+    if (card?.status === 'awaiting_selection') card.status = 'running'
     if (outcome.status === 'selected') {
       return {
         ok: true,
@@ -1047,7 +1135,7 @@ export class AgentRuntime {
       const parsed = SimilarArtistsCapabilityParamsSchema.safeParse(params)
       if (!parsed.success) return Promise.resolve(invalidCapabilityParameters())
       /** 本轮事实池中的目标歌手。 */
-      const artist = this.entities.get(parsed.data.artistRef)
+      const artist = this.resolveVerifiedEntity(parsed.data.artistRef)
       if (!artist || artist.kind !== 'artist') return Promise.resolve(entityReferenceUnavailable())
       return this.readMusic({ operation: 'getSimilarArtists', artistId: artist.id })
     }
@@ -1063,7 +1151,7 @@ export class AgentRuntime {
       const parsed = CommentsCapabilityParamsSchema.safeParse(params)
       if (!parsed.success) return Promise.resolve(invalidCapabilityParameters())
       /** 本轮事实池中的目标评论资源。 */
-      const entity = this.entities.get(parsed.data.resourceRef)
+      const entity = this.resolveVerifiedEntity(parsed.data.resourceRef)
       if (!entity || !['song', 'album', 'playlist'].includes(entity.kind)) {
         return Promise.resolve(entityReferenceUnavailable())
       }
@@ -1136,6 +1224,10 @@ export class AgentRuntime {
     if (!pending) return
     clearTimeout(pending.timer)
     this.pendingPlayerCommands.delete(toolCallId)
+    if (ok) {
+      this.turnPlayerCommandSucceeded = true
+      this.playbackGoalPending = false
+    }
     pending.resolve({
       ok,
       code: ok ? 'OK' : 'PLAYER_COMMAND_FAILED',
@@ -1214,6 +1306,19 @@ export class AgentRuntime {
     return { ok, code, summary, ...(data !== undefined ? { data } : {}) }
   }
 
+  /** 阻止模型在没有真实播放器成功回执时声称已经播放。 */
+  private enforceGroundedPlaybackResponse(assistant: AgentMessage): void {
+    if (!this.turnRequiresPlayback || this.turnPlayerCommandSucceeded) return
+    if (!PLAYBACK_SUCCESS_CLAIM_PATTERN.test(assistant.content)) return
+    /** 当前 Turn 最后一个失败工具，用于生成确定性说明。 */
+    const failure = this.tools
+      .slice(this.turnToolStartIndex)
+      .findLast((tool) => ['failed', 'cancelled', 'rejected', 'expired'].includes(tool.status))
+    /** 真实失败摘要。 */
+    const reason = failure?.resultSummary ?? '播放器尚未返回成功回执。'
+    assistant.content = `未能完成播放：${trimSentence(reason)}。`
+  }
+
   /** 收集标准响应中的实体。 */
   private collectResultEntities(result: ReturnType<typeof MusicReadResultSchema.parse>): void {
     if (result.kind === 'search') {
@@ -1227,9 +1332,26 @@ export class AgentRuntime {
     }
   }
 
-  /** 将实体加入本轮安全引用池。 */
+  /** 将实体加入本轮事实池与当前账户有限验证池。 */
   private collectEntities(entities: readonly StandardMusicEntity[]): void {
-    for (const entity of entities) this.entities.set(`${entity.kind}:${entity.id}`, entity)
+    for (const entity of entities) {
+      /** 标准稳定实体引用。 */
+      const reference = `${entity.kind}:${entity.id}`
+      this.entities.set(reference, entity)
+      this.verifiedEntities.delete(reference)
+      this.verifiedEntities.set(reference, entity)
+    }
+    while (this.verifiedEntities.size > VERIFIED_ENTITY_LIMIT) {
+      /** 最早插入的验证实体引用。 */
+      const oldestReference = this.verifiedEntities.keys().next().value as string | undefined
+      if (!oldestReference) break
+      this.verifiedEntities.delete(oldestReference)
+    }
+  }
+
+  /** 从本轮或连续会话验证池解析稳定实体引用。 */
+  private resolveVerifiedEntity(reference: string): StandardMusicEntity | undefined {
+    return this.entities.get(reference) ?? this.verifiedEntities.get(reference)
   }
 
   /** 是否达到任一硬限额。 */
@@ -1324,12 +1446,25 @@ export class AgentRuntime {
     this.approvals.splice(0, this.approvals.length, ...restoreApprovals(saved?.approvals ?? []))
     this.selections.splice(0, this.selections.length, ...restoreSelections(saved?.selections ?? []))
     this.entities.clear()
+    this.verifiedEntities.clear()
+    for (const selection of this.selections) {
+      for (const option of selection.options) {
+        if (option.kind !== 'entity') continue
+        /** 持久化选择卡中曾由 Music Service 验证的稳定实体引用。 */
+        const reference = `${option.entity.kind}:${option.entity.id}`
+        this.verifiedEntities.set(reference, option.entity)
+      }
+    }
     this.knownQueueItemIds.clear()
     this.turnId = undefined
     this.turnStatus = this.messages.length > 0 ? 'completed' : 'idle'
     this.endReason = this.messages.length > 0 ? 'completed' : undefined
     this.toolRounds = 0
     this.toolCalls = 0
+    this.turnToolStartIndex = this.tools.length
+    this.turnRequiresPlayback = false
+    this.turnPlayerCommandSucceeded = false
+    this.playbackGoalPending = false
     this.conversationRestored = true
     this.publish(false)
   }
@@ -1446,8 +1581,8 @@ function songToTrackSummary(song: StandardSong): TrackSummary {
   }
 }
 
-/** 从搜索结果中优先选择原唱、显式歌手匹配和上游高相关候选。 */
-function selectPreferredPlaybackSong(songs: readonly StandardSong[], query: string): StandardSong {
+/** 从搜索结果中确定播放项，真正同名且分数接近时交给用户选择。 */
+function resolvePlaybackSong(songs: readonly StandardSong[], query: string): PlaybackSongResolution {
   /** 归一化后的点播文本。 */
   const normalizedQuery = normalizeName(query)
   /** 带稳定上游顺序的候选评分。 */
@@ -1456,7 +1591,21 @@ function selectPreferredPlaybackSong(songs: readonly StandardSong[], query: stri
     index,
     score: playbackCandidateScore(song, normalizedQuery, index)
   })).sort((left, right) => right.score - left.score || left.index - right.index)
-  return ranked[0]?.song ?? songs[0] as StandardSong
+  /** 最高相关候选。 */
+  const first = ranked[0]
+  if (!first) return { status: 'resolved', song: songs[0] as StandardSong }
+  /** 查询中明确包含歌曲标题且与首位分数接近的候选。 */
+  const ambiguous = ranked.filter((candidate) => {
+    /** 归一化候选标题。 */
+    const title = normalizeName(candidate.song.name)
+    return first.score - candidate.score < PLAYBACK_CLEAR_LEAD_MARGIN
+      && Boolean(title)
+      && normalizedQuery.includes(title)
+  }).slice(0, 5)
+  if (ambiguous.length > 1) {
+    return { status: 'needs_selection', candidates: ambiguous.map((candidate) => candidate.song) }
+  }
+  return { status: 'resolved', song: first.song }
 }
 
 /** 计算播放候选分数；未被用户点名的翻唱、现场与混音版本会降权。 */
@@ -1479,6 +1628,33 @@ function playbackCandidateScore(song: StandardSong, normalizedQuery: string, ind
   if (candidateHasVersionMarker && !queryHasVersionMarker) score -= 0.65
   if (/原唱|原版|original/iu.test(versionText)) score += 0.25
   return score
+}
+
+/** 从选择结果中读取唯一歌曲实体引用。 */
+function selectedEntityRef(data: unknown): string | undefined {
+  if (!isRecord(data) || !Array.isArray(data['selectedRefs'])) return undefined
+  /** 第一个且应为唯一的已选择引用。 */
+  const reference = data['selectedRefs'][0]
+  return typeof reference === 'string' ? reference : undefined
+}
+
+/** 判断模型查询是否属于随机推荐短语而不是歌曲关键词。 */
+function isGenericPlaybackQuery(query: string): boolean {
+  return GENERIC_PLAYBACK_QUERY_PATTERN.test(query.trim())
+}
+
+/** 判断短消息是否在延续上一轮未完成的歌曲版本澄清。 */
+function isPlaybackClarification(content: string): boolean {
+  /** 去除首尾空白后的澄清文本。 */
+  const normalized = content.trim()
+  if (!normalized || normalized.length > 80) return false
+  return /(?:原版|原唱|专辑版|现场|live|翻唱|cover|remix|混音|song:\d{1,20})/iu.test(normalized)
+    || !/[？?]/u.test(normalized)
+}
+
+/** 去除错误摘要末尾标点，避免确定性回复出现重复句号。 */
+function trimSentence(value: string): string {
+  return value.trim().replace(/[。！？!?]+$/u, '')
 }
 
 /** 标准实体的模型安全引用。 */

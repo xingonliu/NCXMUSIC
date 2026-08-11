@@ -38,6 +38,8 @@ describe('agent tool registry', () => {
     /** 正向 Tool Registry。 */
     const registry = new AgentToolRegistry()
 
+    expect(registry.has('control_player')).toBe(true)
+    expect(registry.has('unknown_tool')).toBe(false)
     expect(registry.resolve('unknown_tool', {})).toBeUndefined()
     expect(registry.resolve('control_player', { action: 'launch_missile' })).toBeUndefined()
   })
@@ -58,5 +60,6 @@ describe('agent tool registry', () => {
     expect(registry.resolve('smart_search_and_play', { action: 'play' })).toBeUndefined()
     expect(JSON.stringify(selectionParameters)).toContain('entityRef')
     expect(JSON.stringify(selectionParameters)).toContain('optionKey')
+    expect(JSON.stringify(selectionParameters)).toContain('oneOf')
   })
 })

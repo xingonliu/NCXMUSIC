@@ -10,7 +10,7 @@ import type { PlaybackCoordinator, PlayerSnapshot } from '../../src/domains/play
 import { PlayerCommandGateway } from '../../src/domains/player/player-command-gateway'
 import type { TrackSummary } from '../../src/domains/player/types'
 import type { AgentRuntimeEvent, AgentSnapshot, MusicSafetyLevel } from '../../src/shared/schemas/agent'
-import type { MusicMutationPayload, StandardSong } from '../../src/shared/schemas/music'
+import type { MusicMutationPayload, MusicReadPayload, StandardSong } from '../../src/shared/schemas/music'
 
 // ========= 类型 =========
 
@@ -303,7 +303,7 @@ test('M3 将歌曲加入指定歌单时只执行一次 Music Service 写入', as
   expect(snapshot.tools[0]?.status).toBe('succeeded')
 })
 
-test('同名歌曲完成 SelectionCard 后通过稳定实体引用直接播放且不重复搜索', async () => {
+test('同名歌曲由搜播工具内部完成 SelectionCard 暂停恢复且不依赖模型二次编排', async () => {
   /** 两个需要消歧的同名歌曲。 */
   const songs = [
     createSong('1', '同名歌曲', '歌手甲'),
@@ -325,16 +325,8 @@ test('同名歌曲完成 SelectionCard 后通过稳定实体引用直接播放�
   /** 消歧完整 Agent 夹具。 */
   const fixture = createAgentFixture({
     rounds: [
+      // 故意模拟模型误用 search；Runtime 应根据播放目标纠正并自行闭环消歧。
       createToolRound('ambiguous-search', 'smart_search_and_play', { action: 'search', query: '同名歌曲' }),
-      createToolRound('choose-song', 'request_user_selection', {
-        prompt: '请选择要播放的版本',
-        mode: 'single',
-        options: [
-          { kind: 'entity', optionKey: 'song-a', entityRef: 'song:1' },
-          { kind: 'entity', optionKey: 'song-b', entityRef: 'song:2' }
-        ]
-      }),
-      createToolRound('play-selected-song', 'smart_search_and_play', { action: 'play', entityRef: 'song:2' }),
       createTextRound('已经为你播放歌手乙的《同名歌曲》。')
     ],
     music,
@@ -371,15 +363,16 @@ test('同名歌曲完成 SelectionCard 后通过稳定实体引用直接播放�
   await fixture.runtime.command({
     operation: 'respondSelection',
     selectionId: selection.selectionId,
-    selectedOptionKeys: ['song-b']
+    selectedOptionKeys: ['song-2']
   })
   /** 消歧完成快照。 */
   const snapshot = await completed
 
-  expect(snapshot.selections[0]).toMatchObject({ status: 'selected', selectedOptionKeys: ['song-b'] })
+  expect(snapshot.selections[0]).toMatchObject({ status: 'selected', selectedOptionKeys: ['song-2'] })
   expect(searchCount).toBe(1)
   expect(player.playedTracks).toMatchObject([{ trackId: '2', name: '同名歌曲' }])
-  expect(snapshot.tools).toHaveLength(3)
+  expect(snapshot.tools).toHaveLength(1)
+  expect(snapshot.tools[0]).toMatchObject({ toolName: 'smart_search_and_play', status: 'succeeded' })
 })
 
 test('普通点播遇到同名版本时优先原唱或最高相关候选而不弹选择卡', async () => {
@@ -417,6 +410,111 @@ test('普通点播遇到同名版本时优先原唱或最高相关候选而不�
 
   expect(player.playedTracks).toMatchObject([{ trackId: '1', name: '爱我还是他' }])
   expect(snapshot.selections).toHaveLength(0)
+})
+
+test('随机点播查询由 Runtime 路由到公开新歌而不是把推荐短语送入关键词搜索', async () => {
+  /** 随机点播候选。 */
+  const song = createSong('31', '今天的新歌', '测试歌手')
+  /** 实际收到的 Music Service 读取载荷。 */
+  const payloads: MusicReadPayload[] = []
+  /** 只允许读取公开新歌集合的 Music Service。 */
+  const music: AgentMusicPort = {
+    read: async (_requestId, payload) => {
+      payloads.push(payload)
+      return {
+        kind: 'songCollection',
+        collection: 'new',
+        songs: [song],
+        updatedAt: '2026-08-10T08:00:00.000Z'
+      }
+    },
+    mutate: async () => ({ operation: 'dailySignin', succeeded: true }),
+    cancel: () => {}
+  }
+  /** 随机点播 Agent 夹具。 */
+  const fixture = createAgentFixture({
+    rounds: [
+      createToolRound('random-play', 'smart_search_and_play', { action: 'play', query: '随机推荐' }),
+      createTextRound('已经为你播放《今天的新歌》。')
+    ],
+    music,
+    safetyLevel: 'M2',
+    onPlayerCommand: (event, runtime) => {
+      void runtime.command({
+        operation: 'playerCommandResult',
+        toolCallId: event.request.toolCallId,
+        ok: true,
+        summary: '已播放公开新歌。',
+        latestRevision: 1
+      })
+    }
+  })
+  /** 本轮完成快照。 */
+  const completed = waitForSnapshot(fixture, (snapshot) => snapshot.turnStatus === 'completed')
+  await fixture.runtime.command({ operation: 'sendMessage', content: '随便放首歌' })
+  await completed
+
+  expect(payloads).toEqual([{ operation: 'getNewSongs', limit: 10 }])
+})
+
+test('播放器失败后即使模型声称已播放也由 Runtime 改写为真实失败结果', async () => {
+  /** 播放失败场景的候选歌曲。 */
+  const song = createSong('41', '无法播放的歌', '测试歌手')
+  /** 播放失败 Agent 夹具。 */
+  const fixture = createAgentFixture({
+    rounds: [
+      createToolRound('failed-play', 'smart_search_and_play', { action: 'play', query: '无法播放的歌' }),
+      createTextRound('已经为你播放《无法播放的歌》。')
+    ],
+    music: createMusicPort([song]),
+    safetyLevel: 'M2',
+    onPlayerCommand: (event, runtime) => {
+      void runtime.command({
+        operation: 'playerCommandResult',
+        toolCallId: event.request.toolCallId,
+        ok: false,
+        summary: '歌曲当前不可播放。'
+      })
+    }
+  })
+  /** 本轮完成快照。 */
+  const completed = waitForSnapshot(fixture, (snapshot) => snapshot.turnStatus === 'completed')
+  await fixture.runtime.command({ operation: 'sendMessage', content: '播放无法播放的歌' })
+  /** 经过事实守卫的最终快照。 */
+  const snapshot = await completed
+
+  expect(snapshot.tools[0]).toMatchObject({ status: 'failed', errorCode: 'PLAYER_COMMAND_FAILED' })
+  expect(snapshot.messages.at(-1)?.content).toBe('未能完成播放：歌曲当前不可播放。')
+})
+
+test('已注册选择工具的参数错误返回可重试参数码而不是能力不可用', async () => {
+  /** 参数错误场景 Agent 夹具。 */
+  const fixture = createAgentFixture({
+    rounds: [
+      createToolRound('invalid-selection', 'request_user_selection', {
+        prompt: '请选择版本',
+        mode: 'single',
+        options: [
+          { kind: 'entity', optionKey: 'first' },
+          { kind: 'entity', optionKey: 'second' }
+        ]
+      }),
+      createTextRound('选择参数有误，请重试。')
+    ],
+    music: createMusicPort([]),
+    safetyLevel: 'M2'
+  })
+  /** 本轮完成快照。 */
+  const completed = waitForSnapshot(fixture, (snapshot) => snapshot.turnStatus === 'completed')
+  await fixture.runtime.command({ operation: 'sendMessage', content: '帮我选择一个版本' })
+  /** 参数错误完成快照。 */
+  const snapshot = await completed
+
+  expect(snapshot.tools[0]).toMatchObject({
+    toolName: 'request_user_selection',
+    status: 'failed',
+    errorCode: 'TOOL_ARGUMENTS_INVALID'
+  })
 })
 
 test('M1 用户拒绝后播放器和 Music Service 均为零执行', async () => {
