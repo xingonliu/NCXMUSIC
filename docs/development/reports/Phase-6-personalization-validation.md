@@ -63,7 +63,7 @@ Phase 6 已覆盖 MEM-001～006、PRO-001～011、DAT-011～013 与 SET-003。�
 最终门禁：
 
 - `pnpm typecheck`：通过；
-- `pnpm lint`：通过，0 个错误，架构边界通过；仓库现有 Vue 模板规则共报告 429 个非阻断 warning；
+- `pnpm lint`：通过，0 个错误，架构边界通过；Vue 模板规则仍报告非阻断 warning；
 - `pnpm test`：63 个文件通过、1 个文件按环境跳过；417 项通过、6 项跳过；
 - `pnpm test:e2e`：10/10 通过；
 - `pnpm smoke:build`：Build Artifact Contract 与 Electron Build Smoke 通过，包含 Utility 崩溃恢复、取消、音频可播放、快照恢复和 Renderer 重载重连。
