@@ -728,6 +728,7 @@ function normalizePlaylist(
     ...(numberValue(raw['trackCount']) !== undefined ? { trackCount: numberValue(raw['trackCount']) } : {}),
     ...(numberValue(raw['playCount']) !== undefined ? { playCount: numberValue(raw['playCount']) } : {}),
     ...(numberValue(raw['subscribedCount']) !== undefined ? { subscribedCount: numberValue(raw['subscribedCount']) } : {}),
+    ...(numberValue(raw['createTime']) !== undefined ? { createTime: numberValue(raw['createTime']) } : {}),
     ...(numberValue(raw['updateTime']) !== undefined ? { updateTime: numberValue(raw['updateTime']) } : {}),
     ...(numberValue(raw['privacy']) !== undefined ? { privacy: numberValue(raw['privacy']) } : {}),
     ...(stringValue(raw['updateFrequency']) ? { updateFrequency: stringValue(raw['updateFrequency']) } : {}),

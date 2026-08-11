@@ -111,6 +111,8 @@ describe('十项音乐体验 UI 契约', () => {
   it('集合详情提供完整主操作组，歌手页覆盖六个核心内容区', async () => {
     /** 集合详情源码。 */
     const collection = await read('src/renderer/features/music/CollectionDetailPage.vue')
+    /** 音乐内容页样式源码。 */
+    const contentStyles = await read('src/renderer/features/music/music-content-pages.css')
     /** 歌手详情源码。 */
     const artist = await read('src/renderer/features/music/ArtistDetailPage.vue')
 
@@ -118,6 +120,14 @@ describe('十项音乐体验 UI 契约', () => {
     expect(collection).toContain('添加至资料库')
     expect(collection).toContain('downloadCollection')
     expect(collection).toContain('moreMenuItems')
+    expect(collection).toContain(':always-show-shadow="true"')
+    expect(collection).toContain('collection-comments-button')
+    expect(collection).toContain('<CommonDrawer')
+    expect(collection).toContain('mode="drawer"')
+    expect(collection).toContain('collection-detail-skeleton')
+    expect(collection).not.toContain('class="music-track-surface music-surface"')
+    expect(contentStyles).toContain('.music-content-page .track-row--active')
+    expect(contentStyles).not.toContain('box-shadow: inset 3px 0 0 var(--ncx-color-accent)')
     expect(artist).toContain('最新发布')
     expect(artist).toContain('热门歌曲')
     expect(artist).toContain('专辑与 EP')

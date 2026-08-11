@@ -203,6 +203,8 @@ export const StandardPlaylistSchema = z.strictObject({
   trackCount: z.number().int().nonnegative().optional(),
   playCount: z.number().int().nonnegative().optional(),
   subscribedCount: z.number().int().nonnegative().optional(),
+  /** 歌单创建时间，用于详情页展示真实创建日期。 */
+  createTime: z.number().int().nonnegative().optional(),
   updateTime: z.number().int().nonnegative().optional(),
   privacy: z.number().int().nonnegative().optional(),
   updateFrequency: z.string().max(80).optional(),

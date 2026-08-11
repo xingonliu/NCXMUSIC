@@ -290,7 +290,7 @@ function handleContextAction(value: string | number): void {
 }
 
 .track-row--active {
-  background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
 }
 
 .track-row-index,

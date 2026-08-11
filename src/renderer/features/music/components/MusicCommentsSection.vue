@@ -26,15 +26,22 @@ import Cover from './Cover.vue'
 /** 评论 Section 的四态模型。 */
 type CommentsSectionState = 'loading' | 'empty' | 'error' | 'ready'
 
+/** 评论区域的容器形态。 */
+type CommentsSectionMode = 'surface' | 'drawer'
+
 // ========= 属性 =========
 
 /** 评论 Section 输入属性。 */
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   /** 评论所属标准资源类型。 */
   resourceType: MusicCommentResourceType
   /** 评论所属标准资源 ID。 */
   resourceId: string
-}>()
+  /** 评论区域所在的容器形态。 */
+  mode?: CommentsSectionMode
+}>(), {
+  mode: 'surface'
+})
 
 // ========= 变量 =========
 
@@ -296,12 +303,19 @@ watch(
 
 <template>
   <section
-    class="music-comments-section music-surface"
+    class="music-comments-section"
+    :class="{
+      'music-surface': props.mode === 'surface',
+      'music-comments-section--drawer': props.mode === 'drawer'
+    }"
     aria-labelledby="music-comments-title"
   >
     <header class="music-comments-header">
       <div>
-        <p class="music-page-eyebrow">
+        <p
+          v-if="props.mode === 'surface'"
+          class="music-page-eyebrow"
+        >
           乐评
         </p>
         <h2 id="music-comments-title">
@@ -500,6 +514,11 @@ watch(
   padding: var(--ncx-space-6);
 }
 
+.music-comments-section--drawer {
+  min-height: 100%;
+  padding: 0;
+}
+
 .music-comments-header,
 .music-comment-composer-footer,
 .music-comment-meta,
@@ -518,6 +537,11 @@ watch(
   margin: var(--ncx-space-1) 0 0;
   font-size: 20px;
   letter-spacing: -0.02em;
+}
+
+.music-comments-section--drawer .music-comments-header h2 {
+  margin-top: 0;
+  font-size: 15px;
 }
 
 .music-comment-composer {
@@ -570,7 +594,10 @@ watch(
   grid-template-columns: auto minmax(0, 1fr);
   gap: var(--ncx-space-3);
   padding: var(--ncx-space-3) 0;
-  border-bottom: 1px solid var(--music-page-edge);
+  border-bottom: 1px solid var(
+    --music-page-edge,
+    color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent)
+  );
 }
 
 .music-comment-card:last-of-type {

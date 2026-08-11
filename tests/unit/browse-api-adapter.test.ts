@@ -144,6 +144,7 @@ describe('浏览与个人页 API 适配', () => {
         playlist: {
           id: 7001,
           name: '加入时间歌单',
+          createTime: 1_690_000_000_000,
           tracks: [{ id: 9, name: '带时间歌曲', ar: [] }],
           trackIds: [{ id: 9, at: 1_700_000_000_000 }]
         }
@@ -161,6 +162,9 @@ describe('浏览与个人页 API 适配', () => {
     /** 带歌单上下文加入时间的标准详情。 */
     const playlist = await adapter.read({ operation: 'getPlaylist', id: '7001' }, '')
     expect(playlist.kind).toBe('playlist')
-    if (playlist.kind === 'playlist') expect(playlist.entity?.songs[0]?.addedAt).toBe(1_700_000_000_000)
+    if (playlist.kind === 'playlist') {
+      expect(playlist.entity?.createTime).toBe(1_690_000_000_000)
+      expect(playlist.entity?.songs[0]?.addedAt).toBe(1_700_000_000_000)
+    }
   })
 })

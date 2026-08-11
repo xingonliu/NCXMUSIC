@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Download, Ellipsis, Heart, Play, Plus, Shuffle } from '@lucide/vue'
+import { Download, Ellipsis, Heart, MessageCircle, Play, Plus, Shuffle } from '@lucide/vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -11,10 +11,11 @@ import type {
 } from '../../../shared/schemas/music'
 import {
   CommonButton,
+  CommonDrawer,
   CommonDropdownMenu,
   CommonEmptyState,
   CommonErrorState,
-  CommonSpinner,
+  CommonSkeleton,
   type CommonMenuItem
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
@@ -38,6 +39,14 @@ import { usePlayer } from './use-player'
 
 /** 当前详情页实体类型。 */
 type CollectionKind = 'album' | 'playlist'
+
+/** 当前集合日期元信息。 */
+interface CollectionDateMeta {
+  /** 日期前缀文案。 */
+  readonly label: '发行于' | '创建于' | '更新于'
+  /** 格式化后的日期文案。 */
+  readonly value: string
+}
 
 // ========= 变量 =========
 
@@ -77,6 +86,12 @@ const downloadBusy = ref<boolean>(false)
 /** 当前等待选择目标歌单的歌曲。 */
 const playlistTarget = ref<StandardSong | null>(null)
 
+/** 评论抽屉是否可见。 */
+const commentsDrawerVisible = ref<boolean>(false)
+
+/** 骨架屏中模拟的歌曲行数。 */
+const SKELETON_TRACK_COUNT = 7
+
 /** 当前集合类型。 */
 const collectionKind = computed<CollectionKind>(() => {
   return route.name === 'album-detail' ? 'album' : 'playlist'
@@ -112,17 +127,27 @@ const isOwnedPlaylist = computed<boolean>(() => {
     current.creator?.id === active.neteaseUserId
 })
 
-/** 当前集合发行或更新时间。 */
-const collectionDateLabel = computed<string>(() => {
+/** 当前集合发行或创建时间；歌单缺少创建时间时明确降级为更新时间。 */
+const collectionDateMeta = computed<CollectionDateMeta | null>(() => {
   /** 当前集合实体。 */
   const current = collection.value
-  if (!current) return ''
-  /** 专辑发行时间或歌单更新时间。 */
-  const timestamp = current.kind === 'album' ? current.publishTime : current.updateTime
-  if (!timestamp) return ''
-  return current.kind === 'album'
-    ? String(new Date(timestamp).getFullYear())
-    : new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' }).format(timestamp)
+  if (!current) return null
+  /** 专辑发行时间或歌单创建/更新时间。 */
+  const timestamp = current.kind === 'album'
+    ? current.publishTime
+    : current.createTime ?? current.updateTime
+  if (!timestamp) return null
+  if (current.kind === 'album') {
+    return { label: '发行于', value: String(new Date(timestamp).getFullYear()) }
+  }
+  return {
+    label: current.createTime ? '创建于' : '更新于',
+    value: new Intl.DateTimeFormat('zh-CN', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    }).format(timestamp)
+  }
 })
 
 /** 当前集合更多菜单。 */
@@ -347,6 +372,16 @@ function giveSongToAgent(song: StandardSong): void {
   })
 }
 
+/** 打开当前集合的评论抽屉。 */
+function openCommentsDrawer(): void {
+  commentsDrawerVisible.value = true
+}
+
+/** 关闭当前集合的评论抽屉。 */
+function closeCommentsDrawer(): void {
+  commentsDrawerVisible.value = false
+}
+
 /** 处理集合更多菜单动作。 */
 function handleMoreAction(rawAction: string | number): void {
   /** 标准化后的菜单动作。 */
@@ -373,6 +408,7 @@ function handleMoreAction(rawAction: string | number): void {
 // ========= 生命周期 =========
 
 watch([collectionKind, collectionId], () => {
+  closeCommentsDrawer()
   void loadCollection()
 }, { immediate: true })
 
@@ -385,6 +421,7 @@ onMounted(() => {
   <section
     class="collection-detail-page music-content-page"
     aria-labelledby="collection-title"
+    :aria-busy="loading"
   >
     <Transition
       name="music-page-state"
@@ -393,10 +430,108 @@ onMounted(() => {
       <div
         v-if="loading"
         key="loading"
-        class="collection-detail-state collection-loading"
+        class="collection-detail-skeleton"
+        aria-label="正在加载专辑或歌单"
       >
-        <CommonSpinner label="正在加载集合" />
-        <span>正在加载集合</span>
+        <header class="collection-skeleton-hero">
+          <CommonSkeleton
+            class="collection-skeleton-cover"
+            variant="rectangular"
+          />
+          <div class="collection-skeleton-copy">
+            <CommonSkeleton
+              variant="rectangular"
+              width="56px"
+              height="11px"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="78%"
+              height="48px"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="38%"
+              height="17px"
+            />
+            <CommonSkeleton
+              :lines="2"
+              height="13px"
+            />
+            <div class="collection-skeleton-actions">
+              <CommonSkeleton
+                variant="rectangular"
+                width="112px"
+                height="38px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="112px"
+                height="38px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="92px"
+                height="38px"
+              />
+            </div>
+          </div>
+        </header>
+        <section
+          class="collection-skeleton-tracks"
+          aria-hidden="true"
+        >
+          <div class="collection-skeleton-section-heading">
+            <CommonSkeleton
+              variant="rectangular"
+              width="72px"
+              height="22px"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="48px"
+              height="12px"
+            />
+          </div>
+          <div
+            v-for="index in SKELETON_TRACK_COUNT"
+            :key="index"
+            class="collection-skeleton-track"
+          >
+            <CommonSkeleton
+              variant="rectangular"
+              width="20px"
+              height="12px"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="36px"
+              height="36px"
+            />
+            <div class="collection-skeleton-track-copy">
+              <CommonSkeleton
+                variant="rectangular"
+                width="64%"
+                height="13px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="38%"
+                height="10px"
+              />
+            </div>
+            <CommonSkeleton
+              variant="rectangular"
+              width="42%"
+              height="11px"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="42px"
+              height="11px"
+            />
+          </div>
+        </section>
       </div>
 
       <div
@@ -427,13 +562,16 @@ onMounted(() => {
         key="content"
         class="collection-detail-content"
       >
-        <header class="music-detail-hero music-surface">
+        <header class="music-detail-hero">
           <Cover
             :src="collection.artworkUrl"
             :alt="collection.name"
             size="hero"
             :hover-effect="false"
-            :show-play-button="false"
+            :always-show-shadow="true"
+            :show-play-button="songs.length > 0"
+            @click="playAll"
+            @play="playAll"
           />
           <div class="music-detail-hero-copy">
             <p class="music-page-eyebrow">
@@ -442,8 +580,11 @@ onMounted(() => {
             <h1 id="collection-title">
               {{ collection.name }}
             </h1>
+            <p class="music-detail-creator">
+              {{ subtitle }}
+            </p>
             <p class="music-detail-meta">
-              {{ subtitle }}<template v-if="collectionDateLabel"> · {{ collection.kind === 'album' ? '发行于' : '更新于' }} {{ collectionDateLabel }}</template> · {{ songs.length }} 首
+              <span v-if="collectionDateMeta">{{ collectionDateMeta.label }} {{ collectionDateMeta.value }} · </span>{{ songs.length }} 首
             </p>
             <p
               v-if="collection.description"
@@ -474,12 +615,28 @@ onMounted(() => {
                 随机播放
               </CommonButton>
               <CommonButton
+                class="collection-comments-button"
+                variant="secondary"
+                size="prominent"
+                @click="openCommentsDrawer"
+              >
+                <MessageCircle :size="16" />
+                评论
+              </CommonButton>
+              <CommonButton
                 v-if="collection.kind === 'album' || !isOwnedPlaylist"
                 variant="secondary"
                 @click="toggleSubscription"
               >
-                <Heart v-if="collection.subscribed" :size="15" fill="currentColor" />
-                <Plus v-else :size="15" />
+                <Heart
+                  v-if="collection.subscribed"
+                  :size="15"
+                  fill="currentColor"
+                />
+                <Plus
+                  v-else
+                  :size="15"
+                />
                 {{ collection.subscribed ? '已在资料库' : '添加至资料库' }}
               </CommonButton>
               <CommonButton
@@ -487,10 +644,22 @@ onMounted(() => {
                 :loading="downloadBusy"
                 :disabled="songs.length === 0"
                 @click="downloadCollection"
-              ><Download :size="15" />下载</CommonButton>
-              <CommonDropdownMenu :items="moreMenuItems" placement="bottom-end" @select="handleMoreAction">
+              >
+                <Download :size="15" />下载
+              </CommonButton>
+              <CommonDropdownMenu
+                :items="moreMenuItems"
+                placement="bottom-end"
+                @select="handleMoreAction"
+              >
                 <template #trigger="{ toggle }">
-                  <CommonButton variant="ghost" aria-label="更多操作" @click="toggle"><Ellipsis :size="17" /></CommonButton>
+                  <CommonButton
+                    variant="ghost"
+                    aria-label="更多操作"
+                    @click="toggle"
+                  >
+                    <Ellipsis :size="17" />
+                  </CommonButton>
                 </template>
               </CommonDropdownMenu>
             </div>
@@ -498,7 +667,7 @@ onMounted(() => {
         </header>
 
         <section
-          class="music-track-surface music-surface"
+          class="music-track-surface"
           aria-labelledby="collection-tracks-title"
         >
           <header class="music-section-heading">
@@ -526,10 +695,19 @@ onMounted(() => {
           />
         </section>
 
-        <MusicCommentsSection
-          :resource-type="collection.kind"
-          :resource-id="collection.id"
-        />
+        <CommonDrawer
+          :visible="commentsDrawerVisible"
+          title="评论"
+          width="min(480px, 92vw)"
+          placement="right"
+          @close="closeCommentsDrawer"
+        >
+          <MusicCommentsSection
+            mode="drawer"
+            :resource-type="collection.kind"
+            :resource-id="collection.id"
+          />
+        </CommonDrawer>
 
         <AddTrackToPlaylistDialog
           :song="playlistTarget"
