@@ -34,7 +34,7 @@ export class ProviderProfileCoordinator {
     else if (request.operation === 'verify') {
       verificationMessage = await this.verify(request.profileId)
     }
-    if (request.operation !== 'list' && request.operation !== 'verify') this.syncUtility()
+    if (request.operation !== 'verify') this.syncUtility()
     return ProviderProfileResultSchema.parse({
       profiles: this.store.list(),
       ...(this.store.activeProfileId() ? { activeProfileId: this.store.activeProfileId() } : {}),

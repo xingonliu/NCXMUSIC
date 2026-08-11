@@ -32,6 +32,10 @@ import {
 } from '../../shared/schemas/music'
 import type { PlayerCommandAction } from '../../shared/schemas/player-command'
 import type { ProviderProtocol } from '../../shared/schemas/provider-profile'
+import {
+  PersistedAgentConversationSchema,
+  type PersistedAgentConversation
+} from '../../shared/schemas/agent-persistence'
 
 // ========= 类型 =========
 
@@ -96,6 +100,14 @@ export interface AgentMusicPort {
   cancel(requestId: string): void
 }
 
+/** 当前账户连续会话持久化端口。 */
+export interface AgentConversationPersistencePort {
+  /** 读取当前账户最近一次完整会话。 */
+  load(): Promise<PersistedAgentConversation | undefined>
+  /** 覆盖保存当前账户完整会话。 */
+  save(snapshot: PersistedAgentConversation): Promise<void>
+}
+
 /** Agent Runtime 构造参数。 */
 export interface AgentRuntimeOptions {
   /** 三协议统一 Provider 端口。 */
@@ -110,6 +122,8 @@ export interface AgentRuntimeOptions {
   readonly commandSafetyLevel?: CommandSafetyLevel
   /** 初始 Shell Tool 开关。 */
   readonly shellToolEnabled?: boolean
+  /** 当前账户连续会话持久化端口。 */
+  readonly conversationPersistence?: AgentConversationPersistencePort
 }
 
 /** Provider 已完成 Tool Call。 */
@@ -185,11 +199,18 @@ const PLAYER_COMMAND_TIMEOUT_MS = 10_000
 /** 播放器状态读取超时。 */
 const PLAYER_STATE_TIMEOUT_MS = 5_000
 
+/** 连续会话流式写入防抖时间。 */
+const CONVERSATION_PERSIST_DEBOUNCE_MS = 250
+
+/** 原版优先时识别的版本标记；用户明确点名标记时不降权。 */
+const NON_ORIGINAL_VERSION_PATTERN = /翻唱|cover|伴奏|instrumental|live|现场|remix|混音|dj|片段|铃声/iu
+
 /** 小云固定系统规则；安全边界仍由代码策略执行。 */
 const XIAOYUN_SYSTEM_PROMPT = [
   '你是 NcxMusic 的音乐助手“小云”。默认使用简体中文，友好、自然、简洁并优先给出结果。',
   '所有播放、歌单、收藏、评论和账户操作必须通过已注册工具，不能声称尚未收到真实回执的操作已经成功。',
-  '当工具返回 needs_selection 时，调用 request_user_selection；选择结果只表示用户答案，后续业务操作必须重新调用对应工具。',
+  '用户表达播放意图时优先调用 smart_search_and_play 的 play 动作并直接播放原唱或最高相关候选；没有实质歧义时禁止追问、禁止展示选择卡。',
+  '只有候选存在会明显改变用户意图的实质歧义时才调用 request_user_selection。选择歌曲后，必须把 selectedRefs 中的 song:ID 作为 smart_search_and_play.entityRef 直接播放，禁止再次按文本搜索。',
   '不要猜测网易云实体 ID，不要请求或输出 Cookie、API Key、认证 Header、权限内部判断或未注册能力。',
   '支付、购买、订阅、下单和代购不在可用能力范围。'
 ].join('\n')
@@ -311,10 +332,23 @@ export class AgentRuntime {
   /** Shell Tool 开关。 */
   private shellToolEnabled: boolean
 
+  /** 当前账户会话是否已经从 SQLite 恢复。 */
+  private conversationRestored: boolean
+
+  /** 正在执行的会话恢复任务。 */
+  private conversationRestore: Promise<void> | undefined
+
+  /** 连续会话防抖写入计时器。 */
+  private conversationPersistTimer: ReturnType<typeof setTimeout> | undefined
+
+  /** 会话写入串行尾链。 */
+  private conversationPersistTail: Promise<void> = Promise.resolve()
+
   constructor(private readonly options: AgentRuntimeOptions) {
-    this.musicSafetyLevel = options.musicSafetyLevel ?? 'M1'
+    this.musicSafetyLevel = options.musicSafetyLevel ?? 'M3'
     this.commandSafetyLevel = options.commandSafetyLevel ?? 'S1'
     this.shellToolEnabled = options.shellToolEnabled ?? false
+    this.conversationRestored = !options.conversationPersistence
     this.approvalCoordinator = new ApprovalCoordinator({
       onChange: (snapshot) => {
         upsertSnapshot(this.approvals, snapshot, (item) => item.approvalId)
@@ -338,10 +372,13 @@ export class AgentRuntime {
 
   /** 处理 Renderer Agent 命令并返回最新快照。 */
   async command(command: AgentCommand): Promise<AgentSnapshot> {
+    await this.ensureConversationRestored()
     if (command.operation === 'sendMessage') {
       void this.startTurn(command.content, command.context)
     } else if (command.operation === 'stop') {
       this.cancelActiveTurn('user_stopped')
+    } else if (command.operation === 'flushConversation') {
+      await this.flushConversation()
     } else if (command.operation === 'respondApproval') {
       this.approvalCoordinator.respond(command.approvalId, command.decision)
     } else if (command.operation === 'respondSelection') {
@@ -359,6 +396,39 @@ export class AgentRuntime {
       this.resolvePlayerState(command.toolCallId, command.state)
     }
     return this.snapshot()
+  }
+
+  /** 账户打开或切换后恢复对应连续会话，绝不沿用上一账户内存。 */
+  async restoreConversation(): Promise<void> {
+    this.conversationRestored = false
+    if (this.conversationPersistTimer) clearTimeout(this.conversationPersistTimer)
+    this.conversationPersistTimer = undefined
+    this.conversationRestore ??= this.loadConversation().finally(() => {
+      this.conversationRestore = undefined
+    })
+    await this.conversationRestore
+  }
+
+  /** 立即等待当前连续会话写入 SQLite，用于退出与换号边界。 */
+  async flushConversation(): Promise<void> {
+    if (this.conversationPersistTimer) clearTimeout(this.conversationPersistTimer)
+    this.conversationPersistTimer = undefined
+    /** 当前账户持久化端口。 */
+    const persistence = this.options.conversationPersistence
+    if (!persistence || !this.conversationRestored) return
+    /** 本次不可变会话快照。 */
+    const snapshot = PersistedAgentConversationSchema.parse({
+      schemaVersion: 1,
+      savedAt: Date.now(),
+      messages: this.messages,
+      tools: this.tools,
+      approvals: this.approvals,
+      selections: this.selections
+    })
+    /** 排在此前写入之后的保存任务。 */
+    const write = this.conversationPersistTail.then(() => persistence.save(snapshot))
+    this.conversationPersistTail = write.catch(() => undefined)
+    await write
   }
 
   /** 账户切换、应用退出或 Utility 生命周期故障时终止旧 Turn。 */
@@ -417,9 +487,6 @@ export class AgentRuntime {
     this.activeBudgetPaused = false
     this.entities.clear()
     this.knownQueueItemIds.clear()
-    this.tools.splice(0)
-    this.approvals.splice(0)
-    this.selections.splice(0)
     /** 带页面实体上下文的用户消息。 */
     const contextSuffix = context?.entityId
       ? `\n\n[当前页面上下文：${context.entityKind ?? 'entity'} ${context.entityName ?? ''} (${context.entityId})]`
@@ -448,7 +515,7 @@ export class AgentRuntime {
     const providerMessages: AgentProviderMessage[] = [
       { role: 'system', content: XIAOYUN_SYSTEM_PROMPT },
       ...this.messages
-        .filter((message) => message.role !== 'system')
+        .filter((message) => message.role !== 'system' && (message.role !== 'assistant' || message.content.trim().length > 0))
         .slice(-24)
         .map((message) => ({ role: message.role, content: message.content }))
     ]
@@ -476,6 +543,7 @@ export class AgentRuntime {
         this.publish()
         return
       }
+      assistant.toolCallIds = response.toolCalls.map((toolCall) => toolCall.id)
       this.toolRounds += 1
       providerMessages.push({
         role: 'assistant',
@@ -544,7 +612,7 @@ export class AgentRuntime {
             this.publish()
           } else if (event.type === 'tool-call-delta') {
             /** 当前事件的稳定 Tool Call ID。 */
-            const eventId = normalizeToolCallId(event.id)
+            const eventId = normalizeToolCallId(event.id, this.turnId)
             /** 由 ID 精确关联的 Tool Call。 */
             let targetCall = calls.find((call) => call.id === eventId)
             if (!targetCall && event.name) {
@@ -731,6 +799,18 @@ export class AgentRuntime {
 
   /** 搜索歌曲，并在唯一候选时请求 Renderer 真实播放。 */
   private async smartSearchAndPlay(input: Record<string, unknown>, toolCallId: string): Promise<AgentToolResult> {
+    /** 选择完成后传回的稳定歌曲引用。 */
+    const entityRef = typeof input['entityRef'] === 'string' ? input['entityRef'] : undefined
+    if (entityRef) {
+      /** 本轮事实池中已经由真实工具验证的歌曲。 */
+      const selectedSong = this.entities.get(entityRef)
+      if (!selectedSong || selectedSong.kind !== 'song') return entityReferenceUnavailable()
+      return this.requestPlayerCommand(toolCallId, {
+        type: 'player.play-track',
+        track: songToTrackSummary(selectedSong),
+        source: { kind: 'agent' }
+      })
+    }
     /** Music Service 请求 ID。 */
     const requestId = crypto.randomUUID()
     this.activeMusicRequests.add(requestId)
@@ -755,6 +835,15 @@ export class AgentRuntime {
     }
     this.collectEntities(songs)
     if (songs.length === 0) return { ok: false, code: 'NOT_FOUND', summary: '没有找到匹配歌曲。' }
+    if (input['action'] === 'play') {
+      /** 搜索排序、原唱特征和显式歌手共同决定的直接播放候选。 */
+      const preferredSong = selectPreferredPlaybackSong(songs, String(input['query']))
+      return this.requestPlayerCommand(toolCallId, {
+        type: 'player.play-track',
+        track: songToTrackSummary(preferredSong),
+        source: { kind: 'agent' }
+      })
+    }
     /** 基于本轮实体事实池的确定性歌曲消解结果。 */
     const resolution = this.entityResolver.resolve({
       kind: 'song',
@@ -773,14 +862,7 @@ export class AgentRuntime {
     }
     /** 唯一明确候选。 */
     const song = resolution.entity
-    if (input['action'] === 'search') {
-      return { ok: true, code: 'OK', summary: `找到了《${song.name}》。`, data: entityReference(song) }
-    }
-    return this.requestPlayerCommand(toolCallId, {
-      type: 'player.play-track',
-      track: songToTrackSummary(song),
-      source: { kind: 'agent' }
-    })
+    return { ok: true, code: 'OK', summary: `找到了《${song.name}》。`, data: entityReference(song) }
   }
 
   /** 映射播放器控制 Tool 到统一 PlayerCommand。 */
@@ -1105,6 +1187,7 @@ export class AgentRuntime {
       category: 'gateway',
       status: 'failed',
       parameterSummary: '参数未通过校验',
+      startedAt: Date.now(),
       resultSummary: summary,
       errorCode: code,
       endedAt: Date.now()
@@ -1219,8 +1302,46 @@ export class AgentRuntime {
   }
 
   /** 发布完整快照；Renderer 重载不依赖重放增量。 */
-  private publish(): void {
+  private publish(persistConversation = true): void {
     this.options.emit({ type: 'snapshot', snapshot: this.snapshot() })
+    if (persistConversation) this.scheduleConversationPersistence()
+  }
+
+  /** 首次命令前确保当前账户会话已经恢复。 */
+  private async ensureConversationRestored(): Promise<void> {
+    if (this.conversationRestored) return
+    await this.restoreConversation()
+  }
+
+  /** 从当前账户 SQLite 恢复消息、工具和交互历史；活动状态统一中止。 */
+  private async loadConversation(): Promise<void> {
+    /** 当前账户持久化端口。 */
+    const persistence = this.options.conversationPersistence
+    /** 磁盘连续会话；损坏快照按空会话恢复，不拖垮 Runtime。 */
+    const saved = persistence ? await persistence.load().catch(() => undefined) : undefined
+    this.messages.splice(0, this.messages.length, ...restoreMessages(saved?.messages ?? []))
+    this.tools.splice(0, this.tools.length, ...restoreTools(saved?.tools ?? []))
+    this.approvals.splice(0, this.approvals.length, ...restoreApprovals(saved?.approvals ?? []))
+    this.selections.splice(0, this.selections.length, ...restoreSelections(saved?.selections ?? []))
+    this.entities.clear()
+    this.knownQueueItemIds.clear()
+    this.turnId = undefined
+    this.turnStatus = this.messages.length > 0 ? 'completed' : 'idle'
+    this.endReason = this.messages.length > 0 ? 'completed' : undefined
+    this.toolRounds = 0
+    this.toolCalls = 0
+    this.conversationRestored = true
+    this.publish(false)
+  }
+
+  /** 合并流式快照写入，避免每个 Token 都触发 SQLite 事务。 */
+  private scheduleConversationPersistence(): void {
+    if (!this.options.conversationPersistence || !this.conversationRestored) return
+    if (this.conversationPersistTimer) clearTimeout(this.conversationPersistTimer)
+    this.conversationPersistTimer = setTimeout(() => {
+      this.conversationPersistTimer = undefined
+      void this.flushConversation().catch(() => undefined)
+    }, CONVERSATION_PERSIST_DEBOUNCE_MS)
   }
 }
 
@@ -1236,15 +1357,59 @@ function createMessage(
     messageId: crypto.randomUUID(),
     role,
     content,
+    toolCallIds: [],
     createdAt: Date.now(),
     streaming,
     interrupted: false
   }
 }
 
+/** 恢复消息历史，并把应用退出时仍在流式生成的消息标为已中止。 */
+function restoreMessages(messages: readonly AgentMessage[]): AgentMessage[] {
+  return messages.map((message) => ({
+    ...message,
+    streaming: false,
+    interrupted: message.interrupted || message.streaming
+  }))
+}
+
+/** 恢复工具历史，并把未进入终态的旧调用标为已取消。 */
+function restoreTools(tools: readonly ToolExecutionCardSnapshot[]): ToolExecutionCardSnapshot[] {
+  /** 不得跨应用继续等待或执行的工具状态。 */
+  const activeStatuses = new Set<ToolExecutionCardSnapshot['status']>([
+    'queued',
+    'awaiting_approval',
+    'awaiting_selection',
+    'running'
+  ])
+  return tools.map((tool) => activeStatuses.has(tool.status)
+    ? {
+        ...tool,
+        status: 'cancelled',
+        errorCode: 'APP_RESTARTED',
+        resultSummary: '应用退出时工具尚未完成。',
+        endedAt: tool.endedAt ?? Date.now()
+      }
+    : { ...tool })
+}
+
+/** 恢复审批历史；旧待审批项不会跨应用继续有效。 */
+function restoreApprovals(approvals: readonly ApprovalSnapshot[]): ApprovalSnapshot[] {
+  return approvals.map((approval) => approval.status === 'pending'
+    ? { ...approval, status: 'cancelled' }
+    : { ...approval })
+}
+
+/** 恢复选择历史；旧待选择项不会跨应用继续有效。 */
+function restoreSelections(selections: readonly SelectionSnapshot[]): SelectionSnapshot[] {
+  return selections.map((selection) => selection.status === 'pending'
+    ? { ...selection, status: 'cancelled' }
+    : { ...selection })
+}
+
 /** 将非 UUID Provider Tool ID 映射成本地稳定 UUID。 */
-function normalizeToolCallId(value: string): string {
-  return normalizeUuid(value)
+function normalizeToolCallId(value: string, turnId?: string): string {
+  return deterministicUuid(`${turnId ?? 'agent-turn'}:${value}`)
 }
 
 /** 保留合法 UUID，否则生成本地关联 ID。 */
@@ -1279,6 +1444,41 @@ function songToTrackSummary(song: StandardSong): TrackSummary {
     ...(artworkUrl ? { artwork: [{ src: artworkUrl }] } : {}),
     durationMs: song.durationMs ?? null
   }
+}
+
+/** 从搜索结果中优先选择原唱、显式歌手匹配和上游高相关候选。 */
+function selectPreferredPlaybackSong(songs: readonly StandardSong[], query: string): StandardSong {
+  /** 归一化后的点播文本。 */
+  const normalizedQuery = normalizeName(query)
+  /** 带稳定上游顺序的候选评分。 */
+  const ranked = songs.map((song, index) => ({
+    song,
+    index,
+    score: playbackCandidateScore(song, normalizedQuery, index)
+  })).sort((left, right) => right.score - left.score || left.index - right.index)
+  return ranked[0]?.song ?? songs[0] as StandardSong
+}
+
+/** 计算播放候选分数；未被用户点名的翻唱、现场与混音版本会降权。 */
+function playbackCandidateScore(song: StandardSong, normalizedQuery: string, index: number): number {
+  /** 上游搜索相关性基础分；越靠前越高。 */
+  let score = Math.max(0, 1 - index * 0.04)
+  /** 歌曲标题、专辑与歌手组成的版本描述。 */
+  const versionText = `${song.name} ${song.album?.name ?? ''} ${song.artists.map((artist) => artist.name).join(' ')}`
+  /** 归一化歌曲标题。 */
+  const normalizedTitle = normalizeName(song.name)
+  if (normalizedTitle && normalizedQuery.includes(normalizedTitle)) score += 0.35
+  for (const artist of song.artists) {
+    /** 歌手主名和别名。 */
+    const names = [artist.name, ...artist.alias]
+    if (names.some((name) => normalizedQuery.includes(normalizeName(name)))) score += 0.7
+  }
+  /** 用户未明确要求特殊版本时偏向录音室原版。 */
+  const candidateHasVersionMarker = NON_ORIGINAL_VERSION_PATTERN.test(versionText)
+  const queryHasVersionMarker = NON_ORIGINAL_VERSION_PATTERN.test(normalizedQuery)
+  if (candidateHasVersionMarker && !queryHasVersionMarker) score -= 0.65
+  if (/原唱|原版|original/iu.test(versionText)) score += 0.25
+  return score
 }
 
 /** 标准实体的模型安全引用。 */

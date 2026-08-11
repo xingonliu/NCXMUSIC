@@ -114,6 +114,21 @@ function createRuntime(level: 'M1' | 'M2'): {
 // ========= 测试 =========
 
 describe('agent main loop', () => {
+  it('未传音乐等级时默认使用 M3', () => {
+    /** 使用产品默认权限的 Agent Runtime。 */
+    const runtime = new AgentRuntime({
+      provider: createProvider(),
+      music: {
+        read: async () => searchResult,
+        mutate: async () => ({ operation: 'dailySignin', applied: true }),
+        cancel: () => {}
+      },
+      emit: () => {}
+    })
+
+    expect(runtime.snapshot().musicSafetyLevel).toBe('M3')
+  })
+
   it('M2 下完成搜索、PlayerCommand 真实回执和最终回复', async () => {
     /** M2 搜播测试夹具。 */
     const fixture = createRuntime('M2')

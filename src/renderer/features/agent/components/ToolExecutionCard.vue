@@ -98,7 +98,7 @@ function statusText(status: ToolExecutionCardSnapshot['status']): string {
         />
       </span>
       <span class="agent-tool-card-copy">
-        <strong>{{ card.title }}</strong>
+        <strong>{{ card.toolName }} · {{ card.title }}</strong>
         <span>{{ statusLabel }}<template v-if="durationLabel"> · {{ durationLabel }}</template></span>
       </span>
       <span
@@ -121,10 +121,6 @@ function statusText(status: ToolExecutionCardSnapshot['status']): string {
       <div>
         <span>脱敏参数</span>
         <p>{{ card.parameterSummary || '无参数' }}</p>
-      </div>
-      <div v-if="card.resultSummary">
-        <span>{{ card.errorCode ? '错误' : '结果' }}</span>
-        <p>{{ card.resultSummary }}</p>
       </div>
     </div>
   </article>

@@ -184,6 +184,19 @@ export const ACCOUNT_SQLITE_MIGRATIONS: readonly SQLiteMigration[] = [
         );
       `)
     }
+  },
+  {
+    version: 3,
+    description: '建立 Agent 当前连续会话快照表',
+    up: (database): void => {
+      database.exec?.(`
+        CREATE TABLE IF NOT EXISTS agent_conversation_snapshot (
+          account_id TEXT PRIMARY KEY,
+          saved_at INTEGER NOT NULL,
+          snapshot_json TEXT NOT NULL
+        );
+      `)
+    }
   }
 ]
 

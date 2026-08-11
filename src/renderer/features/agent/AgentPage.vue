@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { Bot, LogIn, Settings2, Sparkles } from '@lucide/vue'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch, type DeepReadonly } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { CommonButton } from '../../design-system/components'
+import type { AgentSnapshot } from '../../../shared/schemas/agent'
 import { useAccountSessionStore } from '../account/account-session-store'
 import AgentComposer from './components/AgentComposer.vue'
 import ApprovalCard from './components/ApprovalCard.vue'
@@ -62,12 +63,6 @@ const hasConversation = computed<boolean>(() =>
   || agent.snapshot.value.selections.length > 0
 )
 
-/** 仍有效或刚结束的审批卡。 */
-const visibleApprovals = computed(() => agent.snapshot.value.approvals)
-
-/** 仍有效或刚结束的选择卡。 */
-const visibleSelections = computed(() => agent.snapshot.value.selections)
-
 // ========= 函数 =========
 
 /** 发送消息并携带当前标准实体上下文。 */
@@ -105,6 +100,32 @@ function readEntityKind(value: unknown): AgentMessageContext['entityKind'] | und
   return value === 'song' || value === 'artist' || value === 'album' || value === 'playlist'
     ? value
     : undefined
+}
+
+/** 判断消息是否有实际可见内容，纯 Tool Call 消息不渲染空气泡。 */
+function shouldRenderMessage(message: DeepReadonly<AgentSnapshot['messages'][number]>): boolean {
+  return message.content.trim().length > 0 || message.streaming || message.interrupted
+}
+
+/** 取得某条 Assistant 消息实际调用的完整工具卡。 */
+function toolsForMessage(message: DeepReadonly<AgentSnapshot['messages'][number]>) {
+  /** 当前消息关联的 Tool Call ID 集合。 */
+  const toolCallIds = new Set(message.toolCallIds)
+  return agent.snapshot.value.tools.filter((tool) => toolCallIds.has(tool.toolCallId))
+}
+
+/** 取得某条 Assistant 消息对应的审批卡。 */
+function approvalsForMessage(message: DeepReadonly<AgentSnapshot['messages'][number]>) {
+  /** 当前消息关联的 Tool Call ID 集合。 */
+  const toolCallIds = new Set(message.toolCallIds)
+  return agent.snapshot.value.approvals.filter((approval) => toolCallIds.has(approval.toolCallId))
+}
+
+/** 取得某条 Assistant 消息对应的无副作用选择卡。 */
+function selectionsForMessage(message: DeepReadonly<AgentSnapshot['messages'][number]>) {
+  /** 当前消息关联的 Tool Call ID 集合。 */
+  const toolCallIds = new Set(message.toolCallIds)
+  return agent.snapshot.value.selections.filter((selection) => toolCallIds.has(selection.toolCallId))
 }
 
 // ========= 生命周期 =========
@@ -218,56 +239,60 @@ watch(
       </section>
 
       <template v-else>
-        <article
+        <template
           v-for="message in agent.snapshot.value.messages"
           :key="message.messageId"
-          class="agent-message"
-          :class="`is-${message.role}`"
         >
-          <div
-            v-if="message.role === 'assistant'"
-            class="agent-message-avatar"
+          <article
+            v-if="shouldRenderMessage(message)"
+            class="agent-message"
+            :class="`is-${message.role}`"
           >
-            <Bot :size="15" />
-          </div>
-          <div class="agent-message-bubble">
-            <p>
-              {{ message.content }}<span
-                v-if="message.streaming"
-                class="agent-streaming-caret"
-              />
-            </p>
-            <small v-if="message.interrupted">已中止</small>
-          </div>
-        </article>
+            <div
+              v-if="message.role === 'assistant'"
+              class="agent-message-avatar"
+            >
+              <Bot :size="15" />
+            </div>
+            <div class="agent-message-bubble">
+              <p>
+                {{ message.content }}<span
+                  v-if="message.streaming"
+                  class="agent-streaming-caret"
+                />
+              </p>
+              <small v-if="message.interrupted">已中止</small>
+            </div>
+          </article>
 
-        <section
-          v-if="agent.snapshot.value.tools.length"
-          class="agent-tool-stack"
-          aria-label="工具执行记录"
-        >
-          <ToolExecutionCard
-            v-for="tool in agent.snapshot.value.tools"
-            :key="tool.toolCallId"
-            :card="tool"
+          <section
+            v-if="toolsForMessage(message).length"
+            class="agent-tool-stack"
+            aria-label="工具执行记录"
+          >
+            <ToolExecutionCard
+              v-for="tool in toolsForMessage(message)"
+              :key="tool.toolCallId"
+              :card="tool"
+            />
+          </section>
+
+          <ApprovalCard
+            v-for="approval in approvalsForMessage(message)"
+            :key="approval.approvalId"
+            :approval="approval"
+            @approve="agent.respondApproval($event, 'approve')"
+            @reject="agent.respondApproval($event, 'reject')"
           />
-        </section>
 
-        <ApprovalCard
-          v-for="approval in visibleApprovals"
-          :key="approval.approvalId"
-          :approval="approval"
-          @approve="agent.respondApproval($event, 'approve')"
-          @reject="agent.respondApproval($event, 'reject')"
-        />
-
-        <SelectionCard
-          v-for="selection in visibleSelections"
-          :key="selection.selectionId"
-          :selection="selection"
-          @submit="agent.respondSelection"
-          @cancel="agent.cancelSelection"
-        />
+          <SelectionCard
+            v-for="selection in selectionsForMessage(message)"
+            :key="selection.selectionId"
+            :selection="selection"
+            @submit="agent.respondSelection"
+            @cancel="agent.cancelSelection"
+          />
+        </template>
       </template>
     </div>
 

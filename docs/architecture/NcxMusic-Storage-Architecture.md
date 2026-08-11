@@ -106,9 +106,10 @@ netease/<userId>
 ## 6. SQLite 与文件快照
 
 - 每个账户使用单一 `account.sqlite`，避免多个数据库之间的事务和迁移不一致。
-- 当前账户 SQLite Schema v2 包含 `action_journal`、`playback_snapshot` 与 `account_preferences`；偏好值通过 JSON Schema 和 20KB 上限校验。
+- 当前账户 SQLite Schema v3 包含 `action_journal`、`playback_snapshot`、`account_preferences` 与 `agent_conversation_snapshot`；偏好值通过 JSON Schema 和 20KB 上限校验。
 - SQLite 由 Utility Process 单写者持有，开启 WAL、外键和 Busy Timeout；Main 与 Renderer 不并发打开。
 - Schema 使用递增 Migration Version。升级前创建可恢复备份或事务检查点，失败时停止写入并提示修复，不能以空库覆盖旧库。
+- 当前 Agent 对话快照在消息、工具、审批或选择状态变化后短防抖写入 `agent_conversation_snapshot`，并在账号切换或退出前刷新；10 分钟无输入只关闭会话块和触发摘要，不延迟当前记录落库。
 - 对话、消息块、摘要和画像结构化数据写入 SQLite；首版使用 SQLite FTS5 索引会话块摘要、可检索正文、关键词和必要原文，不创建本地向量索引，也不依赖云端 Embedding。
 - `MemoryRetriever` 是检索实现边界。首版实现先按账户、时间、实体与内容类型过滤，再组合 FTS 相关性、摘要重要性和新鲜度排序；未来增加混合检索时只能通过 Schema Migration 和新后端实现扩展，不能改变上层 `memory_search` Tool 契约。
 - `profile.json` 与 `working-memory.json` 是快速启动快照，不是唯一事实来源；采用临时文件写入、Flush 和同目录原子替换，损坏时从 SQLite 重建。

@@ -60,4 +60,33 @@ describe('provider profile store', () => {
       'X-Tenant': 'private-tenant'
     })
   })
+
+  it('应用重启后恢复默认模型 Profile 与可执行配置', () => {
+    /** 当前测试隔离目录。 */
+    const directory = mkdtempSync(join(tmpdir(), 'ncx-provider-restart-'))
+    temporaryDirectories.push(directory)
+    /** 首次应用进程中的 Profile 仓库。 */
+    const firstStore = new ProviderProfileStore(directory, testCipher)
+    firstStore.load()
+    /** 首次保存并自动成为默认项的 Profile。 */
+    const saved = firstStore.save({
+      displayName: '持久模型',
+      protocol: 'openai-compatible',
+      baseUrl: 'https://provider.example.com/v1',
+      modelId: 'persistent-model',
+      apiKey: 'persistent-key',
+      customHeaders: {},
+      enabled: true
+    })
+
+    /** 模拟应用重启后重新构造的 Profile 仓库。 */
+    const restartedStore = new ProviderProfileStore(directory, testCipher)
+    restartedStore.load()
+
+    expect(restartedStore.activeProfileId()).toBe(saved.profileId)
+    expect(restartedStore.runtimeProfile()).toMatchObject({
+      profileId: saved.profileId,
+      model: 'persistent-model'
+    })
+  })
 })

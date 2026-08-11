@@ -2,7 +2,7 @@
 
 > 文档状态：Baseline 0.1
 > 建立日期：2026-08-04
-> 最后更新：2026-08-05
+> 最后更新：2026-08-11
 > 关联决策：A-006、D-013、D-101、D-102、D-103、D-106、D-109、D-110、D-111、D-112
 
 ## 1. 目标
@@ -23,6 +23,7 @@
 - 默认使用简体中文，语气友好、自然、简洁，优先给出结果；复杂任务提供必要进度，用户明确要求时再展开细节。
 - 小云不能把“已发送命令”表述为“已执行成功”，所有操作性结论都必须来自真实 Tool Result。
 - 首页“小云为你推荐”只展示内容，不自动播放或修改队列。用户明确提出“随便放点歌”“来点适合现在听的”等开放式播放意图时，小云可依据画像与当前上下文选歌并立即播放，无需先展示 SelectionCard；真实播放仍经过正常工具与音乐权限规则。
+- 音乐安全默认等级为 M3。普通播放请求优先选择原唱或最高相关候选并立即播放；只有会实质改变意图且无法可靠判断的歧义才请求选择。
 
 ## 2. 运行时组件
 
@@ -142,7 +143,7 @@ Shell Tool、`mcp_manager`、已连接 MCP Tool 和 Dynamic Skill Tool 根据功
 
 `request_user_selection` 是 Runtime 内置的 `effect: interaction` Tool，本质是让模型把一个选择题呈现成可点击答案以减少用户输入，不是业务操作。它声明 `single | multiple` 模式并接受 2~5 个可混排选项：`entity` 选项只引用本轮工具结果或 Entity Pool 中已有实体，由 Runtime 解析安全展示字段；`text` 选项只包含稳定 `optionKey`、纯文本标题和可选简短说明。模型不能直接构造原始网易云 ID、HTML、Markdown、组件 Props、图片 URL 或可执行回调。
 
-该 Tool 进入 `awaiting_user_selection` 后暂停自己的结果返回，但不产生业务副作用，也不走 M/S 审批。单选点击即提交且结果长度为 1；多选允许选择 1~5 项，在点击“完成”后提交。两种模式统一返回 `selectedOptionKeys`，实体选项另汇总到 `selectedRefs`；这个结果仅等价于用户回答了问题。点击“取消”返回 `SELECTION_CANCELLED`，固定等待 10 分钟后返回 `SELECTION_EXPIRED`。随后是否调用播放、收藏或歌单工具由模型下一轮重新决定，新的业务 Tool Call 必须重新经过能力校验和 Policy。Selection Tool 不保存待执行回调、业务 Tool 名称或参数模板，`optionKey` 也不能被 Executor 当作命令分派键。
+该 Tool 进入 `awaiting_user_selection` 后暂停自己的结果返回，但不产生业务副作用，也不走 M/S 审批。单选点击即提交且结果长度为 1；多选允许选择 1~5 项，在点击“完成”后提交。两种模式统一返回 `selectedOptionKeys`，实体选项另汇总到 `selectedRefs`；这个结果仅等价于用户回答了问题。点击“取消”返回 `SELECTION_CANCELLED`，固定等待 10 分钟后返回 `SELECTION_EXPIRED`。随后是否调用播放、收藏或歌单工具由模型下一轮重新决定，新的业务 Tool Call 必须重新经过能力校验和 Policy；播放场景必须把 `selectedRefs` 作为 `entityRef` 直接调用，不得再次按文本搜索。Selection Tool 不保存待执行回调、业务 Tool 名称或参数模板，`optionKey` 也不能被 Executor 当作命令分派键。
 
 同一 Active Turn 最多存在一个 `awaiting_user_selection` Tool Call；同批次其他交互调用保持排队，避免同时出现多个选择卡。选择工具计入 24 次 Tool Call 上限。离开页面、收起侧栏、最小化窗口和关闭到托盘不改变状态；Renderer 重载从 Snapshot 恢复剩余时间。用户发送新消息时取消旧选择和旧 Turn，再创建新 Turn。应用退出、账号切换或 Runtime 故障取消选择，不跨应用恢复。
 
@@ -266,7 +267,9 @@ Runtime 至少发布：
 - Tool Call 接收、排队、审批、执行和终态。
 - 限额、取消、Provider 用量和结束原因。
 
-Renderer 重连时按 A-004 拉取 Active Turn Snapshot，不依赖重放所有文本增量。完成后的用户消息、模型消息和工具摘要写入当前 10 分钟会话块；技术事件进入有界调试日志，不能将完整敏感 Tool 参数写入聊天历史。
+Renderer 重连时按 A-004 拉取 Active Turn Snapshot，不依赖重放所有文本增量。Runtime 为每条 Assistant 消息保存关联的 `toolCallIds`，Renderer 按消息渲染工具卡，纯工具调用消息不生成空文本气泡。ToolExecutionCard 只显示工具名、状态、耗时和脱敏调用参数，不显示 Tool Result；结果由 Assistant 文本归纳。
+
+当前账户的消息、工具和交互终态在状态变化后短防抖写入 SQLite 对话快照，并在账号切换或退出前刷新。10 分钟规则只负责关闭会话块和生成摘要，不作为首次写入条件。应用启动或账户切换后先恢复对应账户快照，再对 Renderer 宣告 Utility 就绪。
 
 应用真正退出后不恢复未完成 Turn，也不自动重跑纯只读任务。下次启动保留对话和工具记录，将末次任务标记为“上次任务已中止”，由用户手动继续。Utility Process 在应用仍运行时崩溃，只自动恢复连接和可用状态；旧 Turn 结束为失败，任何副作用均不自动重放。
 

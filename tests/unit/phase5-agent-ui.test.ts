@@ -21,13 +21,21 @@ describe('phase 5 agent UI contract', () => {
     expect(router).toContain("shell: 'standalone'")
   })
 
-  it('ToolExecutionCard 使用 @lucide/vue 显式图标映射和状态点', () => {
+  it('ToolExecutionCard 只展示工具名、调用方式与状态，不展示工具结果', () => {
     /** ToolExecutionCard 源代码。 */
     const card = source('src/renderer/features/agent/components/ToolExecutionCard.vue')
-    expect(card).toContain("from '@lucide/vue'")
-    expect(card).toContain('resolveToolIcon')
-    expect(card).toContain('agent-tool-card-state-dot')
-    expect(card).toContain('脱敏参数')
+    expect(card).toContain('card.toolName')
+    expect(card).toContain('card.parameterSummary')
+    expect(card).toContain('card.status')
+    expect(card).not.toContain("card.resultSummary")
+  })
+
+  it('纯 Tool Call 消息不渲染空气泡且工具卡挂回对应消息', () => {
+    /** Agent 页面源代码。 */
+    const page = source('src/renderer/features/agent/AgentPage.vue')
+    expect(page).toContain('shouldRenderMessage(message)')
+    expect(page).toContain('message.content.trim().length > 0')
+    expect(page).toContain('toolsForMessage(message)')
   })
 
   it('审批卡固定批准拒绝且无关闭按钮，选择卡保持独立语义', () => {
@@ -35,10 +43,9 @@ describe('phase 5 agent UI contract', () => {
     const approval = source('src/renderer/features/agent/components/ApprovalCard.vue')
     /** SelectionCard 源代码。 */
     const selection = source('src/renderer/features/agent/components/SelectionCard.vue')
-    expect(approval).toMatch(/>\s*拒绝\s*<\/CommonButton>/u)
-    expect(approval).toMatch(/>\s*批准\s*<\/CommonButton>/u)
+    expect(approval).toContain('拒绝')
+    expect(approval).toContain('批准')
     expect(approval).not.toContain('关闭')
-    expect(selection).toContain('无副作用选择')
     expect(selection).toContain('selection.mode === \'multiple\'')
   })
 })

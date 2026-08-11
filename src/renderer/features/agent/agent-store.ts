@@ -65,7 +65,7 @@ const EMPTY_AGENT_SNAPSHOT: AgentSnapshot = AgentSnapshotSchema.parse({
   selections: [],
   toolRounds: 0,
   toolCalls: 0,
-  musicSafetyLevel: 'M1',
+  musicSafetyLevel: 'M3',
   commandSafetyLevel: 'S1',
   shellToolEnabled: false,
   updatedAt: 0
@@ -82,6 +82,9 @@ let initializing: Promise<void> | undefined
 
 /** Agent 事件取消订阅函数；应用生命周期内保持。 */
 let unsubscribeAgentEvents: (() => void) | undefined
+
+/** 应用退出前会话刷新取消订阅函数。 */
+let unsubscribeConversationFlush: (() => void) | undefined
 
 // ========= 函数 =========
 
@@ -168,6 +171,10 @@ async function initialize(): Promise<void> {
   if (initialized.value) return
   initializing ??= (async () => {
     unsubscribeAgentEvents ??= window.ncx.runtime.onAgentEvent(handleAgentEvent)
+    unsubscribeConversationFlush ??= window.ncx.lifecycle.onFlushRequest(async () => {
+      await execute({ operation: 'flushConversation' })
+    })
+    await window.ncx.providerProfiles.request({ operation: 'list' }).catch(() => undefined)
     await execute({ operation: 'snapshot' })
     await hydrateSafetyPreferences()
     initialized.value = true

@@ -48,6 +48,8 @@ export const AgentMessageSchema = z.strictObject({
   messageId: z.uuid(),
   role: z.enum(['user', 'assistant', 'system']),
   content: z.string().max(200_000),
+  /** 当前 Assistant 消息实际发起的 Tool Call，用于把工具卡稳定挂回会话时间线。 */
+  toolCallIds: z.array(z.uuid()).max(24).default([]),
   createdAt: z.number().int().nonnegative(),
   streaming: z.boolean().default(false),
   interrupted: z.boolean().default(false)
@@ -176,6 +178,7 @@ export const AgentCommandSchema = z.discriminatedUnion('operation', [
     }).optional()
   }),
   z.strictObject({ operation: z.literal('stop') }),
+  z.strictObject({ operation: z.literal('flushConversation') }),
   z.strictObject({
     operation: z.literal('respondApproval'),
     approvalId: z.uuid(),

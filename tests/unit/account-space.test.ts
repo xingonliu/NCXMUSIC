@@ -84,6 +84,7 @@ describe('account storage spaces', () => {
 
     expect(existsSync(guest.sqlitePath)).toBe(true)
     expect(guestTables.map((row) => row.name)).toContain('playback_snapshot')
+    expect(guestTables.map((row) => row.name)).toContain('agent_conversation_snapshot')
 
     /** 已切换的网易云账户。 */
     const netease = await store.switchAccount(toNeteaseAccountId('10001'))

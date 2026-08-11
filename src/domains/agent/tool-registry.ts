@@ -56,7 +56,18 @@ export interface AgentToolDefinition {
 /** 智能搜播输入。 */
 const SmartSearchAndPlayInputSchema = z.strictObject({
   action: z.enum(['search', 'play']).default('play'),
-  query: z.string().trim().min(1).max(120)
+  query: z.string().trim().min(1).max(120).optional(),
+  entityRef: z.string().regex(/^song:\d{1,20}$/u).optional()
+}).superRefine((input, context) => {
+  if (!input.query && !input.entityRef) {
+    context.addIssue({ code: 'custom', message: 'query 与 entityRef 必须提供一个。' })
+  }
+  if (input.query && input.entityRef) {
+    context.addIssue({ code: 'custom', message: 'query 与 entityRef 不能同时提供。' })
+  }
+  if (input.action === 'search' && !input.query) {
+    context.addIssue({ code: 'custom', path: ['query'], message: 'search 需要 query。' })
+  }
 })
 
 /** 播放器控制输入。 */
@@ -224,8 +235,14 @@ const CallCapabilityInputSchema = z.strictObject({
 
 /** 10 个核心业务 Tool 与 2 个两步兜底 Tool。 */
 const TOOL_DEFINITIONS: readonly AgentToolDefinition[] = [
-  definition('smart_search_and_play', '搜索歌曲并在唯一候选时通过播放器 Gateway 播放；有歧义时返回候选。', SmartSearchAndPlayInputSchema, {
-    type: 'object', properties: { action: { enum: ['search', 'play'] }, query: { type: 'string' } }, required: ['query'], additionalProperties: false
+  definition('smart_search_and_play', '优先播放歌曲：普通播放请求会从搜索结果中直接选择原唱或最高相关候选；用户已通过选择工具确定歌曲时，必须传 selectedRefs 中的 entityRef 直接播放，不得再次搜索。', SmartSearchAndPlayInputSchema, {
+    type: 'object',
+    properties: {
+      action: { enum: ['search', 'play'], description: 'search 只查找，play 播放；默认优先使用 play。' },
+      query: { type: 'string', description: '首次搜索的歌曲名、歌手或场景描述；与 entityRef 二选一。' },
+      entityRef: { type: 'string', pattern: '^song:\\d{1,20}$', description: '选择工具返回的 selectedRefs 歌曲引用；使用它可直接播放且不得再次搜索。' }
+    },
+    additionalProperties: false
   }, (input) => input['action'] === 'search'
     ? readOperation('搜索音乐')
     : playerOperation('搜索并播放')),
@@ -255,8 +272,31 @@ const TOOL_DEFINITIONS: readonly AgentToolDefinition[] = [
   definition('user_profile_memory', '读取音乐画像与长期记忆能力状态。Phase 5 不生成画像。', UserProfileMemoryInputSchema, {
     type: 'object', properties: { action: { enum: ['get_status'] } }, required: ['action'], additionalProperties: false
   }, () => readOperation('读取画像状态')),
-  definition('request_user_selection', '展示 2 到 5 个无副作用选项，结果只表示用户选择。', RequestUserSelectionInputSchema, {
-    type: 'object', properties: { prompt: { type: 'string' }, mode: { enum: ['single', 'multiple'] }, options: { type: 'array', minItems: 2, maxItems: 5, items: { type: 'object' } } }, required: ['prompt', 'mode', 'options'], additionalProperties: false
+  definition('request_user_selection', '只在候选存在实质歧义且无法合理采用最高相关项时展示 2 到 5 个无副作用选项。实体选项必须使用此前工具结果中的 ref；选完歌曲后把 selectedRefs 交给 smart_search_and_play.entityRef 直接播放。', RequestUserSelectionInputSchema, {
+    type: 'object',
+    properties: {
+      prompt: { type: 'string', description: '向用户说明必须选择的实质差异。' },
+      mode: { enum: ['single', 'multiple'], description: '歌曲点播通常使用 single。' },
+      options: {
+        type: 'array',
+        minItems: 2,
+        maxItems: 5,
+        items: {
+          type: 'object',
+          properties: {
+            kind: { enum: ['entity', 'text'] },
+            optionKey: { type: 'string', pattern: '^[A-Za-z0-9._-]{1,80}$' },
+            entityRef: { type: 'string', pattern: '^(song|artist|album|playlist):\\d{1,20}$', description: 'kind=entity 时必填，必须来自此前工具结果的 ref。' },
+            label: { type: 'string', description: 'kind=text 时必填。' },
+            description: { type: 'string', description: 'kind=text 时可选的补充说明。' }
+          },
+          required: ['kind', 'optionKey'],
+          additionalProperties: false
+        }
+      }
+    },
+    required: ['prompt', 'mode', 'options'],
+    additionalProperties: false
   }, () => ({ effect: 'interaction', conflictKeys: ['agent:selection'], title: '等待用户选择' })),
   definition('find_music_api_capabilities', '按意图检索少量已注册的冷门音乐能力；不调用业务接口。', FindCapabilitiesInputSchema, {
     type: 'object', properties: { query: { type: 'string' } }, required: ['query'], additionalProperties: false

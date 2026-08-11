@@ -18,6 +18,7 @@ import { ShellWorkspaceRegistry } from '../infrastructure/shell/workspace-regist
 import { PROTOCOL_VERSION } from '../shared/schemas/runtime'
 import { CredentialLeaseService } from './credential-lease-service'
 import { AccountDataService } from './account-data-service'
+import { AgentConversationService } from './agent-conversation-service'
 import { MusicService } from './music-service'
 import { PlaybackSnapshotService } from './playback-snapshot-service'
 import { TrackUrlService } from './track-url-service'
@@ -78,6 +79,8 @@ const musicService = new MusicService(
 )
 /** 播放快照服务：只通过当前账户 SQLite 单写者读写。 */
 const playbackSnapshotService = new PlaybackSnapshotService(accountStore)
+/** Agent 当前连续会话服务：在时间分块前持续保存完整消息与工具时间线。 */
+const agentConversationService = new AgentConversationService(accountStore)
 /** Utility 内单会话 Agent Runtime。 */
 const agentRuntime = new AgentRuntime({
   provider: {
@@ -97,6 +100,7 @@ const agentRuntime = new AgentRuntime({
     )
   },
   music: musicService,
+  conversationPersistence: agentConversationService,
   emit: (event) => runtime.publishAgentEvent(event)
 })
 /** Renderer MessagePort 协议服务。 */
@@ -145,13 +149,15 @@ process.parentPort.on('message', (event) => {
     }
     accountStoreGeneration = accountCommand.data.accountGeneration
     agentRuntime.terminate('account_switch')
-    void accountStoreReady
+    void agentRuntime.flushConversation()
+      .then(() => accountStoreReady)
       .then(() => accountStore.switchAccount(
         accountCommand.data.accountId,
         accountCommand.data.accountGeneration
       ))
-      .then(() => {
+      .then(async () => {
         musicService.resetEntities()
+        await agentRuntime.restoreConversation()
         process.parentPort.postMessage(AccountStoreReadyEventSchema.parse({
           kind: 'account-store.ready',
           requestId: accountCommand.data.requestId,
@@ -213,6 +219,7 @@ if (shouldCrashBeforeReady) {
   setTimeout(() => process.exit(86), 25)
 } else {
   void accountStoreReady
+    .then(() => agentRuntime.restoreConversation())
     .then(() => {
       process.parentPort.postMessage({
         kind: 'utility.ready',

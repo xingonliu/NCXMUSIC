@@ -303,16 +303,29 @@ test('M3 将歌曲加入指定歌单时只执行一次 Music Service 写入', as
   expect(snapshot.tools[0]?.status).toBe('succeeded')
 })
 
-test('同名歌曲要求 SelectionCard，选择只返回答案且不产生播放副作用', async () => {
+test('同名歌曲完成 SelectionCard 后通过稳定实体引用直接播放且不重复搜索', async () => {
   /** 两个需要消歧的同名歌曲。 */
   const songs = [
     createSong('1', '同名歌曲', '歌手甲'),
     createSong('2', '同名歌曲', '歌手乙')
   ]
+  /** 可验证选择后真实执行的播放器 Gateway。 */
+  const player = createPlayerGateway()
+  /** Music Service 搜索次数。 */
+  let searchCount = 0
+  /** 只允许首次读取候选的 Music Service。 */
+  const music: AgentMusicPort = {
+    read: async (_requestId, payload) => {
+      if (payload.operation === 'search') searchCount += 1
+      return createSearchResult(payload.operation === 'search' ? payload.query : '测试', songs)
+    },
+    mutate: async () => ({ operation: 'dailySignin', succeeded: true }),
+    cancel: () => {}
+  }
   /** 消歧完整 Agent 夹具。 */
   const fixture = createAgentFixture({
     rounds: [
-      createToolRound('ambiguous-search', 'smart_search_and_play', { action: 'play', query: '同名歌曲' }),
+      createToolRound('ambiguous-search', 'smart_search_and_play', { action: 'search', query: '同名歌曲' }),
       createToolRound('choose-song', 'request_user_selection', {
         prompt: '请选择要播放的版本',
         mode: 'single',
@@ -321,10 +334,26 @@ test('同名歌曲要求 SelectionCard，选择只返回答案且不产生播放
           { kind: 'entity', optionKey: 'song-b', entityRef: 'song:2' }
         ]
       }),
-      createTextRound('已记录你的选择。')
+      createToolRound('play-selected-song', 'smart_search_and_play', { action: 'play', entityRef: 'song:2' }),
+      createTextRound('已经为你播放歌手乙的《同名歌曲》。')
     ],
-    music: createMusicPort(songs),
-    safetyLevel: 'M2'
+    music,
+    safetyLevel: 'M2',
+    onPlayerCommand: (event, runtime) => {
+      void player.gateway.execute({
+        commandId: crypto.randomUUID(),
+        expectedRevision: player.revision(),
+        issuedAt: Date.now(),
+        timeoutMs: 1_000,
+        action: event.request.action
+      }).then((result) => runtime.command({
+        operation: 'playerCommandResult',
+        toolCallId: event.request.toolCallId,
+        ok: result.ok,
+        summary: result.ok ? '已播放用户选择的歌曲。' : result.code,
+        latestRevision: result.latestRevision
+      }))
+    }
   })
   /** 待选择快照。 */
   const pending = waitForSnapshot(
@@ -348,7 +377,46 @@ test('同名歌曲要求 SelectionCard，选择只返回答案且不产生播放
   const snapshot = await completed
 
   expect(snapshot.selections[0]).toMatchObject({ status: 'selected', selectedOptionKeys: ['song-b'] })
-  expect(fixture.events.some((event) => event.type === 'player-command')).toBe(false)
+  expect(searchCount).toBe(1)
+  expect(player.playedTracks).toMatchObject([{ trackId: '2', name: '同名歌曲' }])
+  expect(snapshot.tools).toHaveLength(3)
+})
+
+test('普通点播遇到同名版本时优先原唱或最高相关候选而不弹选择卡', async () => {
+  /** 上游首位原唱与次位翻唱候选。 */
+  const songs = [
+    createSong('1', '爱我还是他', '陶喆'),
+    createSong('2', '爱我还是他（翻唱版）', '翻唱歌手')
+  ]
+  /** 可验证直接播放结果的播放器 Gateway。 */
+  const player = createPlayerGateway()
+  /** 普通点播 Agent 夹具。 */
+  const fixture = createAgentFixture({
+    rounds: [
+      createToolRound('direct-original', 'smart_search_and_play', { action: 'play', query: '爱我还是他 原版' }),
+      createTextRound('已经为你播放陶喆的《爱我还是他》。')
+    ],
+    music: createMusicPort(songs),
+    safetyLevel: 'M2',
+    onPlayerCommand: (event, runtime) => {
+      void runtime.command({
+        operation: 'playerCommandResult',
+        toolCallId: event.request.toolCallId,
+        ok: true,
+        summary: '已直接播放原唱。',
+        latestRevision: 1
+      })
+      if (event.request.action.type === 'player.play-track') player.playedTracks.push(event.request.action.track)
+    }
+  })
+  /** 本轮完成快照。 */
+  const completed = waitForSnapshot(fixture, (snapshot) => snapshot.turnStatus === 'completed')
+  await fixture.runtime.command({ operation: 'sendMessage', content: '随便放首爱我还是他，原版就行' })
+  /** 直接点播完成快照。 */
+  const snapshot = await completed
+
+  expect(player.playedTracks).toMatchObject([{ trackId: '1', name: '爱我还是他' }])
+  expect(snapshot.selections).toHaveLength(0)
 })
 
 test('M1 用户拒绝后播放器和 Music Service 均为零执行', async () => {

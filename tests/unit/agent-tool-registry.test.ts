@@ -41,4 +41,22 @@ describe('agent tool registry', () => {
     expect(registry.resolve('unknown_tool', {})).toBeUndefined()
     expect(registry.resolve('control_player', { action: 'launch_missile' })).toBeUndefined()
   })
+
+  it('选择后的歌曲引用可直接进入搜播工具且选择工具公开完整选项字段', () => {
+    /** 正向 Tool Registry。 */
+    const registry = new AgentToolRegistry()
+    /** 稳定实体引用直播放行结果。 */
+    const directPlay = registry.resolve('smart_search_and_play', {
+      action: 'play',
+      entityRef: 'song:123'
+    })
+    /** Provider 可见的选择工具参数。 */
+    const selectionParameters = registry.providerDefinitions()
+      .find((definition) => definition.name === 'request_user_selection')?.parameters
+
+    expect(directPlay?.operation).toMatchObject({ effect: 'player' })
+    expect(registry.resolve('smart_search_and_play', { action: 'play' })).toBeUndefined()
+    expect(JSON.stringify(selectionParameters)).toContain('entityRef')
+    expect(JSON.stringify(selectionParameters)).toContain('optionKey')
+  })
 })
