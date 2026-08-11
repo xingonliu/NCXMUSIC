@@ -64,15 +64,26 @@ export class HtmlAudioAdapter implements MediaElementPort {
   /** 换源后延迟绑定原生事件的计时器。 */
   private attachTimer: ReturnType<typeof setTimeout> | undefined
 
+  /** 用于 Web Audio API 频谱分析的 AudioContext。 */
+  private audioContext: AudioContext | undefined
+
+  /** 用于频域分析的 AnalyserNode。 */
+  private analyserNode: AnalyserNode | undefined
+
+  /** Web Audio 缓存的频域数据数组。 */
+  private frequencyData: Uint8Array | undefined
+
+  /** 经过 EMA 指数衰减平滑后的低频能量。 */
+  private smoothedAudioEnergy = 0
+
   /**
    * @param element 可选的既有 audio 元素；省略时自行创建一个游离元素
    */
   constructor(element?: HTMLAudioElement) {
     this.element = element ?? new Audio()
-    // 刻意不设置 crossOrigin：
-    // Range 与 206 不依赖 CORS，只有用 Web Audio / canvas 读取媒体数据才需要匿名跨源。
-    // 本实现的 ducking 走 element.volume 相乘，不读取音频数据；
-    // 而网易云 CDN 通常不返回 Access-Control-Allow-Origin，设置该属性会直接导致直链加载失败。
+    // 设置 crossOrigin 为 anonymous 以允许 Web Audio API AnalyserNode 提取频谱，
+    // Main 进程会通过 webRequest.onHeadersReceived 统一注入 Allow-Origin 头。
+    this.element.crossOrigin = 'anonymous'
     this.element.preload = 'auto'
     this.attachNativeListeners()
   }
@@ -102,6 +113,10 @@ export class HtmlAudioAdapter implements MediaElementPort {
   }
 
   play(): Promise<void> {
+    this.ensureAudioAnalyzer()
+    if (this.audioContext?.state === 'suspended') {
+      void this.audioContext.resume()
+    }
     return this.element.play()
   }
 
@@ -140,6 +155,35 @@ export class HtmlAudioAdapter implements MediaElementPort {
     }
   }
 
+  /**
+   * 读取经过 EMA 指数衰减平滑后的低频（Bass / Kick）能量值 [0, 1]。
+   */
+  getAudioEnergy(): number {
+    const analyser = this.ensureAudioAnalyzer()
+    const buffer = this.frequencyData
+    if (!analyser || !buffer || this.element.paused) {
+      this.smoothedAudioEnergy *= 0.9
+      return this.smoothedAudioEnergy < 0.01 ? 0 : this.smoothedAudioEnergy
+    }
+
+    analyser.getByteFrequencyData(buffer)
+    /** 取前 8 个 Bin（低于约 350Hz 的低音鼓点区间）。 */
+    let sum = 0
+    const binCount = Math.min(8, buffer.length)
+    for (let index = 0; index < binCount; index += 1) {
+      sum += buffer[index] ?? 0
+    }
+    const rawEnergy = sum / (binCount * 255)
+
+    if (rawEnergy > this.smoothedAudioEnergy) {
+      this.smoothedAudioEnergy = rawEnergy * 0.7 + this.smoothedAudioEnergy * 0.3
+    } else {
+      this.smoothedAudioEnergy = this.smoothedAudioEnergy * 0.88 + rawEnergy * 0.12
+    }
+
+    return this.smoothedAudioEnergy
+  }
+
   // ── 生命周期区 ──
 
   /** 解绑全部原生监听器并释放媒体资源 */
@@ -149,6 +193,12 @@ export class HtmlAudioAdapter implements MediaElementPort {
     this.element.pause()
     this.element.removeAttribute('src')
     this.element.load()
+    if (this.audioContext && this.audioContext.state !== 'closed') {
+      void this.audioContext.close()
+    }
+    this.audioContext = undefined
+    this.analyserNode = undefined
+    this.frequencyData = undefined
   }
 
   /** 当前已注册的原生监听器数量，供泄漏检测使用 */
@@ -274,5 +324,28 @@ export class HtmlAudioAdapter implements MediaElementPort {
     const code = this.element.error?.code
     if (code === undefined) return 'network-error'
     return MEDIA_ERROR_CODES[code] ?? 'network-error'
+  }
+
+  /** 初始化或获取 Web Audio AnalyserNode 分析节点。 */
+  private ensureAudioAnalyzer(): AnalyserNode | undefined {
+    if (this.analyserNode) return this.analyserNode
+    if (typeof window === 'undefined' || !window.AudioContext) return undefined
+    try {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+      const context = new AudioCtx()
+      const analyser = context.createAnalyser()
+      analyser.fftSize = 256
+      analyser.smoothingTimeConstant = 0.8
+      const sourceNode = context.createMediaElementSource(this.element)
+      sourceNode.connect(analyser)
+      analyser.connect(context.destination)
+
+      this.audioContext = context
+      this.analyserNode = analyser
+      this.frequencyData = new Uint8Array(analyser.frequencyBinCount)
+      return analyser
+    } catch {
+      return undefined
+    }
   }
 }

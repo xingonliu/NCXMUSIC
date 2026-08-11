@@ -8,6 +8,7 @@ import {
   type FluidMeshPalette
 } from '../fluid-mesh-palette'
 import { FluidMeshRenderer } from '../fluid-mesh-renderer'
+import { usePlayer } from '../use-player'
 
 // ========= 属性 =========
 
@@ -23,6 +24,9 @@ const props = withDefaults(defineProps<{
 })
 
 // ========= 变量 =========
+
+/** 共享播放器接口。 */
+const player = usePlayer()
 
 /** 低分辨率 WebGL 渲染画布。 */
 const canvasElement = ref<HTMLCanvasElement | null>(null)
@@ -75,6 +79,7 @@ function createRenderer(): void {
     nextRenderer.setPalette(activePalette)
     nextRenderer.setMotionActive(props.playing)
     nextRenderer.setReducedMotion(reducedMotionQuery?.matches ?? false)
+    nextRenderer.setAudioEnergyProvider(() => player.getAudioEnergy())
     resizeRenderer()
     if (!document.hidden) nextRenderer.start()
     webglReady.value = true
@@ -201,10 +206,10 @@ onBeforeUnmount(() => {
 
 .fluid-mesh-background-fallback,
 .fluid-mesh-background-canvas {
-  inset: -16%;
-  width: 132%;
-  height: 132%;
-  transform: translateZ(0) scale(1.06);
+  inset: -22%;
+  width: 144%;
+  height: 144%;
+  transform: translateZ(0) scale(1.12);
   will-change: transform, filter, opacity;
 }
 
@@ -212,14 +217,14 @@ onBeforeUnmount(() => {
   background-color: #10171a;
   background-position: center;
   background-size: cover;
-  filter: blur(80px) saturate(1.38) brightness(0.58);
+  filter: blur(110px) saturate(1.38) brightness(0.58);
   opacity: 0.9;
   transition: opacity 900ms ease;
 }
 
 .fluid-mesh-background-canvas {
   display: block;
-  filter: blur(80px) saturate(1.12);
+  filter: blur(110px) saturate(1.15);
   opacity: 0;
   transition: opacity 700ms ease;
 }

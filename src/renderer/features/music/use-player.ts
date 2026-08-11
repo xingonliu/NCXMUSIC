@@ -295,6 +295,8 @@ export function usePlayer(): {
   clear: () => Promise<void>
   /** 清空提示 */
   dismissNotice: () => void
+  /** 获取低频音频波形能量 [0, 1] */
+  getAudioEnergy: () => number
 } {
   runtime ??= createRuntime()
   const active = runtime
@@ -302,6 +304,7 @@ export function usePlayer(): {
   return {
     snapshot: readonly(active.snapshot) as Readonly<Ref<PlayerSnapshot>>,
     notice: readonly(active.notice) as Readonly<Ref<string | null>>,
+    getAudioEnergy: () => active.adapter.getAudioEnergy(),
     playContext: (context) => executeAppliedCommand(active.coordinator, active.gateway, {
       type: 'player.play-context',
       tracks: context.tracks,

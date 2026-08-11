@@ -139,13 +139,13 @@ const INSTRUMENTAL_GAP_THRESHOLD_MS = 8_000
 const AUTO_FOLLOW_RESUME_DELAY_MS = 4_000
 
 /** 弹簧质量参数。 */
-const SPRING_MASS = 1
+const SPRING_MASS = 1.2
 
-/** 弹簧刚度参数。 */
-const SPRING_STIFFNESS = 170
+/** 弹簧刚度参数（调整为低频 Apple 阻尼弹簧）。 */
+const SPRING_STIFFNESS = 95
 
-/** 弹簧阻尼参数。 */
-const SPRING_DAMPING = 22
+/** 弹簧阻尼参数（调整为厚重流体滑移感）。 */
+const SPRING_DAMPING = 18.5
 
 /** 弹簧停止时允许的位置误差。 */
 const SPRING_POSITION_EPSILON = 0.35
@@ -187,23 +187,43 @@ const timelineNodes = computed<LyricTimelineNode[]>(() => {
 
 /** 当前精确命中的歌词行下标；间奏或空白时为 -1。 */
 const activeLineIndex = computed<number>(() => {
-  /** 当前播放时刻命中的最后一行，解决边界重叠时的新行优先问题。 */
-  let activeIndex = -1
+  const lines = displayLines.value
+  if (lines.length === 0) return -1
 
-  displayLines.value.forEach((line, lineIndex) => {
-    const lineEndMs = line.lineStartMs + line.lineDurationMs
-    if (line.lineStartMs <= animationPositionMs.value && animationPositionMs.value < lineEndMs) {
-      activeIndex = lineIndex
+  const currentMs = animationPositionMs.value
+
+  // 若当前落入虚拟间奏节点区间，则无歌词行处于 active 状态
+  if (activeInstrumentalNode.value) {
+    return -1
+  }
+
+  let activeIndex = -1
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]!
+    const nextLine = lines[i + 1]
+
+    if (currentMs >= line.lineStartMs) {
+      if (nextLine) {
+        if (currentMs < nextLine.lineStartMs) {
+          activeIndex = i
+          break
+        }
+      } else {
+        activeIndex = i
+        break
+      }
     }
-  })
+  }
 
   return activeIndex
 })
 
 /** 当前动画帧已经完整唱完的歌词行数量。 */
 const pastLineCount = computed<number>(() => {
+  const activeIdx = activeLineIndex.value
+  if (activeIdx >= 0) return activeIdx
   return displayLines.value.filter((line) => (
-    animationPositionMs.value >= line.lineStartMs + line.lineDurationMs
+    animationPositionMs.value >= line.lineStartMs
   )).length
 })
 
@@ -255,7 +275,7 @@ function lineWords(line: StandardLyricsLine): StandardLyricsWord[] {
   return line.words ?? []
 }
 
-/** 返回指定播放时刻下单个字或音节的填充、弹跳与发光状态。 */
+/** 返回指定播放时刻下单个字或音节的填充、上抬与泛光状态。 */
 function calculateWordVisualState(
   word: StandardLyricsWord,
   currentTimeMs: number
@@ -264,25 +284,28 @@ function calculateWordVisualState(
   const fillProgress = word.durationMs <= 0
     ? Number(currentTimeMs >= word.startMs)
     : clampProgress((currentTimeMs - word.startMs) / word.durationMs)
-  /** 当前字起音后经过的秒数，用于求解快速衰减的弹簧波。 */
+  /** 当前字起音后经过的秒数。 */
   const elapsedSeconds = Math.max(0, currentTimeMs - word.startMs) / 1_000
-  /** 起音阶段的正向衰减振幅，避免字符向内骤缩。 */
-  const springEnvelope = fillProgress > 0 && fillProgress < 1
-    ? Math.exp(-7 * elapsedSeconds) * Math.abs(Math.sin(24 * elapsedSeconds))
-    : 0
-  /** 发光起音包络，在字时长前 12% 内平滑点亮。 */
-  const glowAttack = clampProgress(fillProgress / 0.12)
-  /** 发光收尾包络，在字时长后 18% 内快速收拢。 */
-  const glowDecay = clampProgress((1 - fillProgress) / 0.18)
-  /** 只在字符实际唱响期间保持的发光强度。 */
+
+  /** 正在唱响期间（0 < fillProgress < 1）的弧形泛光包络，在中间达到 1.0 峰值。 */
   const glow = fillProgress > 0 && fillProgress < 1
-    ? Math.min(glowAttack, glowDecay)
+    ? Math.sin(fillProgress * Math.PI)
     : 0
+
+  /**
+   * 字符上抬像素 (liftPx)：
+   * - 未唱响的字：0px (基线)
+   * - 已唱响或正在唱的字：在 180ms 内平滑上浮至 -2.5px，唱完后保持在上浮位置不回落
+   */
+  const liftProgress = fillProgress > 0
+    ? Math.min(1, elapsedSeconds / 0.18)
+    : 0
+  const liftPx = -2.5 * liftProgress
 
   return {
     fillProgress,
-    scale: 1 + springEnvelope * 0.08,
-    liftPx: -springEnvelope * 2.4,
+    scale: 1 + glow * 0.03,
+    liftPx,
     glow
   }
 }
@@ -323,11 +346,65 @@ function lyricLineClass(
   }
 }
 
+/** 返回基于播放焦点距离的连续景深（模糊、不透明度与缩放）样式。 */
+function lineDynamicStyle(lineIndex: number): Record<string, string> {
+  if (!props.immersive) return {}
+  const activeIndex = activeLineIndex.value
+  if (activeIndex < 0) {
+    return {
+      filter: 'blur(0.8px)',
+      opacity: '0.55',
+      transform: 'scale(0.96)'
+    }
+  }
+  if (lineIndex === activeIndex) {
+    return {
+      filter: 'blur(0px)',
+      opacity: '1',
+      transform: 'scale(1.08)'
+    }
+  }
+  const distance = Math.abs(lineIndex - activeIndex)
+  const blurPx = Math.min(7.5, distance * 2.1)
+  const opacity = Math.max(0.18, 0.62 - distance * 0.14)
+  const scale = Math.max(0.86, 1 - distance * 0.04)
+  return {
+    filter: `blur(${blurPx.toFixed(1)}px)`,
+    opacity: opacity.toFixed(2),
+    transform: `scale(${scale.toFixed(2)})`
+  }
+}
+
 /** 返回虚拟间奏节点相对当前播放时刻的状态。 */
 function instrumentalState(node: LyricTimelineInstrumentalNode): LyricTemporalState {
   if (activeInstrumentalNode.value?.afterLineIndex === node.afterLineIndex) return 'active'
   if (node.afterLineIndex <= completedInstrumentalAfterLineIndex.value) return 'past'
   return 'future'
+}
+
+/** 返回虚拟间奏节点基于焦点距离的连续景深样式。 */
+function instrumentalDynamicStyle(afterLineIndex: number): Record<string, string> {
+  if (!props.immersive) return {}
+  const activeAfter = activeInstrumentalNode.value?.afterLineIndex
+  if (activeAfter === afterLineIndex) {
+    return {
+      filter: 'blur(0px)',
+      opacity: '1',
+      transform: 'scale(1.08)'
+    }
+  }
+  const activeIndex = activeLineIndex.value >= 0
+    ? activeLineIndex.value
+    : (activeAfter ?? 0)
+  const distance = Math.abs(afterLineIndex - activeIndex)
+  const blurPx = Math.min(7.5, distance * 2.1)
+  const opacity = Math.max(0.18, 0.55 - distance * 0.14)
+  const scale = Math.max(0.86, 1 - distance * 0.04)
+  return {
+    filter: `blur(${blurPx.toFixed(1)}px)`,
+    opacity: opacity.toFixed(2),
+    transform: `scale(${scale.toFixed(2)})`
+  }
 }
 
 /** 返回虚拟间奏节点的状态类名。 */
@@ -494,8 +571,12 @@ function estimatedFramePositionMs(frameTime: number): number {
 }
 
 /** 把当前时刻的逐字进度直接写入 CSS 变量，避免每帧触发 Vue 整树渲染。 */
-function writeWordProgress(currentTimeMs: number): void {
-  const wordElements = scrollContainer.value?.querySelectorAll<HTMLElement>('.lyric-word') ?? []
+function writeWordProgress(currentTimeMs: number, activeOnly = false): void {
+  const container = scrollContainer.value
+  if (!container) return
+
+  const selector = activeOnly ? '.lyrics-line--active .lyric-word' : '.lyric-word'
+  const wordElements = container.querySelectorAll<HTMLElement>(selector)
   wordElements.forEach((element) => {
     const startMs = Number(element.dataset['wordStartMs'] ?? 0)
     const durationMs = Number(element.dataset['wordDurationMs'] ?? 0)
@@ -514,7 +595,7 @@ function writeWordProgress(currentTimeMs: number): void {
 function runWordProgressFrame(frameTime: number): void {
   const currentTimeMs = estimatedFramePositionMs(frameTime)
   animationPositionMs.value = currentTimeMs
-  writeWordProgress(currentTimeMs)
+  writeWordProgress(currentTimeMs, true)
   if (!props.immersive || !props.playing) {
     wordProgressFrameId = undefined
     return
@@ -625,6 +706,7 @@ onBeforeUnmount(() => {
           v-if="node.kind === 'line'"
           class="lyrics-line"
           :class="lyricLineClass(node.line, node.lineIndex)"
+          :style="lineDynamicStyle(node.lineIndex)"
           :data-lyric-index="node.lineIndex"
           :data-state="lyricLineState(node.lineIndex)"
           :aria-current="node.lineIndex === activeLineIndex ? 'true' : undefined"
@@ -670,6 +752,7 @@ onBeforeUnmount(() => {
           v-else
           class="lyrics-instrumental"
           :class="instrumentalClass(node)"
+          :style="instrumentalDynamicStyle(node.afterLineIndex)"
           :data-instrumental-after="node.afterLineIndex"
           :data-state="instrumentalState(node)"
         >
@@ -737,6 +820,8 @@ onBeforeUnmount(() => {
 
 .lyric-line-primary {
   white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .lyrics-line small {
@@ -781,10 +866,10 @@ onBeforeUnmount(() => {
   transform-origin: left center;
   will-change: transform, opacity, filter;
   transition:
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    color 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform 420ms cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 360ms cubic-bezier(0.25, 1, 0.5, 1),
+    filter 360ms cubic-bezier(0.25, 1, 0.5, 1),
+    color 360ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .lyrics-panel--immersive .lyrics-line button {
@@ -841,24 +926,29 @@ onBeforeUnmount(() => {
 
 .lyric-word {
   display: inline-block;
+  vertical-align: baseline;
   color: transparent;
   background:
     linear-gradient(
       to right,
-      #ffffff calc(var(--progress, 0) * 100%),
-      rgb(255 255 255 / 40%) 0
+      #ffffff calc(var(--progress, 0) * 100% - 14px),
+      rgb(255 255 255 / 96%) calc(var(--progress, 0) * 100%),
+      rgb(255 255 255 / 38%) calc(var(--progress, 0) * 100% + 14px)
     );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow:
-    0 0 calc(2px + var(--word-glow, 0) * 10px)
-    rgb(255 255 255 / calc(var(--word-glow, 0) * 58%));
-  transform:
-    translateY(var(--word-lift, 0))
-    scale(var(--word-scale, 1));
+    0 0 calc(var(--word-glow, 0) * 16px)
+    rgb(255 255 255 / calc(var(--word-glow, 0) * 85%)),
+    0 0 calc(var(--word-glow, 0) * 28px)
+    rgb(255 255 255 / calc(var(--word-glow, 0) * 45%));
+  transform: translateY(var(--word-lift, 0px)) scale(calc(1 + (var(--word-scale, 1) - 1) * 0.25));
   transform-origin: center bottom;
   will-change: transform, text-shadow;
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.9, 0.3, 1),
+    text-shadow 220ms ease;
 }
 
 .lyrics-line--background {

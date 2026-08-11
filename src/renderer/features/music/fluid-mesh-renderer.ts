@@ -96,18 +96,18 @@ float randomGrain(vec2 coordinate, float frame) {
 }
 
 vec2 movingNode(vec2 anchor, float seed, float time) {
-  float horizontal = simplexNoise(vec2(seed, time * 0.035 + seed * 1.7));
-  float vertical = simplexNoise(vec2(time * -0.029 + seed * 2.3, seed + 4.0));
-  return anchor + vec2(horizontal, vertical) * (0.095 + u_energy * 0.025);
+  float horizontal = simplexNoise(vec2(seed, time * 0.018 + seed * 1.7));
+  float vertical = simplexNoise(vec2(time * -0.015 + seed * 2.3, seed + 4.0));
+  return anchor + vec2(horizontal, vertical) * (0.075 + u_energy * 0.02);
 }
 
 void main() {
   float aspect = u_resolution.x / max(u_resolution.y, 1.0);
   vec2 flow = vec2(
-    simplexNoise(v_uv * 1.35 + vec2(u_time * 0.026, -u_time * 0.019)),
-    simplexNoise(v_uv * 1.18 + vec2(-u_time * 0.021, u_time * 0.024) + 8.4)
+    simplexNoise(v_uv * 1.2 + vec2(u_time * 0.014, -u_time * 0.010)),
+    simplexNoise(v_uv * 1.05 + vec2(-u_time * 0.011, u_time * 0.012) + 8.4)
   );
-  vec2 warpedUv = v_uv + flow * (0.105 + u_energy * 0.018);
+  vec2 warpedUv = v_uv + flow * (0.075 + u_energy * 0.012);
   vec2 position = vec2(warpedUv.x * aspect, warpedUv.y);
   vec2 node0 = movingNode(vec2(0.12, 0.16), 1.3, u_time);
   vec2 node1 = movingNode(vec2(0.86, 0.20), 4.7, u_time);
@@ -407,7 +407,15 @@ export class FluidMeshRenderer {
     this.transitionStartedAt = timestamp
   }
 
-  /** 根据播放状态切换流体能量，暂停时仍保留极慢的呼吸。 */
+  /** 当前绑定的低频音频能量提供函数。 */
+  private audioEnergyProvider: (() => number) | undefined
+
+  /** 设置低频音频波形能量提供者。 */
+  setAudioEnergyProvider(provider?: () => number): void {
+    this.audioEnergyProvider = provider
+  }
+
+  /** 根据播放状态切换流点能量，暂停时仍保留极慢的呼吸。 */
   setMotionActive(active: boolean): void {
     this.motionActive = active
   }
@@ -463,8 +471,14 @@ export class FluidMeshRenderer {
     this.displayedPalette = this.paletteAt(timestamp)
     /** 传入 Shader 的连续调色板数组。 */
     const flattenedPalette = flattenPalette(this.displayedPalette)
-    /** 播放状态对应的网格形变能量。 */
-    const energy = this.reducedMotion ? 0 : (this.motionActive ? PLAYING_ENERGY : PAUSED_ENERGY)
+    /** 实时低频音频能量 [0, 1]。 */
+    const audioEnergy = (this.motionActive && !this.reducedMotion)
+      ? (this.audioEnergyProvider?.() ?? 0)
+      : 0
+    /** 播放状态对应的网格形变能量（基础能量 0.65 + 低频重拍律动 0.75 * audioEnergy）。 */
+    const energy = this.reducedMotion
+      ? 0
+      : (this.motionActive ? PLAYING_ENERGY * (0.65 + audioEnergy * 0.75) : PAUSED_ENERGY)
     this.gl.useProgram(this.program)
     this.gl.uniform1f(this.uniforms.time, this.flowTime)
     this.gl.uniform2f(this.uniforms.resolution, this.canvas.width, this.canvas.height)

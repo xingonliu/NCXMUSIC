@@ -738,12 +738,25 @@ if (!hasSingleInstanceLock) {
       appConfigStore = new AppConfigStore(app.getPath('userData'))
       closeWindowBehavior = appConfigStore.load().closeWindowBehavior
       accountStoreCoordinator = new AccountStoreCoordinator(supervisor)
+      /** 允许 Web Audio API 跨域提取音频频谱。 */
+      const configureCorsHeaders = (targetSession: Session): void => {
+        targetSession.webRequest.onHeadersReceived((details, callback) => {
+          const responseHeaders = { ...details.responseHeaders }
+          responseHeaders['access-control-allow-origin'] = ['*']
+          responseHeaders['access-control-allow-headers'] = ['*']
+          callback({ responseHeaders })
+        })
+      }
+      configureCorsHeaders(session.defaultSession)
+      const authSession = session.fromPartition(NETEASE_AUTH_PARTITION, { cache: true })
+      const guestSession = session.fromPartition(NETEASE_GUEST_PARTITION, { cache: false })
+      configureCorsHeaders(authSession)
+      configureCorsHeaders(guestSession)
+
       authController = new AuthSessionController(
-        session.fromPartition(NETEASE_AUTH_PARTITION, { cache: true }),
+        authSession,
         new CredentialLeaseCoordinator(supervisor),
-        new AnonymousSessionRepository(
-          session.fromPartition(NETEASE_GUEST_PARTITION, { cache: false })
-        ),
+        new AnonymousSessionRepository(guestSession),
         (accountId, accountGeneration) =>
           accountStoreCoordinator?.open(accountId, accountGeneration) ??
           Promise.reject(new Error('Account store coordinator is unavailable'))
