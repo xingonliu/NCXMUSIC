@@ -369,22 +369,21 @@ function openImmersivePlayer(event: MouseEvent): void {
   --ncx-player-bar-thumb-shadow:
     0 2px 8px rgb(20 20 24 / 18%),
     0 0 0 3px rgb(255 255 255 / 42%);
+  --ncx-player-bar-shadow:
+    0 0 2px 1px rgb(255 255 255 / 88%) inset,
+    0 0 10px 4px rgb(255 255 255 / 58%) inset,
+    0 6px 18px rgb(35 38 45 / 12%),
+    0 4px 16px rgb(255 255 255 / 42%) inset,
+    0 8px 24px rgb(255 255 255 / 24%) inset;
 
   color: var(--ncx-color-text-primary);
   isolation: isolate;
   -webkit-app-region: no-drag;
 }
 
-@media (prefers-color-scheme: light) {
-  :deep(.player-bar-glass.effect),
-  .player-bar-glass {
-    box-shadow:
-      0 0 2px 1px rgb(255 255 255 / 88%) inset,
-      0 0 10px 4px rgb(255 255 255 / 58%) inset,
-      0 6px 18px rgb(35 38 45 / 12%),
-      0 4px 16px rgb(255 255 255 / 42%) inset,
-      0 8px 24px rgb(255 255 255 / 24%) inset !important;
-  }
+:deep(.player-bar-glass.effect),
+.player-bar-glass {
+  box-shadow: var(--ncx-player-bar-shadow) !important;
 }
 
 .player-bar-content {
@@ -591,12 +590,29 @@ function openImmersivePlayer(event: MouseEvent): void {
 }
 
 
+:root[data-theme='dark'] .player-bar-glass {
+  --ncx-player-bar-track-bg: color-mix(in srgb, white 15%, transparent);
+  --ncx-player-bar-thumb-shadow:
+    0 2px 8px rgb(0 0 0 / 32%),
+    0 0 0 3px rgb(255 255 255 / 14%);
+  --ncx-player-bar-shadow:
+    0 0 2px 1px rgb(255 255 255 / 12%) inset,
+    0 0 10px 4px rgb(255 255 255 / 5%) inset,
+    0 8px 32px rgb(0 0 0 / 45%),
+    0 1px 1px rgb(255 255 255 / 15%) inset;
+}
+
 @media (prefers-color-scheme: dark) {
-  .player-bar-glass {
+  :root:not([data-theme='light']) .player-bar-glass {
     --ncx-player-bar-track-bg: color-mix(in srgb, white 15%, transparent);
     --ncx-player-bar-thumb-shadow:
       0 2px 8px rgb(0 0 0 / 32%),
       0 0 0 3px rgb(255 255 255 / 14%);
+    --ncx-player-bar-shadow:
+      0 0 2px 1px rgb(255 255 255 / 12%) inset,
+      0 0 10px 4px rgb(255 255 255 / 5%) inset,
+      0 8px 32px rgb(0 0 0 / 45%),
+      0 1px 1px rgb(255 255 255 / 15%) inset;
   }
 }
 

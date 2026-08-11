@@ -60,6 +60,15 @@ const isDragging = ref<boolean>(false)
 /** 拖拽过程中的实时预览数值。 */
 const dragValue = ref<number | null>(null)
 
+/** 悬浮预览百分比（0-100）。 */
+const hoverPercentage = ref<number | null>(null)
+
+/** 悬浮预览时间值（毫秒）。 */
+const hoverValue = ref<number | null>(null)
+
+/** 悬浮提示框的 X 轴像素位置。 */
+const hoverX = ref<number>(0)
+
 /** 活跃指针 ID，用于多触点/指针捕获释放。 */
 let activePointerId: number | null = null
 
@@ -79,32 +88,79 @@ const percentage = computed<number>(() => {
   return Math.max(0, Math.min(100, normalized * 100))
 })
 
+/** 格式化后的悬浮时间文本。 */
+const formattedHoverTime = computed<string>(() => {
+  if (hoverValue.value === null) return ''
+  const totalSeconds = Math.max(0, Math.floor(hoverValue.value / 1000))
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+  return `${minutes}:${String(seconds).padStart(2, '0')}`
+})
+
 // ========= 函数 =========
 
 /**
- * 根据指针坐标计算对应的进度数值。
+ * 根据指针坐标计算对应的进度数值与绝对偏移像素。
  *
  * @param clientX 指针相对视口的 X 坐标
  */
-function calculateValueFromClientX(clientX: number): number {
-  if (!trackRef.value) return props.modelValue
+function calculateValueAndPositionFromClientX(clientX: number): {
+  value: number
+  ratioPercentage: number
+  offsetX: number
+} {
+  if (!trackRef.value) {
+    return { value: props.modelValue, ratioPercentage: 0, offsetX: 0 }
+  }
   const rect = trackRef.value.getBoundingClientRect()
-  if (rect.width <= 0) return props.min
+  if (rect.width <= 0) {
+    return { value: props.min, ratioPercentage: 0, offsetX: 0 }
+  }
 
-  /** 指针相对轨道左侧的偏移比例。 */
-  const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width))
+  /** 指针相对轨道左侧的偏移像素。 */
+  const offsetX = Math.max(0, Math.min(rect.width, clientX - rect.left))
+  /** 比例。 */
+  const ratio = offsetX / rect.width
   /** 范围差值。 */
   const range = props.max - props.min
   /** 未量化的目标值。 */
   const rawValue = props.min + ratio * range
 
+  let finalValue: number
   if (props.step <= 0) {
-    return Math.round(rawValue)
+    finalValue = Math.round(rawValue)
+  } else {
+    finalValue = Math.round(rawValue / props.step) * props.step
   }
 
-  /** 按步长量化后的值。 */
-  const steppedValue = Math.round(rawValue / props.step) * props.step
-  return Math.max(props.min, Math.min(props.max, steppedValue))
+  const clampedValue = Math.max(props.min, Math.min(props.max, finalValue))
+  return {
+    value: clampedValue,
+    ratioPercentage: ratio * 100,
+    offsetX
+  }
+}
+
+/**
+ * 处理悬浮或指针移动时的预览更新。
+ *
+ * @param event 指针移动事件
+ */
+function handleTrackMouseMove(event: MouseEvent): void {
+  if (props.disabled) return
+  const { value, ratioPercentage, offsetX } = calculateValueAndPositionFromClientX(event.clientX)
+  hoverValue.value = value
+  hoverPercentage.value = ratioPercentage
+  hoverX.value = offsetX
+}
+
+/** 鼠标离开进度条区域。 */
+function handleMouseLeave(): void {
+  isHovered.value = false
+  if (!isDragging.value) {
+    hoverPercentage.value = null
+    hoverValue.value = null
+  }
 }
 
 /**
@@ -131,11 +187,14 @@ function handlePointerDown(event: PointerEvent): void {
   }
 
   /** 计算按下位置对应数值。 */
-  const nextValue = calculateValueFromClientX(event.clientX)
-  dragValue.value = nextValue
+  const { value, ratioPercentage, offsetX } = calculateValueAndPositionFromClientX(event.clientX)
+  dragValue.value = value
+  hoverValue.value = value
+  hoverPercentage.value = ratioPercentage
+  hoverX.value = offsetX
 
   emit('dragStart')
-  emit('update:modelValue', nextValue)
+  emit('update:modelValue', value)
 
   window.addEventListener('pointermove', handlePointerMove)
   window.addEventListener('pointerup', handlePointerUp)
@@ -151,9 +210,13 @@ function handlePointerMove(event: PointerEvent): void {
   if (!isDragging.value) return
   event.preventDefault()
 
-  const nextValue = calculateValueFromClientX(event.clientX)
-  dragValue.value = nextValue
-  emit('update:modelValue', nextValue)
+  const { value, ratioPercentage, offsetX } = calculateValueAndPositionFromClientX(event.clientX)
+  dragValue.value = value
+  hoverValue.value = value
+  hoverPercentage.value = ratioPercentage
+  hoverX.value = offsetX
+
+  emit('update:modelValue', value)
 }
 
 /**
@@ -173,16 +236,21 @@ function handlePointerUp(event: PointerEvent): void {
     }
   }
 
-  const finalValue = calculateValueFromClientX(event.clientX)
+  const { value } = calculateValueAndPositionFromClientX(event.clientX)
   isDragging.value = false
   dragValue.value = null
   activePointerId = null
 
+  if (!isHovered.value) {
+    hoverPercentage.value = null
+    hoverValue.value = null
+  }
+
   cleanupListeners()
 
-  emit('update:modelValue', finalValue)
-  emit('change', finalValue)
-  emit('dragEnd', finalValue)
+  emit('update:modelValue', value)
+  emit('change', value)
+  emit('dragEnd', value)
 }
 
 /** 清理未释放的全局指针监听。 */
@@ -247,16 +315,42 @@ onBeforeUnmount(() => {
     :aria-label="props.label"
     @pointerdown="handlePointerDown"
     @mouseenter="isHovered = true"
-    @mouseleave="isHovered = false"
+    @mousemove="handleTrackMouseMove"
+    @mouseleave="handleMouseLeave"
     @keydown="handleKeyDown"
   >
+    <!-- 悬浮时间气泡 Tooltip -->
+    <Transition name="tooltip-fade">
+      <div
+        v-if="hoverValue !== null && (isHovered || isDragging) && !props.disabled"
+        class="music-progress-tooltip"
+        :style="{ left: `${hoverX}px` }"
+      >
+        {{ formattedHoverTime }}
+      </div>
+    </Transition>
+
     <div class="music-progress-rail">
+      <!-- 悬浮预览轻微高亮轨 -->
+      <div
+        v-if="hoverPercentage !== null && hoverPercentage > percentage && !props.disabled"
+        class="music-progress-hover-fill"
+        :style="{
+          left: `${percentage}%`,
+          width: `${hoverPercentage - percentage}%`
+        }"
+      />
+
+      <!-- 已播放进度条 -->
       <div
         class="music-progress-fill"
         :style="{ width: `${percentage}%` }"
       >
-        <div class="music-progress-glow-tip" />
+        <!-- Apple 物理圆环滑块 Thumb -->
+        <div class="music-progress-thumb" />
       </div>
+
+      <!-- 缓冲/加载 Shimmer 效果 -->
       <div
         v-if="props.busy"
         class="music-progress-busy-glow"
@@ -270,7 +364,7 @@ onBeforeUnmount(() => {
   position: relative;
   display: flex;
   width: 100%;
-  height: 16px;
+  height: 20px;
   align-items: center;
   box-sizing: border-box;
   cursor: pointer;
@@ -284,47 +378,113 @@ onBeforeUnmount(() => {
   cursor: not-allowed;
 }
 
+/* Apple 风格半透明轨道：常态 6px 饱满质感，悬浮与拖拽加粗至 9px */
 .music-progress-rail {
   position: relative;
   width: 100%;
   height: 6px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--ncx-color-text-primary, #ffffff) 22%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-text-primary, #ffffff) 20%, transparent);
   overflow: visible;
+  transition: height 0.22s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease;
 }
 
+.music-progress-bar:hover:not(.music-progress-bar--disabled) .music-progress-rail,
+.music-progress-bar--dragging .music-progress-rail {
+  height: 9px;
+  background: color-mix(in srgb, var(--ncx-color-text-primary, #ffffff) 28%, transparent);
+}
+
+/* 已播放填充轨 */
 .music-progress-fill {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   border-radius: 999px;
-  background: #ffffff;
+  background: var(--ncx-color-text-primary, #ffffff);
   transition: width 0.05s linear;
 }
 
-.music-progress-glow-tip {
+/* 悬浮预看轨 */
+.music-progress-hover-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ncx-color-text-primary, #ffffff) 32%, transparent);
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+/* Apple 物理圆环滑块 Thumb */
+.music-progress-thumb {
   position: absolute;
   top: 50%;
   right: 0;
-  width: 6px;
-  height: 100%;
-  border-radius: 999px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
   background: #ffffff;
-  transform: translate(50%, -50%);
+  transform: translate(50%, -50%) scale(0);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.18s ease, box-shadow 0.18s ease;
-}
-
-.music-progress-bar:hover .music-progress-glow-tip,
-.music-progress-bar--dragging .music-progress-glow-tip {
-  opacity: 1;
   box-shadow:
-    0 0 10px 3px rgba(255, 255, 255, 0.95),
-    0 0 20px 6px rgba(255, 255, 255, 0.7);
+    0 2px 8px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease;
 }
 
+/* Hover / Active 状态弹出滑块，消除原先极富盗版感的强发光 */
+.music-progress-bar:hover:not(.music-progress-bar--disabled) .music-progress-thumb {
+  opacity: 1;
+  transform: translate(50%, -50%) scale(1);
+}
+
+.music-progress-bar--dragging .music-progress-thumb {
+  opacity: 1;
+  transform: translate(50%, -50%) scale(1.18);
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+/* 精致悬浮时间气泡 */
+.music-progress-tooltip {
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 8px;
+  transform: translateX(-50%);
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(24, 24, 28, 0.82);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+  z-index: 10;
+}
+
+.tooltip-fade-enter-active,
+.tooltip-fade-leave-active {
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.tooltip-fade-enter-from,
+.tooltip-fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, 4px);
+}
+
+/* 缓冲/加载 shimmer 效果 */
 .music-progress-busy-glow {
   position: absolute;
   inset: 0;
@@ -332,7 +492,7 @@ onBeforeUnmount(() => {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.4) 50%,
     transparent 100%
   );
   animation: music-progress-shimmer 1.4s ease-in-out infinite;

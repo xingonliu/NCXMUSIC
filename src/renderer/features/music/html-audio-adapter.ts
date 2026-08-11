@@ -71,7 +71,7 @@ export class HtmlAudioAdapter implements MediaElementPort {
   private analyserNode: AnalyserNode | undefined
 
   /** Web Audio 缓存的频域数据数组。 */
-  private frequencyData: Uint8Array | undefined
+  private frequencyData: Uint8Array<ArrayBuffer> | undefined
 
   /** 经过 EMA 指数衰减平滑后的低频能量。 */
   private smoothedAudioEnergy = 0

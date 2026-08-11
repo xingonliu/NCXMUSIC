@@ -60,6 +60,11 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     expect(playerBarSource).not.toContain('backdrop-filter: none !important')
   })
 
+  it('支持在设置中动态切换深色/浅色模式时更新 PlayerBar 内阴影变量', () => {
+    expect(playerBarSource).toContain('--ncx-player-bar-shadow')
+    expect(playerBarSource).toContain(":root[data-theme='dark'] .player-bar-glass")
+  })
+
   it('播放/暂停 icon 按钮具有 prominent 尺寸与 primary 变体', () => {
     const wrapper = mount(PlayerBar)
     const transport = wrapper.find('.player-transport')
