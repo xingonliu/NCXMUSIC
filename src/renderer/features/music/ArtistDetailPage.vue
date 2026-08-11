@@ -329,48 +329,60 @@ watch(artistId, () => {
         key="content"
         class="artist-page-content"
       >
-        <header class="artist-visual-hero">
+        <div class="artist-visual-hero-shell">
           <div
-            class="artist-visual-background"
+            class="artist-visual-glow"
             :style="{ backgroundImage: `url(${artist.coverUrl || artist.artworkUrl || ''})` }"
             aria-hidden="true"
           />
-          <div class="artist-visual-scrim" />
-          <div class="artist-visual-copy">
-            <p class="music-page-eyebrow">
-              <Radio :size="13" /> 歌手
-            </p>
-            <h1 id="artist-title">
-              {{ artist.name }}
-            </h1>
-            <p class="music-detail-description">
-              {{ artist.alias.join(' / ') || artist.description || '网易云音乐歌手' }}
-            </p>
-            <p class="music-detail-meta">
-              {{ artist.songCount ?? hotSongs.length }} 首歌曲 · {{ artist.albumCount ?? albumsSection.items.length }} 张专辑
-            </p>
-            <div class="music-detail-actions">
-              <CommonButton
-                variant="primary"
-                :disabled="hotSongs.length === 0"
-                @click="playAll"
-              >
-                <Play
-                  :size="15"
-                  fill="currentColor"
-                />
-                播放热门歌曲
-              </CommonButton>
-              <CommonButton
-                variant="secondary"
-                @click="toggleArtistFollow"
-              >
-                <Heart :size="15" :fill="artist.followed ? 'currentColor' : 'none'" />
-                {{ artist.followed ? '已关注' : '关注' }}
-              </CommonButton>
+          <header class="artist-visual-hero">
+            <div
+              class="artist-visual-background"
+              :style="{ backgroundImage: `url(${artist.coverUrl || artist.artworkUrl || ''})` }"
+              aria-hidden="true"
+            />
+            <div class="artist-visual-scrim" />
+            <div class="artist-visual-copy">
+              <p class="music-page-eyebrow">
+                <Radio :size="13" /> 歌手
+              </p>
+              <h1 id="artist-title">
+                {{ artist.name }}
+              </h1>
+              <p class="music-detail-description">
+                {{ artist.alias.join(' / ') || artist.description || '网易云音乐歌手' }}
+              </p>
+              <p class="music-detail-meta">
+                {{ artist.songCount ?? hotSongs.length }} 首歌曲 · {{ artist.albumCount ?? albumsSection.items.length }} 张专辑
+              </p>
+              <div class="music-detail-actions">
+                <CommonButton
+                  variant="primary"
+                  size="prominent"
+                  :disabled="hotSongs.length === 0"
+                  @click="playAll"
+                >
+                  <Play
+                    :size="15"
+                    fill="currentColor"
+                  />
+                  播放热门歌曲
+                </CommonButton>
+                <CommonButton
+                  variant="secondary"
+                  size="prominent"
+                  @click="toggleArtistFollow"
+                >
+                  <Heart
+                    :size="15"
+                    :fill="artist.followed ? 'currentColor' : 'none'"
+                  />
+                  {{ artist.followed ? '已关注' : '关注' }}
+                </CommonButton>
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        </div>
 
         <MusicSection
           section-id="artist-latest-release"
@@ -379,16 +391,30 @@ watch(artistId, () => {
           :state="albumsSection.state"
           :error-text="albumsSection.error"
           empty-text="暂时没有最新发布。"
+          min-height="0"
           @retry="loadArtistAlbums"
         >
-          <button v-if="latestRelease" class="artist-latest-card" type="button" @click="openAlbum(latestRelease)">
-            <Cover :src="latestRelease.artworkUrl" :alt="latestRelease.name" size="card" :show-play-button="false" />
+          <button
+            v-if="latestRelease"
+            class="artist-latest-card"
+            type="button"
+            @click="openAlbum(latestRelease)"
+          >
+            <Cover
+              :src="latestRelease.artworkUrl"
+              :alt="latestRelease.name"
+              size="card"
+              :show-play-button="false"
+            />
             <span>
               <small>Latest Release</small>
               <strong>{{ latestRelease.name }}</strong>
               <span>{{ latestRelease.publishTime ? new Date(latestRelease.publishTime).getFullYear() : '最新发行' }} · {{ latestRelease.size ?? 0 }} 首</span>
             </span>
-            <Play :size="18" fill="currentColor" />
+            <Play
+              :size="18"
+              fill="currentColor"
+            />
           </button>
         </MusicSection>
 
@@ -397,6 +423,7 @@ watch(artistId, () => {
           title="热门歌曲"
           :state="hotSongs.length > 0 ? 'ready' : 'empty'"
           empty-text="暂时没有热门歌曲。"
+          min-height="0"
         >
           <VirtualTrackList
             :songs="hotSongs"
@@ -418,6 +445,7 @@ watch(artistId, () => {
           :state="albumsSection.state"
           :error-text="albumsSection.error"
           empty-text="暂时没有专辑。"
+          min-height="0"
           @retry="loadArtistAlbums"
         >
           <div class="artist-card-grid">
@@ -439,6 +467,7 @@ watch(artistId, () => {
           :state="worksSection.state"
           :error-text="worksSection.error"
           empty-text="暂时没有可识别的参与作品。"
+          min-height="0"
           @retry="loadArtistWorks"
         >
           <VirtualTrackList
@@ -461,6 +490,7 @@ watch(artistId, () => {
           :state="similarSection.state"
           :error-text="similarSection.error"
           empty-text="暂时没有相似歌手。"
+          min-height="0"
           @retry="loadSimilarArtists"
         >
           <div class="artist-card-grid">
@@ -485,6 +515,23 @@ watch(artistId, () => {
 </template>
 
 <style scoped>
+.artist-visual-hero-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.artist-visual-glow {
+  position: absolute;
+  inset: 12% 6% -3%;
+  z-index: -1;
+  border-radius: 30px;
+  background-position: center 26%;
+  background-size: cover;
+  filter: blur(52px) saturate(1.35) opacity(.42);
+  transform: scale(.96) translateY(18px);
+  pointer-events: none;
+}
+
 .artist-visual-hero {
   position: relative;
   display: flex;
@@ -561,18 +608,18 @@ watch(artistId, () => {
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 20px;
-  padding: 18px;
+  padding: 4px 8px 4px 0;
   border: 0;
-  border-radius: var(--ncx-radius-xl);
+  border-radius: var(--ncx-radius-lg);
   color: inherit;
   text-align: left;
-  background: var(--ncx-color-surface);
+  background: transparent;
   cursor: pointer;
 }
 
 .artist-latest-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--ncx-shadow-md);
+  background: var(--music-page-surface-subtle);
+  transform: translateY(-1px);
 }
 
 .artist-latest-card:active {
@@ -621,7 +668,8 @@ watch(artistId, () => {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .artist-visual-background {
+  .artist-visual-background,
+  .artist-visual-glow {
     transform: none;
   }
 
