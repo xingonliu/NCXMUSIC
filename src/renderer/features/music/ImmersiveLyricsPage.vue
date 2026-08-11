@@ -22,6 +22,7 @@ import {
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { copyText } from '../foundation/clipboard'
+import FluidMeshBackground from './components/FluidMeshBackground.vue'
 import LyricsPanel from './components/LyricsPanel.vue'
 import MediaArtwork from './components/MediaArtwork.vue'
 import PlaybackControls from './components/PlaybackControls.vue'
@@ -62,11 +63,6 @@ const displayArtworkUrl = ref<string | undefined>(previewArtworkUrl.value ?? art
 
 /** 当前曲目歌手展示文本。 */
 const artistText = computed<string>(() => track.value?.artists.join(' / ') ?? '')
-
-/** 当前封面驱动的全窗背景样式。 */
-const backdropStyle = computed<Record<string, string>>(() => {
-  return artworkUrl.value ? { backgroundImage: `url("${artworkUrl.value}")` } : {}
-})
 
 /** 当前曲目是否已在本次沉浸会话中完成收藏。 */
 const isLiked = ref<boolean>(false)
@@ -216,16 +212,11 @@ onBeforeUnmount(() => {
     aria-labelledby="immersive-lyrics-title"
     tabindex="-1"
   >
-    <div
+    <FluidMeshBackground
       class="immersive-backdrop"
-      aria-hidden="true"
-    >
-      <div
-        class="immersive-backdrop-artwork"
-        :style="backdropStyle"
-      />
-      <div class="immersive-backdrop-veil" />
-    </div>
+      :artwork-url="artworkUrl"
+      :playing="snapshot.playback.status === 'playing'"
+    />
 
     <button
       type="button"
@@ -413,44 +404,13 @@ onBeforeUnmount(() => {
   border-radius: 0;
 }
 
-.immersive-backdrop,
-.immersive-backdrop-artwork,
-.immersive-backdrop-veil {
+.immersive-backdrop {
   position: absolute;
   inset: 0;
 }
 
 .immersive-backdrop {
   z-index: -1;
-  overflow: hidden;
-  background: #111719;
-}
-
-.immersive-backdrop-artwork {
-  inset: -20%;
-  background-position: center;
-  background-size: cover;
-  filter: blur(80px) saturate(1.65) brightness(0.8);
-  opacity: 0.9;
-  transform: scale(1.18);
-  animation: ncx-backdrop-pulse 24s ease-in-out infinite alternate;
-}
-
-@keyframes ncx-backdrop-pulse {
-  0% {
-    transform: scale(1.15) rotate(0deg);
-  }
-  50% {
-    transform: scale(1.22) rotate(2deg);
-  }
-  100% {
-    transform: scale(1.16) rotate(-1deg);
-  }
-}
-
-.immersive-backdrop-veil {
-  background: rgb(5 12 14 / 34%);
-  box-shadow: inset 0 0 180px rgb(0 0 0 / 18%);
 }
 
 .immersive-toolbar {

@@ -82,6 +82,7 @@ describe('应用级沉浸播放展示', () => {
           CommonHeaderGroupButton: true,
           CommonHeaderGroupItem: true,
           CommonIconButton: true,
+          FluidMeshBackground: true,
           LyricsPanel: true,
           MediaArtwork: true,
           PlaybackControls: true,
@@ -111,6 +112,7 @@ describe('应用级沉浸播放展示', () => {
 
     expect(wrapper.findAll('.immersive-close-handle')).toHaveLength(1)
     expect(closeHandle.element.parentElement).toBe(page.element)
+    expect(wrapper.find('fluid-mesh-background-stub').exists()).toBe(true)
     expect(wrapper.emitted('close')).toBeUndefined()
     expect(closeHandle.findAll('line')).toHaveLength(1)
 
