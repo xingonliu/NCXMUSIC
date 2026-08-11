@@ -121,11 +121,30 @@ export const StandardSongSchema = z.strictObject({
   updatedAt: EntityUpdatedAtSchema
 })
 
+/** 标准歌词字或音节。 */
+export const StandardLyricsWordSchema = z.strictObject({
+  /** 字或音节文案。 */
+  text: z.string().max(200),
+  /** 字或音节的绝对起始时间（毫秒）。 */
+  startMs: z.number().int().nonnegative(),
+  /** 字或音节持续时间（毫秒）。 */
+  durationMs: z.number().int().nonnegative()
+})
+
 /** 标准歌词行。 */
 export const StandardLyricsLineSchema = z.strictObject({
-  timeMs: z.number().int().nonnegative(),
+  /** 当前行的绝对起始时间（毫秒）。 */
+  lineStartMs: z.number().int().nonnegative(),
+  /** 当前行持续时间（毫秒）。 */
+  lineDurationMs: z.number().int().nonnegative(),
+  /** 当前行显示文案。 */
   text: z.string().max(500),
-  translation: z.string().max(500).optional()
+  /** 当前行内的字或音节时间轴；普通 LRC 行为空数组。 */
+  words: z.array(StandardLyricsWordSchema).default([]),
+  /** 与当前原文时间对齐的翻译。 */
+  translation: z.string().max(500).optional(),
+  /** 非主唱声部只在可识别时显式标记。 */
+  vocalRole: z.literal('background').optional()
 })
 
 /** 标准歌词实体。 */
@@ -729,6 +748,7 @@ export type StandardAlbumSummary = z.infer<typeof StandardAlbumSummarySchema>
 export type StandardUserSummary = z.infer<typeof StandardUserSummarySchema>
 export type StandardMusicComment = z.infer<typeof StandardMusicCommentSchema>
 export type StandardSong = z.infer<typeof StandardSongSchema>
+export type StandardLyricsWord = z.infer<typeof StandardLyricsWordSchema>
 export type StandardLyricsLine = z.infer<typeof StandardLyricsLineSchema>
 export type StandardLyrics = z.infer<typeof StandardLyricsSchema>
 export type StandardArtist = z.infer<typeof StandardArtistSchema>

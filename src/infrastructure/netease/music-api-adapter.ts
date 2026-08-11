@@ -19,6 +19,7 @@ import {
   type StandardArtistSummary,
   type StandardLyrics,
   type StandardLyricsLine,
+  type StandardLyricsWord,
   type StandardMusicComment,
   type StandardPlaylist,
   type StandardSong,
@@ -104,16 +105,26 @@ type UnknownRecord = Record<string, unknown>
 
 /** 已解析但尚未合并翻译的歌词行。 */
 interface ParsedLyricLine {
-  /** 歌词时间点（毫秒）。 */
-  timeMs: number
+  /** 当前行的绝对起始时间（毫秒）。 */
+  lineStartMs: number
+  /** 上游明确提供的当前行持续时间（毫秒）。 */
+  lineDurationMs?: number
   /** 当前时间点歌词文案。 */
   text: string
+  /** 当前行内的字或音节时间轴。 */
+  words: StandardLyricsWord[]
 }
 
 // ========= 变量 =========
 
 /** 网易云 API 默认超时。 */
 const NETEASE_API_TIMEOUT_MS = 20_000
+
+/** 普通 LRC 末行或长间隔行的最短推断持续时间。 */
+const MIN_INFERRED_LYRIC_DURATION_MS = 2_200
+
+/** 普通 LRC 行为避免吞并间奏所使用的最长推断持续时间。 */
+const MAX_INFERRED_LYRIC_DURATION_MS = 6_000
 
 /** 搜索类型与响应字段映射。 */
 const SEARCH_TYPES = {
@@ -383,36 +394,138 @@ function normalizeAccess(raw: UnknownRecord): TrackAccessMeta {
   return { badges, playableKnown: false }
 }
 
+/** 判断歌词文本是否属于可区分的和声或副唱声部。 */
+function isBackgroundVocalText(text: string): boolean {
+  /** 行首显式声部标签。 */
+  const vocalPrefixPattern = /^\s*(?:(?:男|女|男声|女声|和声|伴唱|合唱)\s*[:：]|[（(]\s*(?:男|女|男声|女声|和声|伴唱|合唱)(?:\s*[:：][^）)]*)?\s*[）)])/u
+  /** 整行括号文案；网易云双声部歌词常用此形式表示副唱。 */
+  const parenthesizedLinePattern = /^\s*[（(][^）)]+[）)]\s*$/u
+  return vocalPrefixPattern.test(text) || parenthesizedLinePattern.test(text)
+}
+
+/** 根据文本长度推断普通 LRC 行的自然演唱时长。 */
+function inferNaturalLineDurationMs(text: string): number {
+  /** 按 Unicode 字符数估算的当前行长度。 */
+  const characterCount = Array.from(text).length
+  /** 短句至少展示 2.2 秒，长句最多占用 6 秒。 */
+  return Math.min(
+    MAX_INFERRED_LYRIC_DURATION_MS,
+    Math.max(MIN_INFERRED_LYRIC_DURATION_MS, 1_400 + characterCount * 180)
+  )
+}
+
+/** 为缺少持续时间的普通 LRC 行补齐可渲染时段。 */
+function completeLyricLineDurations(lines: ParsedLyricLine[]): ParsedLyricLine[] {
+  return lines.map((line, index) => {
+    if (line.lineDurationMs !== undefined) return line
+
+    /** 下一行歌词，用于防止推断时段越过下一行。 */
+    const nextLine = lines[index + 1]
+    /** 当前行按文本长度推断的自然演唱时长。 */
+    const naturalDurationMs = inferNaturalLineDurationMs(line.text)
+    /** 当前行至下一行的实际间隔。 */
+    const timeUntilNextLineMs = nextLine
+      ? Math.max(0, nextLine.lineStartMs - line.lineStartMs)
+      : naturalDurationMs
+
+    return {
+      ...line,
+      lineDurationMs: Math.min(naturalDurationMs, timeUntilNextLineMs)
+    }
+  })
+}
+
 /**
- * 把 lrc/yrc 歌词文本拆成标准时间轴。
+ * 把普通 LRC 歌词文本拆成行级时间轴。
  *
- * @param lyricText 网易云返回的原始歌词文本
+ * @param lyricText 网易云返回的原始 LRC 文本
  */
-function parseLyricLines(lyricText: string | undefined): ParsedLyricLine[] {
+function parseLrcLines(lyricText: string | undefined): ParsedLyricLine[] {
   if (!lyricText) return []
 
-  /** 单行中所有时间标签及其正文。 */
-  const linePattern = /\[(\d{1,3}):(\d{1,2})(?:[.:](\d{1,3}))?\][^\S\r\n]*(.*)/gu
+  /** 兼容出现在 LRC 字段中的 YRC 风格毫秒行头。 */
+  const millisecondLinePattern = /^\s*\[(\d+)\s*,\s*(\d+)\]\s*(.*)$/u
+  /** 单行中所有分钟制时间标签。 */
+  const timePattern = /\[(\d{1,3}):(\d{1,2})(?:[.:](\d{1,3}))?\]/gu
   /** 标准化后的歌词行集合。 */
   const lines: ParsedLyricLine[] = []
 
   for (const rawLine of lyricText.split(/\r?\n/u)) {
-    linePattern.lastIndex = 0
-    const match = linePattern.exec(rawLine)
-    if (!match) continue
+    const millisecondLineMatch = millisecondLinePattern.exec(rawLine)
+    if (millisecondLineMatch) {
+      lines.push({
+        lineStartMs: Number(millisecondLineMatch[1] ?? 0),
+        lineDurationMs: Number(millisecondLineMatch[2] ?? 0),
+        text: (millisecondLineMatch[3] ?? '').trim(),
+        words: []
+      })
+      continue
+    }
 
-    const minutes = Number(match[1] ?? 0)
-    const seconds = Number(match[2] ?? 0)
-    const fractionText = match[3] ?? '0'
-    const fractionMs = Number(fractionText.padEnd(3, '0').slice(0, 3))
-    const text = (match[4] ?? '').trim()
-    lines.push({
-      timeMs: (minutes * 60 + seconds) * 1000 + fractionMs,
-      text
-    })
+    timePattern.lastIndex = 0
+    /** 移除时间标签后保留的当前行正文。 */
+    const text = rawLine.replace(timePattern, '').trim()
+    timePattern.lastIndex = 0
+
+    for (const match of rawLine.matchAll(timePattern)) {
+      const minutes = Number(match[1] ?? 0)
+      const seconds = Number(match[2] ?? 0)
+      const fractionText = match[3] ?? '0'
+      const fractionMs = Number(fractionText.padEnd(3, '0').slice(0, 3))
+      lines.push({
+        lineStartMs: (minutes * 60 + seconds) * 1000 + fractionMs,
+        text,
+        words: []
+      })
+    }
   }
 
-  return lines.sort((a, b) => a.timeMs - b.timeMs)
+  return completeLyricLineDurations(lines.sort((a, b) => a.lineStartMs - b.lineStartMs))
+}
+
+/**
+ * 把 YRC 文本拆成行级与字/音节级绝对时间轴。
+ *
+ * @param lyricText 网易云返回的原始 YRC 文本
+ */
+function parseYrcLines(lyricText: string | undefined): ParsedLyricLine[] {
+  if (!lyricText) return []
+
+  /** YRC 单行的毫秒级起始时间与持续时间头。 */
+  const linePattern = /^\s*\[(\d+)\s*,\s*(\d+)\](.*)$/u
+  /** YRC 行内逐字时间块，正文允许保留普通括号。 */
+  const wordPattern = /\(\s*(\d+)\s*,\s*(\d+)\s*,\s*\d+\s*\)(.*?)(?=\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)|$)/gu
+  /** 解析完成的逐字歌词行。 */
+  const lines: ParsedLyricLine[] = []
+
+  for (const rawLine of lyricText.split(/\r?\n/u)) {
+    const lineMatch = linePattern.exec(rawLine)
+    if (!lineMatch) continue
+
+    const lineStartMs = Number(lineMatch[1] ?? 0)
+    const lineDurationMs = Number(lineMatch[2] ?? 0)
+    const encodedWords = lineMatch[3] ?? ''
+    /** 当前行解析出的逐字或逐音节时间块。 */
+    const words: StandardLyricsWord[] = []
+    wordPattern.lastIndex = 0
+
+    for (const wordMatch of encodedWords.matchAll(wordPattern)) {
+      words.push({
+        startMs: Number(wordMatch[1] ?? 0),
+        durationMs: Number(wordMatch[2] ?? 0),
+        text: wordMatch[3] ?? ''
+      })
+    }
+
+    /** 优先拼接逐字正文，异常 YRC 则退回移除时间块后的可见文本。 */
+    const text = words.length > 0
+      ? words.map((word) => word.text).join('').trim()
+      : encodedWords.replace(/\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)/gu, '').trim()
+
+    lines.push({ lineStartMs, lineDurationMs, text, words })
+  }
+
+  return lines.sort((a, b) => a.lineStartMs - b.lineStartMs)
 }
 
 /**
@@ -428,24 +541,29 @@ function mergeLyricLines(
   /** 翻译歌词按毫秒时间点建立的快速查找表。 */
   const translationByTime = new Map<number, string>()
   for (const line of translatedLines) {
-    if (line.text) translationByTime.set(line.timeMs, line.text)
+    if (line.text) translationByTime.set(line.lineStartMs, line.text)
   }
 
   return originalLines.map((line) => ({
-    timeMs: line.timeMs,
+    lineStartMs: line.lineStartMs,
+    lineDurationMs: line.lineDurationMs ?? inferNaturalLineDurationMs(line.text),
     text: line.text,
-    ...(translationByTime.get(line.timeMs)
-      ? { translation: translationByTime.get(line.timeMs) as string }
-      : {})
+    words: line.words,
+    ...(translationByTime.get(line.lineStartMs)
+      ? { translation: translationByTime.get(line.lineStartMs) as string }
+      : {}),
+    ...(isBackgroundVocalText(line.text) ? { vocalRole: 'background' as const } : {})
   }))
 }
 
 /** 从歌词响应体中归一化标准歌词实体。 */
 function normalizeLyrics(id: string, rawBody: UnknownRecord, api: string, observedAt: string): StandardLyrics {
   const lyricText = stringValue(record(rawBody['lrc'])?.['lyric'])
+  const wordTimedText = stringValue(record(rawBody['yrc'])?.['lyric'])
   const translatedText = stringValue(record(rawBody['tlyric'])?.['lyric'])
-  const originalLines = parseLyricLines(lyricText)
-  const translatedLines = parseLyricLines(translatedText)
+  const wordTimedLines = parseYrcLines(wordTimedText)
+  const originalLines = wordTimedLines.length > 0 ? wordTimedLines : parseLrcLines(lyricText)
+  const translatedLines = parseLrcLines(translatedText)
 
   return {
     kind: 'lyrics',

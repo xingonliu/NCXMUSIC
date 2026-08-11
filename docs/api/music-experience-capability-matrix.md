@@ -18,6 +18,7 @@
 | `getBrowseFacets` | `playlist_catlist` 与 `artist_list` 能力描述 | 浏览页与歌手探索的标签、筛选项 | 歌单分类实时解析 `categories`/`sub`；歌手固定数值域集中在适配器能力层 |
 | `getSearchSuggestions` | `search_suggest` | 输入中实时搜索建议 | 请求取消与 180ms 防抖；失败时不显示伪造建议 |
 | `search` | `cloudsearch` | 全部、歌曲、歌手、专辑、歌单、歌词结果 | `category` 决定上游搜索类型；各分类独立展示 |
+| `getLyrics` | `lyric_new`，缺失时回退 `lyric` | 普通与沉浸歌词时间轴 | 优先解析 `yrc` 的行级和字/音节级绝对时间；无 `yrc` 时解析 `lrc`，并以相邻行间隔和文本长度上限推断持续时间；`tlyric` 按起始毫秒合并翻译 |
 | `getListeningHistory` | `user_record` | 最近一周与所有时间听歌排行 | `score` 映射到歌曲 `listeningCount` |
 | `getArtistSongs` | `artist_songs` | 参与作品与合集 | 无明确合作艺人关系时以近期作品替代并显示说明 |
 
@@ -35,6 +36,7 @@
 - 页面只按稳定的 facet key 选择展示位置，标签文字、选项文字和请求值都来自 `getBrowseFacets`。
 - 排行榜标签由当前 `toplist` 响应里的更新频率生成；上游新增或删除频率后，界面会在下一次读取时同步变化。
 - 搜索结果的实体类型标签属于标准搜索协议，不属于内容分类 facet；其值与 `MusicSearchPayloadSchema.category` 保持一致。
+- Renderer 只消费标准歌词内存对象：歌词行包含 `lineStartMs`、`lineDurationMs`、`text`、`words`，逐字块包含 `text`、`startMs`、`durationMs`；不把上游 YRC 文本或 TTML 解析职责下放到页面。
 
 ## 不可得字段的优雅降级
 

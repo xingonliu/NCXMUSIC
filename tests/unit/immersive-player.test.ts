@@ -217,9 +217,29 @@ describe('应用级沉浸播放展示', () => {
           kind: 'lyrics',
           trackId: 'track-1',
           lines: [
-            { timeMs: 0, text: '第一行' },
-            { timeMs: 1_000, text: '第二行', translation: 'Second line' },
-            { timeMs: 2_000, text: '第三行' }
+            {
+              lineStartMs: 0,
+              lineDurationMs: 900,
+              text: '第一行',
+              words: []
+            },
+            {
+              lineStartMs: 1_000,
+              lineDurationMs: 900,
+              text: '第二行',
+              words: [
+                { text: '第', startMs: 1_000, durationMs: 500 },
+                { text: '二行', startMs: 1_500, durationMs: 400 }
+              ],
+              translation: 'Second line'
+            },
+            {
+              lineStartMs: 12_000,
+              lineDurationMs: 2_000,
+              text: '女：第三行',
+              words: [],
+              vocalRole: 'background'
+            }
           ],
           sources: [{ api: 'test.lyrics', observedAt }],
           updatedAt: observedAt
@@ -242,8 +262,72 @@ describe('应用级沉浸播放展示', () => {
     const activeLine = wrapper.findAll('.lyrics-line')[1]
     expect(activeLine?.classes()).toContain('lyrics-line--active')
     expect(activeLine?.attributes('aria-current')).toBe('true')
+    expect(wrapper.findAll('.lyrics-line')[0]?.attributes('data-state')).toBe('past')
+    expect(wrapper.findAll('.lyrics-line')[2]?.attributes('data-state')).toBe('future')
+    expect(wrapper.findAll('.lyric-word')).toHaveLength(2)
+    expect(wrapper.find('.lyrics-instrumental').exists()).toBe(true)
+    expect(wrapper.findAll('.lyrics-line')[2]?.classes()).toContain('lyrics-line--background')
 
     await wrapper.findAll('.lyrics-line button')[2]?.trigger('click')
-    expect(wrapper.emitted('seek')).toEqual([[2_000]])
+    expect(wrapper.emitted('seek')).toEqual([[12_000]])
+    wrapper.unmount()
+  })
+
+  it('uses precise word mask progress and resumes auto-follow after four idle seconds', async () => {
+    vi.useFakeTimers()
+    getLyrics.mockResolvedValue({
+      ok: true,
+      data: {
+        kind: 'lyrics',
+        entity: {
+          kind: 'lyrics',
+          trackId: 'track-word-progress',
+          lines: [{
+            lineStartMs: 1_000,
+            lineDurationMs: 2_000,
+            text: '逐字',
+            words: [
+              { text: '逐', startMs: 1_000, durationMs: 1_000 },
+              { text: '字', startMs: 2_000, durationMs: 1_000 }
+            ]
+          }],
+          sources: [{ api: 'test.lyrics', observedAt }],
+          updatedAt: observedAt
+        }
+      }
+    })
+
+    /** 暂停状态下使用固定位置验证逐字遮罩的歌词面板。 */
+    const wrapper = mount(LyricsPanel, {
+      props: {
+        trackId: 'track-word-progress',
+        positionMs: 1_500,
+        playing: false,
+        immersive: true
+      }
+    })
+
+    await vi.waitFor(() => expect(wrapper.findAll('.lyric-word')).toHaveLength(2))
+    await wrapper.vm.$nextTick()
+
+    /** 播放到一半的第一个字。 */
+    const firstWord = wrapper.findAll<HTMLElement>('.lyric-word')[0]
+    /** 尚未开始播放的第二个字。 */
+    const secondWord = wrapper.findAll<HTMLElement>('.lyric-word')[1]
+    expect(firstWord?.element.style.getPropertyValue('--progress')).toBe('0.5000')
+    expect(secondWord?.element.style.getPropertyValue('--progress')).toBe('0.0000')
+    expect(firstWord?.element.style.getPropertyValue('--word-glow')).toBe('1.0000')
+    expect(Number(firstWord?.element.style.getPropertyValue('--word-scale'))).toBeGreaterThan(1)
+    expect(secondWord?.element.style.getPropertyValue('--word-scale')).toBe('1.0000')
+
+    await wrapper.find('.lyrics-panel').trigger('wheel')
+    expect(wrapper.classes()).toContain('lyrics-panel--manual')
+
+    await vi.advanceTimersByTimeAsync(4_000)
+    await wrapper.vm.$nextTick()
+    expect(wrapper.classes()).not.toContain('lyrics-panel--manual')
+
+    wrapper.unmount()
+    vi.useRealTimers()
   })
 })

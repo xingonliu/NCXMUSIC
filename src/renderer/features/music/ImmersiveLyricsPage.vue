@@ -351,6 +351,7 @@ onBeforeUnmount(() => {
         immersive
         :track-id="track.trackId"
         :position-ms="snapshot.playback.positionMs"
+        :playing="snapshot.playback.status === 'playing'"
         @seek="player.seek"
       />
     </main>

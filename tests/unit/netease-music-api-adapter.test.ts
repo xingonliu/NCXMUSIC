@@ -146,10 +146,96 @@ describe('NeteaseMusicApiAdapter', () => {
     expect(result.kind).toBe('lyrics')
     if (result.kind !== 'lyrics') throw new Error('Expected lyrics result')
     expect(result.entity?.lines).toEqual([
-      { timeMs: 1000, text: '夜空中最亮的星', translation: 'The brightest star' },
-      { timeMs: 3500, text: '能否听清', translation: 'Can you hear me' }
+      {
+        lineStartMs: 1_000,
+        lineDurationMs: 2_500,
+        text: '夜空中最亮的星',
+        words: [],
+        translation: 'The brightest star'
+      },
+      {
+        lineStartMs: 3_500,
+        lineDurationMs: 2_200,
+        text: '能否听清',
+        words: [],
+        translation: 'Can you hear me'
+      }
     ])
     expect(JSON.stringify(result)).not.toContain('cookie')
+  })
+
+  it('prefers yrc and preserves line, word and background-vocal timing', async () => {
+    /** 提供逐字歌词的网易云 API 夹具。 */
+    const api = apiFixture()
+    api.lyric_new = vi.fn(async () => response({
+      lrc: { lyric: '[00:01.00]夜空中\n[00:12.00]女：等你' },
+      yrc: {
+        lyric: [
+          '[1000,2400](1000,500,0)夜(1500,500,0)空(2000,1000,0)中',
+          '[12000,3000](12000,500,0)女：(12500,1000,0)等(13500,1000,0)你'
+        ].join('\n')
+      },
+      tlyric: { lyric: '[00:01.00]In the night\n[00:12.00]Waiting for you' }
+    }))
+    /** 使用逐字夹具的网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+
+    const result = await adapter.read({
+      operation: 'getLyrics',
+      id: '90001'
+    }, '', undefined)
+
+    expect(result.kind).toBe('lyrics')
+    if (result.kind !== 'lyrics') throw new Error('Expected lyrics result')
+    expect(result.entity?.lines).toEqual([
+      {
+        lineStartMs: 1_000,
+        lineDurationMs: 2_400,
+        text: '夜空中',
+        words: [
+          { text: '夜', startMs: 1_000, durationMs: 500 },
+          { text: '空', startMs: 1_500, durationMs: 500 },
+          { text: '中', startMs: 2_000, durationMs: 1_000 }
+        ],
+        translation: 'In the night'
+      },
+      {
+        lineStartMs: 12_000,
+        lineDurationMs: 3_000,
+        text: '女：等你',
+        words: [
+          { text: '女：', startMs: 12_000, durationMs: 500 },
+          { text: '等', startMs: 12_500, durationMs: 1_000 },
+          { text: '你', startMs: 13_500, durationMs: 1_000 }
+        ],
+        translation: 'Waiting for you',
+        vocalRole: 'background'
+      }
+    ])
+  })
+
+  it('accepts millisecond line headers when they are returned in the lrc field', async () => {
+    /** 提供毫秒行头 LRC 的网易云 API 夹具。 */
+    const api = apiFixture()
+    api.lyric_new = vi.fn(async () => response({
+      lrc: { lyric: '[1500,900]短句' }
+    }))
+    /** 使用毫秒行头夹具的网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+
+    const result = await adapter.read({
+      operation: 'getLyrics',
+      id: '90002'
+    }, '', undefined)
+
+    expect(result.kind).toBe('lyrics')
+    if (result.kind !== 'lyrics') throw new Error('Expected lyrics result')
+    expect(result.entity?.lines).toEqual([{
+      lineStartMs: 1_500,
+      lineDurationMs: 900,
+      text: '短句',
+      words: []
+    }])
   })
 
   it('normalizes independent Phase 4 discovery and library collections', async () => {
