@@ -2336,7 +2336,9 @@ export const CommonDropdownMenu = defineComponent({
         top: `${Math.round(top)}px`,
         left: `${Math.round(left)}px`,
         minWidth: `${Math.max(160, Math.round(rect.width))}px`,
-        zIndex: 'var(--ncx-layer-popover)'
+        zIndex: 'var(--ncx-layer-popover)',
+        transformOrigin: props.placement.startsWith('top') ? 'bottom left' : 'top left',
+        animation: 'ncx-tooltip-fade-in var(--ncx-motion-fast) var(--ncx-spring-smooth)'
       }
     }
 
