@@ -113,8 +113,11 @@ let resumeAutoFollowTimer: number | undefined
 /** 逐字高亮动画帧 ID。 */
 let wordProgressFrameId: number | undefined
 
-/** 最近一次播放器位置同步时的高精度时钟。 */
-let latestPositionSyncAt = performance.now()
+/** 单调递顺高精度平滑播放位置（毫秒）。 */
+let smoothPositionMs = props.positionMs
+
+/** 动画循环上一帧的时钟戳（performance.now()）。 */
+let wordProgressPreviousFrameAt = 0
 
 /** 弹簧滚动动画帧 ID。 */
 let springFrameId: number | undefined
@@ -277,15 +280,28 @@ function lineWords(line: StandardLyricsLine): StandardLyricsWord[] {
   return line.words ?? []
 }
 
+/** 归一化 Smoothstep 缓动函数，在 0% 起音与 100% 收音阶段提供贝塞尔平滑减速，消除硬性突变。 */
+function smoothstepProgress(progress: number): number {
+  const clamped = Math.min(1, Math.max(0, progress))
+  return clamped * clamped * (3 - 2 * clamped)
+}
+
 /** 返回指定播放时刻下单个字或音节的填充、上抬与泛光状态。 */
 function calculateWordVisualState(
   word: StandardLyricsWord,
   currentTimeMs: number
 ): WordVisualState {
+  /** 保证极短音节（上游歌词数据如 20ms-80ms）拥有视觉平滑的最小过渡时长（保底 160ms）。 */
+  const effectiveDurationMs = Math.max(160, word.durationMs)
+
   /** 当前字从起音到收音的线性归一化进度。 */
-  const fillProgress = word.durationMs <= 0
+  const rawProgress = effectiveDurationMs <= 0
     ? Number(currentTimeMs >= word.startMs)
-    : clampProgress((currentTimeMs - word.startMs) / word.durationMs)
+    : clampProgress((currentTimeMs - word.startMs) / effectiveDurationMs)
+
+  /** 应用 smoothstep 缓动曲线使起音与收音平滑过渡，避免硬卡帧感。 */
+  const fillProgress = smoothstepProgress(rawProgress)
+
   /** 当前字起音后经过的秒数。 */
   const elapsedSeconds = Math.max(0, currentTimeMs - word.startMs) / 1_000
 
@@ -572,12 +588,6 @@ function seekToLyric(line: StandardLyricsLine, lineIndex: number): void {
   })
 }
 
-/** 根据播放器同步点估算当前动画帧的播放位置。 */
-function estimatedFramePositionMs(frameTime: number): number {
-  if (!props.playing) return props.positionMs
-  return props.positionMs + Math.max(0, frameTime - latestPositionSyncAt)
-}
-
 /** 把当前时刻的逐字进度直接写入 CSS 变量，避免每帧触发 Vue 整树渲染。 */
 function writeWordProgress(currentTimeMs: number, activeOnly = false): void {
   const container = scrollContainer.value
@@ -604,11 +614,33 @@ function writeWordProgress(currentTimeMs: number, activeOnly = false): void {
 
 /** 驱动一帧逐字遮罩进度并在播放期间持续调度。 */
 function runWordProgressFrame(frameTime: number): void {
-  const currentTimeMs = estimatedFramePositionMs(frameTime)
-  animationPositionMs.value = currentTimeMs
-  writeWordProgress(currentTimeMs, true)
+  /** 距离上一帧经过的秒数，上限约束至 50ms 避免切后台后突变。 */
+  const deltaSeconds = wordProgressPreviousFrameAt > 0
+    ? Math.min((frameTime - wordProgressPreviousFrameAt) / 1_000, 0.05)
+    : 1 / 60
+  wordProgressPreviousFrameAt = frameTime
+
+  if (props.playing) {
+    /** 播放状态下按真实物理时间单调推进毫秒数。 */
+    smoothPositionMs += deltaSeconds * 1_000
+
+    /** 计算播放器推送目标点与平滑估算点之间的偏差（毫秒）。 */
+    const driftMs = props.positionMs - smoothPositionMs
+    if (Math.abs(driftMs) > 400) {
+      smoothPositionMs = props.positionMs
+    } else {
+      smoothPositionMs += driftMs * Math.min(1, deltaSeconds * 5)
+    }
+  } else {
+    smoothPositionMs = props.positionMs
+  }
+
+  animationPositionMs.value = smoothPositionMs
+  writeWordProgress(smoothPositionMs, true)
+
   if (!props.immersive || !props.playing) {
     wordProgressFrameId = undefined
+    wordProgressPreviousFrameAt = 0
     return
   }
   wordProgressFrameId = window.requestAnimationFrame(runWordProgressFrame)
@@ -618,12 +650,14 @@ function runWordProgressFrame(frameTime: number): void {
 function cancelWordProgressLoop(): void {
   if (wordProgressFrameId !== undefined) window.cancelAnimationFrame(wordProgressFrameId)
   wordProgressFrameId = undefined
+  wordProgressPreviousFrameAt = 0
 }
 
 /** 在 DOM 更新后刷新逐字遮罩，并按播放状态决定是否持续运行。 */
 async function refreshWordProgressLoop(): Promise<void> {
   cancelWordProgressLoop()
   await nextTick()
+  smoothPositionMs = props.positionMs
   animationPositionMs.value = props.positionMs
   writeWordProgress(props.positionMs)
   if (props.immersive && props.playing) {
@@ -643,10 +677,12 @@ watch(activeFocusSelector, async () => {
 })
 
 watch(() => props.positionMs, async () => {
-  latestPositionSyncAt = performance.now()
-  animationPositionMs.value = props.positionMs
+  if (Math.abs(props.positionMs - smoothPositionMs) > 400 || !props.playing) {
+    smoothPositionMs = props.positionMs
+  }
+  animationPositionMs.value = smoothPositionMs
   await nextTick()
-  writeWordProgress(props.positionMs)
+  writeWordProgress(smoothPositionMs)
 })
 
 watch([
@@ -654,7 +690,6 @@ watch([
   () => props.immersive,
   displayLines
 ], () => {
-  latestPositionSyncAt = performance.now()
   void refreshWordProgressLoop()
 }, { immediate: true })
 
@@ -943,7 +978,18 @@ onBeforeUnmount(() => {
 .lyric-word {
   display: inline-block;
   vertical-align: baseline;
-  color: var(--lyric-color-unplayed);
+  color: transparent;
+  background:
+    linear-gradient(
+      to right,
+      var(--lyric-color-active) 0%,
+      var(--lyric-color-active) calc(var(--progress, 0) * 100% - 4px),
+      var(--lyric-color-unplayed) calc(var(--progress, 0) * 100%),
+      var(--lyric-color-unplayed) 100%
+    );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   transform: translateY(var(--word-lift, 0px)) scale(calc(1 + (var(--word-scale, 1) - 1) * 0.25));
   transform-origin: center bottom;
   will-change: transform, text-shadow;
@@ -952,35 +998,7 @@ onBeforeUnmount(() => {
     text-shadow 220ms ease;
 }
 
-.lyric-word[data-state="past"] {
-  color: var(--lyric-color-active);
-  background: none;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
-  -webkit-text-fill-color: currentColor;
-}
-
-.lyric-word[data-state="future"] {
-  color: var(--lyric-color-unplayed);
-  background: none;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
-  -webkit-text-fill-color: currentColor;
-}
-
 .lyric-word[data-state="active"] {
-  color: transparent;
-  background:
-    linear-gradient(
-      to right,
-      var(--lyric-color-active) 0%,
-      var(--lyric-color-active) calc(var(--progress, 0) * 100%),
-      var(--lyric-color-unplayed) calc(var(--progress, 0) * 100% + 4px),
-      var(--lyric-color-unplayed) 100%
-    );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   text-shadow:
     0 0 calc(var(--word-glow, 0) * 16px)
     rgb(255 255 255 / calc(var(--word-glow, 0) * 85%)),
