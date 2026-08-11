@@ -46,6 +46,8 @@ type LyricTimelineNode = LyricTimelineLineNode | LyricTimelineInstrumentalNode
 
 /** 单个字或音节在当前帧的完整视觉状态。 */
 interface WordVisualState {
+  /** 字的时态状态：已唱完 (past)、唱响中 (active)、未开始 (future)。 */
+  state: 'past' | 'active' | 'future'
   /** 从左至右的渐变填充进度。 */
   fillProgress: number
   /** 发音起点的弹簧缩放倍数。 */
@@ -287,8 +289,13 @@ function calculateWordVisualState(
   /** 当前字起音后经过的秒数。 */
   const elapsedSeconds = Math.max(0, currentTimeMs - word.startMs) / 1_000
 
+  /** 字的三段式时态状态：进度达到 1 为 past，在 0 与 1 之间为 active，0 及以下为 future。 */
+  const state: 'past' | 'active' | 'future' = fillProgress >= 1
+    ? 'past'
+    : (fillProgress > 0 ? 'active' : 'future')
+
   /** 正在唱响期间（0 < fillProgress < 1）的弧形泛光包络，在中间达到 1.0 峰值。 */
-  const glow = fillProgress > 0 && fillProgress < 1
+  const glow = state === 'active'
     ? Math.sin(fillProgress * Math.PI)
     : 0
 
@@ -303,6 +310,7 @@ function calculateWordVisualState(
   const liftPx = -2.5 * liftProgress
 
   return {
+    state,
     fillProgress,
     scale: 1 + glow * 0.03,
     liftPx,
@@ -588,6 +596,9 @@ function writeWordProgress(currentTimeMs: number, activeOnly = false): void {
     element.style.setProperty('--word-scale', visualState.scale.toFixed(4))
     element.style.setProperty('--word-lift', `${visualState.liftPx.toFixed(3)}px`)
     element.style.setProperty('--word-glow', visualState.glow.toFixed(4))
+    if (element.dataset['state'] !== visualState.state) {
+      element.dataset['state'] = visualState.state
+    }
   })
 }
 
@@ -729,6 +740,7 @@ onBeforeUnmount(() => {
                   class="lyric-word"
                   :data-word-start-ms="word.startMs"
                   :data-word-duration-ms="word.durationMs"
+                  :data-state="calculateWordVisualState(word, animationPositionMs).state"
                   :style="initialWordStyle(word)"
                 >{{ word.text }}</span>
               </template>
@@ -765,6 +777,8 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .lyrics-panel {
+  --lyric-color-active: var(--ncx-color-text-primary);
+  --lyric-color-unplayed: var(--ncx-color-text-tertiary);
   display: flex;
   min-height: 280px;
   flex-direction: column;
@@ -837,6 +851,8 @@ onBeforeUnmount(() => {
 }
 
 .lyrics-panel--immersive {
+  --lyric-color-active: #ffffff;
+  --lyric-color-unplayed: rgb(255 255 255 / 38%);
   display: block;
   min-height: 0;
   overflow-x: hidden;
@@ -927,13 +943,40 @@ onBeforeUnmount(() => {
 .lyric-word {
   display: inline-block;
   vertical-align: baseline;
+  color: var(--lyric-color-unplayed);
+  transform: translateY(var(--word-lift, 0px)) scale(calc(1 + (var(--word-scale, 1) - 1) * 0.25));
+  transform-origin: center bottom;
+  will-change: transform, text-shadow;
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.9, 0.3, 1),
+    text-shadow 220ms ease;
+}
+
+.lyric-word[data-state="past"] {
+  color: var(--lyric-color-active);
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+}
+
+.lyric-word[data-state="future"] {
+  color: var(--lyric-color-unplayed);
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+}
+
+.lyric-word[data-state="active"] {
   color: transparent;
   background:
     linear-gradient(
       to right,
-      #ffffff calc(var(--progress, 0) * 100% - 14px),
-      rgb(255 255 255 / 96%) calc(var(--progress, 0) * 100%),
-      rgb(255 255 255 / 38%) calc(var(--progress, 0) * 100% + 14px)
+      var(--lyric-color-active) 0%,
+      var(--lyric-color-active) calc(var(--progress, 0) * 100%),
+      var(--lyric-color-unplayed) calc(var(--progress, 0) * 100% + 4px),
+      var(--lyric-color-unplayed) 100%
     );
   background-clip: text;
   -webkit-background-clip: text;
@@ -943,12 +986,6 @@ onBeforeUnmount(() => {
     rgb(255 255 255 / calc(var(--word-glow, 0) * 85%)),
     0 0 calc(var(--word-glow, 0) * 28px)
     rgb(255 255 255 / calc(var(--word-glow, 0) * 45%));
-  transform: translateY(var(--word-lift, 0px)) scale(calc(1 + (var(--word-scale, 1) - 1) * 0.25));
-  transform-origin: center bottom;
-  will-change: transform, text-shadow;
-  transition:
-    transform 220ms cubic-bezier(0.2, 0.9, 0.3, 1),
-    text-shadow 220ms ease;
 }
 
 .lyrics-line--background {
