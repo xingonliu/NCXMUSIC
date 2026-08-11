@@ -50,6 +50,15 @@ describe('Phase 4 music UI primitives', () => {
     expect(adaptArtworkUrl(source, 'hero')?.match(/param=/gu)).toHaveLength(1)
   })
 
+  it('removes unsafe nested transforms from Netease artwork URLs before resizing', () => {
+    /** 分类歌单接口返回的复合图片处理地址。 */
+    const source = 'http://p1.music.126.net/cover.jpg?imageView=1&thumbnail=800y800&enlarge=1%7CimageView=1&watermark&type=1&image=abc%3D%3D&'
+
+    expect(adaptArtworkUrl(source, 'feature')).toBe(
+      'https://p1.music.126.net/cover.jpg?param=640y640'
+    )
+  })
+
   it('keeps artwork layout stable when no image URL exists', () => {
     /** 无远程图片的封面组件。 */
     const wrapper = mount(MediaArtwork, { props: { src: undefined, alt: '占位封面', size: 'feature' } })

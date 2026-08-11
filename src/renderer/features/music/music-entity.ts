@@ -37,6 +37,12 @@ export function adaptArtworkUrl(url: string | undefined, size: MediaArtworkSize)
   const pixelSize = ARTWORK_PIXEL_SIZE[size]
   try {
     const parsed = new URL(url)
+    /** 网易云 CDN 复合查询串包含嵌套 imageView/watermark 参数，重新序列化会破坏其语义。 */
+    const isNeteaseArtwork = /(?:^|\.)music\.126\.net$/iu.test(parsed.hostname)
+    if (isNeteaseArtwork) {
+      parsed.protocol = 'https:'
+      parsed.search = ''
+    }
     parsed.searchParams.set('param', `${pixelSize}y${pixelSize}`)
     return parsed.toString()
   } catch {

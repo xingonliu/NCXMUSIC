@@ -21,10 +21,19 @@ function createApi(): NeteaseMusicApi {
       status: 200,
       body: {
         code: 200,
-        categories: { 1: '服务端新风格', 2: '服务端新场景' },
+        categories: {
+          0: '服务端新语种',
+          1: '服务端新风格',
+          2: '服务端新场景',
+          3: '服务端新情感',
+          4: '服务端新主题'
+        },
         sub: [
+          { name: '未来语种', category: 0 },
           { name: '未来曲风', category: 1 },
-          { name: '深空通勤', category: 2 }
+          { name: '深空通勤', category: 2 },
+          { name: '平静宇宙', category: 3 },
+          { name: '未来主题', category: 4 }
         ]
       }
     })),
@@ -32,6 +41,8 @@ function createApi(): NeteaseMusicApi {
       status: 200,
       body: {
         code: 200,
+        total: 61,
+        more: true,
         playlists: [{ id: 701, name: '未来曲风精选', coverImgUrl: 'https://example.com/list.jpg' }]
       }
     })),
@@ -76,6 +87,7 @@ describe('浏览与个人页 API 适配', () => {
     expect(facets.facets.find((group) => group.key === 'playlist-style')?.options).toEqual([
       { value: '未来曲风', label: '未来曲风' }
     ])
+    expect(facets.facets.filter((group) => group.key.startsWith('playlist-'))).toHaveLength(5)
     expect(facets.facets.find((group) => group.key === 'artist-area')?.options.length).toBeGreaterThan(0)
     expect(facets.facets.find((group) => group.key === 'artist-initial')?.options).toHaveLength(26)
     expect(facets.facets.find((group) => group.key === 'artist-initial')?.options).not.toContainEqual({ value: '-1', label: '#' })
@@ -84,10 +96,16 @@ describe('浏览与个人页 API 适配', () => {
     const playlists = await adapter.read({
       operation: 'getCategoryPlaylists',
       category: '未来曲风',
-      limit: 10
+      limit: 10,
+      offset: 20
     }, '')
     expect(playlists.kind).toBe('playlistCollection')
-    expect(api.top_playlist).toHaveBeenCalledWith(expect.objectContaining({ cat: '未来曲风', limit: 10 }))
+    expect(api.top_playlist).toHaveBeenCalledWith(expect.objectContaining({ cat: '未来曲风', limit: 10, offset: 20 }))
+    if (playlists.kind === 'playlistCollection') {
+      expect(playlists.total).toBe(61)
+      expect(playlists.hasMore).toBe(true)
+      expect(playlists.playlists[0]?.artworkUrl).toBe('https://example.com/list.jpg')
+    }
   })
 
   it('把 API 歌手筛选、实时建议和听歌次数归一化为标准实体', async () => {

@@ -30,7 +30,7 @@ describe('十项音乐体验 UI 契约', () => {
     expect(source).toContain('title="歌手推荐"')
   })
 
-  it('浏览是首页之后的一级入口，并具备榜单与歌手二级页', async () => {
+  it('浏览是首页之后的一级入口，并具备分类、榜单与歌手二级页', async () => {
     /** 主导航源码。 */
     const navigation = await read('src/renderer/app/navigation.ts')
     /** 路由源码。 */
@@ -40,6 +40,7 @@ describe('十项音乐体验 UI 契约', () => {
     expect(navigation.indexOf("routeName: 'browse'")).toBeLessThan(navigation.indexOf("routeName: 'search'"))
     expect(router).toContain("name: 'browse-rankings'")
     expect(router).toContain("name: 'browse-artists'")
+    expect(router).toContain("name: 'browse-categories'")
   })
 
   it('分类与歌手筛选完全消费 API facet，不在页面写死枚举', async () => {
@@ -50,12 +51,28 @@ describe('十项音乐体验 UI 契约', () => {
 
     expect(browse).toContain("operation: 'getBrowseFacets'")
     expect(browse).toContain('group.options')
+    expect(browse).toContain("'playlist-language'")
+    expect(browse).toContain("'playlist-theme'")
+    expect(browse).toContain('browse-category-preview-row')
     expect(browse).not.toContain("['流行', '摇滚'")
     expect(artists).toContain("operation: 'getBrowseFacets'")
     expect(artists).toContain('areaFacet?.options')
     expect(artists).toContain('typeFacet?.options')
     expect(artists).not.toContain("label: '华语'")
     expect(artists).not.toContain("label: '欧美'")
+  })
+
+  it('分类二级页使用五个动态 Tab、URL 状态和服务端分页', async () => {
+    /** 分类歌单二级页源码。 */
+    const source = await read('src/renderer/features/music/BrowseCategoriesPage.vue')
+
+    expect(source).toContain('PLAYLIST_FACET_KEYS')
+    expect(source).toContain('CommonTabs')
+    expect(source).toContain('route.query')
+    expect(source).toContain('const offset =')
+    expect(source).toContain('offset,')
+    expect(source).toContain('category-pagination')
+    expect(source).toContain('PAGE_SIZE = 30')
   })
 
   it('排行榜标签由 API 返回的更新频率动态生成', async () => {

@@ -852,7 +852,7 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
     }
     if (parsed.operation === 'getCharts') return this.getCharts(cookie, signal)
     if (parsed.operation === 'getCategoryPlaylists') {
-      return this.getCategoryPlaylists(parsed.category, parsed.limit, cookie, signal)
+      return this.getCategoryPlaylists(parsed.category, parsed.limit, parsed.offset, cookie, signal)
     }
     if (parsed.operation === 'getArtists') {
       return this.getArtists(
@@ -1515,6 +1515,7 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
   private async getCategoryPlaylists(
     category: string,
     limit: number,
+    offset: number,
     cookie: string,
     signal?: AbortSignal
   ): Promise<MusicReadResult> {
@@ -1528,15 +1529,20 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
       cat: category,
       order: 'hot',
       limit,
+      offset,
       cookie,
       timeout: NETEASE_API_TIMEOUT_MS
     }))
     signal?.throwIfAborted()
+    /** 分类歌单响应体，用于同时归一化列表与分页元数据。 */
+    const body = bodyRecord(response)
     return MusicReadResultSchema.parse({
       kind: 'playlistCollection',
       collection: 'category',
       category,
-      playlists: array(bodyRecord(response)['playlists'])
+      ...(numberValue(body['total']) !== undefined ? { total: numberValue(body['total']) } : {}),
+      ...(booleanValue(body['more']) !== undefined ? { hasMore: booleanValue(body['more']) } : {}),
+      playlists: array(body['playlists'])
         .map((item) => normalizePlaylist(item, 'ncm.top_playlist', observedAt))
         .filter(Boolean),
       updatedAt: observedAt

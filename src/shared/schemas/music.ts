@@ -372,7 +372,9 @@ export const GetChartsPayloadSchema = z.strictObject({
 export const GetCategoryPlaylistsPayloadSchema = z.strictObject({
   operation: z.literal('getCategoryPlaylists'),
   category: z.string().trim().min(1).max(40),
-  limit: z.number().int().min(1).max(50).default(24)
+  limit: z.number().int().min(1).max(50).default(24),
+  /** 分类歌单分页偏移量。 */
+  offset: z.number().int().min(0).max(5_000).default(0)
 })
 
 /** 按地区、类型和首字母筛选歌手请求。 */
@@ -504,6 +506,10 @@ export const MusicPlaylistCollectionResultSchema = z.strictObject({
   collection: z.enum(['featured', 'user', 'charts', 'category', 'facets']),
   ownerId: MusicUserIdSchema.optional(),
   category: z.string().max(40).optional(),
+  /** 上游分类歌单结果总数；仅支持总数的集合响应提供。 */
+  total: z.number().int().nonnegative().optional(),
+  /** 上游是否仍有下一页；仅分页集合响应提供。 */
+  hasMore: z.boolean().optional(),
   facets: z.array(MusicBrowseFacetGroupSchema).default([]),
   playlists: z.array(StandardPlaylistSchema).default([]),
   updatedAt: EntityUpdatedAtSchema

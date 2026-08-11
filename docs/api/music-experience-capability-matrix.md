@@ -13,7 +13,7 @@
 | `getRecommendedArtists` | `top_artists` | 发现页与浏览页歌手推荐 | 同类 Section 独立失败 |
 | `getNewAlbums` | `top_album` | 浏览页最新专辑 | 同类 Section 独立失败 |
 | `getCharts` | `toplist` | 榜单预览与完整榜单页 | 榜单标签由响应中的 `updateFrequency` 去重生成，不维护静态分类 |
-| `getCategoryPlaylists` | `top_playlist` | 按风格、场景、情绪浏览歌单 | `category` 原样来自动态 facet 选项 |
+| `getCategoryPlaylists` | `top_playlist` | 浏览页五类单行预览与分类歌单二级页 | `category` 原样来自动态 facet 选项；`limit`/`offset` 驱动分页，并归一化 `total`/`more` |
 | `getArtists` | `artist_list` | 地区、类型、首字母筛选歌手 | 筛选值只能来自 `getBrowseFacets`，页面不维护枚举 |
 | `getBrowseFacets` | `playlist_catlist` 与 `artist_list` 能力描述 | 浏览页与歌手探索的标签、筛选项 | 歌单分类实时解析 `categories`/`sub`；歌手固定数值域集中在适配器能力层 |
 | `getSearchSuggestions` | `search_suggest` | 输入中实时搜索建议 | 请求取消与 180ms 防抖；失败时不显示伪造建议 |
@@ -32,7 +32,7 @@
 
 ## 动态筛选约束
 
-- 多标签探索 Section 不在 Vue 页面写死选项。音乐风格、场景、情绪由 `playlist_catlist` 返回的分类树生成；歌手地区、类型、首字母由适配器公布的 `artist_list` 参数能力生成。
+- 多标签探索 Section 不在 Vue 页面写死选项。语种、风格、场景、情感与主题由 `playlist_catlist` 返回的五类分类树生成；首页每类以首个真实分类展示一行五个歌单，完整二级页通过五个 Tab、组内分类和服务端分页继续浏览。歌手地区、类型、首字母由适配器公布的 `artist_list` 参数能力生成。
 - 页面只按稳定的 facet key 选择展示位置，标签文字、选项文字和请求值都来自 `getBrowseFacets`。
 - 排行榜标签由当前 `toplist` 响应里的更新频率生成；上游新增或删除频率后，界面会在下一次读取时同步变化。
 - 搜索结果的实体类型标签属于标准搜索协议，不属于内容分类 facet；其值与 `MusicSearchPayloadSchema.category` 保持一致。
@@ -41,6 +41,7 @@
 ## 不可得字段的优雅降级
 
 - 网易云用户详情没有可靠的“获赞总数”字段：个人主页显示“暂未公开”，并提供解释性提示，不伪造数值。
+- 网易云分类歌单封面可能携带嵌套 `imageView`/`watermark` 查询串；统一封面适配层会保留 CDN 路径、升级 HTTPS，并以单一 `param=<width>y<height>` 重建安全尺寸地址，避免浏览器请求因查询串重编码返回 400。
 - 歌手接口没有稳定的动态视频封面字段：歌手头图使用 `coverUrl`，缺失时回退到 `artworkUrl`，再缺失时使用纯色背景。
 - 参与作品接口不保证直接标注客串关系：优先筛选包含其他艺人的歌曲，无法识别时展示近期作品并明确标注降级原因。
 - 相似歌手接口可能要求登录或受上游限制：失败时回退到热门歌手推荐，同时排除当前歌手。

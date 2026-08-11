@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronRight, Play, Radio, Sparkles } from '@lucide/vue'
+import { ChevronRight, Play } from '@lucide/vue'
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -29,6 +29,16 @@ interface BrowseSectionState<T> {
   error: string
 }
 
+/** 首页单个歌单分类分组的一行预览。 */
+interface BrowseCategoryPreviewRow {
+  /** API 返回的歌单分类分组。 */
+  group: MusicBrowseFacetGroup
+  /** 当前预览使用的具体分类名。 */
+  category: string
+  /** 当前分类下的歌单预览状态。 */
+  section: BrowseSectionState<StandardPlaylist[]>
+}
+
 // ========= 变量 =========
 
 /** 页面路由实例。 */
@@ -52,19 +62,24 @@ const chartsSection = ref<BrowseSectionState<StandardPlaylist[]>>({ state: 'load
 /** 歌手探索内容区。 */
 const artistsSection = ref<BrowseSectionState<StandardArtist[]>>({ state: 'loading', data: [], error: '' })
 
-/** 当前分类的歌单预览内容区。 */
-const categorySection = ref<BrowseSectionState<StandardPlaylist[]>>({ state: 'loading', data: [], error: '' })
+/** 五类歌单首页预览内容区。 */
+const categoryPreviewSection = ref<BrowseSectionState<BrowseCategoryPreviewRow[]>>({
+  state: 'loading',
+  data: [],
+  error: ''
+})
 
-/** API 能力层返回的浏览筛选分组。 */
-const browseFacets = ref<MusicBrowseFacetGroup[]>([])
+/** 首页每个分类分组展示的歌单数量。 */
+const CATEGORY_PREVIEW_LIMIT = 5
 
-/** 当前用于拉取分类歌单的分类名。 */
-const activeCategory = ref<string>('')
-
-/** 浏览页展示的音乐风格、场景与情绪 API 分组。 */
-const playlistFacetGroups = computed<MusicBrowseFacetGroup[]>(() => browseFacets.value.filter((group) =>
-  group.key === 'playlist-style' || group.key === 'playlist-scene' || group.key === 'playlist-mood'
-))
+/** 首页需要按接口顺序完整展示的五个歌单分类分组。 */
+const PLAYLIST_FACET_KEYS: ReadonlySet<MusicBrowseFacetGroup['key']> = new Set([
+  'playlist-language',
+  'playlist-style',
+  'playlist-scene',
+  'playlist-mood',
+  'playlist-theme'
+])
 
 /** 最新单曲预览。 */
 const newSongPreview = computed<StandardSong[]>(() => newSongsSection.value.data.slice(0, 6))
@@ -153,46 +168,59 @@ async function loadArtists(): Promise<void> {
   settleSection(artistsSection.value, response.data.artists)
 }
 
-/** 读取当前选中分类的歌单预览。 */
-async function loadCategoryPlaylists(): Promise<void> {
-  if (!activeCategory.value) {
-    categorySection.value = { state: 'empty', data: [], error: '' }
-    return
-  }
-  categorySection.value.state = 'loading'
-  /** 当前分类请求发起时的分类快照。 */
-  const category = activeCategory.value
-  /** 分类歌单标准响应。 */
+/** 读取首页单个分类分组的首个分类预览。 */
+async function loadCategoryPreview(row: BrowseCategoryPreviewRow): Promise<void> {
+  row.section.state = 'loading'
+  row.section.error = ''
+  /** 当前行绑定的具体分类名。 */
+  const category = row.category
+  /** 当前分类的歌单标准响应。 */
   const response = await window.ncx.runtime.readMusic({
     operation: 'getCategoryPlaylists',
     category,
-    limit: 10
+    limit: CATEGORY_PREVIEW_LIMIT,
+    offset: 0
   })
-  if (category !== activeCategory.value) return
-  if (!response.ok) return failSection(categorySection.value, response.error.message)
-  if (response.data.kind !== 'playlistCollection') return failSection(categorySection.value, '分类歌单响应类型不匹配。')
-  settleSection(categorySection.value, response.data.playlists)
+  if (!response.ok) return failSection(row.section, response.error.message)
+  if (response.data.kind !== 'playlistCollection' || response.data.collection !== 'category') {
+    return failSection(row.section, '分类歌单响应类型不匹配。')
+  }
+  settleSection(row.section, response.data.playlists)
 }
 
-/** 读取由网易云分类树与歌手 API 能力层返回的动态筛选项。 */
+/** 读取网易云五类歌单分类树，并并行生成每类一行的首页预览。 */
 async function loadBrowseFacets(): Promise<void> {
+  categoryPreviewSection.value = { state: 'loading', data: [], error: '' }
   /** 动态筛选标准响应。 */
   const response = await window.ncx.runtime.readMusic({ operation: 'getBrowseFacets' })
   if (!response.ok || response.data.kind !== 'playlistCollection' || response.data.collection !== 'facets') {
-    browseFacets.value = []
+    categoryPreviewSection.value = {
+      state: 'error',
+      data: [],
+      error: response.ok ? '分类筛选响应类型不匹配。' : response.error.message
+    }
     return
   }
-  browseFacets.value = response.data.facets
-  /** API 返回的第一个音乐风格选项。 */
-  const firstCategory = playlistFacetGroups.value.flatMap((group) => group.options)[0]
-  if (!activeCategory.value && firstCategory) activeCategory.value = firstCategory.value
-}
-
-/** 切换音乐风格或场景情绪分类。 */
-function selectCategory(category: string): void {
-  if (activeCategory.value === category) return
-  activeCategory.value = category
-  void loadCategoryPlaylists()
+  /** 保持 API 顺序且只包含歌单五类的首页预览行。 */
+  const rows = response.data.facets
+    .filter((group) => PLAYLIST_FACET_KEYS.has(group.key))
+    .map((group): BrowseCategoryPreviewRow | undefined => {
+      /** 当前分组用于首页预览的首个真实分类。 */
+      const category = group.options[0]?.value
+      if (!category) return undefined
+      return {
+        group,
+        category,
+        section: { state: 'loading', data: [], error: '' }
+      }
+    })
+    .filter((row): row is BrowseCategoryPreviewRow => Boolean(row))
+  categoryPreviewSection.value = {
+    state: rows.length > 0 ? 'ready' : 'empty',
+    data: rows,
+    error: ''
+  }
+  await Promise.all(rows.map(loadCategoryPreview))
 }
 
 /** 播放一首最新单曲。 */
@@ -225,16 +253,20 @@ function openAllArtists(): void {
   void router.push({ name: 'browse-artists' })
 }
 
+/** 打开五类歌单的完整分页浏览页。 */
+function openAllCategories(): void {
+  void router.push({ name: 'browse-categories' })
+}
+
 /** 读取浏览页全部互相独立的内容区。 */
 async function loadPage(): Promise<void> {
-  await loadBrowseFacets()
   await Promise.all([
+    loadBrowseFacets(),
     loadNewSongs(),
     loadNewAlbums(),
     loadFeaturedPlaylists(),
     loadCharts(),
-    loadArtists(),
-    loadCategoryPlaylists()
+    loadArtists()
   ])
 }
 
@@ -332,40 +364,68 @@ onMounted(() => {
 
     <MusicSection
       section-id="browse-categories"
-      title="按音乐风格与场景探索"
-      :description="activeCategory ? `正在浏览“${activeCategory}”` : '分类会随网易云 API 返回结果动态生成。'"
-      :state="categorySection.state"
-      :error-text="categorySection.error"
-      @retry="loadCategoryPlaylists"
+      title="按分类探索歌单"
+      description="语种、风格、场景、情感与主题各展示一行热门内容。"
+      :state="categoryPreviewSection.state"
+      :error-text="categoryPreviewSection.error"
+      @retry="loadBrowseFacets"
     >
-      <div class="browse-category-board">
-        <section v-for="group in playlistFacetGroups" :key="group.key">
+      <template #actions>
+        <CommonButton
+          variant="ghost"
+          size="compact"
+          @click="openAllCategories"
+        >
+          查看更多 <ChevronRight :size="14" />
+        </CommonButton>
+      </template>
+      <div class="browse-category-preview-list">
+        <section
+          v-for="row in categoryPreviewSection.data"
+          :key="row.group.key"
+          class="browse-category-preview-row"
+        >
           <header>
-            <Radio v-if="group.key === 'playlist-scene'" :size="17" />
-            <Sparkles v-else :size="17" />
-            <h3>{{ group.label }}</h3>
+            <p>{{ row.group.label }}</p>
+            <h3>{{ row.category }}</h3>
+            <span>{{ row.section.data.length }} 个歌单</span>
           </header>
-          <div>
+          <div
+            v-if="row.section.state === 'loading'"
+            class="browse-category-row-state"
+          >
+            正在加载
+          </div>
+          <div
+            v-else-if="row.section.state === 'error'"
+            class="browse-category-row-state"
+          >
+            <span>{{ row.section.error }}</span>
             <button
-              v-for="option in group.options"
-              :key="option.value"
               type="button"
-              :class="{ active: activeCategory === option.value }"
-              @click="selectCategory(option.value)"
-            >{{ option.label }}</button>
+              @click="loadCategoryPreview(row)"
+            >
+              重试
+            </button>
+          </div>
+          <div
+            v-else-if="row.section.state === 'empty'"
+            class="browse-category-row-state"
+          >
+            当前分类暂无歌单
+          </div>
+          <div v-else class="browse-category-preview-strip">
+            <EntityCard
+              v-for="playlist in row.section.data"
+              :key="playlist.id"
+              :title="playlist.name"
+              :subtitle="playlist.creator?.nickname"
+              :artwork-url="playlist.artworkUrl"
+              featured
+              @activate="openPlaylist(playlist)"
+            />
           </div>
         </section>
-      </div>
-      <div class="browse-card-strip browse-category-results">
-        <EntityCard
-          v-for="playlist in categorySection.data.slice(0, 5)"
-          :key="playlist.id"
-          :title="playlist.name"
-          :subtitle="playlist.creator?.nickname"
-          :artwork-url="playlist.artworkUrl"
-          featured
-          @activate="openPlaylist(playlist)"
-        />
       </div>
     </MusicSection>
 
@@ -420,21 +480,23 @@ onMounted(() => {
 .browse-chart-grid > button > span { display: grid; min-width: 0; }
 .browse-chart-grid strong, .browse-chart-grid small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .browse-chart-grid small { margin-top: 4px; color: var(--ncx-color-text-secondary); }
-.browse-category-board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
-.browse-category-board > section { padding: 18px; border-radius: var(--ncx-radius-xl); background: var(--ncx-color-surface); }
-.browse-category-board header { display: flex; align-items: center; gap: 8px; color: var(--ncx-color-accent); }
-.browse-category-board h3 { margin: 0; color: var(--ncx-color-text-primary); font-size: 14px; }
-.browse-category-board section > div { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.browse-category-board button { padding: 8px 12px; border: 0; border-radius: 999px; color: var(--ncx-color-text-secondary); background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent); cursor: pointer; }
-.browse-category-board button:hover, .browse-category-board button.active { color: #fff; background: var(--ncx-color-accent); }
-.browse-category-board button:active { transform: scale(.96); }
-.browse-category-results { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.browse-category-preview-list { display: grid; gap: 18px; }
+.browse-category-preview-row { display: grid; min-width: 0; grid-template-columns: 132px minmax(0, 1fr); gap: 20px; padding: 18px; border-radius: var(--ncx-radius-xl); background: var(--ncx-color-surface); }
+.browse-category-preview-row > header { display: grid; align-content: start; gap: 5px; }
+.browse-category-preview-row > header p, .browse-category-preview-row > header h3, .browse-category-preview-row > header span { margin: 0; }
+.browse-category-preview-row > header p { color: var(--ncx-color-accent); font-size: 12px; font-weight: 720; }
+.browse-category-preview-row > header h3 { overflow: hidden; font-size: 17px; text-overflow: ellipsis; white-space: nowrap; }
+.browse-category-preview-row > header span { color: var(--ncx-color-text-tertiary); font-size: 11px; }
+.browse-category-preview-strip { display: grid; min-width: 0; grid-template-columns: repeat(5, minmax(126px, 1fr)); gap: 18px; }
+.browse-category-row-state { display: flex; min-height: 150px; align-items: center; justify-content: center; gap: 10px; color: var(--ncx-color-text-secondary); font-size: 13px; }
+.browse-category-row-state button { padding: 6px 10px; border: 0; border-radius: var(--ncx-radius-full); color: var(--ncx-color-accent); background: color-mix(in srgb, var(--ncx-color-accent) 10%, transparent); cursor: pointer; }
 .browse-artist-strip { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 18px; }
 .browse-artist-strip > button { display: grid; min-width: 0; justify-items: center; gap: 7px; padding: 0; border: 0; color: inherit; text-align: center; background: transparent; cursor: pointer; }
 .browse-artist-strip strong, .browse-artist-strip span { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .browse-artist-strip strong { margin-top: 8px; font-size: 13px; }
 .browse-artist-strip span { color: var(--ncx-color-text-secondary); font-size: 11px; }
 @media (width < 1100px) { .browse-release-layout { grid-template-columns: 1fr; } .browse-card-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } .browse-chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .browse-artist-strip { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
-@media (width < 760px) { .browse-page { width: min(100% - 24px, 1240px); gap: 52px; } .browse-album-grid, .browse-chart-grid { grid-template-columns: 1fr 1fr; } .browse-card-strip, .browse-category-results { grid-template-columns: repeat(2, minmax(0, 1fr)); } .browse-category-board { grid-template-columns: 1fr; } .browse-artist-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (width < 1100px) { .browse-category-preview-strip { overflow-x: auto; grid-template-columns: repeat(5, minmax(138px, 1fr)); padding-bottom: 8px; } }
+@media (width < 760px) { .browse-page { width: min(100% - 24px, 1240px); gap: 52px; } .browse-album-grid, .browse-chart-grid { grid-template-columns: 1fr 1fr; } .browse-card-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } .browse-category-preview-row { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; padding: 14px; } .browse-artist-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (prefers-reduced-motion: reduce) { .browse-page button { transition: none !important; } .browse-page button:hover, .browse-page button:active { transform: none; } }
 </style>

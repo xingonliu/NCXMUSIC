@@ -16,5 +16,7 @@ describe('music route contract', () => {
     expect(source).toContain("presentation: 'immersive'")
     expect(source).toContain("path: '/songs/:songId'")
     expect(source).toContain("name: 'song-detail'")
+    expect(source).toContain("path: '/browse/categories'")
+    expect(source).toContain("name: 'browse-categories'")
   })
 })

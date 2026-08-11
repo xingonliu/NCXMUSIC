@@ -6,6 +6,7 @@ import CollectionDetailPage from '../features/music/CollectionDetailPage.vue'
 import ArtistDetailPage from '../features/music/ArtistDetailPage.vue'
 import DiscoverPage from '../features/music/DiscoverPage.vue'
 import BrowsePage from '../features/music/BrowsePage.vue'
+import BrowseCategoriesPage from '../features/music/BrowseCategoriesPage.vue'
 import BrowseRankingsPage from '../features/music/BrowseRankingsPage.vue'
 import ArtistExplorePage from '../features/music/ArtistExplorePage.vue'
 import LikedSongsPage from '../features/music/LikedSongsPage.vue'
@@ -79,6 +80,17 @@ const routes: RouteRecordRaw[] = [
       pageLevel: 1,
       title: 'routes.browse',
       playerBar: 'show'
+    }
+  },
+  {
+    path: '/browse/categories',
+    name: 'browse-categories',
+    component: BrowseCategoriesPage,
+    meta: {
+      pageLevel: 2,
+      title: 'routes.browseCategories',
+      playerBar: 'show',
+      fallbackRoute: 'browse'
     }
   },
   {

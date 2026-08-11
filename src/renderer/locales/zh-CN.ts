@@ -9,6 +9,7 @@ export const zhCN = {
     'routes.artistDetail': '艺人详情',
     'routes.browse': '浏览',
     'routes.browseArtists': '歌手探索',
+    'routes.browseCategories': '分类歌单',
     'routes.browseRankings': '排行榜',
     'routes.discover': '发现音乐',
     'routes.designSystemLab': '通用组件',
