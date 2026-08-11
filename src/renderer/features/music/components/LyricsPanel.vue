@@ -291,16 +291,22 @@ function calculateWordVisualState(
   word: StandardLyricsWord,
   currentTimeMs: number
 ): WordVisualState {
-  /** 保证极短音节（上游歌词数据如 20ms-80ms）拥有视觉平滑的最小过渡时长（保底 160ms）。 */
-  const effectiveDurationMs = Math.max(160, word.durationMs)
+  /** 保证极短音节（上游歌词数据如 20ms-80ms）拥有视觉平滑的最小过渡时长（保底 260ms）。 */
+  const effectiveDurationMs = Math.max(260, word.durationMs)
 
   /** 当前字从起音到收音的线性归一化进度。 */
   const rawProgress = effectiveDurationMs <= 0
     ? Number(currentTimeMs >= word.startMs)
     : clampProgress((currentTimeMs - word.startMs) / effectiveDurationMs)
 
-  /** 应用 smoothstep 缓动曲线使起音与收音平滑过渡，避免硬卡帧感。 */
-  const fillProgress = smoothstepProgress(rawProgress)
+  /**
+   * 应用平滑进度映射：
+   * 对短音节使用线性平滑过渡（避免 smoothstep 在中段 1.5 倍速压缩），
+   * 保证起音至收音在物理时间上拥有足够丰富的逐帧画面数。
+   */
+  const fillProgress = word.durationMs < 300
+    ? rawProgress
+    : smoothstepProgress(rawProgress)
 
   /** 当前字起音后经过的秒数。 */
   const elapsedSeconds = Math.max(0, currentTimeMs - word.startMs) / 1_000
@@ -331,17 +337,6 @@ function calculateWordVisualState(
     scale: 1 + glow * 0.03,
     liftPx,
     glow
-  }
-}
-
-/** 生成逐字节点首次渲染所需的 CSS 自定义变量。 */
-function initialWordStyle(word: StandardLyricsWord): Record<string, string> {
-  const visualState = calculateWordVisualState(word, props.positionMs)
-  return {
-    '--progress': visualState.fillProgress.toFixed(4),
-    '--word-scale': visualState.scale.toFixed(4),
-    '--word-lift': `${visualState.liftPx.toFixed(3)}px`,
-    '--word-glow': visualState.glow.toFixed(4)
   }
 }
 
@@ -593,9 +588,19 @@ function writeWordProgress(currentTimeMs: number, activeOnly = false): void {
   const container = scrollContainer.value
   if (!container) return
 
-  const selector = activeOnly ? '.lyrics-line--active .lyric-word' : '.lyric-word'
+  /**
+   * activeOnly 为 true 时选择激活行与已唱完行，保证切行时 past 行全量补满至 100%，
+   * 且对已处于 past 且填充完成的节点跳过重复计算以保障高帧率。
+   */
+  const selector = activeOnly
+    ? '.lyrics-line--active .lyric-word, .lyrics-line--past .lyric-word'
+    : '.lyric-word'
   const wordElements = container.querySelectorAll<HTMLElement>(selector)
   wordElements.forEach((element) => {
+    if (activeOnly && element.dataset['state'] === 'past' && element.style.getPropertyValue('--progress') === '1.0000') {
+      return
+    }
+
     const startMs = Number(element.dataset['wordStartMs'] ?? 0)
     const durationMs = Number(element.dataset['wordDurationMs'] ?? 0)
     /** 由 DOM 时间数据构造的当前字时间块。 */
@@ -775,8 +780,6 @@ onBeforeUnmount(() => {
                   class="lyric-word"
                   :data-word-start-ms="word.startMs"
                   :data-word-duration-ms="word.durationMs"
-                  :data-state="calculateWordVisualState(word, animationPositionMs).state"
-                  :style="initialWordStyle(word)"
                 >{{ word.text }}</span>
               </template>
               <span
@@ -983,8 +986,8 @@ onBeforeUnmount(() => {
     linear-gradient(
       to right,
       var(--lyric-color-active) 0%,
-      var(--lyric-color-active) calc(var(--progress, 0) * 100% - 4px),
-      var(--lyric-color-unplayed) calc(var(--progress, 0) * 100%),
+      var(--lyric-color-active) calc(var(--progress, 0) * 100% - 6%),
+      var(--lyric-color-unplayed) calc(var(--progress, 0) * 100% + 4%),
       var(--lyric-color-unplayed) 100%
     );
   background-clip: text;
@@ -993,9 +996,7 @@ onBeforeUnmount(() => {
   transform: translateY(var(--word-lift, 0px)) scale(calc(1 + (var(--word-scale, 1) - 1) * 0.25));
   transform-origin: center bottom;
   will-change: transform, text-shadow;
-  transition:
-    transform 220ms cubic-bezier(0.2, 0.9, 0.3, 1),
-    text-shadow 220ms ease;
+  transition: text-shadow 220ms ease;
 }
 
 .lyric-word[data-state="active"] {
