@@ -24,8 +24,9 @@
 }
 
 .settings-tabs {
-  width: min(480px, 100%);
-  margin-top: var(--ncx-space-8);
+  width: fit-content;
+  max-width: 100%;
+  margin: var(--ncx-space-8) auto 0;
 }
 
 .settings-list {

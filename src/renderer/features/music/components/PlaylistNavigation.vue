@@ -200,43 +200,46 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
 </script>
 
 <template>
-  <nav v-if="visible" class="ncx-playlist-nav" aria-label="歌单导航">
-    <section class="ncx-nav-section ncx-playlist-group">
-      <div class="ncx-playlist-group-heading">
-        <p class="ncx-nav-section-title">我的歌单</p>
-        <CommonIconButton
-          size="compact"
-          variant="ghost"
-          label="创建歌单"
-          @click="createDialogVisible = true"
+  <div v-if="visible" class="ncx-playlist-nav-wrapper">
+    <nav class="ncx-playlist-nav" aria-label="歌单导航">
+      <section class="ncx-nav-section ncx-playlist-group">
+        <div class="ncx-playlist-group-heading">
+          <p class="ncx-nav-section-title">我的歌单</p>
+          <CommonIconButton
+            size="compact"
+            variant="ghost"
+            label="创建歌单"
+            @click="createDialogVisible = true"
+          >
+            <Plus :size="13" />
+          </CommonIconButton>
+        </div>
+        <CommonContextMenu
+          v-for="playlist in visiblePlaylists"
+          :key="playlist.id"
+          :items="playlist.owned ? ownedMenuItems : collectedMenuItems"
+          @select="handlePlaylistAction(playlist, $event)"
         >
-          <Plus :size="13" />
-        </CommonIconButton>
-      </div>
-      <CommonContextMenu
-        v-for="playlist in visiblePlaylists"
-        :key="playlist.id"
-        :items="playlist.owned ? ownedMenuItems : collectedMenuItems"
-        @select="handlePlaylistAction(playlist, $event)"
-      >
-        <RouterLink
-          class="ncx-nav-item"
-          :class="{ 'ncx-nav-item--sub-active': isPlaylistActive(playlist) }"
-          :to="{ name: 'playlist-detail', params: { playlistId: playlist.id } }"
-        >
-          <span class="ncx-playlist-cover" aria-hidden="true">
-            <img
-              v-if="playlist.artworkUrl"
-              :src="adaptArtworkUrl(playlist.artworkUrl, 'thumbnail')"
-              alt=""
-              loading="lazy"
-            />
-            <Music2 v-else :size="13" />
-          </span>
-          <span>{{ playlist.name }}</span>
-        </RouterLink>
-      </CommonContextMenu>
-    </section>
+          <RouterLink
+            class="ncx-nav-item"
+            :class="{ 'ncx-nav-item--sub-active': isPlaylistActive(playlist) }"
+            :to="{ name: 'playlist-detail', params: { playlistId: playlist.id } }"
+          >
+            <span class="ncx-playlist-cover" aria-hidden="true">
+              <img
+                v-if="playlist.artworkUrl"
+                :src="adaptArtworkUrl(playlist.artworkUrl, 'thumbnail')"
+                alt=""
+                loading="lazy"
+              />
+              <Music2 v-else :size="13" />
+            </span>
+            <span>{{ playlist.name }}</span>
+          </RouterLink>
+        </CommonContextMenu>
+      </section>
+    </nav>
+    <div class="ncx-playlist-nav-mask" aria-hidden="true" />
 
     <CommonDialog
       :visible="createDialogVisible"
@@ -270,7 +273,7 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
       @cancel="deleteTarget = null"
       @confirm="deletePlaylist"
     />
-  </nav>
+  </div>
 </template>
 
 <style scoped>

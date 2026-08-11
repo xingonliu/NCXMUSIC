@@ -569,9 +569,7 @@ onMounted(() => {
             size="hero"
             :hover-effect="false"
             :always-show-shadow="true"
-            :show-play-button="songs.length > 0"
-            @click="playAll"
-            @play="playAll"
+            :show-play-button="false"
           />
           <div class="music-detail-hero-copy">
             <p class="music-page-eyebrow">

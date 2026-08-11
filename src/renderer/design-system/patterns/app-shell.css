@@ -52,11 +52,60 @@
   -webkit-app-region: no-drag;
 }
 
-.ncx-playlist-nav {
+.ncx-playlist-nav-wrapper {
+  position: relative;
+  display: flex;
   min-height: 0;
+  flex: 1;
+  flex-direction: column;
   margin-top: var(--ncx-space-4);
+}
+
+.ncx-playlist-nav {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  padding-bottom: var(--ncx-space-3);
   overflow-y: auto;
+  scrollbar-color: color-mix(in srgb, var(--ncx-color-text-primary) 18%, transparent) transparent;
+  scrollbar-width: thin;
+  mask-image: linear-gradient(to bottom, black 0%, black calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black calc(100% - 24px), transparent 100%);
   -webkit-app-region: no-drag;
+}
+
+.ncx-playlist-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ncx-playlist-nav::-webkit-scrollbar-track {
+  border: none;
+  background: transparent;
+}
+
+.ncx-playlist-nav::-webkit-scrollbar-thumb {
+  border: none;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 16%, transparent);
+}
+
+.ncx-playlist-nav::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 30%, transparent);
+}
+
+.ncx-playlist-nav::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.ncx-playlist-nav-mask {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 24px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 0%, var(--ncx-color-surface) 100%);
 }
 
 .ncx-playlist-group {

@@ -121,9 +121,9 @@ function handlePlayClick(e: MouseEvent): void {
         <Music2 :size="props.size === 'hero' ? 56 : 28" aria-hidden="true" />
       </div>
 
-      <!-- Hover 播放悬浮层（与 YesPlayMusic 一致，不加 opacity 渐变，避免 backdrop-filter 在过渡中闪烁半透明底色） -->
+      <!-- Hover 播放悬浮层（仅在 showPlayButton 为 true 时在 Hover/alwaysShowShadow 下显示） -->
       <div
-        v-show="props.showPlayButton && (isHovered || props.alwaysShowShadow)"
+        v-if="props.showPlayButton && (isHovered || props.alwaysShowShadow)"
         class="ncx-cover-shade"
       >
         <button
@@ -231,6 +231,9 @@ function handlePlayClick(e: MouseEvent): void {
   min-height: 220px;
 }
 .ncx-cover--hero .ncx-cover-media {
+  border-radius: var(--ncx-radius-xl);
+}
+.ncx-cover--hero .ncx-cover-shadow {
   border-radius: var(--ncx-radius-xl);
 }
 

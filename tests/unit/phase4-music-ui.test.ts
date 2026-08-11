@@ -76,15 +76,14 @@ describe('Phase 4 music UI primitives', () => {
     expect(wrapper.find('img').attributes('loading')).toBe('eager')
   })
 
-  it('只挂载真实可视窗口和 overscan 行', () => {
-    /** 两百首歌曲的长列表。 */
+  it('直接放在页面中展示完整歌曲列表，不嵌套内部滚动容器', () => {
+    /** 两百首歌曲的列表。 */
     const songs = Array.from({ length: 200 }, (_, index) => song(index))
     /** 直接交给页面主滚动容器的歌曲列表。 */
     const wrapper = mount(VirtualTrackList, { props: { songs } })
 
-    expect(wrapper.findAll('.track-row').length).toBeLessThan(200)
-    expect(wrapper.find('.virtual-track-list').attributes('style')).toContain('height: 520px')
-    expect(wrapper.find('.virtual-track-list-spacer').attributes('style')).toContain('height: 12000px')
+    expect(wrapper.findAll('.track-row').length).toBe(200)
+    expect(wrapper.find('.virtual-track-list').classes()).toContain('virtual-track-list')
   })
 
   it('exposes keyboard-reachable playlist removal controls and context actions', async () => {

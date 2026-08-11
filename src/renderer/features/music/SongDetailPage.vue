@@ -139,6 +139,7 @@ watch(songId, () => void loadSong(), { immediate: true })
             :alt="song.name"
             size="hero"
             :hover-effect="false"
+            :always-show-shadow="true"
             :show-play-button="false"
           />
           <div class="music-detail-hero-copy">
