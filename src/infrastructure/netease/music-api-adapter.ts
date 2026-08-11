@@ -155,7 +155,6 @@ const ARTIST_TYPE_FACETS = [
 
 /** artist_list API 支持的 A-Z 首字母 facet，由能力层生成而非页面写死。 */
 const ARTIST_INITIAL_FACETS = [
-  { value: '-1', label: '#' },
   ...Array.from({ length: 26 }, (_, index) => ({
     value: String.fromCharCode(65 + index),
     label: String.fromCharCode(65 + index)

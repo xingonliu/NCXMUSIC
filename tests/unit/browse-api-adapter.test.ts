@@ -77,6 +77,8 @@ describe('浏览与个人页 API 适配', () => {
       { value: '未来曲风', label: '未来曲风' }
     ])
     expect(facets.facets.find((group) => group.key === 'artist-area')?.options.length).toBeGreaterThan(0)
+    expect(facets.facets.find((group) => group.key === 'artist-initial')?.options).toHaveLength(26)
+    expect(facets.facets.find((group) => group.key === 'artist-initial')?.options).not.toContainEqual({ value: '-1', label: '#' })
 
     /** 动态分类对应的歌单响应。 */
     const playlists = await adapter.read({
