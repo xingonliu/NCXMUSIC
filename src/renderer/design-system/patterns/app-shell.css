@@ -242,12 +242,12 @@
   z-index: 0;
   inset: 0;
   pointer-events: auto;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--ncx-color-canvas) 72%, transparent) 0%,
-    color-mix(in srgb, var(--ncx-color-canvas) 35%, transparent) 60%,
-    transparent 100%
-  );
+  background: linear-gradient(180deg,
+      color-mix(in srgb, var(--ncx-color-canvas) 100%, transparent) 0%,
+      color-mix(in srgb, var(--ncx-color-canvas) 80%, transparent) 30%,
+      color-mix(in srgb, var(--ncx-color-canvas) 45%, transparent) 60%,
+      transparent 100%);
+  backdrop-filter: blur(1px);
 }
 
 .ncx-page-leading-actions,
