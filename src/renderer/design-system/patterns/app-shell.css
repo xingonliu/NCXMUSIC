@@ -248,7 +248,6 @@
     color-mix(in srgb, var(--ncx-color-canvas) 35%, transparent) 60%,
     transparent 100%
   );
-  backdrop-filter: blur(24px) saturate(180%);
 }
 
 .ncx-page-leading-actions,
