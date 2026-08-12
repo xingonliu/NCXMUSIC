@@ -63,8 +63,8 @@ const isQueueOpen = ref<boolean>(false)
 /** 当前曲目摘要 */
 const track = computed(() => snapshot.value.playback.track)
 
-/** 当前曲目封面 URL */
-const coverUrl = computed<string | undefined>(() => track.value?.artwork?.[0]?.src)
+/** 当前曲目封面 URL，直接使用高清封面（与沉浸歌词页一致）。 */
+const coverUrl = computed<string | undefined>(() => track.value?.artwork?.at(-1)?.src ?? track.value?.artwork?.[0]?.src)
 
 /** 队列中是否有内容可操作 */
 const hasQueue = computed(() => snapshot.value.queue.items.length > 0)
@@ -197,6 +197,7 @@ function openImmersivePlayer(event: MouseEvent): void {
               :src="coverUrl"
               :alt="track?.name ?? text.emptyTrack"
               size="thumbnail"
+              :adapt-source="false"
               class="player-track-cover"
               :style="{
                 viewTransitionName: isImmersivePlayerOpen ? 'none' : 'ncx-now-playing-artwork'

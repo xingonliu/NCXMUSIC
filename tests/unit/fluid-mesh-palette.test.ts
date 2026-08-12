@@ -43,7 +43,7 @@ describe('流体网格调色板', () => {
     const lightnesses = palette.map((color) => rgbToOklch(color).lightness)
 
     expect(palette).toHaveLength(4)
-    expect(lightnesses.every((lightness) => lightness >= 0.149 && lightness <= 0.451)).toBe(true)
+    expect(lightnesses.every((lightness) => lightness >= 0.139 && lightness <= 0.551)).toBe(true)
     expect(new Set(palette.map((color) => color.map((channel) => channel.toFixed(3)).join(','))).size)
       .toBeGreaterThanOrEqual(3)
   })

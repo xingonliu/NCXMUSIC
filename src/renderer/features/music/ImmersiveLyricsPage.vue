@@ -52,14 +52,11 @@ const snapshot = player.snapshot
 /** 当前曲目摘要。 */
 const track = computed(() => snapshot.value.playback.track)
 
-/** 当前曲目高清封面。 */
-const artworkUrl = computed<string | undefined>(() => track.value?.artwork?.at(-1)?.src)
+/** 当前曲目高清封面，与 PlayerBar 使用完全一致的图片资源。 */
+const artworkUrl = computed<string | undefined>(() => track.value?.artwork?.at(-1)?.src ?? track.value?.artwork?.[0]?.src)
 
-/** PlayerBar 已加载的当前曲目缩略封面。 */
-const previewArtworkUrl = computed<string | undefined>(() => track.value?.artwork?.[0]?.src)
-
-/** 沉浸页实际展示的封面，先复用缩略图再无闪烁替换高清图。 */
-const displayArtworkUrl = ref<string | undefined>(previewArtworkUrl.value ?? artworkUrl.value)
+/** 沉浸页实际展示的封面，直接使用与 PlayerBar 一致的高清图。 */
+const displayArtworkUrl = computed<string | undefined>(() => artworkUrl.value)
 
 /** 当前曲目歌手展示文本。 */
 const artistText = computed<string>(() => track.value?.artists.join(' / ') ?? '')
@@ -154,35 +151,6 @@ function handleWindowKeydown(event: KeyboardEvent): void {
 watch(() => track.value?.trackId, () => {
   isLiked.value = false
 })
-
-watch([previewArtworkUrl, artworkUrl], ([previewUrl, highResolutionUrl], _previous, onCleanup) => {
-  displayArtworkUrl.value = previewUrl ?? highResolutionUrl
-  if (!highResolutionUrl || highResolutionUrl === displayArtworkUrl.value) return
-
-  /** 标记当前曲目封面预载是否已经失效。 */
-  let cancelled = false
-  /** 共享元素动画结束后替换高清封面的延迟定时器。 */
-  let highResolutionPromotionTimer: number | undefined
-  /** 用于后台解码当前曲目高清封面的临时图片。 */
-  const highResolutionImage = new Image()
-
-  /** 解码高清封面，并在共享元素动画结束后无闪烁替换。 */
-  async function promoteHighResolutionArtwork(): Promise<void> {
-    await highResolutionImage.decode().catch(() => undefined)
-    if (cancelled) return
-    highResolutionPromotionTimer = window.setTimeout(() => {
-      if (!cancelled) displayArtworkUrl.value = highResolutionUrl
-    }, 520)
-  }
-
-  highResolutionImage.src = highResolutionUrl
-  void promoteHighResolutionArtwork()
-
-  onCleanup(() => {
-    cancelled = true
-    window.clearTimeout(highResolutionPromotionTimer)
-  })
-}, { immediate: true })
 
 onMounted(async () => {
   window.addEventListener('keydown', handleWindowKeydown)
