@@ -49,12 +49,12 @@ interface PaletteCluster {
 
 // ========= 变量 =========
 
-/** 无封面时使用的深色流体调色板。 */
+/** 无封面时使用的深色高饱和度流体调色板。 */
 export const DEFAULT_FLUID_MESH_PALETTE: FluidMeshPalette = [
-  [0.18, 0.12, 0.27],
-  [0.08, 0.24, 0.30],
-  [0.33, 0.18, 0.29],
-  [0.055, 0.075, 0.10]
+  [0.26, 0.12, 0.44],
+  [0.06, 0.36, 0.46],
+  [0.48, 0.16, 0.38],
+  [0.08, 0.09, 0.16]
 ]
 
 /** 调色板固定节点数量。 */
@@ -254,7 +254,7 @@ function buildWeightedSamples(pixels: Uint8ClampedArray): WeightedColorSample[] 
   }))
 }
 
-/** 使用确定性的加权最远点策略选择 K-Means 初始中心。 */
+/** 使用确定性的加权最远点策略选择 K-Means 初始中心，偏向选取鲜艳色彩。 */
 function initializeCentroids(samples: WeightedColorSample[]): OklabColor[] {
   /** 按覆盖像素数降序排列的样本。 */
   const sortedSamples = [...samples].sort((first, second) => second.weight - first.weight)
@@ -272,8 +272,10 @@ function initializeCentroids(samples: WeightedColorSample[]): OklabColor[] {
       const nearestDistance = Math.min(...centroids.map((centroid) => (
         colorDistanceSquared(sample.color, centroid)
       )))
-      /** 同时考虑覆盖率和色差的确定性评分。 */
-      const score = nearestDistance * Math.sqrt(sample.weight)
+      /** 样本的 OKLCH 色度。 */
+      const sampleChroma = oklabToOklch(sample.color).chroma
+      /** 同时考虑覆盖率、色差与鲜艳度的评分。 */
+      const score = nearestDistance * Math.sqrt(sample.weight) * (1.0 + sampleChroma * 4.0)
       if (score > bestScore) {
         bestSample = sample
         bestScore = score
@@ -356,7 +358,7 @@ function clusterSamples(samples: WeightedColorSample[]): PaletteCluster[] {
     .filter((cluster) => cluster.weight > 0)
 }
 
-/** 从候选聚类中挑选与已选色差异最大的聚类。 */
+/** 从候选聚类中挑选与已选色差异最大且相对鲜艳的聚类。 */
 function pickMostDistinctCluster(
   clusters: PaletteCluster[],
   selected: PaletteCluster[]
@@ -372,15 +374,17 @@ function pickMostDistinctCluster(
     const secondDistance = Math.min(...selected.map((cluster) => (
       colorDistanceSquared(second.color, cluster.color)
     )))
-    /** 第一候选兼顾覆盖率后的评分。 */
-    const firstScore = firstDistance * (1 + Math.log1p(first.weight))
-    /** 第二候选兼顾覆盖率后的评分。 */
-    const secondScore = secondDistance * (1 + Math.log1p(second.weight))
+    /** 第一候选兼顾覆盖率与鲜艳度后的评分。 */
+    const firstChroma = oklabToOklch(first.color).chroma
+    const firstScore = firstDistance * (1 + Math.log1p(first.weight)) * (1.0 + firstChroma * 3.5)
+    /** 第二候选兼顾覆盖率与鲜艳度后的评分。 */
+    const secondChroma = oklabToOklch(second.color).chroma
+    const secondScore = secondDistance * (1 + Math.log1p(second.weight)) * (1.0 + secondChroma * 3.5)
     return secondScore - firstScore
   })[0]
 }
 
-/** 生成单色封面缺少的辅助色，避免四个 Shader 节点完全重合。 */
+/** 生成单色封面缺少的辅助色，强化补位色彩的鲜艳度。 */
 function deriveMissingColor(base: OklabColor, index: number): OklabColor {
   /** 基准色的圆柱坐标。 */
   const baseLch = oklabToOklch(base)
@@ -389,16 +393,20 @@ function deriveMissingColor(base: OklabColor, index: number): OklabColor {
   /** 不同补位节点使用的明度偏移。 */
   const lightnessOffset = index % 2 === 0 ? 0.08 : -0.07
   return oklchToOklab({
-    lightness: clamp(baseLch.lightness + lightnessOffset, 0.12, 0.52),
-    chroma: clamp(baseLch.chroma * 0.85 + 0.035, 0.035, 0.16),
+    lightness: clamp(baseLch.lightness + lightnessOffset, 0.14, 0.56),
+    chroma: clamp(baseLch.chroma * 1.25 + 0.08, 0.08, 0.28),
     hue: baseLch.hue + hueOffset
   })
 }
 
 /** 把聚类候选组织为主色、辅色、高光色和暗部色。 */
 function selectPaletteRoles(clusters: PaletteCluster[]): OklabColor[] {
-  /** 按像素覆盖率排列的聚类。 */
-  const byWeight = [...clusters].sort((first, second) => second.weight - first.weight)
+  /** 按像素覆盖率与鲜艳度综合排列的聚类。 */
+  const byWeight = [...clusters].sort((first, second) => {
+    const firstScore = first.weight * (1.0 + oklabToOklch(first.color).chroma * 3.0)
+    const secondScore = second.weight * (1.0 + oklabToOklch(second.color).chroma * 3.0)
+    return secondScore - firstScore
+  })
   /** 已选择的代表聚类。 */
   const selected: PaletteCluster[] = []
   if (byWeight[0]) selected.push(byWeight[0])
@@ -416,16 +424,16 @@ function selectPaletteRoles(clusters: PaletteCluster[]): OklabColor[] {
   const base = colors[0] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[0])
   while (colors.length < PALETTE_SIZE) colors.push(deriveMissingColor(base, colors.length))
 
-  /** 主色使用覆盖率最大的色彩。 */
+  /** 主色优先使用覆盖率与鲜艳度综合最高的色彩。 */
   const dominant = colors[0] ?? base
   /** 暗部色使用感知明度最低的色彩。 */
   const shadow = [...colors].sort((first, second) => first.lightness - second.lightness)[0] ?? base
   /** 高光色优先使用明度与色度综合最高的色彩。 */
   const highlight = [...colors].sort((first, second) => {
     /** 第一候选的明度色度综合评分。 */
-    const firstScore = first.lightness + oklabToOklch(first).chroma * 0.6
+    const firstScore = first.lightness + oklabToOklch(first).chroma * 1.8
     /** 第二候选的明度色度综合评分。 */
-    const secondScore = second.lightness + oklabToOklch(second).chroma * 0.6
+    const secondScore = second.lightness + oklabToOklch(second).chroma * 1.8
     return secondScore - firstScore
   })[0] ?? base
   /** 辅色使用与主色距离最大的剩余色彩。 */
@@ -437,25 +445,28 @@ function selectPaletteRoles(clusters: PaletteCluster[]): OklabColor[] {
 }
 
 /**
- * 依据节点角色限制 OKLCH 明度与色度，保证白色歌词对比度。
+ * 依据节点角色调整 OKLCH 明度与色度，适当放宽色度限制以使颜色更加饱满鲜艳。
  *
  * @param color 原始聚类色
  * @param roleIndex 节点角色索引：主色、辅色、高光、暗部
  */
 function correctPaletteColor(color: OklabColor, roleIndex: number): FluidRgbColor {
   /** 各角色允许的最低明度。 */
-  const minimumLightness = [0.20, 0.18, 0.30, 0.15][roleIndex] ?? 0.18
+  const minimumLightness = [0.22, 0.20, 0.32, 0.14][roleIndex] ?? 0.20
   /** 各角色允许的最高明度。 */
-  const maximumLightness = [0.38, 0.40, 0.45, 0.25][roleIndex] ?? 0.45
+  const maximumLightness = [0.46, 0.48, 0.55, 0.28][roleIndex] ?? 0.48
   /** 原始色彩的 OKLCH 表达。 */
   const lch = oklabToOklch(color)
-  /** 极低色度封面需要的最小背景色度。 */
-  const minimumChroma = roleIndex === 3 ? 0.025 : 0.045
-  /** 暗部节点使用更克制的最大色度。 */
-  const maximumChroma = roleIndex === 3 ? 0.13 : 0.19
+  /** 保证背景具备足够鲜艳度的最小色度。 */
+  const minimumChroma = [0.08, 0.07, 0.10, 0.035][roleIndex] ?? 0.07
+  /** 允许的最大色度，放宽限制以呈现饱满鲜艳的色彩。 */
+  const maximumChroma = [0.30, 0.32, 0.34, 0.18][roleIndex] ?? 0.30
+  /** 增艳提升：对提取到的色度适当乘以 1.3 放大。 */
+  const boostedChroma = Math.max(lch.chroma * 1.3, minimumChroma)
+
   return gamutMapOklch({
     lightness: clamp(lch.lightness, minimumLightness, maximumLightness),
-    chroma: clamp(lch.chroma, minimumChroma, maximumChroma),
+    chroma: clamp(boostedChroma, minimumChroma, maximumChroma),
     hue: Number.isFinite(lch.hue) ? lch.hue : 0
   })
 }
@@ -493,7 +504,7 @@ function hashSeed(seed: string): number {
 }
 
 /**
- * 为无法读取像素的跨域封面生成稳定的深色调色板。
+ * 为无法读取像素的跨域封面生成稳定的鲜艳深色调色板。
  *
  * @param seed 通常使用封面 URL
  */
@@ -501,10 +512,10 @@ export function createFallbackFluidMeshPalette(seed: string): FluidMeshPalette {
   /** URL 哈希得到的基础色相。 */
   const hue = (hashSeed(seed) / 0xffffffff) * Math.PI * 2
   return [
-    gamutMapOklch({ lightness: 0.32, chroma: 0.14, hue }),
-    gamutMapOklch({ lightness: 0.29, chroma: 0.12, hue: hue + Math.PI * 0.62 }),
-    gamutMapOklch({ lightness: 0.42, chroma: 0.15, hue: hue - Math.PI * 0.24 }),
-    gamutMapOklch({ lightness: 0.18, chroma: 0.07, hue: hue + Math.PI * 0.18 })
+    gamutMapOklch({ lightness: 0.38, chroma: 0.24, hue }),
+    gamutMapOklch({ lightness: 0.34, chroma: 0.22, hue: hue + Math.PI * 0.62 }),
+    gamutMapOklch({ lightness: 0.48, chroma: 0.26, hue: hue - Math.PI * 0.24 }),
+    gamutMapOklch({ lightness: 0.18, chroma: 0.10, hue: hue + Math.PI * 0.18 })
   ]
 }
 
