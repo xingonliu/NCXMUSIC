@@ -1028,9 +1028,12 @@ onBeforeUnmount(() => {
   display: inline-block;
   vertical-align: baseline;
   color: var(--lyric-color-unplayed);
-  transform: translate3d(0, 0, 0);
+  filter: drop-shadow(0 0 0 rgb(255 255 255 / 0%));
+  transform: translate3d(0, 0, 0) scale(1);
   transform-origin: center bottom;
-  transition: transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition:
+    transform 600ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 600ms ease;
   will-change: transform;
 }
 
@@ -1045,8 +1048,11 @@ onBeforeUnmount(() => {
 }
 
 .lyric-word[data-lifted="true"] {
-  animation: lyric-word-lift 180ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  transform: translate3d(0, -1.5px, 0);
+  transform: translate3d(0, -1.5px, 0) scale(1.02);
+}
+
+.lyric-word[data-state="active"] {
+  filter: drop-shadow(0 3px 8px rgb(255 255 255 / 50%));
 }
 
 .lyric-word[data-state="active"]::after {
@@ -1055,16 +1061,7 @@ onBeforeUnmount(() => {
 
 .lyric-word[data-state="past"] {
   color: var(--lyric-color-active);
-}
-
-@keyframes lyric-word-lift {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(0, -1.5px, 0);
-  }
+  filter: drop-shadow(0 2px 6px rgb(255 255 255 / 30%));
 }
 
 .lyrics-line--background {

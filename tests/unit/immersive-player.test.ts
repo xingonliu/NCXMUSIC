@@ -280,7 +280,7 @@ describe('应用级沉浸播放展示', () => {
     wrapper.unmount()
   })
 
-  it('严格按原始音节时长扫光并在起音时动画上抬 1.5px', async () => {
+  it('严格按原始音节时长扫光并在起音时缓动上抬 1.5px', async () => {
     vi.useFakeTimers()
     getLyrics.mockResolvedValue({
       ok: true,
@@ -330,10 +330,13 @@ describe('应用级沉浸播放展示', () => {
     expect(secondWord?.attributes('data-state')).toBe('future')
     expect(secondWord?.attributes('data-lifted')).toBe('false')
     expect(firstWord?.attributes('data-word-text')).toBe('逐')
-    expect(lyricsPanelSource).toContain('transform: translate3d(0, -1.5px, 0)')
-    expect(lyricsPanelSource).toContain('transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1)')
-    expect(lyricsPanelSource).toContain('@keyframes lyric-word-lift')
-    expect(lyricsPanelSource).toContain('animation: lyric-word-lift 180ms')
+    expect(lyricsPanelSource).toContain('transform: translate3d(0, -1.5px, 0) scale(1.02)')
+    expect(lyricsPanelSource).toContain('transform 600ms cubic-bezier(0.16, 1, 0.3, 1)')
+    expect(lyricsPanelSource).toContain('filter 600ms ease')
+    expect(lyricsPanelSource).toContain('drop-shadow(0 3px 8px rgb(255 255 255 / 50%))')
+    expect(lyricsPanelSource).toContain('drop-shadow(0 2px 6px rgb(255 255 255 / 30%))')
+    expect(lyricsPanelSource).not.toContain('@keyframes lyric-word-lift')
+    expect(lyricsPanelSource).not.toContain('wordVibratoSubtle')
     expect(lyricsPanelSource).toContain('clip-path: inset(0 var(--word-unfilled, 100%) 0 0)')
     expect(lyricsPanelSource).not.toContain('Math.max(260, word.durationMs)')
     expect(lyricsPanelSource).not.toContain('smoothstepProgress')
