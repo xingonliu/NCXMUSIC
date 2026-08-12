@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 
 // ========= 属性 =========
 
@@ -54,6 +54,12 @@ const trackRef = ref<HTMLElement | null>(null)
 /** 用户是否正在按住进度条。 */
 const isDragging = ref<boolean>(false)
 
+/** 是否正处于点击或快进 Seek 状态。 */
+const isSeeking = ref<boolean>(false)
+
+/** Seek 状态弹性过渡重置定时器。 */
+let seekResetTimer: number | undefined
+
 /** 拖动期间的本地预览值。 */
 const dragValue = ref<number | null>(null)
 
@@ -78,6 +84,29 @@ const percentage = computed<number>(() => {
 })
 
 // ========= 函数 =========
+
+/**
+ * 触发一次 Seek 缓动平滑过渡。
+ *
+ * @param durationMs 缓动维持时长（默认 350ms）
+ */
+function triggerSeekAnimation(durationMs = 350): void {
+  isSeeking.value = true
+  if (seekResetTimer !== undefined) {
+    window.clearTimeout(seekResetTimer)
+  }
+  seekResetTimer = window.setTimeout(() => {
+    isSeeking.value = false
+  }, durationMs)
+}
+
+watch(() => props.modelValue, (nextValue, previousValue) => {
+  if (isDragging.value) return
+  /** 若数值离散大跳跃（如点击 Seek 或切歌），激活 Seek 弹性缓动。 */
+  if (Math.abs(nextValue - previousValue) > 2500) {
+    triggerSeekAnimation()
+  }
+})
 
 /**
  * 把原始进度值按步长量化并限制在合法范围内。
@@ -205,6 +234,7 @@ function handlePointerUp(event: PointerEvent): void {
   /** 释放位置对应的最终播放进度。 */
   const finalValue = valueFromClientX(event.clientX)
   resetPointerInteraction()
+  triggerSeekAnimation()
   emit('update:modelValue', finalValue)
   emit('change', finalValue)
   emit('dragEnd', finalValue)
@@ -257,6 +287,7 @@ function handleKeyDown(event: KeyboardEvent): void {
 
   if (nextValue === null) return
   event.preventDefault()
+  triggerSeekAnimation()
   emit('update:modelValue', nextValue)
   emit('change', nextValue)
 }
@@ -265,6 +296,9 @@ function handleKeyDown(event: KeyboardEvent): void {
 
 onBeforeUnmount(() => {
   resetPointerInteraction()
+  if (seekResetTimer !== undefined) {
+    window.clearTimeout(seekResetTimer)
+  }
 })
 </script>
 
@@ -274,6 +308,7 @@ onBeforeUnmount(() => {
     class="music-progress-bar"
     :class="{
       'music-progress-bar--dragging': isDragging,
+      'music-progress-bar--seeking': isSeeking,
       'music-progress-bar--busy': props.busy,
       'music-progress-bar--disabled': props.disabled
     }"
@@ -335,8 +370,16 @@ onBeforeUnmount(() => {
   border-radius: 10px 0 0 10px;
   background-color: rgb(255 255 255 / 94.5%);
   pointer-events: none;
+  will-change: width;
   transition:
-    width 200ms ease,
+    width 250ms linear,
+    background-color 500ms ease,
+    box-shadow 500ms ease;
+}
+
+.music-progress-bar--seeking .music-progress-fill {
+  transition:
+    width 350ms cubic-bezier(0.22, 1, 0.36, 1),
     background-color 500ms ease,
     box-shadow 500ms ease;
 }
