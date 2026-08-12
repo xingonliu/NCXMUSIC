@@ -194,7 +194,7 @@ const PAUSED_ENERGY = 0.28
  */
 function generateRandomNodeAnchors(): FluidNodeAnchors {
   /** 四个基本象限边界范围 [minX, maxX, minY, maxY]。 */
-  const quadrants = [
+  const quadrants: readonly (readonly [number, number, number, number])[] = [
     [0.10, 0.45, 0.10, 0.45],
     [0.55, 0.90, 0.10, 0.45],
     [0.55, 0.90, 0.55, 0.90],
@@ -202,10 +202,16 @@ function generateRandomNodeAnchors(): FluidNodeAnchors {
   ]
   /** 打乱象限分配，使色彩在全图随机交替分布。 */
   const shuffledQuadrants = [...quadrants].sort(() => Math.random() - 0.5)
-  return shuffledQuadrants.map(([minX, maxX, minY, maxY]) => [
-    minX + Math.random() * (maxX - minX),
-    minY + Math.random() * (maxY - minY)
-  ]) as unknown as FluidNodeAnchors
+  return shuffledQuadrants.map((quadrant) => {
+    const minX = quadrant[0] ?? 0.1
+    const maxX = quadrant[1] ?? 0.45
+    const minY = quadrant[2] ?? 0.1
+    const maxY = quadrant[3] ?? 0.45
+    return [
+      minX + Math.random() * (maxX - minX),
+      minY + Math.random() * (maxY - minY)
+    ]
+  }) as unknown as FluidNodeAnchors
 }
 
 /**
@@ -235,7 +241,7 @@ function interpolateNodeAnchors(
   /** 限制在 [0, 1] 范围内的有效进度。 */
   const clampedProgress = Math.min(1, Math.max(0, progress))
   return from.map((pointFrom, index) => {
-    const pointTo = to[index]
+    const pointTo = to[index] ?? pointFrom
     return [
       pointFrom[0] + (pointTo[0] - pointFrom[0]) * clampedProgress,
       pointFrom[1] + (pointTo[1] - pointFrom[1]) * clampedProgress
