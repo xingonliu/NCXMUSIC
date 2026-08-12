@@ -16,6 +16,14 @@ export interface FluidMeshRendererOptions {
   maximumRenderHeight?: number
 }
 
+/** 4 个节点的归一化 2D 坐标或相位 Seed 集合。 */
+export type FluidNodeAnchors = readonly [
+  readonly [x: number, y: number],
+  readonly [x: number, y: number],
+  readonly [x: number, y: number],
+  readonly [x: number, y: number]
+]
+
 /** Shader 中需要频繁更新的 uniform 位置。 */
 interface FluidMeshUniforms {
   /** 动画累计时间。 */
@@ -24,6 +32,10 @@ interface FluidMeshUniforms {
   resolution: WebGLUniformLocation
   /** 四个节点的连续 RGB 调色板。 */
   colors: WebGLUniformLocation
+  /** 四个节点的随机归一化 2D 锚点。 */
+  anchors: WebGLUniformLocation
+  /** 四个节点的随机相位 Seed。 */
+  seeds: WebGLUniformLocation
   /** 播放状态驱动的流体能量。 */
   energy: WebGLUniformLocation
 }
@@ -43,7 +55,7 @@ void main() {
 
 /**
  * 四节点流体网格 Fragment Shader。
- * Simplex Noise 同时扭曲采样空间和节点坐标，输出端加入 3.5% 动态颗粒。
+ * 支持 4 节点随机锚点与 Seed 输入、双层 FBM 空间扭曲与更高流动振幅。
  */
 const FRAGMENT_SHADER_SOURCE = `
 precision highp float;
@@ -52,6 +64,8 @@ varying vec2 v_uv;
 uniform float u_time;
 uniform vec2 u_resolution;
 uniform vec3 u_colors[4];
+uniform vec2 u_anchors[4];
+uniform vec2 u_seeds[4];
 uniform float u_energy;
 
 vec3 permute(vec3 value) {
@@ -95,43 +109,59 @@ float randomGrain(vec2 coordinate, float frame) {
   return fract(sin(dot(coordinate + frame, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
-vec2 movingNode(vec2 anchor, float seed, float time) {
-  float horizontal = simplexNoise(vec2(seed, time * 0.018 + seed * 1.7));
-  float vertical = simplexNoise(vec2(time * -0.015 + seed * 2.3, seed + 4.0));
-  return anchor + vec2(horizontal, vertical) * (0.075 + u_energy * 0.02);
+vec2 movingNode(vec2 anchor, vec2 seed, float time) {
+  float horizontal = simplexNoise(vec2(seed.x, time * 0.032 + seed.y * 1.7)) * 0.75
+                   + simplexNoise(vec2(seed.y + 11.2, time * 0.065)) * 0.25;
+  float vertical = simplexNoise(vec2(time * -0.028 + seed.x * 2.3, seed.y + 4.0)) * 0.75
+                 + simplexNoise(vec2(time * -0.055, seed.x + 47.3)) * 0.25;
+  return anchor + vec2(horizontal, vertical) * (0.24 + u_energy * 0.12);
 }
 
 void main() {
   float aspect = u_resolution.x / max(u_resolution.y, 1.0);
-  vec2 flow = vec2(
-    simplexNoise(v_uv * 1.2 + vec2(u_time * 0.014, -u_time * 0.010)),
-    simplexNoise(v_uv * 1.05 + vec2(-u_time * 0.011, u_time * 0.012) + 8.4)
+  
+  // 双层 FBM 空间扭曲：主流动 + 高频小旋涡
+  vec2 flow1 = vec2(
+    simplexNoise(v_uv * 1.3 + vec2(u_time * 0.025, -u_time * 0.020)),
+    simplexNoise(v_uv * 1.15 + vec2(-u_time * 0.022, u_time * 0.024) + 8.4)
   );
-  vec2 warpedUv = v_uv + flow * (0.075 + u_energy * 0.012);
+  vec2 flow2 = vec2(
+    simplexNoise(v_uv * 2.6 - vec2(u_time * 0.040, u_time * 0.032) + 14.1),
+    simplexNoise(v_uv * 2.3 + vec2(u_time * 0.036, -u_time * 0.038) + 2.7)
+  );
+  vec2 flow = flow1 * 0.75 + flow2 * 0.25;
+  vec2 warpedUv = v_uv + flow * (0.18 + u_energy * 0.10);
   vec2 position = vec2(warpedUv.x * aspect, warpedUv.y);
-  vec2 node0 = movingNode(vec2(0.12, 0.16), 1.3, u_time);
-  vec2 node1 = movingNode(vec2(0.86, 0.20), 4.7, u_time);
-  vec2 node2 = movingNode(vec2(0.72, 0.83), 8.2, u_time);
-  vec2 node3 = movingNode(vec2(0.18, 0.78), 12.6, u_time);
+
+  // 计算 4 个动态节点的宽高比纠正坐标
+  vec2 node0 = movingNode(u_anchors[0], u_seeds[0], u_time);
+  vec2 node1 = movingNode(u_anchors[1], u_seeds[1], u_time);
+  vec2 node2 = movingNode(u_anchors[2], u_seeds[2], u_time);
+  vec2 node3 = movingNode(u_anchors[3], u_seeds[3], u_time);
   node0.x *= aspect;
   node1.x *= aspect;
   node2.x *= aspect;
   node3.x *= aspect;
-  float weight0 = exp(-dot(position - node0, position - node0) * 2.65);
-  float weight1 = exp(-dot(position - node1, position - node1) * 2.65);
-  float weight2 = exp(-dot(position - node2, position - node2) * 2.65);
-  float weight3 = exp(-dot(position - node3, position - node3) * 2.65);
+
+  // 更平滑的高斯渗色衰减系数 (1.35)，增强 Liquid 漫延质感
+  float weight0 = exp(-dot(position - node0, position - node0) * 1.35);
+  float weight1 = exp(-dot(position - node1, position - node1) * 1.35);
+  float weight2 = exp(-dot(position - node2, position - node2) * 1.35);
+  float weight3 = exp(-dot(position - node3, position - node3) * 1.35);
   float weightTotal = max(weight0 + weight1 + weight2 + weight3, 0.0001);
+
   vec3 color = (
     u_colors[0] * weight0 +
     u_colors[1] * weight1 +
     u_colors[2] * weight2 +
     u_colors[3] * weight3
   ) / weightTotal;
-  float softVariation = simplexNoise(warpedUv * 2.2 - u_time * 0.011) * 0.035;
+
+  float softVariation = simplexNoise(warpedUv * 2.4 - u_time * 0.018) * 0.045;
   color *= 1.0 + softVariation;
-  float frame = floor(u_time * 18.0);
-  float grain = (randomGrain(gl_FragCoord.xy, frame) - 0.5) * 0.07;
+
+  float frame = floor(u_time * 24.0);
+  float grain = (randomGrain(gl_FragCoord.xy, frame) - 0.5) * 0.065;
   gl_FragColor = vec4(clamp(color + grain, 0.0, 1.0), 1.0);
 }
 `
@@ -158,6 +188,60 @@ const PLAYING_ENERGY = 1
 const PAUSED_ENERGY = 0.28
 
 // ========= 函数 =========
+
+/**
+ * 随机生成四象限分布的 4 节点归一化 2D 锚点，确保全图色彩分布均衡。
+ */
+function generateRandomNodeAnchors(): FluidNodeAnchors {
+  /** 四个基本象限边界范围 [minX, maxX, minY, maxY]。 */
+  const quadrants = [
+    [0.10, 0.45, 0.10, 0.45],
+    [0.55, 0.90, 0.10, 0.45],
+    [0.55, 0.90, 0.55, 0.90],
+    [0.10, 0.45, 0.55, 0.90]
+  ]
+  /** 打乱象限分配，使色彩在全图随机交替分布。 */
+  const shuffledQuadrants = [...quadrants].sort(() => Math.random() - 0.5)
+  return shuffledQuadrants.map(([minX, maxX, minY, maxY]) => [
+    minX + Math.random() * (maxX - minX),
+    minY + Math.random() * (maxY - minY)
+  ]) as unknown as FluidNodeAnchors
+}
+
+/**
+ * 随机生成 4 个节点的噪声相位 Seed。
+ */
+function generateRandomNodeSeeds(): FluidNodeAnchors {
+  return [
+    [Math.random() * 100 + 1.0, Math.random() * 100 + 1.0],
+    [Math.random() * 100 + 10.0, Math.random() * 100 + 10.0],
+    [Math.random() * 100 + 20.0, Math.random() * 100 + 20.0],
+    [Math.random() * 100 + 30.0, Math.random() * 100 + 30.0]
+  ]
+}
+
+/**
+ * 在两组 4 节点 2D 锚点集合之间执行归一化线性插值。
+ *
+ * @param from 起始锚点
+ * @param to 目标锚点
+ * @param progress 归一化进度 [0, 1]
+ */
+function interpolateNodeAnchors(
+  from: FluidNodeAnchors,
+  to: FluidNodeAnchors,
+  progress: number
+): FluidNodeAnchors {
+  /** 限制在 [0, 1] 范围内的有效进度。 */
+  const clampedProgress = Math.min(1, Math.max(0, progress))
+  return from.map((pointFrom, index) => {
+    const pointTo = to[index]
+    return [
+      pointFrom[0] + (pointTo[0] - pointFrom[0]) * clampedProgress,
+      pointFrom[1] + (pointTo[1] - pointFrom[1]) * clampedProgress
+    ]
+  }) as unknown as FluidNodeAnchors
+}
 
 /**
  * 编译单个 WebGL Shader，并在失败时释放资源。
@@ -229,6 +313,11 @@ function flattenPalette(palette: FluidMeshPalette): Float32Array {
   return new Float32Array(palette.flatMap((color) => [...color]))
 }
 
+/** 把 4 节点 2D 坐标展平为 uniform2fv 所需的连续数组。 */
+function flattenVec2Array(points: FluidNodeAnchors): Float32Array {
+  return new Float32Array(points.flatMap((point) => [...point]))
+}
+
 // ========= 类 =========
 
 /**
@@ -293,6 +382,18 @@ export class FluidMeshRenderer {
   /** 本轮过渡目标调色板。 */
   private transitionTo: FluidMeshPalette = DEFAULT_FLUID_MESH_PALETTE
 
+  /** 当前画面已经显示的节点锚点。 */
+  private displayedAnchors: FluidNodeAnchors = generateRandomNodeAnchors()
+
+  /** 本轮过渡起始节点锚点。 */
+  private transitionAnchorsFrom: FluidNodeAnchors = this.displayedAnchors
+
+  /** 本轮过渡目标节点锚点。 */
+  private transitionAnchorsTo: FluidNodeAnchors = generateRandomNodeAnchors()
+
+  /** 节点生成的随机噪声 Phase Seed 集合。 */
+  private readonly nodeSeeds: FluidNodeAnchors = generateRandomNodeSeeds()
+
   /** 本轮调色板过渡起始时间。 */
   private transitionStartedAt = 0
 
@@ -343,6 +444,8 @@ export class FluidMeshRenderer {
       time: requireUniform(gl, this.program, 'u_time'),
       resolution: requireUniform(gl, this.program, 'u_resolution'),
       colors: requireUniform(gl, this.program, 'u_colors[0]'),
+      anchors: requireUniform(gl, this.program, 'u_anchors[0]'),
+      seeds: requireUniform(gl, this.program, 'u_seeds[0]'),
       energy: requireUniform(gl, this.program, 'u_energy')
     }
     this.configurePipeline()
@@ -395,15 +498,18 @@ export class FluidMeshRenderer {
   }
 
   /**
-   * 从当前画面开始，在 1.5 秒内线性过渡到新调色板。
+   * 从当前画面开始，在 1.5 秒内线性过渡到新调色板与随机新节点位置。
    *
    * @param palette 新曲目的四节点调色板
    * @param timestamp 可注入的统一时间戳
    */
   setPalette(palette: FluidMeshPalette, timestamp = performance.now()): void {
     this.displayedPalette = this.paletteAt(timestamp)
+    this.displayedAnchors = this.anchorsAt(timestamp)
     this.transitionFrom = this.displayedPalette
     this.transitionTo = palette
+    this.transitionAnchorsFrom = this.displayedAnchors
+    this.transitionAnchorsTo = generateRandomNodeAnchors()
     this.transitionStartedAt = timestamp
   }
 
@@ -457,6 +563,14 @@ export class FluidMeshRenderer {
     return interpolateFluidMeshPalette(this.transitionFrom, this.transitionTo, progress)
   }
 
+  /** 返回指定时刻线性插值得到的节点锚点位置。 */
+  private anchorsAt(timestamp: number): FluidNodeAnchors {
+    if (this.transitionStartedAt === 0) return this.transitionAnchorsTo
+    /** 本轮过渡的归一化进度。 */
+    const progress = (timestamp - this.transitionStartedAt) / this.paletteTransitionMs
+    return interpolateNodeAnchors(this.transitionAnchorsFrom, this.transitionAnchorsTo, progress)
+  }
+
   /** 执行一次低分辨率 Shader 绘制。 */
   private draw(timestamp: number): void {
     /** 与上一次实际 Shader 时钟之间的间隔。 */
@@ -469,8 +583,13 @@ export class FluidMeshRenderer {
     this.lastClockAt = timestamp
     this.lastRenderAt = timestamp
     this.displayedPalette = this.paletteAt(timestamp)
+    this.displayedAnchors = this.anchorsAt(timestamp)
     /** 传入 Shader 的连续调色板数组。 */
     const flattenedPalette = flattenPalette(this.displayedPalette)
+    /** 传入 Shader 的连续锚点数组。 */
+    const flattenedAnchors = flattenVec2Array(this.displayedAnchors)
+    /** 传入 Shader 的连续 Seed 数组。 */
+    const flattenedSeeds = flattenVec2Array(this.nodeSeeds)
     /** 实时低频音频能量 [0, 1]。 */
     const audioEnergy = (this.motionActive && !this.reducedMotion)
       ? (this.audioEnergyProvider?.() ?? 0)
@@ -483,6 +602,8 @@ export class FluidMeshRenderer {
     this.gl.uniform1f(this.uniforms.time, this.flowTime)
     this.gl.uniform2f(this.uniforms.resolution, this.canvas.width, this.canvas.height)
     this.gl.uniform3fv(this.uniforms.colors, flattenedPalette)
+    this.gl.uniform2fv(this.uniforms.anchors, flattenedAnchors)
+    this.gl.uniform2fv(this.uniforms.seeds, flattenedSeeds)
     this.gl.uniform1f(this.uniforms.energy, energy)
     this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4)
   }
