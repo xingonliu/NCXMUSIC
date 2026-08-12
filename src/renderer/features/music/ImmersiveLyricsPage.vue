@@ -205,6 +205,7 @@ onBeforeUnmount(() => {
     class="immersive-lyrics-page"
     :class="[
       isWindows ? 'immersive-lyrics-page--windows' : 'immersive-lyrics-page--macos',
+      windowSnapshot.maximized ? 'immersive-lyrics-page--maximized' : '',
       windowSnapshot.fullscreen ? 'immersive-lyrics-page--fullscreen' : ''
     ]"
     role="dialog"
@@ -487,14 +488,15 @@ onBeforeUnmount(() => {
 
 .immersive-content {
   display: grid;
-  width: min(1360px, calc(100% - 72px));
+  width: calc(100% - 96px);
+  max-width: 1760px;
   min-height: 0;
   flex: 1;
-  grid-template-columns: minmax(280px, 400px) minmax(0, 1fr);
-  gap: clamp(48px, 6.5vw, 116px);
+  grid-template-columns: clamp(280px, 26vw, 460px) minmax(0, 1fr);
+  gap: clamp(48px, 6vw, 120px);
   align-items: center;
-  align-self: center;
-  padding: 10px 0 30px;
+  align-self: stretch;
+  padding: 10px 0 20px;
 }
 
 .immersive-now-playing {
@@ -503,6 +505,7 @@ onBeforeUnmount(() => {
   flex-direction: column;
   align-items: flex-start;
   gap: var(--ncx-space-3);
+  align-self: center;
 }
 
 .immersive-artwork {
@@ -569,7 +572,9 @@ onBeforeUnmount(() => {
 }
 
 .immersive-lyrics-panel {
-  height: min(680px, calc(100vh - 138px));
+  width: 100%;
+  height: calc(100vh - 110px);
+  max-height: 100%;
   min-height: 0;
 }
 
@@ -597,37 +602,39 @@ onBeforeUnmount(() => {
   -webkit-app-region: no-drag;
 }
 
-.immersive-lyrics-page--fullscreen .immersive-content {
-  width: min(1680px, calc(100% - 120px));
-  grid-template-columns: minmax(340px, 480px) minmax(0, 1fr);
-  gap: clamp(64px, 7vw, 136px);
+.immersive-lyrics-page--fullscreen .immersive-content,
+.immersive-lyrics-page--maximized .immersive-content {
+  width: calc(100% - 120px);
+  max-width: 2200px;
+  grid-template-columns: clamp(320px, 28vw, 540px) minmax(0, 1fr);
+  gap: clamp(64px, 7vw, 140px);
 }
 
-.immersive-lyrics-page--fullscreen .immersive-lyrics-panel {
-  height: min(780px, calc(100vh - 140px));
+.immersive-lyrics-page--fullscreen .immersive-lyrics-panel,
+.immersive-lyrics-page--maximized .immersive-lyrics-panel {
+  height: calc(100vh - 100px);
 }
 
-.immersive-lyrics-page--fullscreen :deep(.lyrics-panel--immersive .lyrics-line) {
-  font-size: clamp(44px, 3.8vw, 58px);
+.immersive-lyrics-page--fullscreen :deep(.lyrics-panel--immersive .lyrics-line),
+.immersive-lyrics-page--maximized :deep(.lyrics-panel--immersive .lyrics-line) {
+  font-size: clamp(44px, 3vw + 1.5vh, 60px);
 }
 
-.immersive-lyrics-page--fullscreen :deep(.lyrics-panel--immersive .lyrics-line small) {
-  font-size: clamp(22px, 1.8vw, 30px);
+.immersive-lyrics-page--fullscreen :deep(.lyrics-panel--immersive .lyrics-line small),
+.immersive-lyrics-page--maximized :deep(.lyrics-panel--immersive .lyrics-line small) {
+  font-size: clamp(22px, 1.5vw + 0.8vh, 32px);
 }
 
 @media (min-width: 1440px) {
   .immersive-content {
-    width: min(1560px, calc(100% - 96px));
-    grid-template-columns: minmax(320px, 440px) minmax(0, 1fr);
-    gap: clamp(56px, 6vw, 120px);
-  }
-
-  .immersive-lyrics-panel {
-    height: min(740px, calc(100vh - 138px));
+    width: calc(100% - 100px);
+    max-width: 1920px;
+    grid-template-columns: clamp(300px, 26vw, 480px) minmax(0, 1fr);
+    gap: clamp(56px, 6vw, 128px);
   }
 
   .immersive-lyrics-panel :deep(.lyrics-panel--immersive .lyrics-line) {
-    font-size: clamp(42px, 3.5vw, 54px);
+    font-size: clamp(42px, 2.8vw + 1.3vh, 56px);
   }
 }
 

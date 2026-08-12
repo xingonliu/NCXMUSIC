@@ -996,16 +996,16 @@ onBeforeUnmount(() => {
 }
 
 .lyrics-panel--immersive .lyrics-lines {
-  gap: clamp(34px, 4.5vh, 52px);
+  gap: clamp(34px, 4.5vh, 56px);
   min-height: 100%;
-  padding: 34% 34px 44% 12px;
+  padding: 30vh 34px 38vh 12px;
 }
 
 .lyrics-panel--immersive .lyrics-line {
   width: calc(100% / 1.08);
   max-width: 100%;
   color: #ffffff;
-  font-size: clamp(38px, 3.2vw, 48px);
+  font-size: clamp(38px, 2.6vw + 1.2vh, 52px);
   font-weight: 800;
   -webkit-font-smoothing: antialiased;
   line-height: 1.24;
@@ -1034,7 +1034,7 @@ onBeforeUnmount(() => {
   display: block;
   margin-top: 8px;
   color: inherit;
-  font-size: clamp(20px, 1.6vw, 26px);
+  font-size: clamp(20px, 1.4vw + 0.6vh, 28px);
   font-weight: 750;
   opacity: 0.68;
 }
