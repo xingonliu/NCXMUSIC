@@ -238,15 +238,7 @@ onBeforeUnmount(() => {
 }
 
 .fluid-mesh-background-vignette {
-  background:
-    linear-gradient(180deg, rgb(3 7 9 / 26%) 0%, transparent 30%, rgb(2 5 7 / 32%) 100%),
-    radial-gradient(
-      ellipse 82% 74% at 54% 46%,
-      rgb(4 8 10 / 20%) 0%,
-      rgb(3 7 9 / 30%) 54%,
-      rgb(1 3 5 / 66%) 100%
-    );
-  box-shadow: inset 0 0 190px rgb(0 0 0 / 24%);
+  background: linear-gradient(180deg, rgb(3 7 9 / 26%) 0%, transparent 30%, rgb(2 5 7 / 32%) 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
