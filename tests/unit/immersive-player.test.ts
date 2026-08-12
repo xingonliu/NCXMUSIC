@@ -321,19 +321,25 @@ describe('应用级沉浸播放展示', () => {
     const firstWord = wrapper.findAll<HTMLElement>('.lyric-word')[0]
     /** 尚未开始播放的第二个字。 */
     const secondWord = wrapper.findAll<HTMLElement>('.lyric-word')[1]
-    expect(firstWord?.element.style.getPropertyValue('--progress')).toBe('0.5000')
-    expect(secondWord?.element.style.getPropertyValue('--progress')).toBe('0.0000')
-    expect(firstWord?.element.style.getPropertyValue('--word-glow')).toBe('1.0000')
+    expect(firstWord?.element.style.getPropertyValue('--word-unfilled')).toBe('50.000%')
+    expect(secondWord?.element.style.getPropertyValue('--word-unfilled')).toBe('100.000%')
+    expect(firstWord?.element.style.getPropertyValue('--progress')).toBe('')
+    expect(firstWord?.element.style.getPropertyValue('--word-glow')).toBe('')
     expect(firstWord?.attributes('data-state')).toBe('active')
     expect(secondWord?.attributes('data-state')).toBe('future')
+    expect(firstWord?.attributes('data-word-text')).toBe('逐')
     expect(lyricsPanelSource).toContain('transform: translate3d(0, -1.5px, 0)')
     expect(lyricsPanelSource).toContain('transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1)')
+    expect(lyricsPanelSource).toContain('clip-path: inset(0 var(--word-unfilled, 100%) 0 0)')
     expect(lyricsPanelSource).not.toContain('Math.max(260, word.durationMs)')
     expect(lyricsPanelSource).not.toContain('smoothstepProgress')
+    expect(lyricsPanelSource).not.toContain('smoothPositionMs += driftMs')
+    expect(lyricsPanelSource).not.toContain('-webkit-text-fill-color: transparent')
+    expect(lyricsPanelSource).not.toContain('calc(var(--word-glow')
 
     await wrapper.setProps({ positionMs: 1_100 })
     await wrapper.vm.$nextTick()
-    expect(firstWord?.element.style.getPropertyValue('--progress')).toBe('1.0000')
+    expect(firstWord?.element.style.getPropertyValue('--word-unfilled')).toBe('0.000%')
     expect(firstWord?.attributes('data-state')).toBe('past')
     expect(secondWord?.attributes('data-state')).toBe('active')
 
@@ -346,5 +352,98 @@ describe('应用级沉浸播放展示', () => {
 
     wrapper.unmount()
     vi.useRealTimers()
+  })
+
+  it('播放期间在离散播放器采样之间保持单调等速的逐帧扫光', async () => {
+    getLyrics.mockResolvedValue({
+      ok: true,
+      data: {
+        kind: 'lyrics',
+        entity: {
+          kind: 'lyrics',
+          trackId: 'track-steady-word-progress',
+          lines: [{
+            lineStartMs: 0,
+            lineDurationMs: 1_000,
+            text: '稳定',
+            words: [{ text: '稳定', startMs: 0, durationMs: 1_000 }]
+          }],
+          sources: [{ api: 'test.lyrics', observedAt }],
+          updatedAt: observedAt
+        }
+      }
+    })
+
+    /** 受测试控制的全部待执行动画帧。 */
+    const pendingFrames = new Map<number, FrameRequestCallback>()
+    /** 下一个动画帧的测试 ID。 */
+    let nextFrameId = 0
+    /** 当前模拟的高精度页面时钟。 */
+    let frameTime = 0
+    /** 测试期间接管的页面时钟。 */
+    const performanceNow = vi.spyOn(performance, 'now').mockImplementation(() => frameTime)
+    /** 测试期间接管的动画帧调度器。 */
+    const requestFrame = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) => {
+      /** 本次调度分配的稳定帧 ID。 */
+      const frameId = ++nextFrameId
+      pendingFrames.set(frameId, callback)
+      return frameId
+    })
+    /** 测试期间接管的动画帧取消器。 */
+    const cancelFrame = vi.spyOn(window, 'cancelAnimationFrame').mockImplementation((frameId) => {
+      pendingFrames.delete(frameId)
+    })
+
+    /** 在暂停状态完成歌词 DOM 初始化的测试面板。 */
+    const wrapper = mount(LyricsPanel, {
+      props: {
+        trackId: 'track-steady-word-progress',
+        positionMs: 0,
+        playing: false,
+        immersive: true
+      }
+    })
+
+    try {
+      await vi.waitFor(() => expect(wrapper.findAll('.lyric-word')).toHaveLength(1))
+      await wrapper.setProps({ playing: true })
+      await wrapper.vm.$nextTick()
+      await wrapper.vm.$nextTick()
+
+      /** 每一帧扫光进度相对上一帧的增量。 */
+      const progressDeltas: number[] = []
+      /** 上一帧已经渲染的扫光进度。 */
+      let previousProgress = 0
+
+      for (let frameIndex = 1; frameIndex <= 30; frameIndex += 1) {
+        frameTime = frameIndex * (1_000 / 60)
+        if (frameIndex % 15 === 0) {
+          await wrapper.setProps({ positionMs: Math.round(frameTime) })
+        }
+
+        /** 当前刷新周期真正有效的动画帧回调。 */
+        const scheduledFrames = [...pendingFrames.values()]
+        pendingFrames.clear()
+        scheduledFrames.forEach((callback) => callback(frameTime))
+
+        /** 当前字本帧剩余的未填充百分比。 */
+        const currentUnfilled = Number.parseFloat(
+          wrapper.find<HTMLElement>('.lyric-word').element.style.getPropertyValue('--word-unfilled')
+        )
+        /** 由裁切比例还原的线性扫光进度。 */
+        const currentProgress = 1 - currentUnfilled / 100
+        progressDeltas.push(currentProgress - previousProgress)
+        previousProgress = currentProgress
+      }
+
+      expect(progressDeltas.every((delta) => delta > 0)).toBe(true)
+      expect(Math.max(...progressDeltas) - Math.min(...progressDeltas)).toBeLessThan(0.0002)
+      expect(previousProgress).toBeCloseTo(0.5, 3)
+    } finally {
+      wrapper.unmount()
+      performanceNow.mockRestore()
+      requestFrame.mockRestore()
+      cancelFrame.mockRestore()
+    }
   })
 })

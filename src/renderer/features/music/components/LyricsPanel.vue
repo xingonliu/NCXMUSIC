@@ -48,10 +48,8 @@ type LyricTimelineNode = LyricTimelineLineNode | LyricTimelineInstrumentalNode
 interface WordVisualState {
   /** 字的时态状态：已唱完 (past)、唱响中 (active)、未开始 (future)。 */
   state: 'past' | 'active' | 'future'
-  /** 从左至右的渐变填充进度。 */
+  /** 从左至右的白色覆盖进度。 */
   fillProgress: number
-  /** 发音过程中的柔光强度。 */
-  glow: number
 }
 
 // ========= 属性 =========
@@ -112,8 +110,11 @@ let wordProgressFrameId: number | undefined
 /** 逐字动画循环代次，用于让过期的异步启动和动画帧立即失效。 */
 let wordProgressLoopGeneration = 0
 
-/** 单调递顺高精度平滑播放位置（毫秒）。 */
+/** 单调递增的高精度逐字播放位置（毫秒）。 */
 let smoothPositionMs = props.positionMs
+
+/** 最近一次播放器推送的权威位置，用于识别反向 seek。 */
+let latestPlayerPositionMs = props.positionMs
 
 /** 动画循环上一帧的时钟戳（performance.now()）。 */
 let wordProgressPreviousFrameAt = 0
@@ -318,7 +319,7 @@ function lineWords(line: StandardLyricsLine): StandardLyricsWord[] {
   return line.words ?? []
 }
 
-/** 返回指定播放时刻下单个字或音节的填充与泛光状态。 */
+/** 返回指定播放时刻下单个字或音节的填充状态。 */
 function calculateWordVisualState(
   word: StandardLyricsWord,
   currentTimeMs: number
@@ -335,16 +336,36 @@ function calculateWordVisualState(
     ? 'past'
     : (started ? 'active' : 'future')
 
-  /** 正在唱响期间的弧形泛光包络，在音节中间达到峰值。 */
-  const glow = state === 'active'
-    ? Math.sin(fillProgress * Math.PI)
-    : 0
-
   return {
     state,
-    fillProgress,
-    glow
+    fillProgress
   }
+}
+
+/**
+ * 用播放器的新采样校准单调逐字时钟。
+ *
+ * 小幅落后采样通常只是原生 timeupdate 的离散延迟，直接忽略以避免回拉；
+ * 前进采样、暂停和真正 seek 会重设时钟锚点，使下一帧只累计采样后的时间。
+ *
+ * @param positionMs 播放器推送的权威播放位置
+ * @param sampledAt 本次采样对应的高精度页面时钟
+ */
+function syncWordProgressClock(
+  positionMs: number,
+  sampledAt = performance.now()
+): void {
+  /** 播放器位置是否发生了明显反向移动。 */
+  const movedBackward = positionMs < latestPlayerPositionMs - 24
+  /** 权威采样与当前逐字时钟之间的偏差。 */
+  const driftMs = positionMs - smoothPositionMs
+  /** 本次采样是否代表暂停、seek 或后台恢复后的时间跳变。 */
+  const shouldSnap = !props.playing || movedBackward || Math.abs(driftMs) > 400
+  latestPlayerPositionMs = positionMs
+
+  if (!shouldSnap && driftMs <= 0) return
+  smoothPositionMs = positionMs
+  wordProgressPreviousFrameAt = sampledAt
 }
 
 /** 判断副唱正文是否需要由渲染层补充半透明括号。 */
@@ -604,7 +625,11 @@ function writeWordProgress(currentTimeMs: number, activeOnly = false): void {
     : '.lyric-word'
   const wordElements = container.querySelectorAll<HTMLElement>(selector)
   wordElements.forEach((element) => {
-    if (activeOnly && element.dataset['state'] === 'past' && element.style.getPropertyValue('--progress') === '1.0000') {
+    if (
+      activeOnly &&
+      element.dataset['state'] === 'past' &&
+      element.style.getPropertyValue('--word-unfilled') === '0.000%'
+    ) {
       return
     }
 
@@ -612,10 +637,13 @@ function writeWordProgress(currentTimeMs: number, activeOnly = false): void {
     const durationMs = Number(element.dataset['wordDurationMs'] ?? 0)
     /** 由 DOM 时间数据构造的当前字时间块。 */
     const word: StandardLyricsWord = { text: element.textContent ?? '', startMs, durationMs }
-    /** 当前动画帧的填充与发光状态。 */
+    /** 当前动画帧的填充状态。 */
     const visualState = calculateWordVisualState(word, currentTimeMs)
-    element.style.setProperty('--progress', visualState.fillProgress.toFixed(4))
-    element.style.setProperty('--word-glow', visualState.glow.toFixed(4))
+    /** 白色覆盖层右侧尚未显示的裁切比例。 */
+    const unfilledValue = `${((1 - visualState.fillProgress) * 100).toFixed(3)}%`
+    if (element.style.getPropertyValue('--word-unfilled') !== unfilledValue) {
+      element.style.setProperty('--word-unfilled', unfilledValue)
+    }
     if (element.dataset['state'] !== visualState.state) {
       element.dataset['state'] = visualState.state
     }
@@ -640,14 +668,6 @@ function runWordProgressFrame(frameTime: number, generation: number): void {
   if (props.playing) {
     /** 播放状态下按真实物理时间单调推进毫秒数。 */
     smoothPositionMs += deltaSeconds * 1_000
-
-    /** 计算播放器推送目标点与平滑估算点之间的偏差（毫秒）。 */
-    const driftMs = props.positionMs - smoothPositionMs
-    if (Math.abs(driftMs) > 400) {
-      smoothPositionMs = props.positionMs
-    } else {
-      smoothPositionMs += driftMs * Math.min(1, deltaSeconds * 5)
-    }
   } else {
     smoothPositionMs = props.positionMs
   }
@@ -681,6 +701,8 @@ async function refreshWordProgressLoop(): Promise<void> {
   await nextTick()
   if (generation !== wordProgressLoopGeneration) return
   smoothPositionMs = props.positionMs
+  latestPlayerPositionMs = props.positionMs
+  wordProgressPreviousFrameAt = performance.now()
   syncTimelineFocusPosition(props.positionMs, true)
   writeWordProgress(props.positionMs)
   if (props.immersive && props.playing) {
@@ -702,9 +724,7 @@ watch(activeFocusSelector, async () => {
 })
 
 watch(() => props.positionMs, () => {
-  if (Math.abs(props.positionMs - smoothPositionMs) > 400 || !props.playing) {
-    smoothPositionMs = props.positionMs
-  }
+  syncWordProgressClock(props.positionMs)
   syncTimelineFocusPosition(smoothPositionMs)
   writeWordProgress(smoothPositionMs)
 }, { flush: 'post' })
@@ -799,6 +819,7 @@ onBeforeUnmount(() => {
                   class="lyric-word"
                   :data-word-start-ms="word.startMs"
                   :data-word-duration-ms="word.durationMs"
+                  :data-word-text="word.text"
                 >{{ word.text }}</span>
               </template>
               <span
@@ -998,36 +1019,32 @@ onBeforeUnmount(() => {
 }
 
 .lyric-word {
+  position: relative;
   display: inline-block;
   vertical-align: baseline;
   color: var(--lyric-color-unplayed);
   transform: translate3d(0, 0, 0);
   transform-origin: center bottom;
-  transition:
-    color 100ms linear,
-    transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
   will-change: transform;
 }
 
+.lyric-word::after {
+  position: absolute;
+  inset: 0;
+  color: var(--lyric-color-active);
+  clip-path: inset(0 var(--word-unfilled, 100%) 0 0);
+  content: attr(data-word-text);
+  pointer-events: none;
+  white-space: pre;
+}
+
 .lyric-word[data-state="active"] {
-  color: transparent;
-  background:
-    linear-gradient(
-      to right,
-      var(--lyric-color-active) 0%,
-      var(--lyric-color-active) calc(var(--progress, 0) * 100%),
-      var(--lyric-color-unplayed) calc(var(--progress, 0) * 100% + 4%),
-      var(--lyric-color-unplayed) 100%
-    );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   transform: translate3d(0, -1.5px, 0);
-  text-shadow:
-    0 0 calc(var(--word-glow, 0) * 16px)
-    rgb(255 255 255 / calc(var(--word-glow, 0) * 85%)),
-    0 0 calc(var(--word-glow, 0) * 28px)
-    rgb(255 255 255 / calc(var(--word-glow, 0) * 45%));
+}
+
+.lyric-word[data-state="active"]::after {
+  will-change: clip-path;
 }
 
 .lyric-word[data-state="past"] {
