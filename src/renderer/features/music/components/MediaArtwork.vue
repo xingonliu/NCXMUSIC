@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Music2 } from '@lucide/vue'
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import { adaptArtworkUrl, type MediaArtworkSize } from '../music-entity'
 
@@ -30,6 +30,27 @@ const props = withDefaults(defineProps<{
 const artworkUrl = computed<string | undefined>(() => {
   return props.adaptSource ? adaptArtworkUrl(props.src, props.size) : props.src
 })
+
+/** 当前封面地址是否已经触发图片加载错误。 */
+const artworkLoadFailed = ref<boolean>(false)
+
+/** 当前能够安全渲染的封面地址。 */
+const displayArtworkUrl = computed<string | undefined>(() => {
+  return artworkLoadFailed.value ? undefined : artworkUrl.value
+})
+
+// ========= 函数 =========
+
+/** 图片加载失败后切换到纯灰占位封面。 */
+function handleArtworkError(): void {
+  artworkLoadFailed.value = true
+}
+
+// ========= 生命周期 =========
+
+watch(artworkUrl, () => {
+  artworkLoadFailed.value = false
+})
 </script>
 
 <template>
@@ -38,11 +59,12 @@ const artworkUrl = computed<string | undefined>(() => {
     :class="`media-artwork--${props.size}`"
   >
     <img
-      v-if="artworkUrl"
-      :src="artworkUrl"
+      v-if="displayArtworkUrl"
+      :src="displayArtworkUrl"
       :alt="props.alt"
       :loading="props.loading"
       decoding="async"
+      @error="handleArtworkError"
     >
     <Music2
       v-else
@@ -63,9 +85,7 @@ const artworkUrl = computed<string | undefined>(() => {
   margin: 0;
   border-radius: var(--ncx-radius-md);
   color: var(--ncx-color-text-tertiary);
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--ncx-color-accent) 18%, transparent), transparent),
-    var(--ncx-color-surface-raised);
+  background: var(--ncx-color-surface-raised);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
 }
 

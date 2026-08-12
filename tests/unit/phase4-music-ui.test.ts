@@ -3,6 +3,7 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import MediaArtwork from '../../src/renderer/features/music/components/MediaArtwork.vue'
+import Cover from '../../src/renderer/features/music/components/Cover.vue'
 import MusicCommentsSection from '../../src/renderer/features/music/components/MusicCommentsSection.vue'
 import VirtualTrackList from '../../src/renderer/features/music/components/VirtualTrackList.vue'
 import { disposeAccountSessionStore } from '../../src/renderer/features/account/account-session-store'
@@ -65,6 +66,25 @@ describe('Phase 4 music UI primitives', () => {
 
     expect(wrapper.find('.media-artwork--feature').exists()).toBe(true)
     expect(wrapper.find('.media-artwork-placeholder').exists()).toBe(true)
+  })
+
+  it('falls back to placeholders when shared artwork images fail to load', async () => {
+    /** 模拟远程图片失效的行内封面。 */
+    const mediaArtwork = mount(MediaArtwork, {
+      props: { src: 'https://example.com/missing.jpg', alt: '失效行内封面' }
+    })
+    /** 模拟远程图片失效的卡片封面。 */
+    const cover = mount(Cover, {
+      props: { src: 'https://example.com/missing.jpg', alt: '失效卡片封面' }
+    })
+
+    await mediaArtwork.get('img').trigger('error')
+    await cover.get('img').trigger('error')
+
+    expect(mediaArtwork.find('img').exists()).toBe(false)
+    expect(mediaArtwork.find('.media-artwork-placeholder').exists()).toBe(true)
+    expect(cover.find('img').exists()).toBe(false)
+    expect(cover.find('.ncx-cover-placeholder').exists()).toBe(true)
   })
 
   it('can preserve an already cached artwork URL during a shared element transition', () => {

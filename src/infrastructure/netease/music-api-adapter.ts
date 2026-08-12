@@ -53,6 +53,7 @@ export interface NeteaseUpstreamErrorMetadata {
 /** NeteaseCloudMusicApiEnhanced 中 Phase 2 首批只读能力。 */
 export interface NeteaseMusicApi {
   search(params: Record<string, unknown>): Promise<NeteaseResponse>
+  cloudsearch?(params: Record<string, unknown>): Promise<NeteaseResponse>
   song_detail(params: Record<string, unknown>): Promise<NeteaseResponse>
   lyric_new?(params: Record<string, unknown>): Promise<NeteaseResponse>
   lyric?(params: Record<string, unknown>): Promise<NeteaseResponse>
@@ -1033,10 +1034,15 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
     const api = await this.requiredApi()
     /** 本次读取的统一观测时间。 */
     const observedAt = new Date().toISOString()
+    /** 优先使用返回完整专辑封面字段的云搜索接口，并为旧依赖保留兼容回退。 */
+    const searchMethodName: 'cloudsearch' | 'search' = typeof api.cloudsearch === 'function'
+      ? 'cloudsearch'
+      : 'search'
+    /** 按指定内容类型调用网易云搜索接口。 */
     const callSearch = async (type: string): Promise<UnknownRecord> => {
       signal?.throwIfAborted()
       const response = await withoutThirdPartyConsole(() =>
-        api.search({
+        requiredApiMethod(api, searchMethodName)({
           keywords: payload.query,
           type,
           limit: payload.limit,

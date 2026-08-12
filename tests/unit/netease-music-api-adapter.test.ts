@@ -134,6 +134,45 @@ describe('NeteaseMusicApiAdapter', () => {
     expect(JSON.stringify(result)).not.toContain('cookie')
   })
 
+  it('prefers cloud search so song results retain complete album artwork', async () => {
+    /** 同时提供新旧搜索接口的网易云 API 夹具。 */
+    const api = apiFixture()
+    api.cloudsearch = vi.fn(async () => response({
+      result: {
+        songs: [{
+          id: 33894312,
+          name: '光年之外',
+          ar: [{ id: 7763, name: 'G.E.M.邓紫棋' }],
+          al: {
+            id: 34740156,
+            name: '新的心跳',
+            picUrl: 'http://p1.music.126.net/complete-cover.jpg'
+          },
+          dt: 235000
+        }]
+      }
+    }))
+    /** 使用完整云搜索结果的网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+
+    const result = await adapter.read({
+      operation: 'search',
+      query: '光年之外',
+      category: 'songs',
+      limit: 10,
+      offset: 0
+    }, '', undefined)
+
+    expect(result.kind).toBe('search')
+    if (result.kind !== 'search') throw new Error('Expected search result')
+    expect(result.songs[0]?.album?.artworkUrl).toBe('http://p1.music.126.net/complete-cover.jpg')
+    expect(api.cloudsearch).toHaveBeenCalledWith(expect.objectContaining({
+      keywords: '光年之外',
+      type: '1'
+    }))
+    expect(api.search).not.toHaveBeenCalled()
+  })
+
   it('normalizes lyrics into timed lines with translations', async () => {
     /** 网易云 Adapter。 */
     const adapter = new NeteaseMusicApiAdapter(apiFixture())
