@@ -274,6 +274,9 @@ describe('应用级沉浸播放展示', () => {
     expect(wrapper.findAll('.lyric-word')).toHaveLength(2)
     expect(wrapper.find('.lyrics-instrumental').exists()).toBe(true)
     expect(wrapper.findAll('.lyrics-line')[2]?.classes()).toContain('lyrics-line--background')
+    expect(wrapper.findAll('.lyric-line-primary')[2]?.text()).toBe('第三行')
+    expect(wrapper.findAll('.lyrics-line button')[2]?.attributes('aria-label')).toBe('第三行')
+    expect(wrapper.text()).not.toContain('女：')
 
     await wrapper.findAll('.lyrics-line button')[2]?.trigger('click')
     expect(wrapper.emitted('seek')).toEqual([[12_000]])
@@ -360,6 +363,59 @@ describe('应用级沉浸播放展示', () => {
 
     wrapper.unmount()
     vi.useRealTimers()
+  })
+
+  it('隐藏逐字副唱标签并允许超长音节在面板宽度内换行', async () => {
+    getLyrics.mockResolvedValue({
+      ok: true,
+      data: {
+        kind: 'lyrics',
+        entity: {
+          kind: 'lyrics',
+          trackId: 'track-long-duet-line',
+          lines: [{
+            lineStartMs: 0,
+            lineDurationMs: 2_000,
+            text: '（女：演唱者）这是一句不会越过歌词面板边界的超长歌词',
+            words: [
+              { text: '（女：演唱者）', startMs: 0, durationMs: 200 },
+              {
+                text: '这是一句不会越过歌词面板边界的超长歌词',
+                startMs: 200,
+                durationMs: 1_800
+              }
+            ],
+            vocalRole: 'background'
+          }],
+          sources: [{ api: 'test.lyrics', observedAt }],
+          updatedAt: observedAt
+        }
+      }
+    })
+
+    /** 启用沉浸模式的合唱歌词面板。 */
+    const wrapper = mount(LyricsPanel, {
+      props: {
+        trackId: 'track-long-duet-line',
+        positionMs: 500,
+        immersive: true
+      }
+    })
+
+    await vi.waitFor(() => expect(wrapper.findAll('.lyrics-line')).toHaveLength(1))
+
+    expect(wrapper.findAll('.lyric-word')).toHaveLength(1)
+    expect(wrapper.find('.lyric-line-primary').text()).toBe(
+      '这是一句不会越过歌词面板边界的超长歌词'
+    )
+    expect(wrapper.find('.lyrics-line button').attributes('aria-label')).toBe(
+      '这是一句不会越过歌词面板边界的超长歌词'
+    )
+    expect(lyricsPanelSource).toContain('overflow-wrap: anywhere')
+    expect(lyricsPanelSource).toContain('width: calc(100% / 1.08)')
+    expect(lyricsPanelSource).toContain('white-space: inherit')
+
+    wrapper.unmount()
   })
 
   it('播放期间在离散播放器采样之间保持单调等速的逐帧扫光', async () => {

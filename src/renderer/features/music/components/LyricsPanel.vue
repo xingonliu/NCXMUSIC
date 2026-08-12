@@ -143,6 +143,12 @@ const INSTRUMENTAL_GAP_THRESHOLD_MS = 8_000
 /** 自动恢复跟随前的用户闲置时长。 */
 const AUTO_FOLLOW_RESUME_DELAY_MS = 4_000
 
+/** 沉浸歌词中只用于区分左右声部、不应作为正文展示的行首标签。 */
+const VOCAL_ROLE_PREFIX_PATTERN = /^\s*(?:男|女|男声|女声|和声|伴唱|合唱)\s*[:：]\s*/u
+
+/** 沉浸歌词中包含声部或演唱者信息的行首括号标签。 */
+const VOCAL_METADATA_PREFIX_PATTERN = /^\s*[（(]\s*(?:男|女|男声|女声|和声|伴唱|合唱)(?:\s*[:：][^）)]*)?\s*[）)]\s*/u
+
 /** 弹簧质量参数。 */
 const SPRING_MASS = 1.2
 
@@ -319,6 +325,59 @@ function lineWords(line: StandardLyricsLine): StandardLyricsWord[] {
   return line.words ?? []
 }
 
+/**
+ * 移除沉浸模式左右声部行首的角色或演唱者标签，仅保留实际歌词。
+ *
+ * @param line 当前标准歌词行
+ * @param text 需要处理的歌词文本
+ */
+function stripImmersiveVocalLabel(line: StandardLyricsLine, text: string): string {
+  if (!props.immersive || line.vocalRole !== 'background') return text
+  return text
+    .replace(VOCAL_METADATA_PREFIX_PATTERN, '')
+    .replace(VOCAL_ROLE_PREFIX_PATTERN, '')
+}
+
+/** 返回当前模式下用于无逐字时间轴歌词行的展示正文。 */
+function visibleLineText(line: StandardLyricsLine): string {
+  return stripImmersiveVocalLabel(line, line.text)
+}
+
+/**
+ * 返回当前模式下的逐字歌词，并从右侧声部开头删除不可见的角色或演唱者标签。
+ *
+ * 被保留音节继续沿用上游绝对时间，避免展示层清理文案破坏扫光时序。
+ */
+function visibleLineWords(line: StandardLyricsLine): StandardLyricsWord[] {
+  /** 当前歌词行的原始逐字时间轴。 */
+  const words = lineWords(line)
+  if (!props.immersive || line.vocalRole !== 'background' || words.length === 0) {
+    return words
+  }
+
+  /** 拼接后的完整逐字正文，用于计算行首标签实际占用的字符数。 */
+  const fullText = words.map((word) => word.text).join('')
+  /** 删除声部标签后应当展示的歌词正文。 */
+  const visibleText = stripImmersiveVocalLabel(line, fullText)
+  /** 只允许删除行首字符，异常文本则原样返回以避免误删歌词。 */
+  let remainingPrefixLength = fullText.endsWith(visibleText)
+    ? fullText.length - visibleText.length
+    : 0
+
+  return words.flatMap((word) => {
+    if (remainingPrefixLength <= 0) return [word]
+    if (remainingPrefixLength >= word.text.length) {
+      remainingPrefixLength -= word.text.length
+      return []
+    }
+
+    /** 标签与歌词共用同一时间块时，仅裁掉该时间块开头的标签字符。 */
+    const visibleWordText = word.text.slice(remainingPrefixLength)
+    remainingPrefixLength = 0
+    return [{ ...word, text: visibleWordText }]
+  })
+}
+
 /** 返回指定播放时刻下单个字或音节的填充状态。 */
 function calculateWordVisualState(
   word: StandardLyricsWord,
@@ -366,12 +425,6 @@ function syncWordProgressClock(
   if (!shouldSnap && driftMs <= 0) return
   smoothPositionMs = positionMs
   wordProgressPreviousFrameAt = sampledAt
-}
-
-/** 判断副唱正文是否需要由渲染层补充半透明括号。 */
-function shouldWrapBackgroundText(line: StandardLyricsLine): boolean {
-  if (line.vocalRole !== 'background') return false
-  return !/^\s*[（(].*[）)]\s*$/u.test(line.text)
 }
 
 /** 返回歌词行相对当前播放时刻的三段式状态。 */
@@ -808,18 +861,13 @@ onBeforeUnmount(() => {
         >
           <button
             type="button"
-            :aria-label="node.line.text || '无词吟唱'"
+            :aria-label="visibleLineText(node.line) || '无词吟唱'"
             @click="seekToLyric(node.line, node.lineIndex)"
           >
             <span class="lyric-line-primary">
-              <span
-                v-if="shouldWrapBackgroundText(node.line)"
-                class="lyric-vocal-bracket"
-                aria-hidden="true"
-              >（</span>
-              <template v-if="lineWords(node.line).length > 0">
+              <template v-if="visibleLineWords(node.line).length > 0">
                 <span
-                  v-for="(word, wordIndex) in lineWords(node.line)"
+                  v-for="(word, wordIndex) in visibleLineWords(node.line)"
                   :key="`${word.startMs}-${wordIndex}`"
                   class="lyric-word"
                   :data-word-start-ms="word.startMs"
@@ -830,12 +878,7 @@ onBeforeUnmount(() => {
               <span
                 v-else
                 class="lyric-line-text"
-              >{{ node.line.text || '…' }}</span>
-              <span
-                v-if="shouldWrapBackgroundText(node.line)"
-                class="lyric-vocal-bracket"
-                aria-hidden="true"
-              >）</span>
+              >{{ visibleLineText(node.line) || '…' }}</span>
             </span>
             <small v-if="node.line.translation && appPreferences.preferences.value.showLyricTranslation">
               {{ node.line.translation }}
@@ -916,9 +959,11 @@ onBeforeUnmount(() => {
 }
 
 .lyric-line-primary {
+  display: block;
+  max-width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .lyrics-line small {
@@ -957,6 +1002,8 @@ onBeforeUnmount(() => {
 }
 
 .lyrics-panel--immersive .lyrics-line {
+  width: calc(100% / 1.08);
+  max-width: 100%;
   color: #ffffff;
   font-size: clamp(30px, 2.4vw, 36px);
   font-weight: 650;
@@ -972,6 +1019,8 @@ onBeforeUnmount(() => {
 }
 
 .lyrics-panel--immersive .lyrics-line button {
+  min-width: 0;
+  max-width: 100%;
   transform-origin: inherit;
   transition: opacity 180ms ease, text-shadow 280ms ease;
 }
@@ -1026,8 +1075,12 @@ onBeforeUnmount(() => {
 .lyric-word {
   position: relative;
   display: inline-block;
+  max-width: 100%;
   vertical-align: baseline;
   color: var(--lyric-color-unplayed);
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
   filter: drop-shadow(0 0 0 rgb(255 255 255 / 0%));
   transform: translate3d(0, 0, 0) scale(1);
   transform-origin: center bottom;
@@ -1044,7 +1097,9 @@ onBeforeUnmount(() => {
   clip-path: inset(0 var(--word-unfilled, 100%) 0 0);
   content: attr(data-word-text);
   pointer-events: none;
-  white-space: pre;
+  white-space: inherit;
+  word-break: inherit;
+  overflow-wrap: inherit;
 }
 
 .lyric-word[data-lifted="true"] {
@@ -1068,6 +1123,10 @@ onBeforeUnmount(() => {
   transform-origin: right center;
 }
 
+.lyrics-panel--immersive .lyrics-line--background {
+  margin-left: auto;
+}
+
 .lyrics-line--background button {
   width: 82%;
   margin-left: auto;
@@ -1081,10 +1140,6 @@ onBeforeUnmount(() => {
 
 .lyrics-line--background small {
   font-size: 0.66em;
-}
-
-.lyric-vocal-bracket {
-  opacity: 0.58;
 }
 
 .lyrics-instrumental {
