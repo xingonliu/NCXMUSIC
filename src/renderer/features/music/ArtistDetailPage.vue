@@ -97,9 +97,6 @@ const collaborativeSongs = computed<StandardSong[]>(() => worksSection.value.ite
 const featuredSongs = computed<StandardSong[]>(() =>
   (collaborativeSongs.value.length > 0 ? collaborativeSongs.value : worksSection.value.items).slice(0, 8))
 
-/** 当前参与作品是否使用近期作品优雅降级。 */
-const featuredFallback = computed<boolean>(() => collaborativeSongs.value.length === 0 && worksSection.value.items.length > 0)
-
 // ========= 函数 =========
 
 /** 读取歌手主实体和热门歌曲。 */
@@ -387,7 +384,6 @@ watch(artistId, () => {
         <MusicSection
           section-id="artist-latest-release"
           title="最新发布"
-          description="按发行时间读取的最新一张专辑或 EP。"
           :state="albumsSection.state"
           :error-text="albumsSection.error"
           empty-text="暂时没有最新发布。"
@@ -441,7 +437,6 @@ watch(artistId, () => {
         <MusicSection
           section-id="artist-albums"
           title="专辑与 EP"
-          description="按发行时间倒序排列。"
           :state="albumsSection.state"
           :error-text="albumsSection.error"
           empty-text="暂时没有专辑。"
@@ -463,7 +458,6 @@ watch(artistId, () => {
         <MusicSection
           section-id="artist-appears-on"
           title="参与作品与合集"
-          :description="featuredFallback ? '上游未返回明确客串关系，暂以近期作品替代展示。' : '艺人客串、合作或共同演唱的近期作品。'"
           :state="worksSection.state"
           :error-text="worksSection.error"
           empty-text="暂时没有可识别的参与作品。"
@@ -486,7 +480,6 @@ watch(artistId, () => {
         <MusicSection
           section-id="similar-artists"
           title="相似歌手"
-          description="登录时优先使用相似歌手；受限时回退为热门歌手推荐。"
           :state="similarSection.state"
           :error-text="similarSection.error"
           empty-text="暂时没有相似歌手。"

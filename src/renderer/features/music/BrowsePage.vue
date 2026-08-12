@@ -289,7 +289,6 @@ onMounted(() => {
     <MusicSection
       section-id="latest-releases"
       title="最新发行"
-      description="最新单曲与专辑，按上架时间保持新鲜。"
       :state="newSongsSection.state === 'error' && newAlbumsSection.state === 'error' ? 'error' : 'ready'"
       :error-text="newSongsSection.error || newAlbumsSection.error"
       @retry="loadPage"
@@ -325,7 +324,6 @@ onMounted(() => {
     <MusicSection
       section-id="browse-featured"
       title="新歌推荐歌单"
-      description="用完整歌单继续探索刚刚发现的声音。"
       :state="featuredSection.state"
       :error-text="featuredSection.error"
       @retry="loadFeaturedPlaylists"
@@ -346,7 +344,6 @@ onMounted(() => {
     <MusicSection
       section-id="popular-charts"
       title="热门排行榜"
-      description="全球与地区榜单会按网易云当前可用目录展示。"
       :state="chartsSection.state"
       :error-text="chartsSection.error"
       @retry="loadCharts"
@@ -366,7 +363,6 @@ onMounted(() => {
     <MusicSection
       section-id="browse-categories"
       title="按分类探索歌单"
-      description="语种、风格、场景、情感与主题各展示一行热门内容。"
       :state="categoryPreviewSection.state"
       :error-text="categoryPreviewSection.error"
       @retry="loadBrowseFacets"
@@ -433,7 +429,6 @@ onMounted(() => {
     <MusicSection
       section-id="artist-explore"
       title="歌手探索"
-      description="从不同地区和类型继续发现歌手。"
       :state="artistsSection.state"
       :error-text="artistsSection.error"
       @retry="loadArtists"

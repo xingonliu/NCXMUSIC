@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RotateCcw } from '@lucide/vue'
+import { watch } from 'vue'
 
 import {
   CommonEmptyState,
@@ -7,6 +8,7 @@ import {
   CommonIconButton,
   CommonSpinner
 } from '../../../design-system/components'
+import { showToast } from '../../../design-system/use-toast'
 
 // ========= 属性与事件 =========
 
@@ -16,8 +18,6 @@ const props = withDefaults(defineProps<{
   sectionId: string
   /** Section 标题。 */
   title: string
-  /** Section 补充说明。 */
-  description?: string
   /** Section 当前状态。 */
   state: 'loading' | 'empty' | 'error' | 'ready'
   /** 空状态说明。 */
@@ -27,7 +27,6 @@ const props = withDefaults(defineProps<{
   /** Section 最小高度。 */
   minHeight?: string
 }>(), {
-  description: '',
   emptyText: '暂无内容。',
   errorText: '内容读取失败。',
   minHeight: '180px'
@@ -44,6 +43,34 @@ const emit = defineEmits<{
 function retrySection(): void {
   emit('retry')
 }
+
+/** 通过全局 Toast 展示当前 Section 的空状态或错误详情。 */
+function notifySectionState(): void {
+  if (props.state === 'error') {
+    showToast({
+      message: props.errorText,
+      title: `${props.title}读取失败`,
+      type: 'warning'
+    })
+    return
+  }
+
+  if (props.state === 'empty') {
+    showToast({
+      message: props.emptyText,
+      title: `${props.title}暂无内容`,
+      type: 'info'
+    })
+  }
+}
+
+// ========= 生命周期 =========
+
+watch(
+  () => [props.state, props.errorText, props.emptyText],
+  () => notifySectionState(),
+  { immediate: true }
+)
 </script>
 
 <template>
@@ -53,10 +80,7 @@ function retrySection(): void {
     :style="{ minHeight: props.minHeight }"
   >
     <header class="music-section-header">
-      <div>
-        <h2 :id="`${props.sectionId}-title`">{{ props.title }}</h2>
-        <p v-if="props.description">{{ props.description }}</p>
-      </div>
+      <h2 :id="`${props.sectionId}-title`">{{ props.title }}</h2>
       <div class="music-section-actions">
         <slot name="actions" />
         <CommonIconButton
@@ -78,13 +102,11 @@ function retrySection(): void {
     <CommonErrorState
       v-else-if="props.state === 'error'"
       title="读取失败"
-      :description="props.errorText"
       @retry="retrySection"
     />
     <CommonEmptyState
       v-else-if="props.state === 'empty'"
       title="暂无内容"
-      :description="props.emptyText"
     />
     <div v-else class="music-section-content">
       <slot />
@@ -106,20 +128,13 @@ function retrySection(): void {
   gap: var(--ncx-space-4);
 }
 
-.music-section-header h2,
-.music-section-header p {
+.music-section-header h2 {
   margin: 0;
 }
 
 .music-section-header h2 {
   font-size: 20px;
   line-height: 1.2;
-}
-
-.music-section-header p {
-  margin-top: var(--ncx-space-1);
-  color: var(--ncx-color-text-secondary);
-  font-size: 13px;
 }
 
 .music-section-actions,

@@ -61,6 +61,5 @@ describe('Phase 6 个性化 UI', () => {
     expect(profilePageSource).toContain('musicProfile.insights.slice(0, 6)')
     expect(discoverPageSource).toContain('agent.snapshot.value.personalization.usable')
     expect(discoverPageSource).toContain('title="小云为你推荐"')
-    expect(discoverPageSource).toContain('内容只展示，不会自动播放')
   })
 })

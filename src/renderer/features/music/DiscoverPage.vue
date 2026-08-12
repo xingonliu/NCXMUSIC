@@ -107,15 +107,6 @@ const profileRecommendationSongs = computed<StandardSong[]>(() => rankSongsForPr
   ]
 ).slice(0, 8))
 
-/** 由画像推荐种子生成的 Section 解释文案。 */
-const profileRecommendationDescription = computed<string>(() => {
-  /** 当前画像推荐种子。 */
-  const seeds = agent.snapshot.value.personalization.recommendationSeeds.slice(0, 3)
-  return seeds.length > 0
-    ? `结合你的画像偏好：${seeds.join('、')}。内容只展示，不会自动播放。`
-    : '结合当前音乐人格画像与每日候选，只展示内容，不会自动播放。'
-})
-
 // ========= 函数 =========
 
 /** 把 Section 响应结果写入统一状态。 */
@@ -317,7 +308,6 @@ watch(
       v-if="agent.snapshot.value.personalization.usable && isAuthenticated"
       section-id="xiaoyun-profile-recommendations"
       title="小云为你推荐"
-      :description="profileRecommendationDescription"
       :state="dailySection.state"
       :error-text="dailySection.error"
       empty-text="画像已就绪，但当前没有可展示的推荐歌曲。"
@@ -351,7 +341,6 @@ watch(
     <MusicSection
       section-id="featured-playlists"
       title="精选歌单"
-      description="平台推荐，适合直接开始一段播放。"
       :state="featuredSection.state"
       :error-text="featuredSection.error"
       empty-text="暂时没有可展示的推荐歌单。"
@@ -373,7 +362,6 @@ watch(
     <MusicSection
       section-id="personal-recommendations"
       title="猜你喜欢"
-      description="每日推荐与私人电台并排呈现，一个适合挑选，一个适合直接开始。"
       :state="newSongsSection.state === 'loading' && !isAuthenticated ? 'loading' : 'ready'"
       min-height="260px"
     >
@@ -442,7 +430,6 @@ watch(
     <MusicSection
       section-id="new-songs"
       title="新歌速递"
-      description="当前可见集合保持统一队列语义。"
       :state="newSongsSection.state"
       :error-text="newSongsSection.error"
       empty-text="暂时没有推荐新歌。"
@@ -485,7 +472,6 @@ watch(
     <MusicSection
       section-id="recommended-artists"
       title="歌手推荐"
-      description="从热门歌手继续延展今天的播放。"
       :state="artistsSection.state"
       :error-text="artistsSection.error"
       empty-text="暂时没有推荐歌手。"
