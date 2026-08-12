@@ -89,6 +89,15 @@ describe('MusicProgressBar 独立音乐进度条组件单元测试', () => {
     expect(playbackControlsSource).not.toContain('@update:model-value="handleSeek"')
   })
 
+  it('切歌时两个入口都重建 Pointer 状态且未知时长不会冒充可拖动范围', () => {
+    expect(playerBarSource).toContain(':key="track?.trackId ?? \'empty-player-progress\'"')
+    expect(playerBarSource).toContain(':disabled="!canSeek"')
+    expect(playerBarSource).not.toContain('durationMs ?? snapshot.value.playback.positionMs')
+    expect(playbackControlsSource).toContain(':key="currentTrackId"')
+    expect(playbackControlsSource).toContain(':disabled="!canSeek"')
+    expect(playbackControlsSource).not.toContain('durationMs ?? snapshot.value.playback.positionMs')
+  })
+
   it('拖动时只预览并在匹配指针释放后提交一次最终进度', async () => {
     const wrapper = mount(MusicProgressBar, {
       props: {

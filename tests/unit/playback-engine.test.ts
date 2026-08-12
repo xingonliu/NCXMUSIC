@@ -265,6 +265,16 @@ describe('PlaybackEngine', () => {
   })
 
   describe('seek', () => {
+    it('当前位置的 no-op seek 不进入 seeking，避免等待永远不会出现的 seeked', () => {
+      engine.load(loadInput('1', false))
+      media.emit({ type: 'canplay' })
+
+      engine.seek(0)
+
+      expect(engine.getSnapshot().seeking).toBe(false)
+      expect(media.calls).not.toContain('seek:0')
+    })
+
     it('canplay 之后 seek 直接下发媒体调用', () => {
       engine.load(loadInput('1', false))
       media.emit({ type: 'canplay' })

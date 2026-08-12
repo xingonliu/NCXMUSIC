@@ -247,6 +247,10 @@ export class PlaybackEngine {
         ? Math.max(0, positionMs)
         : Math.max(0, Math.min(positionMs, this.durationMs))
 
+    // 同一位置不启动原生 seek；部分媒体实现不会为 no-op 派发 seeked，
+    // 若仍把领域状态置为 seeking，后续 timeupdate 会被永久丢弃。
+    if (bounded === this.positionMs) return
+
     this.seeking = true
     this.positionMs = bounded
 

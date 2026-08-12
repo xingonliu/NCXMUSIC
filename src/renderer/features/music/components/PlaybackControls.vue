@@ -54,6 +54,11 @@ const text = zhCN.player
 /** 当前是否有曲目可控制。 */
 const hasTrack = computed<boolean>(() => snapshot.value.playback.track !== null)
 
+/** 当前曲目 ID，用于切歌时重建并清理进度条的 Pointer 状态。 */
+const currentTrackId = computed<string>(() => {
+  return snapshot.value.playback.track?.trackId ?? 'empty-playback-progress'
+})
+
 /** 队列中是否有可切换内容。 */
 const hasQueue = computed<boolean>(() => snapshot.value.queue.items.length > 0)
 
@@ -68,7 +73,12 @@ const showPause = computed<boolean>(() => snapshot.value.playback.intent === 'pl
 
 /** 当前播放进度最大值。 */
 const durationMs = computed<number>(() => {
-  return snapshot.value.playback.durationMs ?? snapshot.value.playback.positionMs
+  return snapshot.value.playback.durationMs ?? snapshot.value.playback.track?.durationMs ?? 0
+})
+
+/** 当前曲目是否已经具备可映射点击百分比的有效时长。 */
+const canSeek = computed<boolean>(() => {
+  return hasTrack.value && Number.isFinite(durationMs.value) && durationMs.value > 0
 })
 
 /** 播放模式循环顺序。 */
@@ -201,12 +211,13 @@ function handleQuality(value: string | number): void {
     <div class="playback-controls-progress">
       <span>{{ formatTime(snapshot.playback.positionMs) }}</span>
       <MusicProgressBar
+        :key="currentTrackId"
         class="playback-controls-slider"
         :model-value="snapshot.playback.positionMs"
         :min="0"
         :max="Math.max(durationMs, 1)"
         :step="1000"
-        :disabled="!hasTrack"
+        :disabled="!canSeek"
         :busy="busy"
         @change="handleSeek"
       />

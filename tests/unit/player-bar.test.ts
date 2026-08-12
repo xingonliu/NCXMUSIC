@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinator'
+import MusicProgressBar from '../../src/renderer/features/music/components/MusicProgressBar.vue'
 import PlayerBar from '../../src/renderer/features/music/components/PlayerBar.vue'
 import playerBarSource from '../../src/renderer/features/music/components/PlayerBar.vue?raw'
 import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
@@ -85,6 +86,56 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     expect(prevBtn.props('variant')).toBe('ghost')
     expect(nextBtn.props('size')).toBe('default')
     expect(nextBtn.props('variant')).toBe('ghost')
+  })
+
+  it('切歌时长尚未就绪时禁用百分比点击且不把 1ms 误当有效范围', () => {
+    disposePlayer()
+    /** 模拟切歌后已存在、但尚未取得 metadata 时长的新曲目。 */
+    const pendingTrack = {
+      trackId: 'pending-duration-track',
+      name: 'Pending Duration',
+      artists: ['Artist'],
+      durationMs: null,
+      album: 'Album'
+    }
+    vi.spyOn(PlaybackCoordinator.prototype, 'getSnapshot').mockReturnValue({
+      playback: {
+        status: 'loading',
+        intent: 'play',
+        track: pendingTrack,
+        generation: 1,
+        positionMs: 0,
+        durationMs: null,
+        bufferedMs: 0,
+        volume: 1,
+        muted: false,
+        seeking: false,
+        error: null,
+        actualQuality: null,
+        downgraded: false
+      },
+      queue: {
+        items: [{
+          queueItemId: 'pending-duration-item',
+          track: pendingTrack,
+          source: { kind: 'playlist', playlistId: 'pl-1' },
+          addedAt: 1700000000000
+        }],
+        currentItemId: 'pending-duration-item',
+        mode: 'loop',
+        revision: 1
+      },
+      quality: 'auto'
+    })
+
+    /** 时长尚未就绪时的 PlayerBar 测试实例。 */
+    const wrapper = mount(PlayerBar)
+    /** PlayerBar 使用的独立音乐进度条。 */
+    const progressBar = wrapper.findComponent(MusicProgressBar)
+
+    expect(progressBar.props('disabled')).toBe(true)
+    expect(progressBar.props('max')).toBe(1)
+    expect(progressBar.attributes('aria-disabled')).toBe('true')
   })
 
   it('音乐控制栏 icon button 的 tip 显式指定左右方向', () => {

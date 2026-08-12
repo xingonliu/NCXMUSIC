@@ -644,6 +644,11 @@ function writeWordProgress(currentTimeMs: number, activeOnly = false): void {
     if (element.style.getPropertyValue('--word-unfilled') !== unfilledValue) {
       element.style.setProperty('--word-unfilled', unfilledValue)
     }
+    /** 起音后保持不变的上抬标记，避免 active → past 时中断短音节动画。 */
+    const liftedState = visualState.state === 'future' ? 'false' : 'true'
+    if (element.dataset['lifted'] !== liftedState) {
+      element.dataset['lifted'] = liftedState
+    }
     if (element.dataset['state'] !== visualState.state) {
       element.dataset['state'] = visualState.state
     }
@@ -1039,7 +1044,8 @@ onBeforeUnmount(() => {
   white-space: pre;
 }
 
-.lyric-word[data-state="active"] {
+.lyric-word[data-lifted="true"] {
+  animation: lyric-word-lift 180ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   transform: translate3d(0, -1.5px, 0);
 }
 
@@ -1049,7 +1055,16 @@ onBeforeUnmount(() => {
 
 .lyric-word[data-state="past"] {
   color: var(--lyric-color-active);
-  transform: translate3d(0, -1.5px, 0);
+}
+
+@keyframes lyric-word-lift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, -1.5px, 0);
+  }
 }
 
 .lyrics-line--background {
@@ -1115,6 +1130,7 @@ onBeforeUnmount(() => {
   .lyrics-panel--immersive .lyrics-line,
   .lyrics-instrumental,
   .lyric-word {
+    animation: none;
     transition: none;
   }
 }

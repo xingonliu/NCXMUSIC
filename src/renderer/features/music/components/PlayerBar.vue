@@ -78,10 +78,15 @@ const busy = computed(() => {
 /** 播放按钮显示为暂停图标的条件：意图是播放 */
 const showPause = computed(() => snapshot.value.playback.intent === 'play')
 
-/** 进度条最大值；时长未知时用当前位置兜底，避免滑块跳动 */
-const durationMs = computed(
-  () => snapshot.value.playback.durationMs ?? snapshot.value.playback.positionMs
-)
+/** 进度条最大值；未知时长不能用当前位置冒充总时长。 */
+const durationMs = computed<number>(() => {
+  return snapshot.value.playback.durationMs ?? track.value?.durationMs ?? 0
+})
+
+/** 当前曲目是否已经具备可映射点击百分比的有效时长。 */
+const canSeek = computed<boolean>(() => {
+  return Boolean(track.value) && Number.isFinite(durationMs.value) && durationMs.value > 0
+})
 
 /** 状态文案 */
 const statusLabel = computed(() => text.status[snapshot.value.playback.status])
@@ -289,12 +294,13 @@ function openImmersivePlayer(event: MouseEvent): void {
           <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
           <div class="player-progress-control">
             <MusicProgressBar
+              :key="track?.trackId ?? 'empty-player-progress'"
               class="player-slider player-slider-progress"
               :model-value="snapshot.playback.positionMs"
               :min="0"
               :max="Math.max(durationMs, 1)"
               :step="1000"
-              :disabled="!track"
+              :disabled="!canSeek"
               :busy="busy"
               :label="statusLabel"
               @change="onSeek"
