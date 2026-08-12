@@ -60,6 +60,9 @@ export const DEFAULT_FLUID_MESH_PALETTE: FluidMeshPalette = [
 /** 调色板固定节点数量。 */
 const PALETTE_SIZE = 4
 
+/** 4 节点色彩之间允许的最小 OKLab 感知距离，防止色块颜色过于接近。 */
+const MINIMUM_COLOR_DISTANCE_OKLAB = 0.16
+
 /** 封面取样画布边长。 */
 const SAMPLE_CANVAS_SIZE = 72
 
@@ -384,17 +387,17 @@ function pickMostDistinctCluster(
   })[0]
 }
 
-/** 生成单色封面缺少的辅助色，强化补位色彩的鲜艳度。 */
+/** 生成单色封面缺少的辅助色，强化补位色彩的鲜艳度与拉开色相关。 */
 function deriveMissingColor(base: OklabColor, index: number): OklabColor {
   /** 基准色的圆柱坐标。 */
   const baseLch = oklabToOklch(base)
-  /** 不同补位节点使用的色相偏移。 */
-  const hueOffset = index % 2 === 0 ? Math.PI * 0.58 : -Math.PI * 0.32
+  /** 不同补位节点使用的色相偏移 (强制拉开 > 60°)。 */
+  const hueOffset = index % 2 === 0 ? Math.PI * 0.62 : -Math.PI * 0.38
   /** 不同补位节点使用的明度偏移。 */
-  const lightnessOffset = index % 2 === 0 ? 0.08 : -0.07
+  const lightnessOffset = index % 2 === 0 ? 0.09 : -0.08
   return oklchToOklab({
     lightness: clamp(baseLch.lightness + lightnessOffset, 0.14, 0.56),
-    chroma: clamp(baseLch.chroma * 1.25 + 0.08, 0.08, 0.28),
+    chroma: clamp(baseLch.chroma * 1.3 + 0.08, 0.09, 0.30),
     hue: baseLch.hue + hueOffset
   })
 }
@@ -472,7 +475,55 @@ function correctPaletteColor(color: OklabColor, roleIndex: number): FluidRgbColo
 }
 
 /**
- * 从封面 RGBA 像素提取并修正四节点调色板。
+ * 强制校验并拉开 4 节点色彩之间的感知距离，防止色块颜色过于接近或同化。
+ *
+ * @param palette 原始提取修正后的调色板
+ */
+export function enforceMinimumColorSeparation(palette: FluidMeshPalette): FluidMeshPalette {
+  /** 转换为 OKLab 空间以便精准求解色彩距离。 */
+  const oklabs = palette.map(([red, green, blue]) => rgbToOklab([red, green, blue]))
+  /** 默认备用基准色。 */
+  const defaultBaseOklab = rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[0])
+
+  for (let index = 1; index < PALETTE_SIZE; index += 1) {
+    /** 当前校验节点的 OKLab 色彩。 */
+    let currentOklab = oklabs[index] ?? oklabs[0] ?? defaultBaseOklab
+
+    for (let previous = 0; previous < index; previous += 1) {
+      /** 当前校验对比的已有已确认节点。 */
+      const prevOklab = oklabs[previous] ?? defaultBaseOklab
+      /** 两节点在 OKLab 空间的欧氏感知距离。 */
+      const distance = Math.sqrt(colorDistanceSquared(currentOklab, prevOklab))
+
+      if (distance < MINIMUM_COLOR_DISTANCE_OKLAB) {
+        /** 当前节点的 OKLCH 表达。 */
+        const lch = oklabToOklch(currentOklab)
+        /** 色彩过于接近时，强制施加动态色相旋转角度与明度差异。 */
+        const hueShift = (index * 1.15) * Math.PI / 3
+        /** 强化的明度分阶。 */
+        const lightnessOffset = index === 2 ? 0.12 : (index === 3 ? -0.12 : 0.06)
+
+        currentOklab = oklchToOklab({
+          lightness: clamp(lch.lightness + lightnessOffset, 0.14, 0.55),
+          chroma: clamp(lch.chroma * 1.2 + 0.06, 0.09, 0.32),
+          hue: lch.hue + hueShift
+        })
+      }
+    }
+
+    oklabs[index] = currentOklab
+  }
+
+  return [
+    gamutMapOklch(oklabToOklch(oklabs[0] ?? defaultBaseOklab)),
+    gamutMapOklch(oklabToOklch(oklabs[1] ?? defaultBaseOklab)),
+    gamutMapOklch(oklabToOklch(oklabs[2] ?? defaultBaseOklab)),
+    gamutMapOklch(oklabToOklch(oklabs[3] ?? defaultBaseOklab))
+  ]
+}
+
+/**
+ * 从封面 RGBA 像素提取并修正四节点调色板，并强制执行色彩防接近校验。
  *
  * @param pixels 连续 RGBA 像素
  */
@@ -484,12 +535,15 @@ export function extractFluidMeshPalette(pixels: Uint8ClampedArray): FluidMeshPal
   const clusters = clusterSamples(samples)
   /** 按网格职责排好的四个聚类中心。 */
   const roles = selectPaletteRoles(clusters)
-  return [
+  /** 原始提取校正后的四节点色彩。 */
+  const rawPalette: FluidMeshPalette = [
     correctPaletteColor(roles[0] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[0]), 0),
     correctPaletteColor(roles[1] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[1]), 1),
     correctPaletteColor(roles[2] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[2]), 2),
     correctPaletteColor(roles[3] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[3]), 3)
   ]
+  /** 强行拉开色差距离，确保四个节点色彩各具特色且绝不接近。 */
+  return enforceMinimumColorSeparation(rawPalette)
 }
 
 /** 把字符串稳定映射为无符号整数。 */
@@ -504,19 +558,20 @@ function hashSeed(seed: string): number {
 }
 
 /**
- * 为无法读取像素的跨域封面生成稳定的鲜艳深色调色板。
+ * 为无法读取像素的跨域封面生成稳定且互不接近的鲜艳深色调色板。
  *
  * @param seed 通常使用封面 URL
  */
 export function createFallbackFluidMeshPalette(seed: string): FluidMeshPalette {
   /** URL 哈希得到的基础色相。 */
   const hue = (hashSeed(seed) / 0xffffffff) * Math.PI * 2
-  return [
+  const rawPalette: FluidMeshPalette = [
     gamutMapOklch({ lightness: 0.38, chroma: 0.24, hue }),
     gamutMapOklch({ lightness: 0.34, chroma: 0.22, hue: hue + Math.PI * 0.62 }),
     gamutMapOklch({ lightness: 0.48, chroma: 0.26, hue: hue - Math.PI * 0.24 }),
     gamutMapOklch({ lightness: 0.18, chroma: 0.10, hue: hue + Math.PI * 0.18 })
   ]
+  return enforceMinimumColorSeparation(rawPalette)
 }
 
 /**
