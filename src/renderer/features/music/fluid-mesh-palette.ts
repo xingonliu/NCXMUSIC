@@ -387,21 +387,17 @@ function pickMostDistinctCluster(
   })[0]
 }
 
-/** 生成单色封面缺少的辅助色，保持同色系（邻近色相），通过拉开明度与色度形成层次。 */
+/** 生成单色封面缺少的辅助色，强化补位色彩的鲜艳度与拉开色相关。 */
 function deriveMissingColor(base: OklabColor, index: number): OklabColor {
   /** 基准色的圆柱坐标。 */
   const baseLch = oklabToOklch(base)
-  /** 补位节点采用微小的同色系/邻近色相偏移 (±13° 以内)，防止跨越到对比色 (如暖棕变绿)。 */
-  const hueOffset = index % 2 === 0 ? 0.22 : -0.18
-  /** 补位节点拉开明度阶梯。 */
-  const lightnessOffsets = [0, 0.12, -0.10, 0.05]
-  const lightnessOffset = lightnessOffsets[index] ?? 0.05
-  /** 补位节点控制适度色度。 */
-  const chromaScale = index % 2 === 0 ? 1.15 : 0.85
-
+  /** 不同补位节点使用的色相偏移 (强制拉开 > 60°)。 */
+  const hueOffset = index % 2 === 0 ? Math.PI * 0.62 : -Math.PI * 0.38
+  /** 不同补位节点使用的明度偏移。 */
+  const lightnessOffset = index % 2 === 0 ? 0.09 : -0.08
   return oklchToOklab({
     lightness: clamp(baseLch.lightness + lightnessOffset, 0.14, 0.56),
-    chroma: clamp(baseLch.chroma * chromaScale, 0.04, 0.28),
+    chroma: clamp(baseLch.chroma * 1.3 + 0.08, 0.09, 0.30),
     hue: baseLch.hue + hueOffset
   })
 }
@@ -452,42 +448,34 @@ function selectPaletteRoles(clusters: PaletteCluster[]): OklabColor[] {
 }
 
 /**
- * 依据节点角色调整 OKLCH 明度与色度，保持同色系和谐度并修正低饱和暗部偏色。
+ * 依据节点角色调整 OKLCH 明度与色度，适当放宽色度限制以使颜色更加饱满鲜艳。
  *
  * @param color 原始聚类色
  * @param roleIndex 节点角色索引：主色、辅色、高光、暗部
- * @param referenceHue 封面主色的基准色相，用于校正低饱和近中性暗部的噪点偏色
  */
-function correctPaletteColor(color: OklabColor, roleIndex: number, referenceHue?: number): FluidRgbColor {
+function correctPaletteColor(color: OklabColor, roleIndex: number): FluidRgbColor {
   /** 各角色允许的最低明度。 */
   const minimumLightness = [0.22, 0.20, 0.32, 0.14][roleIndex] ?? 0.20
   /** 各角色允许的最高明度。 */
   const maximumLightness = [0.46, 0.48, 0.55, 0.28][roleIndex] ?? 0.48
   /** 原始色彩的 OKLCH 表达。 */
   const lch = oklabToOklch(color)
-  /** 各角色合理的最小色度，避免低饱和暗部过度饱和放大杂色。 */
-  const minimumChroma = [0.05, 0.04, 0.06, 0.02][roleIndex] ?? 0.04
-  /** 允许的最大色度，保持色彩饱满但不失真。 */
-  const maximumChroma = [0.28, 0.30, 0.32, 0.16][roleIndex] ?? 0.28
-  /** 对极低饱和的近中性色 (如暗灰色/黑发阴影)，将色相对齐到主色调以防止杂色。 */
-  const isNearNeutral = lch.chroma < 0.045
-  const effectiveHue = (isNearNeutral && referenceHue !== undefined)
-    ? referenceHue
-    : (Number.isFinite(lch.hue) ? lch.hue : 0)
-  /** 适度增艳：只有在具备一定色度时才适度放大，近中性色维持微弱色度。 */
-  const boostedChroma = isNearNeutral
-    ? Math.max(lch.chroma * 1.1, minimumChroma)
-    : Math.max(lch.chroma * 1.25, minimumChroma)
+  /** 保证背景具备足够鲜艳度的最小色度。 */
+  const minimumChroma = [0.08, 0.07, 0.10, 0.035][roleIndex] ?? 0.07
+  /** 允许的最大色度，放宽限制以呈现饱满鲜艳的色彩。 */
+  const maximumChroma = [0.30, 0.32, 0.34, 0.18][roleIndex] ?? 0.30
+  /** 增艳提升：对提取到的色度适当乘以 1.3 放大。 */
+  const boostedChroma = Math.max(lch.chroma * 1.3, minimumChroma)
 
   return gamutMapOklch({
     lightness: clamp(lch.lightness, minimumLightness, maximumLightness),
     chroma: clamp(boostedChroma, minimumChroma, maximumChroma),
-    hue: effectiveHue
+    hue: Number.isFinite(lch.hue) ? lch.hue : 0
   })
 }
 
 /**
- * 校验并拉开 4 节点色彩之间的感知距离，优先通过明度和色度阶梯区分，防止异色突变。
+ * 强制校验并拉开 4 节点色彩之间的感知距离，防止色块颜色过于接近或同化。
  *
  * @param palette 原始提取修正后的调色板
  */
@@ -510,15 +498,14 @@ export function enforceMinimumColorSeparation(palette: FluidMeshPalette): FluidM
       if (distance < MINIMUM_COLOR_DISTANCE_OKLAB) {
         /** 当前节点的 OKLCH 表达。 */
         const lch = oklabToOklch(currentOklab)
-        /** 色彩过于接近时，限制在同色系内做微小色相偏移，主要依靠明度与色度阶梯分界。 */
-        const hueShift = index % 2 === 1 ? 0.22 : -0.18
-        /** 强化的明度与色度分阶。 */
-        const lightnessOffset = index === 1 ? 0.10 : (index === 2 ? -0.12 : (index === 3 ? 0.06 : -0.06))
-        const chromaScale = index % 2 === 0 ? 1.15 : 0.85
+        /** 色彩过于接近时，强制施加动态色相旋转角度与明度差异。 */
+        const hueShift = (index * 1.15) * Math.PI / 3
+        /** 强化的明度分阶。 */
+        const lightnessOffset = index === 2 ? 0.12 : (index === 3 ? -0.12 : 0.06)
 
         currentOklab = oklchToOklab({
           lightness: clamp(lch.lightness + lightnessOffset, 0.14, 0.55),
-          chroma: clamp(lch.chroma * chromaScale, 0.035, 0.28),
+          chroma: clamp(lch.chroma * 1.2 + 0.06, 0.09, 0.32),
           hue: lch.hue + hueShift
         })
       }
@@ -548,18 +535,14 @@ export function extractFluidMeshPalette(pixels: Uint8ClampedArray): FluidMeshPal
   const clusters = clusterSamples(samples)
   /** 按网格职责排好的四个聚类中心。 */
   const roles = selectPaletteRoles(clusters)
-  /** 主色聚类的 OKLCH 色相，作为全图基准色调。 */
-  const dominantLch = oklabToOklch(roles[0] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[0]))
-  const dominantHue = Number.isFinite(dominantLch.hue) ? dominantLch.hue : 0
-
   /** 原始提取校正后的四节点色彩。 */
   const rawPalette: FluidMeshPalette = [
-    correctPaletteColor(roles[0] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[0]), 0, dominantHue),
-    correctPaletteColor(roles[1] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[1]), 1, dominantHue),
-    correctPaletteColor(roles[2] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[2]), 2, dominantHue),
-    correctPaletteColor(roles[3] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[3]), 3, dominantHue)
+    correctPaletteColor(roles[0] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[0]), 0),
+    correctPaletteColor(roles[1] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[1]), 1),
+    correctPaletteColor(roles[2] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[2]), 2),
+    correctPaletteColor(roles[3] ?? rgbToOklab(DEFAULT_FLUID_MESH_PALETTE[3]), 3)
   ]
-  /** 适度拉开色差距离，确保四个节点色彩各具特色且维持封面原色基调。 */
+  /** 强行拉开色差距离，确保四个节点色彩各具特色且绝不接近。 */
   return enforceMinimumColorSeparation(rawPalette)
 }
 
@@ -575,7 +558,7 @@ function hashSeed(seed: string): number {
 }
 
 /**
- * 为无法读取像素的跨域封面生成稳定且互不接近的同色系深色调色板。
+ * 为无法读取像素的跨域封面生成稳定且互不接近的鲜艳深色调色板。
  *
  * @param seed 通常使用封面 URL
  */
@@ -583,10 +566,10 @@ export function createFallbackFluidMeshPalette(seed: string): FluidMeshPalette {
   /** URL 哈希得到的基础色相。 */
   const hue = (hashSeed(seed) / 0xffffffff) * Math.PI * 2
   const rawPalette: FluidMeshPalette = [
-    gamutMapOklch({ lightness: 0.38, chroma: 0.22, hue }),
-    gamutMapOklch({ lightness: 0.34, chroma: 0.20, hue: hue + 0.25 }),
-    gamutMapOklch({ lightness: 0.48, chroma: 0.24, hue: hue - 0.20 }),
-    gamutMapOklch({ lightness: 0.18, chroma: 0.10, hue: hue + 0.15 })
+    gamutMapOklch({ lightness: 0.38, chroma: 0.24, hue }),
+    gamutMapOklch({ lightness: 0.34, chroma: 0.22, hue: hue + Math.PI * 0.62 }),
+    gamutMapOklch({ lightness: 0.48, chroma: 0.26, hue: hue - Math.PI * 0.24 }),
+    gamutMapOklch({ lightness: 0.18, chroma: 0.10, hue: hue + Math.PI * 0.18 })
   ]
   return enforceMinimumColorSeparation(rawPalette)
 }
