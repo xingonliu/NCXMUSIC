@@ -372,13 +372,6 @@ onBeforeUnmount(() => {
   pointer-events: none;
   will-change: width;
   transition:
-    width 250ms linear,
-    background-color 500ms ease,
-    box-shadow 500ms ease;
-}
-
-.music-progress-bar--seeking .music-progress-fill {
-  transition:
     width 350ms cubic-bezier(0.22, 1, 0.36, 1),
     background-color 500ms ease,
     box-shadow 500ms ease;
