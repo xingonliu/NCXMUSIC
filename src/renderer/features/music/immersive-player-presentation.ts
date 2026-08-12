@@ -23,6 +23,9 @@ let returnFocusElement: HTMLElement | null = null
 /** 当前正在执行的展示过渡，用于串行处理快速开合命令。 */
 let activeTransition: Promise<void> | null = null
 
+/** 当前沉浸展示是否由直接访问沉浸路由创建。 */
+let presentationOpenedFromRoute = false
+
 /** 高清封面预热最长等待时间，避免网络慢时阻塞展开交互。 */
 const ARTWORK_PRELOAD_BUDGET_MS = 180
 
@@ -156,17 +159,21 @@ async function open(
   trigger?: HTMLElement | null
 ): Promise<void> {
   if (isOpen.value) return
+  presentationOpenedFromRoute = false
   returnFocusElement = trigger ?? document.activeElement as HTMLElement | null
   void preloadArtwork(artworkUrl)
   await updatePresentation(true)
-  if (window.location.hash !== '#/player/lyrics') window.location.hash = '#/player/lyrics'
 }
 
 /** 关闭沉浸播放展示层并恢复触发按钮焦点。 */
 async function close(): Promise<void> {
   if (!isOpen.value) return
+  /** 是否需要在展示关闭后离开直接访问的沉浸路由。 */
+  const shouldLeaveImmersiveRoute = presentationOpenedFromRoute &&
+    window.location.hash.startsWith('#/player/lyrics')
+  presentationOpenedFromRoute = false
   await updatePresentation(false)
-  if (window.location.hash.startsWith('#/player/lyrics')) {
+  if (shouldLeaveImmersiveRoute) {
     /** 浏览器历史中可返回时优先保持用户来源页，否则进入播放详情页。 */
     if (window.history.length > 1) window.history.back()
     else window.location.hash = '#/player'
@@ -177,6 +184,8 @@ async function close(): Promise<void> {
 
 /** 同步直接输入 URL、历史前进后退产生的沉浸路由状态。 */
 async function syncFromRoute(nextOpen: boolean): Promise<void> {
+  if (nextOpen) presentationOpenedFromRoute = true
+  else presentationOpenedFromRoute = false
   await updatePresentation(nextOpen)
 }
 

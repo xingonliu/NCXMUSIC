@@ -208,7 +208,7 @@ function handleQuality(value: string | number): void {
         :step="1000"
         :disabled="!hasTrack"
         :busy="busy"
-        @update:model-value="handleSeek"
+        @change="handleSeek"
       />
       <span>{{ formatTime(durationMs) }}</span>
     </div>

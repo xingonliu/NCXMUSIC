@@ -50,10 +50,6 @@ interface WordVisualState {
   state: 'past' | 'active' | 'future'
   /** 从左至右的渐变填充进度。 */
   fillProgress: number
-  /** 发音起点的弹簧缩放倍数。 */
-  scale: number
-  /** 发音起点的向上位移像素。 */
-  liftPx: number
   /** 发音过程中的柔光强度。 */
   glow: number
 }
@@ -112,6 +108,9 @@ let resumeAutoFollowTimer: number | undefined
 
 /** 逐字高亮动画帧 ID。 */
 let wordProgressFrameId: number | undefined
+
+/** 逐字动画循环代次，用于让过期的异步启动和动画帧立即失效。 */
+let wordProgressLoopGeneration = 0
 
 /** 单调递顺高精度平滑播放位置（毫秒）。 */
 let smoothPositionMs = props.positionMs
@@ -275,75 +274,75 @@ function clampProgress(value: number): number {
   return Math.min(1, Math.max(0, value))
 }
 
+/**
+ * 返回指定时刻对应的歌词或间奏焦点选择器。
+ *
+ * @param positionMs 需要定位的播放时刻
+ */
+function focusSelectorAtPosition(positionMs: number): string {
+  /** 当前时刻命中的虚拟间奏节点。 */
+  const instrumentalNode = timelineNodes.value.find((node) => (
+    node.kind === 'instrumental' &&
+    node.startMs <= positionMs &&
+    positionMs < node.endMs
+  ))
+  if (instrumentalNode?.kind === 'instrumental') {
+    return `[data-instrumental-after="${instrumentalNode.afterLineIndex}"]`
+  }
+
+  /** 当前时刻命中的最后一行歌词下标。 */
+  let lineIndex = -1
+  for (let index = 0; index < displayLines.value.length; index += 1) {
+    const line = displayLines.value[index]
+    if (!line || positionMs < line.lineStartMs) break
+    lineIndex = index
+  }
+
+  return lineIndex >= 0 ? `[data-lyric-index="${lineIndex}"]` : ''
+}
+
+/**
+ * 仅在歌词焦点真正跨行时更新 Vue 响应式时间轴，避免逐帧重渲染歌词列表。
+ *
+ * @param positionMs 当前动画时刻
+ * @param force 是否强制同步初始或换歌状态
+ */
+function syncTimelineFocusPosition(positionMs: number, force = false): void {
+  const nextFocusSelector = focusSelectorAtPosition(positionMs)
+  if (!force && nextFocusSelector === activeFocusSelector.value) return
+  animationPositionMs.value = positionMs
+}
+
 /** 返回标准歌词行的逐字时间轴，并兼容旧缓存中缺少 words 的行。 */
 function lineWords(line: StandardLyricsLine): StandardLyricsWord[] {
   return line.words ?? []
 }
 
-/** 归一化 Smoothstep 缓动函数，在 0% 起音与 100% 收音阶段提供贝塞尔平滑减速，消除硬性突变。 */
-function smoothstepProgress(progress: number): number {
-  const clamped = Math.min(1, Math.max(0, progress))
-  return clamped * clamped * (3 - 2 * clamped)
-}
-
-/** 归一化 Cubic Ease-Out 缓动函数，为字符上抬提供高品质的三次减速滑移物理质感。 */
-function easeOutCubicProgress(progress: number): number {
-  const clamped = Math.min(1, Math.max(0, progress))
-  const inverted = 1 - clamped
-  return 1 - inverted * inverted * inverted
-}
-
-/** 返回指定播放时刻下单个字或音节的填充、上抬与泛光状态。 */
+/** 返回指定播放时刻下单个字或音节的填充与泛光状态。 */
 function calculateWordVisualState(
   word: StandardLyricsWord,
   currentTimeMs: number
 ): WordVisualState {
-  /** 保证极短音节（上游歌词数据如 20ms-80ms）拥有视觉平滑的最小过渡时长（保底 260ms）。 */
-  const effectiveDurationMs = Math.max(260, word.durationMs)
-
-  /** 当前字从起音到收音的线性归一化进度。 */
-  const rawProgress = effectiveDurationMs <= 0
+  /** 当前字从起音到收音的线性进度，严格遵循上游音节时长。 */
+  const fillProgress = word.durationMs <= 0
     ? Number(currentTimeMs >= word.startMs)
-    : clampProgress((currentTimeMs - word.startMs) / effectiveDurationMs)
+    : clampProgress((currentTimeMs - word.startMs) / word.durationMs)
 
-  /**
-   * 应用平滑进度映射：
-   * 对短音节使用线性平滑过渡（避免 smoothstep 在中段 1.5 倍速压缩），
-   * 保证起音至收音在物理时间上拥有足够丰富的逐帧画面数。
-   */
-  const fillProgress = word.durationMs < 300
-    ? rawProgress
-    : smoothstepProgress(rawProgress)
-
-  /** 当前字起音后经过的秒数。 */
-  const elapsedSeconds = Math.max(0, currentTimeMs - word.startMs) / 1_000
-
-  /** 字的三段式时态状态：进度达到 1 为 past，在 0 与 1 之间为 active，0 及以下为 future。 */
-  const state: 'past' | 'active' | 'future' = fillProgress >= 1
+  /** 当前字是否已经到达起音时刻。 */
+  const started = currentTimeMs >= word.startMs
+  /** 字的三段式时态状态，在起音帧立即进入 active 以触发上抬。 */
+  const state: 'past' | 'active' | 'future' = started && fillProgress >= 1
     ? 'past'
-    : (fillProgress > 0 ? 'active' : 'future')
+    : (started ? 'active' : 'future')
 
-  /** 正在唱响期间（0 < fillProgress < 1）的弧形泛光包络，在中间达到 1.0 峰值。 */
+  /** 正在唱响期间的弧形泛光包络，在音节中间达到峰值。 */
   const glow = state === 'active'
     ? Math.sin(fillProgress * Math.PI)
     : 0
 
-  /**
-   * 字符上抬像素 (liftPx)：
-   * - 未唱响的字：0px (基线)
-   * - 已唱响或正在唱的字：在 380ms 包含 Ease-Out Cubic 减速曲线内平滑上浮至 -3.2px，唱完后保持在上浮位置不回落
-   */
-  const liftLinearProgress = fillProgress > 0
-    ? Math.min(1, elapsedSeconds / 0.38)
-    : 0
-  const liftProgress = easeOutCubicProgress(liftLinearProgress)
-  const liftPx = -3.2 * liftProgress
-
   return {
     state,
     fillProgress,
-    scale: 1 + glow * 0.03,
-    liftPx,
     glow
   }
 }
@@ -613,11 +612,9 @@ function writeWordProgress(currentTimeMs: number, activeOnly = false): void {
     const durationMs = Number(element.dataset['wordDurationMs'] ?? 0)
     /** 由 DOM 时间数据构造的当前字时间块。 */
     const word: StandardLyricsWord = { text: element.textContent ?? '', startMs, durationMs }
-    /** 当前动画帧的填充、弹跳与发光状态。 */
+    /** 当前动画帧的填充与发光状态。 */
     const visualState = calculateWordVisualState(word, currentTimeMs)
     element.style.setProperty('--progress', visualState.fillProgress.toFixed(4))
-    element.style.setProperty('--word-scale', visualState.scale.toFixed(4))
-    element.style.setProperty('--word-lift', `${visualState.liftPx.toFixed(3)}px`)
     element.style.setProperty('--word-glow', visualState.glow.toFixed(4))
     if (element.dataset['state'] !== visualState.state) {
       element.dataset['state'] = visualState.state
@@ -625,8 +622,15 @@ function writeWordProgress(currentTimeMs: number, activeOnly = false): void {
   })
 }
 
-/** 驱动一帧逐字遮罩进度并在播放期间持续调度。 */
-function runWordProgressFrame(frameTime: number): void {
+/**
+ * 驱动一帧逐字遮罩进度并在播放期间持续调度。
+ *
+ * @param frameTime 当前动画帧的高精度时钟
+ * @param generation 当前动画循环代次
+ */
+function runWordProgressFrame(frameTime: number, generation: number): void {
+  if (generation !== wordProgressLoopGeneration) return
+
   /** 距离上一帧经过的秒数，上限约束至 50ms 避免切后台后突变。 */
   const deltaSeconds = wordProgressPreviousFrameAt > 0
     ? Math.min((frameTime - wordProgressPreviousFrameAt) / 1_000, 0.05)
@@ -648,7 +652,7 @@ function runWordProgressFrame(frameTime: number): void {
     smoothPositionMs = props.positionMs
   }
 
-  animationPositionMs.value = smoothPositionMs
+  syncTimelineFocusPosition(smoothPositionMs)
   writeWordProgress(smoothPositionMs, true)
 
   if (!props.immersive || !props.playing) {
@@ -656,11 +660,14 @@ function runWordProgressFrame(frameTime: number): void {
     wordProgressPreviousFrameAt = 0
     return
   }
-  wordProgressFrameId = window.requestAnimationFrame(runWordProgressFrame)
+  wordProgressFrameId = window.requestAnimationFrame((nextFrameTime) => {
+    runWordProgressFrame(nextFrameTime, generation)
+  })
 }
 
 /** 取消逐字遮罩动画帧。 */
 function cancelWordProgressLoop(): void {
+  wordProgressLoopGeneration += 1
   if (wordProgressFrameId !== undefined) window.cancelAnimationFrame(wordProgressFrameId)
   wordProgressFrameId = undefined
   wordProgressPreviousFrameAt = 0
@@ -669,12 +676,17 @@ function cancelWordProgressLoop(): void {
 /** 在 DOM 更新后刷新逐字遮罩，并按播放状态决定是否持续运行。 */
 async function refreshWordProgressLoop(): Promise<void> {
   cancelWordProgressLoop()
+  /** 本次启动拥有的动画循环代次。 */
+  const generation = wordProgressLoopGeneration
   await nextTick()
+  if (generation !== wordProgressLoopGeneration) return
   smoothPositionMs = props.positionMs
-  animationPositionMs.value = props.positionMs
+  syncTimelineFocusPosition(props.positionMs, true)
   writeWordProgress(props.positionMs)
   if (props.immersive && props.playing) {
-    wordProgressFrameId = window.requestAnimationFrame(runWordProgressFrame)
+    wordProgressFrameId = window.requestAnimationFrame((frameTime) => {
+      runWordProgressFrame(frameTime, generation)
+    })
   }
 }
 
@@ -689,14 +701,13 @@ watch(activeFocusSelector, async () => {
   scrollToActiveLine()
 })
 
-watch(() => props.positionMs, async () => {
+watch(() => props.positionMs, () => {
   if (Math.abs(props.positionMs - smoothPositionMs) > 400 || !props.playing) {
     smoothPositionMs = props.positionMs
   }
-  animationPositionMs.value = smoothPositionMs
-  await nextTick()
+  syncTimelineFocusPosition(smoothPositionMs)
   writeWordProgress(smoothPositionMs)
-})
+}, { flush: 'post' })
 
 watch([
   () => props.playing,
@@ -989,30 +1000,39 @@ onBeforeUnmount(() => {
 .lyric-word {
   display: inline-block;
   vertical-align: baseline;
+  color: var(--lyric-color-unplayed);
+  transform: translate3d(0, 0, 0);
+  transform-origin: center bottom;
+  transition:
+    color 100ms linear,
+    transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.lyric-word[data-state="active"] {
   color: transparent;
   background:
     linear-gradient(
       to right,
       var(--lyric-color-active) 0%,
-      var(--lyric-color-active) calc(var(--progress, 0) * 100% - 6%),
+      var(--lyric-color-active) calc(var(--progress, 0) * 100%),
       var(--lyric-color-unplayed) calc(var(--progress, 0) * 100% + 4%),
       var(--lyric-color-unplayed) 100%
     );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  transform: translateY(var(--word-lift, 0px)) scale(calc(1 + (var(--word-scale, 1) - 1) * 0.25));
-  transform-origin: center bottom;
-  will-change: transform, text-shadow;
-  transition: text-shadow 220ms ease;
-}
-
-.lyric-word[data-state="active"] {
+  transform: translate3d(0, -1.5px, 0);
   text-shadow:
     0 0 calc(var(--word-glow, 0) * 16px)
     rgb(255 255 255 / calc(var(--word-glow, 0) * 85%)),
     0 0 calc(var(--word-glow, 0) * 28px)
     rgb(255 255 255 / calc(var(--word-glow, 0) * 45%));
+}
+
+.lyric-word[data-state="past"] {
+  color: var(--lyric-color-active);
+  transform: translate3d(0, -1.5px, 0);
 }
 
 .lyrics-line--background {
@@ -1076,7 +1096,8 @@ onBeforeUnmount(() => {
 
 @media (prefers-reduced-motion: reduce) {
   .lyrics-panel--immersive .lyrics-line,
-  .lyrics-instrumental {
+  .lyrics-instrumental,
+  .lyric-word {
     transition: none;
   }
 }

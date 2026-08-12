@@ -297,7 +297,7 @@ function openImmersivePlayer(event: MouseEvent): void {
               :disabled="!track"
               :busy="busy"
               :label="statusLabel"
-              @update:model-value="onSeek"
+              @change="onSeek"
             />
           </div>
           <span class="player-time">{{ formatTime(durationMs) }}</span>

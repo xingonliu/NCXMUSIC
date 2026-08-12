@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import LyricsPanel from '../../src/renderer/features/music/components/LyricsPanel.vue'
+import lyricsPanelSource from '../../src/renderer/features/music/components/LyricsPanel.vue?raw'
 import ImmersiveLyricsPage from '../../src/renderer/features/music/ImmersiveLyricsPage.vue'
 import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
 import { disposePlayer } from '../../src/renderer/features/music/use-player'
@@ -122,6 +123,8 @@ describe('应用级沉浸播放展示', () => {
   })
 
   it('打开和关闭不改变路由，并在关闭后把焦点还给触发按钮', async () => {
+    /** 打开沉浸页前的原始地址。 */
+    const originalHash = window.location.hash
     /** 模拟 PlayerBar 封面入口的按钮。 */
     const trigger = document.createElement('button')
     document.body.append(trigger)
@@ -132,10 +135,12 @@ describe('应用级沉浸播放展示', () => {
     await immersivePlayer.open(undefined, trigger)
 
     expect(immersivePlayer.isOpen.value).toBe(true)
+    expect(window.location.hash).toBe(originalHash)
 
     await immersivePlayer.close()
 
     expect(immersivePlayer.isOpen.value).toBe(false)
+    expect(window.location.hash).toBe(originalHash)
     expect(document.activeElement).toBe(trigger)
   })
 
@@ -275,7 +280,7 @@ describe('应用级沉浸播放展示', () => {
     wrapper.unmount()
   })
 
-  it('uses precise word mask progress and resumes auto-follow after four idle seconds', async () => {
+  it('严格按原始音节时长扫光并在起音时动画上抬 1.5px', async () => {
     vi.useFakeTimers()
     getLyrics.mockResolvedValue({
       ok: true,
@@ -286,11 +291,11 @@ describe('应用级沉浸播放展示', () => {
           trackId: 'track-word-progress',
           lines: [{
             lineStartMs: 1_000,
-            lineDurationMs: 2_000,
+            lineDurationMs: 200,
             text: '逐字',
             words: [
-              { text: '逐', startMs: 1_000, durationMs: 1_000 },
-              { text: '字', startMs: 2_000, durationMs: 1_000 }
+              { text: '逐', startMs: 1_000, durationMs: 100 },
+              { text: '字', startMs: 1_100, durationMs: 100 }
             ]
           }],
           sources: [{ api: 'test.lyrics', observedAt }],
@@ -303,7 +308,7 @@ describe('应用级沉浸播放展示', () => {
     const wrapper = mount(LyricsPanel, {
       props: {
         trackId: 'track-word-progress',
-        positionMs: 1_500,
+        positionMs: 1_050,
         playing: false,
         immersive: true
       }
@@ -319,8 +324,18 @@ describe('应用级沉浸播放展示', () => {
     expect(firstWord?.element.style.getPropertyValue('--progress')).toBe('0.5000')
     expect(secondWord?.element.style.getPropertyValue('--progress')).toBe('0.0000')
     expect(firstWord?.element.style.getPropertyValue('--word-glow')).toBe('1.0000')
-    expect(Number(firstWord?.element.style.getPropertyValue('--word-scale'))).toBeGreaterThan(1)
-    expect(secondWord?.element.style.getPropertyValue('--word-scale')).toBe('1.0000')
+    expect(firstWord?.attributes('data-state')).toBe('active')
+    expect(secondWord?.attributes('data-state')).toBe('future')
+    expect(lyricsPanelSource).toContain('transform: translate3d(0, -1.5px, 0)')
+    expect(lyricsPanelSource).toContain('transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1)')
+    expect(lyricsPanelSource).not.toContain('Math.max(260, word.durationMs)')
+    expect(lyricsPanelSource).not.toContain('smoothstepProgress')
+
+    await wrapper.setProps({ positionMs: 1_100 })
+    await wrapper.vm.$nextTick()
+    expect(firstWord?.element.style.getPropertyValue('--progress')).toBe('1.0000')
+    expect(firstWord?.attributes('data-state')).toBe('past')
+    expect(secondWord?.attributes('data-state')).toBe('active')
 
     await wrapper.find('.lyrics-panel').trigger('wheel')
     expect(wrapper.classes()).toContain('lyrics-panel--manual')

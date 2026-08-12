@@ -57,9 +57,10 @@ Utility 在执行写入前检查活动凭据租约；游客返回 `AUTH_REQUIRED
 
 - `MediaArtwork` 使用 `thumbnail`、`compact`、`card`、`feature`、`hero` 五档语义尺寸，并通过 URL API 替换唯一 `param`。
 - 沉浸播放不再占用二级路由；展示层与 `AppShell`、`PlayerBar` 并列，关闭后保留原页面、导航历史和滚动位置。
-- PlayerBar 封面与沉浸页封面通过 View Transition 共享元素连续缩放，开合方向由文档根节点显式标记；关闭时共享元素裁切层同步收敛到 PlayerBar 的 40 × 40px 尺寸和 `--ncx-radius-md` 圆角后才交还真实封面，避免落点抖动。展示层从窗口底部展开；减少动态效果时直接切换。
+- PlayerBar 封面与沉浸页封面通过 View Transition 共享元素连续缩放，开合方向由文档根节点显式标记；从 PlayerBar 打开时不再在过渡中切换沉浸路由，使源封面在展开期间保留、目标封面在关闭期间可重新挂载。关闭时共享元素裁切层同步收敛到 PlayerBar 的 40 × 40px 尺寸和 `--ncx-radius-md` 圆角后才交还真实封面，避免落点抖动。展示层从窗口底部展开；减少动态效果时直接切换。
 - 沉浸页关闭短杆固定在页面顶部水平中央，保持单根加粗 SVG 横线，悬停仅显示泛光，不改变形状或增加底色；短杆不再响应拖动、位移阈值或封面手势插值，仅在点击时请求关闭，并继续复用既有 View Transition 共享元素动画返回 PlayerBar。
-- 沉浸歌词按已唱、正在唱和未唱三态建立透明度、缩放与模糊层级；`yrc` 逐字时间通过 `requestAnimationFrame` 驱动渐变遮罩、起音微弹跳和随音节时长延展的发光包络。
+- 沉浸歌词按已唱、正在唱和未唱三态建立透明度、缩放与模糊层级；`yrc` 逐字填充严格使用上游 `startMs` 与 `durationMs` 的线性进度，不再强加最短时长或二次缓动。字词在起音帧立即进入 active，并以 `transform` 动画上抬 1.5px；动画帧只直写字词 CSS 状态，歌词焦点跨行时才更新 Vue 响应式时间轴，过期动画循环通过代次失效，避免逐帧重渲染与重复循环造成抖动。
+- PlayerBar 与沉浸页共用固定样式音乐进度条：轨道、白色填充及 Hover 光晕沿用 NcxMusicWeb 既有实现，不跟随封面或主题背景换色；拖动期间只更新本地预览，按匹配的 Pointer ID 释放后才向播放器提交一次 seek，`pointercancel` 与窗口失焦会放弃预览。
 - 当前歌词或长间奏节点通过质量、刚度和阻尼积分弹簧滚动至容器 38% 高度；鼠标滚轮或触摸浏览会立即暂停跟随，连续交互重置 4 秒闲置计时，恢复后弹簧回到当前焦点。点击任意歌词行会按 `lineStartMs` 跳播并立即恢复跟随。
 - 相邻歌词间真实空白超过 8 秒时插入三点式间奏节点；声部标签与整行括号文本归一化为副唱并右侧缩进。当前标准歌词与歌曲实体没有 BPM 字段，因此间奏点使用中性呼吸节律，不宣称与真实 Tempo 对齐。
 - `VirtualTrackList` 使用固定行高、可视窗口和前后缓冲，长列表不会一次挂载全部歌曲行。
@@ -79,14 +80,16 @@ Utility 在执行写入前检查活动凭据租约；游客返回 `AUTH_REQUIRED
 - `tests/contract/music-read-contract.test.ts`：评论集合严格读取协议与原始字段拒绝；
 - `tests/unit/netease-music-api-adapter.test.ts`：评论归一化、评论写入、歌曲排序与标准写入回执；
 - `tests/unit/music-service.test.ts`：游客写入门禁和凭据租约单次执行；
-- `tests/unit/phase4-music-ui.test.ts`：五档封面、占位布局、长列表虚拟窗口、评论游客态、自建歌单动作与键盘上下文菜单。
+- `tests/unit/phase4-music-ui.test.ts`：五档封面、占位布局、长列表虚拟窗口、评论游客态、自建歌单动作与键盘上下文菜单；
+- `tests/unit/immersive-player.test.ts`：共享封面开合方向、路由保持、严格逐字时间及命中后 1.5px 上抬；
+- `tests/unit/music-progress-bar.test.ts`：固定视觉、Pointer ID 隔离、拖动单次提交及取消保护。
 
 全量结果：
 
 - `pnpm typecheck`：通过；
-- `pnpm lint`：通过，0 个错误、156 个既有 warning 级 Vue 模板排版提示，架构边界通过；
-- `pnpm test`：48 个文件通过、1 个文件按环境跳过，366 个测试通过、6 个按环境跳过；
-- `pnpm test:e2e`：1/1 通过；
+- `pnpm lint`：通过，0 个错误、534 个既有 warning 级 Vue 模板排版提示，架构边界通过；
+- `pnpm test`：68 个文件通过、1 个文件按环境跳过，441 个测试通过、6 个按环境跳过；
+- `pnpm test:e2e`：10/10 通过；
 - `pnpm smoke:build`：构建产物契约与 Electron 冒烟通过，覆盖 Renderer 无 Node 全局、Utility 崩溃恢复、取消、音频可播放、状态快照和重载重连；
 - 隔离用户目录 Electron 截图：1280×800 与最小 960×640 首屏非空，22 张真实封面加载；紧凑态 PlayerBar 保留 Liquid Glass 位移滤镜且无内容拉伸，页面横向宽度等于视口。
 
