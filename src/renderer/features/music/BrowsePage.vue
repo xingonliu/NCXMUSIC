@@ -220,7 +220,8 @@ async function loadBrowseFacets(): Promise<void> {
     data: rows,
     error: ''
   }
-  await Promise.all(rows.map(loadCategoryPreview))
+  /** 必须通过状态树中的 Vue 代理行更新，直接修改写入前的原始 rows 不会触发视图刷新。 */
+  await Promise.all(categoryPreviewSection.value.data.map(loadCategoryPreview))
 }
 
 /** 播放一首最新单曲。 */
