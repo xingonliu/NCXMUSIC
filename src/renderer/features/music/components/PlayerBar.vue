@@ -20,6 +20,7 @@ import {
   VolumeX
 } from '@lucide/vue'
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 import type { PlayMode } from '../../../../domains/player/types'
 import {
@@ -38,6 +39,9 @@ import MusicProgressBar from './MusicProgressBar.vue'
 import QueueDrawer from './QueueDrawer.vue'
 
 // ========= 变量 =========
+
+/** 当前路由对象，用于监听当前所属页面。 */
+const route = useRoute()
 
 /** 播放器组合式接口，只发送命令并读取快照。 */
 const player = usePlayer()
@@ -59,6 +63,38 @@ const text = zhCN.player
 
 /** 播放队列抽屉开闭状态。 */
 const isQueueOpen = ref<boolean>(false)
+
+/** 是否处于小云 (AI 助手) 页面。 */
+const isAgentPage = computed<boolean>(() => route.name === 'agent')
+
+/** PlayerBar 外层 Glass 容器的响应式定位与尺寸样式。 */
+const playerBarStyle = computed(() => {
+  if (isAgentPage.value) {
+    return {
+      position: 'fixed',
+      bottom: '18px',
+      right: '28px',
+      left: 'auto',
+      transform: 'none',
+      width: '56px',
+      height: '56px',
+      zIndex: 'var(--ncx-layer-player)',
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+    }
+  }
+
+  return {
+    position: 'fixed',
+    bottom: '18px',
+    left: 'calc(230px + ((100vw - 230px) / 2))',
+    right: 'auto',
+    transform: 'translateX(-50%)',
+    width: 'min(860px, calc(100vw - 288px))',
+    height: 'auto',
+    zIndex: 'var(--ncx-layer-player)',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+  }
+})
 
 /** 当前曲目摘要 */
 const track = computed(() => snapshot.value.playback.track)
@@ -174,18 +210,17 @@ function openImmersivePlayer(event: MouseEvent): void {
       :frost="0.52"
       :lightness="72"
       :alpha="0.9"
-      :style="{
-        position: 'fixed',
-        bottom: '18px',
-        left: 'calc(230px + ((100vw - 230px) / 2))',
-        transform: 'translateX(-50%)',
-        width: 'min(860px, calc(100vw - 288px))',
-        zIndex: 'var(--ncx-layer-player)'
-      }"
+      :style="playerBarStyle"
     >
-      <div class="player-bar-content">
+      <div
+        class="player-bar-content"
+        :class="{ 'is-compact': isAgentPage }"
+      >
         <!-- 曲目信息 -->
-        <div class="player-track">
+        <div
+          class="player-track"
+          :class="{ 'is-compact': isAgentPage }"
+        >
           <button
             class="player-track-cover-button"
             type="button"
@@ -204,7 +239,10 @@ function openImmersivePlayer(event: MouseEvent): void {
               }"
             />
           </button>
-          <div class="player-track-info">
+          <div
+            v-if="!isAgentPage"
+            class="player-track-info"
+          >
             <p class="player-track-name">
               {{ track?.name ?? text.emptyTrack }}
             </p>
@@ -218,8 +256,9 @@ function openImmersivePlayer(event: MouseEvent): void {
           </div>
         </div>
 
-        <!-- 传输控制区域：上一首、暂停/播放、下一首及模式切换统一使用 icon 按钮组件并保持适宜间距 -->
+        <!-- 传输控制区域：小云页隐藏 -->
         <div
+          v-if="!isAgentPage"
           class="player-transport"
           role="group"
           :aria-label="text.regionLabel"
@@ -290,8 +329,11 @@ function openImmersivePlayer(event: MouseEvent): void {
           </CommonIconButton>
         </div>
 
-        <!-- 进度 -->
-        <div class="player-progress">
+        <!-- 进度：小云页隐藏 -->
+        <div
+          v-if="!isAgentPage"
+          class="player-progress"
+        >
           <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
           <div class="player-progress-control">
             <MusicProgressBar
@@ -310,8 +352,11 @@ function openImmersivePlayer(event: MouseEvent): void {
           <span class="player-time">{{ formatTime(durationMs) }}</span>
         </div>
 
-        <!-- 音量与状态控制 -->
-        <div class="player-output">
+        <!-- 音量与状态控制：小云页隐藏 -->
+        <div
+          v-if="!isAgentPage"
+          class="player-output"
+        >
           <CommonIconButton
             size="default"
             variant="ghost"
@@ -405,6 +450,18 @@ function openImmersivePlayer(event: MouseEvent): void {
   column-gap: var(--ncx-space-4, 16px);
   row-gap: 0;
   align-items: center;
+  transition: padding 0.3s ease;
+}
+
+.player-bar-content.is-compact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  min-height: 56px;
+  height: 56px;
+  grid-template-areas: none;
+  grid-template-columns: none;
 }
 
 .player-track {
@@ -415,6 +472,12 @@ function openImmersivePlayer(event: MouseEvent): void {
   gap: var(--ncx-space-2-5, 10px);
   grid-area: track;
   min-width: 0;
+}
+
+.player-track.is-compact {
+  justify-content: center;
+  width: 100%;
+  gap: 0;
 }
 
 .player-track-cover {
