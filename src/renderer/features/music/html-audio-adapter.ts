@@ -32,6 +32,52 @@ const MEDIA_ERROR_CODES: Record<number, PlaybackError['code']> = {
   4: 'media-unsupported' // MEDIA_ERR_SRC_NOT_SUPPORTED
 }
 
+/** Apple Music 风格背景关注的低频起点。 */
+const BACKGROUND_LOW_FREQUENCY_HZ = 50
+
+/** Apple Music 风格背景关注的低频终点。 */
+const BACKGROUND_HIGH_FREQUENCY_HZ = 120
+
+/**
+ * 从 AnalyserNode 的频域字节数组中计算指定频段的 RMS 能量。
+ * 第 k 个频点中心频率为 `k * sampleRate / fftSize`。
+ */
+export function calculateFrequencyBandEnergy(
+  frequencyData: Uint8Array,
+  sampleRate: number,
+  fftSize: number,
+  minimumFrequency = BACKGROUND_LOW_FREQUENCY_HZ,
+  maximumFrequency = BACKGROUND_HIGH_FREQUENCY_HZ
+): number {
+  if (
+    frequencyData.length === 0 ||
+    !Number.isFinite(sampleRate) ||
+    !Number.isFinite(fftSize) ||
+    sampleRate <= 0 ||
+    fftSize <= 0 ||
+    maximumFrequency < minimumFrequency
+  ) return 0
+
+  /** 每个 FFT 频点覆盖的赫兹宽度。 */
+  const hertzPerBin = sampleRate / fftSize
+  /** 排除直流分量后的首个目标频点。 */
+  const firstBin = Math.max(1, Math.ceil(minimumFrequency / hertzPerBin))
+  /** 目标频段最后一个频点。 */
+  const lastBin = Math.min(
+    frequencyData.length - 1,
+    Math.floor(maximumFrequency / hertzPerBin)
+  )
+  if (lastBin < firstBin) return 0
+
+  /** 目标频段各点的平方和。 */
+  let squaredMagnitude = 0
+  for (let bin = firstBin; bin <= lastBin; bin += 1) {
+    const magnitude = (frequencyData[bin] ?? 0) / 255
+    squaredMagnitude += magnitude * magnitude
+  }
+  return Math.sqrt(squaredMagnitude / (lastBin - firstBin + 1))
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // HtmlAudioAdapter
 // ─────────────────────────────────────────────────────────────────────────────
@@ -167,13 +213,12 @@ export class HtmlAudioAdapter implements MediaElementPort {
     }
 
     analyser.getByteFrequencyData(buffer)
-    /** 取前 8 个 Bin（低于约 350Hz 的低音鼓点区间）。 */
-    let sum = 0
-    const binCount = Math.min(8, buffer.length)
-    for (let index = 0; index < binCount; index += 1) {
-      sum += buffer[index] ?? 0
-    }
-    const rawEnergy = sum / (binCount * 255)
+    /** 只读取 50～120 Hz 的 Bass / Kick 频段，避免人声和高频推动背景。 */
+    const rawEnergy = calculateFrequencyBandEnergy(
+      buffer,
+      analyser.context.sampleRate,
+      analyser.fftSize
+    )
 
     if (rawEnergy > this.smoothedAudioEnergy) {
       this.smoothedAudioEnergy = rawEnergy * 0.7 + this.smoothedAudioEnergy * 0.3
@@ -334,8 +379,10 @@ export class HtmlAudioAdapter implements MediaElementPort {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
       const context = new AudioCtx()
       const analyser = context.createAnalyser()
-      analyser.fftSize = 256
-      analyser.smoothingTimeConstant = 0.8
+      /** 2048 点 FFT 在常见采样率下能为 50～120 Hz 提供 3～4 个有效频点。 */
+      analyser.fftSize = 2_048
+      /** 保留鼓点起音；更长的释放由 getAudioEnergy 的非对称 EMA 完成。 */
+      analyser.smoothingTimeConstant = 0.45
       const sourceNode = context.createMediaElementSource(this.element)
       sourceNode.connect(analyser)
       analyser.connect(context.destination)

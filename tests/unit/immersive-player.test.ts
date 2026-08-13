@@ -283,7 +283,44 @@ describe('应用级沉浸播放展示', () => {
     wrapper.unmount()
   })
 
-  it('严格按原始音节时长扫光并在起音时缓动上抬 1.5px', async () => {
+  it('普通 LRC 只创建逐行状态，不伪造逐字节点', async () => {
+    getLyrics.mockResolvedValue({
+      ok: true,
+      data: {
+        kind: 'lyrics',
+        entity: {
+          kind: 'lyrics',
+          trackId: 'track-line-timed',
+          lines: [
+            { lineStartMs: 0, lineDurationMs: 800, text: '第一行', words: [] },
+            { lineStartMs: 1_000, lineDurationMs: 800, text: '第二行', words: [] }
+          ],
+          sources: [{ api: 'test.lyrics', observedAt }],
+          updatedAt: observedAt
+        }
+      }
+    })
+
+    const wrapper = mount(LyricsPanel, {
+      props: {
+        trackId: 'track-line-timed',
+        positionMs: 1_050,
+        playing: false,
+        immersive: true
+      }
+    })
+
+    await vi.waitFor(() => expect(wrapper.findAll('.lyrics-line')).toHaveLength(2))
+    expect(wrapper.findAll('.lyric-word')).toHaveLength(0)
+    expect(wrapper.findAll('.lyrics-line')[0]?.classes()).toContain('lyrics-line--past')
+    expect(wrapper.findAll('.lyrics-line')[1]?.classes()).toContain('lyrics-line--active')
+    expect(wrapper.findAll('.lyrics-line')[1]?.classes()).toContain('lyrics-line--line-timed')
+    expect(wrapper.findAll('.lyric-line-text')).toHaveLength(2)
+
+    wrapper.unmount()
+  })
+
+  it('严格按原始音节时长填充并将基础悬浮保持到下一行接管', async () => {
     vi.useFakeTimers()
     getLyrics.mockResolvedValue({
       ok: true,
@@ -292,15 +329,23 @@ describe('应用级沉浸播放展示', () => {
         entity: {
           kind: 'lyrics',
           trackId: 'track-word-progress',
-          lines: [{
-            lineStartMs: 1_000,
-            lineDurationMs: 200,
-            text: '逐字',
-            words: [
-              { text: '逐', startMs: 1_000, durationMs: 100 },
-              { text: '字', startMs: 1_100, durationMs: 100 }
-            ]
-          }],
+          lines: [
+            {
+              lineStartMs: 1_000,
+              lineDurationMs: 200,
+              text: '逐字',
+              words: [
+                { text: '逐', startMs: 1_000, durationMs: 100 },
+                { text: '字', startMs: 1_100, durationMs: 100 }
+              ]
+            },
+            {
+              lineStartMs: 2_000,
+              lineDurationMs: 500,
+              text: '换行',
+              words: []
+            }
+          ],
           sources: [{ api: 'test.lyrics', observedAt }],
           updatedAt: observedAt
         }
@@ -324,35 +369,57 @@ describe('应用级沉浸播放展示', () => {
     const firstWord = wrapper.findAll<HTMLElement>('.lyric-word')[0]
     /** 尚未开始播放的第二个字。 */
     const secondWord = wrapper.findAll<HTMLElement>('.lyric-word')[1]
-    expect(firstWord?.element.style.getPropertyValue('--word-unfilled')).toBe('50.000%')
-    expect(secondWord?.element.style.getPropertyValue('--word-unfilled')).toBe('100.000%')
+    expect(firstWord?.element.style.getPropertyValue('--word-fill')).toBe('50.000%')
+    expect(secondWord?.element.style.getPropertyValue('--word-fill')).toBe('0.000%')
     expect(firstWord?.element.style.getPropertyValue('--progress')).toBe('')
     expect(firstWord?.element.style.getPropertyValue('--word-glow')).toBe('')
     expect(firstWord?.attributes('data-state')).toBe('active')
-    expect(firstWord?.attributes('data-lifted')).toBe('true')
     expect(secondWord?.attributes('data-state')).toBe('future')
-    expect(secondWord?.attributes('data-lifted')).toBe('false')
+    expect(Number.parseFloat(firstWord?.element.style.getPropertyValue('--word-lift') ?? '0'))
+      .toBeLessThan(0)
+    const firstWordLiftDuringAttack = Number.parseFloat(
+      firstWord?.element.style.getPropertyValue('--word-lift') ?? '0'
+    )
     expect(firstWord?.attributes('data-word-text')).toBe('逐')
-    expect(lyricsPanelSource).toContain('transform: translate3d(0, -1.5px, 0) scale(1.02)')
-    expect(lyricsPanelSource).toContain('transform 600ms cubic-bezier(0.16, 1, 0.3, 1)')
-    expect(lyricsPanelSource).toContain('filter 600ms ease')
-    expect(lyricsPanelSource).toContain('drop-shadow(0 3px 8px rgb(255 255 255 / 50%))')
-    expect(lyricsPanelSource).toContain('drop-shadow(0 2px 6px rgb(255 255 255 / 30%))')
-    expect(lyricsPanelSource).not.toContain('@keyframes lyric-word-lift')
-    expect(lyricsPanelSource).not.toContain('wordVibratoSubtle')
-    expect(lyricsPanelSource).toContain('clip-path: inset(0 var(--word-unfilled, 100%) 0 0)')
-    expect(lyricsPanelSource).not.toContain('Math.max(260, word.durationMs)')
-    expect(lyricsPanelSource).not.toContain('smoothstepProgress')
-    expect(lyricsPanelSource).not.toContain('smoothPositionMs += driftMs')
-    expect(lyricsPanelSource).not.toContain('-webkit-text-fill-color: transparent')
-    expect(lyricsPanelSource).not.toContain('calc(var(--word-glow')
+    expect(lyricsPanelSource).toContain('mask-image: linear-gradient(')
+    expect(lyricsPanelSource).toContain('var(--lyric-accent-color)')
+    expect(lyricsPanelSource).toContain('background-clip: text')
+    expect(lyricsPanelSource).toContain('translate3d(0, var(--word-lift), 0)')
+    expect(lyricsPanelSource).toContain('smoothstepProgress')
+    expect(lyricsPanelSource).toContain('const peakLiftEm =')
+    expect(lyricsPanelSource).not.toContain('scale(var(--word-scale))')
+    expect(lyricsPanelSource).toContain(
+      '.lyrics-line--word-timed:is(.lyrics-line--active, .lyrics-line--singing) .lyric-word'
+    )
+    expect(lyricsPanelSource).not.toContain('smoothPositionMs +=')
+    expect(lyricsPanelSource).not.toContain('clip-path:')
+    expect(lyricsPanelSource).not.toContain('drop-shadow(')
+    expect(lyricsPanelSource).not.toContain('filter: blur(')
 
     await wrapper.setProps({ positionMs: 1_100 })
     await wrapper.vm.$nextTick()
-    expect(firstWord?.element.style.getPropertyValue('--word-unfilled')).toBe('0.000%')
+    expect(firstWord?.element.style.getPropertyValue('--word-fill')).toBe('100.000%')
     expect(firstWord?.attributes('data-state')).toBe('past')
-    expect(firstWord?.attributes('data-lifted')).toBe('true')
     expect(secondWord?.attributes('data-state')).toBe('active')
+    /** 音节收音后基础悬浮仍然保持，不随起音强调一起落回。 */
+    expect(Number.parseFloat(firstWord?.element.style.getPropertyValue('--word-lift') ?? '0'))
+      .toBeLessThan(0)
+    /** 强调层跨越多个动画帧沿单一方向抵达峰值，而不是在起音帧瞬移。 */
+    expect(Number.parseFloat(firstWord?.element.style.getPropertyValue('--word-lift') ?? '0'))
+      .toBeLessThan(firstWordLiftDuringAttack)
+
+    await wrapper.setProps({ positionMs: 1_500 })
+    await wrapper.vm.$nextTick()
+    expect(Number.parseFloat(secondWord?.element.style.getPropertyValue('--word-lift') ?? '0'))
+      .toBeLessThan(0)
+    /** 回落只抵达稳定悬浮位，之后不再被另一条基础曲线反向拉扯。 */
+    expect(firstWord?.element.style.getPropertyValue('--word-lift')).toBe('-0.0500em')
+
+    /** 下一行接管焦点后，上一行的基础悬浮才统一复位。 */
+    await wrapper.setProps({ positionMs: 2_000 })
+    await wrapper.vm.$nextTick()
+    expect(firstWord?.element.style.getPropertyValue('--word-lift')).toBe('0.0000em')
+    expect(secondWord?.element.style.getPropertyValue('--word-lift')).toBe('0.0000em')
 
     await wrapper.find('.lyrics-panel').trigger('wheel')
     expect(wrapper.classes()).toContain('lyrics-panel--manual')
@@ -412,7 +479,7 @@ describe('应用级沉浸播放展示', () => {
       '这是一句不会越过歌词面板边界的超长歌词'
     )
     expect(lyricsPanelSource).toContain('overflow-wrap: anywhere')
-    expect(lyricsPanelSource).toContain('width: calc(100% / 1.08)')
+    expect(lyricsPanelSource).toContain('width: 96.5%')
     expect(lyricsPanelSource).toContain('white-space: inherit')
 
     wrapper.unmount()
@@ -481,7 +548,10 @@ describe('应用级沉浸播放展示', () => {
 
       for (let frameIndex = 1; frameIndex <= 30; frameIndex += 1) {
         frameTime = frameIndex * (1_000 / 60)
-        if (frameIndex % 15 === 0) {
+        if (frameIndex === 15) {
+          /** 模拟迟到 180ms 的原生 timeupdate；视觉时钟不得因此向后抖动。 */
+          await wrapper.setProps({ positionMs: Math.round(frameTime - 180) })
+        } else if (frameIndex === 30) {
           await wrapper.setProps({ positionMs: Math.round(frameTime) })
         }
 
@@ -490,12 +560,12 @@ describe('应用级沉浸播放展示', () => {
         pendingFrames.clear()
         scheduledFrames.forEach((callback) => callback(frameTime))
 
-        /** 当前字本帧剩余的未填充百分比。 */
-        const currentUnfilled = Number.parseFloat(
-          wrapper.find<HTMLElement>('.lyric-word').element.style.getPropertyValue('--word-unfilled')
+        /** 当前字本帧已经填充的百分比。 */
+        const currentFill = Number.parseFloat(
+          wrapper.find<HTMLElement>('.lyric-word').element.style.getPropertyValue('--word-fill')
         )
-        /** 由裁切比例还原的线性扫光进度。 */
-        const currentProgress = 1 - currentUnfilled / 100
+        /** 由填充比例还原的线性逐字进度。 */
+        const currentProgress = currentFill / 100
         progressDeltas.push(currentProgress - previousProgress)
         previousProgress = currentProgress
       }
@@ -503,6 +573,16 @@ describe('应用级沉浸播放展示', () => {
       expect(progressDeltas.every((delta) => delta > 0)).toBe(true)
       expect(Math.max(...progressDeltas) - Math.min(...progressDeltas)).toBeLessThan(0.0002)
       expect(previousProgress).toBeCloseTo(0.5, 3)
+
+      /** 模拟主线程卡顿 400ms；下一帧应直接回到媒体锚点对应位置，而不是只补 50ms。 */
+      frameTime = 900
+      const delayedFrames = [...pendingFrames.values()]
+      pendingFrames.clear()
+      delayedFrames.forEach((callback) => callback(frameTime))
+      const fillAfterDroppedFrames = Number.parseFloat(
+        wrapper.find<HTMLElement>('.lyric-word').element.style.getPropertyValue('--word-fill')
+      )
+      expect(fillAfterDroppedFrames).toBeCloseTo(90, 3)
     } finally {
       wrapper.unmount()
       performanceNow.mockRestore()

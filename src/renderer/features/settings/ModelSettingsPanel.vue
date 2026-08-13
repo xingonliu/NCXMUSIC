@@ -7,7 +7,14 @@ import type {
   PublicProviderProfile
 } from '../../../shared/schemas/provider-profile'
 import { PROVIDER_PRESETS } from '../../../shared/schemas/provider-profile'
-import { CommonButton, CommonSelect, CommonSwitch, type CommonOption } from '../../design-system/components'
+import {
+  CommonButton,
+  CommonInput,
+  CommonSelect,
+  CommonSwitch,
+  CommonTextarea,
+  type CommonOption
+} from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 
 // ========= 类型 =========
@@ -207,6 +214,7 @@ onMounted(() => { void loadProfiles() })
 <template>
   <div class="model-settings-layout">
     <section
+      id="setting-provider-profiles"
       class="model-profile-list"
       aria-label="Provider Profiles"
     >
@@ -220,12 +228,12 @@ onMounted(() => { void loadProfiles() })
           <Plus :size="14" />新增
         </CommonButton>
       </header>
-      <button
+      <CommonButton
         v-for="profile in profiles"
         :key="profile.profileId"
-        type="button"
         class="model-profile-item"
         :class="{ 'is-active': profile.profileId === activeProfileId }"
+        variant="ghost"
         @click="editProfile(profile)"
       >
         <span class="model-profile-icon"><KeyRound
@@ -245,7 +253,7 @@ onMounted(() => { void loadProfiles() })
           v-if="profile.profileId === activeProfileId"
           class="model-profile-default"
         >默认</span>
-      </button>
+      </CommonButton>
       <p
         v-if="profiles.length === 0"
         class="model-profile-empty"
@@ -254,44 +262,48 @@ onMounted(() => { void loadProfiles() })
       </p>
     </section>
 
-    <section class="model-profile-editor">
+    <section
+      id="setting-provider-editor"
+      class="model-profile-editor"
+    >
       <header><h2>{{ editor.profileId ? '编辑 Profile' : '新增 Profile' }}</h2><p>兼容服务可自定义地址、模型 ID 与必要 Header。</p></header>
       <p class="model-profile-data-disclosure">
         对话时只发送当前消息与上下文选择器选中的必要画像/记忆；画像分析只发送本地聚合特征和有限代表样本。使用云端 Provider 可能产生 Token 费用，不会发送 Cookie、账户数据库或完整歌单文件。
       </p>
       <div class="model-preset-row">
-        <button
+        <CommonButton
           v-for="preset in PROVIDER_PRESETS"
           :key="preset.label"
-          type="button"
+          variant="ghost"
+          size="compact"
           @click="applyPreset(preset)"
         >
           {{ preset.label }}
-        </button>
+        </CommonButton>
       </div>
-      <label><span>名称</span><input
+      <label><span>名称</span><CommonInput
         v-model="editor.displayName"
         maxlength="80"
-      ></label>
+      /></label>
       <label><span>协议</span><CommonSelect
         :model-value="editor.protocol"
         :options="protocolOptions"
         @update:model-value="setProtocol"
       /></label>
-      <label><span>Base URL</span><input
+      <label><span>Base URL</span><CommonInput
         v-model="editor.baseUrl"
         type="url"
-      ></label>
-      <label><span>API Key</span><input
+      /></label>
+      <label><span>API Key</span><CommonInput
         v-model="editor.apiKey"
         type="password"
         autocomplete="new-password"
         :placeholder="editor.profileId ? '留空则保留原凭据' : '只发送到系统安全存储'"
-      ></label>
-      <label><span>模型 ID</span><input v-model="editor.modelId"></label>
-      <label><span>自定义 Headers</span><textarea
+      /></label>
+      <label><span>模型 ID</span><CommonInput v-model="editor.modelId" /></label>
+      <label><span>自定义 Headers</span><CommonTextarea
         v-model="editor.customHeadersText"
-        rows="3"
+        :rows="3"
         placeholder="Header-Name: value（每行一个）"
       /></label>
       <div class="model-profile-editor-switch">

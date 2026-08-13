@@ -2,7 +2,12 @@
 import { Pause, Play, RotateCcw, Sparkles, Trash2 } from '@lucide/vue'
 import { computed, onMounted, ref } from 'vue'
 
-import { CommonAlertDialog, CommonButton, CommonEmptyState } from '../../design-system/components'
+import {
+  CommonAlertDialog,
+  CommonButton,
+  CommonEmptyState,
+  CommonInput
+} from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { useAgentStore } from '../agent/agent-store'
 
@@ -115,11 +120,18 @@ onMounted(async () => {
 
 <template>
   <div class="personalization-settings">
-    <section class="personalization-settings-hero">
+    <section
+      id="setting-agent-profile"
+      class="personalization-settings-hero"
+    >
       <span class="personalization-settings-icon"><Sparkles :size="20" /></span>
       <div>
         <h2>音乐人格画像</h2>
-        <p>状态：{{ statusLabel }}<template v-if="profile.usable"> · v{{ profile.version }} · {{ formatUpdatedAt(profile.updatedAt) }}</template></p>
+        <p>
+          状态：{{ statusLabel }}<template v-if="profile.usable">
+            · v{{ profile.version }} · {{ formatUpdatedAt(profile.updatedAt) }}
+          </template>
+        </p>
       </div>
       <div class="personalization-settings-actions">
         <CommonButton
@@ -129,8 +141,14 @@ onMounted(async () => {
           :disabled="working"
           @click="togglePause"
         >
-          <Play v-if="profile.paused" :size="14" />
-          <Pause v-else :size="14" />
+          <Play
+            v-if="profile.paused"
+            :size="14"
+          />
+          <Pause
+            v-else
+            :size="14"
+          />
           {{ profile.paused ? '恢复更新' : '暂停更新' }}
         </CommonButton>
         <CommonButton
@@ -150,16 +168,30 @@ onMounted(async () => {
           :disabled="!profile.eligible || profile.paused"
           @click="runAnalysis(profile.usable ? 'update' : 'initialize')"
         >
-          <RotateCcw v-if="profile.usable" :size="14" />
-          <Sparkles v-else :size="14" />
+          <RotateCcw
+            v-if="profile.usable"
+            :size="14"
+          />
+          <Sparkles
+            v-else
+            :size="14"
+          />
           {{ profile.usable ? '手动更新' : '开始分析' }}
         </CommonButton>
       </div>
-      <div v-if="working" class="personalization-settings-progress">
+      <div
+        v-if="working"
+        class="personalization-settings-progress"
+      >
         <span :style="{ width: `${profile.progress}%` }" />
         <small>{{ profile.stageLabel }} · {{ profile.progress }}%</small>
       </div>
-      <p v-if="profile.errorMessage" class="personalization-settings-error">{{ profile.errorMessage }}</p>
+      <p
+        v-if="profile.errorMessage"
+        class="personalization-settings-error"
+      >
+        {{ profile.errorMessage }}
+      </p>
       <p class="personalization-settings-disclosure">
         完整喜欢与歌单只在本机扫描。云端 Provider 默认只收到聚合特征、有限代表样本和完成当前请求所需的画像/记忆片段，可能产生 Token 费用；不会上传账户数据库、Cookie 或完整歌单文件。
       </p>
@@ -183,49 +215,111 @@ onMounted(async () => {
         </dl>
       </section>
 
-      <section class="personalization-settings-insights">
+      <section
+        id="setting-agent-insights"
+        class="personalization-settings-insights"
+      >
         <header><h3>偏好结论</h3><span>变化分 {{ profile.prompt.changeScore }}</span></header>
-        <article v-for="insight in profile.insights" :key="insight.insightId">
+        <article
+          v-for="insight in profile.insights"
+          :key="insight.insightId"
+        >
           <div>
             <span>{{ insight.category }} · 置信度 {{ formatConfidence(insight.confidence) }}</span>
             <h4>{{ insight.label }}</h4>
             <p>{{ insight.value }}</p>
             <small>{{ insight.evidence.join(' · ') }}</small>
           </div>
-          <CommonButton variant="ghost" size="compact" @click="hideInsight(insight.insightId)">隐藏</CommonButton>
+          <CommonButton
+            variant="ghost"
+            size="compact"
+            @click="hideInsight(insight.insightId)"
+          >
+            隐藏
+          </CommonButton>
           <label>
             <span>纠正这条结论</span>
-            <input v-model="correctionDrafts[insight.insightId]" maxlength="500" placeholder="写下你确认的真实偏好" />
+            <CommonInput
+              :model-value="correctionDrafts[insight.insightId] ?? ''"
+              maxlength="500"
+              placeholder="写下你确认的真实偏好"
+              @update:model-value="correctionDrafts[insight.insightId] = String($event)"
+            />
           </label>
-          <CommonButton variant="secondary" size="compact" :disabled="!correctionDrafts[insight.insightId]?.trim()" @click="saveCorrection(insight.insightId)">保存纠正</CommonButton>
+          <CommonButton
+            variant="secondary"
+            size="compact"
+            :disabled="!correctionDrafts[insight.insightId]?.trim()"
+            @click="saveCorrection(insight.insightId)"
+          >
+            保存纠正
+          </CommonButton>
         </article>
       </section>
 
-      <section class="personalization-settings-overrides">
+      <section
+        id="setting-agent-overrides"
+        class="personalization-settings-overrides"
+      >
         <h3>你的补充与修正</h3>
         <div class="personalization-settings-supplement">
-          <input v-model="supplementDraft" maxlength="500" placeholder="例如：工作时更喜欢无歌词的器乐" />
-          <CommonButton variant="secondary" :disabled="!supplementDraft.trim()" @click="saveSupplement">添加补充</CommonButton>
+          <CommonInput
+            v-model="supplementDraft"
+            maxlength="500"
+            placeholder="例如：工作时更喜欢无歌词的器乐"
+          />
+          <CommonButton
+            variant="secondary"
+            :disabled="!supplementDraft.trim()"
+            @click="saveSupplement"
+          >
+            添加补充
+          </CommonButton>
         </div>
         <ul v-if="profile.overrides.length">
-          <li v-for="override in profile.overrides" :key="override.overrideId">
+          <li
+            v-for="override in profile.overrides"
+            :key="override.overrideId"
+          >
             <span>{{ override.kind === 'hidden' ? `已隐藏 ${override.insightId}` : override.value }}</span>
-            <CommonButton variant="ghost" size="compact" @click="agent.removeProfileOverride(override.overrideId)">移除</CommonButton>
+            <CommonButton
+              variant="ghost"
+              size="compact"
+              @click="agent.removeProfileOverride(override.overrideId)"
+            >
+              移除
+            </CommonButton>
           </li>
         </ul>
       </section>
 
-      <section class="personalization-settings-data">
+      <section
+        id="setting-agent-data"
+        class="personalization-settings-data"
+      >
         <div>
           <h3>记忆与账户数据</h3>
           <p>查看当前账户的聊天数量、长期记忆块、画像版本、数据库与缓存，并可按账户清理。</p>
         </div>
-        <CommonButton variant="secondary" @click="emit('open-data')">查看账户数据</CommonButton>
+        <CommonButton
+          variant="secondary"
+          @click="emit('open-data')"
+        >
+          查看账户数据
+        </CommonButton>
       </section>
 
-      <section class="personalization-settings-danger">
+      <section
+        id="setting-agent-delete-profile"
+        class="personalization-settings-danger"
+      >
         <div><h3>删除画像</h3><p>只删除当前账户画像、代表样本缓存和用户修正，不删除聊天、长期记忆或网易云数据。</p></div>
-        <CommonButton variant="danger" @click="deleteDialogVisible = true"><Trash2 :size="14" />删除画像</CommonButton>
+        <CommonButton
+          variant="danger"
+          @click="deleteDialogVisible = true"
+        >
+          <Trash2 :size="14" />删除画像
+        </CommonButton>
       </section>
     </template>
 
@@ -267,7 +361,6 @@ onMounted(async () => {
 .personalization-settings-insights article p { margin-top: 4px; font-size: 13px; }
 .personalization-settings-insights article small { display: block; margin-top: 6px; }
 .personalization-settings-insights label { display: grid; grid-column: 1; gap: 5px; color: var(--ncx-color-text-secondary); font-size: 11px; }
-.personalization-settings input { min-height: 36px; padding: 0 11px; border: 1px solid var(--ncx-color-border); border-radius: 10px; color: inherit; background: var(--ncx-color-canvas); }
 .personalization-settings-supplement { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; margin-top: 12px; }
 .personalization-settings-overrides ul { display: grid; gap: 6px; padding: 0; margin: 12px 0 0; list-style: none; }
 .personalization-settings-overrides li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px; border-radius: 10px; background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent); font-size: 12px; }

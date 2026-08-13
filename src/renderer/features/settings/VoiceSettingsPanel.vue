@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { AudioLines, Keyboard, Mic, ShieldAlert } from '@lucide/vue'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 import type {
@@ -10,6 +9,8 @@ import type {
 import { CommonButton, CommonSwitch } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { readMicrophonePermission, type MicrophonePermissionState } from '../voice/use-voice-input'
+import SettingsRow from './SettingsRow.vue'
+import SettingsSection from './SettingsSection.vue'
 
 // ========= 变量 =========
 
@@ -143,15 +144,20 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="settings-list">
-    <section class="settings-row">
-      <span class="settings-row-icon"><Keyboard :size="19" /></span>
-      <div class="settings-row-copy">
-        <h2>全局按住说话</h2>
-        <p>{{ shortcut?.accelerator ?? 'Alt+Space' }} · {{ shortcutStatusText }}</p>
-      </div>
+  <SettingsSection
+    title="语音输入"
+    description="配置全局快捷键、系统权限和当前模型的语音识别能力。"
+  >
+    <SettingsRow
+      setting-id="setting-voice-shortcut"
+      title="全局按住说话"
+      :description="`${shortcut?.accelerator ?? 'Alt+Space'} · ${shortcutStatusText}`"
+    >
       <div class="settings-inline-actions">
-        <CommonButton variant="secondary" @click="startShortcutRecording">
+        <CommonButton
+          variant="secondary"
+          @click="startShortcutRecording"
+        >
           {{ recordingShortcut ? '等待组合键…' : '录制新快捷键' }}
         </CommonButton>
         <CommonSwitch
@@ -160,29 +166,35 @@ onUnmounted(() => {
           @update:model-value="setShortcutEnabled"
         />
       </div>
-    </section>
-    <section class="settings-row">
-      <span class="settings-row-icon"><Mic :size="19" /></span>
-      <div class="settings-row-copy">
-        <h2>麦克风</h2>
-        <p>{{ microphoneStatusText }}；输入区按住麦克风始终作为全局 Hook 的回退入口。</p>
-      </div>
-      <CommonButton variant="secondary" @click="openPermissionSettings">系统权限设置</CommonButton>
-    </section>
-    <section class="settings-row">
-      <span class="settings-row-icon"><AudioLines :size="19" /></span>
-      <div class="settings-row-copy">
-        <h2>云端 ASR</h2>
-        <p>{{ asrStatusText }}；仅复用当前模型配置，不自动切换供应商。</p>
-      </div>
-      <CommonButton variant="secondary" @click="refreshStatus">刷新状态</CommonButton>
-    </section>
-    <section class="settings-row">
-      <span class="settings-row-icon"><ShieldAlert :size="19" /></span>
-      <div class="settings-row-copy">
-        <h2>音频数据边界</h2>
-        <p>原始录音只驻留内存，识别、失败、取消或超时后释放；NcxMusic 不实现 TTS 或本地离线 ASR。</p>
-      </div>
-    </section>
-  </div>
+    </SettingsRow>
+    <SettingsRow
+      setting-id="setting-microphone"
+      title="麦克风"
+      :description="`${microphoneStatusText}；输入区按住麦克风始终作为全局 Hook 的回退入口。`"
+    >
+      <CommonButton
+        variant="secondary"
+        @click="openPermissionSettings"
+      >
+        系统权限设置
+      </CommonButton>
+    </SettingsRow>
+    <SettingsRow
+      setting-id="setting-cloud-asr"
+      title="云端 ASR"
+      :description="`${asrStatusText}；仅复用当前模型配置，不自动切换供应商。`"
+    >
+      <CommonButton
+        variant="secondary"
+        @click="refreshStatus"
+      >
+        刷新状态
+      </CommonButton>
+    </SettingsRow>
+    <SettingsRow
+      setting-id="setting-audio-boundary"
+      title="音频数据边界"
+      description="原始录音只驻留内存，识别、失败、取消或超时后释放；NcxMusic 不实现 TTS 或本地离线 ASR。"
+    />
+  </SettingsSection>
 </template>

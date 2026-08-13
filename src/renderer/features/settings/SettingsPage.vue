@@ -1,13 +1,7 @@
 <script setup lang="ts">
-import {
-  Database,
-  Headphones,
-  Moon,
-  Palette,
-  Sun
-} from '@lucide/vue'
-import { computed, onMounted, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { Moon, Palette, Sun } from '@lucide/vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import type { MusicQualityPreference } from '../../../domains/player/types'
 import type { AccountSessionSnapshot } from '../../../shared/schemas/account'
@@ -18,7 +12,6 @@ import {
   CommonButton,
   CommonSelect,
   CommonSwitch,
-  CommonTabs,
   type CommonOption
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
@@ -26,17 +19,19 @@ import { zhCN } from '../../locales/zh-CN'
 import { useAccountSessionStore } from '../account/account-session-store'
 import { usePlayer } from '../music/use-player'
 import { useAppPreferences } from './app-preferences'
+import ExtensionsSettingsPanel from './ExtensionsSettingsPanel.vue'
 import ModelSettingsPanel from './ModelSettingsPanel.vue'
 import PersonalizationSettingsPanel from './PersonalizationSettingsPanel.vue'
 import SecuritySettingsPanel from './SecuritySettingsPanel.vue'
+import SettingsRow from './SettingsRow.vue'
+import SettingsSection from './SettingsSection.vue'
 import VoiceSettingsPanel from './VoiceSettingsPanel.vue'
-import ExtensionsSettingsPanel from './ExtensionsSettingsPanel.vue'
+import {
+  getSettingsNavigationItem,
+  normalizeSettingsTab,
+  type SettingsTab
+} from './settings-navigation'
 import './settings-page.css'
-
-// ========= 类型 =========
-
-/** 设置页标签。 */
-type SettingsTab = 'music' | 'models' | 'agent' | 'security' | 'voice' | 'extensions' | 'appearance' | 'data'
 
 // ========= 变量 =========
 
@@ -49,14 +44,20 @@ const player = usePlayer()
 /** 应用界面偏好。 */
 const appPreferences = useAppPreferences()
 
-/** 当前路由，用于从小云未配置状态直达模型标签。 */
+/** 当前设置路由。 */
 const route = useRoute()
+
+/** 设置页路由控制器。 */
+const router = useRouter()
 
 /** 播放文案集合。 */
 const playerText = zhCN.player
 
-/** 当前设置标签。 */
-const activeTab = ref<SettingsTab>('music')
+/** 当前路由对应的合法设置标签。 */
+const activeTab = computed<SettingsTab>(() => normalizeSettingsTab(route.query['tab']))
+
+/** 当前设置标签的标题与说明。 */
+const activeNavigationItem = computed(() => getSettingsNavigationItem(activeTab.value))
 
 /** 清理缓存确认框显示状态。 */
 const clearCacheDialogVisible = ref<boolean>(false)
@@ -70,17 +71,8 @@ const dataStats = ref<Extract<AccountDataResult, { operation: 'getStats' }> | nu
 /** 账户数据操作是否正在执行。 */
 const dataBusy = ref<boolean>(false)
 
-/** 设置标签选项。 */
-const tabOptions: CommonOption[] = [
-  { label: '音乐', value: 'music' },
-  { label: '模型', value: 'models' },
-  { label: '小云', value: 'agent' },
-  { label: '安全', value: 'security' },
-  { label: '语音', value: 'voice' },
-  { label: '扩展', value: 'extensions' },
-  { label: '外观', value: 'appearance' },
-  { label: '数据', value: 'data' }
-]
+/** 搜索定位高亮的清理定时器。 */
+let highlightTimer: number | undefined
 
 /** 音质偏好选项。 */
 const qualityOptions: CommonOption[] = [
@@ -112,6 +104,7 @@ const accountReference = computed<string>(() => accountSnapshot.value?.activeAcc
 
 /** 设置播放器全局音质偏好。 */
 function setPlaybackQuality(value: string | number): void {
+  /** 经通用选择器返回的音质值。 */
   const quality = String(value) as MusicQualityPreference
   void player.setQuality(quality)
   persistAccountPreference('playback.quality', quality)
@@ -131,6 +124,7 @@ function setLyricTranslation(value: boolean): void {
 
 /** 将单个用户偏好写入当前账户 SQLite；账户切换后的迟到写入由 Utility 拒绝。 */
 function persistAccountPreference(key: string, value: string | boolean): void {
+  /** 写入开始时的账户快照。 */
   const snapshot = accountSnapshot.value
   if (!snapshot) return
   void window.ncx.runtime.accountData({
@@ -144,8 +138,10 @@ function persistAccountPreference(key: string, value: string | boolean): void {
 
 /** 从账户 SQLite 恢复主题、歌词翻译与音质偏好。 */
 async function loadAccountPreferences(): Promise<void> {
+  /** 读取开始时的账户快照。 */
   const snapshot = accountSnapshot.value
   if (!snapshot) return
+  /** 当前账户的偏好读取响应。 */
   const response = await window.ncx.runtime.accountData({
     operation: 'getPreferences',
     accountId: snapshot.activeAccount.accountId,
@@ -173,6 +169,7 @@ async function loadAccountPreferences(): Promise<void> {
 
 /** 设置主窗口关闭行为并通知 Main。 */
 function setCloseBehavior(value: string | number): void {
+  /** 收敛后的窗口关闭行为。 */
   const behavior = String(value) === 'quit' ? 'quit' : 'minimize'
   appPreferences.setCloseWindowBehavior(behavior)
   void window.ncx.windowControls.send({ type: 'window.setCloseBehavior', behavior })
@@ -181,9 +178,11 @@ function setCloseBehavior(value: string | number): void {
 /** 清理可重建缓存并保留应用偏好。 */
 async function clearCache(): Promise<void> {
   clearCacheDialogVisible.value = false
+  /** 清理开始时的账户快照。 */
   const snapshot = accountSnapshot.value
   if (!snapshot) return
   dataBusy.value = true
+  /** Main 完成缓存清理后的响应。 */
   const response = await window.ncx.runtime.accountData({
     operation: 'clearCache',
     accountId: snapshot.activeAccount.accountId,
@@ -205,8 +204,10 @@ async function clearCache(): Promise<void> {
 
 /** 读取当前账户数据统计。 */
 async function loadDataStats(): Promise<void> {
+  /** 读取开始时的账户快照。 */
   const snapshot = accountSnapshot.value
   if (!snapshot) return
+  /** 当前账户的统计读取响应。 */
   const response = await window.ncx.runtime.accountData({
     operation: 'getStats',
     accountId: snapshot.activeAccount.accountId,
@@ -218,9 +219,11 @@ async function loadDataStats(): Promise<void> {
 /** 删除当前账户业务目录并保留 Main 持有的登录 Cookie。 */
 async function deleteCurrentLocalData(): Promise<void> {
   deleteLocalDataDialogVisible.value = false
+  /** 删除开始时的账户快照。 */
   const snapshot = accountSnapshot.value
   if (!snapshot) return
   dataBusy.value = true
+  /** Main 完成当前账户数据删除后的响应。 */
   const response = await window.ncx.runtime.accountData({
     operation: 'deleteLocalData',
     accountId: snapshot.activeAccount.accountId,
@@ -243,24 +246,38 @@ function formatBytes(bytes: number): string {
   return `${(bytes / 1_048_576).toFixed(1)} MB`
 }
 
-/** 切换设置标签。 */
-function setActiveTab(value: string | number): void {
-  activeTab.value = String(value) as SettingsTab
-}
-
 /** 从小云设置打开当前账户数据与记忆管理。 */
 function openAccountDataSettings(): void {
-  activeTab.value = 'data'
+  void router.replace({
+    name: 'settings',
+    query: { ...route.query, tab: 'data', setting: 'setting-account-data' }
+  })
+}
+
+/** 滚动并短暂高亮侧栏搜索指定的设置项。 */
+function focusRequestedSetting(): void {
+  /** 当前路由指定的设置项 ID。 */
+  const requestedSetting = route.query['setting']
+  if (typeof requestedSetting !== 'string') return
+  void nextTick(() => {
+    /** 与搜索结果对应的页面元素。 */
+    const target = document.getElementById(requestedSetting)
+    if (!target) return
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    target.classList.remove('settings-target-highlight')
+    void target.offsetWidth
+    target.classList.add('settings-target-highlight')
+    if (highlightTimer !== undefined) window.clearTimeout(highlightTimer)
+    highlightTimer = window.setTimeout(() => {
+      target.classList.remove('settings-target-highlight')
+      highlightTimer = undefined
+    }, 1_800)
+  })
 }
 
 // ========= 生命周期 =========
 
 onMounted(async () => {
-  /** 路由 query 指定的初始设置标签。 */
-  const requestedTab = route.query['tab']
-  if (typeof requestedTab === 'string' && tabOptions.some((option) => option.value === requestedTab)) {
-    activeTab.value = requestedTab as SettingsTab
-  }
   await account.initialize()
   /** Main 持久化并在启动时恢复的权威关闭行为。 */
   const snapshot = await window.ncx.windowControls.snapshot()
@@ -278,63 +295,79 @@ watch(
   },
   { immediate: true }
 )
+
+/** 标签或搜索定位变化后滚动到具体设置项。 */
+watch(
+  () => [route.query['tab'], route.query['setting']],
+  focusRequestedSetting,
+  { immediate: true }
+)
+
+onBeforeUnmount(() => {
+  if (highlightTimer !== undefined) window.clearTimeout(highlightTimer)
+})
 </script>
 
 <template>
-  <section class="settings-page" aria-labelledby="settings-title">
+  <section
+    class="settings-page"
+    aria-labelledby="settings-title"
+  >
     <header class="settings-heading">
-      <p class="settings-eyebrow">偏好设置</p>
-      <h1 id="settings-title">设置</h1>
+      <h1 id="settings-title">
+        {{ activeNavigationItem.label }}
+      </h1>
+      <p>{{ activeNavigationItem.description }}</p>
     </header>
 
-    <CommonTabs
-      class="settings-tabs"
-      :model-value="activeTab"
-      :options="tabOptions"
-      variant="segmented"
-      @update:model-value="setActiveTab"
-    />
-
-    <div v-if="activeTab === 'music'" class="settings-list">
-      <section class="settings-row">
-        <span class="settings-row-icon"><Headphones :size="19" /></span>
-        <div class="settings-row-copy">
-          <h2>播放音质</h2>
-          <p>播放中切换会重新解析当前歌曲并尽量保持进度。</p>
-        </div>
-        <CommonSelect
-          class="settings-control"
-          :model-value="player.snapshot.value.quality"
-          :options="qualityOptions"
-          @update:model-value="setPlaybackQuality"
-        />
-      </section>
-      <section class="settings-row">
-        <span class="settings-row-icon"><Headphones :size="19" /></span>
-        <div class="settings-row-copy">
-          <h2>歌词翻译</h2>
-          <p>在普通歌词与沉浸歌词中显示翻译行。</p>
-        </div>
-        <CommonSwitch
-          :model-value="appPreferences.preferences.value.showLyricTranslation"
-          label="显示歌词翻译"
-          @update:model-value="setLyricTranslation"
-        />
-      </section>
-      <section class="settings-row">
-        <span class="settings-row-icon"><Headphones :size="19" /></span>
-        <div class="settings-row-copy">
-          <h2>关闭窗口</h2>
-          <p>关闭到托盘时主窗口隐藏，AudioHost 与播放队列保持运行。</p>
-        </div>
+    <SettingsSection
+      v-if="activeTab === 'general'"
+      title="应用行为"
+      description="控制主窗口关闭后应用如何继续运行。"
+    >
+      <SettingsRow
+        setting-id="setting-close-window"
+        title="关闭窗口"
+        description="关闭到托盘时主窗口隐藏，AudioHost 与播放队列保持运行。"
+      >
         <CommonSelect
           class="settings-control"
           :model-value="appPreferences.preferences.value.closeWindowBehavior"
           :options="closeBehaviorOptions"
           @update:model-value="setCloseBehavior"
         />
-      </section>
-    </div>
+      </SettingsRow>
+    </SettingsSection>
+
+    <SettingsSection
+      v-else-if="activeTab === 'music'"
+      title="播放"
+      description="这些偏好会立即应用到当前账户和播放会话。"
+    >
+      <SettingsRow
+        setting-id="setting-playback-quality"
+        title="播放音质"
+        description="播放中切换会重新解析当前歌曲并尽量保持进度。"
+      >
+        <CommonSelect
+          class="settings-control"
+          :model-value="player.snapshot.value.quality"
+          :options="qualityOptions"
+          @update:model-value="setPlaybackQuality"
+        />
+      </SettingsRow>
+      <SettingsRow
+        setting-id="setting-lyric-translation"
+        title="歌词翻译"
+        description="在普通歌词与沉浸歌词中显示翻译行。"
+      >
+        <CommonSwitch
+          :model-value="appPreferences.preferences.value.showLyricTranslation"
+          label="显示歌词翻译"
+          @update:model-value="setLyricTranslation"
+        />
+      </SettingsRow>
+    </SettingsSection>
 
     <ModelSettingsPanel v-else-if="activeTab === 'models'" />
 
@@ -343,62 +376,93 @@ watch(
       @open-data="openAccountDataSettings"
     />
 
-    <SecuritySettingsPanel v-else-if="activeTab === 'security'" />
+    <ExtensionsSettingsPanel
+      v-else-if="activeTab === 'mcp'"
+      mode="mcp"
+    />
+
+    <ExtensionsSettingsPanel
+      v-else-if="activeTab === 'skill'"
+      mode="skill"
+    />
 
     <VoiceSettingsPanel v-else-if="activeTab === 'voice'" />
 
-    <ExtensionsSettingsPanel v-else-if="activeTab === 'extensions'" />
+    <SecuritySettingsPanel v-else-if="activeTab === 'security'" />
 
-    <div v-else-if="activeTab === 'appearance'" class="settings-list">
-      <section class="settings-row">
-        <span class="settings-row-icon"><Palette :size="19" /></span>
-        <div class="settings-row-copy">
-          <h2>主题</h2>
-          <p>选择跟随系统、浅色或深色外观。</p>
-        </div>
-        <div class="settings-theme-options" role="group" aria-label="主题">
+    <SettingsSection
+      v-else-if="activeTab === 'appearance'"
+      title="界面"
+      description="主题会跟随当前账户保存，并即时更新整个应用。"
+    >
+      <SettingsRow
+        setting-id="setting-theme"
+        title="主题"
+        description="选择跟随系统、浅色或深色外观。"
+      >
+        <div
+          class="settings-theme-options"
+          role="group"
+          aria-label="主题"
+        >
           <CommonButton
             :variant="appPreferences.preferences.value.theme === 'system' ? 'primary' : 'secondary'"
             @click="setTheme('system')"
-          ><Palette :size="14" />系统</CommonButton>
+          >
+            <Palette :size="14" />系统
+          </CommonButton>
           <CommonButton
             :variant="appPreferences.preferences.value.theme === 'light' ? 'primary' : 'secondary'"
             @click="setTheme('light')"
-          ><Sun :size="14" />浅色</CommonButton>
+          >
+            <Sun :size="14" />浅色
+          </CommonButton>
           <CommonButton
             :variant="appPreferences.preferences.value.theme === 'dark' ? 'primary' : 'secondary'"
             @click="setTheme('dark')"
-          ><Moon :size="14" />深色</CommonButton>
+          >
+            <Moon :size="14" />深色
+          </CommonButton>
         </div>
-      </section>
-    </div>
+      </SettingsRow>
+    </SettingsSection>
 
-    <div v-else class="settings-list">
-      <section class="settings-row">
-        <span class="settings-row-icon"><Database :size="19" /></span>
-        <div class="settings-row-copy">
-          <h2>账户数据</h2>
-          <p>
-            当前空间 {{ accountReference }} · 数据库 {{ formatBytes(dataStats?.databaseBytes ?? 0) }} ·
-            对话 {{ dataStats?.chatMessages ?? 0 }} 条 · 记忆块 {{ dataStats?.conversationBlocks ?? 0 }} 个 ·
-            画像 v{{ dataStats?.profileVersion ?? 0 }} · Journal {{ dataStats?.journalEvents ?? 0 }} 条
-          </p>
-        </div>
+    <SettingsSection
+      v-else
+      title="本地存储"
+      description="危险操作只影响当前账户在本机保存的数据。"
+    >
+      <SettingsRow
+        setting-id="setting-account-data"
+        title="账户数据"
+      >
+        <template #description>
+          当前空间 {{ accountReference }} · 数据库 {{ formatBytes(dataStats?.databaseBytes ?? 0) }} ·
+          对话 {{ dataStats?.chatMessages ?? 0 }} 条 · 记忆块 {{ dataStats?.conversationBlocks ?? 0 }} 个 ·
+          画像 v{{ dataStats?.profileVersion ?? 0 }} · Journal {{ dataStats?.journalEvents ?? 0 }} 条
+        </template>
         <CommonButton
           variant="danger"
           :loading="dataBusy"
           @click="deleteLocalDataDialogVisible = true"
-        >删除本地数据</CommonButton>
-      </section>
-      <section class="settings-row">
-        <span class="settings-row-icon"><Database :size="19" /></span>
-        <div class="settings-row-copy">
-          <h2>可重建缓存</h2>
-          <p>当前 {{ formatBytes(dataStats?.cacheBytes ?? 0) }}；清理后不删除账户数据库、Cookie 或播放快照。</p>
-        </div>
-        <CommonButton variant="danger" :loading="dataBusy" @click="clearCacheDialogVisible = true">清理缓存</CommonButton>
-      </section>
-    </div>
+        >
+          删除本地数据
+        </CommonButton>
+      </SettingsRow>
+      <SettingsRow
+        setting-id="setting-rebuildable-cache"
+        title="可重建缓存"
+        :description="`当前 ${formatBytes(dataStats?.cacheBytes ?? 0)}；清理后不删除账户数据库、Cookie 或播放快照。`"
+      >
+        <CommonButton
+          variant="danger"
+          :loading="dataBusy"
+          @click="clearCacheDialogVisible = true"
+        >
+          清理缓存
+        </CommonButton>
+      </SettingsRow>
+    </SettingsSection>
 
     <CommonAlertDialog
       :visible="clearCacheDialogVisible"

@@ -8,8 +8,17 @@ import type {
   McpServerSnapshot,
   SkillSnapshot
 } from '../../../shared/schemas/extensions'
-import { CommonAlertDialog, CommonButton, CommonSwitch } from '../../design-system/components'
+import {
+  CommonAlertDialog,
+  CommonButton,
+  CommonInput,
+  CommonSelect,
+  CommonSwitch,
+  CommonTextarea,
+  type CommonOption
+} from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
+import SettingsSection from './SettingsSection.vue'
 
 // ========= 类型 =========
 
@@ -18,6 +27,15 @@ type SkillAction = 'enable' | 'disable' | 'update' | 'rollback' | 'uninstall'
 
 /** MCP 列表按钮允许的生命周期动作。 */
 type McpAction = 'enable' | 'disable' | 'test' | 'rollback' | 'delete'
+
+/** 当前扩展设置面板展示的独立能力。 */
+type ExtensionSettingsMode = 'mcp' | 'skill'
+
+/** 扩展设置面板属性。 */
+interface ExtensionsSettingsPanelProps {
+  /** 当前只展示 MCP 或 Skill，避免两个独立导航入口共享同一页面。 */
+  readonly mode: ExtensionSettingsMode
+}
 
 /** MCP 编辑表单。 */
 interface McpEditor {
@@ -59,6 +77,9 @@ interface PendingConfirmation {
 
 // ========= 变量 =========
 
+/** 当前扩展设置面板属性。 */
+const props = defineProps<ExtensionsSettingsPanelProps>()
+
 /** 空扩展快照。 */
 const EMPTY_SNAPSHOT: ExtensionSettingsSnapshot = { skills: [], mcpServers: [], updatedAt: 0 }
 
@@ -90,6 +111,12 @@ const editor = ref<McpEditor>(emptyMcpEditor())
 const selectedServer = computed<McpServerSnapshot | undefined>(() =>
   snapshot.value.mcpServers.find((server) => server.serverId === editor.value.serverId)
 )
+
+/** MCP Transport 通用选择器选项。 */
+const transportOptions: CommonOption[] = [
+  { label: 'stdio', value: 'stdio' },
+  { label: 'Streamable HTTP', value: 'streamable_http' }
+]
 
 // ========= 函数 =========
 
@@ -189,6 +216,11 @@ function editMcp(server: McpServerSnapshot): void {
 /** 清空 MCP 编辑器以创建新配置。 */
 function createMcp(): void {
   editor.value = emptyMcpEditor()
+}
+
+/** 设置 MCP 编辑器的传输类型。 */
+function setMcpTransport(value: string | number): void {
+  editor.value.transport = String(value) === 'streamable_http' ? 'streamable_http' : 'stdio'
 }
 
 /** 保存 MCP 无秘密配置与用户本次输入的 Secret。 */
@@ -447,104 +479,301 @@ onMounted(() => { void refresh() })
 
 <template>
   <div class="extensions-settings">
-    <section class="extensions-section">
-      <header class="extensions-section-header">
-        <div>
-          <p class="settings-eyebrow">Dynamic Skill</p>
-          <h2>Skills</h2>
-          <p>新安装默认禁用；JavaScript Skill 在独立受限 Host 中运行，更新仅保留一版回滚。</p>
-        </div>
+    <SettingsSection
+      v-if="props.mode === 'skill'"
+      section-id="setting-skill-install"
+      title="Skill 管理"
+      description="新安装默认禁用；JavaScript Skill 在独立受限 Host 中运行，更新仅保留一版回滚。"
+    >
+      <template #actions>
         <div class="settings-inline-actions">
-          <CommonButton variant="secondary" :loading="busy" @click="chooseSkill('folder')"><PackagePlus :size="14" />文件夹</CommonButton>
-          <CommonButton variant="secondary" :loading="busy" @click="chooseSkill('zip')"><Upload :size="14" />ZIP</CommonButton>
-          <CommonButton variant="ghost" :loading="busy" @click="refresh"><RefreshCw :size="14" />扫描</CommonButton>
+          <CommonButton
+            variant="secondary"
+            :loading="busy"
+            @click="chooseSkill('folder')"
+          >
+            <PackagePlus :size="14" />文件夹
+          </CommonButton>
+          <CommonButton
+            variant="secondary"
+            :loading="busy"
+            @click="chooseSkill('zip')"
+          >
+            <Upload :size="14" />ZIP
+          </CommonButton>
+          <CommonButton
+            variant="ghost"
+            :loading="busy"
+            @click="refresh"
+          >
+            <RefreshCw :size="14" />扫描
+          </CommonButton>
         </div>
-      </header>
-      <div class="extensions-import-row">
-        <input v-model="gitUrl" type="url" autocomplete="off" placeholder="https://github.com/org/skill.git" aria-label="Skill HTTPS Git URL">
-        <CommonButton :loading="busy" @click="installGitSkill">导入 Git Skill</CommonButton>
-      </div>
-      <div v-if="snapshot.skills.length === 0" class="extensions-empty">尚未发现 Skill。</div>
-      <article v-for="skill in snapshot.skills" :key="`${skill.name}-${skill.updatedAt}`" class="extension-card">
-        <span class="settings-row-icon"><Boxes :size="18" /></span>
-        <div class="extension-card-copy">
-          <strong>{{ skill.name }} <small>v{{ skill.version }}</small></strong>
-          <p>{{ skill.description }}</p>
-          <small>{{ skill.sourceType }} · {{ skill.sourceLabel }} · {{ skill.tools.length }} tools · {{ skill.state }}</small>
+      </template>
+      <div class="extensions-section-body">
+        <div class="extensions-import-row">
+          <CommonInput
+            v-model="gitUrl"
+            type="url"
+            autocomplete="off"
+            placeholder="https://github.com/org/skill.git"
+            aria-label="Skill HTTPS Git URL"
+          />
+          <CommonButton
+            :loading="busy"
+            @click="installGitSkill"
+          >
+            导入 Git Skill
+          </CommonButton>
         </div>
-        <div class="settings-inline-actions">
-          <CommonButton v-if="skill.state === 'enabled'" variant="secondary" @click="mutateSkill(skill, 'disable')">禁用</CommonButton>
-          <CommonButton v-else-if="skill.state !== 'trashed'" variant="secondary" @click="mutateSkill(skill, 'enable')">启用</CommonButton>
-          <CommonButton v-if="skill.sourceType !== 'appdata' && skill.state !== 'trashed'" variant="ghost" @click="mutateSkill(skill, 'update')">检查更新</CommonButton>
-          <CommonButton v-if="skill.previousVersionAvailable && skill.state !== 'trashed'" variant="ghost" @click="mutateSkill(skill, 'rollback')">回滚</CommonButton>
-          <CommonButton v-if="skill.state !== 'trashed'" variant="danger" @click="mutateSkill(skill, 'uninstall')">卸载</CommonButton>
-        </div>
-      </article>
-    </section>
-
-    <section class="extensions-section">
-      <header class="extensions-section-header">
-        <div>
-          <p class="settings-eyebrow">Model Context Protocol</p>
-          <h2>MCP Servers</h2>
-          <p>只支持 stdio 与 Streamable HTTP；实际工具范围变化会自动禁用并要求重新批准。</p>
-        </div>
-        <div class="settings-inline-actions">
-          <CommonButton variant="secondary" @click="createMcp"><Server :size="14" />新建</CommonButton>
-          <CommonButton variant="ghost" @click="exportMcp"><Download :size="14" />复制导出</CommonButton>
-        </div>
-      </header>
-
-      <div class="mcp-settings-layout">
-        <div class="mcp-server-list">
-          <button v-for="server in snapshot.mcpServers" :key="server.serverId" type="button" :class="{ 'is-active': selectedServer?.serverId === server.serverId }" @click="editMcp(server)">
-            <span><strong>{{ server.displayName }}</strong><small>{{ server.serverId }} · {{ server.connectionState }}</small></span>
-            <em>{{ server.approvalState === 'approved' ? '已批准' : '需重批' }}</em>
-          </button>
-          <p v-if="snapshot.mcpServers.length === 0" class="extensions-empty">尚未配置 MCP Server。</p>
-        </div>
-
-        <form class="mcp-editor" @submit.prevent="saveMcp">
-          <label><span>Server ID</span><input v-model="editor.serverId" required pattern="[a-z][a-z0-9-]{1,62}" :disabled="Boolean(selectedServer)"></label>
-          <label><span>名称</span><input v-model="editor.displayName" required></label>
-          <label><span>传输</span><select v-model="editor.transport"><option value="stdio">stdio</option><option value="streamable_http">Streamable HTTP</option></select></label>
-          <label v-if="editor.transport === 'stdio'"><span>Command</span><input v-model="editor.command" required placeholder="npx"></label>
-          <label v-if="editor.transport === 'stdio'"><span>Args</span><textarea v-model="editor.args" rows="3" placeholder="每行一个参数；版本必须锁定"></textarea></label>
-          <label v-if="editor.transport === 'stdio'"><span>CWD</span><input v-model="editor.cwd" placeholder="可选绝对目录"></label>
-          <label v-else><span>URL</span><input v-model="editor.url" type="url" required placeholder="https://example.com/mcp"></label>
-          <label v-if="editor.transport === 'stdio'"><span>环境变量</span><textarea v-model="editor.environment" rows="3" placeholder="NAME=value；已有 Secret 不回显"></textarea></label>
-          <label v-else><span>Headers</span><textarea v-model="editor.headers" rows="3" placeholder="Authorization=Bearer …；已有 Secret 不回显"></textarea></label>
-          <div class="mcp-editor-actions">
-            <CommonSwitch v-model="editor.enabled" label="保存后启用" />
-            <CommonButton type="submit" :loading="busy">保存配置</CommonButton>
+        <div
+          id="setting-skill-list"
+          class="extension-card-list"
+        >
+          <div
+            v-if="snapshot.skills.length === 0"
+            class="extensions-empty"
+          >
+            尚未发现 Skill。
           </div>
-          <div v-if="selectedServer" class="mcp-editor-actions">
-            <CommonButton variant="secondary" @click="mutateMcp(selectedServer, 'test')">测试并读取工具</CommonButton>
-            <CommonButton v-if="selectedServer.previousConfigAvailable" variant="ghost" @click="mutateMcp(selectedServer, 'rollback')">回滚</CommonButton>
-            <CommonButton variant="danger" @click="mutateMcp(selectedServer, 'delete')">删除</CommonButton>
-          </div>
-          <div v-if="selectedServer" class="mcp-capabilities">
-            <strong>实际工具（{{ selectedServer.lastKnownTools.length }}）</strong>
-            <span v-for="tool in selectedServer.lastKnownTools" :key="tool.name">mcp.{{ selectedServer.serverId }}.{{ tool.name }}</span>
-            <small v-if="selectedServer.lastError">{{ selectedServer.lastError }}</small>
-          </div>
-        </form>
+          <article
+            v-for="skill in snapshot.skills"
+            :key="`${skill.name}-${skill.updatedAt}`"
+            class="extension-card"
+          >
+            <span class="settings-row-icon"><Boxes :size="18" /></span>
+            <div class="extension-card-copy">
+              <strong>{{ skill.name }} <small>v{{ skill.version }}</small></strong>
+              <p>{{ skill.description }}</p>
+              <small>{{ skill.sourceType }} · {{ skill.sourceLabel }} · {{ skill.tools.length }} tools · {{ skill.state }}</small>
+            </div>
+            <div class="settings-inline-actions">
+              <CommonButton
+                v-if="skill.state === 'enabled'"
+                variant="secondary"
+                @click="mutateSkill(skill, 'disable')"
+              >
+                禁用
+              </CommonButton>
+              <CommonButton
+                v-else-if="skill.state !== 'trashed'"
+                variant="secondary"
+                @click="mutateSkill(skill, 'enable')"
+              >
+                启用
+              </CommonButton>
+              <CommonButton
+                v-if="skill.sourceType !== 'appdata' && skill.state !== 'trashed'"
+                variant="ghost"
+                @click="mutateSkill(skill, 'update')"
+              >
+                检查更新
+              </CommonButton>
+              <CommonButton
+                v-if="skill.previousVersionAvailable && skill.state !== 'trashed'"
+                variant="ghost"
+                @click="mutateSkill(skill, 'rollback')"
+              >
+                回滚
+              </CommonButton>
+              <CommonButton
+                v-if="skill.state !== 'trashed'"
+                variant="danger"
+                @click="mutateSkill(skill, 'uninstall')"
+              >
+                卸载
+              </CommonButton>
+            </div>
+          </article>
+        </div>
       </div>
+    </SettingsSection>
 
-      <div class="mcp-import-box">
-        <textarea v-model="importDocument" rows="5" placeholder="粘贴 .mcp.json 或 NcxMusic 导出文档"></textarea>
-        <div v-if="importPreview.length > 0" class="mcp-capabilities" aria-live="polite">
-          <strong>待导入配置预览（{{ importPreview.length }}）</strong>
-          <span v-for="server in importPreview" :key="server.serverId">
-            {{ server.displayName }} · {{ server.serverId }} · {{ server.transport }} · 默认禁用
-          </span>
-        </div>
+    <SettingsSection
+      v-else
+      section-id="setting-mcp-servers"
+      title="MCP Servers"
+      description="只支持 stdio 与 Streamable HTTP；实际工具范围变化会自动禁用并要求重新批准。"
+    >
+      <template #actions>
         <div class="settings-inline-actions">
-          <CommonButton variant="secondary" :loading="busy" @click="importMcp(false)">预览导入</CommonButton>
-          <CommonButton v-if="importPreview.length > 0" :loading="busy" @click="importMcp(true)">确认导入 {{ importPreview.length }} 项</CommonButton>
+          <CommonButton
+            variant="secondary"
+            @click="createMcp"
+          >
+            <Server :size="14" />新建
+          </CommonButton>
+          <CommonButton
+            variant="ghost"
+            @click="exportMcp"
+          >
+            <Download :size="14" />复制导出
+          </CommonButton>
+        </div>
+      </template>
+
+      <div class="extensions-section-body">
+        <div class="mcp-settings-layout">
+          <div class="mcp-server-list">
+            <CommonButton
+              v-for="server in snapshot.mcpServers"
+              :key="server.serverId"
+              class="mcp-server-option"
+              :class="{ 'is-active': selectedServer?.serverId === server.serverId }"
+              variant="ghost"
+              @click="editMcp(server)"
+            >
+              <span><strong>{{ server.displayName }}</strong><small>{{ server.serverId }} · {{ server.connectionState }}</small></span>
+              <em>{{ server.approvalState === 'approved' ? '已批准' : '需重批' }}</em>
+            </CommonButton>
+            <p
+              v-if="snapshot.mcpServers.length === 0"
+              class="extensions-empty"
+            >
+              尚未配置 MCP Server。
+            </p>
+          </div>
+
+          <form
+            class="mcp-editor"
+            @submit.prevent="saveMcp"
+          >
+            <label><span>Server ID</span><CommonInput
+              v-model="editor.serverId"
+              required
+              pattern="[a-z][a-z0-9-]{1,62}"
+              :disabled="Boolean(selectedServer)"
+            /></label>
+            <label><span>名称</span><CommonInput
+              v-model="editor.displayName"
+              required
+            /></label>
+            <label><span>传输</span><CommonSelect
+              :model-value="editor.transport"
+              :options="transportOptions"
+              @update:model-value="setMcpTransport"
+            /></label>
+            <label v-if="editor.transport === 'stdio'"><span>Command</span><CommonInput
+              v-model="editor.command"
+              required
+              placeholder="npx"
+            /></label>
+            <label v-if="editor.transport === 'stdio'"><span>Args</span><CommonTextarea
+              v-model="editor.args"
+              :rows="3"
+              placeholder="每行一个参数；版本必须锁定"
+            /></label>
+            <label v-if="editor.transport === 'stdio'"><span>CWD</span><CommonInput
+              v-model="editor.cwd"
+              placeholder="可选绝对目录"
+            /></label>
+            <label v-else><span>URL</span><CommonInput
+              v-model="editor.url"
+              type="url"
+              required
+              placeholder="https://example.com/mcp"
+            /></label>
+            <label v-if="editor.transport === 'stdio'"><span>环境变量</span><CommonTextarea
+              v-model="editor.environment"
+              :rows="3"
+              placeholder="NAME=value；已有 Secret 不回显"
+            /></label>
+            <label v-else><span>Headers</span><CommonTextarea
+              v-model="editor.headers"
+              :rows="3"
+              placeholder="Authorization=Bearer …；已有 Secret 不回显"
+            /></label>
+            <div class="mcp-editor-actions">
+              <CommonSwitch
+                v-model="editor.enabled"
+                label="保存后启用"
+              />
+              <CommonButton
+                type="submit"
+                :loading="busy"
+              >
+                保存配置
+              </CommonButton>
+            </div>
+            <div
+              v-if="selectedServer"
+              class="mcp-editor-actions"
+            >
+              <CommonButton
+                variant="secondary"
+                @click="mutateMcp(selectedServer, 'test')"
+              >
+                测试并读取工具
+              </CommonButton>
+              <CommonButton
+                v-if="selectedServer.previousConfigAvailable"
+                variant="ghost"
+                @click="mutateMcp(selectedServer, 'rollback')"
+              >
+                回滚
+              </CommonButton>
+              <CommonButton
+                variant="danger"
+                @click="mutateMcp(selectedServer, 'delete')"
+              >
+                删除
+              </CommonButton>
+            </div>
+            <div
+              v-if="selectedServer"
+              class="mcp-capabilities"
+            >
+              <strong>实际工具（{{ selectedServer.lastKnownTools.length }}）</strong>
+              <span
+                v-for="tool in selectedServer.lastKnownTools"
+                :key="tool.name"
+              >mcp.{{ selectedServer.serverId }}.{{ tool.name }}</span>
+              <small v-if="selectedServer.lastError">{{ selectedServer.lastError }}</small>
+            </div>
+          </form>
+        </div>
+
+        <div
+          id="setting-mcp-import"
+          class="mcp-import-box"
+        >
+          <CommonTextarea
+            v-model="importDocument"
+            :rows="5"
+            placeholder="粘贴 .mcp.json 或 NcxMusic 导出文档"
+          />
+          <div
+            v-if="importPreview.length > 0"
+            class="mcp-capabilities"
+            aria-live="polite"
+          >
+            <strong>待导入配置预览（{{ importPreview.length }}）</strong>
+            <span
+              v-for="server in importPreview"
+              :key="server.serverId"
+            >
+              {{ server.displayName }} · {{ server.serverId }} · {{ server.transport }} · 默认禁用
+            </span>
+          </div>
+          <div class="settings-inline-actions">
+            <CommonButton
+              variant="secondary"
+              :loading="busy"
+              @click="importMcp(false)"
+            >
+              预览导入
+            </CommonButton>
+            <CommonButton
+              v-if="importPreview.length > 0"
+              :loading="busy"
+              @click="importMcp(true)"
+            >
+              确认导入 {{ importPreview.length }} 项
+            </CommonButton>
+          </div>
         </div>
       </div>
-    </section>
+    </SettingsSection>
 
     <CommonAlertDialog
       :visible="Boolean(pendingConfirmation)"

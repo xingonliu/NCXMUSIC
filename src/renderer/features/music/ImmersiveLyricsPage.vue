@@ -22,6 +22,7 @@ import {
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { copyText } from '../foundation/clipboard'
+import { DEFAULT_LYRIC_ACCENT_COLOR } from './artwork-accent-color'
 import FluidMeshBackground from './components/FluidMeshBackground.vue'
 import LyricsPanel from './components/LyricsPanel.vue'
 import MediaArtwork from './components/MediaArtwork.vue'
@@ -58,6 +59,9 @@ const artworkUrl = computed<string | undefined>(() => track.value?.artwork?.at(-
 /** 沉浸页实际展示的封面，直接使用与 PlayerBar 一致的高清图。 */
 const displayArtworkUrl = computed<string | undefined>(() => artworkUrl.value)
 
+/** 当前封面提亮后的歌词前沿色，不区分页面深浅模式。 */
+const lyricAccentColor = ref<string>(DEFAULT_LYRIC_ACCENT_COLOR)
+
 /** 当前曲目歌手展示文本。 */
 const artistText = computed<string>(() => track.value?.artists.join(' / ') ?? '')
 
@@ -91,6 +95,11 @@ function closeImmersivePlayer(): void {
 /** 打开或关闭沉浸页播放队列。 */
 function toggleQueueDrawer(): void {
   isQueueOpen.value = !isQueueOpen.value
+}
+
+/** 接收封面加载阶段一次性提取的歌词前沿色。 */
+function updateLyricAccentColor(color: string): void {
+  lyricAccentColor.value = color
 }
 
 /** 收藏当前歌曲，并通过全局 Toast 返回结果。 */
@@ -184,6 +193,7 @@ onBeforeUnmount(() => {
       class="immersive-backdrop"
       :artwork-url="artworkUrl"
       :playing="snapshot.playback.status === 'playing'"
+      @accent-color="updateLyricAccentColor"
     />
 
     <button
@@ -311,6 +321,7 @@ onBeforeUnmount(() => {
         :track-id="track.trackId"
         :position-ms="snapshot.playback.positionMs"
         :playing="snapshot.playback.status === 'playing'"
+        :accent-color="lyricAccentColor"
         @seek="player.seek"
       />
     </main>

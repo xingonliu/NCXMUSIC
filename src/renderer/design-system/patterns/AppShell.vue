@@ -36,6 +36,7 @@ import {
 } from '../components'
 import PlaylistNavigation from '../../features/music/components/PlaylistNavigation.vue'
 import { useAccountSessionStore } from '../../features/account/account-session-store'
+import SettingsSidebar from '../../features/settings/SettingsSidebar.vue'
 
 // ========= 变量 =========
 
@@ -70,6 +71,9 @@ const headerVariant = computed(() => route.meta.headerVariant ?? 'default')
 
 /** 当前路由是否隐藏普通侧边栏。 */
 const isStandalonePage = computed(() => route.meta.shell === 'standalone')
+
+/** 当前路由是否进入独立设置模式。 */
+const isSettingsPage = computed<boolean>(() => route.name === 'settings')
 
 /** 窗口状态监听清理函数。 */
 let unsubscribeWindowSnapshot = (): void => {}
@@ -167,7 +171,8 @@ onBeforeUnmount(() => {
       isMacOS ? 'ncx-app-shell--macos' : 'ncx-app-shell--windows',
       windowSnapshot.fullscreen ? 'ncx-app-shell--fullscreen' : '',
       windowSnapshot.maximized ? 'ncx-app-shell--maximized' : '',
-      isStandalonePage ? 'ncx-app-shell--standalone' : ''
+      isStandalonePage ? 'ncx-app-shell--standalone' : '',
+      isSettingsPage ? 'ncx-app-shell--settings' : ''
     ]"
   >
     <header
@@ -188,7 +193,7 @@ onBeforeUnmount(() => {
 
       <div class="ncx-page-actions">
         <CommonHeaderButton
-          v-if="!isStandalonePage"
+          v-if="!isStandalonePage && !isSettingsPage"
           label="搜索"
           @click="openSearch"
         >
@@ -196,7 +201,7 @@ onBeforeUnmount(() => {
         </CommonHeaderButton>
 
         <CommonHeaderButton
-          v-if="!isStandalonePage"
+          v-if="!isStandalonePage && !isSettingsPage"
           label="刷新当前页"
           @click="refreshCurrentPage"
         >
@@ -250,75 +255,79 @@ onBeforeUnmount(() => {
         aria-hidden="true"
       />
 
-      <nav class="ncx-nav">
-        <section
-          v-for="section in appPrimaryNavigationSections"
-          :key="section.label || 'primary'"
-          class="ncx-nav-section"
+      <SettingsSidebar v-if="isSettingsPage" />
+
+      <template v-else>
+        <nav class="ncx-nav">
+          <section
+            v-for="section in appPrimaryNavigationSections"
+            :key="section.label || 'primary'"
+            class="ncx-nav-section"
+          >
+            <p
+              v-if="section.label"
+              class="ncx-nav-section-title"
+            >
+              {{ section.label }}
+            </p>
+            <RouterLink
+              v-for="item in section.items"
+              :key="String(item.routeName)"
+              class="ncx-nav-item"
+              :class="{ 'ncx-nav-item--active': isPrimaryNavigationActive(item) }"
+              :to="{ name: item.routeName }"
+            >
+              <component
+                :is="resolveNavIcon(item)"
+                :size="17"
+                :stroke-width="1.9"
+              />
+              <span>{{ item.label }}</span>
+            </RouterLink>
+          </section>
+        </nav>
+
+        <PlaylistNavigation />
+
+        <nav
+          class="ncx-account-nav"
+          aria-label="账户和设置"
         >
-          <p
-            v-if="section.label"
-            class="ncx-nav-section-title"
-          >
-            {{ section.label }}
-          </p>
           <RouterLink
-            v-for="item in section.items"
-            :key="String(item.routeName)"
             class="ncx-nav-item"
-            :class="{ 'ncx-nav-item--active': isPrimaryNavigationActive(item) }"
-            :to="{ name: item.routeName }"
+            :class="{ 'ncx-nav-item--sub-active': isNavigationActive(appAccountNavigationItem) }"
+            :to="{ name: appAccountNavigationItem.routeName }"
           >
+            <CommonAvatar
+              v-if="isAuthenticated"
+              :name="accountDisplayName"
+              :src="accountAvatarUrl"
+              :size="20"
+              shape="circle"
+              class="ncx-nav-avatar"
+            />
             <component
-              :is="resolveNavIcon(item)"
+              :is="resolveNavIcon(appAccountNavigationItem)"
+              v-else
               :size="17"
               :stroke-width="1.9"
             />
-            <span>{{ item.label }}</span>
+            <span>{{ accountDisplayName }}</span>
           </RouterLink>
-        </section>
-      </nav>
-
-      <PlaylistNavigation />
-
-      <nav
-        class="ncx-account-nav"
-        aria-label="账户和设置"
-      >
-        <RouterLink
-          class="ncx-nav-item"
-          :class="{ 'ncx-nav-item--sub-active': isNavigationActive(appAccountNavigationItem) }"
-          :to="{ name: appAccountNavigationItem.routeName }"
-        >
-          <CommonAvatar
-            v-if="isAuthenticated"
-            :name="accountDisplayName"
-            :src="accountAvatarUrl"
-            :size="20"
-            shape="circle"
-            class="ncx-nav-avatar"
-          />
-          <component
-            :is="resolveNavIcon(appAccountNavigationItem)"
-            v-else
-            :size="17"
-            :stroke-width="1.9"
-          />
-          <span>{{ accountDisplayName }}</span>
-        </RouterLink>
-        <RouterLink
-          class="ncx-nav-item"
-          :class="{ 'ncx-nav-item--sub-active': isNavigationActive(appSettingsNavigationItem) }"
-          :to="{ name: appSettingsNavigationItem.routeName }"
-        >
-          <component
-            :is="resolveNavIcon(appSettingsNavigationItem)"
-            :size="17"
-            :stroke-width="1.9"
-          />
-          <span>{{ appSettingsNavigationItem.label }}</span>
-        </RouterLink>
-      </nav>
+          <RouterLink
+            class="ncx-nav-item"
+            :class="{ 'ncx-nav-item--sub-active': isNavigationActive(appSettingsNavigationItem) }"
+            :to="{ name: appSettingsNavigationItem.routeName }"
+          >
+            <component
+              :is="resolveNavIcon(appSettingsNavigationItem)"
+              :size="17"
+              :stroke-width="1.9"
+            />
+            <span>{{ appSettingsNavigationItem.label }}</span>
+          </RouterLink>
+        </nav>
+      </template>
     </aside>
 
     <section class="ncx-main-panel">
