@@ -1153,16 +1153,27 @@ export const CommonSelect = defineComponent({
       closeMenu()
     }
 
+    /** 监听外层滚动事件，在非下拉浮层自身滚动时关闭下拉。 */
+    function handleScroll(e: Event): void {
+      if (!open.value) return
+      const target = e.target as Node
+      const panelEl = document.querySelector('.ncx-common-select-panel-teleport')
+      if (panelEl && (panelEl === target || panelEl.contains(target))) {
+        return
+      }
+      closeMenu()
+    }
+
     onMounted(() => {
       window.addEventListener('pointerdown', handleGlobalClick)
       window.addEventListener('resize', closeMenu)
-      window.addEventListener('scroll', closeMenu, true)
+      window.addEventListener('scroll', handleScroll, true)
     })
 
     onUnmounted(() => {
       window.removeEventListener('pointerdown', handleGlobalClick)
       window.removeEventListener('resize', closeMenu)
-      window.removeEventListener('scroll', closeMenu, true)
+      window.removeEventListener('scroll', handleScroll, true)
     })
 
     return () => {
@@ -1429,16 +1440,27 @@ export const CommonCombobox = defineComponent({
       closeMenu()
     }
 
+    /** 监听外层滚动事件，在非浮层自身滚动时关闭下拉。 */
+    function handleScroll(e: Event): void {
+      if (!open.value) return
+      const target = e.target as Node
+      const panelEl = document.querySelector('.ncx-common-combobox-panel-teleport')
+      if (panelEl && (panelEl === target || panelEl.contains(target))) {
+        return
+      }
+      closeMenu()
+    }
+
     onMounted(() => {
       window.addEventListener('pointerdown', handleGlobalClick)
       window.addEventListener('resize', closeMenu)
-      window.addEventListener('scroll', closeMenu, true)
+      window.addEventListener('scroll', handleScroll, true)
     })
 
     onUnmounted(() => {
       window.removeEventListener('pointerdown', handleGlobalClick)
       window.removeEventListener('resize', closeMenu)
-      window.removeEventListener('scroll', closeMenu, true)
+      window.removeEventListener('scroll', handleScroll, true)
     })
 
     return () => {
@@ -2409,8 +2431,7 @@ export const CommonDropdownMenu = defineComponent({
         left: `${Math.round(left)}px`,
         minWidth: `${Math.max(160, Math.round(rect.width))}px`,
         zIndex: 'var(--ncx-layer-popover)',
-        transformOrigin: props.placement.startsWith('top') ? 'bottom left' : 'top left',
-        animation: 'ncx-tooltip-fade-in var(--ncx-motion-fast) var(--ncx-spring-smooth)'
+        transformOrigin: props.placement.startsWith('top') ? 'bottom left' : 'top left'
       }
     }
 
@@ -2451,18 +2472,29 @@ export const CommonDropdownMenu = defineComponent({
       }
     }
 
+    /** 监听外层滚动事件，在非浮层自身滚动时更新相对位置。 */
+    function handleScroll(e: Event): void {
+      if (!open.value) return
+      const target = e.target as Node
+      const panelEl = document.querySelector('.ncx-common-dropdown-panel-teleport')
+      if (panelEl && (panelEl === target || panelEl.contains(target))) {
+        return
+      }
+      updatePosition()
+    }
+
     onMounted(() => {
       window.addEventListener('pointerdown', handleGlobalClick, true)
       window.addEventListener('keydown', handleKeydown, true)
       window.addEventListener('resize', updatePosition, { passive: true })
-      window.addEventListener('scroll', updatePosition, { passive: true, capture: true })
+      window.addEventListener('scroll', handleScroll, { passive: true, capture: true })
     })
 
     onUnmounted(() => {
       window.removeEventListener('pointerdown', handleGlobalClick, true)
       window.removeEventListener('keydown', handleKeydown, true)
       window.removeEventListener('resize', updatePosition)
-      window.removeEventListener('scroll', updatePosition, true)
+      window.removeEventListener('scroll', handleScroll, true)
     })
 
     return () =>

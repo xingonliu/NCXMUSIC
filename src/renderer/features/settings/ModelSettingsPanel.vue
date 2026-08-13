@@ -531,7 +531,7 @@ onMounted(() => {
             :model-value="editor.modelId"
             :options="modelOptions"
             :disabled="!selectedVendor"
-            placeholder="先选择厂商"
+            placeholder="选择模型"
             @update:model-value="setPresetModel"
           />
         </label>

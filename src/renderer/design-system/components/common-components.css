@@ -2420,6 +2420,7 @@
   background: var(--ncx-color-surface-overlay);
   backdrop-filter: var(--ncx-glass-backdrop-deep);
   box-shadow: var(--ncx-shadow-elevation-2), 0 1px 0 rgb(255 255 255 / 20%) inset;
+  animation: ncx-tooltip-fade-in var(--ncx-motion-fast) var(--ncx-spring-smooth);
 }
 
 .ncx-common-context {
