@@ -67,19 +67,18 @@ const isQueueOpen = ref<boolean>(false)
 /** 是否处于小云 (AI 助手) 页面。 */
 const isAgentPage = computed<boolean>(() => route.name === 'agent')
 
-/** PlayerBar 外层 Glass 容器的响应式定位与尺寸样式。 */
+/** PlayerBar 外层 Glass 容器的响应式定位与尺寸样式（统一基于 left 与 transform 锚定，消除离散属性动画跳变）。 */
 const playerBarStyle = computed(() => {
   if (isAgentPage.value) {
     return {
       position: 'fixed',
       bottom: '18px',
-      right: '28px',
-      left: 'auto',
-      transform: 'none',
+      left: 'calc(100vw - 28px)',
+      transform: 'translateX(-100%)',
       width: '56px',
       height: '56px',
       zIndex: 'var(--ncx-layer-player)',
-      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+      transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)'
     }
   }
 
@@ -87,12 +86,11 @@ const playerBarStyle = computed(() => {
     position: 'fixed',
     bottom: '18px',
     left: 'calc(230px + ((100vw - 230px) / 2))',
-    right: 'auto',
     transform: 'translateX(-50%)',
     width: 'min(860px, calc(100vw - 288px))',
-    height: 'auto',
+    height: '56px',
     zIndex: 'var(--ncx-layer-player)',
-    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+    transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)'
   }
 })
 
@@ -239,10 +237,7 @@ function openImmersivePlayer(event: MouseEvent): void {
               }"
             />
           </button>
-          <div
-            v-if="!isAgentPage"
-            class="player-track-info"
-          >
+          <div class="player-track-info">
             <p class="player-track-name">
               {{ track?.name ?? text.emptyTrack }}
             </p>
@@ -256,9 +251,8 @@ function openImmersivePlayer(event: MouseEvent): void {
           </div>
         </div>
 
-        <!-- 传输控制区域：小云页隐藏 -->
+        <!-- 传输控制区域 -->
         <div
-          v-if="!isAgentPage"
           class="player-transport"
           role="group"
           :aria-label="text.regionLabel"
@@ -329,11 +323,8 @@ function openImmersivePlayer(event: MouseEvent): void {
           </CommonIconButton>
         </div>
 
-        <!-- 进度：小云页隐藏 -->
-        <div
-          v-if="!isAgentPage"
-          class="player-progress"
-        >
+        <!-- 进度 -->
+        <div class="player-progress">
           <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
           <div class="player-progress-control">
             <MusicProgressBar
@@ -352,11 +343,8 @@ function openImmersivePlayer(event: MouseEvent): void {
           <span class="player-time">{{ formatTime(durationMs) }}</span>
         </div>
 
-        <!-- 音量与状态控制：小云页隐藏 -->
-        <div
-          v-if="!isAgentPage"
-          class="player-output"
-        >
+        <!-- 音量与状态控制 -->
+        <div class="player-output">
           <CommonIconButton
             size="default"
             variant="ghost"
@@ -450,7 +438,8 @@ function openImmersivePlayer(event: MouseEvent): void {
   column-gap: var(--ncx-space-4, 16px);
   row-gap: 0;
   align-items: center;
-  transition: padding 0.3s ease;
+  overflow: hidden;
+  transition: padding 0.35s cubic-bezier(0.4, 0, 0.2, 1), column-gap 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .player-bar-content.is-compact {
@@ -460,8 +449,25 @@ function openImmersivePlayer(event: MouseEvent): void {
   padding: 8px;
   min-height: 56px;
   height: 56px;
-  grid-template-areas: none;
-  grid-template-columns: none;
+  column-gap: 0;
+}
+
+.player-bar-content .player-track-info,
+.player-bar-content .player-transport,
+.player-bar-content .player-progress,
+.player-bar-content .player-output {
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  opacity: 1;
+  visibility: visible;
+}
+
+.player-bar-content.is-compact .player-track-info,
+.player-bar-content.is-compact .player-transport,
+.player-bar-content.is-compact .player-progress,
+.player-bar-content.is-compact .player-output {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .player-track {
@@ -472,6 +478,7 @@ function openImmersivePlayer(event: MouseEvent): void {
   gap: var(--ncx-space-2-5, 10px);
   grid-area: track;
   min-width: 0;
+  transition: gap 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .player-track.is-compact {
