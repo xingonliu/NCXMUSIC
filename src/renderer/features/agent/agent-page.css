@@ -1,8 +1,8 @@
 /* stylelint-disable no-descending-specificity */
 
-.ncx-content-area:has(.agent-page) {
-  padding-left: 32px;
-  padding-right: 32px;
+.ncx-main-panel .ncx-content-area:has(.agent-page) {
+  padding-right: 24px;
+  padding-left: 24px;
 }
 
 .agent-page {
@@ -513,7 +513,7 @@
   left: calc(254px + ((100vw - 266px) / 2));
   transform: translateX(-50%);
   z-index: 20;
-  width: min(780px, calc(100vw - 330px));
+  width: min(780px, calc(100vw - 314px));
   padding: 0;
   background: transparent;
   pointer-events: none;
