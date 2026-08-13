@@ -873,7 +873,7 @@
   min-height: 30px;
   padding: 5px 10px;
   border: 0;
-  border-radius: var(--ncx-radius-sm);
+  border-radius: var(--ncx-radius-md);
   background: transparent;
   color: var(--ncx-color-text-primary, #fff);
   font-family: inherit;
@@ -1052,7 +1052,7 @@
   min-height: 30px;
   padding: 5px 10px;
   border: 0;
-  border-radius: var(--ncx-radius-sm);
+  border-radius: var(--ncx-radius-md);
   background: transparent;
   color: var(--ncx-color-text-primary, #fff);
   font-family: inherit;
