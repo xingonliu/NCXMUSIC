@@ -870,10 +870,10 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  min-height: 28px;
-  padding: 4px 8px;
+  min-height: 30px;
+  padding: 5px 10px;
   border: 0;
-  border-radius: var(--ncx-radius-xs);
+  border-radius: var(--ncx-radius-sm);
   background: transparent;
   color: var(--ncx-color-text-primary, #fff);
   font-family: inherit;
@@ -1049,10 +1049,10 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  min-height: 28px;
-  padding: 4px 8px;
+  min-height: 30px;
+  padding: 5px 10px;
   border: 0;
-  border-radius: var(--ncx-radius-xs);
+  border-radius: var(--ncx-radius-sm);
   background: transparent;
   color: var(--ncx-color-text-primary, #fff);
   font-family: inherit;
