@@ -19,9 +19,11 @@
   grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 12px;
-  width: min(900px, calc(100% - 32px));
+  width: 100%;
+  max-width: 780px;
   margin: 0 auto 10px;
   padding: 14px 16px;
+  box-sizing: border-box;
   border: 1px solid color-mix(in srgb, var(--ncx-color-accent) 22%, transparent);
   border-radius: 18px;
   background: color-mix(in srgb, var(--ncx-color-surface) 92%, var(--ncx-color-accent) 8%);
@@ -501,12 +503,12 @@
    Composer Box & Floating Context Pill (Fixed / Sticky at Bottom)
    ========================================================================== */
 .agent-composer {
-  position: fixed;
+  position: sticky;
   bottom: 18px;
-  left: calc(230px + ((100vw - 230px) / 2));
-  transform: translateX(-50%);
   z-index: 20;
-  width: min(780px, calc(100vw - 288px));
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
   padding: 0;
   background: transparent;
   pointer-events: none;
