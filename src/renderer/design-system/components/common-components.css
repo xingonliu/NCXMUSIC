@@ -586,7 +586,8 @@
   user-select: none;
 }
 
-.ncx-common-input-clear {
+.ncx-common-input-clear,
+.ncx-common-input-reveal {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -602,13 +603,24 @@
   transition: color var(--ncx-motion-fast), transform var(--ncx-motion-fast);
 }
 
-.ncx-common-input-clear:hover {
+.ncx-common-input-clear:hover,
+.ncx-common-input-reveal:hover {
   color: var(--ncx-color-text-secondary, rgb(0 0 0 / 75%));
 }
 
-.ncx-common-input-clear svg {
+.ncx-common-input-clear svg,
+.ncx-common-input-reveal svg {
   width: 14px;
   height: 14px;
+}
+
+.ncx-common-input-reveal {
+  margin-left: -2px;
+}
+
+.ncx-common-input-reveal:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 /* Textarea */
@@ -2400,6 +2412,8 @@
   z-index: var(--ncx-layer-popover);
   min-width: 180px;
   max-width: 320px;
+  max-height: min(340px, calc(100vh - 16px));
+  overflow-y: auto;
   padding: 5px;
   border: 1px solid var(--ncx-color-border-default);
   border-radius: var(--ncx-radius-lg);
@@ -2475,6 +2489,10 @@
 
 .ncx-common-menu-item-label {
   flex: 1;
+}
+
+.ncx-common-menu-item-indented .ncx-common-menu-item-label {
+  padding-left: 10px;
 }
 
 .ncx-common-menu-item-shortcut {

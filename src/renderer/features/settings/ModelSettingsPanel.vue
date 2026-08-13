@@ -1,42 +1,45 @@
 <script setup lang="ts">
-import { CheckCircle2, Copy, KeyRound, Plus, RefreshCw, Trash2 } from '@lucide/vue'
-import { onMounted, reactive, ref } from 'vue'
+import { CheckCircle2, KeyRound, Plus, RefreshCw, Trash2 } from '@lucide/vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 
 import type {
-  ProviderProfileInput,
+  ProviderCatalogVendor,
+  ProviderModelCatalog,
   PublicProviderProfile
 } from '../../../shared/schemas/provider-profile'
-import { PROVIDER_PRESETS } from '../../../shared/schemas/provider-profile'
 import {
+  CommonAlertDialog,
   CommonButton,
+  CommonDialog,
+  CommonDropdownMenu,
   CommonInput,
+  CommonSegmentedControl,
   CommonSelect,
-  CommonSwitch,
-  CommonTextarea,
+  type CommonMenuItem,
   type CommonOption
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
+import SettingsSection from './SettingsSection.vue'
 
 // ========= 类型 =========
 
-/** Profile 编辑表单。 */
-interface ProviderEditor {
-  /** 正在编辑的 Profile ID。 */
-  profileId: string | undefined
-  /** 展示名称。 */
+/** 新增模型弹窗的配置方式。 */
+type ModelEditorMode = 'preset' | 'custom'
+
+/** 新增模型弹窗表单。 */
+interface ModelEditor {
+  /** 配置方式。 */
+  mode: ModelEditorMode
+  /** 预设目录中的供应商 ID。 */
+  vendorId: string
+  /** Profile 展示名或自定义供应商名。 */
   displayName: string
-  /** 协议。 */
-  protocol: ProviderProfileInput['protocol']
-  /** 服务根地址。 */
+  /** 模型服务根地址。 */
   baseUrl: string
-  /** API Key，仅本次提交到 Main。 */
+  /** 仅在保存时发送到 Main 安全存储的 API Key。 */
   apiKey: string
-  /** 模型 ID。 */
+  /** 默认模型 ID。 */
   modelId: string
-  /** 每行 Name: Value 的自定义 Header。 */
-  customHeadersText: string
-  /** 是否启用。 */
-  enabled: boolean
 }
 
 // ========= 变量 =========
@@ -47,314 +50,562 @@ const profiles = ref<PublicProviderProfile[]>([])
 /** 当前默认 Profile ID。 */
 const activeProfileId = ref<string | undefined>()
 
-/** Profile 操作繁忙状态。 */
-const busy = ref<boolean>(false)
+/** OpenRouter 最新模型目录。 */
+const catalog = ref<ProviderModelCatalog | undefined>()
 
-/** 当前编辑器。 */
-const editor = reactive<ProviderEditor>(createEmptyEditor())
+/** 模型目录是否正在加载。 */
+const catalogLoading = ref<boolean>(false)
 
-/** 协议选项。 */
-const protocolOptions: CommonOption[] = [
-  { label: 'OpenAI Compatible', value: 'openai-compatible' },
-  { label: 'Anthropic Messages', value: 'anthropic-messages' },
-  { label: 'Gemini generateContent', value: 'gemini-generate-content' }
+/** 模型目录加载错误文案。 */
+const catalogError = ref<string>('')
+
+/** 新增模型弹窗显示状态。 */
+const addDialogVisible = ref<boolean>(false)
+
+/** 等待用户确认删除的 Profile。 */
+const deleteCandidate = ref<PublicProviderProfile | undefined>()
+
+/** 当前正在执行操作的 Profile ID。 */
+const busyProfileId = ref<string | undefined>()
+
+/** 新增模型保存状态。 */
+const saveBusy = ref<boolean>(false)
+
+/** 新增模型表单。 */
+const editor = reactive<ModelEditor>(createEmptyEditor())
+
+/** 预设与自定义分段控制器选项。 */
+const editorModeOptions: CommonOption[] = [
+  { label: '预设', value: 'preset' },
+  { label: '自定义', value: 'custom' }
 ]
+
+/** 英文供应商名称排序器。 */
+const vendorNameCollator = new Intl.Collator('en', { sensitivity: 'base' })
+
+/** 当前选中的预设供应商。 */
+const selectedVendor = computed<ProviderCatalogVendor | undefined>(() =>
+  catalog.value?.vendors.find((vendor) => vendor.id === editor.vendorId)
+)
+
+/** 当前预设供应商由新到旧的模型选项。 */
+const modelOptions = computed<CommonOption[]>(() =>
+  selectedVendor.value?.models.map((model) => ({
+    label: model.name,
+    value: model.id
+  })) ?? []
+)
+
+/** 供应商下拉项：置顶供应商在前，其余按首字母分组。 */
+const vendorMenuItems = computed<CommonMenuItem[]>(() => buildVendorMenuItems(
+  catalog.value?.vendors ?? [],
+  editor.vendorId
+))
+
+/** 供应商下拉当前展示文案。 */
+const vendorDropdownLabel = computed<string>(() =>
+  selectedVendor.value?.name ?? (catalogLoading.value ? '正在加载厂商…' : '选择厂商')
+)
+
+/** 删除确认框说明。 */
+const deleteDescription = computed<string>(() => {
+  /** 待删除 Profile 的展示名。 */
+  const name = deleteCandidate.value?.displayName ?? '此模型'
+  /** 待删除 Profile 是否为当前默认项。 */
+  const isDefault = deleteCandidate.value?.profileId === activeProfileId.value
+  return isDefault
+    ? `${name} 是当前默认模型。删除后将自动选择其他已启用模型；若没有其他模型，小云将暂停使用。此操作无法撤销。`
+    : `将删除 ${name} 的模型配置与安全存储中的凭据。此操作无法撤销。`
+})
 
 // ========= 函数 =========
 
-/** 创建空白 Provider 编辑器。 */
-function createEmptyEditor(): ProviderEditor {
+/** 创建空白新增模型表单。 */
+function createEmptyEditor(): ModelEditor {
   return {
-    profileId: undefined,
-    displayName: 'OpenAI Compatible',
-    protocol: 'openai-compatible',
-    baseUrl: 'https://api.openai.com/v1',
+    mode: 'preset',
+    vendorId: '',
+    displayName: '',
+    baseUrl: '',
     apiKey: '',
-    modelId: 'gpt-4.1-mini',
-    customHeadersText: '',
-    enabled: true
+    modelId: ''
   }
 }
 
 /** 拉取 Main 持有的公开 Profile 快照。 */
 async function loadProfiles(): Promise<void> {
-  /** Profile 列表结果。 */
-  const result = await window.ncx.providerProfiles.request({ operation: 'list' })
-  profiles.value = result.profiles
-  activeProfileId.value = result.activeProfileId
-}
-
-/** 应用内置最小预设，不猜测模型能力。 */
-function applyPreset(preset: typeof PROVIDER_PRESETS[number]): void {
-  editor.displayName = preset.label
-  editor.protocol = preset.protocol
-  editor.baseUrl = preset.baseUrl
-}
-
-/** 从公开快照进入编辑；秘密字段保持空白。 */
-function editProfile(profile: PublicProviderProfile): void {
-  editor.profileId = profile.profileId
-  editor.displayName = profile.displayName
-  editor.protocol = profile.protocol
-  editor.baseUrl = profile.baseUrl
-  editor.apiKey = ''
-  editor.modelId = profile.modelId
-  editor.customHeadersText = profile.headerNames.map((name) => `${name}: `).join('\n')
-  editor.enabled = profile.enabled
-}
-
-/** 复制为新 Profile，秘密仍需用户重新填写。 */
-function copyProfile(profile: PublicProviderProfile): void {
-  editProfile(profile)
-  editor.profileId = undefined
-  editor.displayName = `${profile.displayName} 副本`
-}
-
-/** 重置为新增表单。 */
-function resetEditor(): void {
-  Object.assign(editor, createEmptyEditor())
-  editor.profileId = undefined
-}
-
-/** 保存 Profile；API Key 和 Header 值只经过 contextBridge 发送 Main。 */
-async function saveProfile(): Promise<void> {
-  busy.value = true
   try {
-    /** 已解析自定义 Header。 */
-    const customHeaders = parseCustomHeaders(editor.customHeadersText)
-    /** 保存结果。 */
+    /** Profile 列表结果。 */
+    const result = await window.ncx.providerProfiles.request({ operation: 'list' })
+    profiles.value = result.profiles
+    activeProfileId.value = result.activeProfileId
+  } catch (error) {
+    showToast(error instanceof Error ? error.message : '模型列表加载失败。', 'warning')
+  }
+}
+
+/** 通过 Main 拉取并校验 OpenRouter 最新模型目录。 */
+async function loadCatalog(): Promise<void> {
+  if (catalogLoading.value) return
+  catalogLoading.value = true
+  catalogError.value = ''
+  try {
+    /** 带目录的 Provider IPC 结果。 */
+    const result = await window.ncx.providerProfiles.request({ operation: 'catalog' })
+    if (!result.catalog) throw new Error('OpenRouter 模型目录响应为空。')
+    catalog.value = result.catalog
+  } catch (error) {
+    catalogError.value = error instanceof Error ? error.message : 'OpenRouter 模型目录加载失败。'
+  } finally {
+    catalogLoading.value = false
+  }
+}
+
+/** 构造置顶项和按 A-Z 分组的供应商菜单。 */
+function buildVendorMenuItems(
+  vendors: ProviderCatalogVendor[],
+  selectedVendorId: string
+): CommonMenuItem[] {
+  /** 用户指定的置顶供应商。 */
+  const priority = vendors
+    .filter((vendor) => vendor.priorityRank !== undefined)
+    .sort((left, right) => (left.priorityRank ?? 0) - (right.priorityRank ?? 0))
+  /** 除置顶项外按名称 A-Z 排序的供应商。 */
+  const alphabetical = vendors
+    .filter((vendor) => vendor.priorityRank === undefined)
+    .sort((left, right) => vendorNameCollator.compare(left.name, right.name))
+  /** 输出到 CommonDropdownMenu 的菜单项。 */
+  const items: CommonMenuItem[] = priority.map((vendor) => ({
+    label: vendor.name,
+    value: vendor.id,
+    checked: vendor.id === selectedVendorId
+  }))
+
+  if (priority.length > 0 && alphabetical.length > 0) {
+    items.push({ type: 'separator', label: '', value: 'priority-separator' })
+  }
+  /** 上一个已输出的首字母分组。 */
+  let previousGroup = ''
+  for (const vendor of alphabetical) {
+    /** 当前供应商的 A-Z 首字母分组。 */
+    const group = resolveVendorGroup(vendor.name)
+    if (group !== previousGroup) {
+      items.push({ type: 'header', label: group, value: `group-${group}` })
+      previousGroup = group
+    }
+    items.push({
+      label: vendor.name,
+      value: vendor.id,
+      checked: vendor.id === selectedVendorId,
+      indented: true
+    })
+  }
+  return items
+}
+
+/** 将供应商名称归入 A-Z 或 # 分组。 */
+function resolveVendorGroup(name: string): string {
+  /** 供应商名首字符的大写形式。 */
+  const initial = name.trim().charAt(0).toUpperCase()
+  return /^[A-Z]$/u.test(initial) ? initial : '#'
+}
+
+/** 打开并重置新增模型弹窗。 */
+function openAddDialog(): void {
+  Object.assign(editor, createEmptyEditor())
+  addDialogVisible.value = true
+  if (!catalog.value && !catalogLoading.value) void loadCatalog()
+}
+
+/** 在非保存状态下关闭新增模型弹窗。 */
+function closeAddDialog(): void {
+  if (saveBusy.value) return
+  addDialogVisible.value = false
+}
+
+/** 切换新增模型配置方式并清除另一种方式的残留值。 */
+function setEditorMode(value: string | number): void {
+  /** 分段控制器返回的合法配置方式。 */
+  const mode: ModelEditorMode = String(value) === 'custom' ? 'custom' : 'preset'
+  Object.assign(editor, createEmptyEditor(), { mode })
+}
+
+/** 选择预设供应商，并自动填充固定 Base URL 与最新默认模型。 */
+function selectVendor(value: string): void {
+  /** 与菜单值对应的目录供应商。 */
+  const vendor = catalog.value?.vendors.find((item) => item.id === value)
+  if (!vendor || !catalog.value) return
+  editor.vendorId = vendor.id
+  editor.displayName = vendor.name
+  editor.baseUrl = catalog.value.baseUrl
+  editor.modelId = vendor.models[0]?.id ?? ''
+}
+
+/** 更新当前预设供应商的默认模型。 */
+function setPresetModel(value: string | number): void {
+  editor.modelId = String(value)
+}
+
+/** 保存新增模型，并让 Main 负责加密秘密字段。 */
+async function saveProfile(): Promise<void> {
+  /** 去除首尾空白后的供应商展示名。 */
+  const displayName = editor.displayName.trim()
+  /** 去除首尾空白后的服务地址。 */
+  const baseUrl = editor.baseUrl.trim()
+  /** 去除首尾空白后的模型 ID。 */
+  const modelId = editor.modelId.trim()
+  if (editor.mode === 'preset' && !selectedVendor.value) {
+    showToast('请先选择厂商。', 'warning')
+    return
+  }
+  if (!displayName || !baseUrl || !modelId) {
+    showToast('请完整填写厂商、Base URL 和默认模型。', 'warning')
+    return
+  }
+  if (editor.mode === 'preset' && !editor.apiKey.trim()) {
+    showToast('预设模型需要填写 OpenRouter API Key。', 'warning')
+    return
+  }
+
+  saveBusy.value = true
+  try {
+    /** 保存后的公开 Profile 快照。 */
     const result = await window.ncx.providerProfiles.request({
       operation: 'save',
       profile: {
-        ...(editor.profileId ? { profileId: editor.profileId } : {}),
-        displayName: editor.displayName,
-        protocol: editor.protocol,
-        baseUrl: editor.baseUrl,
-        modelId: editor.modelId,
+        displayName,
+        protocol: 'openai-compatible',
+        baseUrl,
+        modelId,
         ...(editor.apiKey ? { apiKey: editor.apiKey } : {}),
-        customHeaders,
-        enabled: editor.enabled
+        customHeaders: {},
+        enabled: true
       }
     })
     profiles.value = result.profiles
     activeProfileId.value = result.activeProfileId
-    editor.apiKey = ''
-    showToast('Provider Profile 已安全保存。', 'success')
+    addDialogVisible.value = false
+    showToast('模型已添加，API Key 已交由系统安全存储。', 'success')
   } catch (error) {
-    showToast(error instanceof Error ? error.message : 'Provider Profile 保存失败。', 'warning')
+    showToast(error instanceof Error ? error.message : '模型保存失败。', 'warning')
   } finally {
-    busy.value = false
+    saveBusy.value = false
   }
 }
 
 /** 验证连接、流式与 Tool Call 能力。 */
 async function verifyProfile(profileId: string): Promise<void> {
-  busy.value = true
+  busyProfileId.value = profileId
   try {
     /** 验证结果。 */
     const result = await window.ncx.providerProfiles.request({ operation: 'verify', profileId })
     profiles.value = result.profiles
     activeProfileId.value = result.activeProfileId
-    showToast(result.verificationMessage ?? '验证完成。', result.profiles.find((item) => item.profileId === profileId)?.capabilitySnapshot?.toolCalls ? 'success' : 'warning')
+    /** 验证后的目标 Profile。 */
+    const profile = result.profiles.find((item) => item.profileId === profileId)
+    showToast(
+      result.verificationMessage ?? '验证完成。',
+      profile?.capabilitySnapshot?.toolCalls ? 'success' : 'warning'
+    )
+  } catch (error) {
+    showToast(error instanceof Error ? error.message : '模型验证失败。', 'warning')
   } finally {
-    busy.value = false
+    busyProfileId.value = undefined
   }
 }
 
 /** 设置默认 Agent Profile。 */
 async function setDefault(profileId: string): Promise<void> {
-  /** 切换结果。 */
-  const result = await window.ncx.providerProfiles.request({ operation: 'setDefault', profileId })
-  profiles.value = result.profiles
-  activeProfileId.value = result.activeProfileId
-}
-
-/** 删除指定 Profile。 */
-async function deleteProfile(profileId: string): Promise<void> {
-  /** 删除结果。 */
-  const result = await window.ncx.providerProfiles.request({ operation: 'delete', profileId })
-  profiles.value = result.profiles
-  activeProfileId.value = result.activeProfileId
-  if (editor.profileId === profileId) resetEditor()
-}
-
-/** 解析每行 Header-Name: Header Value，并拒绝控制字符。 */
-function parseCustomHeaders(text: string): Record<string, string> {
-  /** 解析输出。 */
-  const headers: Record<string, string> = {}
-  for (const rawLine of text.split(/\r?\n/u)) {
-    /** 去除首尾空白后的 Header 行。 */
-    const line = rawLine.trim()
-    if (!line) continue
-    /** Header 名与值的分隔位置。 */
-    const separator = line.indexOf(':')
-    if (separator <= 0) throw new Error('自定义 Header 必须使用“名称: 值”格式。')
-    /** Header 名。 */
-    const name = line.slice(0, separator).trim()
-    /** Header 值。 */
-    const value = line.slice(separator + 1).trim()
-    if (!/^[A-Za-z0-9-]{1,80}$/u.test(name) || /[\r\n\0]/u.test(value)) {
-      throw new Error('自定义 Header 包含非法字符。')
-    }
-    headers[name] = value
+  busyProfileId.value = profileId
+  try {
+    /** 切换默认项后的公开 Profile 快照。 */
+    const result = await window.ncx.providerProfiles.request({ operation: 'setDefault', profileId })
+    profiles.value = result.profiles
+    activeProfileId.value = result.activeProfileId
+  } catch (error) {
+    showToast(error instanceof Error ? error.message : '默认模型切换失败。', 'warning')
+  } finally {
+    busyProfileId.value = undefined
   }
-  return headers
 }
 
-/** 切换协议选择。 */
-function setProtocol(value: string | number): void {
-  editor.protocol = String(value) as ProviderProfileInput['protocol']
+/** 打开指定 Profile 的删除确认弹窗。 */
+function requestDelete(profile: PublicProviderProfile): void {
+  deleteCandidate.value = profile
+}
+
+/** 关闭删除确认弹窗。 */
+function cancelDelete(): void {
+  if (busyProfileId.value === deleteCandidate.value?.profileId) return
+  deleteCandidate.value = undefined
+}
+
+/** 删除已确认的 Profile。 */
+async function confirmDelete(): Promise<void> {
+  /** 用户当前确认删除的 Profile。 */
+  const profile = deleteCandidate.value
+  if (!profile || busyProfileId.value !== undefined) return
+  busyProfileId.value = profile.profileId
+  try {
+    /** 删除后的公开 Profile 快照。 */
+    const result = await window.ncx.providerProfiles.request({
+      operation: 'delete',
+      profileId: profile.profileId
+    })
+    profiles.value = result.profiles
+    activeProfileId.value = result.activeProfileId
+    deleteCandidate.value = undefined
+    showToast(`${profile.displayName} 已删除。`, 'success')
+  } catch (error) {
+    showToast(error instanceof Error ? error.message : '模型删除失败。', 'warning')
+  } finally {
+    busyProfileId.value = undefined
+  }
 }
 
 // ========= 生命周期 =========
 
-onMounted(() => { void loadProfiles() })
+onMounted(() => {
+  void loadProfiles()
+  void loadCatalog()
+})
 </script>
 
 <template>
-  <div class="model-settings-layout">
-    <section
-      id="setting-provider-profiles"
-      class="model-profile-list"
-      aria-label="Provider Profiles"
-    >
-      <header>
-        <div><h2>Provider Profiles</h2><p>API Key 由系统安全存储加密，不写入普通设置。</p></div>
-        <CommonButton
-          size="compact"
-          variant="secondary"
-          @click="resetEditor"
-        >
-          <Plus :size="14" />新增
-        </CommonButton>
-      </header>
+  <SettingsSection
+    section-id="setting-provider-profiles"
+    title="模型列表"
+    description="管理小云可用的模型配置；API Key 始终由系统安全存储加密。"
+  >
+    <template #actions>
       <CommonButton
-        v-for="profile in profiles"
-        :key="profile.profileId"
-        class="model-profile-item"
-        :class="{ 'is-active': profile.profileId === activeProfileId }"
-        variant="ghost"
-        @click="editProfile(profile)"
+        size="compact"
+        variant="primary"
+        @click="openAddDialog"
       >
-        <span class="model-profile-icon"><KeyRound
-          :size="16"
-          :stroke-width="1.8"
-        /></span>
-        <span class="model-profile-copy">
-          <strong>{{ profile.displayName }}</strong>
-          <small>{{ profile.modelId }} · {{ profile.protocol }}</small>
-        </span>
+        <Plus :size="14" />新增模型
+      </CommonButton>
+    </template>
+
+    <div
+      v-for="profile in profiles"
+      :key="profile.profileId"
+      class="model-profile-row"
+      :class="{ 'is-active': profile.profileId === activeProfileId }"
+    >
+      <span class="model-profile-icon"><KeyRound
+        :size="17"
+        :stroke-width="1.8"
+      /></span>
+      <span class="model-profile-copy">
+        <strong>{{ profile.displayName }}</strong>
+        <small>{{ profile.modelId }} · {{ profile.baseUrl }}</small>
+      </span>
+      <span class="model-profile-status">
         <CheckCircle2
           v-if="profile.capabilitySnapshot?.toolCalls"
           :size="15"
           class="model-profile-verified"
+          aria-label="已通过工具调用验证"
         />
         <span
           v-if="profile.profileId === activeProfileId"
           class="model-profile-default"
         >默认</span>
-      </CommonButton>
-      <p
-        v-if="profiles.length === 0"
-        class="model-profile-empty"
-      >
-        还没有模型配置。选择预设或填写自定义服务。
-      </p>
-    </section>
-
-    <section
-      id="setting-provider-editor"
-      class="model-profile-editor"
-    >
-      <header><h2>{{ editor.profileId ? '编辑 Profile' : '新增 Profile' }}</h2><p>兼容服务可自定义地址、模型 ID 与必要 Header。</p></header>
-      <p class="model-profile-data-disclosure">
-        对话时只发送当前消息与上下文选择器选中的必要画像/记忆；画像分析只发送本地聚合特征和有限代表样本。使用云端 Provider 可能产生 Token 费用，不会发送 Cookie、账户数据库或完整歌单文件。
-      </p>
-      <div class="model-preset-row">
+      </span>
+      <span class="model-profile-actions">
         <CommonButton
-          v-for="preset in PROVIDER_PRESETS"
-          :key="preset.label"
-          variant="ghost"
+          v-if="profile.enabled"
           size="compact"
-          @click="applyPreset(preset)"
-        >
-          {{ preset.label }}
-        </CommonButton>
-      </div>
-      <label><span>名称</span><CommonInput
-        v-model="editor.displayName"
-        maxlength="80"
-      /></label>
-      <label><span>协议</span><CommonSelect
-        :model-value="editor.protocol"
-        :options="protocolOptions"
-        @update:model-value="setProtocol"
-      /></label>
-      <label><span>Base URL</span><CommonInput
-        v-model="editor.baseUrl"
-        type="url"
-      /></label>
-      <label><span>API Key</span><CommonInput
-        v-model="editor.apiKey"
-        type="password"
-        autocomplete="new-password"
-        :placeholder="editor.profileId ? '留空则保留原凭据' : '只发送到系统安全存储'"
-      /></label>
-      <label><span>模型 ID</span><CommonInput v-model="editor.modelId" /></label>
-      <label><span>自定义 Headers</span><CommonTextarea
-        v-model="editor.customHeadersText"
-        :rows="3"
-        placeholder="Header-Name: value（每行一个）"
-      /></label>
-      <div class="model-profile-editor-switch">
-        <span>启用此 Profile</span><CommonSwitch
-          :model-value="editor.enabled"
-          label="启用 Profile"
-          @update:model-value="editor.enabled = $event"
-        />
-      </div>
-      <footer>
-        <CommonButton
-          v-if="editor.profileId"
-          variant="danger"
-          size="compact"
-          @click="deleteProfile(editor.profileId)"
-        >
-          <Trash2 :size="14" />删除
-        </CommonButton>
-        <CommonButton
-          v-if="editor.profileId"
           variant="secondary"
-          size="compact"
-          @click="copyProfile(profiles.find((profile) => profile.profileId === editor.profileId)!)"
+          :loading="busyProfileId === profile.profileId"
+          :disabled="busyProfileId !== undefined && busyProfileId !== profile.profileId"
+          @click="verifyProfile(profile.profileId)"
         >
-          <Copy :size="14" />复制
+          <RefreshCw :size="13" />验证
         </CommonButton>
         <CommonButton
-          v-if="editor.profileId && editor.enabled"
-          variant="secondary"
+          v-if="profile.enabled && profile.profileId !== activeProfileId"
           size="compact"
-          :loading="busy"
-          @click="verifyProfile(editor.profileId)"
-        >
-          <RefreshCw :size="14" />验证
-        </CommonButton>
-        <CommonButton
-          v-if="editor.profileId && editor.enabled && editor.profileId !== activeProfileId"
           variant="secondary"
-          size="compact"
-          @click="setDefault(editor.profileId)"
+          :disabled="busyProfileId !== undefined"
+          @click="setDefault(profile.profileId)"
         >
           设为默认
         </CommonButton>
         <CommonButton
-          variant="primary"
-          :loading="busy"
-          @click="saveProfile"
+          size="compact"
+          variant="danger"
+          :disabled="busyProfileId !== undefined"
+          @click="requestDelete(profile)"
         >
-          保存 Profile
+          <Trash2 :size="13" />删除
         </CommonButton>
-      </footer>
-    </section>
-  </div>
+      </span>
+    </div>
+
+    <div
+      v-if="profiles.length === 0"
+      class="model-profile-empty"
+    >
+      <KeyRound :size="22" />
+      <strong>还没有模型</strong>
+      <span>新增预设或自定义模型后，小云即可开始工作。</span>
+    </div>
+  </SettingsSection>
+
+  <CommonDialog
+    :visible="addDialogVisible"
+    title="新增模型"
+    subtitle="从 OpenRouter 最新目录选择预设，或填写自定义兼容服务。"
+    width="580px"
+    :close-on-overlay-click="!saveBusy"
+    :close-on-esc="!saveBusy"
+    @close="closeAddDialog"
+  >
+    <div class="model-add-dialog">
+      <CommonSegmentedControl
+        class="model-editor-mode"
+        :model-value="editor.mode"
+        :options="editorModeOptions"
+        @update:model-value="setEditorMode"
+      />
+
+      <p
+        v-if="editor.mode === 'preset'"
+        class="model-catalog-note"
+      >
+        预设目录来自 OpenRouter，当前共 {{ catalog?.modelCount ?? 0 }} 个模型。Base URL 固定为 OpenRouter，需填写 OpenRouter API Key。
+      </p>
+
+      <div
+        v-if="editor.mode === 'preset'"
+        class="model-editor-fields"
+      >
+        <label>
+          <span>选择厂商</span>
+          <CommonDropdownMenu
+            class="model-provider-dropdown"
+            :label="vendorDropdownLabel"
+            :items="vendorMenuItems"
+            :disabled="catalogLoading || !catalog"
+            @select="selectVendor"
+          />
+        </label>
+        <div
+          v-if="catalogError"
+          class="model-catalog-error"
+        >
+          <span>{{ catalogError }}</span>
+          <CommonButton
+            size="compact"
+            variant="secondary"
+            :loading="catalogLoading"
+            @click="loadCatalog"
+          >
+            重试
+          </CommonButton>
+        </div>
+        <label>
+          <span>Base URL</span>
+          <CommonInput
+            :model-value="editor.baseUrl"
+            disabled
+            placeholder="选择厂商后自动填写"
+          />
+        </label>
+        <label>
+          <span>API KEY</span>
+          <CommonInput
+            v-model="editor.apiKey"
+            type="password"
+            clearable
+            revealable
+            autocomplete="new-password"
+            placeholder="OpenRouter API Key"
+          />
+        </label>
+        <label>
+          <span>默认模型</span>
+          <CommonSelect
+            :model-value="editor.modelId"
+            :options="modelOptions"
+            :disabled="!selectedVendor"
+            placeholder="先选择厂商"
+            @update:model-value="setPresetModel"
+          />
+        </label>
+      </div>
+
+      <div
+        v-else
+        class="model-editor-fields"
+      >
+        <label>
+          <span>厂商</span>
+          <CommonInput
+            v-model="editor.displayName"
+            maxlength="80"
+            placeholder="例如：本地 Ollama"
+          />
+        </label>
+        <label>
+          <span>Base URL</span>
+          <CommonInput
+            v-model="editor.baseUrl"
+            type="url"
+            placeholder="https://provider.example.com/v1"
+          />
+        </label>
+        <label>
+          <span>API KEY</span>
+          <CommonInput
+            v-model="editor.apiKey"
+            type="password"
+            clearable
+            revealable
+            autocomplete="new-password"
+            placeholder="本地服务可留空"
+          />
+        </label>
+        <label>
+          <span>默认模型</span>
+          <CommonInput
+            v-model="editor.modelId"
+            placeholder="模型 ID"
+          />
+        </label>
+      </div>
+
+      <p class="model-profile-data-disclosure">
+        对话时只发送当前消息与上下文选择器选中的必要画像/记忆；画像分析只发送本地聚合特征和有限代表样本。使用云端 Provider 可能产生 Token 费用，不会发送 Cookie、账户数据库或完整歌单文件。
+      </p>
+    </div>
+
+    <template #actions>
+      <CommonButton
+        variant="secondary"
+        :disabled="saveBusy"
+        @click="closeAddDialog"
+      >
+        取消
+      </CommonButton>
+      <CommonButton
+        variant="primary"
+        :loading="saveBusy"
+        @click="saveProfile"
+      >
+        新增模型
+      </CommonButton>
+    </template>
+  </CommonDialog>
+
+  <CommonAlertDialog
+    :visible="Boolean(deleteCandidate)"
+    title="删除模型？"
+    :description="deleteDescription"
+    confirm-text="删除"
+    @cancel="cancelDelete"
+    @confirm="confirmDelete"
+  />
 </template>

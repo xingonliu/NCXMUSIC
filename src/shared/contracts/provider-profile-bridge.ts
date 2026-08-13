@@ -14,6 +14,6 @@ export const PROVIDER_PROFILE_CHANNELS = {
 
 /** Preload 向 Renderer 暴露的 Provider Profile 白名单桥。 */
 export interface ProviderProfileBridge {
-  /** 管理 Main 持有的公开配置与加密凭据。 */
+  /** 管理 Main 持有的公开配置与加密凭据，并读取公开模型目录。 */
   request(input: ProviderProfileRequest): Promise<ProviderProfileResult>
 }

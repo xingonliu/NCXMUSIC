@@ -1182,6 +1182,10 @@ lastVerifiedAt
 3. **实时模型枚举**：用户填写凭据后，优先调用厂商/中转站的 Models Endpoint，获得当前账号真正可用的模型 ID。
 4. **手动模型 ID**：服务不支持模型枚举、返回失败或中转站做了裁剪时，用户始终可以手动填写。
 
+模型设置页的“预设”入口使用 OpenRouter 的公开 `GET /api/v1/models` 与 `GET /api/v1/models/count` 生成可选目录。由于该响应以模型为条目且没有独立供应商字段，Main 按模型 ID 的 `vendor/model` 前缀归并供应商，将 OpenRouter 的 `~vendor` 最新别名并入同一供应商，并按 `created` 从新到旧展示模型。ChatGPT、Claude、DeepSeek、GLM、Gemini、Grok、Kimi、MiniMax、Qwen、Seed 固定置顶，其余供应商按 A-Z 分组。
+
+该预设是 OpenRouter 路由目录，不代表厂商原生接口目录：预设 Profile 的 Base URL 固定为 `https://openrouter.ai/api/v1` 且不可编辑，凭据必须是 OpenRouter API Key。需要厂商直连、中转站或本地服务时使用“自定义”，手动填写厂商名、Base URL、API Key 与模型 ID。目录请求不携带用户 API Key，网络请求由 Main 发起并经共享 Schema 裁剪后才返回 Renderer。
+
 OpenAI 标准接口通常通过 `GET /v1/models` 返回当前凭据可用的模型；DeepSeek 官方当前提供 `GET /models`。具体路径由 Provider Preset 决定，不通过盲目向第三方域名尝试多个地址来探测。
 
 模型列表通常只提供模型 ID、所有者等基础信息，不能可靠证明是否支持 Tool Call、流式输出或特定参数。因此保存前执行分层测试：

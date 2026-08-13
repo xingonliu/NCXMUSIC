@@ -48,9 +48,34 @@ export const ProviderProfileInputSchema = z.strictObject({
   enabled: z.boolean()
 })
 
+/** OpenRouter 目录中供设置页选择的模型摘要。 */
+export const ProviderCatalogModelSchema = z.strictObject({
+  id: z.string().trim().min(1).max(200),
+  name: z.string().trim().min(1).max(200),
+  created: z.number().int().nonnegative()
+})
+
+/** 从 OpenRouter 模型条目归并出的供应商。 */
+export const ProviderCatalogVendorSchema = z.strictObject({
+  id: z.string().trim().min(1).max(80),
+  name: z.string().trim().min(1).max(80),
+  priorityRank: z.number().int().nonnegative().optional(),
+  models: z.array(ProviderCatalogModelSchema).min(1)
+})
+
+/** Renderer 可见的 OpenRouter 供应商与模型目录。 */
+export const ProviderModelCatalogSchema = z.strictObject({
+  source: z.literal('openrouter'),
+  baseUrl: z.literal('https://openrouter.ai/api/v1'),
+  modelCount: z.number().int().nonnegative(),
+  fetchedAt: z.number().int().positive(),
+  vendors: z.array(ProviderCatalogVendorSchema)
+})
+
 /** Provider Profile 管理请求。 */
 export const ProviderProfileRequestSchema = z.discriminatedUnion('operation', [
   z.strictObject({ operation: z.literal('list') }),
+  z.strictObject({ operation: z.literal('catalog') }),
   z.strictObject({ operation: z.literal('save'), profile: ProviderProfileInputSchema }),
   z.strictObject({ operation: z.literal('delete'), profileId: z.uuid() }),
   z.strictObject({ operation: z.literal('setDefault'), profileId: z.uuid() }),
@@ -61,7 +86,8 @@ export const ProviderProfileRequestSchema = z.discriminatedUnion('operation', [
 export const ProviderProfileResultSchema = z.strictObject({
   profiles: z.array(PublicProviderProfileSchema),
   activeProfileId: z.uuid().optional(),
-  verificationMessage: z.string().max(240).optional()
+  verificationMessage: z.string().max(240).optional(),
+  catalog: ProviderModelCatalogSchema.optional()
 })
 
 /** Main 私有注入 Utility 的可执行 Profile；不得转发 Renderer。 */
@@ -105,6 +131,15 @@ export type PublicProviderProfile = z.infer<typeof PublicProviderProfileSchema>
 
 /** Profile 编辑输入类型。 */
 export type ProviderProfileInput = z.infer<typeof ProviderProfileInputSchema>
+
+/** OpenRouter 目录模型摘要类型。 */
+export type ProviderCatalogModel = z.infer<typeof ProviderCatalogModelSchema>
+
+/** OpenRouter 目录供应商类型。 */
+export type ProviderCatalogVendor = z.infer<typeof ProviderCatalogVendorSchema>
+
+/** OpenRouter 模型目录类型。 */
+export type ProviderModelCatalog = z.infer<typeof ProviderModelCatalogSchema>
 
 /** Profile 管理请求类型。 */
 export type ProviderProfileRequest = z.infer<typeof ProviderProfileRequestSchema>

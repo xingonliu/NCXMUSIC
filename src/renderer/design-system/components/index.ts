@@ -51,6 +51,8 @@ export interface CommonMenuItem {
   disabled?: boolean
   /** 菜单项是否勾选。 */
   checked?: boolean
+  /** 菜单项文案是否相对分组标题缩进。 */
+  indented?: boolean
   /** 菜单项图标。 */
   icon?: string
 }
@@ -723,20 +725,33 @@ export const CommonInput = defineComponent({
     size: { type: String as PropType<CommonComponentSize>, default: 'default' },
     type: { type: String, default: 'text' },
     clearable: { type: Boolean, default: false },
+    /** 密码输入框是否提供明文显示切换按钮。 */
+    revealable: { type: Boolean, default: false },
+    /** 原生自动填充提示。 */
+    autocomplete: { type: String, default: undefined },
+    /** 原生最大输入长度。 */
+    maxlength: { type: [String, Number], default: undefined },
     prefix: { type: String, default: '' },
     suffix: { type: String, default: '' }
   },
   emits: ['update:modelValue', 'change', 'input', 'clear', 'focus', 'blur'],
   setup(props, { emit, slots }) {
+    /** 当前输入框 DOM 引用。 */
     const inputRef = ref<HTMLInputElement | null>(null)
 
+    /** 密码输入框是否正在显示明文。 */
+    const passwordVisible = ref<boolean>(false)
+
+    /** 将原生输入事件同步为通用组件事件。 */
     function handleInput(event: Event): void {
+      /** 当前原生输入框内容。 */
       const val = readInputValue(event)
       emit('update:modelValue', val)
       emit('input', val)
       emit('change', val)
     }
 
+    /** 清空当前输入内容并恢复焦点。 */
     function handleClear(): void {
       if (props.disabled || props.readonly) return
       emit('update:modelValue', '')
@@ -746,19 +761,41 @@ export const CommonInput = defineComponent({
       inputRef.value?.focus()
     }
 
+    /** 转发输入框聚焦事件。 */
     function handleFocus(event: FocusEvent): void {
       emit('focus', event)
     }
 
+    /** 转发输入框失焦事件。 */
     function handleBlur(event: FocusEvent): void {
       emit('blur', event)
     }
 
-    return () => {
-      const sizeClass = `ncx-common-field--${props.size || 'default'}`
-      const hasPrefix = Boolean(slots.prefix || props.prefix)
-      const hasSuffix = Boolean(slots.suffix || props.suffix || (props.clearable && props.modelValue))
+    /** 切换密码明文显示状态且不改变输入内容。 */
+    function togglePasswordVisibility(): void {
+      if (props.disabled) return
+      passwordVisible.value = !passwordVisible.value
+      inputRef.value?.focus()
+    }
 
+    return () => {
+      /** 当前通用输入框尺寸类名。 */
+      const sizeClass = `ncx-common-field--${props.size || 'default'}`
+      /** 当前输入框是否有前置内容。 */
+      const hasPrefix = Boolean(slots.prefix || props.prefix)
+      /** 当前输入框是否需要后置操作或内容。 */
+      const hasSuffix = Boolean(
+        slots.suffix
+        || props.suffix
+        || props.revealable
+        || (props.clearable && props.modelValue)
+      )
+      /** 密码显隐状态对应的原生输入类型。 */
+      const resolvedType = props.revealable && props.type === 'password' && passwordVisible.value
+        ? 'text'
+        : props.type
+
+      /** 通用输入框原生节点。 */
       const inputElement = h('input', {
         ref: inputRef,
         class: joinClasses(
@@ -768,11 +805,13 @@ export const CommonInput = defineComponent({
           props.invalid && 'ncx-common-field-invalid',
           props.disabled && 'ncx-common-field-disabled'
         ),
-        type: props.type,
+        type: resolvedType,
         value: props.modelValue,
         placeholder: props.placeholder,
         disabled: props.disabled,
         readonly: props.readonly,
+        autocomplete: props.autocomplete,
+        maxlength: props.maxlength,
         'aria-invalid': props.invalid ? 'true' : undefined,
         onInput: handleInput,
         onFocus: handleFocus,
@@ -813,6 +852,39 @@ export const CommonInput = defineComponent({
                       d: 'M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm2.707 9.293a1 1 0 0 1-1.414 1.414L8 9.414l-1.293 1.293a1 1 0 0 1-1.414-1.414L6.586 8 5.293 6.707a1 1 0 0 1 1.414-1.414L8 6.586l1.293-1.293a1 1 0 0 1 1.414 1.414L9.414 8l1.293 1.293z'
                     })
                   ])
+                ]
+              )
+            : null,
+          props.revealable && props.type === 'password'
+            ? h(
+                'button',
+                {
+                  class: 'ncx-common-input-reveal',
+                  type: 'button',
+                  disabled: props.disabled,
+                  'aria-label': passwordVisible.value ? '隐藏密码' : '显示密码',
+                  'aria-pressed': passwordVisible.value ? 'true' : 'false',
+                  onClick: togglePasswordVisibility
+                },
+                [
+                  h('svg', {
+                    viewBox: '0 0 24 24',
+                    fill: 'none',
+                    stroke: 'currentColor',
+                    'stroke-width': '1.8',
+                    'stroke-linecap': 'round',
+                    'stroke-linejoin': 'round'
+                  }, passwordVisible.value
+                    ? [
+                        h('path', { d: 'M2 2L22 22' }),
+                        h('path', { d: 'M10.6 10.7a2 2 0 0 0 2.7 2.7' }),
+                        h('path', { d: 'M9.9 4.2A10.5 10.5 0 0 1 12 4c5.5 0 9.5 5.2 10 8a10.8 10.8 0 0 1-3 4.8' }),
+                        h('path', { d: 'M6.6 6.6C4 8.2 2.4 10.5 2 12c.7 3.7 5 8 10 8 1.4 0 2.7-.3 3.8-.8' })
+                      ]
+                    : [
+                        h('path', { d: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z' }),
+                        h('circle', { cx: '12', cy: '12', r: '3' })
+                      ])
                 ]
               )
             : null,
@@ -2427,6 +2499,7 @@ export const CommonDropdownMenu = defineComponent({
                         'ncx-common-menu-item',
                         item.danger && 'ncx-common-menu-item-danger',
                         item.checked && 'ncx-common-menu-item-checked',
+                        item.indented && 'ncx-common-menu-item-indented',
                         item.disabled && 'ncx-common-menu-item-disabled'
                       ),
                       type: 'button',
@@ -2608,6 +2681,7 @@ export const CommonContextMenu = defineComponent({
                         'ncx-common-menu-item',
                         item.danger && 'ncx-common-menu-item-danger',
                         item.checked && 'ncx-common-menu-item-checked',
+                        item.indented && 'ncx-common-menu-item-indented',
                         item.disabled && 'ncx-common-menu-item-disabled'
                       ),
                       type: 'button',

@@ -4,11 +4,13 @@ import {
   type ProviderStreamEvent
 } from '../infrastructure/provider/provider-protocol'
 import type { ProviderProfileStore } from '../infrastructure/credentials/provider-profile-store'
+import { fetchOpenRouterModelCatalog } from '../infrastructure/provider/openrouter-model-catalog'
 import type { UtilitySupervisor } from './utility-supervisor'
 import {
   ProviderProfileRequestSchema,
   ProviderProfileResultSchema,
   type ProviderCapabilitySnapshot,
+  type ProviderModelCatalog,
   type ProviderProfileRequest,
   type ProviderProfileResult
 } from '../shared/schemas/provider-profile'
@@ -28,17 +30,24 @@ export class ProviderProfileCoordinator {
     const request = ProviderProfileRequestSchema.parse(rawRequest)
     /** 可选验证提示。 */
     let verificationMessage: string | undefined
+    /** 按需拉取且不包含凭据的 OpenRouter 模型目录。 */
+    let catalog: ProviderModelCatalog | undefined
     if (request.operation === 'save') this.store.save(request.profile)
     else if (request.operation === 'delete') this.store.delete(request.profileId)
     else if (request.operation === 'setDefault') this.store.setDefault(request.profileId)
     else if (request.operation === 'verify') {
       verificationMessage = await this.verify(request.profileId)
+    } else if (request.operation === 'catalog') {
+      catalog = await fetchOpenRouterModelCatalog()
     }
-    if (request.operation !== 'verify') this.syncUtility()
+    if (request.operation === 'save' || request.operation === 'delete' || request.operation === 'setDefault') {
+      this.syncUtility()
+    }
     return ProviderProfileResultSchema.parse({
       profiles: this.store.list(),
       ...(this.store.activeProfileId() ? { activeProfileId: this.store.activeProfileId() } : {}),
-      ...(verificationMessage ? { verificationMessage } : {})
+      ...(verificationMessage ? { verificationMessage } : {}),
+      ...(catalog ? { catalog } : {})
     })
   }
 

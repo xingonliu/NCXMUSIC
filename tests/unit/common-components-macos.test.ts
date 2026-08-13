@@ -414,6 +414,30 @@ describe('CommonInput macOS Design System', () => {
     expect(wrapper.emitted('update:modelValue')).toEqual([['']])
     expect(wrapper.emitted('clear')).toHaveLength(1)
   })
+
+  it('密码输入框默认圆点遮罩，并支持清空与明文显隐按钮', async () => {
+    /** 带密码操作按钮的输入框。 */
+    const wrapper = mount(CommonInput, {
+      props: {
+        modelValue: 'secret-key',
+        type: 'password',
+        clearable: true,
+        revealable: true
+      }
+    })
+
+    /** 原生密码输入节点。 */
+    const input = wrapper.find('input')
+    /** 明文显示切换按钮。 */
+    const revealButton = wrapper.find('.ncx-common-input-reveal')
+    expect(input.attributes('type')).toBe('password')
+    expect(wrapper.find('.ncx-common-input-clear').exists()).toBe(true)
+    expect(revealButton.attributes('aria-label')).toBe('显示密码')
+
+    await revealButton.trigger('click')
+    expect(input.attributes('type')).toBe('text')
+    expect(revealButton.attributes('aria-label')).toBe('隐藏密码')
+  })
 })
 
 describe('CommonTextarea macOS Design System', () => {
@@ -588,4 +612,3 @@ describe('CommonCombobox macOS Design System', () => {
     expect(wrapper.emitted('clear')).toHaveLength(1)
   })
 })
-
