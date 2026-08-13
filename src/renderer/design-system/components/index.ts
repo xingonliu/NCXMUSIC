@@ -1258,15 +1258,7 @@ export const CommonSelect = defineComponent({
                     class: 'ncx-common-select-panel-teleport',
                     style: panelStyle.value
                   },
-                  [
-                    props.placeholder
-                      ? h(
-                          'div',
-                          { class: 'ncx-common-select-option ncx-common-select-option--placeholder' },
-                          props.placeholder
-                        )
-                      : null,
-                    ...props.options.map((option) => {
+                  props.options.map((option) => {
                       const isSelected = String(option.value) === String(props.modelValue)
                       return h(
                         'button',
@@ -1305,7 +1297,6 @@ export const CommonSelect = defineComponent({
                         ]
                       )
                     })
-                  ]
                 )
               )
             : null
