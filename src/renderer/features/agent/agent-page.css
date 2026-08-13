@@ -571,9 +571,6 @@
   transition: border-color 150ms ease;
 }
 
-.agent-composer-box:focus-within {
-  border-color: color-mix(in srgb, var(--ncx-color-text-primary) 30%, transparent);
-}
 
 .agent-composer-box textarea {
   width: 100%;

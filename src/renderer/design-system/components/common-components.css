@@ -30,8 +30,6 @@
 
 .ncx-common-button:focus-visible,
 .ncx-common-icon-button:focus-visible,
-.ncx-common-field:focus-visible,
-.ncx-common-search:focus-within,
 .ncx-common-link-button:focus-visible,
 .ncx-common-check input:focus-visible,
 .ncx-common-switch:focus-visible,
@@ -3485,12 +3483,6 @@
     transform var(--ncx-motion-instant) cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.music-content-page .ncx-common-search:focus-within {
-  background: var(--ncx-color-surface-raised);
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-accent) 38%, transparent),
-    0 0 0 3px color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
-}
 
 .music-content-page .ncx-common-empty,
 .music-content-page .ncx-common-error {

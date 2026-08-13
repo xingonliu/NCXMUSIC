@@ -65,7 +65,7 @@ const text = zhCN.player
 const isQueueOpen = ref<boolean>(false)
 
 /** 是否处于小云 (AI 助手) 页面。 */
-const isAgentPage = computed<boolean>(() => route.name === 'agent')
+const isAgentPage = computed<boolean>(() => route?.name === 'agent')
 
 /** PlayerBar 外层 Glass 容器的响应式定位与尺寸样式（统一基于 left 与 transform 锚定，消除离散属性动画跳变）。 */
 const playerBarStyle = computed(() => {
