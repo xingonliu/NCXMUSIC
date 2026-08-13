@@ -468,6 +468,14 @@ function openImmersivePlayer(event: MouseEvent): void {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  width: 0 !important;
+  max-width: 0 !important;
+  min-width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  flex: 0 0 0px !important;
 }
 
 .player-track {
