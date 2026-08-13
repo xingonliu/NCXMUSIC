@@ -1,20 +1,19 @@
 <script setup lang="ts">
-import { ArrowUp, ChevronDown, Folder, Mic, Plus, Square } from '@lucide/vue'
+import { ArrowUp, ChevronDown, Folder, Mic, Square } from '@lucide/vue'
 import { computed, onMounted, ref, type DeepReadonly } from 'vue'
-import { useRouter } from 'vue-router'
 
 import type { AgentSnapshot } from '../../../../shared/schemas/agent'
 import type { PublicProviderProfile } from '../../../../shared/schemas/provider-profile'
 import {
-  CommonDropdownMenu,
   CommonIconButton,
-  type CommonMenuItem
+  CommonSelect,
+  type CommonOption
 } from '../../../design-system/components'
 import { showToast } from '../../../design-system/use-toast'
 import SafetyControl from './SafetyControl.vue'
 import { useVoiceInput } from '../../voice/use-voice-input'
 
-// ========= 类型 =========
+// ========= 类型定义 =========
 
 interface AgentComposerProps {
   readonly snapshot: DeepReadonly<AgentSnapshot>
@@ -30,68 +29,50 @@ interface AgentComposerEmits {
 
 // ========= 变量 =========
 
+/** 组件属性定义 */
 const props = defineProps<AgentComposerProps>()
+/** 组件事件定义 */
 const emit = defineEmits<AgentComposerEmits>()
 
-/** 路由实例，用于跳转模型设置。 */
-const router = useRouter()
-
-/** 输入框绑定的消息文本。 */
+/** 输入框绑定的消息文本 */
 const content = ref<string>('')
 
-/** 可选模型 Profile 列表。 */
+/** 可选模型 Profile 列表 */
 const profiles = ref<PublicProviderProfile[]>([])
 
-/** 当前全局激活的默认 Profile ID。 */
+/** 当前全局激活的默认 Profile ID */
 const activeProfileId = ref<string | undefined>()
 
-/** 模型列表切换处理中状态。 */
+/** 模型列表切换处理中状态 */
 const profileChanging = ref<boolean>(false)
 
-/** 应用作用域语音输入控制器。 */
+/** 应用作用域语音输入控制器 */
 const voice = useVoiceInput()
 
-/** 当前 Agent 是否正在处于活动处理状态。 */
+/** 当前 Agent 是否处于活动处理状态 */
 const active = computed<boolean>(() => !['idle', 'completed', 'cancelled', 'failed'].includes(props.snapshot.turnStatus))
 
-/** 当前是否具备发送消息条件。 */
+/** 当前是否具备发送消息条件 */
 const canSend = computed<boolean>(() => content.value.trim().length > 0 && props.snapshot.configured)
 
-/** 当前活动模型的展示名称。 */
+/** 当前活动模型的展示名称 */
 const activeModelDisplayName = computed<string>(() => {
   const activeProfile = profiles.value.find((item) => item.profileId === activeProfileId.value)
   return activeProfile?.displayName ?? 'NCX Agent 极高'
 })
 
-/** 快速切换模型的下拉菜单项列表。 */
-const modelMenuItems = computed<CommonMenuItem[]>(() => {
-  const items: CommonMenuItem[] = []
+/** 快速切换模型的 CommonSelect 选项列表 */
+const modelSelectOptions = computed<CommonOption[]>(() => {
   const enabledProfiles = profiles.value.filter((profile) => profile.enabled)
-
-  if (enabledProfiles.length > 0) {
-    items.push({ type: 'header', label: '默认模型', value: 'header-models' })
-    for (const profile of enabledProfiles) {
-      items.push({
-        label: profile.displayName,
-        value: profile.profileId,
-        checked: profile.profileId === activeProfileId.value,
-        indented: true
-      })
-    }
-    items.push({ type: 'separator', label: '', value: 'sep-settings' })
-  }
-
-  items.push({
-    label: '⚙️ 模型设置...',
-    value: '__go_to_settings__'
-  })
-
-  return items
+  return enabledProfiles.map((profile) => ({
+    label: profile.displayName,
+    value: profile.profileId
+  }))
 })
 
-// ========= 函数 =========
+// ======== 函数 ========
 
-/** 提交发送消息。 */
+/** 提交发送消息 */
 function submit(): void {
   const trimmed = content.value.trim()
   if (!trimmed || !props.snapshot.configured) return
@@ -99,42 +80,42 @@ function submit(): void {
   emit('send', trimmed)
 }
 
-/** 处理键盘按键响应，Enter 发送。 */
+/** 处理键盘按键响应，Enter 发送 */
 function handleKeydown(event: KeyboardEvent): void {
   if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return
   event.preventDefault()
   submit()
 }
 
-/** 输入区麦克风按下时捕获指针并开始录音。 */
+/** 输入区麦克风按下时捕获指针并开始录音 */
 function handleVoicePointerDown(event: PointerEvent): void {
   event.preventDefault()
   ;(event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId)
   void voice.press('composer-button')
 }
 
-/** 输入区麦克风松开或取消时结束本次录音。 */
+/** 输入区麦克风松开或取消时结束本次录音 */
 function handleVoicePointerEnd(event: PointerEvent): void {
   event.preventDefault()
   ;(event.currentTarget as HTMLElement).releasePointerCapture?.(event.pointerId)
   voice.release('composer-button')
 }
 
-/** 键盘按住 Space/Enter 时提供等价的按住说话入口。 */
+/** 键盘按住 Space/Enter 时提供等价的按住说话入口 */
 function handleVoiceKeyDown(event: KeyboardEvent): void {
   if (event.repeat || (event.key !== ' ' && event.key !== 'Enter')) return
   event.preventDefault()
   void voice.press('composer-button')
 }
 
-/** 键盘松开 Space/Enter 时结束录音。 */
+/** 键盘松开 Space/Enter 时结束录音 */
 function handleVoiceKeyUp(event: KeyboardEvent): void {
   if (event.key !== ' ' && event.key !== 'Enter') return
   event.preventDefault()
   voice.release('composer-button')
 }
 
-/** 加载 Main 持有的模型 Profile 列表。 */
+/** 加载 Main 持有的模型 Profile 列表 */
 async function loadProfiles(): Promise<void> {
   try {
     const result = await window.ncx.providerProfiles.request({ operation: 'list' })
@@ -145,24 +126,20 @@ async function loadProfiles(): Promise<void> {
   }
 }
 
-/** 处理模型下拉菜单选择。 */
-async function handleSelectModel(selectedValue: string): Promise<void> {
-  if (selectedValue === '__go_to_settings__') {
-    void router.push({ name: 'settings', query: { tab: 'models' } })
-    return
-  }
-
-  if (selectedValue === activeProfileId.value || profileChanging.value) return
+/** 处理模型 CommonSelect 下拉选择 */
+async function handleSelectModel(selectedValue: string | number): Promise<void> {
+  const selectedId = String(selectedValue)
+  if (selectedId === activeProfileId.value || profileChanging.value) return
   profileChanging.value = true
 
   try {
     const result = await window.ncx.providerProfiles.request({
       operation: 'setDefault',
-      profileId: selectedValue
+      profileId: selectedId
     })
     profiles.value = result.profiles
     activeProfileId.value = result.activeProfileId
-    const targetProfile = result.profiles.find((p) => p.profileId === selectedValue)
+    const targetProfile = result.profiles.find((p) => p.profileId === selectedId)
     if (targetProfile) {
       showToast(`已将默认模型切换为 ${targetProfile.displayName}`, 'success')
     }
@@ -173,7 +150,7 @@ async function handleSelectModel(selectedValue: string): Promise<void> {
   }
 }
 
-// ========= 生命周期 =========
+// ======== 生命周期 ========
 
 onMounted(() => {
   void loadProfiles()
@@ -238,28 +215,15 @@ onMounted(() => {
             <Mic :size="16" />
           </CommonIconButton>
 
-          <!-- 快速切换默认模型下拉菜单 -->
-          <CommonDropdownMenu
-            :items="modelMenuItems"
-            placement="top-end"
-            @select="handleSelectModel"
-            @open-change="loadProfiles"
-          >
-            <template #trigger="{ open, toggle }">
-              <button
-                type="button"
-                class="agent-model-select-pill"
-                :class="{ 'is-open': open }"
-                @click="toggle"
-              >
-                <span>{{ activeModelDisplayName }}</span>
-                <ChevronDown
-                  :size="12"
-                  class="agent-model-chevron"
-                />
-              </button>
-            </template>
-          </CommonDropdownMenu>
+          <!-- 快速切换默认模型 CommonSelect -->
+          <CommonSelect
+            :model-value="activeProfileId"
+            :options="modelSelectOptions"
+            :placeholder="activeModelDisplayName"
+            size="compact"
+            class="agent-model-select"
+            @change="handleSelectModel"
+          />
 
           <CommonIconButton
             v-if="active"
@@ -289,4 +253,3 @@ onMounted(() => {
     </div>
   </section>
 </template>
-
