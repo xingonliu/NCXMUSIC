@@ -97,41 +97,6 @@
   }
 }
 
-/* ==========================================================================
-   Header Bar (Fixed / Sticky at Top)
-   ========================================================================== */
-.agent-page-header {
-  position: sticky;
-  top: -8px;
-  z-index: 20;
-  display: flex;
-  min-height: 48px;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--ncx-space-4);
-  padding: 10px 0;
-  background: color-mix(in srgb, var(--ncx-color-canvas) 85%, transparent);
-  backdrop-filter: blur(16px);
-}
-
-.agent-page-identity {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.agent-page-identity h1 {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.agent-page-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 
 /* ==========================================================================
    Conversation Stream (No Inner Scroll Container)

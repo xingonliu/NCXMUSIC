@@ -4,11 +4,9 @@ import {
   ChevronRight,
   Copy,
   Hammer,
-  LogIn,
   RefreshCw,
   RotateCcw,
   Search,
-  Settings2,
   Terminal,
   ThumbsDown,
   ThumbsUp
@@ -29,13 +27,22 @@ import './agent-page.css'
 
 // ========= 变量 =========
 
+/** 当前路由对象。 */
 const route = useRoute()
+
+/** 路由导航实例。 */
 const router = useRouter()
+
+/** 小云 Agent 运行时 Store。 */
 const agent = useAgentStore()
+
+/** 当前账户 Session Store。 */
 const account = useAccountSessionStore()
+
+/** 对话流 DOM 容器引用。 */
 const conversation = ref<HTMLElement | null>(null)
 
-/** 当前复制成功提示 index */
+/** 当前复制成功提示 index。 */
 const copiedMessageId = ref<string | null>(null)
 
 /** 当前页面实体上下文。 */
@@ -60,8 +67,7 @@ const contextLabel = computed<string>(() => {
     : ''
 })
 
-const isGuest = computed<boolean>(() => account.snapshot.value?.activeAccount.kind !== 'netease')
-
+/** 当前会话是否包含消息或工具记录。 */
 const hasConversation = computed<boolean>(() =>
   agent.snapshot.value.messages.length > 0
   || agent.snapshot.value.tools.length > 0
@@ -71,17 +77,14 @@ const hasConversation = computed<boolean>(() =>
 
 // ========= 函数 =========
 
+/** 发送消息给 Agent。 */
 async function sendMessage(content: string): Promise<void> {
   await agent.sendMessage(content, messageContext.value)
 }
 
+/** 打开模型设置页面。 */
 function openModelSettings(): void {
   void router.push({ name: 'settings', query: { tab: 'models' } })
-}
-
-async function login(): Promise<void> {
-  await window.ncx.account.login()
-  await account.refresh()
 }
 
 async function scrollToLatest(): Promise<void> {
@@ -178,33 +181,8 @@ watch(
 <template>
   <section
     class="agent-page"
-    aria-labelledby="agent-title"
+    aria-label="NCX Agent 小云"
   >
-    <header class="agent-page-header">
-      <div class="agent-page-identity">
-        <h1 id="agent-title">
-          NCX Agent
-        </h1>
-      </div>
-      <div class="agent-page-header-actions">
-        <CommonButton
-          v-if="isGuest"
-          variant="ghost"
-          size="compact"
-          @click="login"
-        >
-          <LogIn :size="14" />登录网易云
-        </CommonButton>
-        <CommonButton
-          variant="ghost"
-          size="compact"
-          @click="openModelSettings"
-        >
-          <Settings2 :size="14" />模型设置
-        </CommonButton>
-      </div>
-    </header>
-
     <div
       ref="conversation"
       class="agent-conversation"
