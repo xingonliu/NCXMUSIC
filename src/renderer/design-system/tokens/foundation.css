@@ -92,9 +92,9 @@
   --ncx-layer-sticky: 100;
   --ncx-layer-player: 200;
   --ncx-layer-presentation: 300;
-  --ncx-layer-popover: 400;
   --ncx-layer-drawer: 500;
   --ncx-layer-modal: 600;
+  --ncx-layer-popover: 700;
   --ncx-layer-voice: 800;
   --ncx-layer-toast: 900;
 

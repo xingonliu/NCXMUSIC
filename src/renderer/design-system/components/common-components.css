@@ -2193,7 +2193,7 @@
 
 .ncx-common-tooltip-anchor {
   display: block;
-  z-index: calc(var(--ncx-layer-popover, 400) + 1);
+  z-index: calc(var(--ncx-layer-popover, 700) + 1);
   pointer-events: none;
 }
 

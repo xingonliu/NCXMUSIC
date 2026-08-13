@@ -340,7 +340,7 @@ export const CommonIconButton = defineComponent({
         left: `${Math.round(rect.left)}px`,
         width: `${Math.round(rect.width)}px`,
         height: `${Math.round(rect.height)}px`,
-        zIndex: 'calc(var(--ncx-layer-popover, 400) + 1)',
+        zIndex: 'calc(var(--ncx-layer-popover, 700) + 1)',
         pointerEvents: 'none'
       }
     }
@@ -1115,7 +1115,7 @@ export const CommonSelect = defineComponent({
         left: `${Math.round(left)}px`,
         width: `${Math.round(rect.width)}px`,
         minWidth: '140px',
-        zIndex: 'var(--ncx-layer-popover, 2000)'
+        zIndex: 'var(--ncx-layer-popover, 700)'
       }
     }
 
@@ -1358,7 +1358,7 @@ export const CommonCombobox = defineComponent({
         left: `${Math.round(left)}px`,
         width: `${Math.round(rect.width)}px`,
         minWidth: '140px',
-        zIndex: 'var(--ncx-layer-popover, 2000)'
+        zIndex: 'var(--ncx-layer-popover, 700)'
       }
     }
 
