@@ -1,14 +1,15 @@
 /* stylelint-disable no-descending-specificity */
 
 .ncx-content-area:has(.agent-page) {
-  padding-left: 36px;
-  padding-right: 48px;
+  padding-left: 32px;
+  padding-right: 32px;
 }
 
 .agent-page {
   position: relative;
   display: flex;
-  width: min(780px, calc(100vw - 288px));
+  width: 100%;
+  max-width: 780px;
   min-height: 100%;
   margin: 0 auto;
   flex-direction: column;
@@ -509,10 +510,10 @@
 .agent-composer {
   position: fixed;
   bottom: 18px;
-  left: calc(230px + ((100vw - 230px) / 2));
+  left: calc(254px + ((100vw - 266px) / 2));
   transform: translateX(-50%);
   z-index: 20;
-  width: min(780px, calc(100vw - 288px));
+  width: min(780px, calc(100vw - 330px));
   padding: 0;
   background: transparent;
   pointer-events: none;
