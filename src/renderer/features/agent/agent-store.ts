@@ -83,7 +83,7 @@ const EMPTY_AGENT_SNAPSHOT: AgentSnapshot = AgentSnapshotSchema.parse({
   selections: [],
   toolRounds: 0,
   toolCalls: 0,
-  musicSafetyLevel: 'M3',
+  musicSafetyLevel: 'M1',
   commandSafetyLevel: 'S1',
   shellToolEnabled: false,
   updatedAt: 0

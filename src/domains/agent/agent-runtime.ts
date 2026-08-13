@@ -474,7 +474,7 @@ export class AgentRuntime {
   private readonly unsubscribePersonalization: (() => void) | undefined
 
   constructor(private readonly options: AgentRuntimeOptions) {
-    this.musicSafetyLevel = options.musicSafetyLevel ?? 'M3'
+    this.musicSafetyLevel = options.musicSafetyLevel ?? 'M1'
     this.commandSafetyLevel = options.commandSafetyLevel ?? 'S1'
     this.shellToolEnabled = options.shellToolEnabled ?? false
     this.conversationRestored = !options.conversationPersistence

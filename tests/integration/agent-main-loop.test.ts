@@ -114,7 +114,7 @@ function createRuntime(level: 'M1' | 'M2'): {
 // ========= 测试 =========
 
 describe('agent main loop', () => {
-  it('未传音乐等级时默认使用 M3', () => {
+  it('未传音乐等级时默认使用 M1', () => {
     /** 使用产品默认权限的 Agent Runtime。 */
     const runtime = new AgentRuntime({
       provider: createProvider(),
@@ -126,7 +126,7 @@ describe('agent main loop', () => {
       emit: () => {}
     })
 
-    expect(runtime.snapshot().musicSafetyLevel).toBe('M3')
+    expect(runtime.snapshot().musicSafetyLevel).toBe('M1')
   })
 
   it('M2 下完成搜索、PlayerCommand 真实回执和最终回复', async () => {
