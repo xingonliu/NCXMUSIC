@@ -955,7 +955,8 @@ export class AgentRuntime {
         title: resolved.operation.title,
         category: toolCategory(call.name),
         status: 'queued',
-        parameterSummary: summarizeParameters(resolved.input)
+        parameterSummary: summarizeParameters(resolved.input),
+        startedAt: Date.now()
       }
       this.tools.push(card)
       this.publish()

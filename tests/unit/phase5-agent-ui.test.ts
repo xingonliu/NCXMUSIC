@@ -86,4 +86,17 @@ describe('phase 5 agent UI contract', () => {
     expect(page).toContain('copyMessageText')
     expect(page).toContain('已复制到剪贴板')
   })
+
+  it('执行中工具包含动态耗时计算与实时计时器', () => {
+    /** Agent 页面源代码。 */
+    const page = source('src/renderer/features/agent/AgentPage.vue')
+    /** ToolExecutionCard 源代码。 */
+    const card = source('src/renderer/features/agent/components/ToolExecutionCard.vue')
+
+    expect(page).toContain('hasRunningTools')
+    expect(page).toContain('updateTimerState()')
+    expect(page).toContain('startedAt')
+    expect(card).toContain('formattedDuration')
+    expect(card).toContain('startedAt')
+  })
 })

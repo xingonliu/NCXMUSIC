@@ -10,7 +10,7 @@ import {
   ThumbsDown,
   ThumbsUp
 } from '@lucide/vue'
-import { computed, nextTick, onMounted, ref, watch, type DeepReadonly } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch, type DeepReadonly } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { CommonButton, CommonIconButton } from '../../design-system/components'
@@ -75,6 +75,19 @@ const hasConversation = computed<boolean>(() =>
   || agent.snapshot.value.selections.length > 0
 )
 
+/** 实时当前时间戳（用于执行中工具的耗时实时计算）。 */
+const now = ref<number>(Date.now())
+
+/** 全局实时计时器句柄。 */
+let timerId: ReturnType<typeof setInterval> | null = null
+
+/** 检查是否存在处于执行中或排队中的工具。 */
+const hasRunningTools = computed<boolean>(() => {
+  return agent.snapshot.value.tools.some(
+    (tool) => tool.status === 'running' || tool.status === 'queued'
+  )
+})
+
 // ========= 函数 =========
 
 /** 发送消息给 Agent。 */
@@ -134,11 +147,34 @@ function selectionsForMessage(message: DeepReadonly<AgentSnapshot['messages'][nu
   return agent.snapshot.value.selections.filter((selection) => toolCallIds.has(selection.toolCallId))
 }
 
+/** 动态更新全局耗时计时器状态。 */
+function updateTimerState(): void {
+  if (hasRunningTools.value) {
+    if (!timerId) {
+      now.value = Date.now()
+      timerId = setInterval(() => {
+        now.value = Date.now()
+      }, 100)
+    }
+  } else if (timerId) {
+    clearInterval(timerId)
+    timerId = null
+  }
+}
+
 /** 格式化已处理耗时与工具数。 */
 function processingSummary(message: DeepReadonly<AgentSnapshot['messages'][number]>): string {
   const tools = toolsForMessage(message)
   if (tools.length === 0) return '已响应'
-  const totalMs = tools.reduce((acc, t) => acc + (t.durationMs ?? 0), 0)
+  const totalMs = tools.reduce((acc, t) => {
+    if (t.durationMs !== undefined) {
+      return acc + t.durationMs
+    }
+    if (t.startedAt !== undefined) {
+      return acc + Math.max(0, now.value - t.startedAt)
+    }
+    return acc
+  }, 0)
   const durationStr = totalMs < 1000 ? `${totalMs}ms` : `${(totalMs / 1000).toFixed(1)}s`
   return `已处理 ${tools.length} 项指令 · ${durationStr}`
 }
@@ -182,6 +218,21 @@ function handleDislike(): void {
 onMounted(async () => {
   await Promise.all([agent.initialize(), account.initialize()])
   await scrollToLatest()
+})
+
+watch(
+  hasRunningTools,
+  () => {
+    updateTimerState()
+  },
+  { immediate: true }
+)
+
+onUnmounted(() => {
+  if (timerId) {
+    clearInterval(timerId)
+    timerId = null
+  }
 })
 
 watch(
@@ -304,6 +355,7 @@ watch(
                 :key="tool.toolCallId"
                 :card="tool"
                 :shell-terminal="shellTerminalForTool(tool.toolCallId)"
+                :now="now"
               />
             </section>
 

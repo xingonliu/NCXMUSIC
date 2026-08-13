@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ChevronDown, FileText, ListMusic, Play, Search, Wrench } from '@lucide/vue'
-import { computed, ref, type Component } from 'vue'
+import { computed, onUnmounted, ref, watch, type Component } from 'vue'
 
 import type {
   AgentShellTerminalSnapshot,
@@ -10,19 +10,53 @@ import type {
 // ========= 类型 =========
 
 interface ToolExecutionCardProps {
+  /** Tool 卡快照数据。 */
   readonly card: ToolExecutionCardSnapshot
   /** execute_shell 对应的实时终端输出。 */
   readonly shellTerminal: AgentShellTerminalSnapshot | undefined
+  /** 当前实时时间戳（可选，外部传入用于统一刷新时钟）。 */
+  readonly now?: number
 }
 
 // ========= 变量 =========
 
+/** 组件 Props 定义。 */
 const props = defineProps<ToolExecutionCardProps>()
+
+/** 卡片明细折叠展开状态。 */
 const expanded = ref<boolean>(false)
 
+/** 本地 fallback 时间戳（用于没有外部传入 now 时独立计时）。 */
+const localNow = ref<number>(Date.now())
+
+/** 定时器句柄。 */
+let timerId: ReturnType<typeof setInterval> | null = null
+
+/** 当前有效时间戳。 */
+const currentNow = computed<number>(() => props.now ?? localNow.value)
+
+/** 根据工具名称解析对应的渲染图标。 */
 const toolIcon = computed<Component>(() => resolveToolIcon(props.card.toolName))
+
+/** 根据工具名称转换对应的展示文本前缀。 */
 const toolLabel = computed<string>(() => toolNameText(props.card.toolName))
 
+/** 格式化后的耗时文本。 */
+const formattedDuration = computed<string>(() => {
+  const { card } = props
+  if (card.durationMs !== undefined) {
+    return formatDuration(card.durationMs)
+  }
+  if (card.startedAt !== undefined) {
+    const elapsed = Math.max(0, currentNow.value - card.startedAt)
+    return formatDuration(elapsed)
+  }
+  return '即时'
+})
+
+// ========= 函数 =========
+
+/** 解析工具图标。 */
 function resolveToolIcon(toolName: string): Component {
   if (toolName === 'smart_search_and_play') return Search
   if (toolName === 'control_player') return Play
@@ -31,6 +65,7 @@ function resolveToolIcon(toolName: string): Component {
   return FileText
 }
 
+/** 映射工具名称。 */
 function toolNameText(toolName: string): string {
   const labels: Readonly<Record<string, string>> = {
     smart_search_and_play: '已搜播',
@@ -48,6 +83,45 @@ function toolNameText(toolName: string): string {
   }
   return labels[toolName] ?? toolName
 }
+
+/** 格式化毫秒耗时。 */
+function formatDuration(ms: number): string {
+  if (ms < 1000) return `${ms}ms`
+  return `${(ms / 1000).toFixed(1)}s`
+}
+
+/** 动态更新内部独立计时器状态。 */
+function updateTimer(): void {
+  const isRunning = props.card.status === 'running' || props.card.status === 'queued'
+  if (isRunning && props.now === undefined) {
+    if (!timerId) {
+      localNow.value = Date.now()
+      timerId = setInterval(() => {
+        localNow.value = Date.now()
+      }, 100)
+    }
+  } else if (timerId) {
+    clearInterval(timerId)
+    timerId = null
+  }
+}
+
+// ========= 生命周期 =========
+
+watch(
+  () => [props.card.status, props.now],
+  () => {
+    updateTimer()
+  },
+  { immediate: true }
+)
+
+onUnmounted(() => {
+  if (timerId) {
+    clearInterval(timerId)
+    timerId = null
+  }
+})
 </script>
 
 <template>
@@ -62,7 +136,7 @@ function toolNameText(toolName: string): string {
         </span>
         <div class="agent-tool-card-info">
           <span class="agent-tool-card-title">{{ toolLabel }} {{ card.title }}</span>
-          <span class="agent-tool-card-sub">{{ card.status === 'succeeded' ? '完成' : card.status === 'running' ? '执行中…' : '失败' }} · {{ card.durationMs ? `${card.durationMs}ms` : '即时' }}</span>
+          <span class="agent-tool-card-sub">{{ card.status === 'succeeded' ? '完成' : card.status === 'running' ? '执行中…' : '失败' }} · {{ formattedDuration }}</span>
         </div>
       </div>
       <div class="agent-tool-card-actions">
