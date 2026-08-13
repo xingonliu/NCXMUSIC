@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ArrowUp, ChevronDown, Folder, Mic, Square } from '@lucide/vue'
-import { computed, onMounted, ref, type DeepReadonly } from 'vue'
+import { ArrowUp, Folder, Mic, Square } from '@lucide/vue'
+import { computed, nextTick, onMounted, ref, watch, type DeepReadonly } from 'vue'
 
 import type { AgentSnapshot } from '../../../../shared/schemas/agent'
 import type { PublicProviderProfile } from '../../../../shared/schemas/provider-profile'
@@ -37,6 +37,9 @@ const emit = defineEmits<AgentComposerEmits>()
 /** 输入框绑定的消息文本 */
 const content = ref<string>('')
 
+/** 输入框 HTML 元素引用 */
+const textareaRef = ref<HTMLTextAreaElement | null>(null)
+
 /** 可选模型 Profile 列表 */
 const profiles = ref<PublicProviderProfile[]>([])
 
@@ -72,11 +75,27 @@ const modelSelectOptions = computed<CommonOption[]>(() => {
 
 // ======== 函数 ========
 
+/** 动态计算并调整输入框高度，最高限制为 350px */
+function adjustTextareaHeight(): void {
+  void nextTick(() => {
+    const el = textareaRef.value
+    if (!el) return
+    el.style.height = 'auto'
+    if (!content.value) {
+      el.style.height = ''
+      return
+    }
+    const targetHeight = Math.min(el.scrollHeight, 350)
+    el.style.height = `${targetHeight}px`
+  })
+}
+
 /** 提交发送消息 */
 function submit(): void {
   const trimmed = content.value.trim()
   if (!trimmed || !props.snapshot.configured) return
   content.value = ''
+  adjustTextareaHeight()
   emit('send', trimmed)
 }
 
@@ -154,6 +173,11 @@ async function handleSelectModel(selectedValue: string | number): Promise<void> 
 
 onMounted(() => {
   void loadProfiles()
+  adjustTextareaHeight()
+})
+
+watch(content, () => {
+  adjustTextareaHeight()
 })
 </script>
 
@@ -174,11 +198,13 @@ onMounted(() => {
     <!-- Composer Rounded Container -->
     <div class="agent-composer-box">
       <textarea
+        ref="textareaRef"
         v-model="content"
         rows="1"
         :disabled="!snapshot.configured"
         :placeholder="snapshot.configured ? '随心输入' : '请先配置语言模型'"
         @keydown="handleKeydown"
+        @input="adjustTextareaHeight"
       />
       <div class="agent-composer-bottom-bar">
         <div class="agent-composer-left-controls">
@@ -210,7 +236,7 @@ onMounted(() => {
 
           <!-- 快速切换默认模型 CommonSelect -->
           <CommonSelect
-            :model-value="activeProfileId"
+            :model-value="activeProfileId ?? ''"
             :options="modelSelectOptions"
             :placeholder="activeModelDisplayName"
             size="compact"

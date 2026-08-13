@@ -48,4 +48,16 @@ describe('phase 5 agent UI contract', () => {
     expect(approval).not.toContain('关闭')
     expect(selection).toContain('selection.mode === \'multiple\'')
   })
+
+  it('输入框组件根据输入文本自适应高度且限制最大高度 350px', () => {
+    /** AgentComposer 源代码。 */
+    const composer = source('src/renderer/features/agent/components/AgentComposer.vue')
+    /** Agent 页面 CSS 源代码。 */
+    const css = source('src/renderer/features/agent/agent-page.css')
+
+    expect(composer).toContain('adjustTextareaHeight()')
+    expect(composer).toContain('Math.min(el.scrollHeight, 350)')
+    expect(composer).toContain('textareaRef')
+    expect(css).toContain('max-height: min(350px, calc(100vh - 140px));')
+  })
 })
