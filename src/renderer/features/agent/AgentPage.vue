@@ -5,7 +5,6 @@ import {
   Copy,
   Hammer,
   RefreshCw,
-  RotateCcw,
   Search,
   Terminal,
   ThumbsDown,
@@ -15,6 +14,7 @@ import { computed, nextTick, onMounted, ref, watch, type DeepReadonly } from 'vu
 import { useRoute, useRouter } from 'vue-router'
 
 import { CommonButton, CommonIconButton } from '../../design-system/components'
+import { showToast } from '../../design-system/use-toast'
 import type { AgentSnapshot } from '../../../shared/schemas/agent'
 import { useAccountSessionStore } from '../account/account-session-store'
 import AgentComposer from './components/AgentComposer.vue'
@@ -149,13 +149,32 @@ function formatTime(timestamp: number): string {
   return `${date.getMonth() + 1}月${date.getDate()}日 ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
 }
 
-/** 复制 AI 文本。 */
+/** 复制 AI 消息文本到剪贴板。 */
 async function copyMessageText(messageId: string, content: string): Promise<void> {
-  await navigator.clipboard.writeText(content)
+  try {
+    if (window.ncx?.clipboard?.writeText) {
+      await window.ncx.clipboard.writeText(content)
+    } else {
+      await navigator.clipboard.writeText(content)
+    }
+  } catch {
+    await navigator.clipboard.writeText(content)
+  }
   copiedMessageId.value = messageId
+  showToast('已复制到剪贴板', 'success')
   setTimeout(() => {
     if (copiedMessageId.value === messageId) copiedMessageId.value = null
   }, 2000)
+}
+
+/** 点击有帮助点赞按钮触发 Toast。 */
+function handleLike(): void {
+  showToast('我就知道我很棒！', 'success')
+}
+
+/** 点击没帮助踩按钮触发 Toast。 */
+function handleDislike(): void {
+  showToast('差评也没用，0人收到你的反馈', 'info')
 }
 
 // ========= 生命周期 =========
@@ -312,7 +331,7 @@ watch(
               />
             </div>
 
-            <!-- Footer Toolbar (Copy, Like, Retry, Timestamp) -->
+            <!-- Footer Toolbar (Copy, Like, Dislike, Timestamp) -->
             <div
               v-if="!message.streaming"
               class="agent-assistant-footer"
@@ -329,6 +348,7 @@ watch(
                 label="有帮助"
                 size="compact"
                 variant="ghost"
+                @click="handleLike"
               >
                 <ThumbsUp :size="14" />
               </CommonIconButton>
@@ -336,16 +356,9 @@ watch(
                 label="没帮助"
                 size="compact"
                 variant="ghost"
+                @click="handleDislike"
               >
                 <ThumbsDown :size="14" />
-              </CommonIconButton>
-              <CommonIconButton
-                label="重新生成"
-                size="compact"
-                variant="ghost"
-                @click="sendMessage(agent.snapshot.value.messages.find(m => m.role === 'user')?.content ?? '')"
-              >
-                <RotateCcw :size="14" />
               </CommonIconButton>
               <span>{{ formatTime(message.createdAt) }}</span>
             </div>

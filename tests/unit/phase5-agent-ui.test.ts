@@ -73,4 +73,17 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('height: 40px;')
     expect(css).toContain('object-fit: cover;')
   })
+
+  it('Agent 消息底部工具栏移除重新生成按钮且点赞点踩复制包含相应交互与提示', () => {
+    /** Agent 页面源代码。 */
+    const page = source('src/renderer/features/agent/AgentPage.vue')
+
+    expect(page).not.toContain('label="重新生成"')
+    expect(page).toContain('handleLike')
+    expect(page).toContain('handleDislike')
+    expect(page).toContain('我就知道我很棒！')
+    expect(page).toContain('差评也没用，0人收到你的反馈')
+    expect(page).toContain('copyMessageText')
+    expect(page).toContain('已复制到剪贴板')
+  })
 })
