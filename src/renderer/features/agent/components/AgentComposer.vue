@@ -182,13 +182,6 @@ onMounted(() => {
       />
       <div class="agent-composer-bottom-bar">
         <div class="agent-composer-left-controls">
-          <CommonIconButton
-            label="添加文件或上下文"
-            size="default"
-            variant="ghost"
-          >
-            <Plus :size="16" />
-          </CommonIconButton>
           <SafetyControl
             kind="music"
             :model-value="snapshot.musicSafetyLevel"
