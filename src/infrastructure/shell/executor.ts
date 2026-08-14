@@ -96,10 +96,12 @@ export class ShellExecutor {
   async execute(
     commandId: string,
     rawInput: unknown,
-    approval?: ShellApprovalContext
+    approval?: ShellApprovalContext,
+    signal?: AbortSignal
   ): Promise<ExecuteShellResult> {
     const input = ExecuteShellInputSchema.safeParse(rawInput)
     if (!input.success) throw Object.assign(new Error('Shell 执行参数不合法。'), { code: 'PROTOCOL_INVALID_MESSAGE' })
+    if (signal?.aborted) return this.cancelledResult()
 
     let workspace: ResolvedShellWorkspace
     let decision: ShellPolicyDecision
@@ -109,6 +111,7 @@ export class ShellExecutor {
     } catch (error) {
       return this.rejectedResult(error instanceof Error ? error.message : 'Shell 工作区解析失败。')
     }
+    if (signal?.aborted) return this.cancelledResult()
 
     if (decision.action === 'deny') return this.rejectedResult(decision.reason)
     if (decision.action === 'ask' && approval?.approved !== true) {
@@ -126,6 +129,12 @@ export class ShellExecutor {
       env: this.createEnvironment(workspace)
     })
     this.activeCommands.set(commandId, { commandId, handle })
+    /** Agent Turn 取消时终止已经启动的 Shell 进程树。 */
+    const cancelFromSignal = (): void => {
+      handle.cancel('user')
+    }
+    signal?.addEventListener('abort', cancelFromSignal, { once: true })
+    if (signal?.aborted) cancelFromSignal()
 
     try {
       const result = await handle.result
@@ -144,6 +153,8 @@ export class ShellExecutor {
     } catch {
       this.activeCommands.delete(commandId)
       throw Object.assign(new Error('Shell 子进程监督失败。'), { code: 'UTILITY_UNAVAILABLE' })
+    } finally {
+      signal?.removeEventListener('abort', cancelFromSignal)
     }
   }
 
@@ -216,6 +227,20 @@ export class ShellExecutor {
       durationMs: 0,
       stdout: '',
       stderr: reason,
+      stdoutTruncated: false,
+      stderrTruncated: false
+    }
+  }
+
+  /** 在进程启动前收到取消信号时返回稳定终态。 */
+  private cancelledResult(): ExecuteShellResult {
+    return {
+      status: 'cancelled',
+      exitCode: null,
+      signal: null,
+      durationMs: 0,
+      stdout: '',
+      stderr: 'Shell 执行已取消。',
       stdoutTruncated: false,
       stderrTruncated: false
     }

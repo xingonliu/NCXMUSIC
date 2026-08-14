@@ -238,7 +238,7 @@ export class AgentExternalTools implements AgentExternalToolPort {
       const result = await this.options.shellExecutor.execute(toolCallId, input, {
         approved: true,
         source: 'approval-card'
-      })
+      }, signal)
       return {
         ok: result.status === 'succeeded',
         code: result.status === 'succeeded' ? 'OK' : `SHELL_${result.status.toUpperCase()}`,

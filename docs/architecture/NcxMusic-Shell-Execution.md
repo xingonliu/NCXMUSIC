@@ -113,8 +113,9 @@ Shell 子进程不继承 Main/Utility Process 的完整 `process.env`。只构�
 - stdout/stderr 分通道流式发送到 ToolExecutionCard，带递增 sequence 和背压；Renderer 不直接读取原生 Stream。
 - 每个通道最多保留 1 MiB 内存，超限后停止累积并加入截断标记；发送给模型的最终结果最多 64 KiB，保留开头 16 KiB 与结尾 48 KiB。
 - 原始完整输出默认不持久化；Action Journal 只保存裁剪摘要、退出码、耗时和截断状态。
+- Process Supervisor 对 `exit`、`close` 与 `error` 使用同一个幂等终态结算函数；spawn 失败不能依赖可能不会出现的 `exit`。强杀后操作系统仍未回报事件时，必须在一个额外宽限期后返回既定的 `cancelled` 或 `timed_out`，禁止留下永久 pending 的 Promise。
 - 取消先发送正常终止，2 秒后仍未退出则终止整个进程树。macOS 使用独立进程组；Windows 必须通过受监督的进程树机制验证所有后代都被回收，不能只结束顶层 PowerShell。
-- 应用退出、账号切换、Utility Process 故障或 Turn 被新消息取代时，活动 Shell Tool 进入明确取消终态，绝不自动重启或重放。
+- 应用退出、账号切换、Utility Process 故障或 Turn 被新消息取代时，Agent 的 `AbortSignal` 必须传播到 Shell Executor，使活动 Shell Tool 进入明确取消终态，绝不自动重启或重放。
 
 Windows 进程树终止与打包后行为属于 Phase 0 技术门禁；验证失败时首版 Shell Tool 保持关闭，而不是发布无法可靠取消的执行器。
 

@@ -52,6 +52,11 @@ class FakeChildProcess {
     for (const listener of this.listeners.get('exit') ?? []) listener(code, signal)
   }
 
+  /** 模拟 Node 在 stdio 全部关闭后发布 close。 */
+  emitClose(code: number | null, signal: string | null): void {
+    for (const listener of this.listeners.get('close') ?? []) listener(code, signal)
+  }
+
   emitError(error: Error): void {
     for (const listener of this.listeners.get('error') ?? []) listener(error)
   }
@@ -148,6 +153,57 @@ describe('ShellProcessSupervisor', () => {
 
     await expect(running.result).resolves.toMatchObject({ status: 'timed_out' })
     killSpy.mockRestore()
+    vi.useRealTimers()
+  })
+
+  it('spawn error 不依赖 exit 事件也会返回失败终态', async () => {
+    const { supervisor, children } = harness('win32')
+    const running = supervisor.run({
+      file: 'missing-command.exe',
+      args: [],
+      cwd: process.cwd(),
+      timeoutMs: 1_000,
+      env: {}
+    })
+
+    children[0]?.emitError(new Error('spawn ENOENT'))
+
+    await expect(running.result).resolves.toMatchObject({
+      status: 'failed',
+      exitCode: null,
+      stderr: 'spawn ENOENT'
+    })
+  })
+
+  it('缺失 exit 时可由 close 事件完成命令', async () => {
+    const { supervisor, children } = harness('win32')
+    const running = supervisor.run({
+      file: 'powershell.exe',
+      args: ['-Command', 'Write-Output done'],
+      cwd: process.cwd(),
+      timeoutMs: 1_000,
+      env: {}
+    })
+    children[0]?.stdout.write('done\n')
+    children[0]?.emitClose(0, null)
+
+    await expect(running.result).resolves.toMatchObject({ status: 'succeeded', stdout: 'done\n' })
+  })
+
+  it('强杀后没有任何进程事件也会有界返回超时终态', async () => {
+    vi.useFakeTimers()
+    const { supervisor } = harness('win32')
+    const running = supervisor.run({
+      file: 'powershell.exe',
+      args: ['-Command', 'Start-Sleep -Seconds 30'],
+      cwd: process.cwd(),
+      timeoutMs: 10,
+      env: {}
+    })
+
+    await vi.advanceTimersByTimeAsync(30)
+
+    await expect(running.result).resolves.toMatchObject({ status: 'timed_out', exitCode: null })
     vi.useRealTimers()
   })
 })

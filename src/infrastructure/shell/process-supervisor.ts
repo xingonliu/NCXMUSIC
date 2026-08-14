@@ -102,8 +102,12 @@ export class ShellProcessSupervisor {
     let sequence = 0
     let timeout: ReturnType<typeof setTimeout> | undefined
     let forceKillTimer: ReturnType<typeof setTimeout> | undefined
+    /** 强杀后等待操作系统终态事件的最后兜底计时器。 */
+    let terminalFallbackTimer: ReturnType<typeof setTimeout> | undefined
     let requestedStatus: ShellExecutionStatus | undefined
     let settled = false
+    /** 由 Promise 初始化后注入的幂等终态结算函数。 */
+    let settleProcess: (code: number | null, signal: string | null) => void = () => {}
 
     const child = this.spawnProcess(request.file, request.args, {
       cwd: request.cwd,
@@ -132,32 +136,38 @@ export class ShellProcessSupervisor {
       ).finally(() => source.resume())
     }
 
-    const cancel = (reason: 'user' | 'shutdown' = 'user'): void => {
+    /** 请求终止进程树，并在操作系统不再回报终态时执行有界兜底。 */
+    const requestTermination = (status: Extract<ShellExecutionStatus, 'cancelled' | 'timed_out'>): void => {
       if (settled) return
-      requestedStatus = reason === 'shutdown' ? 'cancelled' : 'cancelled'
+      requestedStatus ??= status
       this.terminateTree(child)
-      forceKillTimer = setTimeout(() => this.forceKillTree(child), this.gracefulKillMs)
+      if (forceKillTimer) clearTimeout(forceKillTimer)
+      forceKillTimer = setTimeout(() => {
+        if (settled) return
+        this.forceKillTree(child)
+        terminalFallbackTimer = setTimeout(() => {
+          settleProcess(null, null)
+        }, this.gracefulKillMs)
+      }, this.gracefulKillMs)
+    }
+
+    /** 取消当前 Shell 命令。 */
+    const cancel = (): void => {
+      requestTermination('cancelled')
     }
 
     const result = new Promise<ShellProcessResult>((resolve) => {
-      timeout = setTimeout(() => {
+      /** 幂等完成当前命令，覆盖 exit、close、error 与强杀兜底路径。 */
+      settleProcess = (code, signal): void => {
         if (settled) return
-        requestedStatus = 'timed_out'
-        this.terminateTree(child)
-        forceKillTimer = setTimeout(() => this.forceKillTree(child), this.gracefulKillMs)
-      }, request.timeoutMs)
-
-      child.stdout.on('data', (chunk: Buffer) => publish('stdout', chunk))
-      child.stderr.on('data', (chunk: Buffer) => publish('stderr', chunk))
-      child.once('error', (error) => {
-        publish('stderr', redactSensitiveText(error.message))
-      })
-      child.once('exit', (code, signal) => {
         settled = true
         if (timeout) clearTimeout(timeout)
         if (forceKillTimer) clearTimeout(forceKillTimer)
+        if (terminalFallbackTimer) clearTimeout(terminalFallbackTimer)
         this.activeChildren.delete(commandId)
+        /** stdout 最终快照。 */
         const stdoutSnapshot = stdout.snapshot()
+        /** stderr 最终快照。 */
         const stderrSnapshot = stderr.snapshot()
         resolve({
           commandId,
@@ -170,7 +180,20 @@ export class ShellProcessSupervisor {
           stdoutTruncated: stdoutSnapshot.truncated,
           stderrTruncated: stderrSnapshot.truncated
         })
+      }
+
+      timeout = setTimeout(() => {
+        requestTermination('timed_out')
+      }, request.timeoutMs)
+
+      child.stdout.on('data', (chunk: Buffer) => publish('stdout', chunk))
+      child.stderr.on('data', (chunk: Buffer) => publish('stderr', chunk))
+      child.once('error', (error) => {
+        publish('stderr', redactSensitiveText(error.message))
+        settleProcess(null, null)
       })
+      child.once('exit', settleProcess)
+      child.once('close', settleProcess)
     })
 
     return { cancel, result }

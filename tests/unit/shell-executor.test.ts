@@ -137,4 +137,20 @@ describe('ShellExecutor', () => {
       code: 'PROTOCOL_INVALID_MESSAGE'
     })
   })
+
+  it('执行前已取消时直接返回 cancelled 且不启动子进程', async () => {
+    const { executor, supervisor } = createExecutor('S2')
+    /** 已取消的 Agent Turn 控制器。 */
+    const controller = new AbortController()
+    controller.abort('user_stopped')
+
+    const result = await executor.execute(crypto.randomUUID(), {
+      command: 'Get-Location',
+      workspaceId: 'repo',
+      purpose: '验证取消传播'
+    }, undefined, controller.signal)
+
+    expect(result.status).toBe('cancelled')
+    expect(supervisor.runs).toHaveLength(0)
+  })
 })
