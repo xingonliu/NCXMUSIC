@@ -400,7 +400,8 @@ export class FluidMeshRenderer {
       preference: 'webgl',
       powerPreference: 'low-power',
       autoStart: false,
-      sharedTicker: false
+      sharedTicker: false,
+      preserveDrawingBuffer: true
     })
     return new FluidMeshRenderer(app)
   }
@@ -500,7 +501,10 @@ export class FluidMeshRenderer {
     ))
     if (progress < 1) return
     this.artworkTransitionActive = false
+    this.applyArtworkWeights(this.artworkTransitionTo)
     this.releaseInvisibleArtworkTextures()
+    this.layoutArtworkLayers()
+    this.app.render()
   }
 
   /** 推进项目保留的播放或暂停平滑速度过渡。 */
@@ -518,6 +522,8 @@ export class FluidMeshRenderer {
     if (progress < 1) return
     this.displayedMotionScale = this.motionTransitionTo
     this.motionTransitionActive = false
+    this.layoutArtworkLayers()
+    this.app.render()
   }
 
   /** 读取并平滑项目现有的 50～120 Hz 音频能量。 */
@@ -685,6 +691,8 @@ export class FluidMeshRenderer {
       this.motionTransitionFrom = targetScale
       this.motionTransitionTo = targetScale
       this.motionTransitionActive = false
+      this.layoutArtworkLayers()
+      this.app.render()
     } else {
       this.motionTransitionFrom = this.displayedMotionScale
       this.motionTransitionTo = targetScale

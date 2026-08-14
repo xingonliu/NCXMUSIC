@@ -65,6 +65,12 @@ const backdropArtworkUrl = computed<string | undefined>(() => (
   adaptArtworkUrl(artworkUrl.value, 'backdrop') ?? artworkUrl.value
 ))
 
+/** 沉浸页是否处于活跃播放或切歌缓冲状态，防止切歌瞬态抖动导致背景运动归零。 */
+const isImmersivePlaying = computed<boolean>(() => (
+  snapshot.value.playback.status === 'playing' ||
+  (snapshot.value.playback.status === 'loading' && snapshot.value.playback.intent === 'play')
+))
+
 /** 当前封面提亮后的歌词前沿色，不区分页面深浅模式。 */
 const lyricAccentColor = ref<string>(DEFAULT_LYRIC_ACCENT_COLOR)
 
@@ -198,7 +204,7 @@ onBeforeUnmount(() => {
     <FluidMeshBackground
       class="immersive-backdrop"
       :artwork-url="backdropArtworkUrl"
-      :playing="snapshot.playback.status === 'playing'"
+      :playing="isImmersivePlaying"
       @accent-color="updateLyricAccentColor"
     />
 
