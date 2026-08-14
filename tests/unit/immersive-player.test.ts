@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import LyricsPanel from '../../src/renderer/features/music/components/LyricsPanel.vue'
 import lyricsPanelSource from '../../src/renderer/features/music/components/LyricsPanel.vue?raw'
 import ImmersiveLyricsPage from '../../src/renderer/features/music/ImmersiveLyricsPage.vue'
+import immersiveLyricsPageSource from '../../src/renderer/features/music/ImmersiveLyricsPage.vue?raw'
 import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
 import { disposePlayer } from '../../src/renderer/features/music/use-player'
 
@@ -75,6 +76,22 @@ afterEach(async () => {
 // ========= 测试 =========
 
 describe('应用级沉浸播放展示', () => {
+  it('主内容、封面列与歌词面板随窗口可用宽高伸展', () => {
+    expect(immersiveLyricsPageSource).toContain(
+      'width: calc(100% - clamp(72px, 6.25vw, 120px))'
+    )
+    expect(immersiveLyricsPageSource).toContain(
+      'grid-template-columns: clamp(280px, 28vw, 520px) minmax(0, 1fr)'
+    )
+    expect(immersiveLyricsPageSource).toContain('height: calc(100dvh - 104px)')
+    expect(immersiveLyricsPageSource).not.toContain(
+      'width: min(1140px, calc(100% - 72px))'
+    )
+    expect(immersiveLyricsPageSource).not.toContain(
+      'height: min(630px, calc(100vh - 138px))'
+    )
+  })
+
   it('顶部短杆忽略拖动并仅在点击时请求关闭', async () => {
     /** 使用空播放状态挂载的沉浸页测试实例。 */
     const wrapper = mount(ImmersiveLyricsPage, {

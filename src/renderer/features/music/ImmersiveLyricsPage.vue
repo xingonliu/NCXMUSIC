@@ -472,14 +472,15 @@ onBeforeUnmount(() => {
 
 .immersive-content {
   display: grid;
-  width: min(1140px, calc(100% - 72px));
+  width: calc(100% - clamp(72px, 6.25vw, 120px));
+  max-width: 2200px;
   min-height: 0;
   flex: 1;
-  grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
-  gap: clamp(48px, 8vw, 112px);
+  grid-template-columns: clamp(280px, 28vw, 520px) minmax(0, 1fr);
+  gap: clamp(48px, 6vw, 120px);
   align-items: center;
   align-self: center;
-  padding: 10px 0 30px;
+  padding: 10px 0 20px;
 }
 
 .immersive-now-playing {
@@ -554,7 +555,9 @@ onBeforeUnmount(() => {
 }
 
 .immersive-lyrics-panel {
-  height: min(630px, calc(100vh - 138px));
+  width: 100%;
+  height: calc(100dvh - 104px);
+  max-height: 100%;
   min-height: 0;
 }
 
