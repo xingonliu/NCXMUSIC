@@ -296,6 +296,12 @@ function createArtworkSlot(): ArtworkSlot {
   return { container, sprites, texture: undefined }
 }
 
+/** 释放封面 Texture 的 GPU 数据，但保留底层图片 source 给当前渲染批次安全收尾。 */
+export function releaseAppleMusicArtworkTexture(texture: Texture): void {
+  texture.source.unload()
+  texture.destroy(false)
+}
+
 // ========= 渲染器 =========
 
 /**
@@ -559,7 +565,7 @@ export class FluidMeshRenderer {
       sprite.texture = Texture.EMPTY
     })
     slot.texture = undefined
-    texture.destroy(true)
+    releaseAppleMusicArtworkTexture(texture)
   }
 
   /** 判断当前场景是否仍需要持续刷新。 */

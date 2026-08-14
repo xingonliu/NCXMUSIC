@@ -1,4 +1,5 @@
-import { describe, expect, it } from 'vitest'
+import type { Texture } from 'pixi.js'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   APPLE_MUSIC_WEB_BACKGROUND_CONFIG,
@@ -6,7 +7,8 @@ import {
   createAppleMusicArtworkLayerFrames,
   interpolateAppleMusicAudioEnergy,
   interpolateAppleMusicArtworkWeights,
-  interpolateAppleMusicMotionScale
+  interpolateAppleMusicMotionScale,
+  releaseAppleMusicArtworkTexture
 } from '../../src/renderer/features/music/fluid-mesh-renderer'
 
 // ========= 测试 =========
@@ -100,5 +102,24 @@ describe('Apple Music 网页端同形背景参数', () => {
     expect(attack).toBeGreaterThan(1 - release)
     expect(interpolateAppleMusicAudioEnergy(0, 2, 10_000)).toBeCloseTo(1)
     expect(interpolateAppleMusicAudioEnergy(1, -1, 10_000)).toBeCloseTo(0)
+  })
+
+  it('释放过渡旧封面时只卸载 GPU 数据，不销毁底层图片 source', () => {
+    /** 代表 Pixi TextureSource 的最小可观察替身。 */
+    const source = {
+      unload: vi.fn(),
+      destroy: vi.fn()
+    }
+    /** 代表 Pixi Texture 的最小可观察替身。 */
+    const texture = {
+      source,
+      destroy: vi.fn()
+    }
+
+    releaseAppleMusicArtworkTexture(texture as unknown as Texture)
+
+    expect(source.unload).toHaveBeenCalledTimes(1)
+    expect(source.destroy).not.toHaveBeenCalled()
+    expect(texture.destroy).toHaveBeenCalledWith(false)
   })
 })
