@@ -400,12 +400,7 @@ export class FluidMeshRenderer {
       preference: 'webgl',
       powerPreference: 'low-power',
       autoStart: false,
-      sharedTicker: false,
-      // 切歌过渡结束后 Ticker 会因无动画任务而停机；
-      // WebGL 默认不保留帧缓冲，停机后浏览器合成器会在下一帧清空 Canvas，
-      // 导致背景在过渡结束约 1.7 秒后变灰。
-      // preserveDrawingBuffer 保留最后一帧直到下一次主动渲染覆盖，彻底消除该闪灰。
-      preserveDrawingBuffer: true
+      sharedTicker: false
     })
     return new FluidMeshRenderer(app)
   }
