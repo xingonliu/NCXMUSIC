@@ -50,8 +50,16 @@ interface WordVisualState {
   state: 'past' | 'active' | 'future'
   /** 从左至右的白色覆盖进度。 */
   fillProgress: number
-  /** 已合并强调峰值与最终悬浮位置的单一垂直位移。 */
-  liftOffsetEm: number
+  /** 当前媒体时刻要求弹簧追踪的垂直目标位置。 */
+  liftTargetEm: number
+}
+
+/** 临界阻尼弹簧单步求值后的状态。 */
+interface WordLiftSpringStep {
+  /** 求值后的垂直位置，单位为 em。 */
+  positionEm: number
+  /** 求值后的垂直速度，单位为 em/s。 */
+  velocityEmPerSecond: number
 }
 
 /** 缓存后的逐字渲染节点，避免动画帧内反复查询和解析 DOM。 */
@@ -64,6 +72,10 @@ interface WordRenderEntry {
   fillValue?: string
   /** 上一帧写入的垂直位移。 */
   liftValue?: string
+  /** 当前显示的垂直位置，弹簧重定向时从此处继续。 */
+  liftPositionEm: number
+  /** 当前垂直速度，目标改变时保持连续。 */
+  liftVelocityEmPerSecond: number
   /** 上一帧写入的时态。 */
   state?: WordVisualState['state']
 }
@@ -152,6 +164,12 @@ const wordRenderEntriesByLine = new Map<number, WordRenderEntry[]>()
 /** 上一帧仍保持逐字悬浮的歌词行。 */
 let previouslyPresentedWordLineIndexes: number[] = []
 
+/** 已离开焦点但仍需完成平滑回落的歌词行。 */
+const settlingWordLineIndexes = new Set<number>()
+
+/** 上一帧音节弹簧使用的高精度页面时间。 */
+let wordLiftPreviousFrameAt = 0
+
 /** 弹簧滚动动画帧 ID。 */
 let springFrameId: number | undefined
 
@@ -182,11 +200,31 @@ const WORD_BASE_FLOAT_EM = 0.05
 /** 起音强调额外叠加的短促抬升高度。 */
 const WORD_EMPHASIS_FLOAT_EM = 0.032
 
-/** 起音强调的最短完整周期，确保在 60Hz 屏幕上能看见连续运动。 */
-const WORD_EMPHASIS_MIN_DURATION_MS = 420
+/** 起音强调目标的最短保持时间，让短音节也能形成可见的上升动量。 */
+const WORD_EMPHASIS_MIN_TARGET_DURATION_MS = 180
 
-/** 起音强调的最长完整周期，避免长音节持续放大过久。 */
-const WORD_EMPHASIS_MAX_DURATION_MS = 900
+/** 起音强调目标的最长保持时间，避免长音节停留在峰值过久。 */
+const WORD_EMPHASIS_MAX_TARGET_DURATION_MS = 280
+
+/** 音节时长用于推导强调目标保持时间的比例。 */
+const WORD_EMPHASIS_TARGET_DURATION_RATIO = 0.36
+
+/** 音节上浮临界阻尼弹簧的设计响应时间。 */
+const WORD_LIFT_SPRING_RESPONSE_SECONDS = 0.36
+
+/** 音节上浮弹簧的角频率，由设计响应时间换算。 */
+const WORD_LIFT_SPRING_ANGULAR_FREQUENCY = (
+  2 * Math.PI / WORD_LIFT_SPRING_RESPONSE_SECONDS
+)
+
+/** 单帧允许推进音节弹簧的最长时间，避免后台恢复后产生大幅跳变。 */
+const WORD_LIFT_MAX_FRAME_DELTA_SECONDS = 0.064
+
+/** 音节弹簧停止时允许的位置误差。 */
+const WORD_LIFT_POSITION_EPSILON_EM = 0.0001
+
+/** 音节弹簧停止时允许的速度误差。 */
+const WORD_LIFT_VELOCITY_EPSILON_EM_PER_SECOND = 0.001
 
 /** 沉浸歌词中只用于区分左右声部、不应作为正文展示的行首标签。 */
 const VOCAL_ROLE_PREFIX_PATTERN = /^\s*(?:男|女|男声|女声|和声|伴唱|合唱)\s*[:：]\s*/u
@@ -391,16 +429,50 @@ function clampProgress(value: number): number {
   return Math.min(1, Math.max(0, value))
 }
 
-/** 平滑连接零至一，用于构造没有突变的一次性运动包络。 */
-function smoothstepProgress(value: number): number {
-  const progress = clampProgress(value)
-  return progress * progress * (3 - 2 * progress)
-}
+/**
+ * 精确推进一帧临界阻尼弹簧，并保留目标切换前的显示位置与速度。
+ *
+ * @param positionEm 当前显示位置
+ * @param velocityEmPerSecond 当前速度
+ * @param targetEm 当前目标位置
+ * @param deltaSeconds 本帧推进时间
+ */
+function advanceCriticallyDampedWordLiftSpring(
+  positionEm: number,
+  velocityEmPerSecond: number,
+  targetEm: number,
+  deltaSeconds: number
+): WordLiftSpringStep {
+  /** 限制后的推进时间，避免窗口挂起后用单帧完成整个回落。 */
+  const safeDeltaSeconds = Math.min(
+    WORD_LIFT_MAX_FRAME_DELTA_SECONDS,
+    Math.max(0, deltaSeconds)
+  )
+  if (safeDeltaSeconds === 0) {
+    return { positionEm, velocityEmPerSecond }
+  }
 
-/** 起音阶段快速但无过冲地进入峰值。 */
-function easeOutCubic(value: number): number {
-  const progress = clampProgress(value)
-  return 1 - (1 - progress) ** 3
+  /** 当前显示位置相对目标位置的位移。 */
+  const displacementEm = positionEm - targetEm
+  /** 临界阻尼解析解中承接当前速度的线性系数。 */
+  const velocityCoefficient = velocityEmPerSecond +
+    WORD_LIFT_SPRING_ANGULAR_FREQUENCY * displacementEm
+  /** 当前时间步内由临界阻尼产生的指数衰减量。 */
+  const decay = Math.exp(-WORD_LIFT_SPRING_ANGULAR_FREQUENCY * safeDeltaSeconds)
+  /** 衰减后的目标相对位移。 */
+  const nextDisplacementEm = (
+    displacementEm + velocityCoefficient * safeDeltaSeconds
+  ) * decay
+  /** 与当前位置连续的一阶速度。 */
+  const nextVelocityEmPerSecond = (
+    velocityEmPerSecond -
+    WORD_LIFT_SPRING_ANGULAR_FREQUENCY * velocityCoefficient * safeDeltaSeconds
+  ) * decay
+
+  return {
+    positionEm: targetEm + nextDisplacementEm,
+    velocityEmPerSecond: nextVelocityEmPerSecond
+  }
 }
 
 /**
@@ -497,7 +569,7 @@ function visibleLineWords(line: StandardLyricsLine): StandardLyricsWord[] {
   })
 }
 
-/** 返回指定播放时刻下单个字或音节的填充与两层运动状态。 */
+/** 返回指定播放时刻下单个字或音节的填充状态与弹簧目标。 */
 function calculateWordVisualState(
   word: StandardLyricsWord,
   currentTimeMs: number
@@ -516,35 +588,25 @@ function calculateWordVisualState(
 
   /** 当前音节已经经过的媒体时间。 */
   const elapsedMs = currentTimeMs - word.startMs
-
-  /**
-   * 起音强调随音节长度自适应，并通过单一轨迹完成抬起与稳定。
-   * 抬起至少跨越约六帧，避免短 YRC 音节在屏幕上表现为瞬移。
-   */
-  const pulseDurationMs = Math.max(
-    WORD_EMPHASIS_MIN_DURATION_MS,
-    Math.min(WORD_EMPHASIS_MAX_DURATION_MS, word.durationMs)
-  )
-  const attackDurationMs = Math.max(100, Math.min(140, pulseDurationMs * 0.28))
-  const peakLiftEm = WORD_BASE_FLOAT_EM + WORD_EMPHASIS_FLOAT_EM
-  let liftOffsetEm = 0
-  if (started && elapsedMs <= attackDurationMs) {
-    /** 第一段只向上运动：原位平滑抵达强调峰值。 */
-    liftOffsetEm = -peakLiftEm * easeOutCubic(elapsedMs / attackDurationMs)
-  } else if (started && elapsedMs < pulseDurationMs) {
-    /** 第二段只向下运动：从峰值平滑落到最终悬浮位，不再与另一条上升曲线竞争。 */
-    const settleProgress = smoothstepProgress(
-      (elapsedMs - attackDurationMs) / (pulseDurationMs - attackDurationMs)
+  /** 当前音节驱动强调峰值目标的保持时间。 */
+  const emphasisTargetDurationMs = Math.max(
+    WORD_EMPHASIS_MIN_TARGET_DURATION_MS,
+    Math.min(
+      WORD_EMPHASIS_MAX_TARGET_DURATION_MS,
+      word.durationMs * WORD_EMPHASIS_TARGET_DURATION_RATIO
     )
-    liftOffsetEm = -peakLiftEm + WORD_EMPHASIS_FLOAT_EM * settleProgress
-  } else if (started) {
-    liftOffsetEm = -WORD_BASE_FLOAT_EM
-  }
+  )
+  /** 起音强调阶段需要追踪的最高位置。 */
+  const peakLiftEm = WORD_BASE_FLOAT_EM + WORD_EMPHASIS_FLOAT_EM
+  /** 起音时先追踪强调峰值，随后重定向至稳定悬浮位置。 */
+  const liftTargetEm = !started
+    ? 0
+    : (elapsedMs < emphasisTargetDurationMs ? -peakLiftEm : -WORD_BASE_FLOAT_EM)
 
   return {
     state,
     fillProgress,
-    liftOffsetEm
+    liftTargetEm
   }
 }
 
@@ -858,6 +920,8 @@ function cacheWordRenderEntries(): void {
   const container = scrollContainer.value
   wordRenderEntriesByLine.clear()
   previouslyPresentedWordLineIndexes = []
+  settlingWordLineIndexes.clear()
+  wordLiftPreviousFrameAt = 0
   if (!container) return
 
   container.querySelectorAll<HTMLElement>('.lyrics-line[data-lyric-index]').forEach((lineElement) => {
@@ -872,23 +936,85 @@ function cacheWordRenderEntries(): void {
           text: element.dataset['wordText'] ?? element.textContent ?? '',
           startMs: Number(element.dataset['wordStartMs'] ?? 0),
           durationMs: Number(element.dataset['wordDurationMs'] ?? 0)
-        }
+        },
+        liftPositionEm: 0,
+        liftVelocityEmPerSecond: 0
       }))
     if (entries.length > 0) wordRenderEntriesByLine.set(lineIndex, entries)
   })
 }
 
-/** 把单个音节当前帧的状态写入缓存 DOM。 */
+/** 返回本次逐字渲染距离上一帧经过的秒数。 */
+function wordLiftFrameDeltaSecondsAt(frameTime: number): number {
+  /** 首帧使用一帧的标准间隔，后续使用真实显示帧时间。 */
+  const deltaSeconds = wordLiftPreviousFrameAt > 0
+    ? Math.max(0, (frameTime - wordLiftPreviousFrameAt) / 1_000)
+    : 1 / 60
+  wordLiftPreviousFrameAt = frameTime
+  return deltaSeconds
+}
+
+/** 推进单个音节的垂直弹簧，并返回它是否已经稳定。 */
+function updateWordLiftSpring(
+  entry: WordRenderEntry,
+  targetEm: number,
+  deltaSeconds: number,
+  snap: boolean
+): boolean {
+  if (snap) {
+    entry.liftPositionEm = targetEm
+    entry.liftVelocityEmPerSecond = 0
+  } else {
+    /** 从当前显示位置与当前速度继续求值的弹簧状态。 */
+    const springStep = advanceCriticallyDampedWordLiftSpring(
+      entry.liftPositionEm,
+      entry.liftVelocityEmPerSecond,
+      targetEm,
+      deltaSeconds
+    )
+    entry.liftPositionEm = springStep.positionEm
+    entry.liftVelocityEmPerSecond = springStep.velocityEmPerSecond
+  }
+
+  /** 当前弹簧是否已经接近目标且速度足够低。 */
+  const settled =
+    Math.abs(targetEm - entry.liftPositionEm) <= WORD_LIFT_POSITION_EPSILON_EM &&
+    Math.abs(entry.liftVelocityEmPerSecond) <= WORD_LIFT_VELOCITY_EPSILON_EM_PER_SECOND
+  if (settled) {
+    entry.liftPositionEm = targetEm
+    entry.liftVelocityEmPerSecond = 0
+  }
+  return settled
+}
+
+/** 把单个音节当前帧的填充、时态与弹簧状态写入缓存 DOM。 */
 function renderWordEntry(
   entry: WordRenderEntry,
   currentTimeMs: number,
-  maintainFloat: boolean
-): void {
+  maintainFloat: boolean,
+  deltaSeconds: number,
+  snapLift: boolean
+): boolean {
+  /** 严格依据媒体时间计算的音节状态。 */
   const visualState = calculateWordVisualState(entry.word, currentTimeMs)
+  /** 写入遮罩的百分比字符串。 */
   const fillValue = `${(visualState.fillProgress * 100).toFixed(3)}%`
-  /** 单一位移轨迹保持至换行；不再叠加会互相抵消的多条 transform 曲线。 */
-  const liftEm = maintainFloat ? visualState.liftOffsetEm : 0
-  const liftValue = `${liftEm.toFixed(4)}em`
+  /** 当前行失去展示资格时，把弹簧目标重定向回原位。 */
+  const liftTargetEm = maintainFloat ? visualState.liftTargetEm : 0
+  /** 位移弹簧是否已经抵达本帧目标。 */
+  const liftSettled = updateWordLiftSpring(
+    entry,
+    liftTargetEm,
+    deltaSeconds,
+    snapLift
+  )
+  if (liftSettled) {
+    delete entry.element.dataset['liftAnimating']
+  } else {
+    entry.element.dataset['liftAnimating'] = 'true'
+  }
+  /** 写入垂直位移的 em 字符串。 */
+  const liftValue = `${entry.liftPositionEm.toFixed(4)}em`
 
   if (entry.fillValue !== fillValue) {
     entry.element.style.setProperty('--word-fill', fillValue)
@@ -902,17 +1028,25 @@ function renderWordEntry(
     entry.element.dataset['state'] = visualState.state
     entry.state = visualState.state
   }
+  return liftSettled
 }
 
-/** 渲染指定逐字歌词行。 */
+/** 渲染指定逐字歌词行，并返回整行弹簧是否已经稳定。 */
 function renderWordLine(
   lineIndex: number,
   currentTimeMs: number,
-  maintainFloat: boolean
-): void {
+  maintainFloat: boolean,
+  deltaSeconds: number,
+  snapLift: boolean
+): boolean {
+  /** 当前行所有音节的联合稳定状态。 */
+  let liftSettled = true
   wordRenderEntriesByLine.get(lineIndex)?.forEach((entry) => {
-    renderWordEntry(entry, currentTimeMs, maintainFloat)
+    if (!renderWordEntry(entry, currentTimeMs, maintainFloat, deltaSeconds, snapLift)) {
+      liftSettled = false
+    }
   })
+  return liftSettled
 }
 
 /**
@@ -929,22 +1063,53 @@ function presentedWordLineIndexesAtPosition(currentTimeMs: number): number[] {
 
 /** 在初始化、暂停或 seek 后一次性恢复所有逐字节点。 */
 function renderAllWordStates(currentTimeMs: number): void {
+  /** 当前时刻仍应保持悬浮的歌词行集合。 */
   const presentedLineIndexSet = new Set(presentedWordLineIndexesAtPosition(currentTimeMs))
+  settlingWordLineIndexes.clear()
   wordRenderEntriesByLine.forEach((_entries, lineIndex) => {
-    renderWordLine(lineIndex, currentTimeMs, presentedLineIndexSet.has(lineIndex))
+    renderWordLine(lineIndex, currentTimeMs, presentedLineIndexSet.has(lineIndex), 0, true)
   })
   previouslyPresentedWordLineIndexes = [...presentedLineIndexSet]
+  wordLiftPreviousFrameAt = performance.now()
 }
 
-/** 播放期间只更新当前展示行，并在换行时清除上一行的基础悬浮。 */
-function renderAnimatedWordStates(currentTimeMs: number): void {
+/** 播放期间更新展示行，并让退出行用同一套弹簧平滑回到原位。 */
+function renderAnimatedWordStates(
+  currentTimeMs: number,
+  frameTime = performance.now()
+): void {
+  /** 当前时刻仍应保持悬浮的歌词行。 */
   const presentedLineIndexes = presentedWordLineIndexesAtPosition(currentTimeMs)
+  /** 当前时刻仍应保持悬浮的歌词行集合。 */
   const presentedLineIndexSet = new Set(presentedLineIndexes)
+  /** 当前帧需要推进的展示行与退出行集合。 */
+  const renderedLineIndexes = new Set([
+    ...presentedLineIndexes,
+    ...previouslyPresentedWordLineIndexes,
+    ...settlingWordLineIndexes
+  ])
+  /** 本帧弹簧的真实推进时间。 */
+  const deltaSeconds = wordLiftFrameDeltaSecondsAt(frameTime)
+  /** 减少动态效果时直接对齐目标，保留歌词状态反馈但跳过空间运动。 */
+  const snapLift = prefersReducedMotion()
 
-  previouslyPresentedWordLineIndexes.forEach((lineIndex) => {
-    if (!presentedLineIndexSet.has(lineIndex)) renderWordLine(lineIndex, currentTimeMs, false)
+  renderedLineIndexes.forEach((lineIndex) => {
+    /** 当前行是否仍应维持音节悬浮。 */
+    const maintainFloat = presentedLineIndexSet.has(lineIndex)
+    /** 当前行所有音节是否已经抵达最新目标。 */
+    const liftSettled = renderWordLine(
+      lineIndex,
+      currentTimeMs,
+      maintainFloat,
+      deltaSeconds,
+      snapLift
+    )
+    if (maintainFloat || liftSettled) {
+      settlingWordLineIndexes.delete(lineIndex)
+    } else {
+      settlingWordLineIndexes.add(lineIndex)
+    }
   })
-  presentedLineIndexes.forEach((lineIndex) => renderWordLine(lineIndex, currentTimeMs, true))
   previouslyPresentedWordLineIndexes = presentedLineIndexes
 }
 
@@ -960,7 +1125,7 @@ function runWordProgressFrame(frameTime: number, generation: number): void {
   /** 直接从媒体锚点求值，丢帧后下一帧仍与音频处在同一时刻。 */
   const currentTimeMs = playbackPositionAt(frameTime)
   syncTimelinePresentationPosition(currentTimeMs)
-  renderAnimatedWordStates(currentTimeMs)
+  renderAnimatedWordStates(currentTimeMs, frameTime)
 
   if (!props.immersive || !props.playing) {
     wordProgressFrameId = undefined
@@ -1359,6 +1524,11 @@ onBeforeUnmount(() => {
  * 不能只绑定 active 音节，否则音节收音变成 past 时会在回落中途撤销图层并产生抖动。
  */
 .lyrics-line--word-timed:is(.lyrics-line--active, .lyrics-line--singing) .lyric-word {
+  will-change: transform;
+}
+
+/** 退出焦点的音节在弹簧完全回落前继续保留独立合成层。 */
+.lyric-word[data-lift-animating="true"] {
   will-change: transform;
 }
 

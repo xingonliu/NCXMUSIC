@@ -337,7 +337,7 @@ describe('应用级沉浸播放展示', () => {
     wrapper.unmount()
   })
 
-  it('严格按原始音节时长填充并将基础悬浮保持到下一行接管', async () => {
+  it('严格按原始音节时长填充并用弹簧目标保持基础悬浮', async () => {
     vi.useFakeTimers()
     getLyrics.mockResolvedValue({
       ok: true,
@@ -392,17 +392,15 @@ describe('应用级沉浸播放展示', () => {
     expect(firstWord?.element.style.getPropertyValue('--word-glow')).toBe('')
     expect(firstWord?.attributes('data-state')).toBe('active')
     expect(secondWord?.attributes('data-state')).toBe('future')
-    expect(Number.parseFloat(firstWord?.element.style.getPropertyValue('--word-lift') ?? '0'))
-      .toBeLessThan(0)
-    const firstWordLiftDuringAttack = Number.parseFloat(
-      firstWord?.element.style.getPropertyValue('--word-lift') ?? '0'
-    )
+    expect(firstWord?.element.style.getPropertyValue('--word-lift')).toBe('-0.0820em')
     expect(firstWord?.attributes('data-word-text')).toBe('逐')
     expect(lyricsPanelSource).toContain('mask-image: linear-gradient(')
     expect(lyricsPanelSource).toContain('var(--lyric-accent-color)')
     expect(lyricsPanelSource).toContain('background-clip: text')
     expect(lyricsPanelSource).toContain('translate3d(0, var(--word-lift), 0)')
-    expect(lyricsPanelSource).toContain('smoothstepProgress')
+    expect(lyricsPanelSource).toContain('advanceCriticallyDampedWordLiftSpring')
+    expect(lyricsPanelSource).toContain('liftVelocityEmPerSecond')
+    expect(lyricsPanelSource).toContain('settlingWordLineIndexes')
     expect(lyricsPanelSource).toContain('const peakLiftEm =')
     expect(lyricsPanelSource).not.toContain('scale(var(--word-scale))')
     expect(lyricsPanelSource).toContain(
@@ -419,11 +417,8 @@ describe('应用级沉浸播放展示', () => {
     expect(firstWord?.attributes('data-state')).toBe('past')
     expect(secondWord?.attributes('data-state')).toBe('active')
     /** 音节收音后基础悬浮仍然保持，不随起音强调一起落回。 */
-    expect(Number.parseFloat(firstWord?.element.style.getPropertyValue('--word-lift') ?? '0'))
-      .toBeLessThan(0)
-    /** 强调层跨越多个动画帧沿单一方向抵达峰值，而不是在起音帧瞬移。 */
-    expect(Number.parseFloat(firstWord?.element.style.getPropertyValue('--word-lift') ?? '0'))
-      .toBeLessThan(firstWordLiftDuringAttack)
+    expect(firstWord?.element.style.getPropertyValue('--word-lift')).toBe('-0.0820em')
+    expect(secondWord?.element.style.getPropertyValue('--word-lift')).toBe('-0.0820em')
 
     await wrapper.setProps({ positionMs: 1_500 })
     await wrapper.vm.$nextTick()
@@ -444,6 +439,85 @@ describe('应用级沉浸播放展示', () => {
     await vi.advanceTimersByTimeAsync(4_000)
     await wrapper.vm.$nextTick()
     expect(wrapper.classes()).not.toContain('lyrics-panel--manual')
+
+    wrapper.unmount()
+    vi.useRealTimers()
+  })
+
+  it('播放起音和切行时均从当前显示位置连续推进', async () => {
+    vi.useFakeTimers()
+    getLyrics.mockResolvedValue({
+      ok: true,
+      data: {
+        kind: 'lyrics',
+        entity: {
+          kind: 'lyrics',
+          trackId: 'track-word-spring-return',
+          lines: [
+            {
+              lineStartMs: 1_000,
+              lineDurationMs: 200,
+              text: '逐字',
+              words: [
+                { text: '逐', startMs: 1_000, durationMs: 100 },
+                { text: '字', startMs: 1_100, durationMs: 100 }
+              ]
+            },
+            {
+              lineStartMs: 2_000,
+              lineDurationMs: 500,
+              text: '换行',
+              words: []
+            }
+          ],
+          sources: [{ api: 'test.lyrics', observedAt }],
+          updatedAt: observedAt
+        }
+      }
+    })
+
+    /** 在第一个音节起音前挂载，用连续播放时钟观察完整弹簧运动。 */
+    const wrapper = mount(LyricsPanel, {
+      props: {
+        trackId: 'track-word-spring-return',
+        positionMs: 950,
+        playing: true,
+        immersive: true
+      }
+    })
+
+    await vi.waitFor(() => expect(wrapper.findAll('.lyric-word')).toHaveLength(2))
+    await wrapper.vm.$nextTick()
+
+    /** 用于观察切行回落的第一个音节。 */
+    const firstWord = wrapper.findAll<HTMLElement>('.lyric-word')[0]
+    expect(firstWord?.element.style.getPropertyValue('--word-lift')).toBe('0.0000em')
+
+    await vi.advanceTimersByTimeAsync(80)
+    await wrapper.vm.$nextTick()
+    /** 起音后的前几帧必须处于原位与峰值之间，证明没有首帧跳到终点。 */
+    const liftDuringRise = Number.parseFloat(
+      firstWord?.element.style.getPropertyValue('--word-lift') ?? '0'
+    )
+    expect(liftDuringRise).toBeGreaterThan(-0.082)
+    expect(liftDuringRise).toBeLessThan(0)
+
+    await vi.advanceTimersByTimeAsync(900)
+    await wrapper.vm.$nextTick()
+    expect(firstWord?.element.style.getPropertyValue('--word-lift')).toBe('-0.0500em')
+
+    await vi.advanceTimersByTimeAsync(80)
+    await wrapper.vm.$nextTick()
+    /** 切行后的前几帧必须仍处于原位与零点之间，证明没有瞬间归零。 */
+    const liftDuringReturn = Number.parseFloat(
+      firstWord?.element.style.getPropertyValue('--word-lift') ?? '0'
+    )
+    expect(liftDuringReturn).toBeGreaterThan(-0.05)
+    expect(liftDuringReturn).toBeLessThan(0)
+
+    await vi.advanceTimersByTimeAsync(700)
+    await wrapper.vm.$nextTick()
+    expect(firstWord?.element.style.getPropertyValue('--word-lift')).toBe('0.0000em')
 
     wrapper.unmount()
     vi.useRealTimers()
