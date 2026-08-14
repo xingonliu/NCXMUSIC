@@ -507,21 +507,28 @@ export class TimelineController {
 	//#region 间奏计算
 	private calculateInterludes(bounds: TimeBounds[]): PlayerInterlude[] {
 		const interludes: PlayerInterlude[] = [];
+		let latestCoveredEndTime = 0;
 
-		for (let i = -1; i < bounds.length - 1; i++) {
-			const prevGroup = i === -1 ? null : bounds[i];
-			const nextGroup = bounds[i + 1];
+		for (let nextGroupIndex = 0; nextGroupIndex < bounds.length; nextGroupIndex++) {
+			const nextGroup = bounds[nextGroupIndex];
 
-			const gapStart = prevGroup ? prevGroup.endTime : 0;
+			// 对唱或背景声可能与更早的长句重叠，空白必须从此前所有行的最晚结束点开始计算。
+			const gapStart = latestCoveredEndTime;
 			const gapEnd = Math.max(gapStart, nextGroup.startTime);
 
 			if (gapEnd - gapStart >= 4000) {
 				interludes.push({
 					startTime: gapStart,
 					endTime: gapEnd,
-					anchorLineIndex: i,
+					anchorLineIndex: nextGroupIndex - 1,
 				});
 			}
+
+			latestCoveredEndTime = Math.max(
+				latestCoveredEndTime,
+				nextGroup.startTime,
+				nextGroup.endTime,
+			);
 		}
 
 		return interludes;

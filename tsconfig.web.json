@@ -11,6 +11,7 @@
     "src/domains/player/**/*.ts",
     "tests/unit/player-bar.test.ts",
     "tests/unit/immersive-player.test.ts",
+    "tests/unit/fluid-mesh-background.test.ts",
     "tests/unit/lyrics-engine.test.ts",
     "tests/unit/lyrics-engine-split-words.test.ts",
     "tests/unit/music-progress-bar.test.ts",

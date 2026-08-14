@@ -60,6 +60,9 @@ let resizeObserver: ResizeObserver | undefined
 /** 系统减少动态效果媒体查询。 */
 let reducedMotionQuery: MediaQueryList | undefined
 
+/** 切歌瞬间封面请求失败后的单次重试等待时间。 */
+const ARTWORK_LOAD_RETRY_DELAY_MS = 180
+
 // ========= 函数 =========
 
 /** 创建可取消且允许 WebGL 采样的跨域图片加载任务。 */
@@ -107,6 +110,49 @@ function loadArtwork(source: string, signal: AbortSignal): Promise<HTMLImageElem
   })
 }
 
+/** 在可取消的短等待后允许封面加载重试一次。 */
+function waitForArtworkRetry(signal: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    /** 本次短等待使用的计时器。 */
+    const timeoutId = window.setTimeout(() => {
+      cleanup()
+      resolve()
+    }, ARTWORK_LOAD_RETRY_DELAY_MS)
+
+    /** 移除短等待注册的取消监听。 */
+    function cleanup(): void {
+      signal.removeEventListener('abort', handleAbort)
+    }
+
+    /** 切到另一首歌或卸载时取消尚未开始的重试。 */
+    function handleAbort(): void {
+      window.clearTimeout(timeoutId)
+      cleanup()
+      reject(new DOMException('Artwork texture loading was aborted.', 'AbortError'))
+    }
+
+    if (signal.aborted) {
+      handleAbort()
+      return
+    }
+    signal.addEventListener('abort', handleAbort, { once: true })
+  })
+}
+
+/** 首次封面请求异常时短暂等待并重试一次，避免重新进入页面才能恢复。 */
+async function loadArtworkWithRetry(
+  source: string,
+  signal: AbortSignal
+): Promise<HTMLImageElement> {
+  try {
+    return await loadArtwork(source, signal)
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') throw error
+    await waitForArtworkRetry(signal)
+    return loadArtwork(source, signal)
+  }
+}
+
 /** 使用当前容器 CSS 尺寸更新 Pixi WebGL 目标。 */
 function resizeRenderer(): void {
   /** Canvas 在页面上的 CSS 尺寸。 */
@@ -125,12 +171,14 @@ async function createRenderer(): Promise<void> {
   if (!canvas) return
   /** 当前异步初始化任务的世代编号。 */
   const generation = ++rendererGeneration
+  /** 本次异步创建出来、尚未确认接管 Canvas 的 Pixi 渲染器。 */
+  let nextRenderer: FluidMeshRenderer | undefined
   renderer?.destroy()
   renderer = undefined
   webglReady.value = false
   try {
     /** 新建的 Apple Music 网页端同形 Pixi 渲染器。 */
-    const nextRenderer = await FluidMeshRenderer.create(canvas)
+    nextRenderer = await FluidMeshRenderer.create(canvas)
     if (generation !== rendererGeneration || canvasElement.value !== canvas) {
       nextRenderer.destroy()
       return
@@ -146,7 +194,34 @@ async function createRenderer(): Promise<void> {
     }
     if (!document.hidden) nextRenderer.start()
   } catch {
-    if (generation === rendererGeneration) renderer = undefined
+    nextRenderer?.destroy()
+    if (generation === rendererGeneration) {
+      renderer = undefined
+      webglReady.value = false
+    }
+  }
+}
+
+/**
+ * 把已解码封面交给当前 Pixi 实例；旧实例状态异常时以同一封面重建完整管线。
+ *
+ * @param artwork 当前歌曲已完成跨域校验的封面
+ */
+async function applyArtworkToRenderer(artwork: HTMLImageElement): Promise<void> {
+  /** 当前负责屏幕输出的 Pixi 实例。 */
+  const activeRenderer = renderer
+  if (!activeRenderer) {
+    webglReady.value = false
+    return
+  }
+
+  try {
+    activeRenderer.setArtwork(artwork)
+    webglReady.value = true
+  } catch {
+    // 关闭再打开能恢复说明封面有效、旧 GPU 管线失效；原地重建可在当前页面自愈。
+    webglReady.value = false
+    if (activeArtwork === artwork) await createRenderer()
   }
 }
 
@@ -192,12 +267,11 @@ watch(() => props.artworkUrl, async (artworkUrl, _previous, onCleanup) => {
 
   try {
     /** 当前歌曲完成跨域校验和解码的封面。 */
-    const artwork = await loadArtwork(artworkUrl, controller.signal)
+    const artwork = await loadArtworkWithRetry(artworkUrl, controller.signal)
     if (controller.signal.aborted) return
     activeArtwork = artwork
     emit('accent-color', extractArtworkAccentColor(artwork))
-    renderer?.setArtwork(artwork)
-    webglReady.value = renderer !== undefined
+    await applyArtworkToRenderer(artwork)
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') return
     activeArtwork = undefined

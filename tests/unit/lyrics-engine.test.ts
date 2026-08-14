@@ -113,6 +113,22 @@ describe('AMLL 歌词视觉与动效引擎', () => {
     expect(timeline.getSnapshot().playingGroups.has(0)).toBe(true)
   })
 
+  it('重叠短句结束时不会把仍在演唱的长句误判为间奏', () => {
+    /** 包含长主声部和短重叠声部的歌词时间线控制器。 */
+    const timeline = new TimelineController()
+    timeline.setTimeBounds([
+      { startTime: 0, endTime: 10_000 },
+      { startTime: 2_000, endTime: 3_000 },
+      { startTime: 8_000, endTime: 9_000 }
+    ])
+
+    timeline.sync(5_000, true)
+
+    expect(timeline.getSnapshot().playingGroups.has(0)).toBe(true)
+    expect(timeline.getSnapshot().activeInterlude).toBeUndefined()
+    expect(timeline.getSnapshot().isFocusOnInterlude).toBe(false)
+  })
+
   it('两千行歌词只把视口和 overscan 范围标记为需要挂载 DOM', () => {
     /** 使用前缀和高度缓存的 AMLL 布局计算器。 */
     const layout = new LayoutCalculator()
