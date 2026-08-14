@@ -76,15 +76,28 @@ const LYRIC_ALIGNMENT_POSITIONS = {
 const IMMERSIVE_FONT_SIZES = {
   compact: 'clamp(27px, 2.15vw, 33px)',
   standard: 'clamp(30px, 2.4vw, 36px)',
-  large: 'clamp(34px, 2.7vw, 41px)'
+  large: 'clamp(34px, 2.7vw, 41px)',
+  extraLarge: '46px'
 } as const
 
-/** 传递给 AMLL 样式系统的歌词颜色和字号。 */
+/** 用户级歌词字重预设对应的 CSS 数值。 */
+const LYRIC_FONT_WEIGHTS = {
+  light: '300',
+  regular: '400',
+  semibold: '600',
+  bold: '700',
+  heavy: '800'
+} as const
+
+/** 传递给 AMLL 样式系统的歌词颜色、字号和字重。 */
 const lyricPlayerStyle = computed<Record<string, string>>(() => ({
   '--amll-lp-color': props.accentColor,
   '--amll-lp-font-size': props.immersive
     ? IMMERSIVE_FONT_SIZES[appPreferences.preferences.value.lyricFontSize]
-    : '18px'
+    : '18px',
+  '--amll-lp-font-weight': LYRIC_FONT_WEIGHTS[
+    appPreferences.preferences.value.lyricFontWeight
+  ]
 }))
 
 /** 内置的 AMLL DOM 歌词播放器实例。 */

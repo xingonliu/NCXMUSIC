@@ -21,6 +21,7 @@ import { usePlayer } from '../music/use-player'
 import {
   type LyricAlignmentPreset,
   type LyricFontSizePreset,
+  type LyricFontWeightPreset,
   type LyricMotionPreset,
   useAppPreferences
 } from './app-preferences'
@@ -117,7 +118,17 @@ const lyricMotionOptions: CommonOption[] = [
 const lyricFontSizeOptions: CommonOption[] = [
   { label: '紧凑', value: 'compact' },
   { label: '标准', value: 'standard' },
-  { label: '大号', value: 'large' }
+  { label: '大号', value: 'large' },
+  { label: '超大号', value: 'extraLarge' }
+]
+
+/** 歌词字重的用户级预设。 */
+const lyricFontWeightOptions: CommonOption[] = [
+  { label: '细', value: 'light' },
+  { label: '常规', value: 'regular' },
+  { label: '中粗', value: 'semibold' },
+  { label: '粗体', value: 'bold' },
+  { label: '超粗体', value: 'heavy' }
 ]
 
 /** 当前账户安全快照。 */
@@ -170,6 +181,14 @@ function setLyricFontSize(value: string | number): void {
   const fontSize = String(value) as LyricFontSizePreset
   appPreferences.setLyricFontSize(fontSize)
   persistAccountPreference('lyrics.fontSize', fontSize)
+}
+
+/** 设置歌词字重预设。 */
+function setLyricFontWeight(value: string | number): void {
+  /** 通用选择器返回的歌词字重预设。 */
+  const fontWeight = String(value) as LyricFontWeightPreset
+  appPreferences.setLyricFontWeight(fontWeight)
+  persistAccountPreference('lyrics.fontWeight', fontWeight)
 }
 
 /** 设置是否隐藏已经唱完的歌词行。 */
@@ -228,8 +247,20 @@ async function loadAccountPreferences(): Promise<void> {
   }
   /** 已校验的沉浸歌词字号预设。 */
   const lyricFontSize = preferences['lyrics.fontSize']
-  if (lyricFontSize === 'compact' || lyricFontSize === 'standard' || lyricFontSize === 'large') {
+  if (lyricFontSize === 'compact'
+    || lyricFontSize === 'standard'
+    || lyricFontSize === 'large'
+    || lyricFontSize === 'extraLarge') {
     appPreferences.hydrateLyricFontSize(lyricFontSize)
+  }
+  /** 已校验的歌词字重预设。 */
+  const lyricFontWeight = preferences['lyrics.fontWeight']
+  if (lyricFontWeight === 'light'
+    || lyricFontWeight === 'regular'
+    || lyricFontWeight === 'semibold'
+    || lyricFontWeight === 'bold'
+    || lyricFontWeight === 'heavy') {
+    appPreferences.hydrateLyricFontWeight(lyricFontWeight)
   }
   /** 已校验的隐藏已唱歌词偏好。 */
   const hidePassedLyrics = preferences['lyrics.hidePassed']
@@ -477,6 +508,18 @@ onBeforeUnmount(() => {
           :model-value="appPreferences.preferences.value.lyricFontSize"
           :options="lyricFontSizeOptions"
           @update:model-value="setLyricFontSize"
+        />
+      </SettingsRow>
+      <SettingsRow
+        setting-id="setting-lyric-font-weight"
+        title="歌词字重"
+        description="调整主歌词、翻译与音译的粗细。"
+      >
+        <CommonSelect
+          class="settings-control"
+          :model-value="appPreferences.preferences.value.lyricFontWeight"
+          :options="lyricFontWeightOptions"
+          @update:model-value="setLyricFontWeight"
         />
       </SettingsRow>
       <SettingsRow

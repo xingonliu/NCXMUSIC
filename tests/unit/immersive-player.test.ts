@@ -7,6 +7,7 @@ import ImmersiveLyricsPage from '../../src/renderer/features/music/ImmersiveLyri
 import immersiveLyricsPageSource from '../../src/renderer/features/music/ImmersiveLyricsPage.vue?raw'
 import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
 import { disposePlayer } from '../../src/renderer/features/music/use-player'
+import { useAppPreferences } from '../../src/renderer/features/settings/app-preferences'
 
 // ========= 变量 =========
 
@@ -370,7 +371,7 @@ describe('应用级沉浸播放展示', () => {
     wrapper.unmount()
   })
 
-  it('把歌词展示偏好直接映射到 AMLL 引擎控制面和字号变量', async () => {
+  it('把歌词展示偏好直接映射到 AMLL 引擎控制面、字号和字重变量', async () => {
     getLyrics.mockResolvedValue({
       ok: true,
       data: {
@@ -390,6 +391,11 @@ describe('应用级沉浸播放展示', () => {
       }
     })
 
+    /** 用于验证字号和字重设置的应用偏好接口。 */
+    const appPreferences = useAppPreferences()
+    appPreferences.setLyricFontSize('extraLarge')
+    appPreferences.setLyricFontWeight('heavy')
+
     /** 用于验证设置同步的歌词面板。 */
     const wrapper = mount(LyricsPanel, {
       props: {
@@ -400,8 +406,11 @@ describe('应用级沉浸播放展示', () => {
     })
 
     await vi.waitFor(() => expect(wrapper.find('[data-amll-line]').exists()).toBe(true))
-    expect(wrapper.attributes('style')).toContain('--amll-lp-font-size')
+    expect(wrapper.attributes('style')).toContain('--amll-lp-font-size: 46px')
+    expect(wrapper.attributes('style')).toContain('--amll-lp-font-weight: 800')
 
     wrapper.unmount()
+    appPreferences.setLyricFontSize('standard')
+    appPreferences.setLyricFontWeight('regular')
   })
 })

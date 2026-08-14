@@ -11,7 +11,10 @@ export type LyricAlignmentPreset = 'upper' | 'center' | 'lower'
 export type LyricMotionPreset = 'full' | 'soft' | 'minimal'
 
 /** 沉浸歌词字号预设。 */
-export type LyricFontSizePreset = 'compact' | 'standard' | 'large'
+export type LyricFontSizePreset = 'compact' | 'standard' | 'large' | 'extraLarge'
+
+/** 歌词字重预设。 */
+export type LyricFontWeightPreset = 'light' | 'regular' | 'semibold' | 'bold' | 'heavy'
 
 /** Phase 4 可由 Renderer 安全持久化的界面偏好。 */
 export interface AppPreferences {
@@ -25,6 +28,8 @@ export interface AppPreferences {
   lyricMotion: LyricMotionPreset
   /** 沉浸歌词字号。 */
   lyricFontSize: LyricFontSizePreset
+  /** 歌词主行与附属行继承的字重。 */
+  lyricFontWeight: LyricFontWeightPreset
   /** 是否隐藏已经演唱完毕的歌词。 */
   hidePassedLyrics: boolean
   /** 关闭主窗口时驻留托盘或退出应用；`minimize` 为兼容旧配置的驻留值。 */
@@ -43,6 +48,7 @@ const DEFAULT_PREFERENCES: AppPreferences = {
   lyricAlignment: 'center',
   lyricMotion: 'full',
   lyricFontSize: 'standard',
+  lyricFontWeight: 'regular',
   hidePassedLyrics: false,
   closeWindowBehavior: 'minimize'
 }
@@ -68,9 +74,20 @@ function lyricMotionValue(value: unknown): LyricMotionPreset {
 
 /** 校验并恢复歌词字号预设。 */
 function lyricFontSizeValue(value: unknown): LyricFontSizePreset {
-  return value === 'compact' || value === 'large' || value === 'standard'
+  return value === 'compact' || value === 'large' || value === 'extraLarge' || value === 'standard'
     ? value
     : DEFAULT_PREFERENCES.lyricFontSize
+}
+
+/** 校验并恢复歌词字重预设。 */
+function lyricFontWeightValue(value: unknown): LyricFontWeightPreset {
+  return value === 'light'
+    || value === 'semibold'
+    || value === 'bold'
+    || value === 'heavy'
+    || value === 'regular'
+    ? value
+    : DEFAULT_PREFERENCES.lyricFontWeight
 }
 
 /** 从本地存储读取并校验界面偏好。 */
@@ -88,6 +105,7 @@ function readPreferences(): AppPreferences {
       lyricAlignment: lyricAlignmentValue(parsed.lyricAlignment),
       lyricMotion: lyricMotionValue(parsed.lyricMotion),
       lyricFontSize: lyricFontSizeValue(parsed.lyricFontSize),
+      lyricFontWeight: lyricFontWeightValue(parsed.lyricFontWeight),
       hidePassedLyrics: typeof parsed.hidePassedLyrics === 'boolean'
         ? parsed.hidePassedLyrics
         : DEFAULT_PREFERENCES.hidePassedLyrics,
@@ -160,6 +178,16 @@ function hydrateLyricFontSize(lyricFontSize: LyricFontSizePreset): void {
   savePreferences({ ...preferences.value, lyricFontSize })
 }
 
+/** 更新歌词字重预设。 */
+function setLyricFontWeight(lyricFontWeight: LyricFontWeightPreset): void {
+  savePreferences({ ...preferences.value, lyricFontWeight })
+}
+
+/** 使用账户 SQLite 权威值同步歌词字重。 */
+function hydrateLyricFontWeight(lyricFontWeight: LyricFontWeightPreset): void {
+  savePreferences({ ...preferences.value, lyricFontWeight })
+}
+
 /** 更新是否隐藏已唱歌词。 */
 function setHidePassedLyrics(hidePassedLyrics: boolean): void {
   savePreferences({ ...preferences.value, hidePassedLyrics })
@@ -203,6 +231,8 @@ export function useAppPreferences(): {
   hydrateLyricMotion: (value: LyricMotionPreset) => void
   setLyricFontSize: (value: LyricFontSizePreset) => void
   hydrateLyricFontSize: (value: LyricFontSizePreset) => void
+  setLyricFontWeight: (value: LyricFontWeightPreset) => void
+  hydrateLyricFontWeight: (value: LyricFontWeightPreset) => void
   setHidePassedLyrics: (value: boolean) => void
   hydrateHidePassedLyrics: (value: boolean) => void
   setCloseWindowBehavior: (value: 'minimize' | 'quit') => void
@@ -221,6 +251,8 @@ export function useAppPreferences(): {
     hydrateLyricMotion,
     setLyricFontSize,
     hydrateLyricFontSize,
+    setLyricFontWeight,
+    hydrateLyricFontWeight,
     setHidePassedLyrics,
     hydrateHidePassedLyrics,
     setCloseWindowBehavior,

@@ -7,7 +7,7 @@ NcxMusic 是一个基于 Electron、Vue 3 和 TypeScript 的 Agent 原生桌面�
 - 沉浸播放页使用封面颜色驱动的流体网格动态背景，背景算法与空间氛围参考 Apple Music，并由 NcxMusic 使用 PixiJS 独立实现。
 - 歌词获取和 LRC/YRC 解析由 NcxMusic 自己负责；逐字扫光、音节运动、当前行突出、弹簧滚动、间奏、背景声、双声部及长歌词视口管理参考 [Apple Music-like Lyrics（AMLL）](https://github.com/amll-dev/applemusic-like-lyrics) 的歌词视觉与动效实现。
 - AMLL 歌词引擎以源码形式内置，不依赖其 Vue/React 组件；来源、固定提交、改写边界和许可证记录在 [歌词引擎上游说明](src/renderer/features/music/lyrics-engine/UPSTREAM.md) 中。
-- 设置页提供面向普通用户的歌词翻译、当前歌词位置、动效强度、字号和已唱歌词显示选项。
+- 设置页提供面向普通用户的歌词翻译、当前歌词位置、动效强度、字号、字重和已唱歌词显示选项。
 
 ## 环境
 

@@ -54,6 +54,19 @@ describe('settings navigation UI contract', () => {
     expect(SETTINGS_SEARCH_ITEMS.some((item) => item.targetId === 'setting-close-window')).toBe(true)
     expect(SETTINGS_SEARCH_ITEMS.some((item) => item.targetId === 'setting-mcp-servers')).toBe(true)
     expect(SETTINGS_SEARCH_ITEMS.some((item) => item.targetId === 'setting-skill-install')).toBe(true)
+    expect(SETTINGS_SEARCH_ITEMS.some((item) => item.targetId === 'setting-lyric-font-weight')).toBe(true)
+  })
+
+  it('提供超大号歌词和完整字重预设', () => {
+    /** 音乐设置页源码。 */
+    const settingsPageSource = settingsPanelSources[3] ?? ''
+
+    expect(settingsPageSource).toContain("{ label: '超大号', value: 'extraLarge' }")
+    expect(settingsPageSource).toContain("{ label: '细', value: 'light' }")
+    expect(settingsPageSource).toContain("{ label: '常规', value: 'regular' }")
+    expect(settingsPageSource).toContain("{ label: '中粗', value: 'semibold' }")
+    expect(settingsPageSource).toContain("{ label: '粗体', value: 'bold' }")
+    expect(settingsPageSource).toContain("{ label: '超粗体', value: 'heavy' }")
   })
 
   it('让当前设置项复用 hover 背景且复用通用表单组件', () => {
