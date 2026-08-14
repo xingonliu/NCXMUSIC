@@ -18,7 +18,12 @@ import { showToast } from '../../design-system/use-toast'
 import { zhCN } from '../../locales/zh-CN'
 import { useAccountSessionStore } from '../account/account-session-store'
 import { usePlayer } from '../music/use-player'
-import { useAppPreferences } from './app-preferences'
+import {
+  type LyricAlignmentPreset,
+  type LyricFontSizePreset,
+  type LyricMotionPreset,
+  useAppPreferences
+} from './app-preferences'
 import ExtensionsSettingsPanel from './ExtensionsSettingsPanel.vue'
 import ModelSettingsPanel from './ModelSettingsPanel.vue'
 import PersonalizationSettingsPanel from './PersonalizationSettingsPanel.vue'
@@ -94,6 +99,27 @@ const closeBehaviorOptions: CommonOption[] = [
   { label: '退出应用', value: 'quit' }
 ]
 
+/** 当前歌词垂直焦点的用户级预设。 */
+const lyricAlignmentOptions: CommonOption[] = [
+  { label: '靠上', value: 'upper' },
+  { label: '居中', value: 'center' },
+  { label: '靠下', value: 'lower' }
+]
+
+/** 歌词空间动效强度的用户级预设。 */
+const lyricMotionOptions: CommonOption[] = [
+  { label: '完整', value: 'full' },
+  { label: '轻柔', value: 'soft' },
+  { label: '简洁', value: 'minimal' }
+]
+
+/** 沉浸歌词字号的用户级预设。 */
+const lyricFontSizeOptions: CommonOption[] = [
+  { label: '紧凑', value: 'compact' },
+  { label: '标准', value: 'standard' },
+  { label: '大号', value: 'large' }
+]
+
 /** 当前账户安全快照。 */
 const accountSnapshot = computed<AccountSessionSnapshot | undefined>(() => account.snapshot.value)
 
@@ -120,6 +146,36 @@ function setTheme(theme: AppTheme): void {
 function setLyricTranslation(value: boolean): void {
   appPreferences.setShowLyricTranslation(value)
   persistAccountPreference('lyrics.showTranslation', value)
+}
+
+/** 设置当前歌词的垂直焦点预设。 */
+function setLyricAlignment(value: string | number): void {
+  /** 通用选择器返回的歌词焦点预设。 */
+  const alignment = String(value) as LyricAlignmentPreset
+  appPreferences.setLyricAlignment(alignment)
+  persistAccountPreference('lyrics.alignment', alignment)
+}
+
+/** 设置歌词空间动效强度预设。 */
+function setLyricMotion(value: string | number): void {
+  /** 通用选择器返回的歌词动效预设。 */
+  const motion = String(value) as LyricMotionPreset
+  appPreferences.setLyricMotion(motion)
+  persistAccountPreference('lyrics.motion', motion)
+}
+
+/** 设置沉浸歌词字号预设。 */
+function setLyricFontSize(value: string | number): void {
+  /** 通用选择器返回的歌词字号预设。 */
+  const fontSize = String(value) as LyricFontSizePreset
+  appPreferences.setLyricFontSize(fontSize)
+  persistAccountPreference('lyrics.fontSize', fontSize)
+}
+
+/** 设置是否隐藏已经唱完的歌词行。 */
+function setHidePassedLyrics(value: boolean): void {
+  appPreferences.setHidePassedLyrics(value)
+  persistAccountPreference('lyrics.hidePassed', value)
 }
 
 /** 将单个用户偏好写入当前账户 SQLite；账户切换后的迟到写入由 Utility 拒绝。 */
@@ -159,6 +215,26 @@ async function loadAccountPreferences(): Promise<void> {
   const showTranslation = preferences['lyrics.showTranslation']
   if (typeof showTranslation === 'boolean') {
     appPreferences.hydrateShowLyricTranslation(showTranslation)
+  }
+  /** 已校验的歌词焦点预设。 */
+  const lyricAlignment = preferences['lyrics.alignment']
+  if (lyricAlignment === 'upper' || lyricAlignment === 'center' || lyricAlignment === 'lower') {
+    appPreferences.hydrateLyricAlignment(lyricAlignment)
+  }
+  /** 已校验的歌词动效强度预设。 */
+  const lyricMotion = preferences['lyrics.motion']
+  if (lyricMotion === 'full' || lyricMotion === 'soft' || lyricMotion === 'minimal') {
+    appPreferences.hydrateLyricMotion(lyricMotion)
+  }
+  /** 已校验的沉浸歌词字号预设。 */
+  const lyricFontSize = preferences['lyrics.fontSize']
+  if (lyricFontSize === 'compact' || lyricFontSize === 'standard' || lyricFontSize === 'large') {
+    appPreferences.hydrateLyricFontSize(lyricFontSize)
+  }
+  /** 已校验的隐藏已唱歌词偏好。 */
+  const hidePassedLyrics = preferences['lyrics.hidePassed']
+  if (typeof hidePassedLyrics === 'boolean') {
+    appPreferences.hydrateHidePassedLyrics(hidePassedLyrics)
   }
   /** 已校验的账户播放音质偏好。 */
   const quality = preferences['playback.quality']
@@ -365,6 +441,53 @@ onBeforeUnmount(() => {
           :model-value="appPreferences.preferences.value.showLyricTranslation"
           label="显示歌词翻译"
           @update:model-value="setLyricTranslation"
+        />
+      </SettingsRow>
+      <SettingsRow
+        setting-id="setting-lyric-alignment"
+        title="当前歌词位置"
+        description="选择当前歌词在沉浸视图中的垂直焦点。"
+      >
+        <CommonSelect
+          class="settings-control"
+          :model-value="appPreferences.preferences.value.lyricAlignment"
+          :options="lyricAlignmentOptions"
+          @update:model-value="setLyricAlignment"
+        />
+      </SettingsRow>
+      <SettingsRow
+        setting-id="setting-lyric-motion"
+        title="歌词动效"
+        description="完整包含弹簧、缩放和模糊；轻柔移除模糊；简洁保留同步扫光。"
+      >
+        <CommonSelect
+          class="settings-control"
+          :model-value="appPreferences.preferences.value.lyricMotion"
+          :options="lyricMotionOptions"
+          @update:model-value="setLyricMotion"
+        />
+      </SettingsRow>
+      <SettingsRow
+        setting-id="setting-lyric-font-size"
+        title="歌词字号"
+        description="调整沉浸歌词主行的整体字号。"
+      >
+        <CommonSelect
+          class="settings-control"
+          :model-value="appPreferences.preferences.value.lyricFontSize"
+          :options="lyricFontSizeOptions"
+          @update:model-value="setLyricFontSize"
+        />
+      </SettingsRow>
+      <SettingsRow
+        setting-id="setting-hide-passed-lyrics"
+        title="已唱歌词"
+        description="隐藏后可减少视觉干扰，仍可滚动查看完整歌词。"
+      >
+        <CommonSwitch
+          :model-value="appPreferences.preferences.value.hidePassedLyrics"
+          label="隐藏已唱歌词"
+          @update:model-value="setHidePassedLyrics"
         />
       </SettingsRow>
     </SettingsSection>

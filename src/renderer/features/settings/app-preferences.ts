@@ -4,12 +4,29 @@ import { AppThemeSchema, type AppTheme } from '../../../shared/schemas/storage'
 
 // ========= 类型 =========
 
+/** 当前歌词在沉浸视图中的垂直焦点预设。 */
+export type LyricAlignmentPreset = 'upper' | 'center' | 'lower'
+
+/** 歌词空间动效强度预设。 */
+export type LyricMotionPreset = 'full' | 'soft' | 'minimal'
+
+/** 沉浸歌词字号预设。 */
+export type LyricFontSizePreset = 'compact' | 'standard' | 'large'
+
 /** Phase 4 可由 Renderer 安全持久化的界面偏好。 */
 export interface AppPreferences {
   /** 应用主题模式。 */
   theme: AppTheme
   /** 是否展示歌词翻译。 */
   showLyricTranslation: boolean
+  /** 当前歌词在沉浸视图中的垂直焦点。 */
+  lyricAlignment: LyricAlignmentPreset
+  /** 歌词弹簧、缩放和模糊的组合强度。 */
+  lyricMotion: LyricMotionPreset
+  /** 沉浸歌词字号。 */
+  lyricFontSize: LyricFontSizePreset
+  /** 是否隐藏已经演唱完毕的歌词。 */
+  hidePassedLyrics: boolean
   /** 关闭主窗口时驻留托盘或退出应用；`minimize` 为兼容旧配置的驻留值。 */
   closeWindowBehavior: 'minimize' | 'quit'
 }
@@ -23,6 +40,10 @@ const PREFERENCES_STORAGE_KEY = 'ncx.app-preferences.v1'
 const DEFAULT_PREFERENCES: AppPreferences = {
   theme: 'system',
   showLyricTranslation: true,
+  lyricAlignment: 'center',
+  lyricMotion: 'full',
+  lyricFontSize: 'standard',
+  hidePassedLyrics: false,
   closeWindowBehavior: 'minimize'
 }
 
@@ -30,6 +51,27 @@ const DEFAULT_PREFERENCES: AppPreferences = {
 const preferences = ref<AppPreferences>(readPreferences())
 
 // ========= 函数 =========
+
+/** 校验并恢复歌词焦点预设。 */
+function lyricAlignmentValue(value: unknown): LyricAlignmentPreset {
+  return value === 'upper' || value === 'lower' || value === 'center'
+    ? value
+    : DEFAULT_PREFERENCES.lyricAlignment
+}
+
+/** 校验并恢复歌词动效强度预设。 */
+function lyricMotionValue(value: unknown): LyricMotionPreset {
+  return value === 'soft' || value === 'minimal' || value === 'full'
+    ? value
+    : DEFAULT_PREFERENCES.lyricMotion
+}
+
+/** 校验并恢复歌词字号预设。 */
+function lyricFontSizeValue(value: unknown): LyricFontSizePreset {
+  return value === 'compact' || value === 'large' || value === 'standard'
+    ? value
+    : DEFAULT_PREFERENCES.lyricFontSize
+}
 
 /** 从本地存储读取并校验界面偏好。 */
 function readPreferences(): AppPreferences {
@@ -43,6 +85,12 @@ function readPreferences(): AppPreferences {
       showLyricTranslation: typeof parsed.showLyricTranslation === 'boolean'
         ? parsed.showLyricTranslation
         : DEFAULT_PREFERENCES.showLyricTranslation,
+      lyricAlignment: lyricAlignmentValue(parsed.lyricAlignment),
+      lyricMotion: lyricMotionValue(parsed.lyricMotion),
+      lyricFontSize: lyricFontSizeValue(parsed.lyricFontSize),
+      hidePassedLyrics: typeof parsed.hidePassedLyrics === 'boolean'
+        ? parsed.hidePassedLyrics
+        : DEFAULT_PREFERENCES.hidePassedLyrics,
       closeWindowBehavior: parsed.closeWindowBehavior === 'quit' ? 'quit' : 'minimize'
     }
   } catch {
@@ -82,6 +130,46 @@ function hydrateShowLyricTranslation(showLyricTranslation: boolean): void {
   savePreferences({ ...preferences.value, showLyricTranslation })
 }
 
+/** 更新歌词垂直焦点预设。 */
+function setLyricAlignment(lyricAlignment: LyricAlignmentPreset): void {
+  savePreferences({ ...preferences.value, lyricAlignment })
+}
+
+/** 使用账户 SQLite 权威值同步歌词垂直焦点。 */
+function hydrateLyricAlignment(lyricAlignment: LyricAlignmentPreset): void {
+  savePreferences({ ...preferences.value, lyricAlignment })
+}
+
+/** 更新歌词动效强度预设。 */
+function setLyricMotion(lyricMotion: LyricMotionPreset): void {
+  savePreferences({ ...preferences.value, lyricMotion })
+}
+
+/** 使用账户 SQLite 权威值同步歌词动效强度。 */
+function hydrateLyricMotion(lyricMotion: LyricMotionPreset): void {
+  savePreferences({ ...preferences.value, lyricMotion })
+}
+
+/** 更新沉浸歌词字号预设。 */
+function setLyricFontSize(lyricFontSize: LyricFontSizePreset): void {
+  savePreferences({ ...preferences.value, lyricFontSize })
+}
+
+/** 使用账户 SQLite 权威值同步沉浸歌词字号。 */
+function hydrateLyricFontSize(lyricFontSize: LyricFontSizePreset): void {
+  savePreferences({ ...preferences.value, lyricFontSize })
+}
+
+/** 更新是否隐藏已唱歌词。 */
+function setHidePassedLyrics(hidePassedLyrics: boolean): void {
+  savePreferences({ ...preferences.value, hidePassedLyrics })
+}
+
+/** 使用账户 SQLite 权威值同步已唱歌词显示偏好。 */
+function hydrateHidePassedLyrics(hidePassedLyrics: boolean): void {
+  savePreferences({ ...preferences.value, hidePassedLyrics })
+}
+
 /** 更新关闭窗口行为偏好。 */
 function setCloseWindowBehavior(closeWindowBehavior: 'minimize' | 'quit'): void {
   savePreferences({ ...preferences.value, closeWindowBehavior })
@@ -109,6 +197,14 @@ export function useAppPreferences(): {
   hydrateTheme: (theme: AppTheme) => void
   setShowLyricTranslation: (value: boolean) => void
   hydrateShowLyricTranslation: (value: boolean) => void
+  setLyricAlignment: (value: LyricAlignmentPreset) => void
+  hydrateLyricAlignment: (value: LyricAlignmentPreset) => void
+  setLyricMotion: (value: LyricMotionPreset) => void
+  hydrateLyricMotion: (value: LyricMotionPreset) => void
+  setLyricFontSize: (value: LyricFontSizePreset) => void
+  hydrateLyricFontSize: (value: LyricFontSizePreset) => void
+  setHidePassedLyrics: (value: boolean) => void
+  hydrateHidePassedLyrics: (value: boolean) => void
   setCloseWindowBehavior: (value: 'minimize' | 'quit') => void
   hydrateCloseWindowBehavior: (value: 'minimize' | 'quit') => void
   clearRendererCache: () => void
@@ -119,6 +215,14 @@ export function useAppPreferences(): {
     hydrateTheme,
     setShowLyricTranslation,
     hydrateShowLyricTranslation,
+    setLyricAlignment,
+    hydrateLyricAlignment,
+    setLyricMotion,
+    hydrateLyricMotion,
+    setLyricFontSize,
+    hydrateLyricFontSize,
+    setHidePassedLyrics,
+    hydrateHidePassedLyrics,
     setCloseWindowBehavior,
     hydrateCloseWindowBehavior,
     clearRendererCache

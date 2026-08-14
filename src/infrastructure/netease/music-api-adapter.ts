@@ -394,10 +394,10 @@ function normalizeAccess(raw: UnknownRecord): TrackAccessMeta {
   return { badges, playableKnown: false }
 }
 
-/** 判断歌词文本是否属于可区分的和声或副唱声部。 */
+/** 判断歌词文本是否属于可区分的和声、伴唱或括号背景声部。 */
 function isBackgroundVocalText(text: string): boolean {
   /** 行首显式声部标签。 */
-  const vocalPrefixPattern = /^\s*(?:(?:男|女|男声|女声|和声|伴唱|合唱)\s*[:：]|[（(]\s*(?:男|女|男声|女声|和声|伴唱|合唱)(?:\s*[:：][^）)]*)?\s*[）)])/u
+  const vocalPrefixPattern = /^\s*(?:(?:和声|伴唱|合唱)\s*[:：]|[（(]\s*(?:和声|伴唱|合唱)(?:\s*[:：][^）)]*)?\s*[）)])/u
   /** 整行括号文案；网易云双声部歌词常用此形式表示副唱。 */
   const parenthesizedLinePattern = /^\s*[（(][^）)]+[）)]\s*$/u
   return vocalPrefixPattern.test(text) || parenthesizedLinePattern.test(text)

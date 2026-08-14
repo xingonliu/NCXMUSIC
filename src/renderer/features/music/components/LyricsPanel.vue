@@ -1,84 +1,18 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
-import type {
-  StandardLyrics,
-  StandardLyricsLine,
-  StandardLyricsWord
-} from '../../../../shared/schemas/music'
+import type { StandardLyrics } from '../../../../shared/schemas/music'
 import {
   CommonEmptyState,
   CommonErrorState,
   CommonSpinner
 } from '../../../design-system/components'
 import { useAppPreferences } from '../../settings/app-preferences'
-import InstrumentalDots from './InstrumentalDots.vue'
-
-// ========= 类型 =========
-
-/** 歌词行相对播放位置的三段式时态。 */
-type LyricTemporalState = 'past' | 'active' | 'future'
-
-/** 歌词时间轴中的真实歌词行节点。 */
-interface LyricTimelineLineNode {
-  /** 节点类型。 */
-  kind: 'line'
-  /** 标准歌词行。 */
-  line: StandardLyricsLine
-  /** 标准歌词数组中的原始下标。 */
-  lineIndex: number
-}
-
-/** 歌词时间轴中自动插入的虚拟间奏节点。 */
-interface LyricTimelineInstrumentalNode {
-  /** 节点类型。 */
-  kind: 'instrumental'
-  /** 间奏开始时间（毫秒）。 */
-  startMs: number
-  /** 间奏结束时间（毫秒）。 */
-  endMs: number
-  /** 间奏前一行歌词的下标。 */
-  afterLineIndex: number
-}
-
-/** 沉浸歌词可以渲染的联合时间轴节点。 */
-type LyricTimelineNode = LyricTimelineLineNode | LyricTimelineInstrumentalNode
-
-/** 单个字或音节在当前帧的完整视觉状态。 */
-interface WordVisualState {
-  /** 字的时态状态：已唱完 (past)、唱响中 (active)、未开始 (future)。 */
-  state: 'past' | 'active' | 'future'
-  /** 从左至右的白色覆盖进度。 */
-  fillProgress: number
-  /** 当前媒体时刻要求弹簧追踪的垂直目标位置。 */
-  liftTargetEm: number
-}
-
-/** 临界阻尼弹簧单步求值后的状态。 */
-interface WordLiftSpringStep {
-  /** 求值后的垂直位置，单位为 em。 */
-  positionEm: number
-  /** 求值后的垂直速度，单位为 em/s。 */
-  velocityEmPerSecond: number
-}
-
-/** 缓存后的逐字渲染节点，避免动画帧内反复查询和解析 DOM。 */
-interface WordRenderEntry {
-  /** 当前字或音节的 DOM。 */
-  element: HTMLElement
-  /** 当前字或音节的时间数据。 */
-  word: StandardLyricsWord
-  /** 上一帧写入的填充进度。 */
-  fillValue?: string
-  /** 上一帧写入的垂直位移。 */
-  liftValue?: string
-  /** 当前显示的垂直位置，弹簧重定向时从此处继续。 */
-  liftPositionEm: number
-  /** 当前垂直速度，目标改变时保持连续。 */
-  liftVelocityEmPerSecond: number
-  /** 上一帧写入的时态。 */
-  state?: WordVisualState['state']
-}
+import {
+  LyricPlayer,
+  type LyricLineMouseEvent
+} from '../lyrics-engine'
+import { adaptStandardLyrics } from '../lyrics-engine/standard-lyrics-adapter'
 
 // ========= 属性 =========
 
@@ -92,7 +26,7 @@ const props = withDefaults(defineProps<{
   playing?: boolean
   /** 是否使用沉浸式大字号。 */
   immersive?: boolean
-  /** 当前封面提亮后的歌词播放前沿色。 */
+  /** 当前封面提亮后的歌词与扫光颜色。 */
   accentColor?: string
 }>(), {
   playing: false,
@@ -111,40 +45,59 @@ const emit = defineEmits<{
 /** 应用歌词展示偏好。 */
 const appPreferences = useAppPreferences()
 
-/** 歌词面板使用的封面前沿色 CSS 变量。 */
-const lyricAccentStyle = computed<Record<string, string>>(() => ({
-  '--lyric-accent-color': props.accentColor
-}))
+/** 承载内置歌词视觉引擎 DOM 的元素。 */
+const lyricPlayerHost = ref<HTMLDivElement | null>(null)
 
-/** 当前歌词实体。 */
+/** 当前标准歌词实体。 */
 const lyrics = ref<StandardLyrics | null>(null)
 
-/** 当前加载状态。 */
+/** 当前歌词请求是否仍在加载。 */
 const loading = ref<boolean>(false)
 
-/** 当前错误文案。 */
+/** 当前歌词读取错误文案。 */
 const errorMessage = ref<string>('')
 
-/** 沉浸歌词滚动容器。 */
-const scrollContainer = ref<HTMLElement | null>(null)
+/** 当前是否存在可以交给视觉引擎的歌词行。 */
+const hasLyrics = computed<boolean>(() => (lyrics.value?.lines.length ?? 0) > 0)
 
-/** 用户主动浏览歌词时是否暂停自动跟随。 */
-const autoFollowPaused = ref<boolean>(false)
+/** 是否隐藏歌词引擎并展示加载、错误或空状态。 */
+const hideLyricPlayer = computed<boolean>(() => (
+  loading.value || Boolean(errorMessage.value) || !hasLyrics.value
+))
 
-/** 动画帧级播放位置，用于在播放器事件之间精确切换行与间奏状态。 */
-const animationPositionMs = ref<number>(props.positionMs)
+/** 用户级歌词焦点预设对应的 AMLL 视口高度比例。 */
+const LYRIC_ALIGNMENT_POSITIONS = {
+  upper: 0.35,
+  center: 0.5,
+  lower: 0.65
+} as const
 
-/** 最近一次歌词请求 ID，用于丢弃迟到响应。 */
+/** 用户级沉浸歌词字号预设。 */
+const IMMERSIVE_FONT_SIZES = {
+  compact: 'clamp(27px, 2.15vw, 33px)',
+  standard: 'clamp(30px, 2.4vw, 36px)',
+  large: 'clamp(34px, 2.7vw, 41px)'
+} as const
+
+/** 传递给 AMLL 样式系统的歌词颜色和字号。 */
+const lyricPlayerStyle = computed<Record<string, string>>(() => ({
+  '--amll-lp-color': props.accentColor,
+  '--amll-lp-font-size': props.immersive
+    ? IMMERSIVE_FONT_SIZES[appPreferences.preferences.value.lyricFontSize]
+    : '18px'
+}))
+
+/** 内置的 AMLL DOM 歌词播放器实例。 */
+let lyricPlayer: LyricPlayer | undefined
+
+/** 最近一次歌词请求 ID，用于丢弃过期响应。 */
 let latestRequestId = ''
 
-/** 恢复自动跟随的延迟定时器。 */
-let resumeAutoFollowTimer: number | undefined
+/** 歌词引擎逐帧更新任务 ID。 */
+let animationFrameId: number | undefined
 
-/** 逐字高亮动画帧 ID。 */
-let wordProgressFrameId: number | undefined
-
-/** 逐字动画循环代次，用于让过期的异步启动和动画帧立即失效。 */
-let wordProgressLoopGeneration = 0
+/** 上一帧动画使用的高精度页面时间。 */
+let previousFrameTime = -1
 
 /** 播放时钟锚点对应的媒体位置。 */
 let playbackClockAnchorPositionMs = props.positionMs
@@ -152,479 +105,48 @@ let playbackClockAnchorPositionMs = props.positionMs
 /** 播放时钟锚点对应的高精度页面时间。 */
 let playbackClockAnchorAt = 0
 
-/** 最近一次播放器推送的权威位置，用于识别 seek。 */
+/** 最近一次播放器推送的权威位置。 */
 let latestPlayerPositionMs = props.positionMs
 
-/** 最近一次实际用于歌词渲染的位置，播放期间只允许单调递增。 */
+/** 最近一次交给歌词引擎的播放位置。 */
 let lastRenderedPlaybackPositionMs = props.positionMs
 
-/** 按歌词行缓存的逐字渲染节点。 */
-const wordRenderEntriesByLine = new Map<number, WordRenderEntry[]>()
+/** 系统减少动态效果媒体查询。 */
+let reducedMotionQuery: MediaQueryList | undefined
 
-/** 上一帧仍保持逐字悬浮的歌词行。 */
-let previouslyPresentedWordLineIndexes: number[] = []
-
-/** 已离开焦点但仍需完成平滑回落的歌词行。 */
-const settlingWordLineIndexes = new Set<number>()
-
-/** 上一帧音节弹簧使用的高精度页面时间。 */
-let wordLiftPreviousFrameAt = 0
-
-/** 弹簧滚动动画帧 ID。 */
-let springFrameId: number | undefined
-
-/** 弹簧当前模拟位置。 */
-let springPosition = 0
-
-/** 弹簧当前速度，单位为像素每秒。 */
-let springVelocity = 0
-
-/** 弹簧目标滚动位置。 */
-let springTarget = 0
-
-/** 弹簧上一帧高精度时钟。 */
-let springPreviousFrameAt = 0
-
-/** 自动跟随的垂直黄金焦点比例。 */
-const ACTIVE_LINE_FOCUS_RATIO = 0.42
-
-/** 插入虚拟间奏节点所需的最短空白时长。 */
-const INSTRUMENTAL_GAP_THRESHOLD_MS = 8_000
-
-/** 自动恢复跟随前的用户闲置时长。 */
-const AUTO_FOLLOW_RESUME_DELAY_MS = 4_000
-
-/** Apple Music 风格的基础悬浮高度，约等于沉浸字号下的 1.5 至 1.8px。 */
-const WORD_BASE_FLOAT_EM = 0.05
-
-/** 起音强调额外叠加的短促抬升高度。 */
-const WORD_EMPHASIS_FLOAT_EM = 0.032
-
-/** 起音强调目标的最短保持时间，让短音节也能形成可见的上升动量。 */
-const WORD_EMPHASIS_MIN_TARGET_DURATION_MS = 180
-
-/** 起音强调目标的最长保持时间，避免长音节停留在峰值过久。 */
-const WORD_EMPHASIS_MAX_TARGET_DURATION_MS = 280
-
-/** 音节时长用于推导强调目标保持时间的比例。 */
-const WORD_EMPHASIS_TARGET_DURATION_RATIO = 0.36
-
-/** 音节上浮临界阻尼弹簧的设计响应时间。 */
-const WORD_LIFT_SPRING_RESPONSE_SECONDS = 0.36
-
-/** 音节上浮弹簧的角频率，由设计响应时间换算。 */
-const WORD_LIFT_SPRING_ANGULAR_FREQUENCY = (
-  2 * Math.PI / WORD_LIFT_SPRING_RESPONSE_SECONDS
-)
-
-/** 单帧允许推进音节弹簧的最长时间，避免后台恢复后产生大幅跳变。 */
-const WORD_LIFT_MAX_FRAME_DELTA_SECONDS = 0.064
-
-/** 音节弹簧停止时允许的位置误差。 */
-const WORD_LIFT_POSITION_EPSILON_EM = 0.0001
-
-/** 音节弹簧停止时允许的速度误差。 */
-const WORD_LIFT_VELOCITY_EPSILON_EM_PER_SECOND = 0.001
-
-/** 沉浸歌词中只用于区分左右声部、不应作为正文展示的行首标签。 */
-const VOCAL_ROLE_PREFIX_PATTERN = /^\s*(?:男|女|男声|女声|和声|伴唱|合唱)\s*[:：]\s*/u
-
-/** 沉浸歌词中包含声部或演唱者信息的行首括号标签。 */
-const VOCAL_METADATA_PREFIX_PATTERN = /^\s*[（(]\s*(?:男|女|男声|女声|和声|伴唱|合唱)(?:\s*[:：][^）)]*)?\s*[）)]\s*/u
-
-/** 弹簧质量参数。 */
-const SPRING_MASS = 1
-
-/** 弹簧刚度参数（调整为低频 Apple 阻尼弹簧）。 */
-const SPRING_STIFFNESS = 115
-
-/** 弹簧阻尼参数（调整为厚重流体滑移感）。 */
-const SPRING_DAMPING = 22
-
-/** 弹簧停止时允许的位置误差。 */
-const SPRING_POSITION_EPSILON = 0.35
-
-/** 弹簧停止时允许的速度误差。 */
-const SPRING_VELOCITY_EPSILON = 4
-
-/** 可展示歌词行。 */
-const displayLines = computed<StandardLyricsLine[]>(() => lyrics.value?.lines ?? [])
-
-/** 包含长间奏虚拟节点的完整歌词时间轴。 */
-const timelineNodes = computed<LyricTimelineNode[]>(() => {
-  /** 本次构建生成的真实歌词与虚拟间奏节点。 */
-  const nodes: LyricTimelineNode[] = []
-
-  displayLines.value.forEach((line, lineIndex) => {
-    nodes.push({ kind: 'line', line, lineIndex })
-
-    /** 当前行之后的下一行歌词。 */
-    const nextLine = displayLines.value[lineIndex + 1]
-    if (!nextLine) return
-
-    /** 当前行按上游持续时间计算的结束点。 */
-    const lineEndMs = line.lineStartMs + line.lineDurationMs
-    /** 当前行结束至下一行开始之间的纯音乐时长。 */
-    const instrumentalGapMs = nextLine.lineStartMs - lineEndMs
-    if (instrumentalGapMs <= INSTRUMENTAL_GAP_THRESHOLD_MS) return
-
-    nodes.push({
-      kind: 'instrumental',
-      startMs: lineEndMs,
-      endMs: nextLine.lineStartMs,
-      afterLineIndex: lineIndex
-    })
-  })
-
-  return nodes
-})
-
-/** 返回歌词行真实的收音时间，兼容行时长与最后一个音节不完全一致。 */
-function lyricLineEndMs(line: StandardLyricsLine): number {
-  const lastWordEndMs = lineWords(line).reduce(
-    (latestEndMs, word) => Math.max(latestEndMs, word.startMs + word.durationMs),
-    line.lineStartMs
-  )
-  return Math.max(line.lineStartMs + line.lineDurationMs, lastWordEndMs)
-}
-
-/** 歌词加载时一次性计算的收音时间，动画帧内不再遍历每个音节。 */
-const lyricLineEndTimes = computed<number[]>(() => (
-  displayLines.value.map((line) => lyricLineEndMs(line))
-))
-
-/** 每行之前最晚的收音时间，用于快速跳过不可能重叠的历史歌词。 */
-const lyricLinePrefixMaxEndTimes = computed<number[]>(() => {
-  let latestEndMs = Number.NEGATIVE_INFINITY
-  return lyricLineEndTimes.value.map((lineEndMs) => {
-    latestEndMs = Math.max(latestEndMs, lineEndMs)
-    return latestEndMs
-  })
-})
-
-/** 按前一行下标索引虚拟间奏，动画帧内不再线性扫描整个时间轴。 */
-const instrumentalNodesByAfterLineIndex = computed<Map<number, LyricTimelineInstrumentalNode>>(() => {
-  const nodesByLineIndex = new Map<number, LyricTimelineInstrumentalNode>()
-  timelineNodes.value.forEach((node) => {
-    if (node.kind === 'instrumental') nodesByLineIndex.set(node.afterLineIndex, node)
-  })
-  return nodesByLineIndex
-})
-
-/** 通过二分查找返回指定时刻最近已经开始的歌词行，不处理间奏状态。 */
-function startedLineIndexAtPosition(positionMs: number): number {
-  const lines = displayLines.value
-  let lower = 0
-  let upper = lines.length - 1
-  let result = -1
-
-  while (lower <= upper) {
-    const middle = Math.floor((lower + upper) / 2)
-    const line = lines[middle]
-    if (line && line.lineStartMs <= positionMs) {
-      result = middle
-      lower = middle + 1
-    } else {
-      upper = middle - 1
-    }
-  }
-
-  return result
-}
-
-/** 返回指定时刻命中的虚拟间奏节点。 */
-function instrumentalAtPosition(
-  positionMs: number
-): LyricTimelineInstrumentalNode | undefined {
-  const startedLineIndex = startedLineIndexAtPosition(positionMs)
-  const node = instrumentalNodesByAfterLineIndex.value.get(startedLineIndex)
-  return node && node.startMs <= positionMs && positionMs < node.endMs
-    ? node
-    : undefined
-}
-
-/** 通过二分查找返回指定时刻最近已经开始的歌词行。 */
-function focusedLineIndexAtPosition(positionMs: number): number {
-  if (instrumentalAtPosition(positionMs)) return -1
-  return startedLineIndexAtPosition(positionMs)
-}
-
-/**
- * 返回指定时刻仍处在实际演唱区间内的歌词行。
- *
- * 从最近起音行向前只检查可能重叠的邻近区间，避免每帧遍历整首歌词。
- */
-function singingLineIndexesAtPosition(positionMs: number): number[] {
-  const indexes: number[] = []
-  const latestStartedLineIndex = startedLineIndexAtPosition(positionMs)
-  for (let lineIndex = latestStartedLineIndex; lineIndex >= 0; lineIndex -= 1) {
-    const line = displayLines.value[lineIndex]
-    if (!line) continue
-    const lineEndMs = lyricLineEndTimes.value[lineIndex] ?? line.lineStartMs
-    if (line.lineStartMs <= positionMs && positionMs < lineEndMs) {
-      indexes.push(lineIndex)
-    }
-
-    /** 更早歌词的最大收音时间也已过去时，可以安全结束回溯。 */
-    if (lineIndex === 0 || lyricLinePrefixMaxEndTimes.value[lineIndex - 1]! <= positionMs) break
-  }
-  return indexes.reverse()
-}
-
-/** 当前精确命中的歌词行下标；间奏或空白时为 -1。 */
-const activeLineIndex = computed<number>(() => {
-  return focusedLineIndexAtPosition(animationPositionMs.value)
-})
-
-/** 当前仍处在真实演唱区间内的歌词行。 */
-const singingLineIndexes = computed<number[]>(() => (
-  singingLineIndexesAtPosition(animationPositionMs.value)
-))
-
-/** 当前动画帧已经完整唱完的歌词行数量。 */
-const pastLineCount = computed<number>(() => {
-  const activeIdx = activeLineIndex.value
-  if (activeIdx >= 0) return activeIdx
-  return displayLines.value.filter((line) => (
-    animationPositionMs.value >= line.lineStartMs
-  )).length
-})
-
-/** 当前精确命中的虚拟间奏节点。 */
-const activeInstrumentalNode = computed<LyricTimelineInstrumentalNode | undefined>(() => {
-  return instrumentalAtPosition(animationPositionMs.value)
-})
-
-/** 当前动画帧已经完整播放完的最后一个虚拟间奏下标。 */
-const completedInstrumentalAfterLineIndex = computed<number>(() => {
-  /** 已经结束的间奏节点所对应的歌词下标。 */
-  const completedIndexes = timelineNodes.value
-    .filter((node): node is LyricTimelineInstrumentalNode => (
-      node.kind === 'instrumental' && animationPositionMs.value >= node.endMs
-    ))
-    .map((node) => node.afterLineIndex)
-  return completedIndexes.at(-1) ?? -1
-})
-
-/** 当前自动跟随目标的 DOM 选择器。 */
-const activeFocusSelector = computed<string>(() => {
-  if (activeLineIndex.value >= 0) {
-    return `[data-lyric-index="${activeLineIndex.value}"]`
-  }
-  if (activeInstrumentalNode.value) {
-    return `[data-instrumental-after="${activeInstrumentalNode.value.afterLineIndex}"]`
-  }
-  return ''
-})
+/** 组件是否已经进入销毁流程。 */
+let disposed = false
 
 // ========= 函数 =========
 
-/** 读取系统是否要求减少动态效果。 */
+/** 返回当前页面是否要求减少动态效果。 */
 function prefersReducedMotion(): boolean {
-  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+  return reducedMotionQuery?.matches ?? false
 }
 
-/** 把任意数值约束到零至一之间。 */
-function clampProgress(value: number): number {
-  return Math.min(1, Math.max(0, value))
+/** 把歌词播放时钟直接锚定到权威媒体位置。 */
+function anchorPlaybackClock(
+  positionMs: number,
+  sampledAt: number = performance.now()
+): void {
+  playbackClockAnchorPositionMs = Math.max(0, positionMs)
+  playbackClockAnchorAt = sampledAt
+  latestPlayerPositionMs = positionMs
+  lastRenderedPlaybackPositionMs = playbackClockAnchorPositionMs
 }
 
-/**
- * 精确推进一帧临界阻尼弹簧，并保留目标切换前的显示位置与速度。
- *
- * @param positionEm 当前显示位置
- * @param velocityEmPerSecond 当前速度
- * @param targetEm 当前目标位置
- * @param deltaSeconds 本帧推进时间
- */
-function advanceCriticallyDampedWordLiftSpring(
-  positionEm: number,
-  velocityEmPerSecond: number,
-  targetEm: number,
-  deltaSeconds: number
-): WordLiftSpringStep {
-  /** 限制后的推进时间，避免窗口挂起后用单帧完成整个回落。 */
-  const safeDeltaSeconds = Math.min(
-    WORD_LIFT_MAX_FRAME_DELTA_SECONDS,
-    Math.max(0, deltaSeconds)
-  )
-  if (safeDeltaSeconds === 0) {
-    return { positionEm, velocityEmPerSecond }
-  }
-
-  /** 当前显示位置相对目标位置的位移。 */
-  const displacementEm = positionEm - targetEm
-  /** 临界阻尼解析解中承接当前速度的线性系数。 */
-  const velocityCoefficient = velocityEmPerSecond +
-    WORD_LIFT_SPRING_ANGULAR_FREQUENCY * displacementEm
-  /** 当前时间步内由临界阻尼产生的指数衰减量。 */
-  const decay = Math.exp(-WORD_LIFT_SPRING_ANGULAR_FREQUENCY * safeDeltaSeconds)
-  /** 衰减后的目标相对位移。 */
-  const nextDisplacementEm = (
-    displacementEm + velocityCoefficient * safeDeltaSeconds
-  ) * decay
-  /** 与当前位置连续的一阶速度。 */
-  const nextVelocityEmPerSecond = (
-    velocityEmPerSecond -
-    WORD_LIFT_SPRING_ANGULAR_FREQUENCY * velocityCoefficient * safeDeltaSeconds
-  ) * decay
-
-  return {
-    positionEm: targetEm + nextDisplacementEm,
-    velocityEmPerSecond: nextVelocityEmPerSecond
-  }
-}
-
-/**
- * 返回指定时刻对应的歌词或间奏焦点选择器。
- *
- * @param positionMs 需要定位的播放时刻
- */
-function focusSelectorAtPosition(positionMs: number): string {
-  /** 当前时刻命中的虚拟间奏节点。 */
-  const instrumentalNode = instrumentalAtPosition(positionMs)
-  if (instrumentalNode) {
-    return `[data-instrumental-after="${instrumentalNode.afterLineIndex}"]`
-  }
-
-  /** 当前时刻命中的最后一行歌词下标。 */
-  const lineIndex = focusedLineIndexAtPosition(positionMs)
-
-  return lineIndex >= 0 ? `[data-lyric-index="${lineIndex}"]` : ''
-}
-
-/**
- * 仅在歌词焦点真正跨行时更新 Vue 响应式时间轴，避免逐帧重渲染歌词列表。
- *
- * @param positionMs 当前动画时刻
- * @param force 是否强制同步初始或换歌状态
- */
-function syncTimelinePresentationPosition(positionMs: number, force = false): void {
-  const nextFocusSelector = focusSelectorAtPosition(positionMs)
-  const nextSingingIndexes = singingLineIndexesAtPosition(positionMs).join(',')
-  const currentSingingIndexes = singingLineIndexes.value.join(',')
-  if (
-    !force &&
-    nextFocusSelector === activeFocusSelector.value &&
-    nextSingingIndexes === currentSingingIndexes
-  ) return
-  animationPositionMs.value = positionMs
-}
-
-/** 返回标准歌词行的逐字时间轴，并兼容旧缓存中缺少 words 的行。 */
-function lineWords(line: StandardLyricsLine): StandardLyricsWord[] {
-  return line.words ?? []
-}
-
-/**
- * 移除沉浸模式左右声部行首的角色或演唱者标签，仅保留实际歌词。
- *
- * @param line 当前标准歌词行
- * @param text 需要处理的歌词文本
- */
-function stripImmersiveVocalLabel(line: StandardLyricsLine, text: string): string {
-  if (!props.immersive || line.vocalRole !== 'background') return text
-  return text
-    .replace(VOCAL_METADATA_PREFIX_PATTERN, '')
-    .replace(VOCAL_ROLE_PREFIX_PATTERN, '')
-}
-
-/** 返回当前模式下用于无逐字时间轴歌词行的展示正文。 */
-function visibleLineText(line: StandardLyricsLine): string {
-  return stripImmersiveVocalLabel(line, line.text)
-}
-
-/**
- * 返回当前模式下的逐字歌词，并从右侧声部开头删除不可见的角色或演唱者标签。
- *
- * 被保留音节继续沿用上游绝对时间，避免展示层清理文案破坏扫光时序。
- */
-function visibleLineWords(line: StandardLyricsLine): StandardLyricsWord[] {
-  /** 当前歌词行的原始逐字时间轴。 */
-  const words = lineWords(line)
-  if (!props.immersive || line.vocalRole !== 'background' || words.length === 0) {
-    return words
-  }
-
-  /** 拼接后的完整逐字正文，用于计算行首标签实际占用的字符数。 */
-  const fullText = words.map((word) => word.text).join('')
-  /** 删除声部标签后应当展示的歌词正文。 */
-  const visibleText = stripImmersiveVocalLabel(line, fullText)
-  /** 只允许删除行首字符，异常文本则原样返回以避免误删歌词。 */
-  let remainingPrefixLength = fullText.endsWith(visibleText)
-    ? fullText.length - visibleText.length
-    : 0
-
-  return words.flatMap((word) => {
-    if (remainingPrefixLength <= 0) return [word]
-    if (remainingPrefixLength >= word.text.length) {
-      remainingPrefixLength -= word.text.length
-      return []
-    }
-
-    /** 标签与歌词共用同一时间块时，仅裁掉该时间块开头的标签字符。 */
-    const visibleWordText = word.text.slice(remainingPrefixLength)
-    remainingPrefixLength = 0
-    return [{ ...word, text: visibleWordText }]
-  })
-}
-
-/** 返回指定播放时刻下单个字或音节的填充状态与弹簧目标。 */
-function calculateWordVisualState(
-  word: StandardLyricsWord,
-  currentTimeMs: number
-): WordVisualState {
-  /** 当前字从起音到收音的线性进度，严格遵循上游音节时长。 */
-  const fillProgress = word.durationMs <= 0
-    ? Number(currentTimeMs >= word.startMs)
-    : clampProgress((currentTimeMs - word.startMs) / word.durationMs)
-
-  /** 当前字是否已经到达起音时刻。 */
-  const started = currentTimeMs >= word.startMs
-  /** 字的三段式时态状态，在起音帧立即进入 active 以触发上抬。 */
-  const state: 'past' | 'active' | 'future' = started && fillProgress >= 1
-    ? 'past'
-    : (started ? 'active' : 'future')
-
-  /** 当前音节已经经过的媒体时间。 */
-  const elapsedMs = currentTimeMs - word.startMs
-  /** 当前音节驱动强调峰值目标的保持时间。 */
-  const emphasisTargetDurationMs = Math.max(
-    WORD_EMPHASIS_MIN_TARGET_DURATION_MS,
-    Math.min(
-      WORD_EMPHASIS_MAX_TARGET_DURATION_MS,
-      word.durationMs * WORD_EMPHASIS_TARGET_DURATION_RATIO
-    )
-  )
-  /** 起音强调阶段需要追踪的最高位置。 */
-  const peakLiftEm = WORD_BASE_FLOAT_EM + WORD_EMPHASIS_FLOAT_EM
-  /** 起音时先追踪强调峰值，随后重定向至稳定悬浮位置。 */
-  const liftTargetEm = !started
-    ? 0
-    : (elapsedMs < emphasisTargetDurationMs ? -peakLiftEm : -WORD_BASE_FLOAT_EM)
-
-  return {
-    state,
-    fillProgress,
-    liftTargetEm
-  }
-}
-
-/**
- * 返回指定高精度页面时间对应的媒体位置。
- *
- * 位置永远从最近的媒体采样锚点计算，不按帧累加；因此掉帧不会让歌词时钟落后。
- */
-function playbackPositionAt(frameTime = performance.now()): number {
+/** 返回指定页面时刻对应的连续媒体位置。 */
+function playbackPositionAt(frameTime: number = performance.now()): number {
   if (!props.playing) {
     lastRenderedPlaybackPositionMs = playbackClockAnchorPositionMs
     return playbackClockAnchorPositionMs
   }
+
+  /** 从最近权威采样推导的连续媒体位置。 */
   const predictedPositionMs = Math.max(
     0,
     playbackClockAnchorPositionMs + Math.max(0, frameTime - playbackClockAnchorAt)
   )
-  /** 离散 timeupdate 的迟到采样不得让正在播放的逐字运动倒退。 */
   lastRenderedPlaybackPositionMs = Math.max(
     lastRenderedPlaybackPositionMs,
     predictedPositionMs
@@ -632,44 +154,27 @@ function playbackPositionAt(frameTime = performance.now()): number {
   return lastRenderedPlaybackPositionMs
 }
 
-/** 把播放时钟直接锚定到指定媒体采样。 */
-function anchorPlaybackClock(positionMs: number, sampledAt = performance.now()): void {
-  playbackClockAnchorPositionMs = Math.max(0, positionMs)
-  playbackClockAnchorAt = sampledAt
-  latestPlayerPositionMs = positionMs
-  lastRenderedPlaybackPositionMs = playbackClockAnchorPositionMs
-}
-
 /**
- * 用播放器的新采样校准逐字时钟。
- *
- * 普通 timeupdate 对小误差做对称的温和校正，暂停和 seek 则立即对齐。
- *
- * @param positionMs 播放器推送的权威播放位置
- * @param sampledAt 本次采样对应的高精度页面时钟
- * @returns 本次采样是否被识别为需要全量重绘的时间跳变
+ * 用播放器采样校准连续歌词时钟，并返回本次变化是否应按 seek 处理。
  */
-function syncWordProgressClock(
+function synchronizePlaybackClock(
   positionMs: number,
-  sampledAt = performance.now()
+  sampledAt: number = performance.now()
 ): boolean {
+  /** 接收新采样前由本地时钟预测的位置。 */
   const predictedPositionMs = playbackPositionAt(sampledAt)
-  /** 播放器位置是否发生了明显反向移动。 */
+  /** 权威位置是否发生明显反向移动。 */
   const movedBackward = positionMs < latestPlayerPositionMs - 48
-  /** 权威采样与锚点推导位置之间的偏差。 */
+  /** 权威采样相对连续时钟的偏差。 */
   const driftMs = positionMs - predictedPositionMs
-  /** 暂停、明确的反向 seek 或大幅向前跳转必须立刻对齐。 */
-  const shouldSnap = !props.playing || movedBackward || driftMs > 240
+  /** 暂停、反向跳转或超过阈值的正向跳转需要立即定位。 */
+  const shouldSeek = !props.playing || movedBackward || driftMs > 240
 
-  if (shouldSnap) {
+  if (shouldSeek) {
     anchorPlaybackClock(positionMs, sampledAt)
     return true
   }
 
-  /**
-   * 普通负偏差来自离散采样延迟，不能反向拖动动画时钟。
-   * 只有权威位置略微领先时才做温和的正向校准。
-   */
   if (driftMs > 0) {
     playbackClockAnchorPositionMs = predictedPositionMs + driftMs * 0.2
     playbackClockAnchorAt = sampledAt
@@ -678,85 +183,105 @@ function syncWordProgressClock(
   return false
 }
 
-/** 返回歌词行相对当前播放时刻的三段式状态。 */
-function lyricLineState(lineIndex: number): LyricTemporalState {
-  if (lineIndex === activeLineIndex.value) return 'active'
-  if (lineIndex < pastLineCount.value) return 'past'
-  return 'future'
+/** 将系统减少动态效果偏好同步给歌词视觉引擎。 */
+function synchronizeMotionPreference(): void {
+  if (!lyricPlayer) return
+  /** 系统减少动态效果优先级高于应用内预设。 */
+  const motionPreset = prefersReducedMotion()
+    ? 'minimal'
+    : appPreferences.preferences.value.lyricMotion
+  lyricPlayer.setEnableSpring(motionPreset !== 'minimal')
+  lyricPlayer.setEnableBlur(motionPreset === 'full')
+  lyricPlayer.setEnableScale(motionPreset !== 'minimal')
 }
 
-/** 返回歌词行的状态与声部类名。 */
-function lyricLineClass(
-  line: StandardLyricsLine,
-  lineIndex: number
-): Record<string, boolean> {
-  const state = lyricLineState(lineIndex)
-  return {
-    [`lyrics-line--${state}`]: true,
-    'lyrics-line--singing': singingLineIndexes.value.includes(lineIndex),
-    'lyrics-line--word-timed': lineWords(line).length > 0,
-    'lyrics-line--line-timed': lineWords(line).length === 0,
-    'lyrics-line--background': line.vocalRole === 'background'
-  }
+/** 把用户级歌词显示预设映射到 AMLL 的完整控制接口。 */
+function synchronizeDisplayPreferences(): void {
+  if (!lyricPlayer) return
+  /** 当前歌词焦点预设对应的视口位置。 */
+  const alignPosition = LYRIC_ALIGNMENT_POSITIONS[
+    appPreferences.preferences.value.lyricAlignment
+  ]
+  lyricPlayer.setAlignPosition(alignPosition)
+  lyricPlayer.setHidePassedLines(appPreferences.preferences.value.hidePassedLyrics)
+  synchronizeMotionPreference()
 }
 
-/** 返回基于播放焦点距离的连续景深样式，只使用合成友好的透明度与缩放。 */
-function lineDynamicStyle(lineIndex: number): Record<string, string> {
-  if (!props.immersive) return {}
-  const activeIndex = activeLineIndex.value
-  if (activeIndex < 0) {
-    return {
-      opacity: '0.42',
-      transform: 'scale(0.965)'
-    }
-  }
-  if (lineIndex === activeIndex) {
-    return {
-      opacity: '1',
-      transform: 'scale(1.035)'
-    }
-  }
-  const distance = Math.abs(lineIndex - activeIndex)
-  const opacity = Math.max(0.16, 0.56 - distance * 0.12)
-  const scale = Math.max(0.91, 0.985 - distance * 0.022)
-  return {
-    opacity: opacity.toFixed(2),
-    transform: `scale(${scale.toFixed(3)})`
-  }
+/** 把当前标准歌词和翻译偏好同步给视觉引擎。 */
+function synchronizeLyricLines(): void {
+  if (!lyricPlayer) return
+  /** 适配完成的完整 AMLL 歌词行模型。 */
+  const engineLines = adaptStandardLyrics(lyrics.value, {
+    showTranslation: appPreferences.preferences.value.showLyricTranslation
+  })
+  lyricPlayer.setLyricLines(engineLines, props.positionMs)
+  lyricPlayer.setCurrentTime(props.positionMs, true)
 }
 
-/** 返回虚拟间奏节点相对当前播放时刻的状态。 */
-function instrumentalState(node: LyricTimelineInstrumentalNode): LyricTemporalState {
-  if (activeInstrumentalNode.value?.afterLineIndex === node.afterLineIndex) return 'active'
-  if (node.afterLineIndex <= completedInstrumentalAfterLineIndex.value) return 'past'
-  return 'future'
+/** 把播放/暂停状态同步给歌词视觉引擎。 */
+function synchronizePlayingState(): void {
+  if (!lyricPlayer) return
+  anchorPlaybackClock(props.positionMs)
+  lyricPlayer.setCurrentTime(props.positionMs, true)
+  if (props.playing) lyricPlayer.resume()
+  else lyricPlayer.pause()
 }
 
-/** 返回虚拟间奏节点基于焦点距离的连续景深样式。 */
-function instrumentalDynamicStyle(afterLineIndex: number): Record<string, string> {
-  if (!props.immersive) return {}
-  const activeAfter = activeInstrumentalNode.value?.afterLineIndex
-  if (activeAfter === afterLineIndex) {
-    return {
-      opacity: '1',
-      transform: 'scale(1.035)'
-    }
-  }
-  const activeIndex = activeLineIndex.value >= 0
-    ? activeLineIndex.value
-    : (activeAfter ?? 0)
-  const distance = Math.abs(afterLineIndex - activeIndex)
-  const opacity = Math.max(0.16, 0.5 - distance * 0.12)
-  const scale = Math.max(0.91, 0.98 - distance * 0.022)
-  return {
-    opacity: opacity.toFixed(2),
-    transform: `scale(${scale.toFixed(3)})`
-  }
+/** 响应 AMLL 歌词行点击并请求主播放器 seek。 */
+function handleLineClick(event: Event): void {
+  /** AMLL 派发的歌词行鼠标事件。 */
+  const lyricEvent = event as LyricLineMouseEvent
+  /** 被点击歌词行在优化前的原始时间轴，避免提前高亮优化改变 seek 位置。 */
+  const line = lyricPlayer?.getLyricLines()[lyricEvent.lineIndex] ?? lyricEvent.line.getLine()
+  emit('seek', line.startTime)
+  lyricPlayer?.resetScroll()
 }
 
-/** 返回虚拟间奏节点的状态类名。 */
-function instrumentalClass(node: LyricTimelineInstrumentalNode): string {
-  return `lyrics-instrumental--${instrumentalState(node)}`
+/** 驱动 AMLL 时间轴、Web Animation 与弹簧布局的一帧。 */
+function runAnimationFrame(frameTime: number): void {
+  if (disposed || !lyricPlayer) return
+  /** 本次引擎更新距离上一帧经过的毫秒数。 */
+  const deltaMs = previousFrameTime < 0 ? 0 : Math.max(0, frameTime - previousFrameTime)
+  previousFrameTime = frameTime
+
+  if (props.playing) {
+    lyricPlayer.setCurrentTime(Math.round(playbackPositionAt(frameTime)))
+  }
+  lyricPlayer.update(deltaMs)
+  animationFrameId = window.requestAnimationFrame(runAnimationFrame)
+}
+
+/** 创建并配置内置歌词视觉引擎。 */
+function createLyricPlayer(): void {
+  if (lyricPlayer || !lyricPlayerHost.value) return
+
+  /** 直接从本项目源码创建的 AMLL DOM 歌词播放器。 */
+  const player = new LyricPlayer()
+  lyricPlayer = player
+  player.getElement().setAttribute('aria-label', '同步歌词')
+  player.setWordFadeWidth(0.5)
+  player.setOverscanPx(300)
+  player.setAlwaysPostpositionBackground(false)
+  player.addEventListener('line-click', handleLineClick)
+  lyricPlayerHost.value.appendChild(player.getElement())
+
+  synchronizeDisplayPreferences()
+  synchronizeLyricLines()
+  synchronizePlayingState()
+  previousFrameTime = -1
+  animationFrameId = window.requestAnimationFrame(runAnimationFrame)
+}
+
+/** 销毁歌词视觉引擎和所有动画、观察器及事件监听。 */
+function disposeLyricPlayer(): void {
+  if (animationFrameId !== undefined) window.cancelAnimationFrame(animationFrameId)
+  animationFrameId = undefined
+  previousFrameTime = -1
+
+  if (!lyricPlayer) return
+  lyricPlayer.removeEventListener('line-click', handleLineClick)
+  lyricPlayer.dispose()
+  lyricPlayer = undefined
 }
 
 /**
@@ -765,17 +290,17 @@ function instrumentalClass(node: LyricTimelineInstrumentalNode): string {
  * @param trackId 当前曲目 ID
  */
 async function loadLyrics(trackId: string | undefined): Promise<void> {
+  /** 本次歌词读取请求的唯一 ID。 */
   const requestId = crypto.randomUUID()
   latestRequestId = requestId
   lyrics.value = null
   errorMessage.value = ''
   loading.value = Boolean(trackId)
-  autoFollowPaused.value = false
-  cancelSpringScroll()
 
   if (!trackId) return
 
   try {
+    /** Renderer Bridge 返回的标准歌词读取结果。 */
     const result = await window.ncx.runtime.getLyrics({ id: trackId, requestId })
     if (requestId !== latestRequestId) return
     if (!result.ok) {
@@ -794,371 +319,9 @@ async function loadLyrics(trackId: string | undefined): Promise<void> {
   }
 }
 
-/** 重试读取歌词。 */
+/** 重试读取当前曲目的歌词。 */
 function retryLyrics(): void {
   void loadLyrics(props.trackId)
-}
-
-/** 取消仍在运行的弹簧滚动。 */
-function cancelSpringScroll(): void {
-  if (springFrameId !== undefined) window.cancelAnimationFrame(springFrameId)
-  springFrameId = undefined
-  springVelocity = 0
-  springPreviousFrameAt = 0
-}
-
-/** 驱动一帧基于质量、刚度与阻尼的滚动弹簧。 */
-function runSpringFrame(frameTime: number): void {
-  const container = scrollContainer.value
-  if (!container || autoFollowPaused.value) {
-    cancelSpringScroll()
-    return
-  }
-
-  /** 本帧积分时间，限制上限以避免窗口挂起后弹簧失稳。 */
-  const deltaSeconds = springPreviousFrameAt > 0
-    ? Math.min((frameTime - springPreviousFrameAt) / 1_000, 0.032)
-    : 1 / 60
-  springPreviousFrameAt = frameTime
-
-  /** 当前弹簧相对目标点的位移。 */
-  const displacement = springPosition - springTarget
-  /** 胡克力与阻尼力共同产生的加速度。 */
-  const acceleration = (
-    -SPRING_STIFFNESS * displacement - SPRING_DAMPING * springVelocity
-  ) / SPRING_MASS
-
-  springVelocity += acceleration * deltaSeconds
-  springPosition += springVelocity * deltaSeconds
-  container.scrollTop = springPosition
-
-  const settled =
-    Math.abs(springTarget - springPosition) <= SPRING_POSITION_EPSILON &&
-    Math.abs(springVelocity) <= SPRING_VELOCITY_EPSILON
-  if (settled) {
-    container.scrollTop = springTarget
-    springFrameId = undefined
-    springVelocity = 0
-    springPreviousFrameAt = 0
-    return
-  }
-
-  springFrameId = window.requestAnimationFrame(runSpringFrame)
-}
-
-/** 把指定节点中心弹簧滚动至容器 42% 高度的焦点区。 */
-function springScrollToElement(element: HTMLElement): void {
-  if (!props.immersive) return
-
-  const container = scrollContainer.value
-  if (!container) return
-
-  /** 浏览器允许的最大垂直滚动位置。 */
-  const maximumScrollTop = Math.max(0, container.scrollHeight - container.clientHeight)
-  /** 目标节点对齐至黄金焦点后的合法滚动位置。 */
-  const targetTop = Math.min(
-    maximumScrollTop,
-    Math.max(
-      0,
-      element.offsetTop + element.offsetHeight / 2 -
-        container.clientHeight * ACTIVE_LINE_FOCUS_RATIO
-    )
-  )
-
-  cancelSpringScroll()
-  if (prefersReducedMotion()) {
-    container.scrollTop = targetTop
-    return
-  }
-
-  springPosition = container.scrollTop
-  springTarget = targetTop
-  springFrameId = window.requestAnimationFrame(runSpringFrame)
-}
-
-/** 将当前歌词或间奏弹簧移动到沉浸面板焦点区。 */
-function scrollToActiveLine(): void {
-  if (!props.immersive || autoFollowPaused.value || !activeFocusSelector.value) return
-
-  const container = scrollContainer.value
-  const activeElement = container?.querySelector<HTMLElement>(activeFocusSelector.value)
-  if (activeElement) springScrollToElement(activeElement)
-}
-
-/** 用户主动浏览歌词时暂时停止自动跟随。 */
-function pauseAutoFollow(): void {
-  if (!props.immersive) return
-  autoFollowPaused.value = true
-  cancelSpringScroll()
-  window.clearTimeout(resumeAutoFollowTimer)
-  resumeAutoFollowTimer = window.setTimeout(() => {
-    autoFollowPaused.value = false
-    void nextTick(scrollToActiveLine)
-  }, AUTO_FOLLOW_RESUME_DELAY_MS)
-}
-
-/**
- * 点击歌词行后跳转播放进度并立即恢复自动跟随。
- *
- * @param line 被点击的标准歌词行
- * @param lineIndex 被点击歌词行的下标
- */
-function seekToLyric(line: StandardLyricsLine, lineIndex: number): void {
-  window.clearTimeout(resumeAutoFollowTimer)
-  autoFollowPaused.value = false
-  emit('seek', line.lineStartMs)
-  void nextTick(() => {
-    const target = scrollContainer.value?.querySelector<HTMLElement>(
-      `[data-lyric-index="${lineIndex}"]`
-    )
-    if (target) springScrollToElement(target)
-  })
-}
-
-/** 在歌词 DOM 更新后建立一次逐字节点缓存。 */
-function cacheWordRenderEntries(): void {
-  const container = scrollContainer.value
-  wordRenderEntriesByLine.clear()
-  previouslyPresentedWordLineIndexes = []
-  settlingWordLineIndexes.clear()
-  wordLiftPreviousFrameAt = 0
-  if (!container) return
-
-  container.querySelectorAll<HTMLElement>('.lyrics-line[data-lyric-index]').forEach((lineElement) => {
-    const lineIndex = Number(lineElement.dataset['lyricIndex'] ?? -1)
-    if (!Number.isInteger(lineIndex) || lineIndex < 0) return
-
-    /** 当前行只在 DOM 初始化时解析一次的逐字渲染节点。 */
-    const entries = Array.from(lineElement.querySelectorAll<HTMLElement>('.lyric-word'))
-      .map((element): WordRenderEntry => ({
-        element,
-        word: {
-          text: element.dataset['wordText'] ?? element.textContent ?? '',
-          startMs: Number(element.dataset['wordStartMs'] ?? 0),
-          durationMs: Number(element.dataset['wordDurationMs'] ?? 0)
-        },
-        liftPositionEm: 0,
-        liftVelocityEmPerSecond: 0
-      }))
-    if (entries.length > 0) wordRenderEntriesByLine.set(lineIndex, entries)
-  })
-}
-
-/** 返回本次逐字渲染距离上一帧经过的秒数。 */
-function wordLiftFrameDeltaSecondsAt(frameTime: number): number {
-  /** 首帧使用一帧的标准间隔，后续使用真实显示帧时间。 */
-  const deltaSeconds = wordLiftPreviousFrameAt > 0
-    ? Math.max(0, (frameTime - wordLiftPreviousFrameAt) / 1_000)
-    : 1 / 60
-  wordLiftPreviousFrameAt = frameTime
-  return deltaSeconds
-}
-
-/** 推进单个音节的垂直弹簧，并返回它是否已经稳定。 */
-function updateWordLiftSpring(
-  entry: WordRenderEntry,
-  targetEm: number,
-  deltaSeconds: number,
-  snap: boolean
-): boolean {
-  if (snap) {
-    entry.liftPositionEm = targetEm
-    entry.liftVelocityEmPerSecond = 0
-  } else {
-    /** 从当前显示位置与当前速度继续求值的弹簧状态。 */
-    const springStep = advanceCriticallyDampedWordLiftSpring(
-      entry.liftPositionEm,
-      entry.liftVelocityEmPerSecond,
-      targetEm,
-      deltaSeconds
-    )
-    entry.liftPositionEm = springStep.positionEm
-    entry.liftVelocityEmPerSecond = springStep.velocityEmPerSecond
-  }
-
-  /** 当前弹簧是否已经接近目标且速度足够低。 */
-  const settled =
-    Math.abs(targetEm - entry.liftPositionEm) <= WORD_LIFT_POSITION_EPSILON_EM &&
-    Math.abs(entry.liftVelocityEmPerSecond) <= WORD_LIFT_VELOCITY_EPSILON_EM_PER_SECOND
-  if (settled) {
-    entry.liftPositionEm = targetEm
-    entry.liftVelocityEmPerSecond = 0
-  }
-  return settled
-}
-
-/** 把单个音节当前帧的填充、时态与弹簧状态写入缓存 DOM。 */
-function renderWordEntry(
-  entry: WordRenderEntry,
-  currentTimeMs: number,
-  maintainFloat: boolean,
-  deltaSeconds: number,
-  snapLift: boolean
-): boolean {
-  /** 严格依据媒体时间计算的音节状态。 */
-  const visualState = calculateWordVisualState(entry.word, currentTimeMs)
-  /** 写入遮罩的百分比字符串。 */
-  const fillValue = `${(visualState.fillProgress * 100).toFixed(3)}%`
-  /** 当前行失去展示资格时，把弹簧目标重定向回原位。 */
-  const liftTargetEm = maintainFloat ? visualState.liftTargetEm : 0
-  /** 位移弹簧是否已经抵达本帧目标。 */
-  const liftSettled = updateWordLiftSpring(
-    entry,
-    liftTargetEm,
-    deltaSeconds,
-    snapLift
-  )
-  if (liftSettled) {
-    delete entry.element.dataset['liftAnimating']
-  } else {
-    entry.element.dataset['liftAnimating'] = 'true'
-  }
-  /** 写入垂直位移的 em 字符串。 */
-  const liftValue = `${entry.liftPositionEm.toFixed(4)}em`
-
-  if (entry.fillValue !== fillValue) {
-    entry.element.style.setProperty('--word-fill', fillValue)
-    entry.fillValue = fillValue
-  }
-  if (entry.liftValue !== liftValue) {
-    entry.element.style.setProperty('--word-lift', liftValue)
-    entry.liftValue = liftValue
-  }
-  if (entry.state !== visualState.state) {
-    entry.element.dataset['state'] = visualState.state
-    entry.state = visualState.state
-  }
-  return liftSettled
-}
-
-/** 渲染指定逐字歌词行，并返回整行弹簧是否已经稳定。 */
-function renderWordLine(
-  lineIndex: number,
-  currentTimeMs: number,
-  maintainFloat: boolean,
-  deltaSeconds: number,
-  snapLift: boolean
-): boolean {
-  /** 当前行所有音节的联合稳定状态。 */
-  let liftSettled = true
-  wordRenderEntriesByLine.get(lineIndex)?.forEach((entry) => {
-    if (!renderWordEntry(entry, currentTimeMs, maintainFloat, deltaSeconds, snapLift)) {
-      liftSettled = false
-    }
-  })
-  return liftSettled
-}
-
-/**
- * 返回当前仍应保持逐字悬浮的行。
- *
- * 当前焦点行在收音后仍保持抬起，直到下一行接管；重叠声部则在演唱期间同时保留。
- */
-function presentedWordLineIndexesAtPosition(currentTimeMs: number): number[] {
-  const indexes = new Set(singingLineIndexesAtPosition(currentTimeMs))
-  const focusedLineIndex = focusedLineIndexAtPosition(currentTimeMs)
-  if (focusedLineIndex >= 0) indexes.add(focusedLineIndex)
-  return [...indexes].filter((lineIndex) => wordRenderEntriesByLine.has(lineIndex))
-}
-
-/** 在初始化、暂停或 seek 后一次性恢复所有逐字节点。 */
-function renderAllWordStates(currentTimeMs: number): void {
-  /** 当前时刻仍应保持悬浮的歌词行集合。 */
-  const presentedLineIndexSet = new Set(presentedWordLineIndexesAtPosition(currentTimeMs))
-  settlingWordLineIndexes.clear()
-  wordRenderEntriesByLine.forEach((_entries, lineIndex) => {
-    renderWordLine(lineIndex, currentTimeMs, presentedLineIndexSet.has(lineIndex), 0, true)
-  })
-  previouslyPresentedWordLineIndexes = [...presentedLineIndexSet]
-  wordLiftPreviousFrameAt = performance.now()
-}
-
-/** 播放期间更新展示行，并让退出行用同一套弹簧平滑回到原位。 */
-function renderAnimatedWordStates(
-  currentTimeMs: number,
-  frameTime = performance.now()
-): void {
-  /** 当前时刻仍应保持悬浮的歌词行。 */
-  const presentedLineIndexes = presentedWordLineIndexesAtPosition(currentTimeMs)
-  /** 当前时刻仍应保持悬浮的歌词行集合。 */
-  const presentedLineIndexSet = new Set(presentedLineIndexes)
-  /** 当前帧需要推进的展示行与退出行集合。 */
-  const renderedLineIndexes = new Set([
-    ...presentedLineIndexes,
-    ...previouslyPresentedWordLineIndexes,
-    ...settlingWordLineIndexes
-  ])
-  /** 本帧弹簧的真实推进时间。 */
-  const deltaSeconds = wordLiftFrameDeltaSecondsAt(frameTime)
-  /** 减少动态效果时直接对齐目标，保留歌词状态反馈但跳过空间运动。 */
-  const snapLift = prefersReducedMotion()
-
-  renderedLineIndexes.forEach((lineIndex) => {
-    /** 当前行是否仍应维持音节悬浮。 */
-    const maintainFloat = presentedLineIndexSet.has(lineIndex)
-    /** 当前行所有音节是否已经抵达最新目标。 */
-    const liftSettled = renderWordLine(
-      lineIndex,
-      currentTimeMs,
-      maintainFloat,
-      deltaSeconds,
-      snapLift
-    )
-    if (maintainFloat || liftSettled) {
-      settlingWordLineIndexes.delete(lineIndex)
-    } else {
-      settlingWordLineIndexes.add(lineIndex)
-    }
-  })
-  previouslyPresentedWordLineIndexes = presentedLineIndexes
-}
-
-/**
- * 驱动一帧逐字柔边遮罩并在播放期间持续调度。
- *
- * @param frameTime 当前动画帧的高精度时钟
- * @param generation 当前动画循环代次
- */
-function runWordProgressFrame(frameTime: number, generation: number): void {
-  if (generation !== wordProgressLoopGeneration) return
-
-  /** 直接从媒体锚点求值，丢帧后下一帧仍与音频处在同一时刻。 */
-  const currentTimeMs = playbackPositionAt(frameTime)
-  syncTimelinePresentationPosition(currentTimeMs)
-  renderAnimatedWordStates(currentTimeMs, frameTime)
-
-  if (!props.immersive || !props.playing) {
-    wordProgressFrameId = undefined
-    return
-  }
-  wordProgressFrameId = window.requestAnimationFrame((nextFrameTime) => {
-    runWordProgressFrame(nextFrameTime, generation)
-  })
-}
-
-/** 取消逐字遮罩动画帧。 */
-function cancelWordProgressLoop(): void {
-  wordProgressLoopGeneration += 1
-  if (wordProgressFrameId !== undefined) window.cancelAnimationFrame(wordProgressFrameId)
-  wordProgressFrameId = undefined
-}
-
-/** 在 DOM 更新后刷新逐字遮罩，并按播放状态决定是否持续运行。 */
-async function refreshWordProgressLoop(): Promise<void> {
-  cancelWordProgressLoop()
-  /** 本次启动拥有的动画循环代次。 */
-  const generation = wordProgressLoopGeneration
-  await nextTick()
-  if (generation !== wordProgressLoopGeneration) return
-  cacheWordRenderEntries()
-  anchorPlaybackClock(props.positionMs)
-  syncTimelinePresentationPosition(props.positionMs, true)
-  renderAllWordStates(props.positionMs)
-  if (props.immersive && props.playing) {
-    wordProgressFrameId = window.requestAnimationFrame((frameTime) => {
-      runWordProgressFrame(frameTime, generation)
-    })
-  }
 }
 
 // ========= 生命周期 =========
@@ -1167,56 +330,65 @@ watch(() => props.trackId, (trackId) => {
   void loadLyrics(trackId)
 }, { immediate: true })
 
-watch(activeFocusSelector, async () => {
-  await nextTick()
-  scrollToActiveLine()
+watch([
+  lyrics,
+  () => appPreferences.preferences.value.showLyricTranslation
+], () => {
+  synchronizeLyricLines()
 })
 
-watch(() => props.positionMs, () => {
-  const discontinuity = syncWordProgressClock(props.positionMs)
-  const currentTimeMs = playbackPositionAt()
-  syncTimelinePresentationPosition(currentTimeMs, discontinuity)
-  if (discontinuity) {
-    renderAllWordStates(currentTimeMs)
-  } else {
-    renderAnimatedWordStates(currentTimeMs)
-  }
-}, { flush: 'post' })
-
 watch([
-  () => props.playing,
-  () => props.immersive,
-  displayLines
+  () => appPreferences.preferences.value.lyricAlignment,
+  () => appPreferences.preferences.value.lyricMotion,
+  () => appPreferences.preferences.value.hidePassedLyrics
 ], () => {
-  void refreshWordProgressLoop()
-}, { immediate: true })
+  synchronizeDisplayPreferences()
+})
+
+watch(() => props.positionMs, (positionMs) => {
+  /** 本次权威位置更新是否属于时间轴跳转。 */
+  const isSeek = synchronizePlaybackClock(positionMs)
+  lyricPlayer?.setCurrentTime(Math.round(playbackPositionAt()), isSeek)
+})
+
+watch(() => props.playing, () => {
+  synchronizePlayingState()
+})
+
+onMounted(() => {
+  reducedMotionQuery = typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : undefined
+  reducedMotionQuery?.addEventListener('change', synchronizeMotionPreference)
+  createLyricPlayer()
+})
 
 onBeforeUnmount(() => {
+  disposed = true
   latestRequestId = ''
-  window.clearTimeout(resumeAutoFollowTimer)
-  cancelSpringScroll()
-  cancelWordProgressLoop()
-  wordRenderEntriesByLine.clear()
+  reducedMotionQuery?.removeEventListener('change', synchronizeMotionPreference)
+  reducedMotionQuery = undefined
+  disposeLyricPlayer()
 })
 </script>
 
 <template>
   <section
-    ref="scrollContainer"
     class="lyrics-panel"
-    :class="{
-      'lyrics-panel--immersive': props.immersive,
-      'lyrics-panel--manual': autoFollowPaused
-    }"
-    :style="lyricAccentStyle"
+    :class="{ 'lyrics-panel--immersive': props.immersive }"
+    :style="lyricPlayerStyle"
     aria-label="歌词"
-    @wheel.passive="pauseAutoFollow"
-    @touchstart.passive="pauseAutoFollow"
-    @touchmove.passive="pauseAutoFollow"
   >
     <div
+      ref="lyricPlayerHost"
+      class="lyrics-player-host"
+      :class="{ 'lyrics-player-host--hidden': hideLyricPlayer }"
+      :aria-hidden="hideLyricPlayer ? 'true' : undefined"
+    />
+
+    <div
       v-if="loading"
-      class="lyrics-panel-loading"
+      class="lyrics-panel-state"
     >
       <CommonSpinner
         size="default"
@@ -1225,93 +397,52 @@ onBeforeUnmount(() => {
       <span>正在加载歌词</span>
     </div>
 
-    <CommonErrorState
+    <div
       v-else-if="errorMessage"
-      title="歌词读取失败"
-      :description="errorMessage"
-      @retry="retryLyrics"
-    />
-
-    <CommonEmptyState
-      v-else-if="displayLines.length === 0"
-      title="暂无歌词"
-      description="当前歌曲没有可展示的时间轴歌词。"
-    />
-
-    <ol
-      v-else
-      class="lyrics-lines"
+      class="lyrics-panel-state"
     >
-      <template
-        v-for="node in timelineNodes"
-        :key="node.kind === 'line'
-          ? `line-${node.line.lineStartMs}-${node.lineIndex}`
-          : `instrumental-${node.afterLineIndex}`"
-      >
-        <li
-          v-if="node.kind === 'line'"
-          class="lyrics-line"
-          :class="lyricLineClass(node.line, node.lineIndex)"
-          :style="lineDynamicStyle(node.lineIndex)"
-          :data-lyric-index="node.lineIndex"
-          :data-state="lyricLineState(node.lineIndex)"
-          :aria-current="node.lineIndex === activeLineIndex ? 'true' : undefined"
-        >
-          <button
-            type="button"
-            :aria-label="visibleLineText(node.line) || '无词吟唱'"
-            @click="seekToLyric(node.line, node.lineIndex)"
-          >
-            <span class="lyric-line-primary">
-              <template v-if="visibleLineWords(node.line).length > 0">
-                <span
-                  v-for="(word, wordIndex) in visibleLineWords(node.line)"
-                  :key="`${word.startMs}-${wordIndex}`"
-                  class="lyric-word"
-                  :data-word-start-ms="word.startMs"
-                  :data-word-duration-ms="word.durationMs"
-                  :data-word-text="word.text"
-                >{{ word.text }}</span>
-              </template>
-              <span
-                v-else
-                class="lyric-line-text"
-              >{{ visibleLineText(node.line) || '…' }}</span>
-            </span>
-            <small v-if="node.line.translation && appPreferences.preferences.value.showLyricTranslation">
-              {{ node.line.translation }}
-            </small>
-          </button>
-        </li>
+      <CommonErrorState
+        title="歌词读取失败"
+        :description="errorMessage"
+        @retry="retryLyrics"
+      />
+    </div>
 
-        <li
-          v-else
-          class="lyrics-instrumental"
-          :class="instrumentalClass(node)"
-          :style="instrumentalDynamicStyle(node.afterLineIndex)"
-          :data-instrumental-after="node.afterLineIndex"
-          :data-state="instrumentalState(node)"
-        >
-          <InstrumentalDots :active="instrumentalState(node) === 'active'" />
-        </li>
-      </template>
-    </ol>
+    <div
+      v-else-if="!hasLyrics"
+      class="lyrics-panel-state"
+    >
+      <CommonEmptyState
+        title="暂无歌词"
+        description="当前歌曲没有可展示的时间轴歌词。"
+      />
+    </div>
   </section>
 </template>
 
 <style scoped>
 .lyrics-panel {
-  --lyric-color-active: var(--ncx-color-text-primary);
-  --lyric-color-unplayed: var(--ncx-color-text-tertiary);
-  --lyric-accent-color: rgb(196 218 255);
-  display: flex;
+  position: relative;
+  display: block;
   min-height: 280px;
-  flex-direction: column;
-  justify-content: center;
+  overflow: hidden;
 }
 
-.lyrics-panel-loading {
-  display: inline-flex;
+.lyrics-player-host {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+}
+
+.lyrics-player-host--hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.lyrics-panel-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--ncx-space-2);
@@ -1319,281 +450,21 @@ onBeforeUnmount(() => {
   font-size: 13px;
 }
 
-.lyrics-lines {
-  display: grid;
-  gap: var(--ncx-space-4);
-  margin: 0;
-  padding: var(--ncx-space-4) 0;
-  list-style: none;
-}
-
-.lyrics-line {
-  color: var(--ncx-color-text-tertiary);
-  font-size: 18px;
-  font-weight: 620;
-  line-height: 1.35;
-  transition:
-    color var(--ncx-motion-normal),
-    opacity var(--ncx-motion-normal),
-    transform var(--ncx-motion-normal);
-}
-
-.lyrics-line button {
-  display: grid;
-  width: 100%;
-  gap: var(--ncx-space-1);
-  padding: 0;
-  border: 0;
-  color: inherit;
-  background: transparent;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.lyrics-line button:focus-visible {
-  border-radius: var(--ncx-radius-xs);
-  outline: 2px solid currentcolor;
-  outline-offset: 6px;
-}
-
-.lyric-line-primary {
-  display: block;
-  max-width: 100%;
-  white-space: pre-wrap;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-}
-
-.lyrics-line small {
-  color: inherit;
-  font-size: 13px;
-  opacity: 0.72;
-}
-
-.lyrics-line--active {
-  color: var(--ncx-color-text-primary);
-}
-
-.lyrics-line--line-timed.lyrics-line--singing .lyric-line-primary {
-  text-shadow: 0 1px 18px rgb(255 255 255 / 12%);
-}
-
-.lyrics-panel--immersive {
-  --lyric-color-active: #ffffff;
-  --lyric-color-unplayed: rgb(255 255 255 / 38%);
-  display: block;
+.lyrics-panel--immersive,
+.lyrics-panel--immersive .lyrics-player-host {
   min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scroll-behavior: auto;
-  scrollbar-color: rgb(255 255 255 / 18%) transparent;
-  scrollbar-width: thin;
 }
 
-.lyrics-panel--immersive.lyrics-panel--manual {
-  scrollbar-color: rgb(255 255 255 / 44%) transparent;
-}
+.lyrics-player-host :deep(.amll-lyric-player) {
+  --amll-lp-hover-bg-color: rgb(255 255 255 / 8%);
 
-.lyrics-panel--immersive .lyrics-lines {
-  gap: clamp(28px, 3.7vh, 42px);
-  min-height: 100%;
-  padding: 42% 36px 50% 12px;
-}
-
-.lyrics-panel--immersive .lyrics-line {
-  width: 96.5%;
-  max-width: 100%;
-  color: #ffffff;
-  font-size: clamp(30px, 2.4vw, 36px);
-  font-weight: 660;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.28;
-  transform-origin: left center;
-  transition:
-    transform 460ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    opacity 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    color 240ms ease;
-}
-
-.lyrics-panel--immersive .lyrics-line button {
-  min-width: 0;
-  max-width: 100%;
-  transform-origin: inherit;
-  transition: opacity 160ms ease;
-}
-
-.lyrics-panel--immersive .lyrics-line button:hover {
-  opacity: 0.88;
-}
-
-.lyrics-panel--immersive .lyrics-line small {
-  display: block;
-  margin-top: 7px;
-  color: inherit;
-  font-size: clamp(17px, 1.25vw, 20px);
-  font-weight: 600;
-  opacity: 0.64;
-}
-
-.lyrics-panel--immersive .lyrics-line--past {
-  opacity: 0.35;
-}
-
-.lyrics-panel--immersive .lyrics-line--active {
-  color: #ffffff;
-  opacity: 1;
   text-shadow: 0 2px 18px rgb(0 0 0 / 24%);
 }
 
-.lyrics-panel--immersive .lyrics-line--active button:hover {
-  opacity: 1;
-}
-
-.lyrics-panel--immersive .lyrics-line--active small {
-  opacity: 0.82;
-}
-
-.lyrics-panel--immersive .lyrics-line--future {
-  opacity: 0.55;
-}
-
-.lyric-word {
-  --word-fill: 0%;
-  --word-lift: 0px;
-  position: relative;
-  display: inline-block;
-  max-width: 100%;
-  vertical-align: baseline;
-  color: var(--lyric-color-unplayed);
-  white-space: pre-wrap;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-  transform: translate3d(0, var(--word-lift), 0);
-  transform-origin: center bottom;
-}
-
-.lyric-word::after {
-  position: absolute;
-  inset: 0;
-  color: transparent;
-  content: attr(data-word-text);
-  background-image: linear-gradient(
-    90deg,
-    var(--lyric-color-active) 0%,
-    var(--lyric-color-active) calc(var(--word-fill) - 0.2em),
-    var(--lyric-accent-color) calc(var(--word-fill) + 0.04em),
-    var(--lyric-accent-color) 100%
-  );
-  background-clip: text;
-  mask-image: linear-gradient(
-    90deg,
-    #000 0%,
-    #000 var(--word-fill),
-    transparent calc(var(--word-fill) + 0.16em),
-    transparent 100%
-  );
-  mask-repeat: no-repeat;
-  pointer-events: none;
-  text-shadow: 0 0 12px rgb(255 255 255 / 14%);
-  transition: opacity 80ms linear;
-  white-space: inherit;
-  word-break: inherit;
-  overflow-wrap: inherit;
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    #000 0%,
-    #000 var(--word-fill),
-    transparent calc(var(--word-fill) + 0.16em),
-    transparent 100%
-  );
-  -webkit-mask-repeat: no-repeat;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.lyric-word:not([data-state])::after,
-.lyric-word[data-state="future"]::after,
-.lyric-word[data-state="past"]::after {
-  opacity: 0;
-}
-
-/**
- * 整条当前声部在完整运动周期内保持同一合成策略。
- * 不能只绑定 active 音节，否则音节收音变成 past 时会在回落中途撤销图层并产生抖动。
- */
-.lyrics-line--word-timed:is(.lyrics-line--active, .lyrics-line--singing) .lyric-word {
-  will-change: transform;
-}
-
-/** 退出焦点的音节在弹簧完全回落前继续保留独立合成层。 */
-.lyric-word[data-lift-animating="true"] {
-  will-change: transform;
-}
-
-.lyric-word[data-state="past"] {
-  color: var(--lyric-color-active);
-}
-
-.lyrics-line--background {
-  transform-origin: right center;
-}
-
-.lyrics-panel--immersive .lyrics-line--background {
-  margin-left: auto;
-}
-
-.lyrics-line--background button {
-  width: 82%;
-  margin-left: auto;
-  text-align: right;
-}
-
-.lyrics-line--background .lyric-line-primary {
-  font-size: 0.82em;
-  opacity: 0.82;
-}
-
-.lyrics-line--background small {
-  font-size: 0.66em;
-}
-
-.lyrics-instrumental {
-  display: flex;
-  min-height: 58px;
-  align-items: center;
-  color: #ffffff;
-  transform-origin: left center;
-  transition:
-    transform 480ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 320ms ease;
-}
-
-.lyrics-instrumental--past {
-  opacity: 0.28;
-}
-
-.lyrics-instrumental--active {
-  opacity: 1;
-}
-
-.lyrics-instrumental--future {
-  opacity: 0.5;
-}
-
-@media (height < 720px) {
-  .lyrics-panel--immersive .lyrics-lines {
-    gap: 26px;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .lyrics-panel--immersive .lyrics-line,
-  .lyrics-instrumental,
-  .lyric-word {
-    animation: none;
-    transition: none;
+  .lyrics-player-host :deep(.amll-lyric-player *) {
+    scroll-behavior: auto;
+    transition-duration: 1ms;
   }
 }
 </style>

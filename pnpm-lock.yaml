@@ -17,9 +17,15 @@ importers:
       '@neteasecloudmusicapienhanced/api':
         specifier: 4.39.0
         version: 4.39.0(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2)
+      '@ungap/structured-clone':
+        specifier: 1.3.3
+        version: 1.3.3
       adm-zip:
         specifier: 0.6.0
         version: 0.6.0
+      bezier-easing:
+        specifier: 3.0.1
+        version: 3.0.1
       pinia:
         specifier: 3.0.4
         version: 3.0.4(typescript@5.9.3)(vue@3.5.41(typescript@5.9.3))
@@ -1202,6 +1208,9 @@ packages:
     engines: {node: '>= 12'}
     hasBin: true
 
+  '@ungap/structured-clone@1.3.3':
+    resolution: {integrity: sha512-60YRaenCQcVjYEKOcG824+DRGGIQ3VKErcBoAEDJZz5bKIs2ZG+X/H9Nk+Q6EVkwJk5QNApxbrc5QtBSwtrXAg==}
+
   '@vitejs/plugin-vue@6.0.8':
     resolution: {integrity: sha512-0ZjgOg7oO6farnNGup7yvoM/YXZV84OZxHAwtflItNa/6zzQyVb5LNxyea3FEKEX2XlagIKzrlH7wwxkKgtiew==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -1488,6 +1497,9 @@ packages:
   basic-ftp@5.3.1:
     resolution: {integrity: sha512-bopVNp6ugyA150DDuZfPFdt1KZ5a94ZDiwX4hMgZDzF+GttD80lEy8kj98kbyhLXnPvhtIo93mdnLIjpCAeeOw==}
     engines: {node: '>=10.0.0'}
+
+  bezier-easing@3.0.1:
+    resolution: {integrity: sha512-vvvg10Anq7py0+KkIqlwJpUVdde9Z8kSzeUzAkQNYAJdA3mZnLG9r9ExdwtjcASCYER6UkNHdBNHHMnVimnU7A==}
 
   birpc@2.9.0:
     resolution: {integrity: sha512-KrayHS5pBi69Xi9JmvoqrIgYGDkD6mcSe/i6YKi3w5kekCLzrX4+nawcXqrj2tIp50Kw/mT/s3p+GVK0A0sKxw==}
@@ -4999,6 +5011,8 @@ snapshots:
       pino: 6.14.0
       pino-pretty: 7.6.1
 
+  '@ungap/structured-clone@1.3.3': {}
+
   '@vitejs/plugin-vue@6.0.8(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.32.0)(yaml@2.9.0))(vue@3.5.41(typescript@5.9.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
@@ -5357,6 +5371,8 @@ snapshots:
   baseline-browser-mapping@2.11.12: {}
 
   basic-ftp@5.3.1: {}
+
+  bezier-easing@3.0.1: {}
 
   birpc@2.9.0: {}
 

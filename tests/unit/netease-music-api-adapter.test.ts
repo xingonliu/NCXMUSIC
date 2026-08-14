@@ -203,7 +203,7 @@ describe('NeteaseMusicApiAdapter', () => {
     expect(JSON.stringify(result)).not.toContain('cookie')
   })
 
-  it('prefers yrc and preserves line, word and background-vocal timing', async () => {
+  it('prefers yrc and preserves line, word and duet-label timing', async () => {
     /** 提供逐字歌词的网易云 API 夹具。 */
     const api = apiFixture()
     api.lyric_new = vi.fn(async () => response({
@@ -247,10 +247,29 @@ describe('NeteaseMusicApiAdapter', () => {
           { text: '等', startMs: 12_500, durationMs: 1_000 },
           { text: '你', startMs: 13_500, durationMs: 1_000 }
         ],
-        translation: 'Waiting for you',
-        vocalRole: 'background'
+        translation: 'Waiting for you'
       }
     ])
+  })
+
+  it('marks harmony labels as background vocals without treating male/female leads as background', async () => {
+    /** 同时包含主唱标签和和声标签的网易云 API 夹具。 */
+    const api = apiFixture()
+    api.lyric_new = vi.fn(async () => response({
+      lrc: { lyric: '[00:01.00]男：主唱\n[00:02.00]和声：回响' }
+    }))
+    /** 使用声部标签夹具的网易云 Adapter。 */
+    const adapter = new NeteaseMusicApiAdapter(api)
+
+    const result = await adapter.read({
+      operation: 'getLyrics',
+      id: '90003'
+    }, '', undefined)
+
+    expect(result.kind).toBe('lyrics')
+    if (result.kind !== 'lyrics') throw new Error('Expected lyrics result')
+    expect(result.entity?.lines[0]?.vocalRole).toBeUndefined()
+    expect(result.entity?.lines[1]?.vocalRole).toBe('background')
   })
 
   it('accepts millisecond line headers when they are returned in the lrc field', async () => {

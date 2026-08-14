@@ -30,6 +30,21 @@ export default tseslint.config(
     }
   },
   {
+    files: [
+      'src/renderer/features/music/lyrics-engine/base/**/*.ts',
+      'src/renderer/features/music/lyrics-engine/dom/**/*.ts',
+      'src/renderer/features/music/lyrics-engine/utils/**/*.ts'
+    ],
+    rules: {
+      // 固定提交的 AMLL 内部源码沿用其编译器与 lint 假设；本地适配器仍执行项目严格规则。
+      '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      'no-irregular-whitespace': 'off',
+      'no-useless-assignment': 'off'
+    }
+  },
+  {
     files: ['**/*.vue'],
     languageOptions: {
       parserOptions: {
