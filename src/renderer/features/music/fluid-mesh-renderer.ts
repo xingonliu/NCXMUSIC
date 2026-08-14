@@ -1,3 +1,8 @@
+import { Application, Container, Graphics, Sprite, Texture, type Ticker } from 'pixi.js'
+import { AdjustmentFilter } from 'pixi-filters/adjustment'
+import { KawaseBlurFilter } from 'pixi-filters/kawase-blur'
+import { TwistFilter } from 'pixi-filters/twist'
+
 // ========= 类型 =========
 
 /** Apple Music 网页端单层封面纹理的动画参数。 */
@@ -8,303 +13,149 @@ export interface AppleMusicArtworkLayerFrame {
   centerY: number
   /** 方形图层边长，单位为渲染像素。 */
   size: number
-  /** 图层顺时针旋转角度，单位为弧度。 */
+  /** 图层最终显示的顺时针旋转角，单位为弧度。 */
   rotation: number
 }
 
-/** 三个 GPU 封面纹理槽在当前画面中的混合权重。 */
+/** 三个可被快速重定向的封面组在当前画面中的混合权重。 */
 export type AppleMusicArtworkWeights = readonly [number, number, number]
 
 /** Apple Music 网页端背景单个封面图层的固定动画配置。 */
 interface AppleMusicArtworkLayerSpec {
   /** 图层边长相对视口宽度的比例。 */
   sizeRatio: number
-  /** 每秒旋转弧度。 */
-  rotationSpeed: number
+  /** Apple 运动相位每秒变化的弧度。 */
+  phaseSpeed: number
   /** 静态中心横坐标相对视口宽度的比例。 */
   centerXRatio: number
   /** 静态中心纵坐标相对视口高度的比例。 */
   centerYRatio: number
+  /** 额外纵向偏移相对视口宽度的比例。 */
+  centerYOffsetWidthRatio: number
   /** 环形轨道半径相对视口宽度的比例。 */
   orbitRadiusRatio: number
-  /** 轨道角速度相对自身旋转速度的倍率。 */
+  /** 轨道角速度相对运动相位的倍率。 */
   orbitSpeedRatio: number
+  /** 是否反转 Sprite 自转方向。 */
+  reverseSpriteRotation: boolean
 }
 
-/** WebGL Program 与其全屏四边形顶点属性。 */
-interface ProgramBinding {
-  /** 已链接的 Program。 */
-  program: WebGLProgram
-  /** 全屏四边形顶点属性位置。 */
-  positionAttribute: number
-}
-
-/** 封面图层绘制 Program。 */
-interface ArtworkProgramBinding extends ProgramBinding {
-  /** 三个可连续重定向的专辑封面纹理槽。 */
-  artworks: readonly [WebGLUniformLocation, WebGLUniformLocation, WebGLUniformLocation]
-  /** 三个封面纹理槽的当前混合权重。 */
-  artworkWeights: WebGLUniformLocation
-  /** 渲染目标尺寸。 */
-  resolution: WebGLUniformLocation
-  /** 当前图层中心点。 */
-  center: WebGLUniformLocation
-  /** 当前图层边长。 */
-  size: WebGLUniformLocation
-  /** 当前图层旋转角。 */
-  rotation: WebGLUniformLocation
-  /** 方形 Sprite 边缘向下层封面羽化的宽度。 */
-  edgeFeather: WebGLUniformLocation
-}
-
-/** Twist 后处理 Program。 */
-interface TwistProgramBinding extends ProgramBinding {
-  /** 上一阶段输出纹理。 */
-  texture: WebGLUniformLocation
-  /** 渲染目标尺寸。 */
-  resolution: WebGLUniformLocation
-  /** Twist 中心点。 */
-  offset: WebGLUniformLocation
-  /** Twist 作用半径。 */
-  radius: WebGLUniformLocation
-  /** Twist 最大旋转角。 */
-  angle: WebGLUniformLocation
-}
-
-/** Kawase 模糊 Program。 */
-interface KawaseProgramBinding extends ProgramBinding {
-  /** 上一阶段输出纹理。 */
-  texture: WebGLUniformLocation
-  /** 渲染目标尺寸。 */
-  resolution: WebGLUniformLocation
-  /** 当前模糊采样偏移。 */
-  offset: WebGLUniformLocation
-}
-
-/** 最终色彩调整 Program。 */
-interface AdjustmentProgramBinding extends ProgramBinding {
-  /** 已完成模糊的纹理。 */
-  texture: WebGLUniformLocation
-  /** 饱和度倍率。 */
-  saturation: WebGLUniformLocation
-}
-
-/** 可被后处理链写入和再次采样的离屏目标。 */
-interface RenderTarget {
-  /** 目标帧缓冲。 */
-  framebuffer: WebGLFramebuffer
-  /** 帧缓冲绑定的 RGBA 纹理。 */
-  texture: WebGLTexture
-}
-
-/** AppleMusicArtworkRenderer 初始化参数。 */
-export interface FluidMeshRendererOptions {
-  /** 低分辨率画布允许的最大宽度。 */
-  maximumRenderWidth?: number
-  /** 低分辨率画布允许的最大高度。 */
-  maximumRenderHeight?: number
+/** 单个可交叉淡化的封面组。 */
+interface ArtworkSlot {
+  /** 承载四层同源 Sprite 的容器。 */
+  container: Container
+  /** 与 Apple Music 网页端一致的四层同源 Sprite。 */
+  sprites: readonly [Sprite, Sprite, Sprite, Sprite]
+  /** 当前槽独占的封面纹理。 */
+  texture: Texture | undefined
 }
 
 // ========= Apple Music 网页端参数 =========
 
 /**
- * Apple Music 网页歌词场景公开逆向得到的核心参数。
- * 四张封面依次按 125%、80%、50%、25% 叠放，动画上限为 15 fps。
+ * Apple Music 网页歌词场景打包代码中核验到的固定参数。
+ * 这些值只描述 Apple 基线；NcxMusic 保留的增强参数单独列在下方。
  */
 export const APPLE_MUSIC_WEB_BACKGROUND_CONFIG = {
   maximumFps: 15,
-  artworkTransitionMs: 1_500,
-  motionTransitionMs: 1_200,
+  artworkTransitionMs: 1_667,
   saturation: 2.75,
+  brightness: 0.7,
+  contrast: 1.9,
   twistAngle: -3.25,
-  twistRadiusRatio: 0.72,
+  twistRadius: 900,
+  kawaseFilters: [
+    { strength: 5, quality: 1 },
+    { strength: 10, quality: 1 },
+    { strength: 20, quality: 2 },
+    { strength: 40, quality: 2 },
+    { strength: 80, quality: 2 }
+  ],
+  layerSizeRatios: [1.25, 0.8, 0.5, 0.25],
+  layerPhaseSpeeds: [0.09, -0.24, -0.18, 0.12]
+} as const
+
+/** NcxMusic 在 Apple 基线上保留的交互、音频和快速切歌优化。 */
+export const NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS = {
+  motionTransitionMs: 1_200,
+  reducedMotionArtworkTransitionMs: 180,
   lowFrequencyScalePulse: 0.1,
   lowFrequencyRotationPulse: 0.2,
   lowFrequencyTwistPulse: 0.04,
   audioAttackMs: 65,
   audioReleaseMs: 240,
-  spriteEdgeFeather: 0.08,
-  kawaseOffsets: [2.5, 5, 10, 20, 30] as const,
-  layerSizeRatios: [1.25, 0.8, 0.5, 0.25] as const,
-  layerRotationSpeeds: [0.09, -0.24, -0.18, 0.12] as const
+  maximumClockDeltaMs: 100
 } as const
 
-/** 四层封面纹理的尺寸、转速和轨道配置。 */
+/** 四层封面纹理的尺寸、转速、自转方向和轨道配置。 */
 const ARTWORK_LAYER_SPECS: readonly AppleMusicArtworkLayerSpec[] = [
   {
     sizeRatio: 1.25,
-    rotationSpeed: 0.09,
+    phaseSpeed: 0.09,
     centerXRatio: 0.5,
     centerYRatio: 0.5,
+    centerYOffsetWidthRatio: 0,
     orbitRadiusRatio: 0,
-    orbitSpeedRatio: 0
+    orbitSpeedRatio: 0,
+    reverseSpriteRotation: false
   },
   {
     sizeRatio: 0.8,
-    rotationSpeed: -0.24,
+    phaseSpeed: -0.24,
     centerXRatio: 0.4,
     centerYRatio: 0.4,
+    centerYOffsetWidthRatio: 0,
     orbitRadiusRatio: 0,
-    orbitSpeedRatio: 0
+    orbitSpeedRatio: 0,
+    reverseSpriteRotation: false
   },
   {
     sizeRatio: 0.5,
-    rotationSpeed: -0.18,
+    phaseSpeed: -0.18,
     centerXRatio: 0.5,
     centerYRatio: 0.5,
+    centerYOffsetWidthRatio: 0,
     orbitRadiusRatio: 0.25,
-    orbitSpeedRatio: 0.75
+    orbitSpeedRatio: 0.75,
+    reverseSpriteRotation: true
   },
   {
     sizeRatio: 0.25,
-    rotationSpeed: 0.12,
+    phaseSpeed: 0.12,
     centerXRatio: 0.55,
-    centerYRatio: 0.55,
+    centerYRatio: 0.5,
+    centerYOffsetWidthRatio: 0.05,
     orbitRadiusRatio: 0.25,
-    orbitSpeedRatio: 0.75
+    orbitSpeedRatio: 0.75,
+    reverseSpriteRotation: true
   }
 ]
 
-/** 默认低分辨率画布最大宽度。 */
-const DEFAULT_MAXIMUM_RENDER_WIDTH = 640
+/** 三槽中每个槽包含的 Sprite 数量。 */
+const SPRITES_PER_ARTWORK = 4
 
-/** 默认低分辨率画布最大高度。 */
-const DEFAULT_MAXIMUM_RENDER_HEIGHT = 420
-
-/** Apple Music 网页歌词场景的 15 fps 绘制间隔。 */
-const FRAME_INTERVAL_MS = 1_000 / APPLE_MUSIC_WEB_BACKGROUND_CONFIG.maximumFps
-
-/** 避免窗口从后台恢复时动画相位突然跃迁的最大时钟步长。 */
-const MAXIMUM_CLOCK_DELTA_MS = 100
-
-// ========= Shader =========
-
-/** 所有后处理阶段共用的全屏四边形顶点 Shader。 */
-const VERTEX_SHADER_SOURCE = `
-attribute vec2 a_position;
-varying vec2 v_uv;
-
-void main() {
-  v_uv = a_position * 0.5 + 0.5;
-  gl_Position = vec4(a_position, 0.0, 1.0);
-}
-`
-
-/** 把单张封面按中心、尺寸和旋转角绘制为一个正方形 Sprite。 */
-const ARTWORK_FRAGMENT_SHADER_SOURCE = `
-precision highp float;
-
-varying vec2 v_uv;
-uniform sampler2D u_artwork0;
-uniform sampler2D u_artwork1;
-uniform sampler2D u_artwork2;
-uniform vec3 u_artworkWeights;
-uniform vec2 u_resolution;
-uniform vec2 u_center;
-uniform float u_size;
-uniform float u_rotation;
-uniform float u_edgeFeather;
-
-void main() {
-  vec2 point = v_uv * u_resolution - u_center;
-  float sine = sin(-u_rotation);
-  float cosine = cos(-u_rotation);
-  vec2 local = vec2(
-    point.x * cosine - point.y * sine,
-    point.x * sine + point.y * cosine
-  ) / u_size + 0.5;
-
-  if (local.x < 0.0 || local.x > 1.0 || local.y < 0.0 || local.y > 1.0) discard;
-  vec4 color = texture2D(u_artwork0, local) * u_artworkWeights.x;
-  color += texture2D(u_artwork1, local) * u_artworkWeights.y;
-  color += texture2D(u_artwork2, local) * u_artworkWeights.z;
-  vec2 edgeDistance = min(local, vec2(1.0) - local);
-  float edgeAlpha = smoothstep(0.0, u_edgeFeather, min(edgeDistance.x, edgeDistance.y));
-  gl_FragColor = vec4(color.rgb, color.a * edgeAlpha);
-}
-`
-
-/**
- * Apple Music / pixi-filters TwistFilter 同形的坐标扭曲。
- * 中心旋转量最大，在 radius 边缘按平方曲线衰减到零。
- */
-const TWIST_FRAGMENT_SHADER_SOURCE = `
-precision highp float;
-
-varying vec2 v_uv;
-uniform sampler2D u_texture;
-uniform vec2 u_resolution;
-uniform vec2 u_offset;
-uniform float u_radius;
-uniform float u_angle;
-
-void main() {
-  vec2 coordinate = v_uv * u_resolution;
-  vec2 relative = coordinate - u_offset;
-  float distanceToOffset = length(relative);
-
-  if (distanceToOffset < u_radius) {
-    float distanceRatio = (u_radius - distanceToOffset) / u_radius;
-    float angle = distanceRatio * distanceRatio * u_angle;
-    float sine = sin(angle);
-    float cosine = cos(angle);
-    relative = vec2(
-      relative.x * cosine - relative.y * sine,
-      relative.x * sine + relative.y * cosine
-    );
-  }
-
-  vec2 sampleUv = clamp((relative + u_offset) / u_resolution, 0.0, 1.0);
-  gl_FragColor = texture2D(u_texture, sampleUv);
-}
-`
-
-/** 以九点帐篷核执行一次 Kawase 模糊，避免轴向硬边退化成两点重影。 */
-const KAWASE_FRAGMENT_SHADER_SOURCE = `
-precision mediump float;
-
-varying vec2 v_uv;
-uniform sampler2D u_texture;
-uniform vec2 u_resolution;
-uniform float u_offset;
-
-void main() {
-  vec2 delta = vec2(u_offset + 0.5) / u_resolution;
-  vec4 color = texture2D(u_texture, v_uv) * 4.0;
-  color += texture2D(u_texture, v_uv + vec2(-delta.x, 0.0)) * 2.0;
-  color += texture2D(u_texture, v_uv + vec2(delta.x, 0.0)) * 2.0;
-  color += texture2D(u_texture, v_uv + vec2(0.0, -delta.y)) * 2.0;
-  color += texture2D(u_texture, v_uv + vec2(0.0, delta.y)) * 2.0;
-  color += texture2D(u_texture, v_uv + vec2(-delta.x, -delta.y));
-  color += texture2D(u_texture, v_uv + vec2(delta.x, -delta.y));
-  color += texture2D(u_texture, v_uv + vec2(-delta.x, delta.y));
-  color += texture2D(u_texture, v_uv + vec2(delta.x, delta.y));
-  gl_FragColor = color * 0.0625;
-}
-`
-
-/** 最终按 Apple Music 网页端参数提升封面色场饱和度。 */
-const ADJUSTMENT_FRAGMENT_SHADER_SOURCE = `
-precision mediump float;
-
-varying vec2 v_uv;
-uniform sampler2D u_texture;
-uniform float u_saturation;
-
-void main() {
-  vec4 source = texture2D(u_texture, v_uv);
-  float luminance = dot(source.rgb, vec3(0.2126, 0.7152, 0.0722));
-  vec3 saturated = mix(vec3(luminance), source.rgb, u_saturation);
-  float dither = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));
-  saturated += vec3((dither - 0.5) / 255.0);
-  gl_FragColor = vec4(clamp(saturated, 0.0, 1.0), 1.0);
-}
-`
+/** 判断浮点权重是否可以视为完全不可见的阈值。 */
+const INVISIBLE_WEIGHT_THRESHOLD = 0.0001
 
 // ========= 纯函数 =========
 
+/** 把数值限制到 0～1。 */
+function clampUnit(value: number): number {
+  return Math.min(1, Math.max(0, value))
+}
+
+/** 播放和暂停速度过渡使用的平滑起停曲线。 */
+function smoothTransitionProgress(progress: number): number {
+  /** 限制后的线性进度。 */
+  const amount = clampUnit(progress)
+  return amount * amount * (3 - 2 * amount)
+}
+
 /**
- * 计算指定动画时刻的四层封面位置，公式与 Apple Music 网页端重构一致。
+ * 计算指定动画时刻的四层封面位置。
+ *
+ * 大层直接使用 Apple 相位，小层反转自转但仍用原相位公转；第四层纵向偏移
+ * 以视口宽度为基准，这是实际网页代码与常见复刻实现容易混淆的细节。
  *
  * @param width 当前渲染宽度
  * @param height 当前渲染高度
@@ -317,48 +168,50 @@ export function createAppleMusicArtworkLayerFrames(
   elapsedSeconds: number,
   audioEnergy = 0
 ): readonly AppleMusicArtworkLayerFrame[] {
-  /** 鼓点只产生克制的整体缩放和角度脉冲，连续流动相位保持独立。 */
+  /** 限制后的低频能量。 */
   const energy = clampUnit(audioEnergy)
-  const sizePulse = 1 + energy * APPLE_MUSIC_WEB_BACKGROUND_CONFIG.lowFrequencyScalePulse
-  const rotationPulse = energy * APPLE_MUSIC_WEB_BACKGROUND_CONFIG.lowFrequencyRotationPulse
+  /** NcxMusic 保留的鼓点缩放脉冲。 */
+  const sizePulse = 1 + energy
+    * NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS.lowFrequencyScalePulse
+  /** NcxMusic 保留的鼓点相位脉冲。 */
+  const rotationPulse = energy
+    * NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS.lowFrequencyRotationPulse
+
   return ARTWORK_LAYER_SPECS.map((spec) => {
-    /** 当前图层自身旋转角。 */
-    const rotation = elapsedSeconds * spec.rotationSpeed + rotationPulse
+    /** 当前图层未经自转方向修正的 Apple 运动相位。 */
+    const phase = elapsedSeconds * spec.phaseSpeed + rotationPulse
     /** 小图层沿圆形轨道移动时使用的相位。 */
-    const orbitAngle = rotation * spec.orbitSpeedRatio
+    const orbitAngle = phase * spec.orbitSpeedRatio
     /** 当前图层的轨道半径。 */
     const orbitRadius = width * spec.orbitRadiusRatio
+    /** Apple 对两张小 Sprite 使用与相位相反的自转方向。 */
+    const rotation = spec.reverseSpriteRotation ? -phase : phase
+
     return {
       centerX: width * spec.centerXRatio + Math.cos(orbitAngle) * orbitRadius,
-      centerY: height * spec.centerYRatio + Math.sin(orbitAngle) * orbitRadius,
+      centerY: height * spec.centerYRatio
+        + width * spec.centerYOffsetWidthRatio
+        + Math.sin(orbitAngle) * orbitRadius,
       size: width * spec.sizeRatio * sizePulse,
       rotation
     }
   })
 }
 
-/** 把数值限制到 0～1。 */
-function clampUnit(value: number): number {
-  return Math.min(1, Math.max(0, value))
-}
-
-/** Apple Music 状态过渡使用的平滑起停曲线。 */
-function smoothTransitionProgress(progress: number): number {
-  /** 限制后的线性进度。 */
-  const amount = clampUnit(progress)
-  return amount * amount * (3 - 2 * amount)
-}
-
 /**
- * 在三纹理权重之间执行平滑插值，供切歌时从当前画面连续重定向。
+ * 在三组封面权重之间执行 Apple 同款线性插值。
+ *
+ * @param from 当前屏幕权重
+ * @param to 新封面目标权重
+ * @param progress 归一化过渡进度
  */
 export function interpolateAppleMusicArtworkWeights(
   from: AppleMusicArtworkWeights,
   to: AppleMusicArtworkWeights,
   progress: number
 ): AppleMusicArtworkWeights {
-  /** 平滑起停后的插值进度。 */
-  const amount = smoothTransitionProgress(progress)
+  /** Apple 切歌淡化使用的线性进度。 */
+  const amount = clampUnit(progress)
   return [
     from[0] + (to[0] - from[0]) * amount,
     from[1] + (to[1] - from[1]) * amount,
@@ -366,7 +219,13 @@ export function interpolateAppleMusicArtworkWeights(
   ]
 }
 
-/** 在播放与暂停速度之间执行平滑起停插值。 */
+/**
+ * 在播放与暂停速度之间执行项目原有的平滑起停插值。
+ *
+ * @param from 当前速度倍率
+ * @param to 目标速度倍率
+ * @param progress 归一化过渡进度
+ */
 export function interpolateAppleMusicMotionScale(
   from: number,
   to: number,
@@ -377,7 +236,13 @@ export function interpolateAppleMusicMotionScale(
   return from + (to - from) * amount
 }
 
-/** 对低频能量执行快速起音、慢速释放的时间常数平滑。 */
+/**
+ * 对低频能量执行快速起音、慢速释放的时间常数平滑。
+ *
+ * @param current 当前平滑能量
+ * @param target 音频分析器目标能量
+ * @param deltaMs 距离上一帧的毫秒数
+ */
 export function interpolateAppleMusicAudioEnergy(
   current: number,
   target: number,
@@ -385,252 +250,103 @@ export function interpolateAppleMusicAudioEnergy(
 ): number {
   /** 起音比释放更快，让鼓点清晰但不会闪烁。 */
   const timeConstant = target > current
-    ? APPLE_MUSIC_WEB_BACKGROUND_CONFIG.audioAttackMs
-    : APPLE_MUSIC_WEB_BACKGROUND_CONFIG.audioReleaseMs
+    ? NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS.audioAttackMs
+    : NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS.audioReleaseMs
   /** 与帧率无关的指数平滑权重。 */
   const amount = 1 - Math.exp(-Math.max(0, deltaMs) / timeConstant)
   return clampUnit(current + (clampUnit(target) - current) * amount)
 }
 
-/** 归一化三纹理权重，并为全零输入提供安全首槽。 */
-function normalizeArtworkWeights(weights: AppleMusicArtworkWeights): AppleMusicArtworkWeights {
-  /** 三个纹理槽的总贡献。 */
-  const total = weights[0] + weights[1] + weights[2]
-  if (total <= 0.0001) return [1, 0, 0]
-  return [weights[0] / total, weights[1] / total, weights[2] / total]
+/** 生成只显示指定纹理槽的独热权重。 */
+function createTargetArtworkWeights(slotIndex: number): AppleMusicArtworkWeights {
+  return [slotIndex === 0 ? 1 : 0, slotIndex === 1 ? 1 : 0, slotIndex === 2 ? 1 : 0]
 }
 
-/** 编译单个 Shader，并在失败时释放资源。 */
-function compileShader(
-  gl: WebGLRenderingContext,
-  type: number,
-  source: string
-): WebGLShader {
-  /** 新建的 Shader。 */
-  const shader = gl.createShader(type)
-  if (!shader) throw new Error('WebGL shader allocation failed.')
-  gl.shaderSource(shader, source)
-  gl.compileShader(shader)
-  if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return shader
-  /** 浏览器返回的 Shader 编译诊断。 */
-  const log = gl.getShaderInfoLog(shader) ?? 'Unknown WebGL shader compilation error.'
-  gl.deleteShader(shader)
-  throw new Error(log)
+/**
+ * 移除即将被重定向的最弱纹理槽，并重新归一化仍在屏幕上的贡献。
+ * 这是项目原有的连续快速切歌优化，可避免新纹理继承旧纹理的非零权重。
+ */
+function retainArtworkWeights(
+  weights: AppleMusicArtworkWeights,
+  redirectedSlotIndex: number
+): AppleMusicArtworkWeights {
+  /** 被保留的三个槽贡献。 */
+  const retained = weights.map((weight, index) => (
+    index === redirectedSlotIndex ? 0 : weight
+  )) as unknown as AppleMusicArtworkWeights
+  /** 被保留贡献的总权重。 */
+  const total = retained[0] + retained[1] + retained[2]
+  if (total <= INVISIBLE_WEIGHT_THRESHOLD) return [0, 0, 0]
+  return [retained[0] / total, retained[1] / total, retained[2] / total]
 }
 
-/** 编译并链接一个使用共用顶点 Shader 的 Program。 */
-function createProgramBinding(
-  gl: WebGLRenderingContext,
-  fragmentSource: string
-): ProgramBinding {
-  /** 已编译的顶点 Shader。 */
-  const vertexShader = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER_SOURCE)
-  /** 已编译的片元 Shader。 */
-  const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fragmentSource)
-  /** 新建的 Shader Program。 */
-  const program = gl.createProgram()
-  if (!program) {
-    gl.deleteShader(vertexShader)
-    gl.deleteShader(fragmentShader)
-    throw new Error('WebGL program allocation failed.')
-  }
-  gl.attachShader(program, vertexShader)
-  gl.attachShader(program, fragmentShader)
-  gl.linkProgram(program)
-  gl.deleteShader(vertexShader)
-  gl.deleteShader(fragmentShader)
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    /** 浏览器返回的 Program 链接诊断。 */
-    const log = gl.getProgramInfoLog(program) ?? 'Unknown WebGL program link error.'
-    gl.deleteProgram(program)
-    throw new Error(log)
-  }
-  /** 所有 Program 使用相同名称的全屏顶点属性。 */
-  const positionAttribute = gl.getAttribLocation(program, 'a_position')
-  if (positionAttribute < 0) {
-    gl.deleteProgram(program)
-    throw new Error('Required WebGL position attribute is unavailable.')
-  }
-  return { program, positionAttribute }
-}
-
-/** 获取必需的 uniform 位置，避免静默输出黑屏。 */
-function requireUniform(
-  gl: WebGLRenderingContext,
-  program: WebGLProgram,
-  name: string
-): WebGLUniformLocation {
-  /** Program 中查找到的 uniform。 */
-  const location = gl.getUniformLocation(program, name)
-  if (!location) throw new Error(`Required WebGL uniform is unavailable: ${name}`)
-  return location
-}
-
-/** 建立专辑封面图层 Program。 */
-function createArtworkProgram(gl: WebGLRenderingContext): ArtworkProgramBinding {
-  /** 已建立的基础 Program 绑定。 */
-  const binding = createProgramBinding(gl, ARTWORK_FRAGMENT_SHADER_SOURCE)
-  return {
-    ...binding,
-    artworks: [
-      requireUniform(gl, binding.program, 'u_artwork0'),
-      requireUniform(gl, binding.program, 'u_artwork1'),
-      requireUniform(gl, binding.program, 'u_artwork2')
-    ],
-    artworkWeights: requireUniform(gl, binding.program, 'u_artworkWeights'),
-    resolution: requireUniform(gl, binding.program, 'u_resolution'),
-    center: requireUniform(gl, binding.program, 'u_center'),
-    size: requireUniform(gl, binding.program, 'u_size'),
-    rotation: requireUniform(gl, binding.program, 'u_rotation'),
-    edgeFeather: requireUniform(gl, binding.program, 'u_edgeFeather')
-  }
-}
-
-/** 建立 Twist Program。 */
-function createTwistProgram(gl: WebGLRenderingContext): TwistProgramBinding {
-  /** 已建立的基础 Program 绑定。 */
-  const binding = createProgramBinding(gl, TWIST_FRAGMENT_SHADER_SOURCE)
-  return {
-    ...binding,
-    texture: requireUniform(gl, binding.program, 'u_texture'),
-    resolution: requireUniform(gl, binding.program, 'u_resolution'),
-    offset: requireUniform(gl, binding.program, 'u_offset'),
-    radius: requireUniform(gl, binding.program, 'u_radius'),
-    angle: requireUniform(gl, binding.program, 'u_angle')
-  }
-}
-
-/** 建立 Kawase 模糊 Program。 */
-function createKawaseProgram(gl: WebGLRenderingContext): KawaseProgramBinding {
-  /** 已建立的基础 Program 绑定。 */
-  const binding = createProgramBinding(gl, KAWASE_FRAGMENT_SHADER_SOURCE)
-  return {
-    ...binding,
-    texture: requireUniform(gl, binding.program, 'u_texture'),
-    resolution: requireUniform(gl, binding.program, 'u_resolution'),
-    offset: requireUniform(gl, binding.program, 'u_offset')
-  }
-}
-
-/** 建立最终色彩调整 Program。 */
-function createAdjustmentProgram(gl: WebGLRenderingContext): AdjustmentProgramBinding {
-  /** 已建立的基础 Program 绑定。 */
-  const binding = createProgramBinding(gl, ADJUSTMENT_FRAGMENT_SHADER_SOURCE)
-  return {
-    ...binding,
-    texture: requireUniform(gl, binding.program, 'u_texture'),
-    saturation: requireUniform(gl, binding.program, 'u_saturation')
-  }
-}
-
-/** 创建线性采样、边缘钳制的 RGBA 纹理。 */
-function createTexture(gl: WebGLRenderingContext): WebGLTexture {
-  /** 新建的纹理。 */
-  const texture = gl.createTexture()
-  if (!texture) throw new Error('WebGL texture allocation failed.')
-  gl.bindTexture(gl.TEXTURE_2D, texture)
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-  return texture
-}
-
-/** 创建初始为 1×1 的离屏帧缓冲目标。 */
-function createRenderTarget(gl: WebGLRenderingContext): RenderTarget {
-  /** 目标纹理。 */
-  const texture = createTexture(gl)
-  /** 目标帧缓冲。 */
-  const framebuffer = gl.createFramebuffer()
-  if (!framebuffer) {
-    gl.deleteTexture(texture)
-    throw new Error('WebGL framebuffer allocation failed.')
-  }
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, null)
-  gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer)
-  gl.framebufferTexture2D(
-    gl.FRAMEBUFFER,
-    gl.COLOR_ATTACHMENT0,
-    gl.TEXTURE_2D,
-    texture,
-    0
-  )
-  if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) {
-    gl.deleteFramebuffer(framebuffer)
-    gl.deleteTexture(texture)
-    throw new Error('WebGL framebuffer is incomplete.')
-  }
-  return { framebuffer, texture }
+/** 建立包含四张空 Sprite 的封面纹理槽。 */
+function createArtworkSlot(): ArtworkSlot {
+  /** 当前槽的淡化容器。 */
+  const container = new Container()
+  /** 当前槽中的四张同源 Sprite。 */
+  const sprites = Array.from({ length: SPRITES_PER_ARTWORK }, () => {
+    /** 使用共享空纹理初始化的 Sprite。 */
+    const sprite = new Sprite(Texture.EMPTY)
+    sprite.anchor.set(0.5)
+    return sprite
+  }) as [Sprite, Sprite, Sprite, Sprite]
+  container.alpha = 0
+  container.addChild(...sprites)
+  return { container, sprites, texture: undefined }
 }
 
 // ========= 渲染器 =========
 
 /**
- * Apple Music 网页端同形的封面纹理背景渲染器。
- *
- * 管线严格按「四层封面 Sprite → Twist → 多次 Kawase Blur → Saturation」执行，
- * 不提取主色、不生成噪声网格，也不读取音频能量。
+ * 以 PixiJS 8 复现 Apple Music 网页歌词动态背景，并叠加 NcxMusic 的音频响应、
+ * 三槽快速切歌、暂停缓停、后台节流和减少动态效果策略。
  */
 export class FluidMeshRenderer {
-  /** 目标 Canvas。 */
-  private readonly canvas: HTMLCanvasElement
+  /** Pixi 应用与 WebGL 渲染循环。 */
+  private readonly app: Application
 
-  /** Canvas 对应的 WebGL 1 上下文。 */
-  private readonly gl: WebGLRenderingContext
+  /** 承载四层封面组并应用完整滤镜链的场景。 */
+  private readonly scene = new Container()
 
-  /** 全屏四边形顶点缓冲。 */
-  private readonly positionBuffer: WebGLBuffer
+  /** 白色底层，保持与 Apple 网页场景一致的合成基底。 */
+  private readonly baseLayer = new Graphics()
 
-  /** 四个连续后处理 Program。 */
-  private readonly artworkProgram: ArtworkProgramBinding
-  private readonly twistProgram: TwistProgramBinding
-  private readonly kawaseProgram: KawaseProgramBinding
-  private readonly adjustmentProgram: AdjustmentProgramBinding
+  /** 三个可在连续快速切歌时重定向的封面组。 */
+  private readonly artworkSlots: readonly [ArtworkSlot, ArtworkSlot, ArtworkSlot]
 
-  /** Scene、Ping、Pong 三个离屏纹理。 */
-  private readonly renderTargets: readonly [RenderTarget, RenderTarget, RenderTarget]
+  /** Apple 网页端的中心扭曲滤镜。 */
+  private readonly twistFilter: TwistFilter
 
-  /** 当前画面与切歌过渡使用的三个专辑封面纹理槽。 */
-  private readonly artworkTextures: readonly [WebGLTexture, WebGLTexture, WebGLTexture]
+  /** Apple 网页端五个逻辑 Kawase 模糊滤镜。 */
+  private readonly kawaseFilters: readonly KawaseBlurFilter[]
+
+  /** Apple 网页端的最终饱和度、亮度与对比度调整。 */
+  private readonly adjustmentFilter: AdjustmentFilter
 
   /** 当前是否已经上传可绘制的封面。 */
   private hasArtwork = false
 
-  /** 当前画面已显示的三纹理权重。 */
-  private displayedArtworkWeights: AppleMusicArtworkWeights = [1, 0, 0]
+  /** 当前画面实际显示的三组封面权重。 */
+  private displayedArtworkWeights: AppleMusicArtworkWeights = [0, 0, 0]
 
   /** 本次切歌过渡起始权重。 */
-  private artworkTransitionFrom: AppleMusicArtworkWeights = [1, 0, 0]
+  private artworkTransitionFrom: AppleMusicArtworkWeights = [0, 0, 0]
 
   /** 本次切歌过渡目标权重。 */
-  private artworkTransitionTo: AppleMusicArtworkWeights = [1, 0, 0]
+  private artworkTransitionTo: AppleMusicArtworkWeights = [0, 0, 0]
 
-  /** 本次切歌交叉混合起始时间。 */
-  private artworkTransitionStartedAt = 0
+  /** 本次切歌过渡已经运行的时间。 */
+  private artworkTransitionElapsedMs = 0
 
-  /** 低分辨率画布最大宽度。 */
-  private readonly maximumRenderWidth: number
+  /** 本次切歌过渡采用的时长。 */
+  private artworkTransitionDurationMs: number = APPLE_MUSIC_WEB_BACKGROUND_CONFIG.artworkTransitionMs
 
-  /** 低分辨率画布最大高度。 */
-  private readonly maximumRenderHeight: number
+  /** 本次切歌过渡是否尚未完成。 */
+  private artworkTransitionActive = false
 
-  /** 当前动画帧句柄。 */
-  private animationFrame: number | undefined
-
-  /** 动画循环是否运行。 */
-  private running = false
-
-  /** 系统是否要求减少动态效果。 */
-  private reducedMotion = false
-
-  /** 上一次实际绘制时间。 */
-  private lastRenderAt = 0
-
-  /** 上一次推进动画相位的时间。 */
-  private lastClockAt = 0
-
-  /** 四层封面动画累计时间。 */
-  private motionTime = 0
+  /** 当前累计的连续运动时间。 */
+  private motionTimeSeconds = 0
 
   /** 当前播放器意图是否为播放。 */
   private motionActive = true
@@ -644,8 +360,11 @@ export class FluidMeshRenderer {
   /** 本次速度过渡目标倍率。 */
   private motionTransitionTo = 1
 
-  /** 本次播放/暂停速度过渡起始时间。 */
-  private motionTransitionStartedAt = 0
+  /** 本次速度过渡已经运行的时间。 */
+  private motionTransitionElapsedMs = 0
+
+  /** 本次播放或暂停速度过渡是否尚未完成。 */
+  private motionTransitionActive = false
 
   /** 当前绑定的 50～120 Hz 低频能量提供函数。 */
   private audioEnergyProvider: (() => number) | undefined
@@ -653,510 +372,375 @@ export class FluidMeshRenderer {
   /** 当前画面使用的平滑低频能量。 */
   private displayedAudioEnergy = 0
 
+  /** 系统是否要求减少动态效果。 */
+  private reducedMotion = false
+
+  /** 页面可见性层是否允许渲染器运行。 */
+  private runningRequested = false
+
   /** 实例是否已经释放。 */
   private destroyed = false
 
-  /** 绑定实例后的动画帧回调。 */
-  private readonly handleAnimationFrame = (timestamp: number): void => {
-    if (!this.running || this.destroyed) return
-    this.animationFrame = window.requestAnimationFrame(this.handleAnimationFrame)
-    if (timestamp - this.lastRenderAt < FRAME_INTERVAL_MS) return
-    this.draw(timestamp)
-  }
-
-  /** 创建 Apple Music 网页端同形背景引擎。 */
-  constructor(canvas: HTMLCanvasElement, options: FluidMeshRendererOptions = {}) {
-    this.canvas = canvas
-    this.maximumRenderWidth = options.maximumRenderWidth ?? DEFAULT_MAXIMUM_RENDER_WIDTH
-    this.maximumRenderHeight = options.maximumRenderHeight ?? DEFAULT_MAXIMUM_RENDER_HEIGHT
-    /** 为持续低帧率背景动画优化的 WebGL 上下文。 */
-    const gl = canvas.getContext('webgl', {
-      alpha: false,
-      antialias: false,
-      depth: false,
-      stencil: false,
-      preserveDrawingBuffer: false,
-      powerPreference: 'low-power'
-    })
-    if (!gl) throw new Error('WebGL is unavailable for the immersive lyrics background.')
-    this.gl = gl
-
-    /** 四个处理阶段的 Program。 */
-    this.artworkProgram = createArtworkProgram(gl)
-    this.twistProgram = createTwistProgram(gl)
-    this.kawaseProgram = createKawaseProgram(gl)
-    this.adjustmentProgram = createAdjustmentProgram(gl)
-
-    /** 共用全屏四边形缓冲。 */
-    const positionBuffer = gl.createBuffer()
-    if (!positionBuffer) throw new Error('WebGL vertex buffer allocation failed.')
-    this.positionBuffer = positionBuffer
-
-    this.renderTargets = [
-      createRenderTarget(gl),
-      createRenderTarget(gl),
-      createRenderTarget(gl)
-    ]
-    this.artworkTextures = [
-      createTexture(gl),
-      createTexture(gl),
-      createTexture(gl)
-    ]
-    /** 未使用的纹理槽也初始化为完整的 1×1 纹理，避免 WebGL 不完整采样。 */
-    for (const texture of this.artworkTextures) {
-      gl.bindTexture(gl.TEXTURE_2D, texture)
-      gl.texImage2D(
-        gl.TEXTURE_2D,
-        0,
-        gl.RGBA,
-        1,
-        1,
-        0,
-        gl.RGBA,
-        gl.UNSIGNED_BYTE,
-        new Uint8Array([0, 0, 0, 255])
-      )
-    }
-    this.configurePipeline()
-  }
-
-  /** 配置不会逐帧变化的 WebGL 状态和全屏四边形。 */
-  private configurePipeline(): void {
-    /** 覆盖裁剪空间的四边形顶点。 */
-    const positions = new Float32Array([
-      -1, -1,
-      1, -1,
-      -1, 1,
-      1, 1
-    ])
-    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.positionBuffer)
-    this.gl.bufferData(this.gl.ARRAY_BUFFER, positions, this.gl.STATIC_DRAW)
-    this.gl.disable(this.gl.BLEND)
-    this.gl.disable(this.gl.DEPTH_TEST)
-    this.gl.disable(this.gl.CULL_FACE)
-    this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, 1)
-  }
-
-  /** 绑定 Program 及其共用全屏四边形属性。 */
-  private bindProgram(binding: ProgramBinding): void {
-    this.gl.useProgram(binding.program)
-    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.positionBuffer)
-    this.gl.enableVertexAttribArray(binding.positionAttribute)
-    this.gl.vertexAttribPointer(binding.positionAttribute, 2, this.gl.FLOAT, false, 0, 0)
-  }
-
-  /** 把输入纹理绑定到指定纹理单元。 */
-  private bindTexture(
-    texture: WebGLTexture,
-    uniform: WebGLUniformLocation,
-    textureUnit = 0
-  ): void {
-    this.gl.activeTexture(this.gl.TEXTURE0 + textureUnit)
-    this.gl.bindTexture(this.gl.TEXTURE_2D, texture)
-    this.gl.uniform1i(uniform, textureUnit)
-  }
-
-  /** 把三个离屏纹理重新分配为当前 Canvas 尺寸。 */
-  private resizeRenderTargets(width: number, height: number): void {
-    for (const target of this.renderTargets) {
-      this.gl.bindTexture(this.gl.TEXTURE_2D, target.texture)
-      this.gl.texImage2D(
-        this.gl.TEXTURE_2D,
-        0,
-        this.gl.RGBA,
-        width,
-        height,
-        0,
-        this.gl.RGBA,
-        this.gl.UNSIGNED_BYTE,
-        null
-      )
-    }
-    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null)
-  }
-
   /**
-   * 按容器比例更新低分辨率画布。
-   * 最长边维持在约 640 像素，结合 15 fps 和多次 Kawase 模糊控制 GPU 成本。
+   * 建立已初始化的 PixiJS 8 渲染器。
+   *
+   * @param canvas 组件提供的固定 Canvas
    */
-  resize(containerWidth: number, containerHeight: number): void {
-    /** 防止零尺寸容器导致无效纹理。 */
-    const safeWidth = Math.max(1, containerWidth)
-    /** 防止零尺寸容器导致无效纹理。 */
-    const safeHeight = Math.max(1, containerHeight)
-    /** 同时受最大宽高约束的降采样比例。 */
-    const scale = Math.min(
-      this.maximumRenderWidth / safeWidth,
-      this.maximumRenderHeight / safeHeight,
-      1
-    )
-    /** 最终渲染像素宽度。 */
-    const renderWidth = Math.max(1, Math.round(safeWidth * scale))
-    /** 最终渲染像素高度。 */
-    const renderHeight = Math.max(1, Math.round(safeHeight * scale))
-    if (this.canvas.width === renderWidth && this.canvas.height === renderHeight) return
-    this.canvas.width = renderWidth
-    this.canvas.height = renderHeight
-    this.resizeRenderTargets(renderWidth, renderHeight)
-    this.draw(performance.now())
+  static async create(canvas: HTMLCanvasElement): Promise<FluidMeshRenderer> {
+    /** 使用 PixiJS 8 异步初始化协议创建的应用。 */
+    const app = new Application()
+    await app.init({
+      canvas,
+      width: 1,
+      height: 1,
+      resolution: 1,
+      autoDensity: false,
+      antialias: false,
+      backgroundAlpha: 0,
+      preference: 'webgl',
+      powerPreference: 'low-power',
+      autoStart: false,
+      sharedTicker: false
+    })
+    return new FluidMeshRenderer(app)
   }
 
-  /** 返回指定时刻切歌交叉混合得到的三纹理权重。 */
-  private artworkWeightsAt(timestamp: number): AppleMusicArtworkWeights {
-    if (this.artworkTransitionStartedAt === 0) return this.artworkTransitionTo
-    /** 当前切歌动画归一化进度。 */
-    const progress = (
-      timestamp - this.artworkTransitionStartedAt
-    ) / APPLE_MUSIC_WEB_BACKGROUND_CONFIG.artworkTransitionMs
-    return interpolateAppleMusicArtworkWeights(
+  /** 配置场景、Sprite 和滤镜链；外部必须通过 create 完成异步初始化。 */
+  private constructor(app: Application) {
+    this.app = app
+    this.artworkSlots = [createArtworkSlot(), createArtworkSlot(), createArtworkSlot()]
+    this.twistFilter = new TwistFilter({
+      angle: APPLE_MUSIC_WEB_BACKGROUND_CONFIG.twistAngle,
+      radius: APPLE_MUSIC_WEB_BACKGROUND_CONFIG.twistRadius,
+      offset: { x: 0.5, y: 0.5 }
+    })
+    this.kawaseFilters = APPLE_MUSIC_WEB_BACKGROUND_CONFIG.kawaseFilters.map((options) => (
+      new KawaseBlurFilter({ ...options })
+    ))
+    this.adjustmentFilter = new AdjustmentFilter({
+      saturation: APPLE_MUSIC_WEB_BACKGROUND_CONFIG.saturation,
+      brightness: APPLE_MUSIC_WEB_BACKGROUND_CONFIG.brightness,
+      contrast: APPLE_MUSIC_WEB_BACKGROUND_CONFIG.contrast
+    })
+
+    this.scene.addChild(...this.artworkSlots.map((slot) => slot.container))
+    this.scene.filters = [
+      this.twistFilter,
+      ...this.kawaseFilters,
+      this.adjustmentFilter
+    ]
+    this.app.stage.addChild(this.baseLayer, this.scene)
+    this.app.ticker.maxFPS = APPLE_MUSIC_WEB_BACKGROUND_CONFIG.maximumFps
+    this.app.ticker.add(this.handleTick)
+    this.resize(1, 1)
+  }
+
+  /** 推进切歌、暂停和音频响应，并在空闲时停掉 Pixi Ticker。 */
+  private readonly handleTick = (ticker: Ticker): void => {
+    if (this.destroyed) return
+    /** 避免窗口从后台恢复时动画相位突然跃迁的安全时间步长。 */
+    const deltaMs = Math.min(
+      NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS.maximumClockDeltaMs,
+      Math.max(0, ticker.elapsedMS)
+    )
+
+    this.updateArtworkTransition(deltaMs)
+    this.updateMotionTransition(deltaMs)
+    this.updateAudioEnergy(deltaMs)
+    this.motionTimeSeconds += deltaMs * this.displayedMotionScale / 1_000
+    this.layoutArtworkLayers()
+    this.twistFilter.angle = APPLE_MUSIC_WEB_BACKGROUND_CONFIG.twistAngle
+      * (1 + this.displayedAudioEnergy
+        * NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS.lowFrequencyTwistPulse)
+
+    if (!this.shouldContinueAnimating()) this.app.stop()
+  }
+
+  /** 把当前三组封面权重同步到 Pixi 容器透明度。 */
+  private applyArtworkWeights(weights: AppleMusicArtworkWeights): void {
+    this.displayedArtworkWeights = weights
+    this.artworkSlots.forEach((slot, index) => {
+      slot.container.alpha = weights[index] ?? 0
+    })
+  }
+
+  /** 按当前视口、动画相位和低频能量布局全部十二张 Sprite。 */
+  private layoutArtworkLayers(): void {
+    /** 当前帧四层封面的共享空间状态。 */
+    const frames = createAppleMusicArtworkLayerFrames(
+      this.app.screen.width,
+      this.app.screen.height,
+      this.motionTimeSeconds,
+      this.displayedAudioEnergy
+    )
+
+    this.artworkSlots.forEach((slot) => {
+      slot.sprites.forEach((sprite, index) => {
+        /** 当前 Sprite 对应的 Apple 图层状态。 */
+        const frame = frames[index]
+        if (!frame) return
+        sprite.position.set(frame.centerX, frame.centerY)
+        sprite.width = frame.size
+        sprite.height = frame.size
+        sprite.rotation = frame.rotation
+      })
+    })
+  }
+
+  /** 推进 Apple 线性切歌过渡，并在完成后释放不再显示的 GPU 纹理。 */
+  private updateArtworkTransition(deltaMs: number): void {
+    if (!this.artworkTransitionActive) return
+    this.artworkTransitionElapsedMs += deltaMs
+    /** 当前线性切歌过渡的归一化进度。 */
+    const progress = this.artworkTransitionElapsedMs / this.artworkTransitionDurationMs
+    this.applyArtworkWeights(interpolateAppleMusicArtworkWeights(
       this.artworkTransitionFrom,
       this.artworkTransitionTo,
       progress
-    )
+    ))
+    if (progress < 1) return
+    this.artworkTransitionActive = false
+    this.releaseInvisibleArtworkTextures()
   }
 
-  /** 返回指定时刻播放/暂停缓动得到的运动速度倍率。 */
-  private motionScaleAt(timestamp: number): number {
-    if (this.motionTransitionStartedAt === 0) return this.motionTransitionTo
-    /** 当前速度动画归一化进度。 */
-    const progress = (
-      timestamp - this.motionTransitionStartedAt
-    ) / APPLE_MUSIC_WEB_BACKGROUND_CONFIG.motionTransitionMs
-    return interpolateAppleMusicMotionScale(
+  /** 推进项目保留的播放或暂停平滑速度过渡。 */
+  private updateMotionTransition(deltaMs: number): void {
+    if (!this.motionTransitionActive) return
+    this.motionTransitionElapsedMs += deltaMs
+    /** 当前速度过渡的归一化进度。 */
+    const progress = this.motionTransitionElapsedMs
+      / NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS.motionTransitionMs
+    this.displayedMotionScale = interpolateAppleMusicMotionScale(
       this.motionTransitionFrom,
       this.motionTransitionTo,
       progress
     )
+    if (progress < 1) return
+    this.displayedMotionScale = this.motionTransitionTo
+    this.motionTransitionActive = false
   }
 
-  /** 当前是否仍有需要持续重绘的封面或速度动画。 */
-  private shouldContinueAnimating(timestamp: number): boolean {
-    if (this.reducedMotion || !this.hasArtwork) return false
-    /** 切歌纹理交叉混合是否尚未完成。 */
-    const artworkTransitioning = this.artworkTransitionStartedAt > 0 &&
-      timestamp - this.artworkTransitionStartedAt <
-        APPLE_MUSIC_WEB_BACKGROUND_CONFIG.artworkTransitionMs
-    /** 播放/暂停速度过渡是否尚未完成。 */
-    const motionTransitioning = this.motionTransitionStartedAt > 0 &&
-      timestamp - this.motionTransitionStartedAt <
-        APPLE_MUSIC_WEB_BACKGROUND_CONFIG.motionTransitionMs
-    return artworkTransitioning || motionTransitioning || this.motionScaleAt(timestamp) > 0.0001
+  /** 读取并平滑项目现有的 50～120 Hz 音频能量。 */
+  private updateAudioEnergy(deltaMs: number): void {
+    /** 减少动态效果或暂停时不再向全屏背景注入音频运动。 */
+    const shouldReadAudio = !this.reducedMotion && this.motionActive
+    /** 当前音频分析器返回的目标能量。 */
+    const targetEnergy = shouldReadAudio ? this.readAudioEnergy() : 0
+    this.displayedAudioEnergy = interpolateAppleMusicAudioEnergy(
+      this.displayedAudioEnergy,
+      targetEnergy,
+      deltaMs
+    )
   }
 
-  /** 上传已经完成跨域校验和解码的专辑封面并平滑重定向混合权重。 */
-  setArtwork(image: HTMLImageElement): void {
+  /** 安全读取外部音频能量，避免分析器异常中断渲染循环。 */
+  private readAudioEnergy(): number {
+    try {
+      return this.audioEnergyProvider?.() ?? 0
+    } catch {
+      return 0
+    }
+  }
+
+  /** 释放过渡结束后透明槽中的纹理，限制快速切歌的显存占用。 */
+  private releaseInvisibleArtworkTextures(): void {
+    this.artworkSlots.forEach((slot, index) => {
+      if ((this.displayedArtworkWeights[index] ?? 0) > INVISIBLE_WEIGHT_THRESHOLD) return
+      this.releaseArtworkSlotTexture(slot)
+    })
+  }
+
+  /** 解除一个槽的 Sprite 纹理并释放其独占纹理源。 */
+  private releaseArtworkSlotTexture(slot: ArtworkSlot): void {
+    /** 当前槽即将释放的独占纹理。 */
+    const texture = slot.texture
+    if (!texture) return
+    slot.sprites.forEach((sprite) => {
+      sprite.texture = Texture.EMPTY
+    })
+    slot.texture = undefined
+    texture.destroy(true)
+  }
+
+  /** 判断当前场景是否仍需要持续刷新。 */
+  private shouldContinueAnimating(): boolean {
+    if (!this.hasArtwork) return false
+    if (this.artworkTransitionActive || this.motionTransitionActive) return true
+    if (this.displayedAudioEnergy > INVISIBLE_WEIGHT_THRESHOLD) return true
+    return !this.reducedMotion && this.displayedMotionScale > INVISIBLE_WEIGHT_THRESHOLD
+  }
+
+  /** 在页面允许且场景需要刷新时启动 Pixi Ticker。 */
+  private ensureTickerRunning(): void {
+    if (!this.destroyed && this.runningRequested && this.shouldContinueAnimating()) {
+      this.app.start()
+    }
+  }
+
+  /**
+   * 更新 CSS 视口对应的 Pixi 渲染尺寸和滤镜中心。
+   *
+   * @param width Canvas 的 CSS 宽度
+   * @param height Canvas 的 CSS 高度
+   */
+  resize(width: number, height: number): void {
     if (this.destroyed) return
-    /** 全部状态使用同一个高精度时间戳，避免首帧权重不一致。 */
-    const timestamp = performance.now()
+    /** 限制后的整数渲染宽度。 */
+    const renderWidth = Math.max(1, Math.round(width))
+    /** 限制后的整数渲染高度。 */
+    const renderHeight = Math.max(1, Math.round(height))
+    if (this.app.screen.width === renderWidth && this.app.screen.height === renderHeight) return
+    this.app.renderer.resize(renderWidth, renderHeight, 1)
+    this.baseLayer.clear().rect(0, 0, renderWidth, renderHeight).fill({ color: 0xffffff })
+    this.scene.filterArea = this.app.screen
+    this.twistFilter.offset = { x: renderWidth / 2, y: renderHeight / 2 }
+    this.layoutArtworkLayers()
+    this.app.render()
+  }
 
+  /**
+   * 上传新封面并从当前画面连续交叉淡化到新封面。
+   *
+   * @param artwork 已加载且完成跨域校验的 40×40 封面
+   */
+  setArtwork(artwork: HTMLImageElement): void {
+    if (this.destroyed) return
+    /** 首次封面固定使用第一槽，后续重定向当前贡献最小的槽。 */
+    const targetSlotIndex = this.hasArtwork
+      ? this.displayedArtworkWeights.reduce((minimumIndex, weight, index, weights) => (
+          weight < (weights[minimumIndex] ?? Number.POSITIVE_INFINITY) ? index : minimumIndex
+        ), 0)
+      : 0
+    /** 即将承载新封面的纹理槽。 */
+    const targetSlot = this.artworkSlots[targetSlotIndex]
+    if (!targetSlot) return
+    /** 从已解码图片建立且不进入全局缓存的独占 Pixi 纹理。 */
+    const texture = Texture.from(artwork, true)
+
+    this.releaseArtworkSlotTexture(targetSlot)
+    targetSlot.texture = texture
+    targetSlot.sprites.forEach((sprite) => {
+      sprite.texture = texture
+    })
+
+    /** 新封面最终独占显示时的权重。 */
+    const targetWeights = createTargetArtworkWeights(targetSlotIndex)
     if (!this.hasArtwork) {
-      this.gl.bindTexture(this.gl.TEXTURE_2D, this.artworkTextures[0])
-      this.gl.texImage2D(
-        this.gl.TEXTURE_2D,
-        0,
-        this.gl.RGBA,
-        this.gl.RGBA,
-        this.gl.UNSIGNED_BYTE,
-        image
-      )
       this.hasArtwork = true
-      this.displayedArtworkWeights = [1, 0, 0]
-      this.artworkTransitionFrom = [1, 0, 0]
-      this.artworkTransitionTo = [1, 0, 0]
-      this.artworkTransitionStartedAt = 0
-      this.draw(timestamp)
-      this.start()
+      this.artworkTransitionActive = false
+      this.applyArtworkWeights(targetWeights)
+      this.layoutArtworkLayers()
+      this.app.render()
+      this.ensureTickerRunning()
       return
     }
 
-    /** 上一次切歌动画在此刻已经显示的权重。 */
-    const currentWeights = this.artworkWeightsAt(timestamp)
-    /** 优先复用当前贡献最小的纹理槽，连续切歌时视觉跳变量最小。 */
-    let targetSlot = 0
-    for (let slot = 1; slot < currentWeights.length; slot += 1) {
-      if ((currentWeights[slot] ?? 0) < (currentWeights[targetSlot] ?? 0)) targetSlot = slot
-    }
-    /** 被覆盖槽先从当前画面中移除，再归一化其他槽的可见贡献。 */
-    const retainedWeights = [...currentWeights] as [number, number, number]
-    retainedWeights[targetSlot] = 0
-    const transitionFrom = normalizeArtworkWeights(retainedWeights)
-    /** 新封面最终独占的目标权重。 */
-    const transitionTo: [number, number, number] = [0, 0, 0]
-    transitionTo[targetSlot] = 1
-
-    const targetTexture = this.artworkTextures[targetSlot]
-    if (!targetTexture) throw new Error(`Missing artwork texture slot ${targetSlot}`)
-    this.gl.bindTexture(this.gl.TEXTURE_2D, targetTexture)
-    this.gl.texImage2D(
-      this.gl.TEXTURE_2D,
-      0,
-      this.gl.RGBA,
-      this.gl.RGBA,
-      this.gl.UNSIGNED_BYTE,
-      image
+    this.artworkTransitionFrom = retainArtworkWeights(
+      this.displayedArtworkWeights,
+      targetSlotIndex
     )
-    this.displayedArtworkWeights = transitionFrom
-    this.artworkTransitionFrom = transitionFrom
-    this.artworkTransitionTo = transitionTo
-    this.artworkTransitionStartedAt = this.reducedMotion ? 0 : timestamp
-    if (this.reducedMotion) this.displayedArtworkWeights = transitionTo
-    this.draw(timestamp)
-    this.start()
+    this.artworkTransitionTo = targetWeights
+    this.artworkTransitionElapsedMs = 0
+    this.artworkTransitionDurationMs = this.reducedMotion
+      ? NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS.reducedMotionArtworkTransitionMs
+      : APPLE_MUSIC_WEB_BACKGROUND_CONFIG.artworkTransitionMs
+    this.artworkTransitionActive = true
+    this.applyArtworkWeights(this.artworkTransitionFrom)
+    this.ensureTickerRunning()
   }
 
-  /** 清空封面并输出安全的深色底。 */
+  /** 清空全部封面纹理并停止无意义的 GPU 刷新。 */
   clearArtwork(): void {
+    if (this.destroyed) return
     this.hasArtwork = false
-    this.displayedArtworkWeights = [1, 0, 0]
-    this.artworkTransitionFrom = [1, 0, 0]
-    this.artworkTransitionTo = [1, 0, 0]
-    this.artworkTransitionStartedAt = 0
-    this.displayedAudioEnergy = 0
-    this.draw(performance.now())
-    this.stop()
+    this.artworkTransitionActive = false
+    this.applyArtworkWeights([0, 0, 0])
+    this.artworkSlots.forEach((slot) => this.releaseArtworkSlotTexture(slot))
+    this.app.render()
+    this.app.stop()
   }
 
-  /** 绑定播放器的实时低频能量读取函数。 */
-  setAudioEnergyProvider(provider?: () => number): void {
+  /**
+   * 绑定项目现有的实时低频能量源。
+   *
+   * @param provider 返回 0～1 能量的无副作用函数
+   */
+  setAudioEnergyProvider(provider: (() => number) | undefined): void {
     this.audioEnergyProvider = provider
   }
 
   /**
-   * 播放时平滑恢复完整速度，暂停时把运动速度缓动到零且保留当前动画相位。
+   * 平滑切换播放或暂停对应的背景运动速度。
    *
-   * @param active 当前是否播放
-   * @param immediate 初始化渲染器时是否立即采用目标速度
+   * @param active 当前歌曲是否播放
+   * @param immediate 是否在初始化时立即对齐状态
    */
   setMotionActive(active: boolean, immediate = false): void {
+    if (this.destroyed) return
     this.motionActive = active
-    /** 减少动态效果下始终冻结空间变换。 */
+    /** 减少动态效果下始终保持静态画面。 */
     const targetScale = this.reducedMotion ? 0 : (active ? 1 : 0)
-    /** 全部速度状态使用同一个高精度时间戳。 */
-    const timestamp = performance.now()
-    this.displayedMotionScale = this.motionScaleAt(timestamp)
-    this.motionTransitionFrom = immediate ? targetScale : this.displayedMotionScale
-    this.motionTransitionTo = targetScale
-    this.motionTransitionStartedAt = immediate || this.reducedMotion ? 0 : timestamp
-    if (immediate || this.reducedMotion) this.displayedMotionScale = targetScale
-    this.draw(timestamp)
-    this.start()
+    if (immediate) {
+      this.displayedMotionScale = targetScale
+      this.motionTransitionFrom = targetScale
+      this.motionTransitionTo = targetScale
+      this.motionTransitionActive = false
+    } else {
+      this.motionTransitionFrom = this.displayedMotionScale
+      this.motionTransitionTo = targetScale
+      this.motionTransitionElapsedMs = 0
+      this.motionTransitionActive = this.motionTransitionFrom !== targetScale
+    }
+    this.ensureTickerRunning()
   }
 
-  /** 启用减少动态效果时冻结封面变换，同时保留当前静态色场。 */
+  /**
+   * 应用系统减少动态效果偏好：冻结全屏空间运动，但保留短切歌淡化。
+   *
+   * @param reduced 是否减少动态效果
+   */
   setReducedMotion(reduced: boolean): void {
-    if (this.reducedMotion === reduced) return
+    if (this.destroyed || this.reducedMotion === reduced) return
     this.reducedMotion = reduced
+    this.displayedAudioEnergy = 0
     if (reduced) {
-      this.displayedArtworkWeights = this.artworkTransitionTo
-      this.artworkTransitionFrom = this.artworkTransitionTo
-      this.artworkTransitionStartedAt = 0
       this.displayedMotionScale = 0
       this.motionTransitionFrom = 0
       this.motionTransitionTo = 0
-      this.motionTransitionStartedAt = 0
-      this.displayedAudioEnergy = 0
-      this.stop()
-      this.draw(performance.now())
+      this.motionTransitionActive = false
+      this.layoutArtworkLayers()
+      this.app.render()
+      if (!this.artworkTransitionActive) this.app.stop()
       return
     }
     this.setMotionActive(this.motionActive)
   }
 
-  /** 启动 Apple Music 网页端同样的至多 15 fps 动画循环。 */
+  /** 允许页面可见时的 Pixi 渲染循环运行。 */
   start(): void {
-    if (this.running || this.destroyed) return
-    /** 启动时是否确实还有动画工作。 */
-    const timestamp = performance.now()
-    if (!this.shouldContinueAnimating(timestamp)) {
-      this.draw(timestamp)
-      return
-    }
-    this.running = true
-    this.lastRenderAt = 0
-    this.lastClockAt = 0
-    this.animationFrame = window.requestAnimationFrame(this.handleAnimationFrame)
+    if (this.destroyed) return
+    this.runningRequested = true
+    this.ensureTickerRunning()
   }
 
-  /** 停止动画循环并保留当前纹理和相位。 */
+  /** 页面隐藏时立即暂停 Pixi 渲染循环。 */
   stop(): void {
-    this.running = false
-    if (this.animationFrame !== undefined) window.cancelAnimationFrame(this.animationFrame)
-    this.animationFrame = undefined
-    this.lastClockAt = 0
+    this.runningRequested = false
+    this.app.stop()
   }
 
-  /** 释放全部 GPU 资源。 */
+  /** 释放滤镜、纹理、场景节点和 WebGL 上下文资源。 */
   destroy(): void {
     if (this.destroyed) return
-    this.stop()
     this.destroyed = true
-    this.gl.deleteBuffer(this.positionBuffer)
-    for (const texture of this.artworkTextures) this.gl.deleteTexture(texture)
-    for (const target of this.renderTargets) {
-      this.gl.deleteFramebuffer(target.framebuffer)
-      this.gl.deleteTexture(target.texture)
-    }
-    this.gl.deleteProgram(this.artworkProgram.program)
-    this.gl.deleteProgram(this.twistProgram.program)
-    this.gl.deleteProgram(this.kawaseProgram.program)
-    this.gl.deleteProgram(this.adjustmentProgram.program)
-  }
-
-  /** 把四张封面 Sprite 合成到 Scene 纹理。 */
-  private drawArtworkScene(target: RenderTarget, audioEnergy: number): void {
-    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, target.framebuffer)
-    this.gl.viewport(0, 0, this.canvas.width, this.canvas.height)
-    this.gl.clearColor(0.035, 0.035, 0.04, 1)
-    this.gl.clear(this.gl.COLOR_BUFFER_BIT)
-    if (!this.hasArtwork) return
-
-    this.bindProgram(this.artworkProgram)
-    this.gl.enable(this.gl.BLEND)
-    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA)
-    this.artworkTextures.forEach((texture, index) => {
-      /** 当前纹理槽对应的 sampler uniform。 */
-      const uniform = this.artworkProgram.artworks[index]
-      if (uniform) this.bindTexture(texture, uniform, index)
-    })
-    this.gl.uniform3fv(
-      this.artworkProgram.artworkWeights,
-      new Float32Array(this.displayedArtworkWeights)
-    )
-    this.gl.uniform2f(
-      this.artworkProgram.resolution,
-      this.canvas.width,
-      this.canvas.height
-    )
-
-    /** 当前时刻四层封面的位置和旋转。 */
-    const frames = createAppleMusicArtworkLayerFrames(
-      this.canvas.width,
-      this.canvas.height,
-      this.motionTime,
-      audioEnergy
-    )
-    for (const frame of frames) {
-      this.gl.uniform2f(this.artworkProgram.center, frame.centerX, frame.centerY)
-      this.gl.uniform1f(this.artworkProgram.size, frame.size)
-      this.gl.uniform1f(this.artworkProgram.rotation, frame.rotation)
-      this.gl.uniform1f(
-        this.artworkProgram.edgeFeather,
-        APPLE_MUSIC_WEB_BACKGROUND_CONFIG.spriteEdgeFeather
-      )
-      this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4)
-    }
-    this.gl.disable(this.gl.BLEND)
-  }
-
-  /** 对 Scene 纹理应用平方衰减的中心 Twist。 */
-  private drawTwist(source: WebGLTexture, target: RenderTarget, audioEnergy: number): void {
-    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, target.framebuffer)
-    this.gl.viewport(0, 0, this.canvas.width, this.canvas.height)
-    this.bindProgram(this.twistProgram)
-    this.bindTexture(source, this.twistProgram.texture)
-    this.gl.uniform2f(this.twistProgram.resolution, this.canvas.width, this.canvas.height)
-    this.gl.uniform2f(
-      this.twistProgram.offset,
-      this.canvas.width / 2,
-      this.canvas.height / 2
-    )
-    this.gl.uniform1f(
-      this.twistProgram.radius,
-      this.canvas.width * APPLE_MUSIC_WEB_BACKGROUND_CONFIG.twistRadiusRatio
-    )
-    this.gl.uniform1f(
-      this.twistProgram.angle,
-      APPLE_MUSIC_WEB_BACKGROUND_CONFIG.twistAngle * (
-        1 + audioEnergy * APPLE_MUSIC_WEB_BACKGROUND_CONFIG.lowFrequencyTwistPulse
-      )
-    )
-    this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4)
-  }
-
-  /** 执行一次 Kawase 对角采样模糊。 */
-  private drawKawase(
-    source: WebGLTexture,
-    target: RenderTarget,
-    offset: number
-  ): void {
-    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, target.framebuffer)
-    this.gl.viewport(0, 0, this.canvas.width, this.canvas.height)
-    this.bindProgram(this.kawaseProgram)
-    this.bindTexture(source, this.kawaseProgram.texture)
-    this.gl.uniform2f(this.kawaseProgram.resolution, this.canvas.width, this.canvas.height)
-    this.gl.uniform1f(this.kawaseProgram.offset, offset)
-    this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4)
-  }
-
-  /** 把模糊结果增艳并输出到屏幕 Canvas。 */
-  private drawAdjustment(source: WebGLTexture): void {
-    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null)
-    this.gl.viewport(0, 0, this.canvas.width, this.canvas.height)
-    this.bindProgram(this.adjustmentProgram)
-    this.bindTexture(source, this.adjustmentProgram.texture)
-    this.gl.uniform1f(
-      this.adjustmentProgram.saturation,
-      APPLE_MUSIC_WEB_BACKGROUND_CONFIG.saturation
-    )
-    this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4)
-  }
-
-  /** 执行一次完整的 Apple Music 网页端背景后处理链。 */
-  private draw(timestamp: number): void {
-    if (this.destroyed || this.canvas.width < 1 || this.canvas.height < 1) return
-    /** 与上一次动画相位更新之间的安全间隔。 */
-    const clockDelta = this.lastClockAt === 0
-      ? 0
-      : Math.min(timestamp - this.lastClockAt, MAXIMUM_CLOCK_DELTA_MS)
-    this.displayedArtworkWeights = this.artworkWeightsAt(timestamp)
-    this.displayedMotionScale = this.motionScaleAt(timestamp)
-    /** 播放时读取 50～120 Hz；暂停或减少动态效果时让律动自然释放到零。 */
-    const targetAudioEnergy = this.motionActive && !this.reducedMotion
-      ? clampUnit(this.audioEnergyProvider?.() ?? 0)
-      : 0
-    this.displayedAudioEnergy = interpolateAppleMusicAudioEnergy(
-      this.displayedAudioEnergy,
-      targetAudioEnergy,
-      clockDelta || FRAME_INTERVAL_MS
-    )
-    if (!this.reducedMotion) {
-      this.motionTime += clockDelta * 0.001 * this.displayedMotionScale
-    }
-
-    if (
-      this.artworkTransitionStartedAt > 0 &&
-      timestamp - this.artworkTransitionStartedAt >=
-        APPLE_MUSIC_WEB_BACKGROUND_CONFIG.artworkTransitionMs
-    ) {
-      this.artworkTransitionFrom = this.artworkTransitionTo
-      this.artworkTransitionStartedAt = 0
-    }
-    if (
-      this.motionTransitionStartedAt > 0 &&
-      timestamp - this.motionTransitionStartedAt >=
-        APPLE_MUSIC_WEB_BACKGROUND_CONFIG.motionTransitionMs
-    ) {
-      this.motionTransitionFrom = this.motionTransitionTo
-      this.motionTransitionStartedAt = 0
-    }
-    this.lastClockAt = timestamp
-    this.lastRenderAt = timestamp
-
-    /** Scene、Twist 和 Ping-Pong 模糊目标。 */
-    const [sceneTarget, firstPingTarget, secondPingTarget] = this.renderTargets
-    this.drawArtworkScene(sceneTarget, this.displayedAudioEnergy)
-    this.drawTwist(sceneTarget.texture, firstPingTarget, this.displayedAudioEnergy)
-
-    /** 当前模糊阶段的源纹理。 */
-    let source = firstPingTarget.texture
-    /** 下一次模糊写入的目标。 */
-    let target = secondPingTarget
-    for (const offset of APPLE_MUSIC_WEB_BACKGROUND_CONFIG.kawaseOffsets) {
-      this.drawKawase(source, target, offset)
-      source = target.texture
-      target = target === firstPingTarget ? secondPingTarget : firstPingTarget
-    }
-    this.drawAdjustment(source)
-    if (this.running && !this.shouldContinueAnimating(timestamp)) this.stop()
+    this.runningRequested = false
+    this.app.stop()
+    this.app.ticker.remove(this.handleTick)
+    this.artworkSlots.forEach((slot) => this.releaseArtworkSlotTexture(slot))
+    this.scene.filters = []
+    this.twistFilter.destroy()
+    this.kawaseFilters.forEach((filter) => filter.destroy())
+    this.adjustmentFilter.destroy()
+    this.app.destroy({ removeView: false }, { children: true })
   }
 }

@@ -8,7 +8,7 @@ import type { TrackArtwork, TrackSummary } from '../../../domains/player/types'
 // ========= 类型 =========
 
 /** 封面语义尺寸。 */
-export type MediaArtworkSize = 'thumbnail' | 'compact' | 'card' | 'feature' | 'hero'
+export type MediaArtworkSize = 'backdrop' | 'thumbnail' | 'compact' | 'card' | 'feature' | 'hero'
 
 /** 可播放集合实体。 */
 export type PlayableCollection = StandardAlbum | StandardPlaylist
@@ -17,6 +17,7 @@ export type PlayableCollection = StandardAlbum | StandardPlaylist
 
 /** 语义尺寸对应的网易云封面边长。 */
 const ARTWORK_PIXEL_SIZE: Record<MediaArtworkSize, number> = {
+  backdrop: 40,
   thumbnail: 96,
   compact: 160,
   card: 320,

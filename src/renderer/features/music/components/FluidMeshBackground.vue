@@ -32,7 +32,7 @@ const emit = defineEmits<{
 /** 提供播放器实时 50～120 Hz 低频能量。 */
 const player = usePlayer()
 
-/** Apple Music 网页端同形 WebGL 渲染画布。 */
+/** Apple Music 网页端同形 Pixi WebGL 渲染画布。 */
 const canvasElement = ref<HTMLCanvasElement | null>(null)
 
 /** WebGL 管线是否已成功输出当前封面。 */
@@ -45,11 +45,14 @@ const fallbackArtworkStyle = computed<Record<string, string>>(() => (
     : {}
 ))
 
-/** 当前已完成跨域加载和解码的封面。 */
+/** 当前已完成跨域加载和解码的 40×40 背景封面。 */
 let activeArtwork: HTMLImageElement | undefined
 
 /** 当前 WebGL 背景实例。 */
 let renderer: FluidMeshRenderer | undefined
+
+/** 使异步 Pixi 初始化在重建或卸载后不会回写过期实例。 */
+let rendererGeneration = 0
 
 /** 跟踪沉浸页尺寸变化的观察器。 */
 let resizeObserver: ResizeObserver | undefined
@@ -104,7 +107,7 @@ function loadArtwork(source: string, signal: AbortSignal): Promise<HTMLImageElem
   })
 }
 
-/** 使用当前容器 CSS 尺寸更新低分辨率 WebGL 目标。 */
+/** 使用当前容器 CSS 尺寸更新 Pixi WebGL 目标。 */
 function resizeRenderer(): void {
   /** Canvas 在页面上的 CSS 尺寸。 */
   const bounds = canvasElement.value?.getBoundingClientRect()
@@ -115,17 +118,23 @@ function resizeRenderer(): void {
   renderer?.resize(width, height)
 }
 
-/** 建立 WebGL 管线；不支持时静默保留 CSS 封面降级层。 */
-function createRenderer(): void {
+/** 建立 Pixi WebGL 管线；不支持时静默保留 CSS 封面降级层。 */
+async function createRenderer(): Promise<void> {
   /** 当前已挂载的 Canvas。 */
   const canvas = canvasElement.value
   if (!canvas) return
+  /** 当前异步初始化任务的世代编号。 */
+  const generation = ++rendererGeneration
   renderer?.destroy()
   renderer = undefined
   webglReady.value = false
   try {
-    /** 新建的 Apple Music 网页端同形渲染器。 */
-    const nextRenderer = new FluidMeshRenderer(canvas)
+    /** 新建的 Apple Music 网页端同形 Pixi 渲染器。 */
+    const nextRenderer = await FluidMeshRenderer.create(canvas)
+    if (generation !== rendererGeneration || canvasElement.value !== canvas) {
+      nextRenderer.destroy()
+      return
+    }
     renderer = nextRenderer
     resizeRenderer()
     nextRenderer.setAudioEnergyProvider(() => player.getAudioEnergy())
@@ -137,7 +146,7 @@ function createRenderer(): void {
     }
     if (!document.hidden) nextRenderer.start()
   } catch {
-    renderer = undefined
+    if (generation === rendererGeneration) renderer = undefined
   }
 }
 
@@ -157,9 +166,9 @@ function handleContextLost(event: Event): void {
   webglReady.value = false
 }
 
-/** WebGL 上下文恢复后重建全部 Program、纹理和帧缓冲。 */
+/** WebGL 上下文恢复后重建 Pixi 应用、滤镜、场景和纹理。 */
 function handleContextRestored(): void {
-  createRenderer()
+  void createRenderer()
 }
 
 /** 系统动态效果偏好变化时立即冻结或恢复封面运动。 */
@@ -215,12 +224,13 @@ onMounted(() => {
     resizeObserver = new ResizeObserver(resizeRenderer)
     resizeObserver.observe(canvas)
   }
-  createRenderer()
+  void createRenderer()
 })
 
 onBeforeUnmount(() => {
   /** 即将卸载的 Canvas。 */
   const canvas = canvasElement.value
+  rendererGeneration += 1
   resizeObserver?.disconnect()
   reducedMotionQuery?.removeEventListener('change', handleReducedMotionChange)
   canvas?.removeEventListener('webglcontextlost', handleContextLost)
@@ -246,7 +256,8 @@ onBeforeUnmount(() => {
       ref="canvasElement"
       class="fluid-mesh-background-canvas"
     />
-    <div class="fluid-mesh-background-contrast" />
+    <div class="fluid-mesh-background-dim" />
+    <div class="fluid-mesh-background-ambient" />
   </div>
 </template>
 
@@ -254,7 +265,8 @@ onBeforeUnmount(() => {
 .fluid-mesh-background,
 .fluid-mesh-background-fallback,
 .fluid-mesh-background-canvas,
-.fluid-mesh-background-contrast {
+.fluid-mesh-background-dim,
+.fluid-mesh-background-ambient {
   position: absolute;
   inset: 0;
 }
@@ -273,7 +285,7 @@ onBeforeUnmount(() => {
   background-color: #0c1013;
   background-position: center;
   background-size: cover;
-  filter: blur(110px) saturate(2.2) brightness(0.58);
+  filter: blur(110px) saturate(2.75) brightness(0.7) contrast(1.9);
   opacity: 0.92;
   transform: translateZ(0) scale(1.08);
   transition: opacity 700ms ease;
@@ -298,21 +310,18 @@ onBeforeUnmount(() => {
   opacity: 1;
 }
 
-.fluid-mesh-background-contrast {
-  background:
-    linear-gradient(
-      180deg,
-      rgb(2 4 6 / 32%) 0%,
-      rgb(2 4 6 / 10%) 34%,
-      rgb(2 4 6 / 16%) 66%,
-      rgb(2 4 6 / 38%) 100%
-    );
+.fluid-mesh-background-dim {
+  background: rgb(0 0 0 / 50%);
+}
+
+.fluid-mesh-background-ambient {
+  background: rgb(255 255 255 / 5%);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .fluid-mesh-background-fallback,
   .fluid-mesh-background-canvas {
-    transition-duration: 1ms;
+    transition-duration: 180ms;
   }
 }
 </style>

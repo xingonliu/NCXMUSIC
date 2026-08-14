@@ -43,6 +43,7 @@ describe('Phase 4 music UI primitives', () => {
     /** 带已有尺寸和其他查询参数的原图地址。 */
     const source = 'https://p1.music.126.net/a.jpg?foo=bar&param=10y10'
 
+    expect(adaptArtworkUrl(source, 'backdrop')).toContain('param=40y40')
     expect(adaptArtworkUrl(source, 'thumbnail')).toContain('param=96y96')
     expect(adaptArtworkUrl(source, 'compact')).toContain('param=160y160')
     expect(adaptArtworkUrl(source, 'card')).toContain('param=320y320')

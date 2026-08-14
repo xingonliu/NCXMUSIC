@@ -29,6 +29,7 @@ import MediaArtwork from './components/MediaArtwork.vue'
 import PlaybackControls from './components/PlaybackControls.vue'
 import QueueDrawer from './components/QueueDrawer.vue'
 import { mutateMusic } from './music-actions'
+import { adaptArtworkUrl } from './music-entity'
 import { usePlayer } from './use-player'
 
 // ========= 事件 =========
@@ -58,6 +59,11 @@ const artworkUrl = computed<string | undefined>(() => track.value?.artwork?.at(-
 
 /** 沉浸页实际展示的封面，直接使用与 PlayerBar 一致的高清图。 */
 const displayArtworkUrl = computed<string | undefined>(() => artworkUrl.value)
+
+/** 动态歌词背景专用的 40×40 网易云 CDN 封面。 */
+const backdropArtworkUrl = computed<string | undefined>(() => (
+  adaptArtworkUrl(artworkUrl.value, 'backdrop') ?? artworkUrl.value
+))
 
 /** 当前封面提亮后的歌词前沿色，不区分页面深浅模式。 */
 const lyricAccentColor = ref<string>(DEFAULT_LYRIC_ACCENT_COLOR)
@@ -191,7 +197,7 @@ onBeforeUnmount(() => {
   >
     <FluidMeshBackground
       class="immersive-backdrop"
-      :artwork-url="artworkUrl"
+      :artwork-url="backdropArtworkUrl"
       :playing="snapshot.playback.status === 'playing'"
       @accent-color="updateLyricAccentColor"
     />
