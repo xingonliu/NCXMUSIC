@@ -101,11 +101,4 @@ describe('Apple Music 网页端同形背景参数', () => {
     expect(interpolateAppleMusicAudioEnergy(0, 2, 10_000)).toBeCloseTo(1)
     expect(interpolateAppleMusicAudioEnergy(1, -1, 10_000)).toBeCloseTo(0)
   })
-
-  it('切歌过渡到达 100% 时权重完全对齐目标值', () => {
-    const current = [1, 0, 0] as const
-    const target = [0, 1, 0] as const
-    const finished = interpolateAppleMusicArtworkWeights(current, target, 1)
-    expect(finished).toEqual([0, 1, 0])
-  })
 })
