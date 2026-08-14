@@ -407,7 +407,7 @@ describe('应用级沉浸播放展示', () => {
 
     await vi.waitFor(() => expect(wrapper.find('[data-amll-line]').exists()).toBe(true))
     expect(wrapper.attributes('style')).toContain('--amll-lp-font-size: 46px')
-    expect(wrapper.attributes('style')).toContain('--amll-lp-font-weight: 800')
+    expect(wrapper.attributes('style')).toContain('--amll-lp-font-weight: 900')
 
     wrapper.unmount()
     appPreferences.setLyricFontSize('standard')

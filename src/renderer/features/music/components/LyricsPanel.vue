@@ -86,7 +86,7 @@ const LYRIC_FONT_WEIGHTS = {
   regular: '400',
   semibold: '600',
   bold: '700',
-  heavy: '800'
+  heavy: '900'
 } as const
 
 /** 传递给 AMLL 样式系统的歌词颜色、字号和字重。 */
