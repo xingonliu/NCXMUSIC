@@ -61,6 +61,16 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('max-height: min(350px, calc(100vh - 140px));')
   })
 
+  it('进入小云页面后输入框等待 0.5 秒并用 0.7 秒从底部抬出', () => {
+    /** Agent 页面 CSS 源代码。 */
+    const css = source('src/renderer/features/agent/agent-page.css')
+
+    expect(css).toContain('animation: agent-composer-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) 500ms both;')
+    expect(css).toContain('transform: translate(-50%, calc(100% + 24px));')
+    expect(css).toContain('@keyframes agent-composer-rise')
+    expect(css).toContain('animation-name: agent-composer-fade;')
+  })
+
   it('SelectionCard 带有小封面与右侧歌曲名歌手布局规范', () => {
     /** SelectionCard 源代码。 */
     const selection = source('src/renderer/features/agent/components/SelectionCard.vue')
