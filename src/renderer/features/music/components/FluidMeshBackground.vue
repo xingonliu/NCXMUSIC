@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import {
   DEFAULT_LYRIC_ACCENT_COLOR,
@@ -35,6 +35,9 @@ const player = usePlayer()
 /** Apple Music 网页端同形 Pixi WebGL 渲染画布。 */
 const canvasElement = ref<HTMLCanvasElement | null>(null)
 
+/** 强制 Vue 为失效 GPU 管线换用全新 Canvas 的世代编号。 */
+const canvasGeneration = ref(0)
+
 /** WebGL 管线是否已成功输出当前封面。 */
 const webglReady = ref(false)
 
@@ -59,6 +62,9 @@ let resizeObserver: ResizeObserver | undefined
 
 /** 系统减少动态效果媒体查询。 */
 let reducedMotionQuery: MediaQueryList | undefined
+
+/** 是否正在用全新 Canvas 重建失效的 GPU 管线。 */
+let rendererRebuildInProgress = false
 
 /** 切歌瞬间封面请求失败后的单次重试等待时间。 */
 const ARTWORK_LOAD_RETRY_DELAY_MS = 180
@@ -164,6 +170,24 @@ function resizeRenderer(): void {
   renderer?.resize(width, height)
 }
 
+/** 为当前 Canvas 注册上下文恢复和尺寸观察。 */
+function attachCanvas(canvas: HTMLCanvasElement): void {
+  canvas.addEventListener('webglcontextlost', handleContextLost)
+  canvas.addEventListener('webglcontextrestored', handleContextRestored)
+  if (typeof ResizeObserver !== 'undefined') {
+    resizeObserver = new ResizeObserver(resizeRenderer)
+    resizeObserver.observe(canvas)
+  }
+}
+
+/** 从即将废弃的 Canvas 移除上下文恢复和尺寸观察。 */
+function detachCanvas(canvas: HTMLCanvasElement | null): void {
+  resizeObserver?.disconnect()
+  resizeObserver = undefined
+  canvas?.removeEventListener('webglcontextlost', handleContextLost)
+  canvas?.removeEventListener('webglcontextrestored', handleContextRestored)
+}
+
 /** 建立 Pixi WebGL 管线；不支持时静默保留 CSS 封面降级层。 */
 async function createRenderer(): Promise<void> {
   /** 当前已挂载的 Canvas。 */
@@ -173,8 +197,6 @@ async function createRenderer(): Promise<void> {
   const generation = ++rendererGeneration
   /** 本次异步创建出来、尚未确认接管 Canvas 的 Pixi 渲染器。 */
   let nextRenderer: FluidMeshRenderer | undefined
-  renderer?.destroy()
-  renderer = undefined
   webglReady.value = false
   try {
     /** 新建的 Apple Music 网页端同形 Pixi 渲染器。 */
@@ -203,6 +225,36 @@ async function createRenderer(): Promise<void> {
 }
 
 /**
+ * 换用全新 Canvas 重建 GPU 管线，隔离旧 Pixi 销毁时强制派发的上下文丢失事件。
+ */
+async function rebuildRendererWithFreshCanvas(): Promise<void> {
+  if (rendererRebuildInProgress) return
+  rendererRebuildInProgress = true
+  /** 即将从页面移除的失效 Canvas。 */
+  const previousCanvas = canvasElement.value
+  /** 即将在旧 Canvas 脱离页面后释放的 Pixi 实例。 */
+  const previousRenderer = renderer
+  rendererGeneration += 1
+  renderer = undefined
+  webglReady.value = false
+  detachCanvas(previousCanvas)
+  previousRenderer?.stop()
+
+  try {
+    canvasGeneration.value += 1
+    await nextTick()
+    previousRenderer?.destroy()
+    /** Vue 为新世代挂载的全新 Canvas。 */
+    const nextCanvas = canvasElement.value
+    if (!nextCanvas) return
+    attachCanvas(nextCanvas)
+    await createRenderer()
+  } finally {
+    rendererRebuildInProgress = false
+  }
+}
+
+/**
  * 把已解码封面交给当前 Pixi 实例；旧实例状态异常时以同一封面重建完整管线。
  *
  * @param artwork 当前歌曲已完成跨域校验的封面
@@ -219,9 +271,9 @@ async function applyArtworkToRenderer(artwork: HTMLImageElement): Promise<void> 
     activeRenderer.setArtwork(artwork)
     webglReady.value = true
   } catch {
-    // 关闭再打开能恢复说明封面有效、旧 GPU 管线失效；原地重建可在当前页面自愈。
+    // 关闭再打开能恢复说明封面有效、旧 GPU 管线失效；新 Canvas 可隔离旧上下文销毁事件。
     webglReady.value = false
-    if (activeArtwork === artwork) await createRenderer()
+    if (activeArtwork === artwork) await rebuildRendererWithFreshCanvas()
   }
 }
 
@@ -241,9 +293,32 @@ function handleContextLost(event: Event): void {
   webglReady.value = false
 }
 
-/** WebGL 上下文恢复后重建 Pixi 应用、滤镜、场景和纹理。 */
+/** 在 Pixi 完成原生上下文恢复后重新上传当前封面并恢复可见输出。 */
+async function recoverRestoredContext(): Promise<void> {
+  /** 浏览器恢复后仍持有当前 Canvas 的 Pixi 实例。 */
+  const activeRenderer = renderer
+  /** 恢复时需要重新确认的当前封面。 */
+  const artwork = activeArtwork
+  if (!activeRenderer || !artwork) {
+    await rebuildRendererWithFreshCanvas()
+    return
+  }
+
+  try {
+    activeRenderer.setArtwork(artwork)
+    resizeRenderer()
+    if (!document.hidden) activeRenderer.start()
+    webglReady.value = true
+  } catch {
+    await rebuildRendererWithFreshCanvas()
+  }
+}
+
+/** WebGL 上下文恢复后等待 Pixi 自身监听器完成资源恢复。 */
 function handleContextRestored(): void {
-  void createRenderer()
+  queueMicrotask(() => {
+    void recoverRestoredContext()
+  })
 }
 
 /** 系统动态效果偏好变化时立即冻结或恢复封面运动。 */
@@ -290,14 +365,9 @@ onMounted(() => {
   if (!canvas) return
   reducedMotionQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)')
   reducedMotionQuery?.addEventListener('change', handleReducedMotionChange)
-  canvas.addEventListener('webglcontextlost', handleContextLost)
-  canvas.addEventListener('webglcontextrestored', handleContextRestored)
+  attachCanvas(canvas)
   document.addEventListener('visibilitychange', handleVisibilityChange)
   window.addEventListener('resize', resizeRenderer)
-  if (typeof ResizeObserver !== 'undefined') {
-    resizeObserver = new ResizeObserver(resizeRenderer)
-    resizeObserver.observe(canvas)
-  }
   void createRenderer()
 })
 
@@ -305,10 +375,8 @@ onBeforeUnmount(() => {
   /** 即将卸载的 Canvas。 */
   const canvas = canvasElement.value
   rendererGeneration += 1
-  resizeObserver?.disconnect()
+  detachCanvas(canvas)
   reducedMotionQuery?.removeEventListener('change', handleReducedMotionChange)
-  canvas?.removeEventListener('webglcontextlost', handleContextLost)
-  canvas?.removeEventListener('webglcontextrestored', handleContextRestored)
   document.removeEventListener('visibilitychange', handleVisibilityChange)
   window.removeEventListener('resize', resizeRenderer)
   renderer?.destroy()
@@ -327,6 +395,7 @@ onBeforeUnmount(() => {
       :style="fallbackArtworkStyle"
     />
     <canvas
+      :key="canvasGeneration"
       ref="canvasElement"
       class="fluid-mesh-background-canvas"
     />

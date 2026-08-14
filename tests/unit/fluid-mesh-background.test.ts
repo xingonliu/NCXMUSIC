@@ -130,7 +130,7 @@ afterEach(() => {
 // ========= 测试 =========
 
 describe('沉浸歌词动态背景', () => {
-  it('现有 Pixi 实例切换封面失败时用当前封面自动重建', async () => {
+  it('切歌上传失败时换用新 Canvas，避免旧上下文延迟丢失覆盖恢复结果', async () => {
     /** 初次挂载使用、第二次上传封面时模拟失效的 Pixi 实例。 */
     const initialRenderer = createRendererMock()
     initialRenderer.setArtwork
@@ -150,12 +150,20 @@ describe('沉浸歌词动态背景', () => {
       }
     })
     await vi.waitFor(() => expect(initialRenderer.setArtwork).toHaveBeenCalledTimes(1))
+    /** 初次 Pixi 实例绑定的旧 Canvas。 */
+    const initialCanvas = wrapper.find('canvas').element
+    initialRenderer.destroy.mockImplementation(() => {
+      queueMicrotask(() => {
+        initialCanvas.dispatchEvent(new Event('webglcontextlost', { cancelable: true }))
+      })
+    })
 
     await wrapper.setProps({ artworkUrl: 'https://example.com/artwork-b.jpg' })
 
     await vi.waitFor(() => expect(FluidMeshRenderer.create).toHaveBeenCalledTimes(2))
     expect(initialRenderer.destroy).toHaveBeenCalledTimes(1)
     expect(recoveredRenderer.setArtwork).toHaveBeenCalledTimes(1)
+    expect(wrapper.find('canvas').element).not.toBe(initialCanvas)
     expect(wrapper.classes()).toContain('fluid-mesh-background--ready')
 
     wrapper.unmount()
@@ -185,6 +193,37 @@ describe('沉浸歌词动态背景', () => {
     })
     expect(imageRequestCounts.get(nextArtworkUrl)).toBe(2)
     expect(renderer.clearArtwork).not.toHaveBeenCalled()
+    expect(wrapper.classes()).toContain('fluid-mesh-background--ready')
+
+    wrapper.unmount()
+  })
+
+  it('浏览器恢复当前 WebGL 上下文时复用 Pixi 实例而不再次销毁上下文', async () => {
+    /** 跨上下文丢失与恢复继续使用的 Pixi 实例。 */
+    const renderer = createRendererMock()
+    rendererQueue.push(renderer)
+
+    /** 使用有效封面挂载的动态背景组件。 */
+    const wrapper = mount(FluidMeshBackground, {
+      props: {
+        artworkUrl: 'https://example.com/artwork-context.jpg',
+        playing: true
+      }
+    })
+    await vi.waitFor(() => expect(renderer.setArtwork).toHaveBeenCalledTimes(1))
+    /** 当前 Pixi 实例绑定且应在恢复后继续使用的 Canvas。 */
+    const canvas = wrapper.find('canvas').element
+
+    canvas.dispatchEvent(new Event('webglcontextlost', { cancelable: true }))
+    await wrapper.vm.$nextTick()
+    expect(wrapper.classes()).not.toContain('fluid-mesh-background--ready')
+
+    canvas.dispatchEvent(new Event('webglcontextrestored'))
+    await vi.waitFor(() => expect(renderer.setArtwork).toHaveBeenCalledTimes(2))
+
+    expect(FluidMeshRenderer.create).toHaveBeenCalledTimes(1)
+    expect(renderer.destroy).not.toHaveBeenCalled()
+    expect(wrapper.find('canvas').element).toBe(canvas)
     expect(wrapper.classes()).toContain('fluid-mesh-background--ready')
 
     wrapper.unmount()

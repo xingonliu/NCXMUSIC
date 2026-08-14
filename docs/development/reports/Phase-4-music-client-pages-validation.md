@@ -83,7 +83,7 @@ Utility 在执行写入前检查活动凭据租约；游客返回 `AUTH_REQUIRED
 - `tests/unit/phase4-music-ui.test.ts`：五档封面、占位布局、长列表虚拟窗口、评论游客态、自建歌单动作与键盘上下文菜单；
 - `tests/unit/immersive-player.test.ts`：共享封面开合方向、路由保持、严格逐字时间、稳定覆盖裁切、命中后 1.5px 上抬，以及播放器每 250ms 离散采样下的 60fps 单调等速扫光；
 - `tests/unit/lyrics-engine.test.ts`：四秒间奏阈值、反向 Seek，以及重叠短声部结束时不打断仍在演唱的长句；
-- `tests/unit/fluid-mesh-background.test.ts`：切歌封面瞬时失败自动重试，以及旧 Pixi 实例纹理上传失败后原地重建；
+- `tests/unit/fluid-mesh-background.test.ts`：切歌封面瞬时失败自动重试、旧 Pixi 实例纹理上传失败后换用新 Canvas，以及延迟 context-lost 事件隔离与浏览器自然上下文恢复；
 - `tests/unit/music-progress-bar.test.ts`：固定视觉、Pointer ID 隔离、拖动单次提交、取消保护、切歌重建及未知时长门禁；
 - `tests/unit/playback-engine.test.ts`：补充同位置 no-op seek 不进入 `seeking` 的锁死回归。
 
@@ -91,7 +91,7 @@ Utility 在执行写入前检查活动凭据租约；游客返回 `AUTH_REQUIRED
 
 - `pnpm typecheck`：通过；
 - `pnpm lint`：通过，0 个错误、345 个既有 warning 级 Vue 模板排版提示，架构边界通过；
-- `pnpm test`：77 个文件通过、1 个文件按环境跳过，493 个测试通过、6 个按环境跳过；
+- `pnpm test`：77 个文件通过、1 个文件按环境跳过，495 个测试通过、6 个按环境跳过；
 - `pnpm test:e2e`：10/10 通过；
 - `pnpm smoke:build`：构建产物契约与 Electron 冒烟通过，覆盖 Renderer 无 Node 全局、Utility 崩溃恢复、取消、音频可播放、状态快照和重载重连；
 - 隔离用户目录 Electron 截图：1280×800 与最小 960×640 首屏非空，22 张真实封面加载；紧凑态 PlayerBar 保留 Liquid Glass 位移滤镜且无内容拉伸，页面横向宽度等于视口。
