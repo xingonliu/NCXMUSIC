@@ -61,6 +61,21 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     expect(playerBarSource).not.toContain('backdrop-filter: none !important')
   })
 
+  it('进入小云页时仅收窄右锚定外壳并淡出非封面内容', () => {
+    expect(playerBarSource).toContain("['player-bar-glass', { 'is-compact': isAgentPage }]")
+    expect(playerBarSource).toContain('.player-bar-glass.is-compact')
+    expect(playerBarSource).toContain('right 280ms cubic-bezier(0.22, 1, 0.36, 1)')
+    expect(playerBarSource).toContain('width 280ms cubic-bezier(0.22, 1, 0.36, 1)')
+    expect(playerBarSource).not.toContain("transition: 'all")
+    expect(playerBarSource).not.toContain('width: 0 !important')
+    expect(playerBarSource).not.toContain('.player-track.is-compact')
+  })
+
+  it('PlayerBar 页面形态切换尊重系统减少动态效果设置', () => {
+    expect(playerBarSource).toContain('@media (prefers-reduced-motion: reduce)')
+    expect(playerBarSource).toMatch(/\.player-bar-glass,[\s\S]*?\.player-bar-content[\s\S]*?transition: none;/)
+  })
+
   it('支持在设置中动态切换深色/浅色模式时更新 PlayerBar 内阴影变量', () => {
     expect(playerBarSource).toContain('--ncx-player-bar-shadow')
     expect(playerBarSource).toContain(":root[data-theme='dark'] .player-bar-glass")

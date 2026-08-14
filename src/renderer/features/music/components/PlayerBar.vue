@@ -67,33 +67,6 @@ const isQueueOpen = ref<boolean>(false)
 /** 是否处于小云 (AI 助手) 页面。 */
 const isAgentPage = computed<boolean>(() => route?.name === 'agent')
 
-/** PlayerBar 外层 Glass 容器的响应式定位与尺寸样式（统一基于 left 与 transform 锚定，消除离散属性动画跳变）。 */
-const playerBarStyle = computed(() => {
-  if (isAgentPage.value) {
-    return {
-      position: 'fixed',
-      bottom: '18px',
-      left: 'calc(100vw - 28px)',
-      transform: 'translateX(-100%)',
-      width: '56px',
-      height: '56px',
-      zIndex: 'var(--ncx-layer-player)',
-      transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)'
-    }
-  }
-
-  return {
-    position: 'fixed',
-    bottom: '18px',
-    left: 'calc(230px + ((100vw - 230px) / 2))',
-    transform: 'translateX(-50%)',
-    width: 'min(860px, calc(100vw - 288px))',
-    height: '56px',
-    zIndex: 'var(--ncx-layer-player)',
-    transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)'
-  }
-})
-
 /** 当前曲目摘要 */
 const track = computed(() => snapshot.value.playback.track)
 
@@ -194,7 +167,7 @@ function openImmersivePlayer(event: MouseEvent): void {
     :aria-hidden="isImmersivePlayerOpen ? 'true' : undefined"
   >
     <LiquidGlass
-      container-class="player-bar-glass"
+      :container-class="['player-bar-glass', { 'is-compact': isAgentPage }]"
       role="contentinfo"
       :aria-label="text.regionLabel"
       :radius="28"
@@ -208,7 +181,6 @@ function openImmersivePlayer(event: MouseEvent): void {
       :frost="0.52"
       :lightness="72"
       :alpha="0.9"
-      :style="playerBarStyle"
     >
       <div
         class="player-bar-content"
@@ -217,7 +189,6 @@ function openImmersivePlayer(event: MouseEvent): void {
         <!-- 曲目信息 -->
         <div
           class="player-track"
-          :class="{ 'is-compact': isAgentPage }"
         >
           <button
             class="player-track-cover-button"
@@ -405,6 +376,8 @@ function openImmersivePlayer(event: MouseEvent): void {
 
 <style scoped>
 .player-bar-glass {
+  --ncx-player-bar-resting-right: max(28px, calc(50vw - 545px));
+  --ncx-player-bar-width: min(860px, calc(100vw - 288px));
   --ncx-player-bar-track-bg: color-mix(in srgb, var(--ncx-color-text-primary) 11%, transparent);
   --ncx-player-bar-thumb-shadow:
     0 2px 8px rgb(20 20 24 / 18%),
@@ -416,9 +389,23 @@ function openImmersivePlayer(event: MouseEvent): void {
     0 4px 16px rgb(255 255 255 / 42%) inset,
     0 8px 24px rgb(255 255 255 / 24%) inset;
 
+  position: fixed;
+  z-index: var(--ncx-layer-player);
+  right: var(--ncx-player-bar-resting-right);
+  bottom: 18px;
+  width: var(--ncx-player-bar-width);
+  height: 56px;
   color: var(--ncx-color-text-primary);
   isolation: isolate;
+  transition:
+    right 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 280ms cubic-bezier(0.22, 1, 0.36, 1);
   -webkit-app-region: no-drag;
+}
+
+.player-bar-glass.is-compact {
+  right: 28px;
+  width: 56px;
 }
 
 :deep(.player-bar-glass.effect),
@@ -439,26 +426,24 @@ function openImmersivePlayer(event: MouseEvent): void {
   row-gap: 0;
   align-items: center;
   overflow: hidden;
-  transition: padding 0.35s cubic-bezier(0.4, 0, 0.2, 1), column-gap 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: padding 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .player-bar-content.is-compact {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 8px;
   min-height: 56px;
   height: 56px;
-  column-gap: 0;
 }
 
 .player-bar-content .player-track-info,
 .player-bar-content .player-transport,
 .player-bar-content .player-progress,
 .player-bar-content .player-output {
-  transition: opacity 0.25s ease, visibility 0.25s ease;
   opacity: 1;
   visibility: visible;
+  transition:
+    opacity 140ms ease-out 100ms,
+    visibility 0s linear;
 }
 
 .player-bar-content.is-compact .player-track-info,
@@ -468,14 +453,9 @@ function openImmersivePlayer(event: MouseEvent): void {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  width: 0 !important;
-  max-width: 0 !important;
-  min-width: 0 !important;
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  flex: 0 0 0px !important;
+  transition:
+    opacity 100ms ease-out,
+    visibility 0s linear 100ms;
 }
 
 .player-track {
@@ -486,13 +466,6 @@ function openImmersivePlayer(event: MouseEvent): void {
   gap: var(--ncx-space-2-5, 10px);
   grid-area: track;
   min-width: 0;
-  transition: gap 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.player-track.is-compact {
-  justify-content: center;
-  width: 100%;
-  gap: 0;
 }
 
 .player-track-cover {
@@ -716,6 +689,15 @@ function openImmersivePlayer(event: MouseEvent): void {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .player-bar-glass,
+  .player-bar-content,
+  .player-bar-content .player-track-info,
+  .player-bar-content .player-transport,
+  .player-bar-content .player-progress,
+  .player-bar-content .player-output {
+    transition: none;
+  }
+
   .player-busy {
     animation: none;
   }
