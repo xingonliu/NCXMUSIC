@@ -3105,8 +3105,7 @@
   padding: var(--ncx-space-6);
   border: 1px solid var(--ncx-color-border-subtle);
   border-radius: var(--ncx-radius-2xl);
-  background: var(--ncx-drawer-bg);
-  backdrop-filter: blur(10px);
+  background: var(--ncx-modal-bg);
   box-shadow: var(--ncx-shadow-elevation-3);
 }
 
@@ -3303,7 +3302,6 @@
   border-left: 1px solid var(--ncx-color-border-subtle);
   border-radius: var(--ncx-radius-2xl) 0 0 var(--ncx-radius-2xl);
   background: var(--ncx-drawer-bg);
-  backdrop-filter: blur(10px);
   box-shadow: var(--ncx-shadow-elevation-3);
   overflow: hidden;
 }
