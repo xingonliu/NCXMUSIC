@@ -211,6 +211,8 @@ describe('Phase 7 MCP 配置安全边界', () => {
       supervisor,
       chooseSkillSource: async () => undefined
     })
+    /** Smithery 可能返回超过设置页展示上限的长描述。 */
+    const longDescription = `Search the web with Brave. ${'long description '.repeat(180)}`
     /** Smithery fetch mock。 */
     const fetchMock = vi.fn(async (input: Parameters<typeof fetch>[0]) => {
       /** 被请求的 Smithery URL。 */
@@ -226,7 +228,7 @@ describe('Phase 7 MCP 配置安全边界', () => {
           qualifiedName: 'brave',
           namespace: 'brave',
           displayName: 'Brave Search',
-          description: 'Search the web with Brave.',
+          description: longDescription,
           iconUrl: 'https://api.smithery.ai/servers/brave/icon',
           verified: true,
           useCount: 118196,
@@ -262,6 +264,7 @@ describe('Phase 7 MCP 配置安全边界', () => {
       displayName: 'Brave Search',
       verified: true
     })
+    expect(result.mcpMarket?.servers[0]?.description).toHaveLength(2_000)
     expect(result.mcpMarket?.pagination).toMatchObject({ currentPage: 2, totalPages: 10 })
     coordinator.shutdown()
   })

@@ -23,6 +23,9 @@ export const SkillSourceTypeSchema = z.enum(['appdata', 'folder', 'zip', 'git'])
 /** Skill 生命周期状态。 */
 export const SkillStateSchema = z.enum(['disabled', 'enabled', 'error', 'trashed'])
 
+/** MCP 市场描述展示上限，避免远程长文案拖垮设置页响应。 */
+const MCP_MARKET_DESCRIPTION_LIMIT = 2_000
+
 /** Skill manifest 中声明的单个工具。 */
 export const SkillToolManifestSchema = z.strictObject({
   name: SkillToolNameSchema,
@@ -126,7 +129,7 @@ export const McpMarketServerSchema = z.object({
   qualifiedName: z.string().trim().min(1).max(200),
   namespace: z.string().trim().max(200).nullish().transform((value) => value ?? ''),
   displayName: z.string().trim().min(1).max(200),
-  description: z.string().trim().max(2_000).nullish().transform((value) => value ?? ''),
+  description: z.string().transform(normalizeMcpMarketDescription).nullish().transform((value) => value ?? ''),
   iconUrl: z.string().trim().max(2_048).nullish().transform((value) => value ?? undefined),
   verified: z.boolean().default(false),
   useCount: z.number().int().nonnegative().default(0),
@@ -307,6 +310,13 @@ export const SkillHostResultSchema = z.strictObject({
   message: z.string().max(500),
   data: z.unknown().optional()
 })
+
+// ========= 函数 =========
+
+/** 将 Smithery 市场长描述裁剪到 UI 展示上限。 */
+function normalizeMcpMarketDescription(value: string): string {
+  return value.trim().slice(0, MCP_MARKET_DESCRIPTION_LIMIT)
+}
 
 // ========= 类型 =========
 
