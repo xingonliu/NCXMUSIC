@@ -51,7 +51,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--ncx-space-2);
-  border: 1px solid var(--ncx-color-border-subtle);
+  border: none;
   border-radius: var(--ncx-radius-md);
   box-shadow: var(--ncx-btn-shadow);
   color: var(--ncx-color-text-primary);
@@ -66,7 +66,6 @@
   backdrop-filter: var(--ncx-glass-backdrop-subtle);
   transition:
     background-color var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
-    border-color var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
     color var(--ncx-motion-fast),
     box-shadow var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
     transform var(--ncx-motion-instant) cubic-bezier(0.2, 0, 0, 1);
@@ -94,28 +93,28 @@
   flex-shrink: 0;
 }
 
-/* 尺寸规格 (Control Heights aligned with macOS HIG: 24px / 32px / 38px) */
+/* 尺寸规格 (Control Heights: 28px / 34px / 40px) */
 .ncx-common-button-compact {
-  height: 24px;
-  min-height: 24px;
-  padding: 0 10px;
-  border-radius: var(--ncx-radius-sm, 6px);
-  font-size: 11px;
+  height: 28px;
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: var(--ncx-radius-sm, 8px);
+  font-size: 12px;
 }
 
 .ncx-common-button-default {
-  height: var(--ncx-control-default, 32px);
-  min-height: var(--ncx-control-default, 32px);
-  padding: 0 14px;
-  border-radius: var(--ncx-radius-md, 8px);
+  height: var(--ncx-control-default, 34px);
+  min-height: var(--ncx-control-default, 34px);
+  padding: 0 16px;
+  border-radius: var(--ncx-radius-md, 10px);
   font-size: 13px;
 }
 
 .ncx-common-button-prominent {
-  height: 38px;
-  min-height: 38px;
-  padding: 0 18px;
-  border-radius: var(--ncx-radius-lg);
+  height: 40px;
+  min-height: 40px;
+  padding: 0 20px;
+  border-radius: var(--ncx-radius-lg, 12px);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: var(--ncx-tracking-tight);
@@ -123,9 +122,9 @@
 
 /* 变体款式 (Variants) */
 
-/* Primary - macOS Primary Push Button */
+/* Primary - macOS Primary Push Button (保留主题色) */
 .ncx-common-button-primary {
-  border: 1px solid transparent;
+  border: none;
   color: var(--ncx-color-on-accent);
   background: var(--ncx-color-accent);
   box-shadow: var(--ncx-btn-shadow);
@@ -141,29 +140,28 @@
   box-shadow: var(--ncx-btn-shadow-pressed);
 }
 
-/* Secondary - macOS Bordered / Push Button */
+/* Secondary - macOS Bordered / Push Button (白净纯粹底色 + 柔和浮层阴影，无边框) */
 .ncx-common-button-secondary {
-  border: 1px solid var(--ncx-color-border-subtle);
+  border: none;
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-color-surface-raised);
+  background: var(--ncx-btn-bg-secondary);
   backdrop-filter: var(--ncx-glass-backdrop-subtle);
   box-shadow: var(--ncx-btn-shadow);
 }
 
 .ncx-common-button-secondary:hover:not(:disabled) {
-  background: var(--ncx-color-control-hover);
-  border-color: var(--ncx-color-border-default);
+  background: var(--ncx-btn-bg-hover);
   box-shadow: var(--ncx-btn-shadow-hover);
 }
 
 .ncx-common-button-secondary:active:not(:disabled) {
-  background: var(--ncx-color-control-pressed);
+  background: var(--ncx-btn-bg-pressed);
   box-shadow: var(--ncx-btn-shadow-pressed);
 }
 
 /* Ghost - Borderless Button */
 .ncx-common-button-ghost {
-  border: 1px solid transparent;
+  border: none;
   box-shadow: none;
   color: var(--ncx-color-text-primary);
   background: transparent;
@@ -171,31 +169,32 @@
 }
 
 .ncx-common-button-ghost:hover:not(:disabled) {
-  background: var(--ncx-color-control-hover);
-  box-shadow: none;
+  background: var(--ncx-btn-bg-hover);
+  box-shadow: var(--ncx-btn-shadow);
 }
 
 .ncx-common-button-ghost:active:not(:disabled) {
-  background: var(--ncx-color-control-pressed);
+  background: var(--ncx-btn-bg-pressed);
+  box-shadow: var(--ncx-btn-shadow-pressed);
 }
 
-/* Danger - macOS Destructive Button */
+/* Danger - macOS Destructive Button (白净半透明底色，无边框) */
 .ncx-common-button-danger {
-  border: 1px solid color-mix(in srgb, var(--ncx-color-danger) 22%, transparent);
+  border: none;
   color: var(--ncx-color-danger);
-  background: color-mix(in srgb, var(--ncx-color-danger) 10%, transparent);
+  background: var(--ncx-btn-bg-secondary);
   backdrop-filter: var(--ncx-glass-backdrop-subtle);
   box-shadow: var(--ncx-btn-shadow);
 }
 
 .ncx-common-button-danger:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--ncx-color-danger) 16%, transparent);
-  border-color: color-mix(in srgb, var(--ncx-color-danger) 32%, transparent);
+  background: var(--ncx-btn-bg-hover);
+  color: var(--ncx-color-danger);
   box-shadow: var(--ncx-btn-shadow-hover);
 }
 
 .ncx-common-button-danger:active:not(:disabled) {
-  background: color-mix(in srgb, var(--ncx-color-danger) 24%, transparent);
+  background: var(--ncx-btn-bg-pressed);
   box-shadow: var(--ncx-btn-shadow-pressed);
 }
 
@@ -217,7 +216,7 @@
   pointer-events: none !important;
 }
 
-/* ========= CommonHeaderButton & CommonHeaderGroupButton ========= */
+/* ========= CommonHeaderButton & CommonHeaderGroupButton (无边框、白净毛玻璃、浮层柔和阴影) ========= */
 .ncx-common-header-button,
 .ncx-glass-button {
   position: relative;
@@ -226,10 +225,10 @@
   justify-content: center;
   width: 38px;
   height: 38px;
-  border: 1px solid var(--ncx-color-border-subtle);
+  border: none;
   border-radius: 999px;
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-color-surface-raised);
+  background: var(--ncx-btn-bg-secondary);
   backdrop-filter: var(--ncx-glass-backdrop);
   box-shadow: var(--ncx-btn-shadow);
   cursor: pointer;
@@ -237,21 +236,19 @@
   transition:
     transform var(--ncx-motion-instant) cubic-bezier(0.2, 0, 0, 1),
     background-color var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
-    border-color var(--ncx-motion-fast),
     box-shadow var(--ncx-motion-fast);
 }
 
 .ncx-common-header-button:hover,
 .ncx-glass-button:hover {
-  background: var(--ncx-color-control-hover);
-  border-color: var(--ncx-color-border-default);
+  background: var(--ncx-btn-bg-hover);
   box-shadow: var(--ncx-btn-shadow-hover);
 }
 
 .ncx-common-header-button:active,
 .ncx-glass-button:active {
   transform: scale(0.95);
-  background: var(--ncx-color-control-pressed);
+  background: var(--ncx-btn-bg-pressed);
   box-shadow: var(--ncx-btn-shadow-pressed);
 }
 
@@ -264,9 +261,9 @@
   max-width: fit-content;
   flex-shrink: 0;
   padding: 3px;
-  border: 1px solid var(--ncx-color-border-subtle);
+  border: none;
   border-radius: 999px;
-  background: var(--ncx-color-surface-raised);
+  background: var(--ncx-btn-bg-secondary);
   backdrop-filter: var(--ncx-glass-backdrop);
   box-shadow: var(--ncx-btn-shadow);
   -webkit-app-region: no-drag;
@@ -318,17 +315,17 @@
   height: 14px;
   margin: 0 1px;
   border-radius: 1px;
-  background: rgb(0 0 0 / 12%);
+  background: rgb(0 0 0 / 8%);
 }
 
-/* ========= CommonIconButton ========= */
+/* ========= CommonIconButton (无边框、白净毛玻璃、柔和阴影) ========= */
 .ncx-common-icon-button {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: 1px solid transparent;
+  border: none;
   border-radius: var(--ncx-radius-md, 8px);
   color: var(--ncx-color-text-primary);
   background: transparent;
@@ -336,7 +333,6 @@
   user-select: none;
   transition:
     background-color var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
-    border-color var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
     color var(--ncx-motion-fast) ease,
     box-shadow var(--ncx-motion-fast) ease,
     transform var(--ncx-motion-instant) cubic-bezier(0.2, 0, 0, 1);
@@ -347,51 +343,58 @@
 }
 
 .ncx-common-icon-button-compact {
-  width: 24px;
-  height: 24px;
-  border-radius: var(--ncx-radius-sm, 6px);
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  border-radius: var(--ncx-radius-sm, 8px);
 }
 
 .ncx-common-icon-button-default {
-  width: var(--ncx-control-default, 32px);
-  height: var(--ncx-control-default, 32px);
-  border-radius: var(--ncx-radius-md, 8px);
+  width: var(--ncx-control-default, 34px);
+  height: var(--ncx-control-default, 34px);
+  min-width: var(--ncx-control-default, 34px);
+  min-height: var(--ncx-control-default, 34px);
+  border-radius: var(--ncx-radius-md, 10px);
 }
 
 .ncx-common-icon-button-prominent {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--ncx-radius-lg);
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: var(--ncx-radius-lg, 12px);
 }
 
 .ncx-common-icon-button-ghost:hover:not(:disabled) {
-  background: var(--ncx-color-control-hover);
+  background: var(--ncx-btn-bg-hover);
+  box-shadow: var(--ncx-btn-shadow);
 }
 
 .ncx-common-icon-button-ghost:active:not(:disabled) {
-  background: var(--ncx-color-control-pressed);
+  background: var(--ncx-btn-bg-pressed);
+  box-shadow: var(--ncx-btn-shadow-pressed);
 }
 
 .ncx-common-icon-button-secondary {
-  border: 1px solid var(--ncx-color-border-subtle);
-  background: var(--ncx-color-surface-raised);
+  border: none;
+  background: var(--ncx-btn-bg-secondary);
   backdrop-filter: var(--ncx-glass-backdrop-subtle);
   box-shadow: var(--ncx-btn-shadow);
 }
 
 .ncx-common-icon-button-secondary:hover:not(:disabled) {
-  background: var(--ncx-color-control-hover);
-  border-color: var(--ncx-color-border-default);
+  background: var(--ncx-btn-bg-hover);
   box-shadow: var(--ncx-btn-shadow-hover);
 }
 
 .ncx-common-icon-button-secondary:active:not(:disabled) {
-  background: var(--ncx-color-control-pressed);
+  background: var(--ncx-btn-bg-pressed);
   box-shadow: var(--ncx-btn-shadow-pressed);
 }
 
 .ncx-common-icon-button-primary {
-  border: 1px solid transparent;
+  border: none;
   color: var(--ncx-color-on-accent);
   background: var(--ncx-color-accent);
   box-shadow: var(--ncx-btn-shadow);
@@ -408,15 +411,15 @@
 }
 
 .ncx-common-icon-button-selected {
-  border: 1px solid color-mix(in srgb, var(--ncx-color-accent) 25%, transparent);
+  border: none;
   color: var(--ncx-color-accent);
-  background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
-  box-shadow: none;
+  background: var(--ncx-btn-bg-secondary);
+  box-shadow: var(--ncx-btn-shadow);
 }
 
 .ncx-common-icon-button-selected:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--ncx-color-accent) 18%, transparent);
-  border-color: color-mix(in srgb, var(--ncx-color-accent) 35%, transparent);
+  background: var(--ncx-btn-bg-hover);
+  box-shadow: var(--ncx-btn-shadow-hover);
 }
 
 /* ========= CommonButtonGroup ========= */
@@ -454,9 +457,10 @@
 .ncx-common-button-group-segmented {
   gap: var(--ncx-space-1);
   padding: var(--ncx-space-1);
-  border: 1px solid var(--ncx-color-border-subtle);
+  border: none;
   border-radius: var(--ncx-radius-lg);
   background: var(--ncx-color-surface);
+  box-shadow: var(--ncx-btn-shadow);
 }
 
 .ncx-common-button-group-vertical {
@@ -1601,7 +1605,7 @@
   display: inline-flex;
   align-items: center;
   padding: 2px;
-  border: 1px solid var(--ncx-color-border-subtle);
+  border: none;
   border-radius: var(--ncx-radius-md);
   background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
   backdrop-filter: var(--ncx-glass-backdrop-subtle);
@@ -1614,8 +1618,8 @@
   top: 2px;
   bottom: 2px;
   border-radius: calc(var(--ncx-radius-md) - 2px);
-  background: var(--ncx-color-surface-raised);
-  box-shadow: var(--ncx-btn-specular), var(--ncx-btn-shadow);
+  background: var(--ncx-btn-bg-hover);
+  box-shadow: var(--ncx-btn-shadow);
   transition:
     left var(--ncx-motion-normal) var(--ncx-spring-bounce),
     width var(--ncx-motion-normal) var(--ncx-spring-bounce);
