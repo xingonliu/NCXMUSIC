@@ -12,8 +12,9 @@
     "pnpm": "11.20.0"
   },
   "scripts": {
-    "electron:install": "install-electron --no",
-    "dev": "electron-vite dev",
+    "postinstall": "node scripts/sync-electron-icon.mjs",
+    "electron:install": "install-electron --no && node scripts/sync-electron-icon.mjs",
+    "dev": "node scripts/sync-electron-icon.mjs && electron-vite dev",
     "typecheck": "tsc -p tsconfig.node.json --noEmit && vue-tsc -p tsconfig.web.json --noEmit",
     "lint": "eslint . && stylelint \"src/renderer/**/*.css\" && node scripts/check-boundaries.mjs",
     "test": "vitest run",

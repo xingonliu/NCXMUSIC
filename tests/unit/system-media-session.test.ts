@@ -227,6 +227,21 @@ describe('SystemMediaSessionBridge', () => {
     bridge.dispose()
   })
 
+  it('当曲目无封面时回退到应用默认图标封面', () => {
+    const { bridge, session } = createBridgeFixture(
+      createPlayerSnapshot({
+        track: createTrack({ artwork: [] })
+      })
+    )
+
+    expect(session.metadata?.artwork).toEqual([
+      { src: '/icon.png', sizes: '512x512', type: 'image/png' },
+      { src: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+    ])
+
+    bridge.dispose()
+  })
+
   it('无当前曲目时清空系统媒体展示状态', () => {
     const { bridge, session } = createBridgeFixture(
       createPlayerSnapshot({

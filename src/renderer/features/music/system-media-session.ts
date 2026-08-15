@@ -70,6 +70,12 @@ const SYSTEM_MEDIA_PLAYBACK_RATE = 1
 /** 快退/快进媒体键未携带偏移量时使用的默认秒数。 */
 const DEFAULT_SEEK_OFFSET_SECONDS = 10
 
+/** 系统媒体中心在曲目未提供封面时使用的默认应用图标回退候选图。 */
+const DEFAULT_MEDIA_FALLBACK_ARTWORK: readonly MediaImage[] = [
+  { src: '/icon.png', sizes: '512x512', type: 'image/png' },
+  { src: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+]
+
 /** 需要注册到 Media Session 的动作列表。 */
 const SYSTEM_MEDIA_ACTIONS: SupportedSystemMediaAction[] = [
   'play',
@@ -335,7 +341,7 @@ function createMetadataInit(track: TrackSummary): MediaMetadataInit {
     album: track.album
   }
   const artwork = normalizeArtwork(track.artwork)
-  if (artwork) metadata.artwork = artwork
+  metadata.artwork = artwork ?? [...DEFAULT_MEDIA_FALLBACK_ARTWORK]
   return metadata
 }
 
