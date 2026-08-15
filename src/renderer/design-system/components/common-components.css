@@ -53,7 +53,7 @@
   gap: var(--ncx-space-2);
   border: 1px solid var(--ncx-color-border-subtle);
   border-radius: var(--ncx-radius-md);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  box-shadow: var(--ncx-btn-shadow);
   color: var(--ncx-color-text-primary);
   font-family: var(--ncx-font-family);
   font-weight: 500;
@@ -65,15 +65,15 @@
   cursor: pointer;
   backdrop-filter: var(--ncx-glass-backdrop-subtle);
   transition:
-    background-color var(--ncx-motion-fast),
-    border-color var(--ncx-motion-fast),
+    background-color var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
+    border-color var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
     color var(--ncx-motion-fast),
-    box-shadow var(--ncx-motion-fast),
-    transform var(--ncx-motion-instant);
+    box-shadow var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
+    transform var(--ncx-motion-instant) cubic-bezier(0.2, 0, 0, 1);
 }
 
 .ncx-common-button:active:not(:disabled, .ncx-common-button-loading) {
-  transform: scale(0.96);
+  transform: scale(0.97);
 }
 
 .ncx-common-button-text {
@@ -125,20 +125,20 @@
 
 /* Primary - macOS Primary Push Button */
 .ncx-common-button-primary {
-  border: 1px solid rgb(255 255 255 / 25%);
+  border: 1px solid rgb(255 255 255 / 18%);
   color: var(--ncx-color-on-accent);
-  background: linear-gradient(180deg, var(--ncx-color-accent-hover) 0%, var(--ncx-color-accent) 100%);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--ncx-color-accent) 42%, transparent), 0 1px 1px rgb(255 255 255 / 35%) inset;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ncx-color-accent) 92%, white) 0%, var(--ncx-color-accent) 100%);
+  box-shadow: var(--ncx-btn-specular-primary), var(--ncx-btn-shadow);
 }
 
 .ncx-common-button-primary:hover:not(:disabled) {
-  background: var(--ncx-color-accent-hover);
-  box-shadow: 0 4px 14px color-mix(in srgb, var(--ncx-color-accent) 55%, transparent), 0 1px 1px rgb(255 255 255 / 45%) inset;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ncx-color-accent-hover) 94%, white) 0%, var(--ncx-color-accent-hover) 100%);
+  box-shadow: var(--ncx-btn-specular-primary), var(--ncx-btn-shadow-hover);
 }
 
 .ncx-common-button-primary:active:not(:disabled) {
   background: var(--ncx-color-accent-pressed);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 20%) inset;
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 20%);
 }
 
 /* Secondary - macOS Bordered / Push Button */
@@ -147,30 +147,32 @@
   color: var(--ncx-color-text-primary);
   background: var(--ncx-color-surface-raised);
   backdrop-filter: var(--ncx-glass-backdrop-subtle);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 5%), 0 1px 0 rgb(255 255 255 / 40%) inset;
+  box-shadow: var(--ncx-btn-specular), var(--ncx-btn-shadow);
 }
 
 .ncx-common-button-secondary:hover:not(:disabled) {
   background: var(--ncx-color-control-hover);
   border-color: var(--ncx-color-border-default);
-  box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
+  box-shadow: var(--ncx-btn-specular), var(--ncx-btn-shadow-hover);
 }
 
 .ncx-common-button-secondary:active:not(:disabled) {
   background: var(--ncx-color-control-pressed);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 10%) inset;
+  box-shadow: var(--ncx-btn-shadow-pressed);
 }
 
 /* Ghost - Borderless Button */
 .ncx-common-button-ghost {
-  border: none;
+  border: 1px solid transparent;
   box-shadow: none;
   color: var(--ncx-color-text-primary);
   background: transparent;
+  backdrop-filter: none;
 }
 
 .ncx-common-button-ghost:hover:not(:disabled) {
   background: var(--ncx-color-control-hover);
+  box-shadow: none;
 }
 
 .ncx-common-button-ghost:active:not(:disabled) {
@@ -179,19 +181,22 @@
 
 /* Danger - macOS Destructive Button */
 .ncx-common-button-danger {
-  border: 1px solid color-mix(in srgb, var(--ncx-color-danger) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ncx-color-danger) 22%, transparent);
   color: var(--ncx-color-danger);
-  background: color-mix(in srgb, var(--ncx-color-danger) 12%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-danger) 10%, transparent);
   backdrop-filter: var(--ncx-glass-backdrop-subtle);
+  box-shadow: var(--ncx-btn-specular-danger), var(--ncx-btn-shadow);
 }
 
 .ncx-common-button-danger:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--ncx-color-danger) 22%, transparent);
-  border-color: color-mix(in srgb, var(--ncx-color-danger) 35%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-danger) 16%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-danger) 32%, transparent);
+  box-shadow: var(--ncx-btn-specular-danger), var(--ncx-btn-shadow-hover);
 }
 
 .ncx-common-button-danger:active:not(:disabled) {
-  background: color-mix(in srgb, var(--ncx-color-danger) 30%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-danger) 24%, transparent);
+  box-shadow: var(--ncx-btn-shadow-pressed);
 }
 
 /* Loading 状态 */
@@ -226,21 +231,28 @@
   color: var(--ncx-color-text-primary);
   background: var(--ncx-color-surface-raised);
   backdrop-filter: var(--ncx-glass-backdrop);
-  box-shadow: var(--ncx-shadow-elevation-1);
+  box-shadow: var(--ncx-btn-specular), var(--ncx-btn-shadow);
   cursor: pointer;
   -webkit-app-region: no-drag;
-  transition: transform var(--ncx-motion-instant), background-color var(--ncx-motion-fast), box-shadow var(--ncx-motion-fast);
+  transition:
+    transform var(--ncx-motion-instant) cubic-bezier(0.2, 0, 0, 1),
+    background-color var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
+    border-color var(--ncx-motion-fast),
+    box-shadow var(--ncx-motion-fast);
 }
 
 .ncx-common-header-button:hover,
 .ncx-glass-button:hover {
   background: var(--ncx-color-control-hover);
+  border-color: var(--ncx-color-border-default);
+  box-shadow: var(--ncx-btn-specular), var(--ncx-btn-shadow-hover);
 }
 
 .ncx-common-header-button:active,
 .ncx-glass-button:active {
   transform: scale(0.95);
   background: var(--ncx-color-control-pressed);
+  box-shadow: var(--ncx-btn-shadow-pressed);
 }
 
 .ncx-common-header-group-button,
@@ -256,7 +268,7 @@
   border-radius: 999px;
   background: var(--ncx-color-surface-raised);
   backdrop-filter: var(--ncx-glass-backdrop);
-  box-shadow: var(--ncx-shadow-elevation-1);
+  box-shadow: var(--ncx-btn-specular), var(--ncx-btn-shadow);
   -webkit-app-region: no-drag;
 }
 
@@ -316,14 +328,15 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: none;
+  border: 1px solid transparent;
   border-radius: var(--ncx-radius-md, 8px);
   color: var(--ncx-color-text-primary);
   background: transparent;
   cursor: pointer;
   user-select: none;
   transition:
-    background-color var(--ncx-motion-fast) ease,
+    background-color var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
+    border-color var(--ncx-motion-fast) cubic-bezier(0.16, 1, 0.3, 1),
     color var(--ncx-motion-fast) ease,
     box-shadow var(--ncx-motion-fast) ease,
     transform var(--ncx-motion-instant) cubic-bezier(0.2, 0, 0, 1);
@@ -360,19 +373,50 @@
 }
 
 .ncx-common-icon-button-secondary {
-  border: none;
+  border: 1px solid var(--ncx-color-border-subtle);
   background: var(--ncx-color-surface-raised);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 4%);
+  backdrop-filter: var(--ncx-glass-backdrop-subtle);
+  box-shadow: var(--ncx-btn-specular), var(--ncx-btn-shadow);
 }
 
 .ncx-common-icon-button-secondary:hover:not(:disabled) {
   background: var(--ncx-color-control-hover);
+  border-color: var(--ncx-color-border-default);
+  box-shadow: var(--ncx-btn-specular), var(--ncx-btn-shadow-hover);
+}
+
+.ncx-common-icon-button-secondary:active:not(:disabled) {
+  background: var(--ncx-color-control-pressed);
+  box-shadow: var(--ncx-btn-shadow-pressed);
+}
+
+.ncx-common-icon-button-primary {
+  border: 1px solid rgb(255 255 255 / 18%);
+  color: var(--ncx-color-on-accent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ncx-color-accent) 92%, white) 0%, var(--ncx-color-accent) 100%);
+  box-shadow: var(--ncx-btn-specular-primary), var(--ncx-btn-shadow);
+}
+
+.ncx-common-icon-button-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ncx-color-accent-hover) 94%, white) 0%, var(--ncx-color-accent-hover) 100%);
+  box-shadow: var(--ncx-btn-specular-primary), var(--ncx-btn-shadow-hover);
+}
+
+.ncx-common-icon-button-primary:active:not(:disabled) {
+  background: var(--ncx-color-accent-pressed);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 20%);
 }
 
 .ncx-common-icon-button-selected {
-  border: none;
+  border: 1px solid color-mix(in srgb, var(--ncx-color-accent) 25%, transparent);
   color: var(--ncx-color-accent);
-  background: color-mix(in srgb, var(--ncx-color-accent) 15%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
+  box-shadow: none;
+}
+
+.ncx-common-icon-button-selected:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--ncx-color-accent) 18%, transparent);
+  border-color: color-mix(in srgb, var(--ncx-color-accent) 35%, transparent);
 }
 
 /* ========= CommonButtonGroup ========= */
@@ -1571,7 +1615,7 @@
   bottom: 2px;
   border-radius: calc(var(--ncx-radius-md) - 2px);
   background: var(--ncx-color-surface-raised);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 12%), 0 0.5px 1px rgb(255 255 255 / 45%) inset;
+  box-shadow: var(--ncx-btn-specular), var(--ncx-btn-shadow);
   transition:
     left var(--ncx-motion-normal) var(--ncx-spring-bounce),
     width var(--ncx-motion-normal) var(--ncx-spring-bounce);
