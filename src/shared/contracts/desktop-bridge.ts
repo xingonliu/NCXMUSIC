@@ -1,3 +1,4 @@
+import type { AgentSettingsBridge } from './agent-settings-bridge'
 import type { AccountBridge } from './account-bridge'
 import type { ClipboardBridge } from './clipboard-bridge'
 import type { LifecycleBridge } from './lifecycle-bridge'
@@ -15,6 +16,8 @@ export interface DesktopBridge {
     readonly electron: string
     readonly node: string
   }
+  /** 应用级 Agent 安全设置。 */
+  readonly agentSettings: AgentSettingsBridge
   readonly account: AccountBridge
   readonly clipboard: ClipboardBridge
   readonly extensions: ExtensionBridge

@@ -10,6 +10,7 @@ import {
   type CommandSafetyLevel,
   type MusicSafetyLevel
 } from '../../../shared/schemas/agent'
+import type { AgentSafetyPreferences } from '../../../shared/schemas/agent-settings'
 import type { PlayerCommandAction } from '../../../shared/schemas/player-command'
 import type { TrackSummary } from '../../../domains/player/types'
 
@@ -33,11 +34,11 @@ export interface AgentStore {
   respondSelection(selectionId: string, selectedOptionKeys: string[]): Promise<void>
   /** 取消无副作用选择。 */
   cancelSelection(selectionId: string): Promise<void>
-  /** 设置音乐安全等级并持久化当前账户偏好。 */
+  /** 设置音乐安全等级并持久化应用级偏好。 */
   setMusicSafetyLevel(level: MusicSafetyLevel): Promise<void>
-  /** 设置命令安全等级并持久化当前账户偏好。 */
+  /** 设置命令安全等级并持久化应用级偏好。 */
   setCommandSafetyLevel(level: CommandSafetyLevel): Promise<void>
-  /** 设置 Shell Tool 开关并持久化当前账户偏好。 */
+  /** 设置 Shell Tool 开关并持久化应用级偏好。 */
   setShellToolEnabled(enabled: boolean): Promise<void>
   /** 用户明确启动初始化、更新或重新生成画像。 */
   startProfileAnalysis(mode: 'initialize' | 'update' | 'regenerate'): Promise<void>
@@ -111,6 +112,15 @@ async function execute(command: AgentCommand): Promise<void> {
   /** Utility Agent 响应。 */
   const response = await window.ncx.runtime.agent(command)
   if (response.ok) snapshot.value = response.data
+}
+
+/** 在 Renderer 本地立即应用安全偏好，避免运行时暂不可用导致 UI 回弹。 */
+function applySafetyPreferences(preferences: AgentSafetyPreferences): void {
+  snapshot.value = AgentSnapshotSchema.parse({
+    ...snapshot.value,
+    ...preferences,
+    updatedAt: Date.now()
+  })
 }
 
 /** 处理 Utility 的快照与播放器命令事件。 */
@@ -202,70 +212,49 @@ async function initialize(): Promise<void> {
   return initializing
 }
 
-/** 从当前账户 SQLite 恢复双安全等级与 Shell 开关。 */
+/** 从 Main 本地配置恢复双安全等级与 Shell 开关。 */
 async function hydrateSafetyPreferences(): Promise<void> {
-  /** 当前账户快照。 */
-  const account = await window.ncx.account.snapshot()
-  /** 当前账户偏好响应。 */
-  const response = await window.ncx.runtime.accountData({
-    operation: 'getPreferences',
-    accountId: account.activeAccount.accountId,
-    accountGeneration: account.accountGeneration
-  })
-  if (!response.ok || response.data.operation !== 'getPreferences') return
-  /** 持久音乐安全等级。 */
-  const musicSafetyLevel = response.data.preferences['agent.musicSafetyLevel']
-  /** 持久命令安全等级。 */
-  const commandSafetyLevel = response.data.preferences['agent.commandSafetyLevel']
-  /** 持久 Shell Tool 开关。 */
-  const shellToolEnabled = response.data.preferences['agent.shellToolEnabled']
+  /** Main 持久化的应用级安全偏好。 */
+  const response = await window.ncx.agentSettings.request({ operation: 'snapshot' })
+  applySafetyPreferences(response.preferences)
   await execute({
     operation: 'setSafety',
-    ...(isMusicSafetyLevel(musicSafetyLevel) ? { musicSafetyLevel } : {}),
-    ...(isCommandSafetyLevel(commandSafetyLevel) ? { commandSafetyLevel } : {}),
-    ...(typeof shellToolEnabled === 'boolean' ? { shellToolEnabled } : {})
+    ...response.preferences
   })
 }
 
-/** 持久化单个安全偏好。 */
-async function persistSafetyPreference(key: string, value: string | boolean): Promise<void> {
-  /** 当前账户快照。 */
-  const account = await window.ncx.account.snapshot()
-  await window.ncx.runtime.accountData({
-    operation: 'setPreference',
-    accountId: account.activeAccount.accountId,
-    accountGeneration: account.accountGeneration,
-    key,
-    value
+/** 持久化应用级安全偏好并返回合并后的完整偏好。 */
+async function persistSafetyPreferences(preferences: Partial<AgentSafetyPreferences>): Promise<AgentSafetyPreferences> {
+  /** Main 写入后的完整安全偏好。 */
+  const response = await window.ncx.agentSettings.request({
+    operation: 'setSafety',
+    ...preferences
   })
+  return response.preferences
 }
 
 /** 设置音乐安全等级并立即应用。 */
 async function setMusicSafetyLevel(level: MusicSafetyLevel): Promise<void> {
-  await execute({ operation: 'setSafety', musicSafetyLevel: level })
-  await persistSafetyPreference('agent.musicSafetyLevel', level)
+  /** 写入 Main 后返回的完整偏好。 */
+  const preferences = await persistSafetyPreferences({ musicSafetyLevel: level })
+  applySafetyPreferences(preferences)
+  await execute({ operation: 'setSafety', ...preferences })
 }
 
 /** 设置命令安全等级并立即应用。 */
 async function setCommandSafetyLevel(level: CommandSafetyLevel): Promise<void> {
-  await execute({ operation: 'setSafety', commandSafetyLevel: level })
-  await persistSafetyPreference('agent.commandSafetyLevel', level)
+  /** 写入 Main 后返回的完整偏好。 */
+  const preferences = await persistSafetyPreferences({ commandSafetyLevel: level })
+  applySafetyPreferences(preferences)
+  await execute({ operation: 'setSafety', ...preferences })
 }
 
 /** 设置 Shell Tool 开关并立即应用。 */
 async function setShellToolEnabled(enabled: boolean): Promise<void> {
-  await execute({ operation: 'setSafety', shellToolEnabled: enabled })
-  await persistSafetyPreference('agent.shellToolEnabled', enabled)
-}
-
-/** 判断持久值是否为音乐安全等级。 */
-function isMusicSafetyLevel(value: unknown): value is MusicSafetyLevel {
-  return value === 'M1' || value === 'M2' || value === 'M3' || value === 'M4'
-}
-
-/** 判断持久值是否为命令安全等级。 */
-function isCommandSafetyLevel(value: unknown): value is CommandSafetyLevel {
-  return value === 'S1' || value === 'S2' || value === 'S3' || value === 'S4'
+  /** 写入 Main 后返回的完整偏好。 */
+  const preferences = await persistSafetyPreferences({ shellToolEnabled: enabled })
+  applySafetyPreferences(preferences)
+  await execute({ operation: 'setSafety', ...preferences })
 }
 
 /** 将播放器动作转换为用户可理解的真实回执摘要。 */

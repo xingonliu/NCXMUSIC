@@ -20,6 +20,7 @@ import {
   resolveNcxCacheRoot,
   resolveNcxDataRoot
 } from '../infrastructure/persistence/account-space'
+import { AGENT_SETTINGS_CHANNELS } from '../shared/contracts/agent-settings-bridge'
 import { ACCOUNT_CHANNELS } from '../shared/contracts/account-bridge'
 import { PROVIDER_PROFILE_CHANNELS } from '../shared/contracts/provider-profile-bridge'
 import {
@@ -38,6 +39,11 @@ import {
 } from '../shared/contracts/window-controls'
 import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
 import { AccountSessionSnapshotSchema, type AccountSessionSnapshot } from '../shared/schemas/account'
+import {
+  AgentSafetyRuntimeSyncSchema,
+  AgentSafetySettingsRequestSchema,
+  AgentSafetySettingsResultSchema
+} from '../shared/schemas/agent-settings'
 import { RuntimeStatusSchema } from '../shared/schemas/control-plane'
 import { ProviderProfileRequestSchema } from '../shared/schemas/provider-profile'
 import { ExtensionSettingsRequestSchema } from '../shared/schemas/extensions'
@@ -411,6 +417,19 @@ function publishVoiceShortcutEvent(rawEvent: unknown): void {
   window.webContents.send(VOICE_SHORTCUT_CHANNELS.event, event.data)
 }
 
+/** 将 Main 持久化的 Agent 安全设置同步给当前 Utility 代次。 */
+function syncAgentSafetyToUtility(): boolean {
+  /** 当前 Main 配置存储。 */
+  const store = appConfigStore
+  if (!store) return false
+  /** 当前已校验的应用配置。 */
+  const config = store.load()
+  return supervisor?.postControl(AgentSafetyRuntimeSyncSchema.parse({
+    kind: 'agent.safety.sync',
+    preferences: config.agentSafety
+  })) ?? false
+}
+
 function registerControlPlane(): void {
   ipcMain.on(LIFECYCLE_CHANNELS.flushAck, (event, requestId: unknown) => {
     if (!isTrustedSender(event) || typeof requestId !== 'string') return
@@ -437,6 +456,24 @@ function registerControlPlane(): void {
     /** Renderer 请求必须先通过共享 Schema。 */
     const request = ProviderProfileRequestSchema.parse(rawRequest)
     return providerProfileCoordinator.handle(request)
+  })
+
+  ipcMain.handle(AGENT_SETTINGS_CHANNELS.request, async (event, rawRequest: unknown) => {
+    if (!isTrustedSender(event) || !appConfigStore) {
+      throw new Error('Agent 安全设置服务不可用。')
+    }
+    /** Renderer 发来的严格 Agent 安全设置请求。 */
+    const request = AgentSafetySettingsRequestSchema.parse(rawRequest)
+    /** Main 当前应用配置。 */
+    const config = request.operation === 'setSafety'
+      ? appConfigStore.setAgentSafety({
+          ...(request.musicSafetyLevel ? { musicSafetyLevel: request.musicSafetyLevel } : {}),
+          ...(request.commandSafetyLevel ? { commandSafetyLevel: request.commandSafetyLevel } : {}),
+          ...(request.shellToolEnabled !== undefined ? { shellToolEnabled: request.shellToolEnabled } : {})
+        })
+      : appConfigStore.load()
+    if (request.operation === 'setSafety') syncAgentSafetyToUtility()
+    return AgentSafetySettingsResultSchema.parse({ preferences: config.agentSafety })
   })
 
   ipcMain.handle(EXTENSION_CHANNELS.request, async (event, rawRequest: unknown) => {
@@ -782,6 +819,7 @@ if (!hasSingleInstanceLock) {
       supervisor.onStatus((status) => {
         broadcastStatus(status)
         if (status.state === 'ready') {
+          syncAgentSafetyToUtility()
           providerProfileCoordinator?.syncUtility()
           extensionCoordinator?.syncUtility()
           shellSettingsCoordinator?.syncUtility()

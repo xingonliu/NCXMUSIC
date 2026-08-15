@@ -4,6 +4,7 @@ import { AgentExternalTools } from '../infrastructure/extensions/agent-external-
 import { McpManager } from '../infrastructure/extensions/mcp-manager'
 import { SkillRuntimeManager } from '../infrastructure/extensions/skill-runtime-manager'
 import { requestProviderTextStream } from '../infrastructure/provider/provider-protocol'
+import { AgentSafetyRuntimeSyncSchema } from '../shared/schemas/agent-settings'
 import { ProviderRuntimeControlSchema } from '../shared/schemas/provider-profile'
 import {
   CredentialControlCommandSchema,
@@ -188,6 +189,13 @@ const runtime = new UtilityRuntimeServer(
 const shouldCrashBeforeReady = process.argv.includes('--ncx-smoke-crash-before-ready')
 
 process.parentPort.on('message', (event) => {
+  /** Main 同步的应用级 Agent 安全设置。 */
+  const agentSafetySync = AgentSafetyRuntimeSyncSchema.safeParse(event.data)
+  if (agentSafetySync.success) {
+    agentRuntime.configureSafety(agentSafetySync.data.preferences)
+    return
+  }
+
   /** Main 同步的用户授权 Shell 工作区。 */
   const shellWorkspaceSync = ShellWorkspaceRuntimeSyncSchema.safeParse(event.data)
   if (shellWorkspaceSync.success) {

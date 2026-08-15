@@ -39,6 +39,28 @@ describe('AppConfigStore', () => {
     expect(restarted.load().closeWindowBehavior).toBe('quit')
   })
 
+  it('由 Main 持久化 Agent 安全偏好并在重启后恢复', () => {
+    const root = configRoot()
+    const firstRun = new AppConfigStore(root)
+    expect(firstRun.load().agentSafety).toEqual({
+      musicSafetyLevel: 'M1',
+      commandSafetyLevel: 'S1',
+      shellToolEnabled: false
+    })
+    firstRun.setAgentSafety({
+      musicSafetyLevel: 'M3',
+      commandSafetyLevel: 'S4',
+      shellToolEnabled: true
+    })
+
+    const restarted = new AppConfigStore(root)
+    expect(restarted.load().agentSafety).toEqual({
+      musicSafetyLevel: 'M3',
+      commandSafetyLevel: 'S4',
+      shellToolEnabled: true
+    })
+  })
+
   it('配置损坏时安全回退到最小化', () => {
     const root = configRoot()
     writeFileSync(join(root, 'ncx-config.json'), '{not-json', 'utf8')

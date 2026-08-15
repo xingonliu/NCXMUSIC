@@ -1,5 +1,9 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
+import {
+  AGENT_SETTINGS_CHANNELS,
+  type AgentSettingsBridge
+} from '../shared/contracts/agent-settings-bridge'
 import { ACCOUNT_CHANNELS, type AccountBridge } from '../shared/contracts/account-bridge'
 import {
   CLIPBOARD_CHANNELS,
@@ -41,6 +45,10 @@ import {
   type WindowSnapshot
 } from '../shared/contracts/window-controls'
 import { AccountSessionSnapshotSchema, type AccountSessionSnapshot } from '../shared/schemas/account'
+import {
+  AgentSafetySettingsRequestSchema,
+  AgentSafetySettingsResultSchema
+} from '../shared/schemas/agent-settings'
 import {
   ExtensionSettingsRequestSchema,
   ExtensionSettingsResultSchema
@@ -270,6 +278,17 @@ const accountBridge: AccountBridge = {
   }
 }
 
+/** 只允许 Renderer 通过共享 Schema 读写应用级 Agent 安全设置。 */
+const agentSettingsBridge: AgentSettingsBridge = {
+  request: async (input) => {
+    /** 经共享 Schema 校验的 Agent 安全设置请求。 */
+    const request = AgentSafetySettingsRequestSchema.parse(input)
+    /** Main 返回的持久 Agent 安全设置结果。 */
+    const result = await ipcRenderer.invoke(AGENT_SETTINGS_CHANNELS.request, request)
+    return AgentSafetySettingsResultSchema.parse(result)
+  }
+}
+
 /** 仅允许写入受限纯文本的系统剪贴板桥。 */
 const clipboardBridge: ClipboardBridge = {
   writeText: async (text) => {
@@ -388,6 +407,7 @@ const bridge: DesktopBridge = Object.freeze({
     electron: process.versions.electron,
     node: process.versions.node
   }),
+  agentSettings: agentSettingsBridge,
   account: accountBridge,
   clipboard: clipboardBridge,
   extensions: extensionBridge,

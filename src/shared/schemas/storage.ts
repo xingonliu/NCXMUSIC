@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { AgentSafetyPreferencesSchema } from './agent-settings'
+
 // ─────────────────────────────────────────────────────────────────────────────
 // 变量区
 // ─────────────────────────────────────────────────────────────────────────────
@@ -26,6 +28,11 @@ export const AppConfigSchema = z.strictObject({
   theme: AppThemeSchema.default('system'),
   window: WindowConfigSchema,
   closeWindowBehavior: z.enum(['minimize', 'quit']).default('minimize'),
+  agentSafety: AgentSafetyPreferencesSchema.default({
+    musicSafetyLevel: 'M1',
+    commandSafetyLevel: 'S1',
+    shellToolEnabled: false
+  }),
   lastOpenedAccountId: z.string().regex(/^(guest:local|netease:\d+)$/u).default('guest:local')
 })
 

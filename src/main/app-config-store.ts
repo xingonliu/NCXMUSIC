@@ -6,6 +6,7 @@ import {
   AppConfigSchema,
   type AppConfig
 } from '../shared/schemas/storage'
+import type { AgentSafetyPreferences } from '../shared/schemas/agent-settings'
 
 // ========= 变量 =========
 
@@ -15,6 +16,11 @@ const DEFAULT_APP_CONFIG: AppConfig = {
   theme: 'system',
   window: { width: 1200, height: 800, maximized: false },
   closeWindowBehavior: 'minimize',
+  agentSafety: {
+    musicSafetyLevel: 'M1',
+    commandSafetyLevel: 'S1',
+    shellToolEnabled: false
+  },
   lastOpenedAccountId: 'guest:local'
 }
 
@@ -42,14 +48,27 @@ export class AppConfigStore {
     } catch {
       this.config = DEFAULT_APP_CONFIG
     }
-    return { ...this.config, window: { ...this.config.window } }
+    return cloneConfig(this.config)
   }
 
   /** 持久化主窗口关闭行为；`minimize` 为兼容旧配置的关闭到托盘值。 */
   setCloseWindowBehavior(closeWindowBehavior: 'minimize' | 'quit'): AppConfig {
     this.config = { ...this.config, closeWindowBehavior }
     this.persist()
-    return { ...this.config, window: { ...this.config.window } }
+    return cloneConfig(this.config)
+  }
+
+  /** 持久化应用级 Agent 安全偏好，避免重启时被 Utility 启动时序重置。 */
+  setAgentSafety(preferences: Partial<AgentSafetyPreferences>): AppConfig {
+    this.config = {
+      ...this.config,
+      agentSafety: {
+        ...this.config.agentSafety,
+        ...preferences
+      }
+    }
+    this.persist()
+    return cloneConfig(this.config)
   }
 
   /** 以同目录临时文件加原子重命名写入配置。 */
@@ -64,5 +83,16 @@ export class AppConfigStore {
       mode: 0o600
     })
     renameSync(temporaryPath, this.configPath)
+  }
+}
+
+// ========= 函数 =========
+
+/** 返回不会被调用方意外改写的应用配置快照。 */
+function cloneConfig(config: AppConfig): AppConfig {
+  return {
+    ...config,
+    window: { ...config.window },
+    agentSafety: { ...config.agentSafety }
   }
 }

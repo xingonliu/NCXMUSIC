@@ -38,6 +38,7 @@ import {
   PersistedAgentConversationSchema,
   type PersistedAgentConversation
 } from '../../shared/schemas/agent-persistence'
+import type { AgentSafetyPreferences } from '../../shared/schemas/agent-settings'
 import {
   MusicProfileAnalysisSchema,
   type MusicProfileAnalysis
@@ -499,6 +500,14 @@ export class AgentRuntime {
   /** Main 私有配置通道注入或清除当前 Provider。 */
   configureProvider(profile: AgentProviderProfile | undefined): void {
     this.profile = profile
+    this.publish()
+  }
+
+  /** Main 应用配置变更后同步当前安全等级与 Shell Tool 可见性。 */
+  configureSafety(preferences: AgentSafetyPreferences): void {
+    this.musicSafetyLevel = preferences.musicSafetyLevel
+    this.commandSafetyLevel = preferences.commandSafetyLevel
+    this.shellToolEnabled = preferences.shellToolEnabled
     this.publish()
   }
 
