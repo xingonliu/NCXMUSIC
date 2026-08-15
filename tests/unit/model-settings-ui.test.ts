@@ -28,13 +28,25 @@ describe('model settings UI contract', () => {
     expect(modelSettingsSource).toContain('<Trash2')
   })
 
-  it('提供居中的预设与自定义分段表单及 API Key 双操作按钮', () => {
+  it('提供居中的预设与自定义分段表单及 API Key 操作按钮', () => {
     expect(modelSettingsSource).toContain('<CommonSegmentedControl')
     expect(modelSettingsSource).toContain("{ label: '预设', value: 'preset' }")
     expect(modelSettingsSource).toContain("{ label: '自定义', value: 'custom' }")
-    expect(modelSettingsSource.match(/type="password"/gu)).toHaveLength(2)
+    expect(modelSettingsSource.match(/type="password"/gu)?.length).toBeGreaterThanOrEqual(2)
     expect(modelSettingsSource.match(/clearable/gu)?.length).toBeGreaterThanOrEqual(2)
     expect(modelSettingsSource.match(/revealable/gu)?.length).toBeGreaterThanOrEqual(2)
+  })
+
+  it('提供编辑模型功能与 Pencil 编辑按钮', () => {
+    expect(modelSettingsSource).toContain('title="编辑模型"')
+    expect(modelSettingsSource).toContain('<Pencil')
+    expect(modelSettingsSource).toContain('openEditDialog')
+    expect(modelSettingsSource).toContain('saveEditProfile')
+  })
+
+  it('集成 ModelIconPicker 与 ModelIconView 图标能力', () => {
+    expect(modelSettingsSource).toContain('<ModelIconPicker')
+    expect(modelSettingsSource).toContain('<ModelIconView')
   })
 
   it('同时使用 OpenRouter 模型与计数接口，并按 created 排序', () => {

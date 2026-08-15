@@ -25,6 +25,7 @@ export const PublicProviderProfileSchema = z.strictObject({
   protocol: ProviderProtocolSchema,
   baseUrl: z.url().max(2_048),
   modelId: z.string().trim().min(1).max(200),
+  icon: z.string().trim().max(500).optional(),
   headerNames: z.array(z.string().min(1).max(80)).max(16),
   enabled: z.boolean(),
   isDefault: z.boolean(),
@@ -40,6 +41,7 @@ export const ProviderProfileInputSchema = z.strictObject({
   protocol: ProviderProtocolSchema,
   baseUrl: z.url().max(2_048),
   modelId: z.string().trim().min(1).max(200),
+  icon: z.string().trim().max(500).optional(),
   apiKey: z.string().max(8_192).optional(),
   customHeaders: z.record(
     z.string().regex(/^[A-Za-z0-9-]{1,80}$/u),

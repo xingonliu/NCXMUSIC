@@ -374,8 +374,16 @@
   border-top: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
 }
 
+.model-profile-row:hover {
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 3.5%, transparent);
+}
+
 .model-profile-row.is-active {
-  background: color-mix(in srgb, var(--ncx-color-accent) 6%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
+}
+
+.model-profile-row.is-active:hover {
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 9%, transparent);
 }
 
 .model-profile-data-disclosure {
@@ -384,24 +392,26 @@
   border: 1px solid var(--ncx-color-border);
   border-radius: var(--ncx-radius-md);
   color: var(--ncx-color-text-secondary);
-  background: color-mix(in srgb, var(--ncx-color-accent) 6%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent);
   font-size: 12px;
   line-height: 1.55;
 }
 
 .model-profile-icon {
   display: inline-flex;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  color: var(--ncx-color-accent);
+  color: var(--ncx-color-text-primary);
   background: color-mix(
     in srgb,
-    var(--ncx-color-agent-surface) 90%,
+    var(--ncx-color-text-primary) 8%,
     transparent
   );
+  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
+  flex-shrink: 0;
 }
 
 .model-profile-copy {
@@ -442,11 +452,18 @@
 }
 
 .model-profile-default {
-  padding: 2px 6px;
+  padding: 2px 7px;
   border-radius: 999px;
-  color: var(--ncx-color-accent);
-  background: color-mix(in srgb, var(--ncx-color-accent) 9%, transparent);
+  color: var(--ncx-color-text-secondary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 10%, transparent);
   font-size: 9px;
+  font-weight: 500;
+}
+
+.model-edit-dialog {
+  display: grid;
+  gap: var(--ncx-space-4);
 }
 
 .model-profile-empty {

@@ -47,6 +47,8 @@ interface StoredProviderProfile {
   readonly baseUrl: string
   /** 模型 ID。 */
   readonly modelId: string
+  /** 模型图标标识或 URL。 */
+  readonly icon?: string | undefined
   /** 仅用于公开展示的 Header 名称。 */
   readonly headerNames: readonly string[]
   /** 是否启用。 */
@@ -77,6 +79,7 @@ const StoredProviderProfileSchema = z.strictObject({
   protocol: ProviderProfileInputSchema.shape.protocol,
   baseUrl: z.url().max(2_048),
   modelId: z.string().min(1).max(200),
+  icon: z.string().max(500).optional(),
   headerNames: z.array(z.string()).max(16),
   enabled: z.boolean(),
   encryptedSecrets: z.string().min(1),
@@ -168,6 +171,7 @@ export class ProviderProfileStore {
       protocol: input.protocol,
       baseUrl: input.baseUrl.replace(/\/+$/u, ''),
       modelId: input.modelId,
+      ...(input.icon !== undefined ? { icon: input.icon } : existing?.icon ? { icon: existing.icon } : {}),
       headerNames: Object.keys(input.customHeaders).sort(),
       enabled: input.enabled,
       encryptedSecrets: this.encryptSecrets(secrets),
@@ -261,6 +265,7 @@ export class ProviderProfileStore {
       protocol: profile.protocol,
       baseUrl: profile.baseUrl,
       modelId: profile.modelId,
+      ...(profile.icon ? { icon: profile.icon } : {}),
       headerNames: profile.headerNames,
       enabled: profile.enabled,
       isDefault: profile.profileId === this.activeProfileId(),

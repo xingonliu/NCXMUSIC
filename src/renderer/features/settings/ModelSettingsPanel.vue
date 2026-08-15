@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CheckCircle2, KeyRound, Plus, RefreshCw, Trash2 } from '@lucide/vue'
+import { CheckCircle2, KeyRound, Pencil, Plus, RefreshCw, Trash2 } from '@lucide/vue'
 import { computed, onMounted, reactive, ref } from 'vue'
 
 import type {
@@ -19,6 +19,8 @@ import {
   type CommonOption
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
+import ModelIconPicker from './components/ModelIconPicker.vue'
+import ModelIconView from './components/ModelIconView.vue'
 import SettingsSection from './SettingsSection.vue'
 
 // ========= 类型 =========
@@ -40,6 +42,26 @@ interface ModelEditor {
   apiKey: string
   /** 默认模型 ID。 */
   modelId: string
+  /** 选中的图标标识。 */
+  icon: string
+}
+
+/** 编辑模型弹窗表单。 */
+interface ModelEditEditor {
+  /** 被编辑的 Profile 稳定 ID。 */
+  profileId: string
+  /** 协议类型。 */
+  protocol: PublicProviderProfile['protocol']
+  /** Profile 展示名。 */
+  displayName: string
+  /** 模型服务根地址。 */
+  baseUrl: string
+  /** 默认模型 ID。 */
+  modelId: string
+  /** 选中的图标标识。 */
+  icon: string
+  /** 新输入的 API Key，留空则保持原密钥。 */
+  apiKey: string
 }
 
 // ========= 变量 =========
@@ -62,6 +84,9 @@ const catalogError = ref<string>('')
 /** 新增模型弹窗显示状态。 */
 const addDialogVisible = ref<boolean>(false)
 
+/** 编辑模型弹窗显示状态。 */
+const editDialogVisible = ref<boolean>(false)
+
 /** 等待用户确认删除的 Profile。 */
 const deleteCandidate = ref<PublicProviderProfile | undefined>()
 
@@ -71,8 +96,14 @@ const busyProfileId = ref<string | undefined>()
 /** 新增模型保存状态。 */
 const saveBusy = ref<boolean>(false)
 
+/** 编辑模型保存状态。 */
+const editSaveBusy = ref<boolean>(false)
+
 /** 新增模型表单。 */
 const editor = reactive<ModelEditor>(createEmptyEditor())
+
+/** 编辑模型表单。 */
+const editEditor = reactive<ModelEditEditor>(createEmptyEditEditor())
 
 /** 预设与自定义分段控制器选项。 */
 const editorModeOptions: CommonOption[] = [
@@ -128,7 +159,21 @@ function createEmptyEditor(): ModelEditor {
     displayName: '',
     baseUrl: '',
     apiKey: '',
-    modelId: ''
+    modelId: '',
+    icon: ''
+  }
+}
+
+/** 创建空白编辑模型表单。 */
+function createEmptyEditEditor(): ModelEditEditor {
+  return {
+    profileId: '',
+    protocol: 'openai-compatible',
+    displayName: '',
+    baseUrl: '',
+    modelId: '',
+    icon: '',
+    apiKey: ''
   }
 }
 
@@ -223,6 +268,24 @@ function closeAddDialog(): void {
   addDialogVisible.value = false
 }
 
+/** 打开指定 Profile 的编辑弹窗。 */
+function openEditDialog(profile: PublicProviderProfile): void {
+  editEditor.profileId = profile.profileId
+  editEditor.protocol = profile.protocol
+  editEditor.displayName = profile.displayName
+  editEditor.baseUrl = profile.baseUrl
+  editEditor.modelId = profile.modelId
+  editEditor.icon = profile.icon ?? ''
+  editEditor.apiKey = ''
+  editDialogVisible.value = true
+}
+
+/** 在非保存状态下关闭编辑模型弹窗。 */
+function closeEditDialog(): void {
+  if (editSaveBusy.value) return
+  editDialogVisible.value = false
+}
+
 /** 切换新增模型配置方式并清除另一种方式的残留值。 */
 function setEditorMode(value: string | number): void {
   /** 分段控制器返回的合法配置方式。 */
@@ -254,6 +317,9 @@ async function saveProfile(): Promise<void> {
   const baseUrl = editor.baseUrl.trim()
   /** 去除首尾空白后的模型 ID。 */
   const modelId = editor.modelId.trim()
+  /** 选中的图标标识。 */
+  const icon = editor.icon.trim()
+
   if (editor.mode === 'preset' && !selectedVendor.value) {
     showToast('请先选择厂商。', 'warning')
     return
@@ -277,6 +343,7 @@ async function saveProfile(): Promise<void> {
         protocol: 'openai-compatible',
         baseUrl,
         modelId,
+        ...(icon ? { icon } : {}),
         ...(editor.apiKey ? { apiKey: editor.apiKey } : {}),
         customHeaders: {},
         enabled: true
@@ -290,6 +357,55 @@ async function saveProfile(): Promise<void> {
     showToast(error instanceof Error ? error.message : '模型保存失败。', 'warning')
   } finally {
     saveBusy.value = false
+  }
+}
+
+/** 保存编辑后的模型配置。 */
+async function saveEditProfile(): Promise<void> {
+  /** 被编辑的 Profile 稳定 ID。 */
+  const profileId = editEditor.profileId
+  /** 去除首尾空白后的供应商展示名。 */
+  const displayName = editEditor.displayName.trim()
+  /** 去除首尾空白后的服务地址。 */
+  const baseUrl = editEditor.baseUrl.trim()
+  /** 去除首尾空白后的模型 ID。 */
+  const modelId = editEditor.modelId.trim()
+  /** 选中的图标标识。 */
+  const icon = editEditor.icon.trim()
+  /** 新输入的 API Key。 */
+  const apiKey = editEditor.apiKey.trim()
+
+  if (!profileId) return
+  if (!displayName || !baseUrl || !modelId) {
+    showToast('请完整填写厂商名称、Base URL 和默认模型。', 'warning')
+    return
+  }
+
+  editSaveBusy.value = true
+  try {
+    /** 保存后的公开 Profile 快照。 */
+    const result = await window.ncx.providerProfiles.request({
+      operation: 'save',
+      profile: {
+        profileId,
+        displayName,
+        protocol: editEditor.protocol,
+        baseUrl,
+        modelId,
+        icon,
+        ...(apiKey ? { apiKey } : {}),
+        customHeaders: {},
+        enabled: true
+      }
+    })
+    profiles.value = result.profiles
+    activeProfileId.value = result.activeProfileId
+    editDialogVisible.value = false
+    showToast('模型配置已更新。', 'success')
+  } catch (error) {
+    showToast(error instanceof Error ? error.message : '模型保存失败。', 'warning')
+  } finally {
+    editSaveBusy.value = false
   }
 }
 
@@ -393,10 +509,13 @@ onMounted(() => {
       class="model-profile-row"
       :class="{ 'is-active': profile.profileId === activeProfileId }"
     >
-      <span class="model-profile-icon"><KeyRound
-        :size="17"
-        :stroke-width="1.8"
-      /></span>
+      <span class="model-profile-icon">
+        <ModelIconView
+          :icon="profile.icon"
+          :name="profile.displayName"
+          :size="18"
+        />
+      </span>
       <span class="model-profile-copy">
         <strong>{{ profile.displayName }}</strong>
         <small>{{ profile.modelId }} · {{ profile.baseUrl }}</small>
@@ -414,6 +533,14 @@ onMounted(() => {
         >默认</span>
       </span>
       <span class="model-profile-actions">
+        <CommonButton
+          size="compact"
+          variant="secondary"
+          :disabled="busyProfileId !== undefined"
+          @click="openEditDialog(profile)"
+        >
+          <Pencil :size="13" />编辑
+        </CommonButton>
         <CommonButton
           v-if="profile.enabled"
           size="compact"
@@ -454,6 +581,7 @@ onMounted(() => {
     </div>
   </SettingsSection>
 
+  <!-- 新增模型弹窗 -->
   <CommonDialog
     :visible="addDialogVisible"
     title="新增模型"
@@ -469,6 +597,11 @@ onMounted(() => {
         :model-value="editor.mode"
         :options="editorModeOptions"
         @update:model-value="setEditorMode"
+      />
+
+      <ModelIconPicker
+        v-model="editor.icon"
+        :display-name="editor.displayName"
       />
 
       <p
@@ -596,6 +729,82 @@ onMounted(() => {
         @click="saveProfile"
       >
         新增模型
+      </CommonButton>
+    </template>
+  </CommonDialog>
+
+  <!-- 编辑模型弹窗 -->
+  <CommonDialog
+    :visible="editDialogVisible"
+    title="编辑模型"
+    subtitle="修改模型配置与凭据信息；留空 API Key 则保留原有已存密钥。"
+    width="580px"
+    :close-on-overlay-click="!editSaveBusy"
+    :close-on-esc="!editSaveBusy"
+    @close="closeEditDialog"
+  >
+    <div class="model-edit-dialog">
+      <ModelIconPicker
+        v-model="editEditor.icon"
+        :display-name="editEditor.displayName"
+      />
+
+      <div class="model-editor-fields">
+        <label>
+          <span>厂商 / 展示名称</span>
+          <CommonInput
+            v-model="editEditor.displayName"
+            maxlength="80"
+            placeholder="例如：OpenAI GPT-4o 或 本地 Ollama"
+          />
+        </label>
+        <label>
+          <span>Base URL</span>
+          <CommonInput
+            v-model="editEditor.baseUrl"
+            type="url"
+            placeholder="https://api.openai.com/v1"
+          />
+        </label>
+        <label>
+          <span>API KEY</span>
+          <CommonInput
+            v-model="editEditor.apiKey"
+            type="password"
+            clearable
+            revealable
+            autocomplete="new-password"
+            placeholder="留空则保持原 API Key 不变"
+          />
+        </label>
+        <label>
+          <span>默认模型 ID</span>
+          <CommonInput
+            v-model="editEditor.modelId"
+            placeholder="例如：gpt-4o, claude-3-7-sonnet"
+          />
+        </label>
+      </div>
+
+      <p class="model-profile-data-disclosure">
+        修改配置后可立即点击列表中的「验证」按钮测试连通性与工具调用。
+      </p>
+    </div>
+
+    <template #actions>
+      <CommonButton
+        variant="secondary"
+        :disabled="editSaveBusy"
+        @click="closeEditDialog"
+      >
+        取消
+      </CommonButton>
+      <CommonButton
+        variant="primary"
+        :loading="editSaveBusy"
+        @click="saveEditProfile"
+      >
+        保存修改
       </CommonButton>
     </template>
   </CommonDialog>

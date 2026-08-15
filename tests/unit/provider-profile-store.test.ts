@@ -89,4 +89,47 @@ describe('provider profile store', () => {
       model: 'persistent-model'
     })
   })
+
+  it('支持保存与更新 icon 字段并在二次编辑留空密钥时保留原有 API Key', () => {
+    /** 当前测试隔离目录。 */
+    const directory = mkdtempSync(join(tmpdir(), 'ncx-provider-edit-'))
+    temporaryDirectories.push(directory)
+    /** 被测仓库。 */
+    const store = new ProviderProfileStore(directory, testCipher)
+    store.load()
+
+    /** 初始保存包含 icon 和 apiKey。 */
+    const initial = store.save({
+      displayName: 'OpenAI GPT-4',
+      protocol: 'openai-compatible',
+      baseUrl: 'https://api.openai.com/v1',
+      modelId: 'gpt-4o',
+      icon: 'simple-icons:openai',
+      apiKey: 'initial-secret-key',
+      customHeaders: {},
+      enabled: true
+    })
+    expect(initial.icon).toBe('simple-icons:openai')
+
+    /** 编辑更新名称、模型和图标，未提供 apiKey。 */
+    const updated = store.save({
+      profileId: initial.profileId,
+      displayName: 'OpenAI GPT-4o Mini',
+      protocol: 'openai-compatible',
+      baseUrl: 'https://api.openai.com/v1',
+      modelId: 'gpt-4o-mini',
+      icon: 'simple-icons:anthropic',
+      customHeaders: {},
+      enabled: true
+    })
+
+    expect(updated.profileId).toBe(initial.profileId)
+    expect(updated.displayName).toBe('OpenAI GPT-4o Mini')
+    expect(updated.modelId).toBe('gpt-4o-mini')
+    expect(updated.icon).toBe('simple-icons:anthropic')
+    expect(updated.hasCredential).toBe(true)
+    expect(store.runtimeProfile()?.headers).toMatchObject({
+      authorization: 'Bearer initial-secret-key'
+    })
+  })
 })
