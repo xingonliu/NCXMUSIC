@@ -643,6 +643,12 @@ watch(
   cursor: pointer;
 }
 
+.discover-profile-recommendations :deep(.ncx-cover) {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+}
+
 .discover-profile-recommendations strong,
 .discover-profile-recommendations span {
   overflow: hidden;
@@ -910,6 +916,13 @@ watch(
   cursor: pointer;
 }
 
+.discover-artist-grid :deep(.ncx-cover) {
+  width: 100%;
+  max-width: 118px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+}
+
 .discover-artist-grid strong,
 .discover-artist-grid span {
   width: 100%;
@@ -1004,17 +1017,21 @@ watch(
   border-radius: 50%;
 }
 
-@media (width < 1180px) {
+@media (width < 1360px) {
+  .discover-artist-grid,
+  .discover-profile-recommendations {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (width < 1120px) {
   .discover-card-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .discover-artist-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
+  .discover-artist-grid,
   .discover-profile-recommendations {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -1028,10 +1045,11 @@ watch(
     display: none;
   }
 
-  .discover-artist-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  .discover-card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .discover-artist-grid,
   .discover-profile-recommendations {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -1040,6 +1058,15 @@ watch(
 @media (width < 680px) {
   .discover-new-song-grid {
     grid-template-columns: 1fr;
+  }
+
+  .discover-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .discover-artist-grid,
+  .discover-profile-recommendations {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

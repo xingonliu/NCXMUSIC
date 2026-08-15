@@ -598,6 +598,7 @@ onMounted(() => {
 .browse-category-row-state button { padding: 6px 10px; border: 0; border-radius: var(--ncx-radius-full); color: var(--ncx-color-accent); background: color-mix(in srgb, var(--ncx-color-accent) 10%, transparent); cursor: pointer; }
 .browse-artist-strip { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 18px; }
 .browse-artist-strip > button { display: grid; min-width: 0; justify-items: center; gap: 7px; padding: 0; border: 0; color: inherit; text-align: center; background: transparent; cursor: pointer; }
+.browse-artist-strip :deep(.ncx-cover) { width: 100%; max-width: 118px; height: auto; aspect-ratio: 1 / 1; }
 .browse-artist-strip strong, .browse-artist-strip span { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .browse-artist-strip strong { margin-top: 8px; font-size: 13px; }
 .browse-artist-strip span { color: var(--ncx-color-text-secondary); font-size: 11px; }
@@ -693,8 +694,9 @@ onMounted(() => {
   border-width: 0;
 }
 
-@media (width < 1100px) { .browse-release-layout { grid-template-columns: 1fr; } .browse-card-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } .browse-chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .browse-artist-strip { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+@media (width < 1360px) { .browse-artist-strip { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+@media (width < 1100px) { .browse-release-layout { grid-template-columns: 1fr; } .browse-card-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } .browse-chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .browse-artist-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (width < 1100px) { .browse-category-preview-strip { overflow-x: auto; grid-template-columns: repeat(5, minmax(138px, 1fr)); padding-bottom: 8px; } }
-@media (width < 760px) { .browse-page { width: min(100% - 24px, 1240px); gap: 52px; } .browse-album-grid, .browse-chart-grid { grid-template-columns: 1fr 1fr; } .browse-card-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } .browse-category-preview-row { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; padding: 14px; } .browse-artist-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (width < 760px) { .browse-page { width: min(100% - 24px, 1240px); gap: 52px; } .browse-album-grid, .browse-chart-grid { grid-template-columns: 1fr 1fr; } .browse-card-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } .browse-category-preview-row { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; padding: 14px; } .browse-artist-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (prefers-reduced-motion: reduce) { .browse-page button { transition: none !important; } .browse-page button:hover, .browse-page button:active { transform: none; } }
 </style>
