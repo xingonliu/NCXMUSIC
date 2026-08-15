@@ -2985,8 +2985,9 @@
   max-width: 440px;
   padding: 10px 14px;
   border-radius: var(--ncx-radius-xl);
-  background: var(--ncx-color-surface-overlay);
-  border: none;
+  background: var(--ncx-toast-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--ncx-color-border-subtle);
   box-shadow: var(--ncx-shadow-elevation-2);
 }
 
@@ -3042,17 +3043,22 @@
 }
 
 .ncx-common-toast-close {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
   border: 0;
   border-radius: var(--ncx-radius-full);
   color: var(--ncx-color-text-tertiary);
   background: transparent;
   cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
   transition: color var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
 }
 
