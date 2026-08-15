@@ -13,7 +13,7 @@ import {
   UserRound,
   X
 } from '@lucide/vue'
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 
 import type {
@@ -39,6 +39,15 @@ import { useAccountSessionStore } from '../../features/account/account-session-s
 import SettingsSidebar from '../../features/settings/SettingsSidebar.vue'
 
 // ========= 变量 =========
+
+/** 内容区滚动容器 DOM 引用。 */
+const contentAreaRef = ref<HTMLElement | null>(null)
+
+/** 各路由对应的滚动条位置记录（毫秒级精准还原）。 */
+const scrollPositions = new Map<string, number>()
+
+/** 路由切换前滚动守卫清理函数。 */
+let removeScrollGuard = (): void => {}
 
 /** 当前路由对象，用于驱动标题、层级和导航高亮。 */
 const route = useRoute()
@@ -129,6 +138,13 @@ function isNavigationActive(item: AppNavigationItem): boolean {
   return route.name === item.routeName || route.meta.fallbackRoute === item.routeName
 }
 
+/** 计算指定路由在滚动位置缓存字典中的唯一 key。 */
+function resolveScrollKey(targetRoute: { name?: unknown; fullPath: string; meta: { keepAlive?: boolean } }): string {
+  return targetRoute.meta.keepAlive && typeof targetRoute.name === 'string'
+    ? targetRoute.name
+    : targetRoute.fullPath
+}
+
 /** 发送窗口控制命令，并等待 Main 回传真实窗口状态。 */
 async function runWindowCommand(command: WindowCommand): Promise<void> {
   windowSnapshot.value = await window.ncx.windowControls.send(command)
@@ -144,10 +160,30 @@ function openSearch(): void {
   void router.push({ name: 'search' })
 }
 
-/** 重挂当前路由页面组件，保留根层 AudioHost 与播放器运行时。 */
+/** 重挂当前路由页面组件，保留根层 AudioHost 与播放器运行时，并重置当前页滚动位置。 */
 function refreshCurrentPage(): void {
+  const currentKey = resolveScrollKey(route)
+  scrollPositions.delete(currentKey)
+  if (contentAreaRef.value) {
+    contentAreaRef.value.scrollTop = 0
+  }
   routeRefreshKey.value += 1
 }
+
+// ========= 监听器 =========
+
+/** 监听路由和刷新代次变化，精准还原历史滚动位置或将新页面置顶。 */
+watch(
+  () => [route.name, route.fullPath, routeRefreshKey.value] as const,
+  async () => {
+    await nextTick()
+    if (!contentAreaRef.value) return
+    const key = resolveScrollKey(route)
+    const savedTop = scrollPositions.get(key) ?? 0
+    contentAreaRef.value.scrollTo({ top: savedTop, behavior: 'instant' })
+  },
+  { flush: 'post' }
+)
 
 // ========= 生命周期 =========
 
@@ -157,10 +193,19 @@ onMounted(async () => {
     windowSnapshot.value = snapshot
   })
   windowSnapshot.value = await window.ncx.windowControls.snapshot()
+
+  removeScrollGuard = router.beforeEach((to, from) => {
+    if (contentAreaRef.value) {
+      const fromKey = resolveScrollKey(from)
+      scrollPositions.set(fromKey, contentAreaRef.value.scrollTop)
+    }
+    return true
+  })
 })
 
 onBeforeUnmount(() => {
   unsubscribeWindowSnapshot()
+  removeScrollGuard()
 })
 </script>
 
@@ -331,7 +376,10 @@ onBeforeUnmount(() => {
     </aside>
 
     <section class="ncx-main-panel">
-      <main class="ncx-content-area">
+      <main
+        ref="contentAreaRef"
+        class="ncx-content-area"
+      >
         <RouterView v-slot="{ Component, route: activeRoute }">
           <KeepAlive>
             <component

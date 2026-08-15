@@ -11,6 +11,12 @@ const appShellSource = readFileSync(
   'utf8'
 )
 
+/** AppShell 样式源码。 */
+const appShellCssSource = readFileSync(
+  join(process.cwd(), 'src/renderer/design-system/patterns/app-shell.css'),
+  'utf8'
+)
+
 /** RouteMeta 类型声明源码。 */
 const routeMetaSource = readFileSync(
   join(process.cwd(), 'src/renderer/app/route-meta.d.ts'),
@@ -28,12 +34,12 @@ const routerSource = readFileSync(
 /** 提取指定 route name 的路由 meta 配置代码片段。 */
 function extractRouteMeta(name: string): string {
   const matched = routerSource.match(new RegExp(`name:\\s*'${name}',[\\s\\S]*?meta:\\s*{([^}]+)}`))
-  return matched ? matched[1] : ''
+  return matched?.[1] ?? ''
 }
 
 // ========= 测试 =========
 
-describe('主 Tab 页面 KeepAlive 契约测试', () => {
+describe('主 Tab 页面 KeepAlive 与滚动条独立管理契约测试', () => {
   it('RouteMeta 类型声明中包含 keepAlive 属性', () => {
     expect(routeMetaSource).toContain('keepAlive?: boolean')
   })
@@ -60,5 +66,17 @@ describe('主 Tab 页面 KeepAlive 契约测试', () => {
     expect(appShellSource).toContain(':key="`${String(activeRoute.name)}:${routeRefreshKey}`"')
     expect(appShellSource).toContain('v-if="!activeRoute.meta.keepAlive"')
     expect(appShellSource).toContain(':key="`${activeRoute.fullPath}:${routeRefreshKey}`"')
+  })
+
+  it('AppShell 为外层内容区绑定 ref 并通过 scrollPositions 与路由守卫精准还原/重置滚动高度', () => {
+    expect(appShellSource).toContain('ref="contentAreaRef"')
+    expect(appShellSource).toContain('const scrollPositions = new Map<string, number>()')
+    expect(appShellSource).toContain('router.beforeEach')
+    expect(appShellSource).toContain('resolveScrollKey')
+    expect(appShellSource).toContain("behavior: 'instant'")
+  })
+
+  it('移除全局 content-area 的 smooth 声明以避免页面切换时滚动条动画撕裂', () => {
+    expect(appShellCssSource).not.toMatch(/\.ncx-content-area\s*{[^}]*scroll-behavior:\s*smooth/)
   })
 })
