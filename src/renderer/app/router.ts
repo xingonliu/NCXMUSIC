@@ -59,7 +59,8 @@ const routes: RouteRecordRaw[] = [
     meta: {
       pageLevel: 1,
       title: 'routes.discover',
-      playerBar: 'show'
+      playerBar: 'show',
+      keepAlive: true
     }
   },
   {
@@ -69,7 +70,8 @@ const routes: RouteRecordRaw[] = [
     meta: {
       pageLevel: 1,
       title: 'routes.search',
-      playerBar: 'show'
+      playerBar: 'show',
+      keepAlive: true
     }
   },
   {
@@ -79,7 +81,8 @@ const routes: RouteRecordRaw[] = [
     meta: {
       pageLevel: 1,
       title: 'routes.browse',
-      playerBar: 'show'
+      playerBar: 'show',
+      keepAlive: true
     }
   },
   {
@@ -144,7 +147,8 @@ const routes: RouteRecordRaw[] = [
     meta: {
       pageLevel: 1,
       title: 'routes.agent',
-      playerBar: 'show'
+      playerBar: 'show',
+      keepAlive: true
     }
   },
   {
@@ -230,7 +234,8 @@ const routes: RouteRecordRaw[] = [
     meta: {
       pageLevel: 1,
       title: 'routes.profile',
-      playerBar: 'hide'
+      playerBar: 'hide',
+      keepAlive: true
     }
   },
   {
@@ -240,7 +245,8 @@ const routes: RouteRecordRaw[] = [
     meta: {
       pageLevel: 1,
       title: 'routes.settings',
-      playerBar: 'hide'
+      playerBar: 'hide',
+      keepAlive: true
     }
   },
   {
@@ -250,7 +256,8 @@ const routes: RouteRecordRaw[] = [
     meta: {
       pageLevel: 1,
       title: 'routes.designSystemLab',
-      playerBar: 'hide'
+      playerBar: 'hide',
+      keepAlive: true
     }
   },
   {

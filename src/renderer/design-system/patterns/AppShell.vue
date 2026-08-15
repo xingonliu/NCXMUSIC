@@ -333,8 +333,16 @@ onBeforeUnmount(() => {
     <section class="ncx-main-panel">
       <main class="ncx-content-area">
         <RouterView v-slot="{ Component, route: activeRoute }">
+          <KeepAlive>
+            <component
+              :is="Component"
+              v-if="activeRoute.meta.keepAlive"
+              :key="`${String(activeRoute.name)}:${routeRefreshKey}`"
+            />
+          </KeepAlive>
           <component
             :is="Component"
+            v-if="!activeRoute.meta.keepAlive"
             :key="`${activeRoute.fullPath}:${routeRefreshKey}`"
           />
         </RouterView>

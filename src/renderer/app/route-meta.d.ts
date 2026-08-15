@@ -13,5 +13,7 @@ declare module 'vue-router' {
     /** 首次引导等页面隐藏普通侧边栏。 */
     shell?: 'default' | 'standalone'
     fallbackRoute?: string
+    /** 是否使用 KeepAlive 缓存组件实例，避免主 Tab 切走时销毁。 */
+    keepAlive?: boolean
   }
 }
