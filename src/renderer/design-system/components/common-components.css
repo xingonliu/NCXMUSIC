@@ -713,18 +713,30 @@
 }
 
 .ncx-common-search--compact {
-  height: 24px;
+  height: 26px;
   padding: 0 8px;
 }
 
+.ncx-common-search--compact .ncx-common-search-input {
+  font-size: 11px;
+}
+
 .ncx-common-search--default {
-  height: 28px;
+  height: 30px;
   padding: 0 10px;
 }
 
+.ncx-common-search--default .ncx-common-search-input {
+  font-size: 12px;
+}
+
 .ncx-common-search--prominent {
-  height: 34px;
+  height: 36px;
   padding: 0 12px;
+}
+
+.ncx-common-search--prominent .ncx-common-search-input {
+  font-size: 13px;
 }
 
 .ncx-common-search-icon {
@@ -736,8 +748,8 @@
 }
 
 .ncx-common-search-icon svg {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
 }
 
 .ncx-common-search-input {
@@ -748,7 +760,10 @@
   box-shadow: none !important;
   color: var(--ncx-color-text-primary);
   background: transparent !important;
-  font: inherit;
+  font-family: var(--ncx-font-family);
+  font-size: 12px;
+  letter-spacing: var(--ncx-tracking-normal);
+  line-height: 1.4;
   padding: 0;
 }
 
@@ -893,6 +908,7 @@
   padding: 4px;
   border-radius: var(--ncx-radius-lg);
   background: var(--ncx-color-surface-overlay);
+  backdrop-filter: blur(10px);
   border: none;
   box-shadow: var(--ncx-shadow-elevation-2);
   overflow-y: auto;
@@ -1072,6 +1088,7 @@
   padding: 4px;
   border-radius: var(--ncx-radius-lg);
   background: var(--ncx-color-surface-overlay);
+  backdrop-filter: blur(10px);
   border: none;
   box-shadow: var(--ncx-shadow-elevation-2);
   overflow-y: auto;
@@ -1603,10 +1620,11 @@
 .ncx-common-segmented {
   position: relative;
   display: inline-flex;
+  box-sizing: border-box;
   align-items: center;
-  padding: 2px;
+  padding: 3px;
   border: none;
-  border-radius: var(--ncx-radius-md);
+  border-radius: var(--ncx-radius-lg, 12px);
   background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
   backdrop-filter: var(--ncx-glass-backdrop-subtle);
   box-shadow: 0 1px 2px rgb(0 0 0 / 4%) inset;
@@ -1615,9 +1633,9 @@
 
 .ncx-common-segmented-indicator {
   position: absolute;
-  top: 2px;
-  bottom: 2px;
-  border-radius: calc(var(--ncx-radius-md) - 2px);
+  top: 3px;
+  bottom: 3px;
+  border-radius: calc(var(--ncx-radius-lg, 12px) - 3px);
   background: var(--ncx-btn-bg-hover);
   box-shadow: var(--ncx-btn-shadow);
   transition:
@@ -1635,7 +1653,7 @@
   gap: var(--ncx-space-1-5);
   flex: 1;
   border: 0;
-  border-radius: calc(var(--ncx-radius-md) - 2px);
+  border-radius: calc(var(--ncx-radius-lg, 12px) - 3px);
   color: var(--ncx-color-text-secondary);
   background: transparent;
   cursor: pointer;
@@ -1652,28 +1670,42 @@
 }
 
 .ncx-common-segmented--compact {
-  height: 26px;
+  height: 28px;
+  padding: 2px;
+  border-radius: var(--ncx-radius-md, 8px);
+}
+
+.ncx-common-segmented--compact .ncx-common-segmented-indicator {
+  top: 2px;
+  bottom: 2px;
+  border-radius: calc(var(--ncx-radius-md, 8px) - 2px);
 }
 
 .ncx-common-segmented--compact .ncx-common-segmented-item {
+  height: 24px;
   padding: 0 var(--ncx-space-2);
+  border-radius: calc(var(--ncx-radius-md, 8px) - 2px);
   font-size: 12px;
 }
 
 .ncx-common-segmented--default {
-  height: 30px;
+  height: 34px;
+  padding: 3px;
 }
 
 .ncx-common-segmented--default .ncx-common-segmented-item {
+  height: 28px;
   padding: 0 var(--ncx-space-3);
   font-size: 13px;
 }
 
 .ncx-common-segmented--prominent {
-  height: 36px;
+  height: 40px;
+  padding: 3px;
 }
 
 .ncx-common-segmented--prominent .ncx-common-segmented-item {
+  height: 34px;
   padding: 0 var(--ncx-space-4);
   font-size: 14px;
 }
@@ -2338,7 +2370,18 @@
   display: flex;
   flex-direction: column;
   gap: var(--ncx-space-3);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.ncx-common-tabs-full-width {
   width: 100%;
+}
+
+.ncx-common-tabs-list {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .ncx-common-tabs-full-width .ncx-common-tabs-list {
@@ -2352,6 +2395,7 @@
 
 .ncx-common-tabs-segmented .ncx-common-tabs-list {
   display: inline-flex;
+  width: fit-content;
   align-items: center;
   gap: 2px;
   padding: 3px;
@@ -2361,6 +2405,7 @@
 
 .ncx-common-tabs-underlined .ncx-common-tabs-list {
   display: inline-flex;
+  width: fit-content;
   align-items: center;
   gap: var(--ncx-space-4);
   padding-bottom: 2px;
@@ -2368,6 +2413,7 @@
 
 .ncx-common-tabs-pills .ncx-common-tabs-list {
   display: inline-flex;
+  width: fit-content;
   align-items: center;
   gap: var(--ncx-space-2);
 }
@@ -3051,11 +3097,11 @@
   max-height: 88vh;
   overflow: hidden;
   padding: var(--ncx-space-6);
-  border: 1px solid var(--ncx-color-border-default);
+  border: 1px solid var(--ncx-color-border-subtle);
   border-radius: var(--ncx-radius-2xl);
-  background: var(--ncx-color-surface-overlay);
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
-  box-shadow: var(--ncx-shadow-elevation-3), 0 1px 1px rgb(255 255 255 / 25%) inset;
+  background: var(--ncx-drawer-bg);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--ncx-shadow-elevation-3);
 }
 
 .ncx-common-modal-header {
@@ -3248,19 +3294,19 @@
   max-height: 100vh;
   box-sizing: border-box;
   padding: var(--ncx-space-6);
-  border-left: 1px solid var(--ncx-color-border-default);
+  border-left: 1px solid var(--ncx-color-border-subtle);
   border-radius: var(--ncx-radius-2xl) 0 0 var(--ncx-radius-2xl);
-  background: var(--ncx-color-surface-overlay);
-  backdrop-filter: var(--ncx-glass-backdrop-deep);
-  box-shadow: var(--ncx-shadow-elevation-3), 0 1px 1px rgb(255 255 255 / 20%) inset;
+  background: var(--ncx-drawer-bg);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--ncx-shadow-elevation-3);
   overflow: hidden;
 }
 
 .ncx-common-drawer-left {
   border-left: none;
-  border-right: 1px solid var(--ncx-color-border-default);
+  border-right: 1px solid var(--ncx-color-border-subtle);
   border-radius: 0 var(--ncx-radius-2xl) var(--ncx-radius-2xl) 0;
-  box-shadow: var(--ncx-shadow-elevation-3), 0 1px 1px rgb(255 255 255 / 20%) inset;
+  box-shadow: var(--ncx-shadow-elevation-3);
 }
 
 .ncx-common-drawer-header {

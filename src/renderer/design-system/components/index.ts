@@ -1879,11 +1879,12 @@ export const CommonSegmentedControl = defineComponent({
       const activeIndex = props.options.findIndex((opt) => opt.value === props.modelValue)
       const count = props.options.length || 1
       const countStyle = { '--ncx-segmented-count': String(count) }
+      const pad = props.size === 'compact' ? 2 : 3
       const indicatorStyle =
         activeIndex >= 0
           ? {
-              left: `calc(100% / ${count} * ${activeIndex})`,
-              width: `calc(100% / ${count})`
+              left: `calc(${pad}px + (100% - ${pad * 2}px) / ${count} * ${activeIndex})`,
+              width: `calc((100% - ${pad * 2}px) / ${count})`
             }
           : { display: 'none' }
 
