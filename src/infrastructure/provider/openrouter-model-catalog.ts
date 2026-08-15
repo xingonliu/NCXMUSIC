@@ -22,6 +22,25 @@ interface MutableVendor {
   models: ProviderCatalogModel[]
 }
 
+/** 已成功完成的模型计数请求结果。 */
+interface FulfilledCatalogCountResult {
+  /** 标记计数请求已成功完成。 */
+  ok: true
+  /** `/models/count` 返回的当前目录模型数。 */
+  count: number
+}
+
+/** 已失败但被显式消费的模型计数请求结果。 */
+interface RejectedCatalogCountResult {
+  /** 标记计数请求已失败。 */
+  ok: false
+  /** 计数请求失败的原始原因，后续统一抛回调用方。 */
+  error: unknown
+}
+
+/** 计数请求的已处理结果，避免并发 Promise 产生未处理拒绝。 */
+type CatalogCountResult = FulfilledCatalogCountResult | RejectedCatalogCountResult
+
 // ========= 变量 =========
 
 /** OpenRouter OpenAI 兼容服务根地址。 */
@@ -38,6 +57,15 @@ const OPENROUTER_REQUEST_TIMEOUT_MS = 15_000
 
 /** 防止异常分页链接造成无限请求的页数上限。 */
 const OPENROUTER_MAX_PAGE_COUNT = 20
+
+/** OpenRouter 目录请求被网络中断时的稳定错误文案。 */
+const OPENROUTER_NETWORK_ERROR_MESSAGE = 'OpenRouter 模型目录暂时无法连接，请检查网络后重试。'
+
+/** OpenRouter 目录请求超时时的稳定错误文案。 */
+const OPENROUTER_TIMEOUT_ERROR_MESSAGE = 'OpenRouter 模型目录请求超时，请稍后重试。'
+
+/** OpenRouter 返回非 JSON 目录内容时的稳定错误文案。 */
+const OPENROUTER_INVALID_JSON_MESSAGE = 'OpenRouter 模型目录响应不是有效 JSON。'
 
 /** 供应商名称排序器。 */
 const vendorNameCollator = new Intl.Collator('en', { sensitivity: 'base' })
@@ -81,9 +109,8 @@ const OpenRouterModelsCountResponseSchema = z.object({
 export async function fetchOpenRouterModelCatalog(
   fetchImpl: ModelCatalogFetch = fetch
 ): Promise<ProviderModelCatalog> {
-  /** 与模型分页并行请求的权威计数。 */
-  const countPromise = requestCatalogJson(fetchImpl, OPENROUTER_MODELS_COUNT_URL)
-    .then((value) => OpenRouterModelsCountResponseSchema.parse(value).data.count)
+  /** 与模型分页并行请求且不会向外泄漏拒绝的权威计数。 */
+  const countPromise = requestCatalogModelCount(fetchImpl)
   /** 已拉取并按 ID 去重的模型条目。 */
   const modelsById = new Map<string, z.infer<typeof OpenRouterModelSchema>>()
   /** 当前待请求的 OpenRouter 模型页地址。 */
@@ -104,8 +131,11 @@ export async function fetchOpenRouterModelCatalog(
     pageCount += 1
   }
 
-  /** `/models/count` 返回的当前目录模型数。 */
-  const modelCount = await countPromise
+  /** `/models/count` 返回且已显式处理的当前目录模型数。 */
+  const countResult = await countPromise
+  if (!countResult.ok) throw countResult.error
+  /** 当前目录模型总数。 */
+  const modelCount = countResult.count
   /** 已按供应商归并并排序的目录。 */
   const vendors = buildCatalogVendors([...modelsById.values()])
   return ProviderModelCatalogSchema.parse({
@@ -117,21 +147,52 @@ export async function fetchOpenRouterModelCatalog(
   })
 }
 
+/** 并行请求 OpenRouter 模型计数，并将失败转换成已处理结果。 */
+function requestCatalogModelCount(fetchImpl: ModelCatalogFetch): Promise<CatalogCountResult> {
+  return requestCatalogJson(fetchImpl, OPENROUTER_MODELS_COUNT_URL)
+    .then((value) => OpenRouterModelsCountResponseSchema.parse(value).data.count)
+    .then(
+      (count): CatalogCountResult => ({ ok: true, count }),
+      (error): CatalogCountResult => ({ ok: false, error })
+    )
+}
+
 /** 请求 OpenRouter JSON，并将网络与 HTTP 错误收敛成稳定错误。 */
 async function requestCatalogJson(
   fetchImpl: ModelCatalogFetch,
   url: string
 ): Promise<unknown> {
   /** 当前目录请求响应。 */
-  const response = await fetchImpl(url, {
-    method: 'GET',
-    headers: { accept: 'application/json' },
-    signal: AbortSignal.timeout(OPENROUTER_REQUEST_TIMEOUT_MS)
-  })
+  let response: Response
+  try {
+    response = await fetchImpl(url, {
+      method: 'GET',
+      headers: { accept: 'application/json' },
+      signal: AbortSignal.timeout(OPENROUTER_REQUEST_TIMEOUT_MS)
+    })
+  } catch (error) {
+    throw createCatalogNetworkError(error)
+  }
   if (!response.ok) {
     throw new Error(`OpenRouter 模型目录请求失败（HTTP ${response.status}）。`)
   }
-  return response.json() as Promise<unknown>
+  try {
+    return await response.json() as unknown
+  } catch {
+    throw new Error(OPENROUTER_INVALID_JSON_MESSAGE)
+  }
+}
+
+/** 将 fetch 抛出的网络异常转换为稳定、可展示的目录错误。 */
+function createCatalogNetworkError(error: unknown): Error {
+  /** 原始网络异常名称。 */
+  const name = error instanceof Error ? error.name : ''
+  /** 原始网络异常消息的小写形式。 */
+  const message = error instanceof Error ? error.message.toLowerCase() : String(error).toLowerCase()
+  if (name === 'TimeoutError' || message.includes('timeout')) {
+    return new Error(OPENROUTER_TIMEOUT_ERROR_MESSAGE)
+  }
+  return new Error(OPENROUTER_NETWORK_ERROR_MESSAGE)
 }
 
 /** 仅允许继续访问 OpenRouter 自身的模型列表分页。 */

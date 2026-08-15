@@ -55,5 +55,6 @@ describe('model settings UI contract', () => {
     expect(modelCatalogSource).toContain('`${OPENROUTER_MODELS_URL}/count`')
     expect(modelCatalogSource).toContain('right.created - left.created')
     expect(modelCatalogSource).toContain("replace(/^~/u, '')")
+    expect(modelSettingsSource).toContain('result.catalogError')
   })
 })

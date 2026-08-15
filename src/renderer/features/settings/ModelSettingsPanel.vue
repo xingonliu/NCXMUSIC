@@ -197,6 +197,7 @@ async function loadCatalog(): Promise<void> {
   try {
     /** 带目录的 Provider IPC 结果。 */
     const result = await window.ncx.providerProfiles.request({ operation: 'catalog' })
+    if (result.catalogError) throw new Error(result.catalogError)
     if (!result.catalog) throw new Error('OpenRouter 模型目录响应为空。')
     catalog.value = result.catalog
   } catch (error) {

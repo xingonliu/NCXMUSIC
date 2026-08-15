@@ -90,6 +90,7 @@ export const ProviderProfileResultSchema = z.strictObject({
   profiles: z.array(PublicProviderProfileSchema),
   activeProfileId: z.uuid().optional(),
   verificationMessage: z.string().max(240).optional(),
+  catalogError: z.string().max(240).optional(),
   catalog: ProviderModelCatalogSchema.optional()
 })
 

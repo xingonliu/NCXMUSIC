@@ -14,6 +14,23 @@ import {
   type ProviderProfileRequest,
   type ProviderProfileResult
 } from '../shared/schemas/provider-profile'
+import { sanitizeErrorMessage } from '../shared/errors/public-error'
+
+// ========= 变量 =========
+
+/** OpenRouter 目录加载失败时的兜底展示文案。 */
+const CATALOG_LOAD_FALLBACK_MESSAGE = 'OpenRouter 模型目录加载失败，请检查网络后重试。'
+
+// ========= 函数 =========
+
+/** 将目录异常转换为 Renderer 可展示、已脱敏且长度受控的错误文案。 */
+function createCatalogErrorMessage(error: unknown): string {
+  /** 原始异常中可安全展示的消息。 */
+  const message = error instanceof Error || typeof error === 'string'
+    ? sanitizeErrorMessage(error)
+    : ''
+  return message || CATALOG_LOAD_FALLBACK_MESSAGE
+}
 
 // ========= 类 =========
 
@@ -32,13 +49,19 @@ export class ProviderProfileCoordinator {
     let verificationMessage: string | undefined
     /** 按需拉取且不包含凭据的 OpenRouter 模型目录。 */
     let catalog: ProviderModelCatalog | undefined
+    /** 目录加载失败时返回给 Renderer 的可展示错误。 */
+    let catalogError: string | undefined
     if (request.operation === 'save') this.store.save(request.profile)
     else if (request.operation === 'delete') this.store.delete(request.profileId)
     else if (request.operation === 'setDefault') this.store.setDefault(request.profileId)
     else if (request.operation === 'verify') {
       verificationMessage = await this.verify(request.profileId)
     } else if (request.operation === 'catalog') {
-      catalog = await fetchOpenRouterModelCatalog()
+      try {
+        catalog = await fetchOpenRouterModelCatalog()
+      } catch (error) {
+        catalogError = createCatalogErrorMessage(error)
+      }
     }
     if (request.operation === 'save' || request.operation === 'delete' || request.operation === 'setDefault') {
       this.syncUtility()
@@ -47,6 +70,7 @@ export class ProviderProfileCoordinator {
       profiles: this.store.list(),
       ...(this.store.activeProfileId() ? { activeProfileId: this.store.activeProfileId() } : {}),
       ...(verificationMessage ? { verificationMessage } : {}),
+      ...(catalogError ? { catalogError } : {}),
       ...(catalog ? { catalog } : {})
     })
   }

@@ -63,4 +63,23 @@ describe('OpenRouter model catalog', () => {
 
     await expect(fetchOpenRouterModelCatalog(fetchMock)).rejects.toThrow('不受信任')
   })
+
+  it('将 fetch 网络异常归一为稳定目录错误，并消费并发计数请求拒绝', async () => {
+    /** 模拟 OpenRouter 连接被中途重置的 Fetch 替身。 */
+    const fetchMock = vi.fn<ModelCatalogFetch>(async () => {
+      throw new TypeError('fetch failed')
+    })
+
+    await expect(fetchOpenRouterModelCatalog(fetchMock)).rejects.toThrow('暂时无法连接')
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('将目录请求超时归一为稳定超时错误', async () => {
+    /** 模拟 AbortSignal.timeout 触发的 Fetch 替身。 */
+    const fetchMock = vi.fn<ModelCatalogFetch>(async () => {
+      throw new DOMException('The operation was aborted due to timeout', 'TimeoutError')
+    })
+
+    await expect(fetchOpenRouterModelCatalog(fetchMock)).rejects.toThrow('请求超时')
+  })
 })
