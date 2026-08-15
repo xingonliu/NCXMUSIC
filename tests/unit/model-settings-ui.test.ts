@@ -32,15 +32,16 @@ describe('model settings UI contract', () => {
     expect(modelSettingsSource).toContain('<CommonSegmentedControl')
     expect(modelSettingsSource).toContain("{ label: '预设', value: 'preset' }")
     expect(modelSettingsSource).toContain("{ label: '自定义', value: 'custom' }")
-    expect(modelSettingsSource.match(/type="password"/gu)?.length).toBeGreaterThanOrEqual(2)
-    expect(modelSettingsSource.match(/clearable/gu)?.length).toBeGreaterThanOrEqual(2)
-    expect(modelSettingsSource.match(/revealable/gu)?.length).toBeGreaterThanOrEqual(2)
+    expect(modelSettingsSource.match(/type="password"/gu)?.length).toBeGreaterThanOrEqual(3)
+    expect(modelSettingsSource.match(/clearable/gu)?.length).toBeGreaterThanOrEqual(3)
+    expect(modelSettingsSource.match(/revealable/gu)?.length).toBeGreaterThanOrEqual(3)
   })
 
-  it('提供编辑模型功能与 Pencil 编辑按钮', () => {
+  it('提供编辑模型功能与 Pencil 编辑按钮并回显 API Key', () => {
     expect(modelSettingsSource).toContain('title="编辑模型"')
     expect(modelSettingsSource).toContain('<Pencil')
     expect(modelSettingsSource).toContain('openEditDialog')
+    expect(modelSettingsSource).toContain("editEditor.apiKey = profile.apiKey ?? ''")
     expect(modelSettingsSource).toContain('saveEditProfile')
   })
 

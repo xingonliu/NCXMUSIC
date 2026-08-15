@@ -30,7 +30,7 @@ describe('provider profile store', () => {
     }
   })
 
-  it('公开快照不含秘密且磁盘不出现 API Key 明文', () => {
+  it('公开快照回显 API Key 但磁盘配置文件不出现明文', () => {
     /** 当前测试隔离目录。 */
     const directory = mkdtempSync(join(tmpdir(), 'ncx-provider-'))
     temporaryDirectories.push(directory)
@@ -51,8 +51,8 @@ describe('provider profile store', () => {
     /** 磁盘加密配置文本。 */
     const disk = readFileSync(join(directory, 'provider-profiles.json'), 'utf8')
     expect(saved.hasCredential).toBe(true)
+    expect(saved.apiKey).toBe('secret-api-key-value')
     expect(saved.headerNames).toEqual(['X-Tenant'])
-    expect(JSON.stringify(saved)).not.toContain('secret-api-key-value')
     expect(disk).not.toContain('secret-api-key-value')
     expect(disk).not.toContain('private-tenant')
     expect(store.runtimeProfile()?.headers).toMatchObject({
@@ -128,6 +128,7 @@ describe('provider profile store', () => {
     expect(updated.modelId).toBe('gpt-4o-mini')
     expect(updated.icon).toBe('simple-icons:anthropic')
     expect(updated.hasCredential).toBe(true)
+    expect(updated.apiKey).toBe('initial-secret-key')
     expect(store.runtimeProfile()?.headers).toMatchObject({
       authorization: 'Bearer initial-secret-key'
     })

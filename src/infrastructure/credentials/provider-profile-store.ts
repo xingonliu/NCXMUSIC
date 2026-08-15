@@ -152,7 +152,9 @@ export class ProviderProfileStore {
     const previousSecrets = existing ? this.readSecrets(existing) : { customHeaders: {} }
     /** 本次持久化秘密。 */
     const secrets: ProviderSecrets = {
-      ...(input.apiKey !== undefined ? { apiKey: input.apiKey } : previousSecrets.apiKey ? { apiKey: previousSecrets.apiKey } : {}),
+      ...(input.apiKey !== undefined
+        ? (input.apiKey ? { apiKey: input.apiKey } : {})
+        : (previousSecrets.apiKey ? { apiKey: previousSecrets.apiKey } : {})),
       customHeaders: input.customHeaders
     }
     /** Profile 稳定 ID。 */
@@ -162,7 +164,7 @@ export class ProviderProfileStore {
       || existing.protocol !== input.protocol
       || existing.baseUrl !== input.baseUrl
       || existing.modelId !== input.modelId
-      || input.apiKey !== undefined
+      || (input.apiKey !== undefined && input.apiKey !== (previousSecrets.apiKey ?? ''))
       || JSON.stringify(existing.headerNames) !== JSON.stringify(Object.keys(input.customHeaders).sort())
     /** 新磁盘记录。 */
     const stored: StoredProviderProfile = {
@@ -250,12 +252,16 @@ export class ProviderProfileStore {
     })
   }
 
-  /** 将磁盘记录裁剪为公开快照。 */
+  /** 将磁盘记录转换为公开快照，包含 API Key 回显。 */
   private toPublic(profile: StoredProviderProfile): PublicProviderProfile {
     /** Profile 是否含有 API Key 或自定义 Header 值。 */
     let hasCredential = profile.headerNames.length > 0
+    /** 解密后的 API Key。 */
+    let apiKey: string | undefined
     try {
-      hasCredential ||= Boolean(this.readSecrets(profile).apiKey)
+      const secrets = this.readSecrets(profile)
+      apiKey = secrets.apiKey
+      hasCredential ||= Boolean(apiKey)
     } catch {
       hasCredential = true
     }
@@ -266,6 +272,7 @@ export class ProviderProfileStore {
       baseUrl: profile.baseUrl,
       modelId: profile.modelId,
       ...(profile.icon ? { icon: profile.icon } : {}),
+      ...(apiKey ? { apiKey } : {}),
       headerNames: profile.headerNames,
       enabled: profile.enabled,
       isDefault: profile.profileId === this.activeProfileId(),

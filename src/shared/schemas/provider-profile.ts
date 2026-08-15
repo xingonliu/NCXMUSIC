@@ -18,7 +18,7 @@ export const ProviderCapabilitySnapshotSchema = z.strictObject({
   latencyMs: z.number().int().nonnegative().optional()
 })
 
-/** Renderer 可见且不包含秘密的 Provider Profile。 */
+/** Renderer 可见的 Provider Profile。 */
 export const PublicProviderProfileSchema = z.strictObject({
   profileId: z.uuid(),
   displayName: z.string().trim().min(1).max(80),
@@ -26,6 +26,7 @@ export const PublicProviderProfileSchema = z.strictObject({
   baseUrl: z.url().max(2_048),
   modelId: z.string().trim().min(1).max(200),
   icon: z.string().trim().max(500).optional(),
+  apiKey: z.string().max(8_192).optional(),
   headerNames: z.array(z.string().min(1).max(80)).max(16),
   enabled: z.boolean(),
   isDefault: z.boolean(),

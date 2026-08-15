@@ -276,7 +276,7 @@ function openEditDialog(profile: PublicProviderProfile): void {
   editEditor.baseUrl = profile.baseUrl
   editEditor.modelId = profile.modelId
   editEditor.icon = profile.icon ?? ''
-  editEditor.apiKey = ''
+  editEditor.apiKey = profile.apiKey ?? ''
   editDialogVisible.value = true
 }
 
@@ -737,7 +737,7 @@ onMounted(() => {
   <CommonDialog
     :visible="editDialogVisible"
     title="编辑模型"
-    subtitle="修改模型配置与凭据信息；留空 API Key 则保留原有已存密钥。"
+    subtitle="修改模型配置与凭据信息。"
     width="580px"
     :close-on-overlay-click="!editSaveBusy"
     :close-on-esc="!editSaveBusy"
@@ -774,7 +774,7 @@ onMounted(() => {
             clearable
             revealable
             autocomplete="new-password"
-            placeholder="留空则保持原 API Key 不变"
+            placeholder="本地服务可留空"
           />
         </label>
         <label>
