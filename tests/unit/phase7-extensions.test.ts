@@ -8,7 +8,7 @@ import {
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import type { McpSecretProtector } from '../../src/infrastructure/extensions/mcp-config-store'
 import { McpConfigStore } from '../../src/infrastructure/extensions/mcp-config-store'
@@ -61,6 +61,7 @@ function writeSkill(root: string, version: string, extra = ''): void {
 // ========= 生命周期 =========
 
 afterEach(() => {
+  vi.unstubAllGlobals()
   for (const directory of temporaryDirectories.splice(0)) {
     rmSync(directory, { recursive: true, force: true })
   }
@@ -194,6 +195,74 @@ describe('Phase 7 MCP 配置安全边界', () => {
       confirm: true,
       previewToken: renewed.importToken
     })).rejects.toThrow(/变化|过期/iu)
+    coordinator.shutdown()
+  })
+
+  it('MCP 市场搜索代理 Smithery 公开目录并返回分页', async () => {
+    /** 无进程副作用的 Utility Supervisor 夹具。 */
+    const supervisor = {
+      onControlMessage: () => () => undefined,
+      postControl: () => true
+    } as unknown as UtilitySupervisor
+    /** 被测 Main 扩展协调器。 */
+    const coordinator = new ExtensionCoordinator({
+      dataRoot: temporaryDirectory('ncx-mcp-market-'),
+      protector: testProtector,
+      supervisor,
+      chooseSkillSource: async () => undefined
+    })
+    /** Smithery fetch mock。 */
+    const fetchMock = vi.fn(async (input: Parameters<typeof fetch>[0]) => {
+      /** 被请求的 Smithery URL。 */
+      const url = new URL(String(input))
+      expect(`${url.origin}${url.pathname}`).toBe('https://api.smithery.ai/servers')
+      expect(url.searchParams.get('page')).toBe('2')
+      expect(url.searchParams.get('pageSize')).toBe('6')
+      expect(url.searchParams.get('q')).toBe('brave')
+      expect(url.searchParams.get('topK')).toBe('100')
+      return new Response(JSON.stringify({
+        servers: [{
+          id: '50f26566-7dfe-4842-a5b8-1a9407fb91f4',
+          qualifiedName: 'brave',
+          namespace: 'brave',
+          displayName: 'Brave Search',
+          description: 'Search the web with Brave.',
+          iconUrl: 'https://api.smithery.ai/servers/brave/icon',
+          verified: true,
+          useCount: 118196,
+          remote: true,
+          isDeployed: true,
+          unlisted: false,
+          inactive: false,
+          createdAt: '2025-09-05T18:07:47.018Z',
+          homepage: 'https://brave.com/search/api/'
+        }],
+        pagination: {
+          currentPage: 2,
+          pageSize: 6,
+          totalPages: 10,
+          totalCount: 60
+        }
+      }), { status: 200, headers: { 'content-type': 'application/json' } })
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    /** MCP 市场搜索结果。 */
+    const result = await coordinator.handle({
+      operation: 'mcp.market.search',
+      page: 2,
+      pageSize: 6,
+      q: 'brave',
+      topK: 100
+    })
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(result.snapshot.mcpServers).toHaveLength(0)
+    expect(result.mcpMarket?.servers[0]).toMatchObject({
+      qualifiedName: 'brave',
+      displayName: 'Brave Search',
+      verified: true
+    })
+    expect(result.mcpMarket?.pagination).toMatchObject({ currentPage: 2, totalPages: 10 })
     coordinator.shutdown()
   })
 })

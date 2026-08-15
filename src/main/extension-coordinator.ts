@@ -10,10 +10,12 @@ import {
   ExtensionProbeResultSchema,
   ExtensionRuntimeStatusEventSchema,
   ExtensionToolScopeChangedEventSchema,
+  McpMarketSearchResultSchema,
   ExtensionSettingsRequestSchema,
   ExtensionSettingsResultSchema,
   type ExtensionSettingsRequest,
-  type ExtensionSettingsResult
+  type ExtensionSettingsResult,
+  type McpMarketSearchResult
 } from '../shared/schemas/extensions'
 import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
 
@@ -47,6 +49,9 @@ interface PendingImport {
   readonly expiryTimer: ReturnType<typeof setTimeout>
 }
 
+/** Smithery MCP 市场搜索请求。 */
+type McpMarketSearchRequest = Extract<ExtensionSettingsRequest, { operation: 'mcp.market.search' }>
+
 /** Extension Coordinator 构造参数。 */
 export interface ExtensionCoordinatorOptions {
   /** AppData 数据根目录。 */
@@ -69,6 +74,12 @@ const MCP_IMPORT_PREVIEW_TIMEOUT_MS = 5 * 60 * 1_000
 
 /** 同时驻留 Main 内存的导入预览上限。 */
 const MCP_IMPORT_PREVIEW_LIMIT = 8
+
+/** Smithery 公开 MCP Server 列表接口。 */
+const SMITHERY_MCP_MARKET_URL = 'https://api.smithery.ai/servers'
+
+/** MCP 市场单次请求超时。 */
+const MCP_MARKET_TIMEOUT_MS = 12_000
 
 // ========= 类 =========
 
@@ -115,6 +126,8 @@ export class ExtensionCoordinator {
     let importPreview: ExtensionSettingsResult['importPreview']
     /** 可选导入确认令牌。 */
     let importToken: string | undefined
+    /** 可选 MCP 市场搜索结果。 */
+    let mcpMarket: McpMarketSearchResult | undefined
 
     if (request.operation === 'skill.discover') {
       this.skills.discover()
@@ -191,15 +204,18 @@ export class ExtensionCoordinator {
         importPreview = candidates.map((candidate) => candidate.config)
         message = `预览发现 ${candidates.length} 个配置；确认后才会写入。`
       }
+    } else if (request.operation === 'mcp.market.search') {
+      mcpMarket = await this.searchMcpMarket(request)
     }
 
-    if (request.operation !== 'snapshot' && request.operation !== 'mcp.test') this.syncUtility()
+    if (!['snapshot', 'mcp.test', 'mcp.market.search'].includes(request.operation)) this.syncUtility()
     return ExtensionSettingsResultSchema.parse({
       snapshot: this.snapshot(),
       ...(message ? { message } : {}),
       ...(exportDocument ? { exportDocument } : {}),
       ...(importPreview ? { importPreview } : {}),
-      ...(importToken ? { importToken } : {})
+      ...(importToken ? { importToken } : {}),
+      ...(mcpMarket ? { mcpMarket } : {})
     })
   }
 
@@ -220,6 +236,42 @@ export class ExtensionCoordinator {
       skills: this.skills.discover(),
       mcpServers: this.mcp.snapshots(this.observations),
       updatedAt: Date.now()
+    }
+  }
+
+  /** 从 Smithery 公开接口搜索 MCP Server 市场。 */
+  private async searchMcpMarket(request: McpMarketSearchRequest): Promise<McpMarketSearchResult> {
+    /** 组装后的查询参数。 */
+    const parameters = new URLSearchParams({
+      page: String(request.page),
+      pageSize: String(request.pageSize)
+    })
+    if (request.q) parameters.set('q', request.q)
+    if (request.topK) parameters.set('topK', String(request.topK))
+
+    /** 本次请求的取消控制器。 */
+    const controller = new AbortController()
+    /** 本次请求的超时计时器。 */
+    const timeout = setTimeout(() => controller.abort(), MCP_MARKET_TIMEOUT_MS)
+    try {
+      /** Smithery 公开目录响应。 */
+      const response = await fetch(`${SMITHERY_MCP_MARKET_URL}?${parameters.toString()}`, {
+        method: 'GET',
+        headers: { accept: 'application/json' },
+        signal: controller.signal
+      })
+      if (!response.ok) throw new Error(`Smithery MCP 市场请求失败（HTTP ${response.status}）。`)
+      /** 未信任的远程 JSON。 */
+      const payload = await response.json() as unknown
+      return McpMarketSearchResultSchema.parse(payload)
+    } catch (error) {
+      /** 对 Renderer 公开的脱敏错误。 */
+      const message = error instanceof Error && error.name === 'AbortError'
+        ? 'Smithery MCP 市场请求超时。'
+        : readableError(error, 'Smithery MCP 市场请求失败。')
+      throw new Error(redactSensitiveText(message).slice(0, 500), { cause: error })
+    } finally {
+      clearTimeout(timeout)
     }
   }
 
@@ -416,6 +468,11 @@ export class ExtensionCoordinator {
 /** 计算不回传 Renderer 的 MCP 导入文档摘要。 */
 function documentDigest(document: string): string {
   return createHash('sha256').update(document, 'utf8').digest('hex')
+}
+
+/** 把未知错误转换为面向设置页的短文案。 */
+function readableError(error: unknown, fallback: string): string {
+  return error instanceof Error ? error.message : fallback
 }
 
 /** 依据选择路径后缀构造本地 Skill 来源；供系统选择器复用。 */

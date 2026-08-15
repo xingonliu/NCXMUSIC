@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronLeft, ChevronRight, LibraryBig } from '@lucide/vue'
+import { LibraryBig } from '@lucide/vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -8,13 +8,13 @@ import type {
   StandardPlaylist
 } from '../../../shared/schemas/music'
 import {
-  CommonButton,
   CommonEmptyState,
   CommonErrorState,
   CommonSpinner,
   CommonTabs,
   type CommonOption
 } from '../../design-system/components'
+import CommonPagination from '../../design-system/components/CommonPagination.vue'
 import EntityCard from './components/EntityCard.vue'
 import './music-content-pages.css'
 
@@ -101,19 +101,6 @@ const tabOptions = computed<CommonOption[]>(() => playlistFacetGroups.value.map(
 
 /** 当前分类结果总页数。 */
 const totalPages = computed<number>(() => Math.max(1, Math.ceil(total.value / PAGE_SIZE)))
-
-/** 分页器当前窗口内展示的页码。 */
-const visiblePageNumbers = computed<number[]>(() => {
-  /** 最多同时展示的数字页码数量。 */
-  const windowSize = 5
-  /** 页码窗口允许的最大起点。 */
-  const maximumStart = Math.max(1, totalPages.value - windowSize + 1)
-  /** 以当前页为中心计算出的页码窗口起点。 */
-  const start = Math.min(maximumStart, Math.max(1, currentPage.value - 2))
-  /** 当前窗口实际包含的页码数量。 */
-  const count = Math.min(windowSize, totalPages.value)
-  return Array.from({ length: count }, (_, index) => start + index)
-})
 
 // ========= 函数 =========
 
@@ -384,40 +371,13 @@ onMounted(() => {
         />
       </div>
 
-      <nav
+      <CommonPagination
         v-if="totalPages > 1"
-        class="category-pagination"
+        :current-page="currentPage"
+        :total-pages="totalPages"
         aria-label="分类歌单分页"
-      >
-        <CommonButton
-          variant="secondary"
-          size="compact"
-          :disabled="currentPage <= 1"
-          @click="goToPage(currentPage - 1)"
-        >
-          <ChevronLeft :size="14" /> 上一页
-        </CommonButton>
-        <div class="category-page-numbers">
-          <button
-            v-for="page in visiblePageNumbers"
-            :key="page"
-            type="button"
-            :class="{ active: page === currentPage }"
-            :aria-current="page === currentPage ? 'page' : undefined"
-            @click="goToPage(page)"
-          >
-            {{ page }}
-          </button>
-        </div>
-        <CommonButton
-          variant="secondary"
-          size="compact"
-          :disabled="currentPage >= totalPages"
-          @click="goToPage(currentPage + 1)"
-        >
-          下一页 <ChevronRight :size="14" />
-        </CommonButton>
-      </nav>
+        @change="goToPage"
+      />
     </template>
   </section>
 </template>
@@ -439,12 +399,7 @@ onMounted(() => {
 .category-results-heading h2 { margin-top: 4px; font-size: 26px; letter-spacing: -.025em; }
 .category-results-heading span { color: var(--ncx-color-text-tertiary); font-size: 12px; font-variant-numeric: tabular-nums; }
 .category-playlist-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px 20px; }
-.category-pagination { display: flex; align-items: center; justify-content: center; gap: 14px; padding-top: 18px; }
-.category-page-numbers { display: flex; gap: 6px; }
-.category-page-numbers button { width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; color: var(--ncx-color-text-secondary); background: transparent; cursor: pointer; font-variant-numeric: tabular-nums; }
-.category-page-numbers button:hover, .category-page-numbers button.active { color: var(--ncx-color-text-primary); background: color-mix(in srgb, var(--ncx-color-text-primary) 10%, transparent); }
-.category-page-numbers button.active { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 10%, transparent); }
 @media (width < 980px) { .category-playlist-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (width < 720px) { .category-explore-page { width: calc(100% - 24px); padding-top: 40px; } .category-playlist-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .category-results-heading { align-items: start; flex-direction: column; } .category-pagination { gap: 8px; } .category-page-numbers button { width: 30px; height: 30px; } }
+@media (width < 720px) { .category-explore-page { width: calc(100% - 24px); padding-top: 40px; } .category-playlist-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .category-results-heading { align-items: start; flex-direction: column; } }
 @media (prefers-reduced-motion: reduce) { .category-explore-page button { transition: none !important; } .category-explore-page button:active { transform: none; } }
 </style>

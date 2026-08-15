@@ -120,6 +120,38 @@ export const McpRuntimeConfigSchema = McpServerEditableSchema.extend({
   lastKnownTools: z.array(McpToolSnapshotSchema).max(256)
 })
 
+/** Smithery 市场公开 MCP Server 条目。 */
+export const McpMarketServerSchema = z.object({
+  id: z.string().trim().min(1).max(200),
+  qualifiedName: z.string().trim().min(1).max(200),
+  namespace: z.string().trim().max(200).nullish().transform((value) => value ?? ''),
+  displayName: z.string().trim().min(1).max(200),
+  description: z.string().trim().max(2_000).nullish().transform((value) => value ?? ''),
+  iconUrl: z.string().trim().max(2_048).nullish().transform((value) => value ?? undefined),
+  verified: z.boolean().default(false),
+  useCount: z.number().int().nonnegative().default(0),
+  remote: z.boolean().default(false),
+  isDeployed: z.boolean().default(false),
+  unlisted: z.boolean().default(false),
+  inactive: z.boolean().default(false),
+  createdAt: z.string().trim().max(80).nullish().transform((value) => value ?? undefined),
+  homepage: z.string().trim().max(2_048).nullish().transform((value) => value ?? undefined)
+})
+
+/** Smithery 市场公开分页信息。 */
+export const McpMarketPaginationSchema = z.object({
+  currentPage: z.number().int().positive().default(1),
+  pageSize: z.number().int().positive().max(100).default(10),
+  totalPages: z.number().int().nonnegative().default(1),
+  totalCount: z.number().int().nonnegative().default(0)
+})
+
+/** Smithery 市场搜索响应。 */
+export const McpMarketSearchResultSchema = z.object({
+  servers: z.array(McpMarketServerSchema).default([]),
+  pagination: McpMarketPaginationSchema
+})
+
 /** 扩展设置页完整公开快照。 */
 export const ExtensionSettingsSnapshotSchema = z.strictObject({
   skills: z.array(SkillSnapshotSchema),
@@ -156,6 +188,13 @@ export const ExtensionSettingsRequestSchema = z.discriminatedUnion('operation', 
     confirm: z.boolean().default(false),
     previewToken: z.uuid().optional()
   }),
+  z.strictObject({
+    operation: z.literal('mcp.market.search'),
+    page: z.number().int().min(1).default(1),
+    pageSize: z.number().int().min(1).max(100).default(10),
+    q: z.string().trim().min(1).max(200).optional(),
+    topK: z.number().int().min(10).max(500).optional()
+  }),
   z.strictObject({ operation: z.literal('mcp.export') })
 ])
 
@@ -165,7 +204,8 @@ export const ExtensionSettingsResultSchema = z.strictObject({
   message: z.string().max(500).optional(),
   exportDocument: z.string().max(1_000_000).optional(),
   importPreview: z.array(McpServerEditableSchema).max(128).optional(),
-  importToken: z.uuid().optional()
+  importToken: z.uuid().optional(),
+  mcpMarket: McpMarketSearchResultSchema.optional()
 })
 
 /** Main → Utility：同步当前已验证扩展运行配置。 */
@@ -290,6 +330,12 @@ export type McpRuntimeConfig = z.infer<typeof McpRuntimeConfigSchema>
 
 /** MCP 工具快照类型。 */
 export type McpToolSnapshot = z.infer<typeof McpToolSnapshotSchema>
+
+/** MCP 市场公开条目类型。 */
+export type McpMarketServer = z.infer<typeof McpMarketServerSchema>
+
+/** MCP 市场搜索结果类型。 */
+export type McpMarketSearchResult = z.infer<typeof McpMarketSearchResultSchema>
 
 /** 扩展公开设置快照类型。 */
 export type ExtensionSettingsSnapshot = z.infer<typeof ExtensionSettingsSnapshotSchema>

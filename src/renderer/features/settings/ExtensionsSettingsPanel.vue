@@ -1,9 +1,23 @@
 <script setup lang="ts">
-import { Boxes, Download, PackagePlus, RefreshCw, Server, Upload } from '@lucide/vue'
-import { computed, onMounted, ref, shallowRef } from 'vue'
+import {
+  Boxes,
+  Download,
+  ExternalLink,
+  Globe2,
+  PackagePlus,
+  Pencil,
+  Plus,
+  RefreshCw,
+  Server,
+  ShieldCheck,
+  Trash2,
+  Upload
+} from '@lucide/vue'
+import { computed, onMounted, ref, shallowRef, watch } from 'vue'
 
 import type {
   ExtensionSettingsSnapshot,
+  McpMarketServer,
   McpServerEditable,
   McpServerSnapshot,
   SkillSnapshot
@@ -11,12 +25,16 @@ import type {
 import {
   CommonAlertDialog,
   CommonButton,
+  CommonDialog,
   CommonInput,
+  CommonSearchInput,
   CommonSelect,
   CommonSwitch,
+  CommonTabs,
   CommonTextarea,
   type CommonOption
 } from '../../design-system/components'
+import CommonPagination from '../../design-system/components/CommonPagination.vue'
 import { showToast } from '../../design-system/use-toast'
 import SettingsSection from './SettingsSection.vue'
 
@@ -30,6 +48,9 @@ type McpAction = 'enable' | 'disable' | 'test' | 'rollback' | 'delete'
 
 /** 当前扩展设置面板展示的独立能力。 */
 type ExtensionSettingsMode = 'mcp' | 'skill'
+
+/** MCP 设置页内部标签。 */
+type McpSettingsTab = 'installed' | 'market'
 
 /** 扩展设置面板属性。 */
 interface ExtensionsSettingsPanelProps {
@@ -72,7 +93,7 @@ interface PendingConfirmation {
   /** 普通或危险确认样式。 */
   readonly type: 'warning' | 'danger'
   /** 用户确认后才执行的任务。 */
-  readonly task: () => Promise<void>
+  readonly task: () => Promise<unknown>
 }
 
 // ========= 变量 =========
@@ -82,6 +103,12 @@ const props = defineProps<ExtensionsSettingsPanelProps>()
 
 /** 空扩展快照。 */
 const EMPTY_SNAPSHOT: ExtensionSettingsSnapshot = { skills: [], mcpServers: [], updatedAt: 0 }
+
+/** MCP 设置页统一分页大小。 */
+const MCP_PAGE_SIZE = 6
+
+/** Smithery 搜索时考虑的候选集上限。 */
+const MCP_MARKET_TOP_K = 100
 
 /** 当前公开扩展快照。 */
 const snapshot = ref<ExtensionSettingsSnapshot>(EMPTY_SNAPSHOT)
@@ -107,16 +134,95 @@ const pendingConfirmation = shallowRef<PendingConfirmation>()
 /** MCP 编辑器。 */
 const editor = ref<McpEditor>(emptyMcpEditor())
 
-/** 当前选中的 MCP Server。 */
-const selectedServer = computed<McpServerSnapshot | undefined>(() =>
-  snapshot.value.mcpServers.find((server) => server.serverId === editor.value.serverId)
-)
+/** MCP 新增/编辑弹窗显示状态。 */
+const mcpDialogVisible = ref<boolean>(false)
+
+/** 当前正在编辑的已安装 MCP Server ID；空值代表新增。 */
+const editingMcpServerId = ref<string>('')
+
+/** MCP 设置页当前标签。 */
+const activeMcpTab = ref<McpSettingsTab>('installed')
+
+/** 已安装 MCP 当前页。 */
+const installedPage = ref<number>(1)
+
+/** MCP 市场搜索输入框草稿。 */
+const marketSearchDraft = ref<string>('')
+
+/** MCP 市场已提交搜索词。 */
+const marketQuery = ref<string>('')
+
+/** MCP 市场当前页。 */
+const marketPage = ref<number>(1)
+
+/** MCP 市场当前页 Server。 */
+const marketServers = ref<McpMarketServer[]>([])
+
+/** MCP 市场总页数。 */
+const marketTotalPages = ref<number>(1)
+
+/** MCP 市场总条目数。 */
+const marketTotalCount = ref<number>(0)
+
+/** MCP 市场是否正在加载。 */
+const marketLoading = ref<boolean>(false)
+
+/** MCP 市场加载错误文案。 */
+const marketError = ref<string>('')
+
+/** 最近一次 MCP 市场请求 ID，用于丢弃迟到响应。 */
+let latestMarketRequestId = ''
 
 /** MCP Transport 通用选择器选项。 */
 const transportOptions: CommonOption[] = [
   { label: 'stdio', value: 'stdio' },
   { label: 'Streamable HTTP', value: 'streamable_http' }
 ]
+
+/** 紧凑展示使用次数的数字格式器。 */
+const useCountFormatter = new Intl.NumberFormat('zh-CN', {
+  notation: 'compact',
+  maximumFractionDigits: 1
+})
+
+/** 当前选中的 MCP Server。 */
+const selectedServer = computed<McpServerSnapshot | undefined>(() => {
+  if (!editingMcpServerId.value) return undefined
+  return snapshot.value.mcpServers.find((server) => server.serverId === editingMcpServerId.value)
+})
+
+/** MCP 弹窗是否处于编辑模式。 */
+const isEditingMcp = computed<boolean>(() => Boolean(selectedServer.value))
+
+/** MCP 弹窗标题。 */
+const mcpDialogTitle = computed<string>(() => isEditingMcp.value ? '编辑 MCP Server' : '新增 MCP Server')
+
+/** MCP 弹窗说明。 */
+const mcpDialogSubtitle = computed<string>(() => isEditingMcp.value
+  ? '修改配置后需要重新测试真实工具范围；Secret 留空表示沿用已保存值。'
+  : '和新增模型一样通过弹窗创建；市场只预填名称和 ID，连接方式仍需按服务说明补齐。')
+
+/** MCP 标签页选项。 */
+const mcpTabOptions = computed<CommonOption[]>(() => {
+  /** 已安装标签项。 */
+  const installedOption: CommonOption = { label: '已安装', value: 'installed', badge: snapshot.value.mcpServers.length }
+  /** 市场标签项。 */
+  const marketOption: CommonOption = { label: '市场', value: 'market' }
+  if (marketTotalCount.value > 0) marketOption.badge = marketTotalCount.value
+  return [installedOption, marketOption]
+})
+
+/** 已安装 MCP 总页数。 */
+const installedTotalPages = computed<number>(() =>
+  Math.max(1, Math.ceil(snapshot.value.mcpServers.length / MCP_PAGE_SIZE))
+)
+
+/** 当前页展示的已安装 MCP Server。 */
+const paginatedMcpServers = computed<McpServerSnapshot[]>(() => {
+  /** 当前页的起始下标。 */
+  const start = (installedPage.value - 1) * MCP_PAGE_SIZE
+  return snapshot.value.mcpServers.slice(start, start + MCP_PAGE_SIZE)
+})
 
 // ========= 函数 =========
 
@@ -178,8 +284,8 @@ async function installGitSkill(): Promise<void> {
     confirmText: '导入 Skill',
     type: 'warning',
     task: async () => {
-      await runRequest(() => window.ncx.extensions.request({ operation: 'skill.installGit', url }))
-      gitUrl.value = ''
+      const ok = await runRequest(() => window.ncx.extensions.request({ operation: 'skill.installGit', url }))
+      if (ok) gitUrl.value = ''
     }
   })
 }
@@ -198,7 +304,7 @@ function mutateSkill(skill: SkillSnapshot, action: SkillAction): void {
 }
 
 /** 把公开 MCP 快照载入编辑器；秘密值永不回填 Renderer。 */
-function editMcp(server: McpServerSnapshot): void {
+function fillMcpEditor(server: McpServerSnapshot): void {
   editor.value = {
     serverId: server.serverId,
     displayName: server.displayName,
@@ -213,9 +319,35 @@ function editMcp(server: McpServerSnapshot): void {
   }
 }
 
-/** 清空 MCP 编辑器以创建新配置。 */
-function createMcp(): void {
+/** 打开 MCP 新增弹窗。 */
+function openCreateMcpDialog(prefill: Partial<McpEditor> = {}): void {
+  editingMcpServerId.value = ''
+  editor.value = { ...emptyMcpEditor(), ...prefill }
+  mcpDialogVisible.value = true
+}
+
+/** 打开 MCP 编辑弹窗。 */
+function openEditMcpDialog(server: McpServerSnapshot): void {
+  editingMcpServerId.value = server.serverId
+  fillMcpEditor(server)
+  mcpDialogVisible.value = true
+}
+
+/** 在非保存状态下关闭 MCP 弹窗。 */
+function closeMcpDialog(): void {
+  if (busy.value) return
+  mcpDialogVisible.value = false
+  editingMcpServerId.value = ''
   editor.value = emptyMcpEditor()
+}
+
+/** 切换 MCP 设置页标签。 */
+function setMcpTab(value: string): void {
+  if (value !== 'installed' && value !== 'market') return
+  activeMcpTab.value = value
+  if (value === 'market' && marketServers.value.length === 0 && !marketLoading.value) {
+    void loadMcpMarket()
+  }
 }
 
 /** 设置 MCP 编辑器的传输类型。 */
@@ -245,16 +377,19 @@ async function saveMcp(): Promise<void> {
     enabled: form.enabled
   }
   requestConfirmation({
-    title: selectedServer.value ? '保存 MCP 配置？' : '新增 MCP Server？',
+    title: isEditingMcp.value ? '保存 MCP 配置？' : '新增 MCP Server？',
     description: '保存后仅在测试或实际调用时按需连接；Secret 由系统保护且不会出现在导出文档中。配置或工具范围变化后必须重新批准。',
     confirmText: '保存配置',
     type: 'warning',
-    task: () => runRequest(() => window.ncx.extensions.request({
-      operation: 'mcp.upsert',
-      config,
-      environment,
-      headers
-    }))
+    task: async () => {
+      const ok = await runRequest(() => window.ncx.extensions.request({
+        operation: 'mcp.upsert',
+        config,
+        environment,
+        headers
+      }))
+      if (ok) closeMcpDialog()
+    }
   })
 }
 
@@ -270,14 +405,15 @@ function mutateMcp(server: McpServerSnapshot, action: McpAction): void {
 
 /** 在用户确认后执行 MCP 设置动作并同步编辑器。 */
 async function executeMcpAction(server: McpServerSnapshot, action: McpAction): Promise<void> {
-  await runRequest(() => window.ncx.extensions.request({
+  const ok = await runRequest(() => window.ncx.extensions.request({
     operation: `mcp.${action}`,
     serverId: server.serverId
   }))
-  /** 操作后把最新同名快照回填表单。 */
+  if (!ok) return
+  /** 操作后查找最新同名快照。 */
   const next = snapshot.value.mcpServers.find((item) => item.serverId === server.serverId)
-  if (next) editMcp(next)
-  else if (editor.value.serverId === server.serverId) createMcp()
+  if (next && editingMcpServerId.value === server.serverId) fillMcpEditor(next)
+  if (!next && editingMcpServerId.value === server.serverId) closeMcpDialog()
 }
 
 /** 生成并复制无 Secret MCP 配置文档。 */
@@ -433,15 +569,17 @@ async function importMcp(confirm: boolean): Promise<void> {
 /** 统一执行设置请求并刷新公开快照。 */
 async function runRequest(
   task: () => ReturnType<typeof window.ncx.extensions.request>
-): Promise<void> {
+): Promise<boolean> {
   busy.value = true
   try {
     /** Main 返回的扩展设置结果。 */
     const result = await task()
     snapshot.value = result.snapshot
     if (result.message) showToast(result.message, 'success')
+    return true
   } catch (error) {
     showToast(readableError(error), 'warning')
+    return false
   } finally {
     busy.value = false
   }
@@ -472,7 +610,135 @@ function readableError(error: unknown): string {
   return error instanceof Error ? error.message : '扩展设置操作失败。'
 }
 
+/** 把市场条目名称规范化为 MCP Server ID。 */
+function normalizeMarketServerId(server: McpMarketServer): string {
+  /** 市场条目的优先稳定名称。 */
+  const source = server.qualifiedName || server.namespace || server.displayName
+  /** 只保留本地 MCP ID 允许的字符。 */
+  const normalized = source
+    .trim()
+    .toLowerCase()
+    .replace(/^@/u, '')
+    .replace(/[^a-z0-9-]+/gu, '-')
+    .replace(/-{2,}/gu, '-')
+    .replace(/^-|-$/gu, '')
+  /** 保证首字符为字母。 */
+  const withInitial = /^[a-z]/u.test(normalized) ? normalized : `mcp-${normalized}`
+  /** 截断后再次去掉尾部分隔符。 */
+  const trimmed = withInitial.slice(0, 63).replace(/-+$/u, '')
+  return trimmed.length >= 2 ? trimmed : 'mcp-server'
+}
+
+/** 使用市场条目打开 MCP 创建弹窗。 */
+function useMarketServer(server: McpMarketServer): void {
+  /** 从市场条目推导出的本地 Server ID。 */
+  const serverId = normalizeMarketServerId(server)
+  /** 已经安装的同名 MCP Server。 */
+  const existing = snapshot.value.mcpServers.find((item) => item.serverId === serverId)
+  if (existing) {
+    openEditMcpDialog(existing)
+    showToast('该 MCP Server 已安装，已打开编辑弹窗。', 'info')
+    return
+  }
+  openCreateMcpDialog({
+    serverId,
+    displayName: server.displayName,
+    transport: server.remote ? 'streamable_http' : 'stdio'
+  })
+}
+
+/** 从 Smithery 公开市场读取 MCP Server 列表。 */
+async function loadMcpMarket(): Promise<void> {
+  /** 当前请求的唯一 ID。 */
+  const requestId = crypto.randomUUID()
+  latestMarketRequestId = requestId
+  marketLoading.value = true
+  marketError.value = ''
+  try {
+    /** 已提交搜索词。 */
+    const query = marketQuery.value.trim()
+    /** Main 代理返回的市场结果。 */
+    const result = await window.ncx.extensions.request({
+      operation: 'mcp.market.search',
+      page: marketPage.value,
+      pageSize: MCP_PAGE_SIZE,
+      ...(query ? { q: query, topK: MCP_MARKET_TOP_K } : {})
+    })
+    if (requestId !== latestMarketRequestId) return
+    snapshot.value = result.snapshot
+    marketServers.value = result.mcpMarket?.servers ?? []
+    marketTotalPages.value = Math.max(1, result.mcpMarket?.pagination.totalPages ?? 1)
+    marketTotalCount.value = result.mcpMarket?.pagination.totalCount ?? marketServers.value.length
+  } catch (error) {
+    if (requestId !== latestMarketRequestId) return
+    marketServers.value = []
+    marketTotalPages.value = 1
+    marketTotalCount.value = 0
+    marketError.value = readableError(error)
+  } finally {
+    if (requestId === latestMarketRequestId) marketLoading.value = false
+  }
+}
+
+/** 提交 MCP 市场搜索并回到第一页。 */
+function submitMarketSearch(): void {
+  marketQuery.value = marketSearchDraft.value.trim()
+  marketPage.value = 1
+  void loadMcpMarket()
+}
+
+/** 清空 MCP 市场搜索并回到推荐列表。 */
+function clearMarketSearch(): void {
+  marketSearchDraft.value = ''
+  marketQuery.value = ''
+  marketPage.value = 1
+  void loadMcpMarket()
+}
+
+/** 跳转已安装 MCP 分页。 */
+function goToInstalledPage(page: number): void {
+  installedPage.value = Math.min(installedTotalPages.value, Math.max(1, page))
+}
+
+/** 跳转 MCP 市场分页。 */
+function goToMarketPage(page: number): void {
+  marketPage.value = Math.min(marketTotalPages.value, Math.max(1, page))
+  void loadMcpMarket()
+}
+
+/** 紧凑格式化市场使用次数。 */
+function formatUseCount(value: number): string {
+  return useCountFormatter.format(value)
+}
+
+/** 读取 MCP 连接状态文案。 */
+function connectionStateLabel(server: McpServerSnapshot): string {
+  /** MCP 连接状态展示字典。 */
+  const labels: Record<McpServerSnapshot['connectionState'], string> = {
+    disconnected: '未连接',
+    connecting: '连接中',
+    ready: '已就绪',
+    failed_disabled: '失败停用'
+  }
+  return labels[server.connectionState]
+}
+
+/** 读取 MCP 批准状态文案。 */
+function approvalStateLabel(server: McpServerSnapshot): string {
+  return server.approvalState === 'approved' ? '已批准' : '需重批'
+}
+
+/** 打开市场条目的外部主页。 */
+function openMarketHomepage(server: McpMarketServer): void {
+  if (!server.homepage || !/^https?:\/\//iu.test(server.homepage)) return
+  window.open(server.homepage, '_blank', 'noopener,noreferrer')
+}
+
 // ========= 生命周期 =========
+
+watch(installedTotalPages, (totalPages) => {
+  if (installedPage.value > totalPages) installedPage.value = totalPages
+})
 
 onMounted(() => { void refresh() })
 </script>
@@ -593,187 +859,391 @@ onMounted(() => { void refresh() })
       v-else
       section-id="setting-mcp-servers"
       title="MCP Servers"
-      description="只支持 stdio 与 Streamable HTTP；实际工具范围变化会自动禁用并要求重新批准。"
+      description="默认展示已安装列表；市场来自 Smithery 公开目录，安装仍需在弹窗中补齐连接配置。"
     >
       <template #actions>
         <div class="settings-inline-actions">
           <CommonButton
-            variant="secondary"
-            @click="createMcp"
+            size="compact"
+            variant="primary"
+            @click="openCreateMcpDialog()"
           >
-            <Server :size="14" />新建
+            <Plus :size="14" />新增 MCP
           </CommonButton>
           <CommonButton
+            size="compact"
             variant="ghost"
+            :loading="busy"
             @click="exportMcp"
           >
             <Download :size="14" />复制导出
+          </CommonButton>
+          <CommonButton
+            size="compact"
+            variant="ghost"
+            :loading="busy"
+            @click="refresh"
+          >
+            <RefreshCw :size="14" />刷新
           </CommonButton>
         </div>
       </template>
 
       <div class="extensions-section-body">
-        <div class="mcp-settings-layout">
-          <div class="mcp-server-list">
-            <CommonButton
-              v-for="server in snapshot.mcpServers"
+        <CommonTabs
+          :model-value="activeMcpTab"
+          :options="mcpTabOptions"
+          variant="segmented"
+          full-width
+          @update:model-value="setMcpTab"
+        />
+
+        <div
+          v-if="activeMcpTab === 'installed'"
+          class="mcp-tab-panel"
+        >
+          <div
+            v-if="snapshot.mcpServers.length === 0"
+            class="mcp-empty-state"
+          >
+            <Server :size="24" />
+            <strong>尚未配置 MCP Server</strong>
+            <span>点击“新增 MCP”打开弹窗，或从市场选择一个条目作为起点。</span>
+          </div>
+          <div
+            v-else
+            class="extension-card-list mcp-installed-list"
+          >
+            <article
+              v-for="server in paginatedMcpServers"
               :key="server.serverId"
-              class="mcp-server-option"
-              :class="{ 'is-active': selectedServer?.serverId === server.serverId }"
-              variant="ghost"
-              @click="editMcp(server)"
+              class="extension-card mcp-installed-card"
             >
-              <span><strong>{{ server.displayName }}</strong><small>{{ server.serverId }} · {{ server.connectionState }}</small></span>
-              <em>{{ server.approvalState === 'approved' ? '已批准' : '需重批' }}</em>
-            </CommonButton>
-            <p
-              v-if="snapshot.mcpServers.length === 0"
-              class="extensions-empty"
-            >
-              尚未配置 MCP Server。
-            </p>
+              <span class="settings-row-icon"><Server :size="18" /></span>
+              <div class="extension-card-copy">
+                <strong>{{ server.displayName }} <small>{{ server.enabled ? '启用' : '禁用' }}</small></strong>
+                <p>{{ server.serverId }} · {{ server.transport }} · {{ connectionStateLabel(server) }}</p>
+                <small>{{ server.lastKnownTools.length }} tools · {{ approvalStateLabel(server) }}</small>
+                <small v-if="server.lastError">{{ server.lastError }}</small>
+              </div>
+              <div class="settings-inline-actions mcp-card-actions">
+                <CommonButton
+                  size="compact"
+                  variant="secondary"
+                  @click="openEditMcpDialog(server)"
+                >
+                  <Pencil :size="13" />编辑
+                </CommonButton>
+                <CommonButton
+                  v-if="server.enabled"
+                  size="compact"
+                  variant="secondary"
+                  @click="mutateMcp(server, 'disable')"
+                >
+                  禁用
+                </CommonButton>
+                <CommonButton
+                  v-else
+                  size="compact"
+                  variant="secondary"
+                  @click="mutateMcp(server, 'enable')"
+                >
+                  启用
+                </CommonButton>
+                <CommonButton
+                  size="compact"
+                  variant="ghost"
+                  @click="mutateMcp(server, 'test')"
+                >
+                  测试
+                </CommonButton>
+                <CommonButton
+                  v-if="server.previousConfigAvailable"
+                  size="compact"
+                  variant="ghost"
+                  @click="mutateMcp(server, 'rollback')"
+                >
+                  回滚
+                </CommonButton>
+                <CommonButton
+                  size="compact"
+                  variant="danger"
+                  @click="mutateMcp(server, 'delete')"
+                >
+                  <Trash2 :size="13" />删除
+                </CommonButton>
+              </div>
+            </article>
           </div>
 
-          <form
-            class="mcp-editor"
-            @submit.prevent="saveMcp"
+          <CommonPagination
+            :current-page="installedPage"
+            :total-pages="installedTotalPages"
+            aria-label="已安装 MCP 分页"
+            @change="goToInstalledPage"
+          />
+
+          <div
+            id="setting-mcp-import"
+            class="mcp-import-box"
           >
-            <label><span>Server ID</span><CommonInput
-              v-model="editor.serverId"
-              required
-              pattern="[a-z][a-z0-9-]{1,62}"
-              :disabled="Boolean(selectedServer)"
-            /></label>
-            <label><span>名称</span><CommonInput
-              v-model="editor.displayName"
-              required
-            /></label>
-            <label><span>传输</span><CommonSelect
-              :model-value="editor.transport"
-              :options="transportOptions"
-              @update:model-value="setMcpTransport"
-            /></label>
-            <label v-if="editor.transport === 'stdio'"><span>Command</span><CommonInput
-              v-model="editor.command"
-              required
-              placeholder="npx"
-            /></label>
-            <label v-if="editor.transport === 'stdio'"><span>Args</span><CommonTextarea
-              v-model="editor.args"
-              :rows="3"
-              placeholder="每行一个参数；版本必须锁定"
-            /></label>
-            <label v-if="editor.transport === 'stdio'"><span>CWD</span><CommonInput
-              v-model="editor.cwd"
-              placeholder="可选绝对目录"
-            /></label>
-            <label v-else><span>URL</span><CommonInput
-              v-model="editor.url"
-              type="url"
-              required
-              placeholder="https://example.com/mcp"
-            /></label>
-            <label v-if="editor.transport === 'stdio'"><span>环境变量</span><CommonTextarea
-              v-model="editor.environment"
-              :rows="3"
-              placeholder="NAME=value；已有 Secret 不回显"
-            /></label>
-            <label v-else><span>Headers</span><CommonTextarea
-              v-model="editor.headers"
-              :rows="3"
-              placeholder="Authorization=Bearer …；已有 Secret 不回显"
-            /></label>
-            <div class="mcp-editor-actions">
-              <CommonSwitch
-                v-model="editor.enabled"
-                label="保存后启用"
-              />
-              <CommonButton
-                type="submit"
-                :loading="busy"
-              >
-                保存配置
-              </CommonButton>
-            </div>
+            <CommonTextarea
+              v-model="importDocument"
+              :rows="5"
+              placeholder="粘贴 .mcp.json 或 NcxMusic 导出文档"
+            />
             <div
-              v-if="selectedServer"
-              class="mcp-editor-actions"
+              v-if="importPreview.length > 0"
+              class="mcp-capabilities"
+              aria-live="polite"
             >
+              <strong>待导入配置预览（{{ importPreview.length }}）</strong>
+              <span
+                v-for="server in importPreview"
+                :key="server.serverId"
+              >
+                {{ server.displayName }} · {{ server.serverId }} · {{ server.transport }} · 默认禁用
+              </span>
+            </div>
+            <div class="settings-inline-actions">
               <CommonButton
                 variant="secondary"
-                @click="mutateMcp(selectedServer, 'test')"
+                :loading="busy"
+                @click="importMcp(false)"
               >
-                测试并读取工具
+                预览导入
               </CommonButton>
               <CommonButton
-                v-if="selectedServer.previousConfigAvailable"
-                variant="ghost"
-                @click="mutateMcp(selectedServer, 'rollback')"
+                v-if="importPreview.length > 0"
+                :loading="busy"
+                @click="importMcp(true)"
               >
-                回滚
-              </CommonButton>
-              <CommonButton
-                variant="danger"
-                @click="mutateMcp(selectedServer, 'delete')"
-              >
-                删除
+                确认导入 {{ importPreview.length }} 项
               </CommonButton>
             </div>
-            <div
-              v-if="selectedServer"
-              class="mcp-capabilities"
-            >
-              <strong>实际工具（{{ selectedServer.lastKnownTools.length }}）</strong>
-              <span
-                v-for="tool in selectedServer.lastKnownTools"
-                :key="tool.name"
-              >mcp.{{ selectedServer.serverId }}.{{ tool.name }}</span>
-              <small v-if="selectedServer.lastError">{{ selectedServer.lastError }}</small>
-            </div>
-          </form>
+          </div>
         </div>
 
         <div
-          id="setting-mcp-import"
-          class="mcp-import-box"
+          v-else
+          class="mcp-tab-panel"
         >
-          <CommonTextarea
-            v-model="importDocument"
-            :rows="5"
-            placeholder="粘贴 .mcp.json 或 NcxMusic 导出文档"
-          />
+          <div class="mcp-market-toolbar">
+            <CommonSearchInput
+              v-model="marketSearchDraft"
+              placeholder="搜索 MCP Server，例如 brave、github、postgres"
+              @search="submitMarketSearch"
+              @clear="clearMarketSearch"
+            />
+            <CommonButton
+              variant="primary"
+              :loading="marketLoading"
+              @click="submitMarketSearch"
+            >
+              搜索
+            </CommonButton>
+            <CommonButton
+              v-if="marketQuery"
+              variant="ghost"
+              :disabled="marketLoading"
+              @click="clearMarketSearch"
+            >
+              推荐
+            </CommonButton>
+          </div>
+
+          <p class="mcp-market-caption">
+            {{ marketQuery ? `搜索 “${marketQuery}”` : '推荐 MCP Server' }} · 共 {{ marketTotalCount }} 项
+          </p>
+
           <div
-            v-if="importPreview.length > 0"
-            class="mcp-capabilities"
-            aria-live="polite"
+            v-if="marketLoading"
+            class="extensions-empty"
           >
-            <strong>待导入配置预览（{{ importPreview.length }}）</strong>
-            <span
-              v-for="server in importPreview"
-              :key="server.serverId"
-            >
-              {{ server.displayName }} · {{ server.serverId }} · {{ server.transport }} · 默认禁用
-            </span>
+            正在读取 Smithery MCP 市场…
           </div>
-          <div class="settings-inline-actions">
+          <div
+            v-else-if="marketError"
+            class="mcp-market-error"
+          >
+            <span>{{ marketError }}</span>
             <CommonButton
+              size="compact"
               variant="secondary"
-              :loading="busy"
-              @click="importMcp(false)"
+              @click="loadMcpMarket"
             >
-              预览导入
-            </CommonButton>
-            <CommonButton
-              v-if="importPreview.length > 0"
-              :loading="busy"
-              @click="importMcp(true)"
-            >
-              确认导入 {{ importPreview.length }} 项
+              重试
             </CommonButton>
           </div>
+          <div
+            v-else-if="marketServers.length === 0"
+            class="extensions-empty"
+          >
+            没有找到匹配的 MCP Server。
+          </div>
+          <div
+            v-else
+            class="mcp-market-list"
+          >
+            <article
+              v-for="server in marketServers"
+              :key="server.id"
+              class="mcp-market-card"
+            >
+              <span class="mcp-market-icon">
+                <img
+                  v-if="server.iconUrl"
+                  :src="server.iconUrl"
+                  :alt="server.displayName"
+                  loading="lazy"
+                >
+                <Globe2
+                  v-else
+                  :size="18"
+                />
+              </span>
+              <div class="mcp-market-copy">
+                <strong>
+                  {{ server.displayName }}
+                  <small v-if="server.verified"><ShieldCheck :size="12" />已验证</small>
+                  <small v-if="server.inactive">停用</small>
+                </strong>
+                <p>{{ server.description || '暂无介绍。' }}</p>
+                <small>{{ server.qualifiedName }} · {{ formatUseCount(server.useCount) }} 次使用 · {{ server.remote ? 'Remote' : 'Local' }}</small>
+              </div>
+              <div class="settings-inline-actions mcp-card-actions">
+                <CommonButton
+                  size="compact"
+                  variant="primary"
+                  @click="useMarketServer(server)"
+                >
+                  用此创建
+                </CommonButton>
+                <CommonButton
+                  v-if="server.homepage"
+                  size="compact"
+                  variant="ghost"
+                  @click="openMarketHomepage(server)"
+                >
+                  <ExternalLink :size="13" />主页
+                </CommonButton>
+              </div>
+            </article>
+          </div>
+
+          <CommonPagination
+            :current-page="marketPage"
+            :total-pages="marketTotalPages"
+            :disabled="marketLoading"
+            aria-label="MCP 市场分页"
+            @change="goToMarketPage"
+          />
         </div>
       </div>
     </SettingsSection>
+
+    <CommonDialog
+      :visible="mcpDialogVisible"
+      :title="mcpDialogTitle"
+      :subtitle="mcpDialogSubtitle"
+      width="640px"
+      :close-on-overlay-click="!busy"
+      :close-on-esc="!busy"
+      @close="closeMcpDialog"
+    >
+      <form
+        class="mcp-editor"
+        @submit.prevent="saveMcp"
+      >
+        <label><span>Server ID</span><CommonInput
+          v-model="editor.serverId"
+          required
+          pattern="[a-z][a-z0-9-]{1,62}"
+          :disabled="isEditingMcp"
+        /></label>
+        <label><span>名称</span><CommonInput
+          v-model="editor.displayName"
+          required
+        /></label>
+        <label><span>传输</span><CommonSelect
+          :model-value="editor.transport"
+          :options="transportOptions"
+          @update:model-value="setMcpTransport"
+        /></label>
+        <label v-if="editor.transport === 'stdio'"><span>Command</span><CommonInput
+          v-model="editor.command"
+          required
+          placeholder="npx"
+        /></label>
+        <label v-if="editor.transport === 'stdio'"><span>Args</span><CommonTextarea
+          v-model="editor.args"
+          :rows="3"
+          placeholder="每行一个参数；版本必须锁定"
+        /></label>
+        <label v-if="editor.transport === 'stdio'"><span>CWD</span><CommonInput
+          v-model="editor.cwd"
+          placeholder="可选绝对目录"
+        /></label>
+        <label v-else><span>URL</span><CommonInput
+          v-model="editor.url"
+          type="url"
+          required
+          placeholder="https://example.com/mcp"
+        /></label>
+        <label v-if="editor.transport === 'stdio'"><span>环境变量</span><CommonTextarea
+          v-model="editor.environment"
+          :rows="3"
+          placeholder="NAME=value；已有 Secret 不回显"
+        /></label>
+        <label v-else><span>Headers</span><CommonTextarea
+          v-model="editor.headers"
+          :rows="3"
+          placeholder="Authorization=Bearer …；已有 Secret 不回显"
+        /></label>
+        <div class="mcp-editor-actions">
+          <CommonSwitch
+            v-model="editor.enabled"
+            label="保存后启用"
+          />
+        </div>
+        <div
+          v-if="selectedServer"
+          class="mcp-capabilities"
+        >
+          <strong>实际工具（{{ selectedServer.lastKnownTools.length }}）</strong>
+          <span
+            v-for="tool in selectedServer.lastKnownTools"
+            :key="tool.name"
+          >mcp.{{ selectedServer.serverId }}.{{ tool.name }}</span>
+          <small v-if="selectedServer.lastError">{{ selectedServer.lastError }}</small>
+        </div>
+      </form>
+
+      <template #actions>
+        <CommonButton
+          variant="secondary"
+          :disabled="busy"
+          @click="closeMcpDialog"
+        >
+          取消
+        </CommonButton>
+        <CommonButton
+          v-if="selectedServer"
+          variant="secondary"
+          :loading="busy"
+          @click="mutateMcp(selectedServer, 'test')"
+        >
+          测试并读取工具
+        </CommonButton>
+        <CommonButton
+          variant="primary"
+          :loading="busy"
+          @click="saveMcp"
+        >
+          保存配置
+        </CommonButton>
+      </template>
+    </CommonDialog>
 
     <CommonAlertDialog
       :visible="Boolean(pendingConfirmation)"

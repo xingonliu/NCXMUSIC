@@ -71,7 +71,7 @@ describe('十项音乐体验 UI 契约', () => {
     expect(source).toContain('route.query')
     expect(source).toContain('const offset =')
     expect(source).toContain('offset,')
-    expect(source).toContain('category-pagination')
+    expect(source).toContain('CommonPagination')
     expect(source).toContain('PAGE_SIZE = 30')
   })
 
