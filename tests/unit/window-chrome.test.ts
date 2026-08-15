@@ -43,12 +43,17 @@ describe('WindowChrome options', () => {
     expect(options.webPreferences?.preload).toBe(preloadPath)
   })
 
-  it('保持 Windows 自绘窗口按钮所需的 frameless 配置', () => {
-    const options = createMainWindowOptions({ platform: 'win32', preloadPath })
+  it('保持 Windows 自绘窗口按钮所需的 frameless 配置并在指定时携带图标路径', () => {
+    const options = createMainWindowOptions({
+      platform: 'win32',
+      preloadPath,
+      iconPath: '/path/to/icon.png'
+    })
 
     expect(options.frame).toBe(false)
     expect(options.titleBarStyle).toBeUndefined()
     expect(options.trafficLightPosition).toBeUndefined()
+    expect(options.icon).toBe('/path/to/icon.png')
   })
 
   it('窗口快照只暴露 Renderer 需要的只读状态', () => {

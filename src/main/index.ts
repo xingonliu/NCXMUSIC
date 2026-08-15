@@ -188,6 +188,7 @@ function applyWindowCommand(command: WindowCommand): WindowSnapshot {
   return publishWindowSnapshot(window) ?? createWindowSnapshot(window)
 }
 
+/** 解析 UtilityProcess 构建入口；打包后从 asar 解包目录执行原生/适配模块。 */
 function utilityEntryPath(): string {
   if (app.isPackaged) {
     return join(process.resourcesPath, 'app.asar.unpacked', 'out', 'main', 'utility.js')
@@ -201,6 +202,11 @@ function inputHookEntryPath(): string {
     return join(process.resourcesPath, 'app.asar.unpacked', 'out', 'main', 'inputHook.js')
   }
   return join(__dirname, 'inputHook.js')
+}
+
+/** 解析应用程序主图标绝对路径，统一指向 resources/icon.png。 */
+function appIconEntryPath(): string {
+  return join(__dirname, '../../resources/icon.png')
 }
 
 function createSupervisor(): UtilitySupervisor {
@@ -626,7 +632,8 @@ async function createMainWindow(): Promise<void> {
   const window = new BrowserWindow(
     createMainWindowOptions({
       platform: process.platform,
-      preloadPath: join(__dirname, '../preload/index.js')
+      preloadPath: join(__dirname, '../preload/index.js'),
+      iconPath: appIconEntryPath()
     })
   )
   mainWindow = window
@@ -685,6 +692,13 @@ if (!hasSingleInstanceLock) {
 
   app.whenReady()
     .then(async () => {
+      if (process.platform === 'darwin' && app.dock) {
+        try {
+          app.dock.setIcon(appIconEntryPath())
+        } catch {
+          // 平台或环境不支持设置 Dock 图标时静默忽略
+        }
+      }
       supervisor = createSupervisor()
       broker = new ConnectionBroker(supervisor, app.getVersion())
       /** 使用 Electron safeStorage 加密模型 API Key 和自定义 Header 值。 */

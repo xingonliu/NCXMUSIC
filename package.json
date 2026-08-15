@@ -75,10 +75,12 @@
     "appId": "io.github.ncxmusic.app",
     "productName": "NcxMusic",
     "directories": {
-      "output": "release"
+      "output": "release",
+      "buildResources": "build"
     },
     "files": [
       "out/**/*",
+      "resources/**/*",
       "package.json"
     ],
     "asar": true,
@@ -87,11 +89,13 @@
       "out/main/**/*"
     ],
     "win": {
+      "icon": "build/icon.ico",
       "target": [
         "nsis"
       ]
     },
     "mac": {
+      "icon": "build/icon.icns",
       "target": [
         "dmg",
         "zip"

@@ -1,3 +1,5 @@
+import { join } from 'node:path'
+
 import { app, Menu, nativeImage, Tray, type NativeImage } from 'electron'
 
 // ========= 类型 =========
@@ -12,20 +14,31 @@ export interface ApplicationTrayActions {
 
 // ========= 变量 =========
 
+/** 托盘默认图标资源路径。 */
+const TRAY_ICON_RESOURCE_PATH = join(__dirname, '../../resources/icon.png')
+
 /** 无法读取可执行文件图标时使用的内嵌 PNG 音乐图标。 */
 const FALLBACK_TRAY_ICON_DATA_URL =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKQSURBVFhH1Ve/axRBFE6ZMmXK/Ak2wcxekfsHhICNVqYJBGzE6rg9vBQpJAQkhRwWKVLEH6AECyNYaKNELM5GsLxgkXDZ3Vv11Ltwmg3f3N44997O7O5lLfzgg7D75r3vfTP3Jjs19b+iWvIX3JJX1kljCkV9vj1bdbzVmuO/rDlBZKQIDlzhVeqXwzmaYyLUF8MZVwRrrgh6rFgaRacB4TRnZkhrhR+yxDkohYuTazR3KmqOvzxR1wbCRVrDCBSnCQriPVqLYWh7cZ1T4iDTmgo4MHn2fPvm9+j19q+oud+Pmi9O5d+UiNHXoLmq075Ea0vAIlrERhRIA2LoOtcJ9mjtuPt81k8qAGQuYHjQoDTqAlrNAbM/aQsURacxJgATjAWlUBdg6tRE1wmOVXFMOxqQhRcRAKptwMVCX2bhRQWoCVkT3hJ7mYE2Adh7cK3cYetGrC74t4YOyFuOB6QxScD9G1+jk8Pf6nmvexbtVrpsLajGM6ygL7OQCkC34dEf9WyEwelZtHk1ZOvxy5MCMH7pSxvRJez9sNdXRSAAnZqwv/WT5cGdM/wVzLdn+UtOdPHl04DmloCAZ+s/6GOFVw0uAIc//iHKG7BFA3TCXn1vKd4+7EV3r4TS7iTQgYSpW19sTWsC7PeAzV7g/dO+jHu+wV1497jH8rH7AEOBBum02QvoFj9Y+aZG8c5t0yj2lsYEAFDFAmPa7AVwMOkaI0XwkdaWSHPhyZ1uoojkE25hUvcjpN2KcGJkL7h1PUfnIL0Fk+A6nUdsYREUwcHYyTcBQYWLkMXDGVrLCsxqlmgS4gMlS+dJiMf0G5Y0Gz9bD1weIBG2Jdv/jfh+jOf8v8Dw28GrxN+Mf1nyynmtPgcGbz1WB+jrqAAAAABJRU5ErkJggg=='
 
 // ========= 函数 =========
 
-/** 优先读取当前可执行文件图标，并在平台读取失败时回退到内嵌图标。 */
+/** 优先读取当前可执行文件图标或本地资源图标，并在平台读取失败时回退到内嵌图标。 */
 async function resolveTrayIcon(): Promise<NativeImage> {
   try {
     /** 当前可执行文件关联的小尺寸平台图标。 */
     const executableIcon = await app.getFileIcon(process.execPath, { size: 'small' })
     if (!executableIcon.isEmpty()) return executableIcon
   } catch {
-    // 平台不支持读取可执行文件图标时继续使用内嵌回退图标。
+    // 平台不支持读取可执行文件图标时继续尝试本地资源图标。
+  }
+  try {
+    const resourceIcon = nativeImage.createFromPath(TRAY_ICON_RESOURCE_PATH)
+    if (!resourceIcon.isEmpty()) {
+      return resourceIcon.resize({ width: 16, height: 16 })
+    }
+  } catch {
+    // 本地资源不存在或加载失败时回退至内嵌 Data URL。
   }
   return nativeImage.createFromDataURL(FALLBACK_TRAY_ICON_DATA_URL)
 }

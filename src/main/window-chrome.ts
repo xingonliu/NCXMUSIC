@@ -19,8 +19,12 @@ export interface CloseWindowActionInput {
 
 /** 构建主窗口参数需要的最小输入。 */
 export interface MainWindowOptionsInput {
+  /** 目标操作系统平台。 */
   readonly platform: NodeJS.Platform
+  /** Preload 脚本文件绝对路径。 */
   readonly preloadPath: string
+  /** 主窗口应用程序图标路径。 */
+  readonly iconPath?: string
 }
 
 // ========= 变量 =========
@@ -47,6 +51,7 @@ export function createMainWindowOptions(
     show: false,
     autoHideMenuBar: true,
     backgroundColor: '#f5f5f7',
+    ...(input.iconPath ? { icon: input.iconPath } : {}),
     ...(input.platform === 'darwin'
       ? {
           titleBarStyle: 'hidden' as const,
