@@ -2847,7 +2847,11 @@ export const CommonSkeleton = defineComponent({
       if (props.variant === 'avatar' || props.variant === 'rectangular' || props.variant === 'card') {
         return h('div', {
           class: skeletonClass,
-          style: { width: props.width, height: props.height },
+          style: {
+            width: props.width || undefined,
+            height: props.height || undefined,
+            minHeight: props.height ? '0' : undefined
+          },
           'aria-hidden': 'true'
         })
       }
@@ -2861,7 +2865,8 @@ export const CommonSkeleton = defineComponent({
             class: 'ncx-common-skeleton-line',
             style: {
               width: index === props.lines - 1 && props.lines > 1 ? '60%' : props.width || '100%',
-              height: props.height
+              height: props.height || undefined,
+              minHeight: props.height ? '0' : undefined
             }
           })
         )

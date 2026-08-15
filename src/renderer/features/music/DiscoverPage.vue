@@ -9,7 +9,7 @@ import type {
   StandardPlaylist,
   StandardSong
 } from '../../../shared/schemas/music'
-import { CommonButton } from '../../design-system/components'
+import { CommonButton, CommonSkeleton } from '../../design-system/components'
 import { useAccountSessionStore } from '../account/account-session-store'
 import { useAgentStore } from '../agent/agent-store'
 import EntityCard from './components/EntityCard.vue'
@@ -97,6 +97,16 @@ const newSongsPreview = computed<StandardSong[]>(() => newSongsSection.value.dat
 
 /** 私人 FM 当前主卡片歌曲；游客模式优雅回退到新歌。 */
 const personalFmSong = computed<StandardSong | null>(() => personalFmSection.value.data[0] ?? newSongsSection.value.data[0] ?? null)
+
+/** 猜你喜欢 Section 的统一加载与展示状态。 */
+const personalSectionState = computed<'loading' | 'ready' | 'empty' | 'error'>(() => {
+  if (isAuthenticated.value) {
+    if (dailySection.value.state === 'loading' && personalFmSection.value.state === 'loading') return 'loading'
+    if (dailySection.value.state === 'error' && personalFmSection.value.state === 'error') return 'error'
+    return 'ready'
+  }
+  return newSongsSection.value.state === 'loading' ? 'loading' : 'ready'
+})
 
 /** 画像就绪后“小云为你推荐”的可见歌曲集合。 */
 const profileRecommendationSongs = computed<StandardSong[]>(() => rankSongsForProfile(
@@ -313,6 +323,19 @@ watch(
       empty-text="画像已就绪，但当前没有可展示的推荐歌曲。"
       @retry="loadDailySongs"
     >
+      <template #skeleton>
+        <div class="discover-profile-recommendations" aria-hidden="true">
+          <div
+            v-for="index in 8"
+            :key="index"
+            class="discover-skeleton-profile-card"
+          >
+            <CommonSkeleton variant="card" class="discover-skeleton-square-cover" />
+            <CommonSkeleton variant="rectangular" width="75%" height="13px" />
+            <CommonSkeleton variant="rectangular" width="50%" height="11px" />
+          </div>
+        </div>
+      </template>
       <template #actions>
         <CommonButton
           variant="secondary"
@@ -346,6 +369,21 @@ watch(
       empty-text="暂时没有可展示的推荐歌单。"
       @retry="loadFeaturedPlaylists"
     >
+      <template #skeleton>
+        <div class="discover-card-grid" aria-hidden="true">
+          <div
+            v-for="index in 5"
+            :key="index"
+            class="discover-skeleton-card"
+          >
+            <CommonSkeleton variant="card" class="discover-skeleton-square-cover" />
+            <div class="discover-skeleton-card-copy">
+              <CommonSkeleton variant="rectangular" width="80%" height="15px" />
+              <CommonSkeleton variant="rectangular" width="55%" height="13px" />
+            </div>
+          </div>
+        </div>
+      </template>
       <div class="discover-card-grid">
         <EntityCard
           v-for="playlist in featuredSection.data"
@@ -362,9 +400,39 @@ watch(
     <MusicSection
       section-id="personal-recommendations"
       title="猜你喜欢"
-      :state="newSongsSection.state === 'loading' && !isAuthenticated ? 'loading' : 'ready'"
+      :state="personalSectionState"
       min-height="260px"
     >
+      <template #skeleton>
+        <div class="discover-personal-grid" aria-hidden="true">
+          <article class="discover-taste-card discover-skeleton-taste-card">
+            <div class="discover-taste-copy">
+              <CommonSkeleton variant="rectangular" width="76px" height="14px" />
+              <CommonSkeleton variant="rectangular" width="160px" height="28px" style="margin-top: 9px" />
+              <CommonSkeleton variant="rectangular" width="220px" height="13px" style="margin-top: 9px" />
+              <div class="discover-taste-actions">
+                <CommonSkeleton variant="rectangular" width="72px" height="30px" style="border-radius: var(--ncx-radius-md)" />
+                <CommonSkeleton variant="rectangular" width="90px" height="30px" style="border-radius: var(--ncx-radius-md)" />
+              </div>
+            </div>
+            <div class="discover-cover-stack">
+              <CommonSkeleton variant="card" class="discover-skeleton-stack-item" style="--stack-index: 0" />
+              <CommonSkeleton variant="card" class="discover-skeleton-stack-item" style="--stack-index: 1" />
+              <CommonSkeleton variant="card" class="discover-skeleton-stack-item" style="--stack-index: 2" />
+            </div>
+          </article>
+
+          <article class="discover-radio-card discover-skeleton-radio-card">
+            <CommonSkeleton variant="rectangular" width="82px" height="26px" style="border-radius: 999px; position: absolute; top: 16px; left: 16px" />
+            <div class="discover-radio-copy">
+              <CommonSkeleton variant="rectangular" width="60px" height="12px" />
+              <CommonSkeleton variant="rectangular" width="140px" height="22px" style="margin-top: 6px" />
+              <CommonSkeleton variant="rectangular" width="180px" height="13px" style="margin-top: 4px" />
+            </div>
+            <CommonSkeleton variant="avatar" width="42px" height="42px" class="discover-radio-play" />
+          </article>
+        </div>
+      </template>
       <div class="discover-personal-grid">
         <article class="discover-taste-card">
           <div class="discover-taste-copy">
@@ -435,6 +503,22 @@ watch(
       empty-text="暂时没有推荐新歌。"
       @retry="loadNewSongs"
     >
+      <template #skeleton>
+        <div class="discover-new-song-grid" aria-hidden="true">
+          <div
+            v-for="index in 10"
+            :key="index"
+            class="discover-skeleton-new-song-item"
+          >
+            <CommonSkeleton variant="rectangular" width="48px" height="48px" style="border-radius: var(--ncx-radius-md); flex-shrink: 0" />
+            <div class="discover-skeleton-song-copy">
+              <CommonSkeleton variant="rectangular" width="65%" height="14px" />
+              <CommonSkeleton variant="rectangular" width="40%" height="11px" style="margin-top: 4px" />
+            </div>
+            <CommonSkeleton variant="avatar" width="16px" height="16px" style="opacity: 0.3; flex-shrink: 0" />
+          </div>
+        </div>
+      </template>
       <template #actions>
         <CommonButton
           variant="ghost"
@@ -477,6 +561,19 @@ watch(
       empty-text="暂时没有推荐歌手。"
       @retry="loadRecommendedArtists"
     >
+      <template #skeleton>
+        <div class="discover-artist-grid" aria-hidden="true">
+          <div
+            v-for="index in 8"
+            :key="index"
+            class="discover-skeleton-artist-card"
+          >
+            <CommonSkeleton variant="avatar" class="discover-skeleton-circle-avatar" />
+            <CommonSkeleton variant="rectangular" width="60%" height="13px" style="margin-top: 8px" />
+            <CommonSkeleton variant="rectangular" width="40%" height="11px" />
+          </div>
+        </div>
+      </template>
       <div class="discover-artist-grid">
         <button v-for="artist in artistsSection.data.slice(0, 8)" :key="artist.id" type="button" @click="openArtist(artist)">
           <Cover :src="artist.artworkUrl" :alt="artist.name" size="card" shape="circle" :show-play-button="false" />
@@ -829,6 +926,82 @@ watch(
 .discover-artist-grid span {
   color: var(--ncx-color-text-secondary);
   font-size: 11px;
+}
+
+/* ========= 骨架屏局部布局 ========= */
+
+.discover-skeleton-profile-card {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+}
+
+.discover-skeleton-card {
+  display: grid;
+  min-width: 0;
+  gap: var(--ncx-space-3);
+}
+
+.discover-skeleton-card-copy {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.discover-skeleton-square-cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--ncx-radius-lg);
+}
+
+.discover-skeleton-taste-card {
+  pointer-events: none;
+}
+
+.discover-skeleton-stack-item {
+  position: absolute;
+  top: 22px;
+  left: 0;
+  width: 118px;
+  height: 118px;
+  z-index: calc(5 - var(--stack-index));
+  transform: translateX(calc(var(--stack-index) * 48px)) rotate(calc((var(--stack-index) - 1) * 4deg));
+  border-radius: var(--ncx-radius-lg);
+}
+
+.discover-skeleton-radio-card {
+  pointer-events: none;
+  background: color-mix(in srgb, var(--ncx-color-surface) 90%, var(--ncx-color-accent) 10%);
+}
+
+.discover-skeleton-new-song-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 14px;
+}
+
+.discover-skeleton-song-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.discover-skeleton-artist-card {
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  gap: 6px;
+}
+
+.discover-skeleton-circle-avatar {
+  width: 100%;
+  max-width: 118px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
 }
 
 @media (width < 1180px) {

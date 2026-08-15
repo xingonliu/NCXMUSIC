@@ -19,7 +19,7 @@ const musicSectionConsumerSources = [
 
 // ========= 测试 =========
 
-describe('MusicSection 提示反馈', () => {
+describe('MusicSection 提示反馈与骨架屏契约', () => {
   it('不在标题下渲染 description', () => {
     expect(musicSectionSource).not.toContain('description?: string')
     expect(musicSectionSource).not.toContain('props.description')
@@ -36,5 +36,26 @@ describe('MusicSection 提示反馈', () => {
     expect(musicSectionSource).toContain('message: props.emptyText')
     expect(musicSectionSource).not.toContain(':description="props.errorText"')
     expect(musicSectionSource).not.toContain(':description="props.emptyText"')
+  })
+
+  it('MusicSection 提供具名 skeleton 插槽并优雅降级为居中加载指示器', () => {
+    expect(musicSectionSource).toContain('<slot name="skeleton">')
+    expect(musicSectionSource).toContain('class="music-section-fallback-spinner"')
+  })
+
+  it('发现页与浏览页均在 Section 级别装配独立骨架屏以防加载抖动', () => {
+    const discoverSource = readFileSync('src/renderer/features/music/DiscoverPage.vue', 'utf8')
+    const browseSource = readFileSync('src/renderer/features/music/BrowsePage.vue', 'utf8')
+
+    expect(discoverSource).toContain('<template #skeleton>')
+    expect(discoverSource).toContain('discover-skeleton-card')
+    expect(discoverSource).toContain('discover-skeleton-new-song-item')
+    expect(discoverSource).toContain('discover-skeleton-artist-card')
+
+    expect(browseSource).toContain('<template #skeleton>')
+    expect(browseSource).toContain('browse-skeleton-song-item')
+    expect(browseSource).toContain('browse-skeleton-card')
+    expect(browseSource).toContain('browse-skeleton-chart-card')
+    expect(browseSource).toContain('browse-skeleton-artist-card')
   })
 })

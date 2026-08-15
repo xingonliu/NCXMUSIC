@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   emptyText: '暂无内容。',
   errorText: '内容读取失败。',
-  minHeight: '180px'
+  minHeight: '0'
 })
 
 /** Section 重试事件。 */
@@ -96,8 +96,12 @@ watch(
     </header>
 
     <div v-if="props.state === 'loading'" class="music-section-loading">
-      <CommonSpinner label="正在加载" />
-      <span>正在加载</span>
+      <slot name="skeleton">
+        <div class="music-section-fallback-spinner">
+          <CommonSpinner label="正在加载" />
+          <span>正在加载</span>
+        </div>
+      </slot>
     </div>
     <CommonErrorState
       v-else-if="props.state === 'error'"
@@ -130,23 +134,27 @@ watch(
 
 .music-section-header h2 {
   margin: 0;
-}
-
-.music-section-header h2 {
   font-size: 20px;
   line-height: 1.2;
 }
 
-.music-section-actions,
-.music-section-loading {
+.music-section-actions {
   display: flex;
   align-items: center;
   gap: var(--ncx-space-2);
 }
 
 .music-section-loading {
+  min-width: 0;
+  width: 100%;
+}
+
+.music-section-fallback-spinner {
+  display: flex;
   min-height: 120px;
+  align-items: center;
   justify-content: center;
+  gap: var(--ncx-space-2);
   color: var(--ncx-color-text-secondary);
 }
 

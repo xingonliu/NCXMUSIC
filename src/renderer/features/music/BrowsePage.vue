@@ -10,7 +10,7 @@ import type {
   StandardPlaylist,
   StandardSong
 } from '../../../shared/schemas/music'
-import { CommonButton } from '../../design-system/components'
+import { CommonButton, CommonSkeleton } from '../../design-system/components'
 import Cover from './components/Cover.vue'
 import EntityCard from './components/EntityCard.vue'
 import MusicSection from './components/MusicSection.vue'
@@ -296,7 +296,21 @@ onMounted(() => {
       <div class="browse-release-layout">
         <section class="browse-subsection" aria-labelledby="latest-songs-title">
           <header><h3 id="latest-songs-title">最新单曲</h3><span>{{ newSongPreview.length }} 首</span></header>
-          <div class="browse-song-list">
+          <div v-if="newSongsSection.state === 'loading'" class="browse-song-list" aria-hidden="true">
+            <div
+              v-for="index in 6"
+              :key="index"
+              class="browse-skeleton-song-item"
+            >
+              <CommonSkeleton variant="rectangular" width="48px" height="48px" style="border-radius: var(--ncx-radius-md); flex-shrink: 0" />
+              <div class="browse-skeleton-song-copy">
+                <CommonSkeleton variant="rectangular" width="65%" height="14px" />
+                <CommonSkeleton variant="rectangular" width="40%" height="11px" style="margin-top: 3px" />
+              </div>
+              <CommonSkeleton variant="avatar" width="16px" height="16px" style="opacity: 0.3; flex-shrink: 0" />
+            </div>
+          </div>
+          <div v-else class="browse-song-list">
             <button v-for="song in newSongPreview" :key="song.id" type="button" @click="playSong(song)">
               <Cover :src="song.album?.artworkUrl" :alt="song.name" size="compact" :show-play-button="false" />
               <span><strong>{{ song.name }}</strong><small>{{ song.artists.map((artist) => artist.name).join(' / ') }}</small></span>
@@ -307,7 +321,20 @@ onMounted(() => {
 
         <section class="browse-subsection" aria-labelledby="latest-albums-title">
           <header><h3 id="latest-albums-title">最新专辑</h3><span>{{ newAlbumPreview.length }} 张</span></header>
-          <div class="browse-album-grid">
+          <div v-if="newAlbumsSection.state === 'loading'" class="browse-album-grid" aria-hidden="true">
+            <div
+              v-for="index in 6"
+              :key="index"
+              class="browse-skeleton-card"
+            >
+              <CommonSkeleton variant="card" class="browse-skeleton-square-cover" />
+              <div class="browse-skeleton-card-copy">
+                <CommonSkeleton variant="rectangular" width="80%" height="14px" />
+                <CommonSkeleton variant="rectangular" width="50%" height="12px" />
+              </div>
+            </div>
+          </div>
+          <div v-else class="browse-album-grid">
             <EntityCard
               v-for="album in newAlbumPreview"
               :key="album.id"
@@ -328,6 +355,21 @@ onMounted(() => {
       :error-text="featuredSection.error"
       @retry="loadFeaturedPlaylists"
     >
+      <template #skeleton>
+        <div class="browse-card-strip" aria-hidden="true">
+          <div
+            v-for="index in 6"
+            :key="index"
+            class="browse-skeleton-card"
+          >
+            <CommonSkeleton variant="card" class="browse-skeleton-square-cover" />
+            <div class="browse-skeleton-card-copy">
+              <CommonSkeleton variant="rectangular" width="80%" height="14px" />
+              <CommonSkeleton variant="rectangular" width="50%" height="12px" />
+            </div>
+          </div>
+        </div>
+      </template>
       <div class="browse-card-strip">
         <EntityCard
           v-for="playlist in featuredSection.data.slice(0, 6)"
@@ -348,6 +390,22 @@ onMounted(() => {
       :error-text="chartsSection.error"
       @retry="loadCharts"
     >
+      <template #skeleton>
+        <div class="browse-chart-grid" aria-hidden="true">
+          <div
+            v-for="index in 6"
+            :key="index"
+            class="browse-skeleton-chart-card"
+          >
+            <CommonSkeleton variant="card" class="browse-skeleton-chart-cover" />
+            <div class="browse-skeleton-chart-copy">
+              <CommonSkeleton variant="rectangular" width="70%" height="14px" />
+              <CommonSkeleton variant="rectangular" width="45%" height="12px" style="margin-top: 4px" />
+            </div>
+            <CommonSkeleton variant="rectangular" width="14px" height="14px" style="opacity: 0.3; margin-left: auto" />
+          </div>
+        </div>
+      </template>
       <template #actions>
         <CommonButton variant="ghost" size="compact" @click="openAllCharts">查看全部 <ChevronRight :size="14" /></CommonButton>
       </template>
@@ -367,6 +425,34 @@ onMounted(() => {
       :error-text="categoryPreviewSection.error"
       @retry="loadBrowseFacets"
     >
+      <template #skeleton>
+        <div class="browse-category-preview-list" aria-hidden="true">
+          <section
+            v-for="rowIndex in 5"
+            :key="rowIndex"
+            class="browse-category-preview-row"
+          >
+            <header>
+              <CommonSkeleton variant="rectangular" width="36px" height="12px" />
+              <CommonSkeleton variant="rectangular" width="68px" height="18px" style="margin-top: 4px" />
+              <CommonSkeleton variant="rectangular" width="48px" height="11px" style="margin-top: 4px" />
+            </header>
+            <div class="browse-category-skeleton-strip">
+              <div
+                v-for="cardIndex in CATEGORY_PREVIEW_LIMIT"
+                :key="cardIndex"
+                class="browse-skeleton-card"
+              >
+                <CommonSkeleton variant="card" class="browse-skeleton-square-cover" />
+                <div class="browse-skeleton-card-copy">
+                  <CommonSkeleton variant="rectangular" width="80%" height="14px" />
+                  <CommonSkeleton variant="rectangular" width="50%" height="12px" />
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </template>
       <template #actions>
         <CommonButton
           variant="ghost"
@@ -389,9 +475,20 @@ onMounted(() => {
           </header>
           <div
             v-if="row.section.state === 'loading'"
-            class="browse-category-row-state"
+            class="browse-category-row-state browse-category-skeleton-strip"
           >
-            正在加载
+            <span class="sr-only">正在加载</span>
+            <div
+              v-for="cardIndex in CATEGORY_PREVIEW_LIMIT"
+              :key="cardIndex"
+              class="browse-skeleton-card"
+            >
+              <CommonSkeleton variant="card" class="browse-skeleton-square-cover" />
+              <div class="browse-skeleton-card-copy">
+                <CommonSkeleton variant="rectangular" width="80%" height="14px" />
+                <CommonSkeleton variant="rectangular" width="50%" height="12px" />
+              </div>
+            </div>
           </div>
           <div
             v-else-if="row.section.state === 'error'"
@@ -433,6 +530,19 @@ onMounted(() => {
       :error-text="artistsSection.error"
       @retry="loadArtists"
     >
+      <template #skeleton>
+        <div class="browse-artist-strip" aria-hidden="true">
+          <div
+            v-for="index in 8"
+            :key="index"
+            class="browse-skeleton-artist-card"
+          >
+            <CommonSkeleton variant="avatar" class="browse-skeleton-circle-avatar" />
+            <CommonSkeleton variant="rectangular" width="60%" height="13px" style="margin-top: 8px" />
+            <CommonSkeleton variant="rectangular" width="40%" height="11px" />
+          </div>
+        </div>
+      </template>
       <template #actions>
         <CommonButton variant="ghost" size="compact" @click="openAllArtists">查看全部 <ChevronRight :size="14" /></CommonButton>
       </template>
@@ -491,6 +601,98 @@ onMounted(() => {
 .browse-artist-strip strong, .browse-artist-strip span { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .browse-artist-strip strong { margin-top: 8px; font-size: 13px; }
 .browse-artist-strip span { color: var(--ncx-color-text-secondary); font-size: 11px; }
+
+/* ========= 骨架屏局部布局 ========= */
+
+.browse-skeleton-song-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 7px;
+  border-radius: 13px;
+}
+
+.browse-skeleton-song-copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.browse-skeleton-card {
+  display: grid;
+  min-width: 0;
+  gap: var(--ncx-space-3);
+}
+
+.browse-skeleton-card-copy {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.browse-skeleton-square-cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--ncx-radius-lg);
+}
+
+.browse-skeleton-chart-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: var(--ncx-radius-lg);
+  background: var(--ncx-color-surface);
+}
+
+.browse-skeleton-chart-cover {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--ncx-radius-md);
+}
+
+.browse-skeleton-chart-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.browse-skeleton-artist-card {
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  gap: 7px;
+}
+
+.browse-skeleton-circle-avatar {
+  width: 100%;
+  max-width: 118px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+
+.browse-category-skeleton-strip {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(5, minmax(126px, 1fr));
+  gap: 18px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 @media (width < 1100px) { .browse-release-layout { grid-template-columns: 1fr; } .browse-card-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } .browse-chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .browse-artist-strip { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
 @media (width < 1100px) { .browse-category-preview-strip { overflow-x: auto; grid-template-columns: repeat(5, minmax(138px, 1fr)); padding-bottom: 8px; } }
 @media (width < 760px) { .browse-page { width: min(100% - 24px, 1240px); gap: 52px; } .browse-album-grid, .browse-chart-grid { grid-template-columns: 1fr 1fr; } .browse-card-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } .browse-category-preview-row { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; padding: 14px; } .browse-artist-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
