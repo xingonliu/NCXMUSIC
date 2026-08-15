@@ -63,6 +63,7 @@ import {
   type CommonOption,
   type CommonVirtualListItem
 } from '../../design-system/components'
+import { useToast } from '../../design-system/use-toast'
 
 import './design-system-lab.css'
 
@@ -207,10 +208,31 @@ function recordAction(action: string): void {
   latestAction.value = action
 }
 
+/** 全局 Toast 服务。 */
+const toast = useToast()
+
+/** UI Lab Toast 计数器。 */
+let toastCounter = 0
+
 /** 展示 Toast 并记录交互。 */
 function showToast(): void {
+  toastCounter += 1
+  const types: Array<'success' | 'info' | 'warning' | 'danger'> = [
+    'success',
+    'info',
+    'warning',
+    'danger'
+  ]
+  const type: 'success' | 'info' | 'warning' | 'danger' =
+    types[(toastCounter - 1) % types.length] ?? 'info'
+  toast.showToast({
+    title: `系统通知 #${toastCounter}`,
+    message: `按顺序堆叠展示，可随时点击右侧关闭按钮移除（${type}）`,
+    type,
+    duration: 4500
+  })
   toastVisible.value = true
-  recordAction('Toast 已打开')
+  recordAction(`Toast #${toastCounter} (${type}) 已触发`)
 }
 
 /** 确认危险弹窗演示。 */

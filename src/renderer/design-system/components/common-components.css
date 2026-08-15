@@ -2971,13 +2971,26 @@
   background: color-mix(in srgb, var(--ncx-color-danger) 11%, transparent);
 }
 
-/* --- 12. CommonToast (macOS Banner / HUD Notification Toast) --- */
-.ncx-common-toast {
+/* --- 12. CommonToast (macOS Banner / HUD Notification Toast & Stacking Container) --- */
+.ncx-common-toast-container {
   position: fixed;
-  z-index: var(--ncx-layer-toast);
+  z-index: 10000;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ncx-space-2, 8px);
+  pointer-events: none;
+  -webkit-app-region: no-drag;
+  max-height: calc(100vh - 40px);
+  overflow: visible;
+}
+
+.ncx-common-toast {
+  position: relative;
+  z-index: 10000;
   display: flex;
   align-items: center;
   gap: var(--ncx-space-3);
@@ -2989,6 +3002,21 @@
   backdrop-filter: blur(10px);
   border: 1px solid var(--ncx-color-border-subtle);
   box-shadow: var(--ncx-shadow-elevation-2);
+  pointer-events: auto;
+  -webkit-app-region: no-drag;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+body > .ncx-common-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ncx-common-toast * {
+  -webkit-app-region: no-drag;
 }
 
 .ncx-common-toast-icon {
@@ -3044,7 +3072,7 @@
 
 .ncx-common-toast-close {
   position: relative;
-  z-index: 2;
+  z-index: 10001;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3058,6 +3086,7 @@
   background: transparent;
   cursor: pointer;
   pointer-events: auto;
+  -webkit-app-region: no-drag;
   user-select: none;
   transition: color var(--ncx-motion-fast), background-color var(--ncx-motion-fast);
 }
@@ -3069,14 +3098,24 @@
 
 /* Toast Transitions */
 .ncx-toast-fade-enter-active,
-.ncx-toast-fade-leave-active {
-  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1), transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+.ncx-toast-fade-leave-active,
+.ncx-toast-stack-enter-active,
+.ncx-toast-stack-leave-active {
+  transition:
+    opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ncx-toast-stack-move {
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ncx-toast-fade-enter-from,
-.ncx-toast-fade-leave-to {
+.ncx-toast-fade-leave-to,
+.ncx-toast-stack-enter-from,
+.ncx-toast-stack-leave-to {
   opacity: 0;
-  transform: translate(-50%, -18px) scale(0.95);
+  transform: translateY(-16px) scale(0.94);
 }
 
 /* --- 13. CommonDialog & CommonAlertDialog (macOS Sheet & Alert Window) --- */

@@ -4,8 +4,12 @@ import { useRoute } from 'vue-router'
 
 import AppShell from './design-system/patterns/AppShell.vue'
 import './design-system/patterns/app-shell.css'
-import { CommonToast } from './design-system/components'
-import { activeToast, dismissToast } from './design-system/use-toast'
+import {
+  dismissToast,
+  pauseToastTimer,
+  resumeToastTimer,
+  toastList
+} from './design-system/use-toast'
 import ImmersiveLyricsPage from './features/music/ImmersiveLyricsPage.vue'
 import AudioHost from './features/music/components/AudioHost.vue'
 import PlayerBar from './features/music/components/PlayerBar.vue'
@@ -25,6 +29,8 @@ const isImmersivePlayerOpen = immersivePlayer.isOpen
 
 /** 当前页面是否展示通用 PlayerBar。 */
 const showPlayerBar = computed<boolean>(() => route.meta.playerBar === 'show')
+
+// ========= 生命周期与监听 =========
 
 /** 正式路由直接访问与浏览器历史变化同步到根层沉浸展示。 */
 watch(
@@ -54,13 +60,82 @@ watch(
     @close="immersivePlayer.close()"
   />
 
-  <!-- 全局轻提示 Toast -->
-  <CommonToast
-    :visible="!!activeToast"
-    :type="activeToast?.type ?? 'info'"
-    :title="activeToast?.title ?? '提示'"
-    :message="activeToast?.message ?? ''"
-    :duration="0"
-    @close="dismissToast"
-  />
+  <!-- 全局轻提示 Toast 多通知堆叠容器（按触发顺序向上自然排列并支持单条关闭） -->
+  <Teleport to="body">
+    <div
+      v-if="toastList.length > 0"
+      class="ncx-common-toast-container"
+      role="region"
+      aria-label="系统通知"
+    >
+      <TransitionGroup name="ncx-toast-stack">
+        <div
+          v-for="toast in toastList"
+          :key="toast.id"
+          :class="['ncx-common-toast', `ncx-common-toast-${toast.type}`]"
+          role="status"
+          @mouseenter="pauseToastTimer(toast.id)"
+          @mouseleave="resumeToastTimer(toast.id)"
+        >
+          <div :class="['ncx-common-toast-icon', `ncx-common-toast-icon-${toast.type}`]">
+            <svg
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <template v-if="toast.type === 'success'">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </template>
+              <template v-else-if="toast.type === 'warning'">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </template>
+              <template v-else-if="toast.type === 'danger'">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+                <line x1="9" y1="9" x2="15" y2="15" />
+              </template>
+              <template v-else>
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+              </template>
+            </svg>
+          </div>
+          <div class="ncx-common-toast-content">
+            <strong class="ncx-common-toast-title">{{ toast.title }}</strong>
+            <span v-if="toast.message" class="ncx-common-toast-message">{{ toast.message }}</span>
+          </div>
+          <button
+            type="button"
+            class="ncx-common-toast-close"
+            aria-label="关闭通知"
+            @click.stop.prevent="dismissToast(toast.id)"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="12"
+              height="12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="pointer-events: none;"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </TransitionGroup>
+    </div>
+  </Teleport>
 </template>
