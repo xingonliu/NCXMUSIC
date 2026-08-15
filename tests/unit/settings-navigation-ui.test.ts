@@ -69,6 +69,27 @@ describe('settings navigation UI contract', () => {
     expect(settingsPageSource).toContain("{ label: '超粗体', value: 'heavy' }")
   })
 
+  it('将歌词焦点、动效、字号、字重与已唱歌词配置归属到外观标签', () => {
+    /** 歌词外观设置项 ID 列表。 */
+    const lyricAppearanceTargetIds = [
+      'setting-lyric-alignment',
+      'setting-lyric-motion',
+      'setting-lyric-font-size',
+      'setting-lyric-font-weight',
+      'setting-hide-passed-lyrics'
+    ]
+
+    for (const targetId of lyricAppearanceTargetIds) {
+      /** 搜索索引中匹配的设置项。 */
+      const item = SETTINGS_SEARCH_ITEMS.find((entry) => entry.targetId === targetId)
+      expect(item?.tab).toBe('appearance')
+    }
+
+    /** 设置页源码。 */
+    const settingsPageSource = settingsPanelSources[3] ?? ''
+    expect(settingsPageSource).toContain('title="歌词页"')
+  })
+
   it('让当前设置项复用 hover 背景且复用通用表单组件', () => {
     expect(appShellStyleSource).toContain('.settings-sidebar-item.is-active:hover')
     expect(appShellStyleSource).toContain('background: var(--ncx-control-hover);')

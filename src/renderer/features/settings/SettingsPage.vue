@@ -474,65 +474,6 @@ onBeforeUnmount(() => {
           @update:model-value="setLyricTranslation"
         />
       </SettingsRow>
-      <SettingsRow
-        setting-id="setting-lyric-alignment"
-        title="当前歌词位置"
-        description="选择当前歌词在沉浸视图中的垂直焦点。"
-      >
-        <CommonSelect
-          class="settings-control"
-          :model-value="appPreferences.preferences.value.lyricAlignment"
-          :options="lyricAlignmentOptions"
-          @update:model-value="setLyricAlignment"
-        />
-      </SettingsRow>
-      <SettingsRow
-        setting-id="setting-lyric-motion"
-        title="歌词动效"
-        description="完整包含弹簧、缩放和模糊；轻柔移除模糊；简洁保留同步扫光。"
-      >
-        <CommonSelect
-          class="settings-control"
-          :model-value="appPreferences.preferences.value.lyricMotion"
-          :options="lyricMotionOptions"
-          @update:model-value="setLyricMotion"
-        />
-      </SettingsRow>
-      <SettingsRow
-        setting-id="setting-lyric-font-size"
-        title="歌词字号"
-        description="调整沉浸歌词主行的整体字号。"
-      >
-        <CommonSelect
-          class="settings-control"
-          :model-value="appPreferences.preferences.value.lyricFontSize"
-          :options="lyricFontSizeOptions"
-          @update:model-value="setLyricFontSize"
-        />
-      </SettingsRow>
-      <SettingsRow
-        setting-id="setting-lyric-font-weight"
-        title="歌词字重"
-        description="调整主歌词、翻译与音译的粗细。"
-      >
-        <CommonSelect
-          class="settings-control"
-          :model-value="appPreferences.preferences.value.lyricFontWeight"
-          :options="lyricFontWeightOptions"
-          @update:model-value="setLyricFontWeight"
-        />
-      </SettingsRow>
-      <SettingsRow
-        setting-id="setting-hide-passed-lyrics"
-        title="已唱歌词"
-        description="隐藏后可减少视觉干扰，仍可滚动查看完整歌词。"
-      >
-        <CommonSwitch
-          :model-value="appPreferences.preferences.value.hidePassedLyrics"
-          label="隐藏已唱歌词"
-          @update:model-value="setHidePassedLyrics"
-        />
-      </SettingsRow>
     </SettingsSection>
 
     <ModelSettingsPanel v-else-if="activeTab === 'models'" />
@@ -556,42 +497,108 @@ onBeforeUnmount(() => {
 
     <SecuritySettingsPanel v-else-if="activeTab === 'security'" />
 
-    <SettingsSection
-      v-else-if="activeTab === 'appearance'"
-      title="界面"
-      description="主题会跟随当前账户保存，并即时更新整个应用。"
-    >
-      <SettingsRow
-        setting-id="setting-theme"
-        title="主题"
-        description="选择跟随系统、浅色或深色外观。"
+    <template v-else-if="activeTab === 'appearance'">
+      <SettingsSection
+        title="界面"
+        description="主题会跟随当前账户保存，并即时更新整个应用。"
       >
-        <div
-          class="settings-theme-options"
-          role="group"
-          aria-label="主题"
+        <SettingsRow
+          setting-id="setting-theme"
+          title="主题"
+          description="选择跟随系统、浅色或深色外观。"
         >
-          <CommonButton
-            :variant="appPreferences.preferences.value.theme === 'system' ? 'primary' : 'secondary'"
-            @click="setTheme('system')"
+          <div
+            class="settings-theme-options"
+            role="group"
+            aria-label="主题"
           >
-            <Palette :size="14" />系统
-          </CommonButton>
-          <CommonButton
-            :variant="appPreferences.preferences.value.theme === 'light' ? 'primary' : 'secondary'"
-            @click="setTheme('light')"
-          >
-            <Sun :size="14" />浅色
-          </CommonButton>
-          <CommonButton
-            :variant="appPreferences.preferences.value.theme === 'dark' ? 'primary' : 'secondary'"
-            @click="setTheme('dark')"
-          >
-            <Moon :size="14" />深色
-          </CommonButton>
-        </div>
-      </SettingsRow>
-    </SettingsSection>
+            <CommonButton
+              :variant="appPreferences.preferences.value.theme === 'system' ? 'primary' : 'secondary'"
+              @click="setTheme('system')"
+            >
+              <Palette :size="14" />系统
+            </CommonButton>
+            <CommonButton
+              :variant="appPreferences.preferences.value.theme === 'light' ? 'primary' : 'secondary'"
+              @click="setTheme('light')"
+            >
+              <Sun :size="14" />浅色
+            </CommonButton>
+            <CommonButton
+              :variant="appPreferences.preferences.value.theme === 'dark' ? 'primary' : 'secondary'"
+              @click="setTheme('dark')"
+            >
+              <Moon :size="14" />深色
+            </CommonButton>
+          </div>
+        </SettingsRow>
+      </SettingsSection>
+
+      <SettingsSection
+        title="歌词页"
+        description="选择当前歌词在沉浸视图中的焦点、动效与排版样式。"
+      >
+        <SettingsRow
+          setting-id="setting-lyric-alignment"
+          title="当前歌词位置"
+          description="选择当前歌词在沉浸视图中的垂直焦点。"
+        >
+          <CommonSelect
+            class="settings-control"
+            :model-value="appPreferences.preferences.value.lyricAlignment"
+            :options="lyricAlignmentOptions"
+            @update:model-value="setLyricAlignment"
+          />
+        </SettingsRow>
+        <SettingsRow
+          setting-id="setting-lyric-motion"
+          title="歌词动效"
+          description="完整包含弹簧、缩放和模糊；轻柔移除模糊；简洁保留同步扫光。"
+        >
+          <CommonSelect
+            class="settings-control"
+            :model-value="appPreferences.preferences.value.lyricMotion"
+            :options="lyricMotionOptions"
+            @update:model-value="setLyricMotion"
+          />
+        </SettingsRow>
+        <SettingsRow
+          setting-id="setting-lyric-font-size"
+          title="歌词字号"
+          description="调整沉浸歌词主行的整体字号。"
+        >
+          <CommonSelect
+            class="settings-control"
+            :model-value="appPreferences.preferences.value.lyricFontSize"
+            :options="lyricFontSizeOptions"
+            @update:model-value="setLyricFontSize"
+          />
+        </SettingsRow>
+        <SettingsRow
+          setting-id="setting-lyric-font-weight"
+          title="歌词字重"
+          description="调整主歌词、翻译与音译的粗细。"
+        >
+          <CommonSelect
+            class="settings-control"
+            :model-value="appPreferences.preferences.value.lyricFontWeight"
+            :options="lyricFontWeightOptions"
+            @update:model-value="setLyricFontWeight"
+          />
+        </SettingsRow>
+        <SettingsRow
+          setting-id="setting-hide-passed-lyrics"
+          title="已唱歌词"
+          description="隐藏后可减少视觉干扰，仍可滚动查看完整歌词。"
+        >
+          <CommonSwitch
+            :model-value="appPreferences.preferences.value.hidePassedLyrics"
+            label="隐藏已唱歌词"
+            @update:model-value="setHidePassedLyrics"
+          />
+        </SettingsRow>
+      </SettingsSection>
+    </template>
 
     <SettingsSection
       v-else
