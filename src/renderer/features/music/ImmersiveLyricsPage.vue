@@ -514,7 +514,7 @@ onBeforeUnmount(() => {
   max-width: 2000px;
   min-height: 0;
   flex: 1;
-  grid-template-columns: minmax(260px, 35%) minmax(320px, 65%);
+  grid-template-columns: minmax(280px, 40%) minmax(320px, 60%);
   gap: clamp(16px, 2.5vw, 40px);
   align-items: center;
   align-self: center;
@@ -525,7 +525,7 @@ onBeforeUnmount(() => {
   display: flex;
   min-width: 0;
   width: 100%;
-  max-width: clamp(240px, 25vw, 380px);
+  max-width: clamp(260px, 26vw, 400px);
   justify-self: center;
   flex-direction: column;
   align-items: flex-start;
@@ -627,7 +627,7 @@ onBeforeUnmount(() => {
 @media (width < 1080px) {
   .immersive-content {
     width: calc(100% - 36px);
-    grid-template-columns: minmax(220px, 36%) minmax(260px, 64%);
+    grid-template-columns: minmax(240px, 40%) minmax(260px, 60%);
     gap: 20px;
   }
 

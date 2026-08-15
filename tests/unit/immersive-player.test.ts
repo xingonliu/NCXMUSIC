@@ -133,7 +133,7 @@ describe('应用级沉浸播放展示', () => {
       'width: calc(100% - clamp(32px, 3.5vw, 72px))'
     )
     expect(immersiveLyricsPageSource).toContain(
-      'grid-template-columns: minmax(260px, 35%) minmax(320px, 65%)'
+      'grid-template-columns: minmax(280px, 40%) minmax(320px, 60%)'
     )
     expect(immersiveLyricsPageSource).toContain('height: calc(100dvh - 104px)')
     expect(immersiveLyricsPageSource).not.toContain(
