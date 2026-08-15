@@ -301,13 +301,10 @@ onBeforeUnmount(() => {
           :style="{ viewTransitionName: 'ncx-now-playing-artwork' }"
         />
 
-        <div class="immersive-track-row">
-          <div class="immersive-track-copy">
-            <h1 id="immersive-lyrics-title">
-              {{ track.name }}
-            </h1>
-            <p>{{ artistText }}<span v-if="track.album"> · {{ track.album }}</span></p>
-          </div>
+        <div class="immersive-track-title-row">
+          <h1 id="immersive-lyrics-title">
+            {{ track.name }}
+          </h1>
 
           <div class="immersive-track-actions">
             <CommonIconButton
@@ -351,6 +348,10 @@ onBeforeUnmount(() => {
             </CommonIconButton>
           </div>
         </div>
+
+        <p class="immersive-track-artist">
+          {{ artistText }}<span v-if="track.album"> · {{ track.album }}</span>
+        </p>
 
         <PlaybackControls
           prominent
@@ -525,7 +526,7 @@ onBeforeUnmount(() => {
   min-width: 0;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--ncx-space-3);
+  gap: var(--ncx-space-3-5, 14px);
 }
 
 .immersive-artwork {
@@ -539,44 +540,42 @@ onBeforeUnmount(() => {
   box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
 }
 
-.immersive-track-row {
+.immersive-track-title-row {
   display: flex;
   width: 100%;
   min-width: 0;
   align-items: center;
   justify-content: space-between;
-  gap: var(--ncx-space-4);
+  gap: var(--ncx-space-3, 12px);
 }
 
 .immersive-now-playing :deep(.playback-controls) {
   width: 100%;
 }
 
-.immersive-track-copy {
+.immersive-track-title-row h1 {
+  flex: 1;
   min-width: 0;
-}
-
-.immersive-track-copy h1,
-.immersive-track-copy p {
-  overflow: hidden;
   margin: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.immersive-track-copy h1 {
+  overflow: hidden;
   font-size: clamp(20px, 1.8vw, 26px);
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.immersive-track-copy p {
-  margin-top: 6px;
+.immersive-track-artist {
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
   color: rgb(255 255 255 / 68%);
   font-size: clamp(13px, 1vw, 15px);
   font-weight: 500;
   line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .immersive-track-actions {

@@ -343,7 +343,7 @@ function handleQuality(value: string | number): void {
 }
 
 .playback-controls--immersive {
-  gap: var(--ncx-space-3);
+  gap: var(--ncx-space-3-5, 14px);
   color: white;
 }
 
@@ -355,7 +355,7 @@ function handleQuality(value: string | number): void {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--ncx-space-1-5, 6px);
+  gap: 0;
   width: 100%;
 }
 
@@ -368,7 +368,7 @@ function handleQuality(value: string | number): void {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 8px;
   padding: 0 2px;
 }
 
@@ -391,15 +391,15 @@ function handleQuality(value: string | number): void {
   justify-self: center;
   width: auto;
   min-width: 0;
-  padding: 1px 8px;
+  padding: 2px 14px;
   border-radius: var(--ncx-radius-full, 999px);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.02em;
   line-height: 16px;
-  color: rgb(255 255 255 / 85%);
-  background: rgb(255 255 255 / 12%);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 16%);
+  color: rgb(255 255 255 / 90%);
+  background: rgb(255 255 255 / 14%);
+  box-shadow: none;
 }
 
 .playback-controls--immersive .playback-controls-transport {
