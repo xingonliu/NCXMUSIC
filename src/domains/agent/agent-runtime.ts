@@ -680,7 +680,8 @@ export class AgentRuntime {
       return
     }
     if (this.turnController) this.cancelActiveTurn('superseded_by_user_message')
-    await this.options.memory?.prepareForTurn(this.messages, content, Date.now()).catch(() => undefined)
+    /** Working Memory 准备使用的新消息进入会话前历史快照。 */
+    const priorMessages = [...this.messages]
     /** 新 Turn 控制器。 */
     const controller = new AbortController()
     this.turnController = controller
@@ -708,6 +709,7 @@ export class AgentRuntime {
     this.messages.push(createMessage('user', `${content}${contextSuffix}`))
     this.publish()
     try {
+      await this.options.memory?.prepareForTurn(priorMessages, content, Date.now()).catch(() => undefined)
       await this.runLoop(controller.signal)
     } catch (error) {
       if (controller.signal.aborted) return

@@ -49,6 +49,26 @@ function createProvider(): AgentProviderPort {
   }
 }
 
+/** 创建等待取消信号才结束的慢 Provider，用于验证发送后的即时状态。 */
+function createWaitingProvider(): AgentProviderPort {
+  return {
+    stream: ({ signal }) => {
+      /** 仅在取消信号到达后完成的异步迭代器。 */
+      const iterator: AsyncIterable<never> = {
+        [Symbol.asyncIterator]: () => ({
+          next: async () => {
+            await new Promise<void>((resolve) => {
+              signal.addEventListener('abort', () => resolve(), { once: true })
+            })
+            return { done: true, value: undefined as never }
+          }
+        })
+      }
+      return iterator
+    }
+  }
+}
+
 /** 等待 Runtime 达到指定状态。 */
 function waitForSnapshot(
   subscribe: (resolve: (snapshot: AgentSnapshot) => void) => void,
@@ -127,6 +147,32 @@ describe('agent main loop', () => {
     })
 
     expect(runtime.snapshot().musicSafetyLevel).toBe('M1')
+  })
+
+  it('发送消息的立即响应快照保持活动状态，避免覆盖进行中快照', async () => {
+    /** 使用慢 Provider 的 Runtime，确保模型未返回前按钮仍应展示停止态。 */
+    const runtime = new AgentRuntime({
+      provider: createWaitingProvider(),
+      music: {
+        read: async () => searchResult,
+        mutate: async () => ({ operation: 'dailySignin', applied: true }),
+        cancel: () => {}
+      },
+      emit: () => {}
+    })
+    runtime.configureProvider({
+      profileId: crypto.randomUUID(),
+      protocol: 'openai-compatible',
+      model: 'model-a',
+      baseUrl: 'https://provider.example.com/v1'
+    })
+
+    /** 发送命令同步返回给 Renderer 的快照。 */
+    const immediate = await runtime.command({ operation: 'sendMessage', content: '你好' })
+    await runtime.command({ operation: 'stop' })
+
+    expect(immediate.turnStatus).toBe('building_context')
+    expect(immediate.messages.at(-1)).toMatchObject({ role: 'user', content: '你好' })
   })
 
   it('M2 下完成搜索、PlayerCommand 真实回执和最终回复', async () => {
