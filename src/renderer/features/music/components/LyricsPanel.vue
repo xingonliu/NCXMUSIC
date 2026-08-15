@@ -72,13 +72,16 @@ const LYRIC_ALIGNMENT_POSITIONS = {
   lower: 0.65
 } as const
 
-/** 用户级沉浸歌词字号预设。 */
+/** 用户级沉浸歌词字号预设，采用流体区间 clamp(min, preferred, max) 自适应不同屏幕与窗口尺寸。 */
 const IMMERSIVE_FONT_SIZES = {
-  compact: 'clamp(27px, 2.15vw, 33px)',
-  standard: 'clamp(30px, 2.4vw, 36px)',
-  large: 'clamp(34px, 2.7vw, 41px)',
-  extraLarge: '46px'
+  compact: 'clamp(26px, 2.2vw, 40px)',
+  standard: 'clamp(32px, 3vw, 54px)',
+  large: 'clamp(38px, 3.8vw, 68px)',
+  extraLarge: 'clamp(44px, 4.6vw, 82px)'
 } as const
+
+/** 非沉浸常规页面的默认自适应歌词字号区间。 */
+const REGULAR_FONT_SIZE = 'clamp(16px, 1.4vw, 22px)'
 
 /** 用户级歌词字重预设对应的 CSS 数值。 */
 const LYRIC_FONT_WEIGHTS = {
@@ -94,7 +97,7 @@ const lyricPlayerStyle = computed<Record<string, string>>(() => ({
   '--amll-lp-color': props.accentColor,
   '--amll-lp-font-size': props.immersive
     ? IMMERSIVE_FONT_SIZES[appPreferences.preferences.value.lyricFontSize]
-    : '18px',
+    : REGULAR_FONT_SIZE,
   '--amll-lp-font-weight': LYRIC_FONT_WEIGHTS[
     appPreferences.preferences.value.lyricFontWeight
   ]

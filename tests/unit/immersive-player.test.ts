@@ -130,10 +130,10 @@ afterEach(async () => {
 describe('应用级沉浸播放展示', () => {
   it('主内容、封面列与歌词面板随窗口可用宽高伸展', () => {
     expect(immersiveLyricsPageSource).toContain(
-      'width: calc(100% - clamp(72px, 6.25vw, 120px))'
+      'width: calc(100% - clamp(32px, 3.5vw, 72px))'
     )
     expect(immersiveLyricsPageSource).toContain(
-      'grid-template-columns: clamp(280px, 28vw, 520px) minmax(0, 1fr)'
+      'grid-template-columns: minmax(260px, 35%) minmax(320px, 65%)'
     )
     expect(immersiveLyricsPageSource).toContain('height: calc(100dvh - 104px)')
     expect(immersiveLyricsPageSource).not.toContain(
@@ -408,7 +408,7 @@ describe('应用级沉浸播放展示', () => {
     })
 
     await vi.waitFor(() => expect(wrapper.find('[data-amll-line]').exists()).toBe(true))
-    expect(wrapper.attributes('style')).toContain('--amll-lp-font-size: 46px')
+    expect(wrapper.attributes('style')).toContain('--amll-lp-font-size: clamp(44px, 4.6vw, 82px)')
     expect(wrapper.attributes('style')).toContain('--amll-lp-font-weight: 900')
 
     wrapper.unmount()
@@ -471,10 +471,12 @@ describe('应用级沉浸播放展示', () => {
     expect(actionButtons).toHaveLength(3)
 
     // 依次为：收藏、复制歌曲信息、播放模式（列表循环/单曲循环/随机播放）
-    const [likeBtn, copyBtn, modeBtn] = actionButtons
-    expect(likeBtn.attributes('aria-label')).toBe('收藏当前歌曲')
-    expect(copyBtn.attributes('aria-label')).toBe('复制歌曲信息')
-    expect(modeBtn.attributes('aria-label')).toBe('列表循环')
+    const likeBtn = actionButtons[0]
+    const copyBtn = actionButtons[1]
+    const modeBtn = actionButtons[2]
+    expect(likeBtn?.attributes('aria-label')).toBe('收藏当前歌曲')
+    expect(copyBtn?.attributes('aria-label')).toBe('复制歌曲信息')
+    expect(modeBtn?.attributes('aria-label')).toBe('列表循环')
 
     wrapper.unmount()
   })
@@ -528,10 +530,12 @@ describe('应用级沉浸播放展示', () => {
     // 传输控制区应仅保留 3 个按钮：上一首、播放/暂停、下一首，播放模式按钮已移至歌曲操作区
     const transportButtons = wrapper.findAll('.playback-controls-transport button')
     expect(transportButtons).toHaveLength(3)
-    const [prevBtn, playBtn, nextBtn] = transportButtons
-    expect(prevBtn.attributes('aria-label')).toBe('上一首')
-    expect(playBtn.attributes('aria-label')).toBe('暂停')
-    expect(nextBtn.attributes('aria-label')).toBe('下一首')
+    const prevBtn = transportButtons[0]
+    const playBtn = transportButtons[1]
+    const nextBtn = transportButtons[2]
+    expect(prevBtn?.attributes('aria-label')).toBe('上一首')
+    expect(playBtn?.attributes('aria-label')).toBe('暂停')
+    expect(nextBtn?.attributes('aria-label')).toBe('下一首')
 
     // 进度条与时间应为沉浸式垂直堆叠布局
     const stackedProgress = wrapper.find('.playback-controls-progress--immersive')
@@ -543,8 +547,8 @@ describe('应用级沉浸播放展示', () => {
 
     const times = metaRow.findAll('.playback-controls-time')
     expect(times).toHaveLength(2)
-    expect(times[0].text()).toBe('0:32')
-    expect(times[1].text()).toBe('3:05')
+    expect(times[0]?.text()).toBe('0:32')
+    expect(times[1]?.text()).toBe('3:05')
 
     // 音质显示仅显示音质名称（高清环绕声），不附带“已降级”
     const qualityBadge = metaRow.find('.playback-controls-quality-badge')

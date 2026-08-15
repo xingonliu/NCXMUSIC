@@ -510,12 +510,12 @@ onBeforeUnmount(() => {
 
 .immersive-content {
   display: grid;
-  width: calc(100% - clamp(72px, 6.25vw, 120px));
-  max-width: 2200px;
+  width: calc(100% - clamp(32px, 3.5vw, 72px));
+  max-width: 2000px;
   min-height: 0;
   flex: 1;
-  grid-template-columns: clamp(280px, 28vw, 520px) minmax(0, 1fr);
-  gap: clamp(48px, 6vw, 120px);
+  grid-template-columns: minmax(260px, 35%) minmax(320px, 65%);
+  gap: clamp(16px, 2.5vw, 40px);
   align-items: center;
   align-self: center;
   padding: 10px 0 20px;
@@ -524,6 +524,9 @@ onBeforeUnmount(() => {
 .immersive-now-playing {
   display: flex;
   min-width: 0;
+  width: 100%;
+  max-width: clamp(240px, 25vw, 380px);
+  justify-self: center;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--ncx-space-3-5, 14px);
@@ -623,9 +626,14 @@ onBeforeUnmount(() => {
 
 @media (width < 1080px) {
   .immersive-content {
-    width: calc(100% - 56px);
-    grid-template-columns: minmax(230px, 300px) minmax(0, 1fr);
-    gap: 48px;
+    width: calc(100% - 36px);
+    grid-template-columns: minmax(220px, 36%) minmax(260px, 64%);
+    gap: 20px;
+  }
+
+  .immersive-now-playing {
+    max-width: 100%;
+    justify-self: center;
   }
 }
 
@@ -640,8 +648,13 @@ onBeforeUnmount(() => {
     padding-top: 8px;
   }
 
+  .immersive-now-playing {
+    max-width: 100%;
+  }
+
   .immersive-lyrics-panel {
     height: calc(100vh - 104px);
+    padding-left: 0;
   }
 }
 </style>
