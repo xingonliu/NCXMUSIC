@@ -335,14 +335,23 @@ onBeforeUnmount(() => {
 .music-progress-bar {
   position: relative;
   width: 100%;
-  height: 5px;
-  box-sizing: content-box;
-  padding: 10px 0;
-  margin: -10px 0;
+  height: 10px;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
   outline: none;
   cursor: pointer;
   touch-action: none;
   user-select: none;
+}
+
+.music-progress-bar::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: 0;
+  right: 0;
 }
 
 .music-progress-bar--disabled {
@@ -353,10 +362,9 @@ onBeforeUnmount(() => {
 .music-progress-rail,
 .music-progress-fill {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 0;
   height: 10px;
-  transform: translateY(-50%);
 }
 
 .music-progress-rail {

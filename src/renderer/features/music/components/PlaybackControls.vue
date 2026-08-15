@@ -355,7 +355,7 @@ function handleQuality(value: string | number): void {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 0;
+  gap: var(--ncx-space-3-5, 14px);
   width: 100%;
 }
 
@@ -368,7 +368,7 @@ function handleQuality(value: string | number): void {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   width: 100%;
-  margin-top: 8px;
+  margin: 0;
   padding: 0 2px;
 }
 
