@@ -301,4 +301,48 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
 
     expect(player.notice.value).toBeNull()
   })
+
+  it('底部音乐控制 bar 移除音质展示标签', () => {
+    disposePlayer()
+    const mockTrack = {
+      trackId: '1',
+      name: 'Test Song',
+      artists: ['Artist A', 'Artist B'],
+      durationMs: 180000,
+      album: 'Album'
+    }
+    vi.spyOn(PlaybackCoordinator.prototype, 'getSnapshot').mockReturnValue({
+      playback: {
+        status: 'playing',
+        intent: 'play',
+        track: mockTrack,
+        generation: 0,
+        positionMs: 5000,
+        durationMs: 180000,
+        bufferedMs: 10000,
+        volume: 1,
+        muted: false,
+        seeking: false,
+        error: null,
+        actualQuality: 'jyeffect',
+        downgraded: true
+      },
+      queue: {
+        items: [{ queueItemId: '1', track: mockTrack, source: { kind: 'playlist', playlistId: 'pl-1' }, addedAt: 1700000000000 }],
+        currentItemId: '1',
+        mode: 'loop',
+        revision: 1
+      },
+      quality: 'auto'
+    })
+
+    const wrapper = mount(PlayerBar)
+    const trackMeta = wrapper.find('.player-track-meta')
+
+    expect(trackMeta.exists()).toBe(true)
+    expect(trackMeta.text()).toBe('Artist A / Artist B')
+    expect(wrapper.find('.player-quality').exists()).toBe(false)
+    expect(trackMeta.text()).not.toContain('高清环绕声')
+    expect(trackMeta.text()).not.toContain('已降级')
+  })
 })

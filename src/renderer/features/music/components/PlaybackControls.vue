@@ -90,6 +90,13 @@ const nextMode = computed<PlayMode>(() => {
   return MODE_CYCLE[(index + 1) % MODE_CYCLE.length] ?? 'loop'
 })
 
+/** 音质展示标签（沉浸页仅展示实际音质名称，不附带已降级后缀）。 */
+const qualityLabel = computed<string | null>(() => {
+  const actualQuality = snapshot.value.playback.actualQuality
+  if (!actualQuality) return null
+  return text.quality[actualQuality] ?? null
+})
+
 /** 可选择的音质偏好。 */
 const qualityOptions: CommonOption[] = [
   { label: '自动（最高可用）', value: 'auto' },
@@ -145,6 +152,7 @@ function handleQuality(value: string | number): void {
   >
     <div class="playback-controls-transport">
       <CommonIconButton
+        v-if="!props.immersive"
         size="default"
         variant="ghost"
         :label="text.mode[snapshot.queue.mode]"
@@ -208,7 +216,39 @@ function handleQuality(value: string | number): void {
       </CommonIconButton>
     </div>
 
-    <div class="playback-controls-progress">
+    <!-- 沉浸式布局：进度条独占一行铺满，时间与音质置于其下方 -->
+    <div
+      v-if="props.immersive"
+      class="playback-controls-progress playback-controls-progress--immersive"
+    >
+      <MusicProgressBar
+        :key="currentTrackId"
+        class="playback-controls-slider"
+        :model-value="snapshot.playback.positionMs"
+        :min="0"
+        :max="Math.max(durationMs, 1)"
+        :step="1000"
+        :disabled="!canSeek"
+        :busy="busy"
+        @change="handleSeek"
+      />
+      <div class="playback-controls-meta-row">
+        <span class="playback-controls-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
+        <span
+          v-if="qualityLabel"
+          class="playback-controls-quality-badge"
+        >
+          {{ qualityLabel }}
+        </span>
+        <span class="playback-controls-time playback-controls-time--duration">{{ formatTime(durationMs) }}</span>
+      </div>
+    </div>
+
+    <!-- 常规布局：时间置于进度条两侧 -->
+    <div
+      v-else
+      class="playback-controls-progress"
+    >
       <span>{{ formatTime(snapshot.playback.positionMs) }}</span>
       <MusicProgressBar
         :key="currentTrackId"
@@ -311,13 +351,62 @@ function handleQuality(value: string | number): void {
   order: -1;
 }
 
-.playback-controls--immersive .playback-controls-transport {
-  justify-content: space-between;
-  padding: 0 4px;
+.playback-controls--immersive .playback-controls-progress--immersive {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--ncx-space-1-5, 6px);
+  width: 100%;
 }
 
-.playback-controls--immersive .playback-controls-progress span {
+.playback-controls--immersive .playback-controls-slider {
+  width: 100%;
+}
+
+.playback-controls-meta-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+  padding: 0 2px;
+}
+
+.playback-controls-meta-row .playback-controls-time {
+  min-width: 0;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
   color: rgb(255 255 255 / 62%);
+  line-height: 16px;
+  text-align: left;
+}
+
+.playback-controls-meta-row .playback-controls-time--duration {
+  grid-column: 3;
+  text-align: right;
+}
+
+.playback-controls-meta-row .playback-controls-quality-badge {
+  grid-column: 2;
+  justify-self: center;
+  width: auto;
+  min-width: 0;
+  padding: 1px 8px;
+  border-radius: var(--ncx-radius-full, 999px);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 16px;
+  color: rgb(255 255 255 / 85%);
+  background: rgb(255 255 255 / 12%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 16%);
+}
+
+.playback-controls--immersive .playback-controls-transport {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
 }
 
 .playback-controls--immersive :deep(.ncx-common-icon-button) {

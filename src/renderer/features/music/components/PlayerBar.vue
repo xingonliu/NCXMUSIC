@@ -98,13 +98,6 @@ const canSeek = computed<boolean>(() => {
 /** 状态文案 */
 const statusLabel = computed(() => text.status[snapshot.value.playback.status])
 
-/** 音质标签；降级时追加提示 */
-const qualityLabel = computed(() => {
-  const playback = snapshot.value.playback
-  if (!playback.actualQuality) return null
-  const name = text.quality[playback.actualQuality]
-  return playback.downgraded ? `${name}${text.downgradedSuffix}` : name
-})
 
 /** 播放模式循环顺序 */
 const MODE_CYCLE: PlayMode[] = ['loop', 'loop-one', 'shuffle']
@@ -214,10 +207,6 @@ function openImmersivePlayer(event: MouseEvent): void {
             </p>
             <p class="player-track-meta">
               <span v-if="track">{{ track.artists.join(' / ') }}</span>
-              <span
-                v-if="qualityLabel"
-                class="player-quality"
-              >{{ qualityLabel }}</span>
             </p>
           </div>
         </div>
@@ -533,17 +522,6 @@ function openImmersivePlayer(event: MouseEvent): void {
   display: none;
 }
 
-.player-quality {
-  flex: none;
-  padding: 0 var(--ncx-space-1-5, 6px);
-  border: 1px solid color-mix(in srgb, var(--ncx-color-accent) 18%, transparent);
-  border-radius: var(--ncx-radius-full);
-  color: var(--ncx-color-accent);
-  background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent);
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 15px;
-}
 
 .player-transport {
   display: flex;

@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import {
+  Copy,
   Heart,
   ListMusic,
   Maximize2,
   Minimize2,
   Minus,
-  Copy,
+  Repeat,
+  Repeat1,
+  Shuffle,
   X
 } from '@lucide/vue'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
+import type { PlayMode } from '../../../domains/player/types'
 import type {
   DesktopPlatform,
   WindowCommand,
@@ -21,6 +25,7 @@ import {
   CommonIconButton
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
+import { zhCN } from '../../locales/zh-CN'
 import { copyText } from '../foundation/clipboard'
 import { DEFAULT_LYRIC_ACCENT_COLOR } from './artwork-accent-color'
 import FluidMeshBackground from './components/FluidMeshBackground.vue'
@@ -73,6 +78,19 @@ const artistText = computed<string>(() => track.value?.artists.join(' / ') ?? ''
 
 /** 当前曲目是否已在本次沉浸会话中完成收藏。 */
 const isLiked = ref<boolean>(false)
+
+/** 沉浸页本地化文案集合。 */
+const text = zhCN.player
+
+/** 播放模式循环顺序。 */
+const MODE_CYCLE: PlayMode[] = ['loop', 'loop-one', 'shuffle']
+
+/** 下一个播放模式。 */
+const nextMode = computed<PlayMode>(() => {
+  const current = snapshot.value.queue.mode
+  const index = MODE_CYCLE.indexOf(current)
+  return MODE_CYCLE[(index + 1) % MODE_CYCLE.length] ?? 'loop'
+})
 
 /** 沉浸页播放队列抽屉是否打开。 */
 const isQueueOpen = ref<boolean>(false)
@@ -311,6 +329,25 @@ onBeforeUnmount(() => {
               @click="copyTrackInformation"
             >
               <Copy :size="18" />
+            </CommonIconButton>
+            <CommonIconButton
+              size="default"
+              variant="ghost"
+              :label="text.mode[snapshot.queue.mode]"
+              @click="player.setMode(nextMode)"
+            >
+              <Shuffle
+                v-if="snapshot.queue.mode === 'shuffle'"
+                :size="18"
+              />
+              <Repeat1
+                v-else-if="snapshot.queue.mode === 'loop-one'"
+                :size="18"
+              />
+              <Repeat
+                v-else
+                :size="18"
+              />
             </CommonIconButton>
           </div>
         </div>

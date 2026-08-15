@@ -2,7 +2,9 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinator'
 import LyricsPanel from '../../src/renderer/features/music/components/LyricsPanel.vue'
+import PlaybackControls from '../../src/renderer/features/music/components/PlaybackControls.vue'
 import ImmersiveLyricsPage from '../../src/renderer/features/music/ImmersiveLyricsPage.vue'
 import immersiveLyricsPageSource from '../../src/renderer/features/music/ImmersiveLyricsPage.vue?raw'
 import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
@@ -412,5 +414,144 @@ describe('应用级沉浸播放展示', () => {
     wrapper.unmount()
     appPreferences.setLyricFontSize('standard')
     appPreferences.setLyricFontWeight('regular')
+  })
+
+  it('沉浸页左侧歌曲操作区将列表循环控制按钮置于复制歌曲信息按钮之后', () => {
+    disposePlayer()
+    const mockTrack = {
+      trackId: 'immersive-track-actions-1',
+      name: 'Actions Track',
+      artists: ['Artist Name'],
+      durationMs: 200000,
+      album: 'Album Name'
+    }
+    vi.spyOn(PlaybackCoordinator.prototype, 'getSnapshot').mockReturnValue({
+      playback: {
+        status: 'playing',
+        intent: 'play',
+        track: mockTrack,
+        generation: 0,
+        positionMs: 30000,
+        durationMs: 200000,
+        bufferedMs: 50000,
+        volume: 1,
+        muted: false,
+        seeking: false,
+        error: null,
+        actualQuality: 'hires',
+        downgraded: false
+      },
+      queue: {
+        items: [{
+          queueItemId: 'item-1',
+          track: mockTrack,
+          source: { kind: 'playlist', playlistId: 'pl-1' },
+          addedAt: 1700000000000
+        }],
+        currentItemId: 'item-1',
+        mode: 'loop',
+        revision: 1
+      },
+      quality: 'auto'
+    })
+
+    const wrapper = mount(ImmersiveLyricsPage, {
+      global: {
+        stubs: {
+          FluidMeshBackground: true,
+          LyricsPanel: true,
+          MediaArtwork: true,
+          PlaybackControls: true,
+          QueueDrawer: true
+        }
+      }
+    })
+
+    const actionButtons = wrapper.findAll('.immersive-track-actions button')
+    expect(actionButtons).toHaveLength(3)
+
+    // 依次为：收藏、复制歌曲信息、播放模式（列表循环/单曲循环/随机播放）
+    const [likeBtn, copyBtn, modeBtn] = actionButtons
+    expect(likeBtn.attributes('aria-label')).toBe('收藏当前歌曲')
+    expect(copyBtn.attributes('aria-label')).toBe('复制歌曲信息')
+    expect(modeBtn.attributes('aria-label')).toBe('列表循环')
+
+    wrapper.unmount()
+  })
+
+  it('沉浸式播放控制条将时间与音质置于进度条下方并均匀分布传输控制按钮', () => {
+    disposePlayer()
+    const mockTrack = {
+      trackId: 'immersive-controls-1',
+      name: 'Controls Track',
+      artists: ['Artist Name'],
+      durationMs: 185000,
+      album: 'Album Name'
+    }
+    vi.spyOn(PlaybackCoordinator.prototype, 'getSnapshot').mockReturnValue({
+      playback: {
+        status: 'playing',
+        intent: 'play',
+        track: mockTrack,
+        generation: 0,
+        positionMs: 32000,
+        durationMs: 185000,
+        bufferedMs: 60000,
+        volume: 1,
+        muted: false,
+        seeking: false,
+        error: null,
+        actualQuality: 'jyeffect',
+        downgraded: true
+      },
+      queue: {
+        items: [{
+          queueItemId: 'item-1',
+          track: mockTrack,
+          source: { kind: 'playlist', playlistId: 'pl-1' },
+          addedAt: 1700000000000
+        }],
+        currentItemId: 'item-1',
+        mode: 'loop',
+        revision: 1
+      },
+      quality: 'auto'
+    })
+
+    const wrapper = mount(PlaybackControls, {
+      props: {
+        prominent: true,
+        immersive: true
+      }
+    })
+
+    // 传输控制区应仅保留 3 个按钮：上一首、播放/暂停、下一首，播放模式按钮已移至歌曲操作区
+    const transportButtons = wrapper.findAll('.playback-controls-transport button')
+    expect(transportButtons).toHaveLength(3)
+    const [prevBtn, playBtn, nextBtn] = transportButtons
+    expect(prevBtn.attributes('aria-label')).toBe('上一首')
+    expect(playBtn.attributes('aria-label')).toBe('暂停')
+    expect(nextBtn.attributes('aria-label')).toBe('下一首')
+
+    // 进度条与时间应为沉浸式垂直堆叠布局
+    const stackedProgress = wrapper.find('.playback-controls-progress--immersive')
+    expect(stackedProgress.exists()).toBe(true)
+
+    // 进度条下方的时间与音质元信息行
+    const metaRow = wrapper.find('.playback-controls-meta-row')
+    expect(metaRow.exists()).toBe(true)
+
+    const times = metaRow.findAll('.playback-controls-time')
+    expect(times).toHaveLength(2)
+    expect(times[0].text()).toBe('0:32')
+    expect(times[1].text()).toBe('3:05')
+
+    // 音质显示仅显示音质名称（高清环绕声），不附带“已降级”
+    const qualityBadge = metaRow.find('.playback-controls-quality-badge')
+    expect(qualityBadge.exists()).toBe(true)
+    expect(qualityBadge.text()).toBe('高清环绕声')
+    expect(qualityBadge.text()).not.toContain('已降级')
+
+    wrapper.unmount()
   })
 })
