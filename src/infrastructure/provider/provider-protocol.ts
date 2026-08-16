@@ -222,7 +222,7 @@ export type AsrTranscriptionResult =
 const ANTHROPIC_VERSION = '2023-06-01'
 
 /** Provider 文本请求默认输出上限。 */
-const DEFAULT_MAX_TOKENS = 1024
+const DEFAULT_MAX_TOKENS = 4096
 
 /** ASR 不支持时统一使用的确认文案，避免自动切换供应商。 */
 export const ASR_UNSUPPORTED_MESSAGE =
