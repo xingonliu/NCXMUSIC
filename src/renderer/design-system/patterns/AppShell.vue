@@ -84,6 +84,9 @@ const isStandalonePage = computed(() => route.meta.shell === 'standalone')
 /** 当前路由是否进入独立设置模式。 */
 const isSettingsPage = computed<boolean>(() => route.name === 'settings')
 
+/** 当前路由是否处于搜索相关页面（隐藏顶栏冗余的搜索按钮）。 */
+const isSearchPage = computed<boolean>(() => route.name === 'search' || route.name === 'search-results')
+
 /** 窗口状态监听清理函数。 */
 let unsubscribeWindowSnapshot = (): void => {}
 
@@ -238,7 +241,7 @@ onBeforeUnmount(() => {
 
       <div class="ncx-page-actions">
         <CommonHeaderButton
-          v-if="!isStandalonePage && !isSettingsPage"
+          v-if="!isStandalonePage && !isSettingsPage && !isSearchPage"
           label="搜索"
           @click="openSearch"
         >

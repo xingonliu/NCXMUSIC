@@ -79,4 +79,9 @@ describe('主 Tab 页面 KeepAlive 与滚动条独立管理契约测试', () => 
   it('移除全局 content-area 的 smooth 声明以避免页面切换时滚动条动画撕裂', () => {
     expect(appShellCssSource).not.toMatch(/\.ncx-content-area\s*{[^}]*scroll-behavior:\s*smooth/)
   })
+
+  it('AppShell 在处于搜索相关页面时隐藏顶栏冗余的搜索按钮', () => {
+    expect(appShellSource).toContain("isSearchPage = computed<boolean>(() => route.name === 'search' || route.name === 'search-results')")
+    expect(appShellSource).toContain('!isStandalonePage && !isSettingsPage && !isSearchPage')
+  })
 })
