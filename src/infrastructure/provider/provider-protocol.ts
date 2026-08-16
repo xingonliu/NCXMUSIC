@@ -577,9 +577,16 @@ function parseOpenAIStreamPayload(value: unknown): ProviderStreamEvent[] {
     const choiceRecord = getRecord(choice)
     /** OpenAI delta 对象。 */
     const delta = getRecord(choiceRecord.delta)
-    /** OpenAI 文本增量，优先使用 content，无 content 时兼容 reasoning_content 与 reasoning 思考链字段。 */
-    const content = getString(delta.content) || getString(delta.reasoning_content) || getString(delta.reasoning)
-    if (content) events.push({ type: 'text-delta', text: content })
+    /** OpenAI 思考链增量（兼容 reasoning_content 与 reasoning 字段）。 */
+    const reasoning = getString(delta.reasoning_content) || getString(delta.reasoning)
+    if (reasoning) {
+      events.push({ type: 'text-delta', text: `<think>${reasoning}</think>` })
+    }
+    /** OpenAI 正常文本增量。 */
+    const content = getString(delta.content)
+    if (content) {
+      events.push({ type: 'text-delta', text: content })
+    }
 
     /** OpenAI tool_calls 增量数组。 */
     const toolCalls = getArray(delta, 'tool_calls')
@@ -632,6 +639,11 @@ function parseAnthropicDelta(record: Readonly<Record<string, unknown>>): Provide
     const text = getString(delta.text)
     return text ? [{ type: 'text-delta', text }] : []
   }
+  if (deltaType === 'thinking_delta') {
+    /** Anthropic 思考链增量。 */
+    const thinking = getString(delta.thinking)
+    return thinking ? [{ type: 'text-delta', text: `<think>${thinking}</think>` }] : []
+  }
   if (deltaType === 'input_json_delta') {
     return [createToolCallDelta(
       `tool-${String(record.index ?? 0)}`,
@@ -675,7 +687,13 @@ function parseGeminiStreamPayload(value: unknown): ProviderStreamEvent[] {
       const partRecord = getRecord(part)
       /** Gemini 文本增量。 */
       const text = getString(partRecord.text)
-      if (text) events.push({ type: 'text-delta', text })
+      if (text) {
+        if (partRecord.thought === true) {
+          events.push({ type: 'text-delta', text: `<think>${text}</think>` })
+        } else {
+          events.push({ type: 'text-delta', text })
+        }
+      }
 
       /** Gemini functionCall 对象。 */
       const functionCall = getRecord(partRecord.functionCall)

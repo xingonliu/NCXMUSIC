@@ -1,17 +1,61 @@
 // @vitest-environment happy-dom
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { nextTick } from 'vue'
 
 import AgentMarkdown from '../../src/renderer/features/agent/components/AgentMarkdown.vue'
 import {
   appendStreamingCaret,
   completeStreamingMarkdown,
+  extractThinkingAndContent,
   renderMarkdownToHtml
 } from '../../src/renderer/features/agent/agent-markdown-parser'
 
 // ========= 测试套件 =========
 
 describe('Agent Markdown 解析与流式渲染测试', () => {
+  describe('思考链与正文分离提取 (extractThinkingAndContent)', () => {
+    it('正确分离 <think> 标签内的思考内容与正文', () => {
+      /** 带有完整 <think> 标签的 Markdown。 */
+      const raw = '<think>分析用户偏好：喜欢流行音乐。\n选择推荐歌曲。</think>为您推荐以下歌曲：\n- 晴天'
+      const extracted = extractThinkingAndContent(raw)
+
+      expect(extracted.thought).toBe('分析用户偏好：喜欢流行音乐。\n选择推荐歌曲。')
+      expect(extracted.content).toBe('为您推荐以下歌曲：\n- 晴天')
+      expect(extracted.isThinking).toBe(false)
+    })
+
+    it('正确分离 <thought> 标签内的思考内容与正文', () => {
+      /** 带有 <thought> 标签的 Markdown。 */
+      const raw = '<thought>检索本地曲库中</thought>已找到 3 首本地歌曲'
+      const extracted = extractThinkingAndContent(raw)
+
+      expect(extracted.thought).toBe('检索本地曲库中')
+      expect(extracted.content).toBe('已找到 3 首本地歌曲')
+      expect(extracted.isThinking).toBe(false)
+    })
+
+    it('正确捕获流式输出中尚未闭合的思考标签并标记 isThinking 为 true', () => {
+      /** 流式未闭合思考文本。 */
+      const raw = '<think>正在规划工具调用：查询天气与歌单'
+      const extracted = extractThinkingAndContent(raw)
+
+      expect(extracted.thought).toBe('正在规划工具调用：查询天气与歌单')
+      expect(extracted.content).toBe('')
+      expect(extracted.isThinking).toBe(true)
+    })
+
+    it('无思考标签时返回完整原内容且 thought 为空', () => {
+      /** 普通 Markdown 文本。 */
+      const raw = '### 今日精选\n1. 稻香\n2. 夜曲'
+      const extracted = extractThinkingAndContent(raw)
+
+      expect(extracted.thought).toBe('')
+      expect(extracted.content).toBe(raw)
+      expect(extracted.isThinking).toBe(false)
+    })
+  })
+
   describe('流式 Markdown 未闭合标记自动补全 (completeStreamingMarkdown)', () => {
     it('正确补全流式输出中尚未闭合的代码块', () => {
       /** 流式输入中途的代码块文本。 */
@@ -121,9 +165,10 @@ describe('Agent Markdown 解析与流式渲染测试', () => {
         }
       })
 
-      expect(wrapper.classes()).toContain('agent-markdown')
+      expect(wrapper.classes()).toContain('agent-markdown-root')
       expect(wrapper.find('h3').text()).toBe('今日推荐')
       expect(wrapper.findAll('li')).toHaveLength(2)
+      expect(wrapper.find('.agent-thought-block').exists()).toBe(false)
       expect(wrapper.find('.agent-streaming-caret').exists()).toBe(false)
     })
 
@@ -135,8 +180,94 @@ describe('Agent Markdown 解析与流式渲染测试', () => {
         }
       })
 
-      expect(wrapper.classes()).toContain('is-streaming')
+      expect(wrapper.find('.agent-body-markdown').classes()).toContain('is-streaming')
       expect(wrapper.find('.agent-streaming-caret').exists()).toBe(true)
+    })
+
+    it('正确渲染 DeepSeek 风格思考容器并支持折叠/展开交互', async () => {
+      const wrapper = mount(AgentMarkdown, {
+        props: {
+          content: '<think>这是第一步推理\n这是第二步推理</think>正式回答：周杰伦是华语流行歌手。',
+          streaming: false
+        }
+      })
+
+      // 1. 验证思考模块存在且默认处于折叠有限窗口
+      const thoughtBlock = wrapper.find('.agent-thought-block')
+      expect(thoughtBlock.exists()).toBe(true)
+      expect(thoughtBlock.classes()).not.toContain('is-expanded')
+      expect(wrapper.find('.agent-thought-content-wrapper').classes()).toContain('is-collapsed')
+      expect(wrapper.find('.agent-thought-label').text()).toBe('已深度思考')
+      expect(wrapper.find('.agent-thought-toggle-text').text()).toBe('展开')
+      expect(thoughtBlock.text()).toContain('这是第一步推理')
+
+      // 2. 验证正式正文在思考模块下方独立渲染
+      const bodyMarkdown = wrapper.find('.agent-body-markdown')
+      expect(bodyMarkdown.exists()).toBe(true)
+      expect(bodyMarkdown.text()).toContain('正式回答：周杰伦是华语流行歌手。')
+
+      // 3. 点击思考头部展开
+      await wrapper.find('.agent-thought-header').trigger('click')
+      expect(wrapper.find('.agent-thought-block').classes()).toContain('is-expanded')
+      expect(wrapper.find('.agent-thought-content-wrapper').classes()).not.toContain('is-collapsed')
+      expect(wrapper.find('.agent-thought-toggle-text').text()).toBe('收起')
+
+      // 4. 再次点击思考头部收起
+      await wrapper.find('.agent-thought-header').trigger('click')
+      expect(wrapper.find('.agent-thought-block').classes()).not.toContain('is-expanded')
+      expect(wrapper.find('.agent-thought-content-wrapper').classes()).toContain('is-collapsed')
+    })
+
+    it('流式思考中正确展示正在深度思考状态文案与脉冲类名', async () => {
+      const wrapper = mount(AgentMarkdown, {
+        props: {
+          content: '<think>正在分析歌词情感模型...',
+          streaming: true
+        }
+      })
+
+      const thoughtBlock = wrapper.find('.agent-thought-block')
+      expect(thoughtBlock.exists()).toBe(true)
+      expect(thoughtBlock.classes()).toContain('is-streaming')
+      expect(wrapper.find('.agent-thought-label').text()).toBe('正在深度思考...')
+      expect(wrapper.find('.agent-thought-body .agent-streaming-caret').exists()).toBe(true)
+    })
+
+    it('在折叠有限窗口状态下点击思考内容区域直接展开', async () => {
+      const wrapper = mount(AgentMarkdown, {
+        props: {
+          content: '<think>思考内容</think>正文内容',
+          streaming: false
+        }
+      })
+
+      const contentWrapper = wrapper.find('.agent-thought-content-wrapper')
+      expect(wrapper.find('.agent-thought-block').classes()).not.toContain('is-expanded')
+
+      await contentWrapper.trigger('click')
+      expect(wrapper.find('.agent-thought-block').classes()).toContain('is-expanded')
+    })
+
+    it('思考内容持续输出时自动向下滚动有限高度窗口', async () => {
+      const wrapper = mount(AgentMarkdown, {
+        props: {
+          content: '<think>第1行思考',
+          streaming: true
+        }
+      })
+
+      const scrollEl = wrapper.find('.agent-thought-content-wrapper').element as HTMLElement
+      Object.defineProperty(scrollEl, 'scrollHeight', { value: 300, configurable: true, writable: true })
+      scrollEl.scrollTop = 0
+
+      // 更新 props 模拟持续流式输入思考
+      await wrapper.setProps({
+        content: '<think>第1行思考\n第2行思考\n第3行思考\n第4行思考',
+        streaming: true
+      })
+      await nextTick()
+
+      expect(scrollEl.scrollTop).toBe(300)
     })
 
     it('点击代码块复制按钮能提取代码文本并更新复制反馈状态', async () => {

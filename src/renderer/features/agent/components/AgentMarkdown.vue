@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { computed, onUnmounted, ref } from 'vue'
+import { ChevronDown, Sparkles } from '@lucide/vue'
+import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 
 import { showToast } from '../../../design-system/use-toast'
-import { renderMarkdownToHtml } from '../agent-markdown-parser'
+import {
+  extractThinkingAndContent,
+  renderMarkdownToHtml,
+  type ExtractedMarkdownContent
+} from '../agent-markdown-parser'
 
 // ========= 类型 =========
 
@@ -20,18 +25,39 @@ const props = withDefaults(defineProps<AgentMarkdownProps>(), {
   streaming: false
 })
 
-/** 根容器 DOM 引用。 */
+/** 思考容器展开状态（默认仅展示有限固定高度窗口）。 */
+const isExpanded = ref<boolean>(false)
+
+/** 思考流内部滚动容器 DOM 引用。 */
+const thoughtScrollRef = ref<HTMLElement | null>(null)
+
+/** 正文根容器 DOM 引用。 */
 const containerRef = ref<HTMLElement | null>(null)
 
 /** 暂存各个复制按钮重置定时器 ID。 */
 const copyResetTimers = new Map<HTMLElement, ReturnType<typeof setTimeout>>()
 
-/** 计算经过 Markdown 解析、语法高亮与安全净化的 HTML 字符串。 */
-const renderedHtml = computed<string>(() => {
-  return renderMarkdownToHtml(props.content, props.streaming)
+/** 解析分离后的思考链内容与正文内容。 */
+const parsedData = computed<ExtractedMarkdownContent>(() => {
+  return extractThinkingAndContent(props.content)
+})
+
+/** 计算渲染后的思考链 HTML 字符串。 */
+const renderedThoughtHtml = computed<string>(() => {
+  return renderMarkdownToHtml(parsedData.value.thought, Boolean(props.streaming && parsedData.value.isThinking))
+})
+
+/** 计算渲染后的正式回复 HTML 字符串。 */
+const renderedContentHtml = computed<string>(() => {
+  return renderMarkdownToHtml(parsedData.value.content, Boolean(props.streaming && !parsedData.value.isThinking))
 })
 
 // ========= 函数 =========
+
+/** 切换思考容器展开/折叠状态。 */
+function toggleExpanded(): void {
+  isExpanded.value = !isExpanded.value
+}
 
 /** 统一复制文本到剪贴板。 */
 async function copyToClipboard(text: string): Promise<boolean> {
@@ -126,6 +152,32 @@ async function handleClick(event: MouseEvent): Promise<void> {
   }
 }
 
+/** 处理思考容器点击：在折叠有限窗口状态下点击任意位置展开；同时支持容器内复制和外链。 */
+async function handleThoughtBoxClick(event: MouseEvent): Promise<void> {
+  if (!isExpanded.value) {
+    // 默认有限窗口下点击直接展开
+    isExpanded.value = true
+    return
+  }
+  // 已展开状态下支持代码复制和外链交互
+  await handleClick(event)
+}
+
+// ========= 侦听与自动滚底 =========
+
+watch(
+  () => parsedData.value.thought,
+  async () => {
+    // 在未展开的有限高度窗口中，思考内容持续输出时自动向下滚动保持可见
+    if (!isExpanded.value && thoughtScrollRef.value) {
+      await nextTick()
+      if (thoughtScrollRef.value) {
+        thoughtScrollRef.value.scrollTop = thoughtScrollRef.value.scrollHeight
+      }
+    }
+  }
+)
+
 // ========= 生命周期 =========
 
 onUnmounted(() => {
@@ -137,11 +189,73 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div
-    ref="containerRef"
-    class="agent-markdown"
-    :class="{ 'is-streaming': streaming }"
-    @click="handleClick"
-    v-html="renderedHtml"
-  />
+  <div class="agent-markdown-root">
+    <!-- DeepSeek 风格深度思考容器 -->
+    <section
+      v-if="parsedData.thought.length > 0 || (streaming && parsedData.isThinking)"
+      class="agent-thought-block"
+      :class="{
+        'is-expanded': isExpanded,
+        'is-streaming': Boolean(streaming && parsedData.isThinking)
+      }"
+      aria-label="思考过程"
+    >
+      <!-- 思考头部状态栏（点击展开/折叠） -->
+      <div
+        class="agent-thought-header"
+        role="button"
+        tabindex="0"
+        :aria-expanded="isExpanded"
+        @click="toggleExpanded"
+        @keydown.enter.prevent="toggleExpanded"
+        @keydown.space.prevent="toggleExpanded"
+      >
+        <div class="agent-thought-title">
+          <span class="agent-thought-icon">
+            <Sparkles :size="13" />
+          </span>
+          <span class="agent-thought-label">
+            {{ (streaming && parsedData.isThinking) ? '正在深度思考...' : '已深度思考' }}
+          </span>
+        </div>
+        <button
+          type="button"
+          class="agent-thought-toggle-btn"
+          :aria-label="isExpanded ? '收起思考内容' : '展开思考内容'"
+          tabindex="-1"
+        >
+          <span class="agent-thought-toggle-text">{{ isExpanded ? '收起' : '展开' }}</span>
+          <ChevronDown
+            :size="13"
+            class="agent-thought-chevron"
+          />
+        </button>
+      </div>
+
+      <!-- 思考内容容器（默认固定有限高度窗口并自动滚底，展开时自适应完整高度） -->
+      <div
+        ref="thoughtScrollRef"
+        class="agent-thought-content-wrapper"
+        :class="{ 'is-collapsed': !isExpanded }"
+        @click="handleThoughtBoxClick"
+      >
+        <div
+          class="agent-markdown agent-thought-body"
+          :class="{ 'is-streaming': streaming && parsedData.isThinking }"
+          v-html="renderedThoughtHtml"
+        />
+      </div>
+    </section>
+
+    <!-- 正式 Markdown 正文 -->
+    <div
+      v-if="renderedContentHtml.length > 0 || (streaming && !parsedData.isThinking)"
+      ref="containerRef"
+      class="agent-markdown agent-body-markdown"
+      :class="{ 'is-streaming': streaming && !parsedData.isThinking }"
+      @click="handleClick"
+      v-html="renderedContentHtml"
+    />
+  </div>
 </template>
+

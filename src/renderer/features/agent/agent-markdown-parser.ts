@@ -2,6 +2,18 @@ import DOMPurify from 'dompurify'
 import hljs from 'highlight.js'
 import { Marked } from 'marked'
 
+// ========= 类型 =========
+
+/** 提取出的思考链与正文内容结构。 */
+export interface ExtractedMarkdownContent {
+  /** 思考链 Markdown 文本。 */
+  readonly thought: string
+  /** 正式回复 Markdown 文本。 */
+  readonly content: string
+  /** 当前是否正处于思考生成中（包含未闭合的 <think> / <thought> 标签）。 */
+  readonly isThinking: boolean
+}
+
 // ========= 变量 =========
 
 /** 自定义 Marked 渲染实例。 */
@@ -55,6 +67,47 @@ const markedInstance = new Marked({
 })
 
 // ========= 函数 =========
+
+/** 从原始 AI 消息文本中分离出思考链内容与正式回复正文。 */
+export function extractThinkingAndContent(raw: string): ExtractedMarkdownContent {
+  if (!raw) {
+    return { thought: '', content: '', isThinking: false }
+  }
+
+  // 1. 匹配所有已闭合或流式未闭合的 <think> / <thought> 标签块
+  const thinkTagRegex = /<(?:think|thought)\b[^>]*>([\s\S]*?)(?:<\/(?:think|thought)>|$)/gi
+  let match: RegExpExecArray | null
+  const thoughts: string[] = []
+
+  // 2. 统计开闭标签数量以判断是否正在思考流中
+  const openTagMatch = raw.match(/<(?:think|thought)\b[^>]*>/gi)
+  const closeTagMatch = raw.match(/<\/(?:think|thought)>/gi)
+  const openCount = openTagMatch ? openTagMatch.length : 0
+  const closeCount = closeTagMatch ? closeTagMatch.length : 0
+  const isThinking = openCount > closeCount
+
+  while ((match = thinkTagRegex.exec(raw)) !== null) {
+    const chunk = match[1] ?? ''
+    if (chunk) {
+      thoughts.push(chunk)
+    }
+  }
+
+  // 3. 从正式回复正文中剔除所有思考标签块以及流式未闭合的思考前缀
+  const cleanedContent = raw
+    .replace(/<(?:think|thought)\b[^>]*>[\s\S]*?<\/(?:think|thought)>/gi, '')
+    .replace(/<(?:think|thought)\b[^>]*>[\s\S]*$/gi, '')
+    .trimStart()
+
+  // 4. 将提取出的思考片段合并
+  const thoughtText = thoughts.join('').trim()
+
+  return {
+    thought: thoughtText,
+    content: cleanedContent,
+    isThinking
+  }
+}
 
 /** 语法高亮代码块文本。 */
 function highlightSourceCode(code: string, lang: string): string {

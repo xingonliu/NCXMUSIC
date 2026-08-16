@@ -181,7 +181,7 @@ describe('provider protocol fixtures', () => {
       'openai-compatible',
       'data: {"choices":[{"delta":{"reasoning_content":"正在思考中..."}}]}'
     )
-    expect(events).toEqual([{ type: 'text-delta', text: '正在思考中...' }])
+    expect(events).toEqual([{ type: 'text-delta', text: '<think>正在思考中...</think>' }])
   })
 
   it('构造并解析 Anthropic Messages 文本流和 tool_use 增量', async () => {
