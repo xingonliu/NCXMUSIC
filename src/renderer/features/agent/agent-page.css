@@ -655,6 +655,7 @@
 }
 
 .agent-composer-box {
+  position: relative;
   display: flex;
   width: 100%;
   max-width: 780px;
@@ -832,3 +833,74 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ==========================================================================
+   Scroll-To-Bottom Floating Button (Centered above Composer)
+   ========================================================================== */
+.agent-scroll-to-bottom-btn {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 14%, transparent);
+  border-radius: 999px;
+  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 12%), 0 1px 4px rgb(0 0 0 / 6%);
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 22;
+  transition: transform 140ms cubic-bezier(0.2, 0, 0, 1), background 140ms ease, border-color 140ms ease, box-shadow 140ms ease, color 140ms ease;
+}
+
+.agent-scroll-to-bottom-btn:hover {
+  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, var(--ncx-color-surface));
+  border-color: color-mix(in srgb, var(--ncx-color-text-primary) 24%, transparent);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 16%), 0 2px 6px rgb(0 0 0 / 8%);
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.agent-scroll-to-bottom-btn:active {
+  transform: translateX(-50%) scale(0.92);
+  transition: transform 60ms ease;
+}
+
+.agent-scroll-btn-fade-enter-active {
+  transition: opacity 180ms cubic-bezier(0.16, 1, 0.3, 1), transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.agent-scroll-btn-fade-leave-active {
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.agent-scroll-btn-fade-enter-from,
+.agent-scroll-btn-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px) scale(0.88);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-scroll-to-bottom-btn {
+    transition: opacity 150ms ease;
+  }
+
+  .agent-scroll-btn-fade-enter-active,
+  .agent-scroll-btn-fade-leave-active {
+    transition: opacity 150ms ease;
+  }
+
+  .agent-scroll-btn-fade-enter-from,
+  .agent-scroll-btn-fade-leave-to {
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+}
+

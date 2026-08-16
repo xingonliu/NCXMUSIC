@@ -109,4 +109,25 @@ describe('phase 5 agent UI contract', () => {
     expect(card).toContain('formattedDuration')
     expect(card).toContain('startedAt')
   })
+
+  it('进入小云页面默认瞬间置底且在未触底时显示输入框上方居中的向下箭头按钮', () => {
+    /** Agent 页面源代码。 */
+    const page = source('src/renderer/features/agent/AgentPage.vue')
+    /** AgentComposer 源代码。 */
+    const composer = source('src/renderer/features/agent/components/AgentComposer.vue')
+    /** CSS 源代码。 */
+    const css = source('src/renderer/features/agent/agent-page.css')
+
+    expect(page).toContain("scrollToBottom('auto')")
+    expect(page).toContain('isAtBottom')
+    expect(page).toContain(':show-scroll-to-bottom="!isAtBottom"')
+    expect(page).toContain("@scroll-to-bottom=\"scrollToBottom('smooth')\"")
+    expect(composer).toContain('showScrollToBottom')
+    expect(composer).toContain('agent-scroll-to-bottom-btn')
+    expect(composer).toContain("emit('scroll-to-bottom')")
+    expect(css).toContain('.agent-scroll-to-bottom-btn')
+    expect(css).toContain('bottom: calc(100% + 12px);')
+    expect(css).toContain('transform: translateX(-50%);')
+  })
 })
+

@@ -11,7 +11,17 @@ import {
   ThumbsDown,
   ThumbsUp
 } from '@lucide/vue'
-import { computed, nextTick, onMounted, onUnmounted, ref, watch, type DeepReadonly } from 'vue'
+import {
+  computed,
+  nextTick,
+  onActivated,
+  onDeactivated,
+  onMounted,
+  onUnmounted,
+  ref,
+  watch,
+  type DeepReadonly
+} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { CommonButton, CommonIconButton } from '../../design-system/components'
@@ -45,6 +55,12 @@ const conversation = ref<HTMLElement | null>(null)
 
 /** 当前复制成功提示 index。 */
 const copiedMessageId = ref<string | null>(null)
+
+/** 滚动条当前是否处于最底部（允许 40px 容差）。 */
+const isAtBottom = ref<boolean>(true)
+
+/** 滚动容器 DOM 引用缓存。 */
+let scrollContainerEl: HTMLElement | null = null
 
 /** 当前页面实体上下文。 */
 const messageContext = computed<AgentMessageContext | undefined>(() => {
@@ -94,6 +110,7 @@ const hasRunningTools = computed<boolean>(() => {
 /** 发送消息给 Agent。 */
 async function sendMessage(content: string): Promise<void> {
   await agent.sendMessage(content, messageContext.value)
+  void scrollToBottom('smooth')
 }
 
 /** 打开模型设置页面。 */
@@ -101,14 +118,64 @@ function openModelSettings(): void {
   void router.push({ name: 'settings', query: { tab: 'models' } })
 }
 
-async function scrollToLatest(): Promise<void> {
-  await nextTick()
-  const element = conversation.value
-  if (!element) return
-  const scrollableParent = element.closest('.ncx-content-area') || element.parentElement
-  if (scrollableParent) {
-    scrollableParent.scrollTo({ top: scrollableParent.scrollHeight, behavior: 'smooth' })
+/** 获取外层滚动容器元素。 */
+function getScrollContainer(): HTMLElement | null {
+  if (scrollContainerEl && scrollContainerEl.isConnected) {
+    return scrollContainerEl
   }
+  const element = conversation.value
+  if (!element) return null
+  const parent = (element.closest('.ncx-content-area') as HTMLElement | null) || element.parentElement
+  scrollContainerEl = parent
+  return parent
+}
+
+/** 检查并更新滚动条是否处于底部的状态。 */
+function updateScrollState(): void {
+  const container = getScrollContainer()
+  if (!container) return
+  const { scrollTop, scrollHeight, clientHeight } = container
+  const distanceToBottom = scrollHeight - scrollTop - clientHeight
+  isAtBottom.value = distanceToBottom <= 40
+}
+
+/** 处理滚动容器的 scroll 事件。 */
+function handleScroll(): void {
+  updateScrollState()
+}
+
+/** 绑定滚动容器事件监听。 */
+function bindScrollListener(): void {
+  const container = getScrollContainer()
+  if (container) {
+    container.addEventListener('scroll', handleScroll, { passive: true })
+  }
+}
+
+/** 解绑滚动容器事件监听。 */
+function unbindScrollListener(): void {
+  if (scrollContainerEl) {
+    scrollContainerEl.removeEventListener('scroll', handleScroll)
+    scrollContainerEl = null
+  }
+}
+
+/** 滚动到对话流最底部。
+ * @param behavior 滚动行为，'auto' 为瞬间置底，'smooth' 为平滑滚动
+ */
+async function scrollToBottom(behavior: ScrollBehavior = 'smooth'): Promise<void> {
+  await nextTick()
+  const container = getScrollContainer()
+  if (!container) return
+  container.scrollTo({ top: container.scrollHeight, behavior })
+  if (behavior === 'auto' || behavior === 'instant') {
+    updateScrollState()
+  }
+}
+
+/** 兼容旧版调用的置底函数。 */
+async function scrollToLatest(): Promise<void> {
+  await scrollToBottom('smooth')
 }
 
 function readQueryText(value: unknown): string | undefined {
@@ -226,7 +293,24 @@ function handleDislike(): void {
 
 onMounted(async () => {
   await Promise.all([agent.initialize(), account.initialize()])
-  await scrollToLatest()
+  await nextTick()
+  // 首次进入小云页面默认瞬间置底，不从顶部滚动下来
+  await scrollToBottom('auto')
+  bindScrollListener()
+  requestAnimationFrame(() => {
+    void scrollToBottom('auto')
+    updateScrollState()
+  })
+})
+
+onActivated(async () => {
+  bindScrollListener()
+  await nextTick()
+  updateScrollState()
+})
+
+onDeactivated(() => {
+  unbindScrollListener()
 })
 
 watch(
@@ -242,6 +326,7 @@ onUnmounted(() => {
     clearInterval(timerId)
     timerId = null
   }
+  unbindScrollListener()
 })
 
 watch(
@@ -266,7 +351,13 @@ watch(
     agent.snapshot.value.approvals.length,
     agent.snapshot.value.selections.length
   ],
-  () => { void scrollToLatest() }
+  () => {
+    if (isAtBottom.value) {
+      void scrollToBottom('smooth')
+    } else {
+      updateScrollState()
+    }
+  }
 )
 </script>
 
@@ -477,10 +568,12 @@ watch(
     <AgentComposer
       :snapshot="agent.snapshot.value"
       :context-label="contextLabel"
+      :show-scroll-to-bottom="!isAtBottom"
       @send="sendMessage"
       @stop="agent.stop"
       @music-safety="agent.setMusicSafetyLevel"
       @command-safety="agent.setCommandSafetyLevel"
+      @scroll-to-bottom="scrollToBottom('smooth')"
     />
   </section>
 </template>

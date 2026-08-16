@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowUp, Folder, Mic, Square } from '@lucide/vue'
+import { ArrowDown, ArrowUp, Folder, Mic, Square } from '@lucide/vue'
 import { computed, nextTick, onMounted, ref, watch, type DeepReadonly } from 'vue'
 
 import type { AgentSnapshot } from '../../../../shared/schemas/agent'
@@ -18,6 +18,7 @@ import { useVoiceInput } from '../../voice/use-voice-input'
 interface AgentComposerProps {
   readonly snapshot: DeepReadonly<AgentSnapshot>
   readonly contextLabel?: string
+  readonly showScrollToBottom?: boolean
 }
 
 interface AgentComposerEmits {
@@ -25,6 +26,7 @@ interface AgentComposerEmits {
   (event: 'stop'): void
   (event: 'music-safety', level: AgentSnapshot['musicSafetyLevel']): void
   (event: 'command-safety', level: AgentSnapshot['commandSafetyLevel']): void
+  (event: 'scroll-to-bottom'): void
 }
 
 // ========= 变量 =========
@@ -197,6 +199,23 @@ watch(content, () => {
 
     <!-- Composer Rounded Container -->
     <div class="agent-composer-box">
+      <!-- 滚动到底部圆形按钮：在输入框上方水平居中，当不在最底部时展示 -->
+      <Transition name="agent-scroll-btn-fade">
+        <button
+          v-if="showScrollToBottom"
+          type="button"
+          class="agent-scroll-to-bottom-btn"
+          aria-label="滚动到底部"
+          title="滚动到底部"
+          @click="emit('scroll-to-bottom')"
+        >
+          <ArrowDown
+            :size="16"
+            :stroke-width="2.2"
+          />
+        </button>
+      </Transition>
+
       <textarea
         ref="textareaRef"
         v-model="content"
