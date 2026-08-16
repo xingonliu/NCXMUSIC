@@ -31,6 +31,29 @@ export function isSearchRoute(route: Pick<RouteLocationNormalizedLoaded, 'name' 
 }
 
 /**
+ * 判断当前路由是否属于小云 (AI 助手) 页面。
+ *
+ * @param route 当前路由快照
+ * @returns 是否属于小云页面
+ */
+export function isAgentRoute(route: Pick<RouteLocationNormalizedLoaded, 'name' | 'path'>): boolean {
+  if (route.name === 'agent') {
+    return true
+  }
+  return typeof route.path === 'string' && route.path.startsWith('/agent')
+}
+
+/**
+ * 判断当前路由是否属于快捷键排除页面（搜索页、小云页等）。
+ *
+ * @param route 当前路由快照
+ * @returns 是否属于排除页面
+ */
+export function isExcludedRoute(route: Pick<RouteLocationNormalizedLoaded, 'name' | 'path'>): boolean {
+  return isSearchRoute(route) || isAgentRoute(route)
+}
+
+/**
  * 判断键盘事件目标是否为可编辑输入元素。
  *
  * @param target 键盘事件目标
@@ -90,7 +113,7 @@ export function calculateVolumeStep(currentVolume: number, direction: 'up' | 'do
  *
  * 启用约束：
  * - 仅在音乐控制栏显示时或在沉浸歌词页内生效
- * - 搜索页全面禁用
+ * - 搜索页与小云 (Agent) 助手页全面禁用
  * - 焦点在输入框/文本域/可编辑区域时禁用
  * - 包含修饰键 (Cmd/Ctrl/Alt) 时不拦截
  *
@@ -118,8 +141,8 @@ export function usePlayerKeyboardShortcuts(options: PlayerKeyboardShortcutsOptio
       return true
     }
 
-    // 搜索页明确禁用快捷键
-    if (isSearchRoute(options.route)) {
+    // 搜索页与小云 (Agent) 页明确禁用快捷键
+    if (isExcludedRoute(options.route)) {
       return false
     }
 
