@@ -391,15 +391,11 @@ function handleQuality(value: string | number): void {
   justify-self: center;
   width: auto;
   min-width: 0;
-  padding: 2px 14px;
-  border-radius: var(--ncx-radius-full, 999px);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.02em;
   line-height: 16px;
-  color: rgb(255 255 255 / 90%);
-  background: rgb(255 255 255 / 14%);
-  box-shadow: none;
+  color: rgb(255 255 255 / 64%);
 }
 
 .playback-controls--immersive .playback-controls-transport {
