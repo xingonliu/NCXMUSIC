@@ -248,8 +248,8 @@ function openImmersivePlayer(event: MouseEvent): void {
             <SkipBack :size="16" />
           </CommonIconButton>
           <CommonIconButton
-            size="prominent"
-            variant="primary"
+            size="default"
+            variant="ghost"
             tooltip-placement="left"
             :disabled="!track"
             :label="showPause ? text.pause : text.play"

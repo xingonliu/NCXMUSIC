@@ -81,14 +81,14 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     expect(playerBarSource).toContain(":root[data-theme='dark'] .player-bar-glass")
   })
 
-  it('播放/暂停 icon 按钮具有 prominent 尺寸与 primary 变体', () => {
+  it('播放/暂停 icon 按钮具有 default 尺寸与 ghost 变体', () => {
     const wrapper = mount(PlayerBar)
     const transport = wrapper.find('.player-transport')
     const iconButtons = transport.findAllComponents({ name: '通用组件IconButton' })
 
     const playBtn = iconButtons[2]
-    expect(playBtn.props('size')).toBe('prominent')
-    expect(playBtn.props('variant')).toBe('primary')
+    expect(playBtn.props('size')).toBe('default')
+    expect(playBtn.props('variant')).toBe('ghost')
   })
 
   it('上一首、下一首 icon 按钮具有 default 尺寸与 ghost 变体', () => {
