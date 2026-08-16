@@ -145,15 +145,15 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('grid-template-rows: 1fr;')
   })
 
-  it('输入框配置 blur(5px) 磨砂滤镜且小云页面底部包含平滑渐变遮罩', () => {
+  it('输入框配置 100% 实体不透明背景且小云页面底部包含平滑渐变遮罩', () => {
     /** Agent 页面源代码。 */
     const page = source('src/renderer/features/agent/AgentPage.vue')
     /** CSS 源代码。 */
     const css = source('src/renderer/features/agent/agent-page.css')
 
     expect(page).toContain('agent-bottom-mask')
-    expect(css).toContain('backdrop-filter: blur(5px);')
-    expect(css).toContain('-webkit-backdrop-filter: blur(5px);')
+    expect(css).toContain('background: var(--ncx-modal-bg, #fff);')
+    expect(css).not.toContain('backdrop-filter: blur(5px);')
     expect(css).toContain('.agent-bottom-mask')
     expect(css).toContain('pointer-events: none;')
     expect(css).toContain('linear-gradient(')

@@ -59,9 +59,6 @@ const copiedMessageId = ref<string | null>(null)
 /** 滚动条当前是否处于最底部（允许 40px 容差）。 */
 const isAtBottom = ref<boolean>(true)
 
-/** 当前页面是否处于活跃激活状态（控制 Teleport 浮层挂载）。 */
-const isActive = ref<boolean>(true)
-
 /** 滚动容器 DOM 引用缓存。 */
 let scrollContainerEl: HTMLElement | null = null
 
@@ -302,14 +299,12 @@ onMounted(async () => {
 })
 
 onActivated(async () => {
-  isActive.value = true
   bindScrollListener()
   await nextTick()
   updateScrollState()
 })
 
 onDeactivated(() => {
-  isActive.value = false
   unbindScrollListener()
 })
 
@@ -565,28 +560,21 @@ watch(
       @dismiss="agent.dismissProfilePrompt"
     />
 
-    <Teleport to="body">
-      <div
-        v-if="isActive"
-        class="agent-floating-layer"
-      >
-        <AgentComposer
-          :snapshot="agent.snapshot.value"
-          :context-label="contextLabel"
-          :show-scroll-to-bottom="!isAtBottom"
-          @send="sendMessage"
-          @stop="agent.stop"
-          @music-safety="agent.setMusicSafetyLevel"
-          @command-safety="agent.setCommandSafetyLevel"
-          @scroll-to-bottom="scrollToBottom('smooth')"
-        />
+    <AgentComposer
+      :snapshot="agent.snapshot.value"
+      :context-label="contextLabel"
+      :show-scroll-to-bottom="!isAtBottom"
+      @send="sendMessage"
+      @stop="agent.stop"
+      @music-safety="agent.setMusicSafetyLevel"
+      @command-safety="agent.setCommandSafetyLevel"
+      @scroll-to-bottom="scrollToBottom('smooth')"
+    />
 
-        <!-- 底部渐变遮罩：在输入框下方平滑渐变，遮挡滚动到底部的消息边缘 -->
-        <div
-          class="agent-bottom-mask"
-          aria-hidden="true"
-        />
-      </div>
-    </Teleport>
+    <!-- 底部渐变遮罩：在输入框下方平滑渐变，遮挡滚动到底部的消息边缘 -->
+    <div
+      class="agent-bottom-mask"
+      aria-hidden="true"
+    />
   </section>
 </template>
