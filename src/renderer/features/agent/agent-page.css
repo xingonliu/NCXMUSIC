@@ -241,16 +241,16 @@
   gap: 12px;
   padding: 12px 16px;
   box-sizing: border-box;
-  border: 1px solid color-mix(in srgb, var(--ncx-color-danger, #ef4444) 28%, transparent);
+  border: none;
   border-radius: 14px;
-  background: color-mix(in srgb, var(--ncx-color-danger, #ef4444) 8%, var(--ncx-color-surface));
-  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
+  color: var(--ncx-color-text-secondary);
   font-size: 13px;
   line-height: 1.5;
 }
 
 .agent-system-icon {
-  color: var(--ncx-color-danger, #ef4444);
+  color: #ff9500;
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -265,6 +265,7 @@
 
 .agent-system-content p {
   margin: 0;
+  color: var(--ncx-color-text-secondary);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
@@ -275,17 +276,18 @@
   align-self: flex-start;
   padding: 4px 10px;
   margin-top: 4px;
-  border: 1px solid color-mix(in srgb, var(--ncx-color-danger, #ef4444) 30%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 12%, transparent);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--ncx-color-danger, #ef4444) 12%, transparent);
-  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
+  color: var(--ncx-color-text-secondary);
   font-size: 12px;
   cursor: pointer;
-  transition: background 120ms ease;
+  transition: background 120ms ease, color 120ms ease;
 }
 
 .agent-system-action-btn:hover {
-  background: color-mix(in srgb, var(--ncx-color-danger, #ef4444) 20%, transparent);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 12%, transparent);
+  color: var(--ncx-color-text-primary);
 }
 
 /* Assistant Message: Full width matching input box! NO bubble! */
