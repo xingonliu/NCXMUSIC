@@ -14,7 +14,8 @@ import {
   PersonalizationService,
   calculateProfileChangeScore,
   evaluateProfileUpdatePrompt,
-  extractLocalMusicProfileFeatures
+  extractLocalMusicProfileFeatures,
+  parseMusicProfileAnalysisText
 } from '../../src/utility/personalization-service'
 
 // ========= 变量 =========
@@ -281,5 +282,65 @@ describe('Phase 6 画像持久化与删除边界', () => {
     expect(snapshot.errorMessage).toBe('模型没有返回有效画像 JSON。')
     expect(snapshot.rawOutput).toBe(mockRawOutput)
     await store.close()
+  })
+
+  it('正确剥离 <think> 思考链（含花括号草稿）并提取 Markdown 代码块中的画像 JSON', () => {
+    /** 带有深度思考推理过程与前后客套话的模型输出。 */
+    const thoughtOutput = `<think>
+用户喜欢歌手 A，偏好集合为 {A, B}。
+准备构建画像分析 JSON 草稿:
+{ "draft": 1 }
+</think>
+你好，这是为你生成的音乐画像：
+\`\`\`json
+{
+  "summary": "偏爱歌手 A 的流行作品",
+  "agentPrompt": "优先推荐 A 的歌曲。",
+  "insights": [{
+    "insightId": "artist.a",
+    "category": "artist",
+    "label": "偏好歌手 A",
+    "value": "高频出现",
+    "evidence": ["歌曲 1"],
+    "coverage": 0.8,
+    "confidence": 0.9
+  }]
+}
+\`\`\`
+希望你喜欢！`
+
+    const parsed = parseMusicProfileAnalysisText(thoughtOutput)
+    expect(parsed.summary).toBe('偏爱歌手 A 的流行作品')
+    expect(parsed.insights).toHaveLength(1)
+    expect(parsed.insights[0]?.insightId).toBe('artist.a')
+  })
+
+  it('正确解析包含字符串字面量转义花括号及前后文本的纯 JSON', () => {
+    /** 含有复杂转义花括号且无 Markdown 代码块的输出。 */
+    const complexOutput = `为您生成的音乐画像如下：
+{
+  "summary": "偏爱包含 \\"{\\"live\\"}\\" 现场版的歌曲",
+  "agentPrompt": "优先推荐现场版。",
+  "insights": [{
+    "insightId": "genre.live",
+    "category": "genre",
+    "label": "现场版偏好",
+    "value": "多次收听 live 版",
+    "evidence": ["歌曲 live"],
+    "coverage": 0.5,
+    "confidence": 0.7
+  }]
+}
+以上是完整画像。`
+
+    const parsed = parseMusicProfileAnalysisText(complexOutput)
+    expect(parsed.summary).toBe('偏爱包含 "{"live"}" 现场版的歌曲')
+    expect(parsed.insights[0]?.label).toBe('现场版偏好')
+  })
+
+  it('格式校验不通过时返回明确的错误提示', () => {
+    /** 缺少必要字段的 JSON。 */
+    const incompleteJson = '{ "summary": "仅有摘要" }'
+    expect(() => parseMusicProfileAnalysisText(incompleteJson)).toThrow('模型画像格式校验未通过')
   })
 })
