@@ -201,17 +201,11 @@
 .music-search-dropdown-item:hover,
 .music-search-dropdown-item.is-highlighted {
   background: color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
-  color: var(--ncx-color-primary, #0071e3);
 }
 
 .dropdown-item-icon {
   color: var(--ncx-color-text-tertiary);
   flex-shrink: 0;
-}
-
-.music-search-dropdown-item:hover .dropdown-item-icon,
-.music-search-dropdown-item.is-highlighted .dropdown-item-icon {
-  color: var(--ncx-color-primary, #0071e3);
 }
 
 .dropdown-item-text {
@@ -386,10 +380,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.hot-song-card:hover .hot-song-name {
-  color: var(--ncx-color-primary, #0071e3);
 }
 
 .hot-song-artist {
