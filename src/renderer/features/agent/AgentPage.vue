@@ -121,8 +121,16 @@ function readEntityKind(value: unknown): AgentMessageContext['entityKind'] | und
     : undefined
 }
 
+/** 判断 Assistant 消息块是否需要渲染（包含文本输出、正在流式生成、已中断或包含工具/审批/选择卡）。 */
 function shouldRenderMessage(message: DeepReadonly<AgentSnapshot['messages'][number]>): boolean {
-  return message.content.trim().length > 0 || message.streaming || message.interrupted
+  return (
+    message.content.trim().length > 0 ||
+    message.streaming ||
+    message.interrupted ||
+    toolsForMessage(message).length > 0 ||
+    approvalsForMessage(message).length > 0 ||
+    selectionsForMessage(message).length > 0
+  )
 }
 
 function toolsForMessage(message: DeepReadonly<AgentSnapshot['messages'][number]>) {
@@ -414,7 +422,10 @@ watch(
             />
 
             <!-- Raw Response Text (No bubble container!) -->
-            <div class="agent-assistant-content">
+            <div
+              v-if="message.content.trim().length > 0 || message.streaming"
+              class="agent-assistant-content"
+            >
               <span>{{ message.content }}</span><span
                 v-if="message.streaming"
                 class="agent-streaming-caret"
@@ -423,7 +434,7 @@ watch(
 
             <!-- Footer Toolbar (Copy, Like, Dislike, Timestamp) -->
             <div
-              v-if="!message.streaming"
+              v-if="!message.streaming && (message.content.trim().length > 0 || message.interrupted)"
               class="agent-assistant-footer"
             >
               <CommonIconButton
