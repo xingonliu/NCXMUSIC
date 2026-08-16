@@ -173,11 +173,6 @@ async function scrollToBottom(behavior: ScrollBehavior = 'smooth'): Promise<void
   }
 }
 
-/** 兼容旧版调用的置底函数。 */
-async function scrollToLatest(): Promise<void> {
-  await scrollToBottom('smooth')
-}
-
 function readQueryText(value: unknown): string | undefined {
   return typeof value === 'string' && value.length > 0 ? value : undefined
 }
@@ -574,6 +569,12 @@ watch(
       @music-safety="agent.setMusicSafetyLevel"
       @command-safety="agent.setCommandSafetyLevel"
       @scroll-to-bottom="scrollToBottom('smooth')"
+    />
+
+    <!-- 底部渐变遮罩：在输入框下方平滑渐变，遮挡滚动到底部的消息边缘 -->
+    <div
+      class="agent-bottom-mask"
+      aria-hidden="true"
     />
   </section>
 </template>
