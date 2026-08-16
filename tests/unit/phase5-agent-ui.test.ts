@@ -66,7 +66,7 @@ describe('phase 5 agent UI contract', () => {
     const css = source('src/renderer/features/agent/agent-page.css')
 
     expect(css).toContain('animation: agent-composer-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) 500ms both;')
-    expect(css).toContain('transform: translate(-50%, calc(100% + 24px));')
+    expect(css).toContain('transform: translateY(calc(100% + 24px));')
     expect(css).toContain('@keyframes agent-composer-rise')
     expect(css).toContain('animation-name: agent-composer-fade;')
   })
