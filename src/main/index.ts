@@ -715,6 +715,12 @@ async function createMainWindow(): Promise<void> {
   }
 }
 
+// ========= 应用主入口与单实例锁 =========
+
+/** 设置应用跨平台权威显示名称。 */
+app.name = 'Ncxmusic'
+app.setName('Ncxmusic')
+
 const hasSingleInstanceLock = app.requestSingleInstanceLock()
 
 if (!hasSingleInstanceLock) {
