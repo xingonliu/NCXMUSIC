@@ -10,6 +10,8 @@ import { join } from 'node:path'
 
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import type { AgentExternalToolsOptions } from '../../src/infrastructure/extensions/agent-external-tools'
+import { AgentExternalTools } from '../../src/infrastructure/extensions/agent-external-tools'
 import type { McpSecretProtector } from '../../src/infrastructure/extensions/mcp-config-store'
 import { McpConfigStore } from '../../src/infrastructure/extensions/mcp-config-store'
 import { SkillPackageManager } from '../../src/infrastructure/extensions/skill-package-manager'
@@ -211,39 +213,36 @@ describe('Phase 7 MCP 配置安全边界', () => {
       supervisor,
       chooseSkillSource: async () => undefined
     })
-    /** Smithery 可能返回超过设置页展示上限的长描述。 */
+    /** MCP Hub 中国可能返回超过设置页展示上限的长描述。 */
     const longDescription = `Search the web with Brave. ${'long description '.repeat(180)}`
-    /** Smithery fetch mock。 */
+    /** MCP Hub 中国 fetch mock。 */
     const fetchMock = vi.fn(async (input: Parameters<typeof fetch>[0]) => {
-      /** 被请求的 Smithery URL。 */
+      /** 被请求的 MCP Hub 中国 URL。 */
       const url = new URL(String(input))
-      expect(`${url.origin}${url.pathname}`).toBe('https://api.smithery.ai/servers')
+      expect(`${url.origin}${url.pathname}`).toBe('https://mcp-cn.com/api/servers')
       expect(url.searchParams.get('page')).toBe('2')
-      expect(url.searchParams.get('pageSize')).toBe('6')
-      expect(url.searchParams.get('q')).toBe('brave')
-      expect(url.searchParams.get('topK')).toBe('100')
+      expect(url.searchParams.get('pageSize')).toBe('12')
+      expect(url.searchParams.get('keywords')).toBe('brave')
       return new Response(JSON.stringify({
-        servers: [{
-          id: '50f26566-7dfe-4842-a5b8-1a9407fb91f4',
-          qualifiedName: 'brave',
-          namespace: 'brave',
-          displayName: 'Brave Search',
+        code: 0,
+        message: 'success',
+        data: [{
+          server_id: 101,
+          qualified_name: 'brave',
+          creator: 'brave',
+          display_name: 'Brave Search',
           description: longDescription,
-          iconUrl: 'https://api.smithery.ai/servers/brave/icon',
-          verified: true,
-          useCount: 118196,
-          remote: true,
-          isDeployed: true,
-          unlisted: false,
-          inactive: false,
-          createdAt: '2025-09-05T18:07:47.018Z',
-          homepage: 'https://brave.com/search/api/'
+          logo: 'https://mcp-cn.com/logo.png',
+          use_count: 118196,
+          is_domestic: false,
+          created_at: '2025-09-05 18:07:47',
+          package_url: 'https://brave.com/search/api/',
+          connections: '[{type:stdio,config:{command:npx,args:[-y,brave]}}]'
         }],
         pagination: {
-          currentPage: 2,
-          pageSize: 6,
-          totalPages: 10,
-          totalCount: 60
+          page: 2,
+          pageSize: 12,
+          total: 60
         }
       }), { status: 200, headers: { 'content-type': 'application/json' } })
     })
@@ -253,9 +252,8 @@ describe('Phase 7 MCP 配置安全边界', () => {
     const result = await coordinator.handle({
       operation: 'mcp.market.search',
       page: 2,
-      pageSize: 6,
-      q: 'brave',
-      topK: 100
+      pageSize: 12,
+      q: 'brave'
     })
     expect(fetchMock).toHaveBeenCalledTimes(1)
     expect(result.snapshot.mcpServers).toHaveLength(0)
@@ -265,11 +263,11 @@ describe('Phase 7 MCP 配置安全边界', () => {
       verified: true
     })
     expect(result.mcpMarket?.servers[0]?.description).toHaveLength(2_000)
-    expect(result.mcpMarket?.pagination).toMatchObject({ currentPage: 2, totalPages: 10 })
+    expect(result.mcpMarket?.pagination).toMatchObject({ currentPage: 2, pageSize: 12, totalPages: 5, totalCount: 60 })
     coordinator.shutdown()
   })
 
-  it('MCP 市场条目详情解析支持获取 deploymentUrl 与 configSchema', async () => {
+  it('MCP 市场条目详情解析支持获取 command、args 与 env 配置', async () => {
     /** 无进程副作用的 Utility Supervisor 夹具。 */
     const supervisor = {
       onControlMessage: () => () => undefined,
@@ -282,38 +280,40 @@ describe('Phase 7 MCP 配置安全边界', () => {
       supervisor,
       chooseSkillSource: async () => undefined
     })
-    /** Smithery detail fetch mock。 */
+    /** MCP Hub 中国 detail fetch mock。 */
     const fetchMock = vi.fn(async (input: Parameters<typeof fetch>[0]) => {
       const url = new URL(String(input))
-      expect(`${url.origin}${url.pathname}`).toBe('https://api.smithery.ai/servers/theagenttimes/news')
+      expect(`${url.origin}${url.pathname}`).toBe('https://mcp-cn.com/api/servers/get_details')
+      expect(url.searchParams.get('qualifiedName')).toBe('@modelcontextprotocol/server-github')
       return new Response(JSON.stringify({
-        qualifiedName: 'theagenttimes/news',
-        displayName: 'Agent News',
-        description: 'Agent news server',
-        remote: true,
-        deploymentUrl: 'https://news--theagenttimes.run.tools',
-        connections: [{
-          type: 'http',
-          deploymentUrl: 'https://news--theagenttimes.run.tools',
-          configSchema: {}
-        }]
+        code: 0,
+        message: 'success',
+        data: {
+          server_id: 62,
+          logo: 'https://github.com/github.png',
+          qualified_name: '@modelcontextprotocol/server-github',
+          display_name: 'GitHub',
+          description: 'GitHub MCP Server',
+          connections: '[{type:stdio,config:{command:npx,args:[-y,@modelcontextprotocol/server-github],env:{GITHUB_PERSONAL_ACCESS_TOKEN:<YOUR_TOKEN>}}}]',
+          package_url: 'https://www.npmjs.com/package/@modelcontextprotocol/server-github'
+        }
       }), { status: 200, headers: { 'content-type': 'application/json' } })
     })
     vi.stubGlobal('fetch', fetchMock)
 
     const resolved = await coordinator.handle({
       operation: 'mcp.market.resolve',
-      qualifiedName: 'theagenttimes/news'
+      qualifiedName: '@modelcontextprotocol/server-github'
     })
     expect(fetchMock).toHaveBeenCalledTimes(1)
     expect(resolved.marketDetail).toMatchObject({
-      qualifiedName: 'theagenttimes/news',
-      displayName: 'Agent News',
-      deploymentUrl: 'https://news--theagenttimes.run.tools',
-      connections: [{
-        type: 'http',
-        deploymentUrl: 'https://news--theagenttimes.run.tools'
-      }]
+      qualifiedName: '@modelcontextprotocol/server-github',
+      displayName: 'GitHub',
+      command: 'npx',
+      args: ['-y', '@modelcontextprotocol/server-github'],
+      env: {
+        GITHUB_PERSONAL_ACCESS_TOKEN: '<YOUR_TOKEN>'
+      }
     })
     coordinator.shutdown()
   })
@@ -471,5 +471,165 @@ describe('Phase 7 Dynamic Skill 生命周期', () => {
       'broken'
     ].join('\n'))
     await expect(manager.install({ type: 'folder', path: brokenRoot })).rejects.toThrow(/入口|entry/iu)
+  })
+})
+
+describe('Phase 7 SkillHub 市场集成与 manage_skill 工具', () => {
+  it('ExtensionCoordinator 支持从 SkillHub 接口搜索并解析技能列表', async () => {
+    const dataRoot = temporaryDirectory('ncx-skill-market-')
+    const coordinator = new ExtensionCoordinator({
+      dataRoot,
+      protector: testProtector,
+      supervisor: { postControl: vi.fn(), onControlMessage: () => () => {} } as unknown as UtilitySupervisor,
+      chooseSkillSource: async () => undefined
+    })
+
+    const mockFetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        code: 0,
+        data: {
+          total: 2,
+          skills: [
+            {
+              slug: 'agent-phone-call',
+              name: '智能电话外呼助手',
+              version: '1.2.0',
+              description: 'AI phone call agent',
+              description_zh: '智能电话外呼助手',
+              category: 'ai-agent',
+              subCategories: [{ key: 'voice', name: '语音交互' }],
+              downloads: 1200,
+              stars: 88,
+              installs: 950,
+              iconUrl: 'https://cdn.skillhub.cn/icons/phone.png',
+              ownerName: 'DevTeam',
+              verified: true,
+              homepage: 'https://skillhub.cn/skills/agent-phone-call'
+            },
+            {
+              slug: 'code-review-pro',
+              name: '代码评审专家',
+              version: '2.0.1',
+              description: 'Code review assistant',
+              description_zh: '代码审查助手',
+              category: 'dev-programming',
+              downloads: 800,
+              stars: 55,
+              verified: false
+            }
+          ]
+        }
+      })
+    })
+    vi.stubGlobal('fetch', mockFetch)
+
+    const result = await coordinator.handle({
+      operation: 'skill.market.search',
+      page: 1,
+      pageSize: 10,
+      sortBy: 'downloads',
+      q: 'phone'
+    })
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining('https://api.skillhub.cn/api/skills?page=1&pageSize=10&sortBy=downloads&keyword=phone'),
+      expect.any(Object)
+    )
+    expect(result.skillMarket).toBeDefined()
+    expect(result.skillMarket?.skills).toHaveLength(2)
+    expect(result.skillMarket?.skills[0]).toMatchObject({
+      slug: 'agent-phone-call',
+      name: '智能电话外呼助手',
+      version: '1.2.0',
+      downloads: 1200,
+      verified: true
+    })
+    expect(result.skillMarket?.pagination).toMatchObject({
+      currentPage: 1,
+      pageSize: 10,
+      totalPages: 1,
+      totalCount: 2
+    })
+
+    coordinator.shutdown()
+  })
+
+  it('AgentExternalTools 的 manage_skill search 动作为只读免批并可执行搜索', async () => {
+    const mockLifecycle = {
+      request: vi.fn().mockResolvedValue({ ok: true, code: 'OK', summary: '已发起' })
+    }
+    const mockOptions: AgentExternalToolsOptions = {
+      shellExecutor: { execute: vi.fn() } as unknown as AgentExternalToolsOptions['shellExecutor'],
+      shellClassifier: { setSafetyLevel: vi.fn(), classify: vi.fn() } as unknown as AgentExternalToolsOptions['shellClassifier'],
+      skills: { has: () => false, call: vi.fn() } as unknown as AgentExternalToolsOptions['skills'],
+      mcp: { has: () => false, call: vi.fn() } as unknown as AgentExternalToolsOptions['mcp'],
+      lifecycle: mockLifecycle
+    }
+    const tools = new AgentExternalTools(mockOptions)
+
+    const testContext = { commandSafetyLevel: 'S1' as const, shellToolEnabled: true }
+
+    // 1. 测试 search 动作 resolve：只读、无 requiresApproval 阻断
+    const searchResolution = await tools.resolve('manage_skill', {
+      action: 'search',
+      query: 'browser'
+    }, testContext)
+    expect(searchResolution).toBeDefined()
+    expect(searchResolution?.operation.effect).toBe('read')
+    expect(searchResolution?.operation.requiresApproval).toBeUndefined()
+
+    // 2. 测试 search 动作 execute：调用 SkillHub API
+    const mockFetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        code: 0,
+        data: {
+          total: 1,
+          skills: [{
+            slug: 'browser-navigator',
+            name: '浏览器导航器',
+            version: '1.0.0',
+            description_zh: '自动化网页操作',
+            downloads: 500,
+            stars: 30
+          }]
+        }
+      })
+    })
+    vi.stubGlobal('fetch', mockFetch)
+
+    const searchExecution = await tools.execute('manage_skill', {
+      action: 'search',
+      query: 'browser'
+    }, 'call-1', new AbortController().signal)
+
+    expect(searchExecution.ok).toBe(true)
+    expect(searchExecution.summary).toContain('SkillHub 市场搜索“browser”')
+    const searchData = searchExecution.data as { total: number; skills: Array<{ slug: string }> }
+    expect(searchData.total).toBe(1)
+    expect(searchData.skills[0]?.slug).toBe('browser-navigator')
+
+    // 3. 测试 install 动作 resolve：写操作、必须 ApprovalCard 逐次批准
+    const installResolution = await tools.resolve('manage_skill', {
+      action: 'install',
+      slug: 'browser-navigator'
+    }, testContext)
+    expect(installResolution).toBeDefined()
+    expect(installResolution?.operation.effect).toBe('write')
+    expect(installResolution?.operation.requiresApproval).toBeDefined()
+
+    // 4. 测试 install 动作 execute：向 lifecycle 发送请求
+    await tools.execute('manage_skill', {
+      action: 'install',
+      slug: 'browser-navigator'
+    }, 'call-2', new AbortController().signal)
+    expect(mockLifecycle.request).toHaveBeenCalledWith('skill', 'install', expect.objectContaining({
+      action: 'install',
+      slug: 'browser-navigator',
+      name: 'browser-navigator'
+    }))
   })
 })

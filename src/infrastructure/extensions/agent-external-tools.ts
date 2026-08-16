@@ -45,17 +45,25 @@ export interface AgentExternalToolsOptions {
 
 // ========= Schema =========
 
-/** Agent 可请求的 Skill 生命周期输入。 */
+/** Agent 可请求的 Skill 生命周期与市场搜索输入。 */
 const ManageSkillInputSchema = z.strictObject({
-  action: z.enum(['install', 'enable', 'disable', 'update', 'rollback', 'uninstall']),
+  action: z.enum(['search', 'install', 'enable', 'disable', 'update', 'rollback', 'uninstall']),
+  query: z.string().trim().min(1).max(200).optional(),
+  slug: z.string().trim().min(1).max(128).optional(),
   name: SkillNameSchema.optional(),
-  url: z.url().max(2_048).optional()
+  url: z.url().max(2_048).optional(),
+  category: z.string().trim().max(100).optional(),
+  page: z.number().int().min(1).default(1).optional(),
+  pageSize: z.number().int().min(1).max(50).default(10).optional()
 }).superRefine((input, context) => {
-  if (input.action === 'install' && (!input.url || !/^https:\/\//iu.test(input.url))) {
-    context.addIssue({ code: 'custom', path: ['url'], message: 'Agent 安装 Skill 只接受 HTTPS Git URL。' })
+  if (input.action === 'search' && !input.query) {
+    context.addIssue({ code: 'custom', path: ['query'], message: '搜索动作需要 query 关键词。' })
   }
-  if (input.action !== 'install' && !input.name) {
-    context.addIssue({ code: 'custom', path: ['name'], message: '当前动作需要 Skill 名。' })
+  if (input.action === 'install' && !input.url && !input.slug && !input.name) {
+    context.addIssue({ code: 'custom', path: ['slug'], message: '安装需要提供 SkillHub slug 或 HTTPS Git URL。' })
+  }
+  if (['enable', 'disable', 'update', 'rollback', 'uninstall'].includes(input.action) && !input.name && !input.slug) {
+    context.addIssue({ code: 'custom', path: ['name'], message: '当前动作需要 Skill 名称。' })
   }
 })
 
@@ -93,16 +101,25 @@ const EXECUTE_SHELL_DEFINITION = {
   }
 } as const
 
-/** Skill 生命周期模型工具定义。 */
+/** Skill 生命周期与市场检索模型工具定义。 */
 const MANAGE_SKILL_DEFINITION = {
   name: 'manage_skill',
-  description: '安装、启用、禁用、显式更新、回滚或卸载 Dynamic Skill；每次变更都需要 ApprovalCard。安装只接受 HTTPS Git URL。',
+  description: '在 SkillHub 市场搜索技能（只读免批），或安装、启用、禁用、显式更新、回滚或卸载 Dynamic Skill（安装支持 slug 或 HTTPS Git URL，变更需 ApprovalCard）。',
   parameters: {
     type: 'object',
     properties: {
-      action: { enum: ['install', 'enable', 'disable', 'update', 'rollback', 'uninstall'] },
-      name: { type: 'string' },
-      url: { type: 'string', description: 'install 使用的 HTTPS Git URL。' }
+      action: {
+        type: 'string',
+        enum: ['search', 'install', 'enable', 'disable', 'update', 'rollback', 'uninstall'],
+        description: '操作类型。search：在 SkillHub 市场搜索技能；install：安装技能（传入 slug 或 url）；其他为生命周期管理。'
+      },
+      query: { type: 'string', description: 'search 使用的搜索关键词。' },
+      slug: { type: 'string', description: 'SkillHub 市场中的技能 slug（用于 search 精准过滤或 install）。' },
+      name: { type: 'string', description: '本地 Skill 名称（用于 enable/disable/update/rollback/uninstall）。' },
+      url: { type: 'string', description: 'install 使用的 HTTPS Git URL。' },
+      category: { type: 'string', description: 'search 可选分类（如 ai-agent, dev-programming, office-efficiency 等）。' },
+      page: { type: 'integer', minimum: 1, description: 'search 时的页码（默认 1）。' },
+      pageSize: { type: 'integer', minimum: 1, maximum: 50, description: 'search 时每页条数（默认 10）。' }
     },
     required: ['action'],
     additionalProperties: false
@@ -196,7 +213,21 @@ export class AgentExternalTools implements AgentExternalToolPort {
       }
     }
 
-    if (name === 'manage_skill') return lifecycleResolution(ManageSkillInputSchema.safeParse(rawInput), '管理 Dynamic Skill')
+    if (name === 'manage_skill') {
+      const parsed = ManageSkillInputSchema.safeParse(rawInput)
+      if (!parsed.success) return undefined
+      if (parsed.data.action === 'search') {
+        return {
+          input: parsed.data,
+          operation: {
+            effect: 'read',
+            conflictKeys: ['extensions:skill-search'],
+            title: `搜索 Skill 市场：“${parsed.data.query ?? ''}”`
+          }
+        }
+      }
+      return lifecycleResolution(parsed, '管理 Dynamic Skill')
+    }
     if (name === 'mcp_manager') return lifecycleResolution(ManageMcpInputSchema.safeParse(rawInput), '管理 MCP Server')
     if (!isRecord(rawInput)) return undefined
     if (this.options.skills.has(name)) {
@@ -247,9 +278,26 @@ export class AgentExternalTools implements AgentExternalToolPort {
       }
     }
     if (name === 'manage_skill') {
-      /** 已验证生命周期输入。 */
+      /** 已验证管理输入。 */
       const request = ManageSkillInputSchema.parse(input)
-      return this.options.lifecycle.request('skill', request.action, request)
+      if (request.action === 'search') {
+        const result = await searchSkillHub(request.query ?? '', {
+          page: request.page ?? 1,
+          pageSize: request.pageSize ?? 10,
+          ...(request.category ? { category: request.category } : {}),
+          ...(signal ? { signal } : {})
+        })
+        return {
+          ok: true,
+          code: 'OK',
+          summary: `SkillHub 市场搜索“${request.query}”：发现 ${result.total} 个技能。`,
+          data: result
+        }
+      }
+      return this.options.lifecycle.request('skill', request.action, {
+        ...request,
+        name: request.name || request.slug
+      })
     }
     if (name === 'mcp_manager') {
       /** 已验证生命周期输入。 */
@@ -263,6 +311,47 @@ export class AgentExternalTools implements AgentExternalToolPort {
 }
 
 // ========= 函数 =========
+
+/** 从 SkillHub 公开接口搜索技能。 */
+async function searchSkillHub(
+  query: string,
+  options: { page?: number; pageSize?: number; category?: string; signal?: AbortSignal }
+): Promise<{ total: number; skills: Array<Record<string, unknown>> }> {
+  const params = new URLSearchParams({
+    page: String(options.page || 1),
+    pageSize: String(options.pageSize || 10),
+    sortBy: 'downloads'
+  })
+  if (query.trim()) params.set('keyword', query.trim())
+  if (options.category) params.set('category', options.category)
+
+  const response = await fetch(`https://api.skillhub.cn/api/skills?${params.toString()}`, {
+    method: 'GET',
+    headers: { accept: 'application/json' },
+    ...(options.signal ? { signal: options.signal } : {})
+  })
+  if (!response.ok) throw new Error(`SkillHub 市场请求失败（HTTP ${response.status}）。`)
+  const payload = (await response.json()) as {
+    code?: number
+    data?: {
+      total?: number
+      skills?: Array<Record<string, unknown>>
+    }
+  }
+  const total = payload?.data?.total ?? 0
+  const skills = (payload?.data?.skills ?? []).map((item) => ({
+    slug: item['slug'],
+    name: item['name'] || item['slug'],
+    version: item['version'] || '1.0.0',
+    description: item['description_zh'] || item['description'] || '',
+    category: item['category'] || '',
+    downloads: item['downloads'] || 0,
+    stars: item['stars'] || 0,
+    ownerName: item['ownerName'] || '',
+    homepage: item['homepage'] || `https://skillhub.cn/skills/${item['slug']}`
+  }))
+  return { total, skills }
+}
 
 /** 把严格生命周期输入转换为统一的强制审批分类。 */
 function lifecycleResolution(

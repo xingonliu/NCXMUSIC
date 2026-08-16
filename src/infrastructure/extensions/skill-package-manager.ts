@@ -50,7 +50,7 @@ interface SkillInstallMetadata {
   /** 元数据 Schema 版本。 */
   readonly schemaVersion: 1
   /** 来源类型。 */
-  readonly sourceType: 'appdata' | 'folder' | 'zip' | 'git'
+  readonly sourceType: 'appdata' | 'folder' | 'zip' | 'git' | 'market'
   /** Main 私有完整来源；不发给 Renderer 或模型。 */
   readonly source: string
   /** 无秘密来源摘要。 */
@@ -76,6 +76,7 @@ export type SkillInstallSource =
   | { readonly type: 'folder'; readonly path: string }
   | { readonly type: 'zip'; readonly path: string }
   | { readonly type: 'git'; readonly url: string }
+  | { readonly type: 'market'; readonly slug: string; readonly version?: string; readonly downloadUrl: string }
 
 // ========= 变量 =========
 
@@ -91,11 +92,11 @@ const MAX_SKILL_MARKDOWN_BYTES = 256 * 1_024
 /** Skill 卸载回收期。 */
 const SKILL_TRASH_RETENTION_MS = 7 * 24 * 60 * 60 * 1_000
 
-/** SKILL.md Frontmatter 严格 Schema。 */
-const SkillFrontmatterSchema = z.strictObject({
-  name: z.string().regex(/^[a-z][a-z0-9-]{1,62}$/u),
-  version: z.union([z.string(), z.number()]).transform((value) => String(value)).pipe(z.string().min(1).max(80)),
-  description: z.string().trim().min(1).max(500),
+/** SKILL.md Frontmatter 宽松解析 Schema（适配开源/社区多样性）。 */
+const SkillFrontmatterSchema = z.object({
+  name: z.string().min(1).max(128).transform((val) => val.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/^-+|-+$/g, '') || 'skill'),
+  version: z.union([z.string(), z.number()]).nullish().transform((value) => (value !== null && value !== undefined) ? String(value) : '1.0.0').pipe(z.string().min(1).max(80)),
+  description: z.string().trim().min(1).transform((value) => value.slice(0, 500)),
   entry: z.string().trim().min(1).max(500).optional(),
   tools: z.array(SkillToolManifestSchema).max(32).default([])
 })
@@ -167,7 +168,7 @@ export class SkillPackageManager {
       const metadata: SkillInstallMetadata = {
         schemaVersion: 1,
         sourceType: source.type,
-        source: source.type === 'git' ? source.url : resolve(source.path),
+        source: source.type === 'git' ? source.url : (source.type === 'market' ? source.downloadUrl : resolve(source.path)),
         sourceLabel: sourceLabel(source),
         contentHash,
         ...(gitCommit ? { gitCommit } : {}),
@@ -218,7 +219,13 @@ export class SkillPackageManager {
     /** 原来源。 */
     const source: SkillInstallSource = metadata.sourceType === 'git'
       ? { type: 'git', url: metadata.source }
-      : { type: metadata.sourceType, path: metadata.source }
+      : metadata.sourceType === 'market'
+        ? {
+            type: 'market',
+            slug: name,
+            downloadUrl: `https://api.skillhub.cn/api/v1/download?slug=${encodeURIComponent(name)}`
+          }
+        : { type: metadata.sourceType, path: metadata.source }
     /** 显式更新前的启用态。 */
     const wasEnabled = metadata.enabled
     /** 原子安装新版本，替换瞬间保持禁用。 */
@@ -348,7 +355,7 @@ export class SkillPackageManager {
     }
   }
 
-  /** 将来源复制、解压或克隆到唯一 staging，并返回包根目录。 */
+  /** 将来源复制、解压、克隆或下载到唯一 staging，并返回包根目录。 */
   private async stageSource(source: SkillInstallSource, staging: string): Promise<string> {
     /** staging 内源目录。 */
     const destination = join(staging, 'package')
@@ -358,6 +365,12 @@ export class SkillPackageManager {
     } else if (source.type === 'zip') {
       validateLocalSource(source.path)
       extractZipSafely(resolve(source.path), destination)
+    } else if (source.type === 'market') {
+      if (!/^https?:\/\//iu.test(source.downloadUrl)) throw new Error('SkillHub 下载地址只允许 HTTP 或 HTTPS。')
+      /** staging 内临时 ZIP 文件路径。 */
+      const zipPath = join(staging, `${source.slug}.zip`)
+      await downloadZip(source.downloadUrl, zipPath)
+      extractZipSafely(zipPath, destination)
     } else {
       if (!/^https:\/\//iu.test(source.url)) throw new Error('Git Skill 只允许 HTTPS 仓库。')
       await runProcess('git', ['clone', '--depth', '1', '--no-tags', '--', source.url, destination])
@@ -606,7 +619,18 @@ function sourceLabel(source: SkillInstallSource): string {
     const url = new URL(source.url)
     return `${url.hostname}${url.pathname}`.slice(0, 500)
   }
+  if (source.type === 'market') {
+    return `SkillHub · ${source.slug}${source.version ? `@${source.version}` : ''}`
+  }
   return `${source.type === 'zip' ? 'ZIP' : '文件夹'} · ${basename(source.path)}`
+}
+
+/** 从远程 URL 安全下载 ZIP 文件到本地。 */
+async function downloadZip(url: string, destination: string): Promise<void> {
+  const response = await fetch(url, { redirect: 'follow' })
+  if (!response.ok) throw new Error(`下载 SkillHub ZIP 包失败（HTTP ${response.status}）。`)
+  const buffer = Buffer.from(await response.arrayBuffer())
+  writeFileSync(destination, buffer)
 }
 
 /** 读取 NcxMusic 私有安装记录。 */

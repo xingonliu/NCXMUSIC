@@ -12,12 +12,14 @@ import {
   ExtensionToolScopeChangedEventSchema,
   McpMarketSearchResultSchema,
   McpMarketServerDetailSchema,
+  SkillMarketSearchResultSchema,
   ExtensionSettingsRequestSchema,
   ExtensionSettingsResultSchema,
   type ExtensionSettingsRequest,
   type ExtensionSettingsResult,
   type McpMarketSearchResult,
-  type McpMarketServerDetail
+  type McpMarketServerDetail,
+  type SkillMarketSearchResult
 } from '../shared/schemas/extensions'
 import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
 
@@ -54,6 +56,9 @@ interface PendingImport {
 /** Smithery MCP 市场搜索请求。 */
 type McpMarketSearchRequest = Extract<ExtensionSettingsRequest, { operation: 'mcp.market.search' }>
 
+/** SkillHub 市场搜索请求。 */
+type SkillMarketSearchRequest = Extract<ExtensionSettingsRequest, { operation: 'skill.market.search' }>
+
 /** Extension Coordinator 构造参数。 */
 export interface ExtensionCoordinatorOptions {
   /** AppData 数据根目录。 */
@@ -77,11 +82,20 @@ const MCP_IMPORT_PREVIEW_TIMEOUT_MS = 5 * 60 * 1_000
 /** 同时驻留 Main 内存的导入预览上限。 */
 const MCP_IMPORT_PREVIEW_LIMIT = 8
 
-/** Smithery 公开 MCP Server 列表接口。 */
-const SMITHERY_MCP_MARKET_URL = 'https://api.smithery.ai/servers'
+/** MCP Hub 中国公开 MCP Server 列表接口。 */
+const MCP_CN_MARKET_URL = 'https://mcp-cn.com/api/servers'
+
+/** MCP Hub 中国公开 MCP Server 详情接口。 */
+const MCP_CN_DETAIL_URL = 'https://mcp-cn.com/api/servers/get_details'
 
 /** MCP 市场单次请求超时。 */
 const MCP_MARKET_TIMEOUT_MS = 12_000
+
+/** SkillHub 公开 Skill 列表与搜索接口。 */
+const SKILLHUB_MARKET_URL = 'https://api.skillhub.cn/api/skills'
+
+/** Skill 市场单次请求超时。 */
+const SKILL_MARKET_TIMEOUT_MS = 12_000
 
 // ========= 类 =========
 
@@ -132,6 +146,8 @@ export class ExtensionCoordinator {
     let mcpMarket: McpMarketSearchResult | undefined
     /** 可选 MCP 市场条目详情。 */
     let marketDetail: McpMarketServerDetail | undefined
+    /** 可选 Skill 市场搜索结果。 */
+    let skillMarket: SkillMarketSearchResult | undefined
 
     if (request.operation === 'skill.discover') {
       this.skills.discover()
@@ -146,6 +162,17 @@ export class ExtensionCoordinator {
     } else if (request.operation === 'skill.installGit') {
       await this.skills.install({ type: 'git', url: request.url })
       message = 'HTTPS Git Skill 已锁定当前 commit 导入，默认保持禁用。'
+    } else if (request.operation === 'skill.installMarket') {
+      const downloadUrl = `https://api.skillhub.cn/api/v1/download?slug=${encodeURIComponent(request.slug)}${request.version ? `&version=${encodeURIComponent(request.version)}` : ''}`
+      await this.skills.install({
+        type: 'market',
+        slug: request.slug,
+        ...(request.version ? { version: request.version } : {}),
+        downloadUrl
+      })
+      message = `已从 SkillHub 安装 ${request.slug}，默认保持禁用。`
+    } else if (request.operation === 'skill.market.search') {
+      skillMarket = await this.searchSkillMarket(request)
     } else if (request.operation.startsWith('skill.')) {
       await this.handleSkillMutation(request)
       message = 'Skill 状态已更新。'
@@ -214,13 +241,14 @@ export class ExtensionCoordinator {
       marketDetail = await this.resolveMcpMarketDetail(request.qualifiedName)
     }
 
-    if (!['snapshot', 'mcp.test', 'mcp.market.search', 'mcp.market.resolve'].includes(request.operation)) this.syncUtility()
+    if (!['snapshot', 'mcp.test', 'mcp.market.search', 'mcp.market.resolve', 'skill.market.search'].includes(request.operation)) this.syncUtility()
     return ExtensionSettingsResultSchema.parse({
       snapshot: this.snapshot(),
       ...(message ? { message } : {}),
       ...(exportDocument ? { exportDocument } : {}),
       ...(importPreview ? { importPreview } : {}),
       ...(importToken ? { importToken } : {}),
+      ...(skillMarket ? { skillMarket } : {}),
       ...(mcpMarket ? { mcpMarket } : {}),
       ...(marketDetail ? { marketDetail } : {})
     })
@@ -246,66 +274,148 @@ export class ExtensionCoordinator {
     }
   }
 
-  /** 从 Smithery 公开接口搜索 MCP Server 市场。 */
+  /** 从 MCP Hub 中国公开接口搜索 MCP Server 市场。 */
   private async searchMcpMarket(request: McpMarketSearchRequest): Promise<McpMarketSearchResult> {
     /** 组装后的查询参数。 */
     const parameters = new URLSearchParams({
       page: String(request.page),
       pageSize: String(request.pageSize)
     })
-    if (request.q) parameters.set('q', request.q)
-    if (request.topK) parameters.set('topK', String(request.topK))
+    if (request.q) parameters.set('keywords', request.q)
 
     /** 本次请求的取消控制器。 */
     const controller = new AbortController()
     /** 本次请求的超时计时器。 */
     const timeout = setTimeout(() => controller.abort(), MCP_MARKET_TIMEOUT_MS)
     try {
-      /** Smithery 公开目录响应。 */
-      const response = await fetch(`${SMITHERY_MCP_MARKET_URL}?${parameters.toString()}`, {
+      /** MCP Hub 中国公开目录响应。 */
+      const response = await fetch(`${MCP_CN_MARKET_URL}?${parameters.toString()}`, {
         method: 'GET',
         headers: { accept: 'application/json' },
         signal: controller.signal
       })
-      if (!response.ok) throw new Error(`Smithery MCP 市场请求失败（HTTP ${response.status}）。`)
+      if (!response.ok) throw new Error(`MCP Hub 中国市场请求失败（HTTP ${response.status}）。`)
       /** 未信任的远程 JSON。 */
-      const payload = await response.json() as unknown
-      return McpMarketSearchResultSchema.parse(payload)
+      const payload = await response.json() as {
+        code?: number
+        message?: string
+        data?: Array<{
+          server_id: number
+          logo?: string | null
+          qualified_name: string
+          display_name?: string | null
+          description?: string | null
+          repository_id?: string | null
+          creator?: string | null
+          package_url?: string | null
+          use_count?: number | null
+          is_domestic?: boolean | null
+          created_at?: string | null
+          connections?: unknown
+        }>
+        pagination?: {
+          total?: number
+          page?: number
+          pageSize?: number
+        }
+      }
+      if (typeof payload.code === 'number' && payload.code !== 0) {
+        throw new Error(payload.message || 'MCP Hub 中国市场返回错误状态。')
+      }
+      const rawList = Array.isArray(payload.data) ? payload.data : []
+      const servers = rawList.map((item) => ({
+        id: String(item.server_id),
+        qualifiedName: item.qualified_name,
+        namespace: item.creator || '',
+        displayName: item.display_name || item.qualified_name,
+        description: item.description || '',
+        ...(item.logo ? { iconUrl: item.logo } : {}),
+        verified: true,
+        useCount: item.use_count ?? 0,
+        remote: false,
+        ...(item.package_url || item.repository_id
+          ? { homepage: item.package_url || `https://github.com/${item.repository_id}` }
+          : {}),
+        ...(item.created_at ? { createdAt: item.created_at } : {})
+      }))
+      const totalCount = payload.pagination?.total ?? servers.length
+      const currentPage = payload.pagination?.page ?? request.page
+      const pageSize = payload.pagination?.pageSize ?? request.pageSize
+      const totalPages = Math.max(1, Math.ceil(totalCount / pageSize))
+
+      return McpMarketSearchResultSchema.parse({
+        servers,
+        pagination: {
+          currentPage,
+          pageSize,
+          totalPages,
+          totalCount
+        }
+      })
     } catch (error) {
       /** 对 Renderer 公开的脱敏错误。 */
       const message = error instanceof Error && error.name === 'AbortError'
-        ? 'Smithery MCP 市场请求超时。'
-        : readableError(error, 'Smithery MCP 市场请求失败。')
+        ? 'MCP Hub 中国市场请求超时。'
+        : readableError(error, 'MCP Hub 中国市场请求失败。')
       throw new Error(redactSensitiveText(message).slice(0, 500), { cause: error })
     } finally {
       clearTimeout(timeout)
     }
   }
 
-  /** 从 Smithery 公开接口解析指定 MCP Server 详情与连接配置。 */
+  /** 从 MCP Hub 中国公开接口解析指定 MCP Server 详情与连接配置。 */
   private async resolveMcpMarketDetail(qualifiedName: string): Promise<McpMarketServerDetail> {
     /** 本次请求的取消控制器。 */
     const controller = new AbortController()
     /** 本次请求的超时计时器。 */
     const timeout = setTimeout(() => controller.abort(), MCP_MARKET_TIMEOUT_MS)
     try {
-      /** 对 qualifiedName 进行路径规范化。 */
-      const encodedName = encodeURIComponent(qualifiedName).replace(/%2F/gi, '/')
-      /** Smithery 单个 Server 详情响应。 */
-      const response = await fetch(`${SMITHERY_MCP_MARKET_URL}/${encodedName}`, {
+      /** MCP Hub 中国单个 Server 详情响应。 */
+      const response = await fetch(`${MCP_CN_DETAIL_URL}?qualifiedName=${encodeURIComponent(qualifiedName)}`, {
         method: 'GET',
         headers: { accept: 'application/json' },
         signal: controller.signal
       })
-      if (!response.ok) throw new Error(`Smithery MCP 详情获取失败（HTTP ${response.status}）。`)
+      if (!response.ok) throw new Error(`MCP Hub 中国详情获取失败（HTTP ${response.status}）。`)
       /** 未信任的远程 JSON。 */
-      const payload = await response.json() as unknown
-      return McpMarketServerDetailSchema.parse(payload)
+      const payload = await response.json() as {
+        code?: number
+        message?: string
+        data?: {
+          server_id: number
+          logo?: string | null
+          qualified_name: string
+          display_name?: string | null
+          description?: string | null
+          repository_id?: string | null
+          package_url?: string | null
+          connections?: unknown
+        }
+      }
+      if ((typeof payload.code === 'number' && payload.code !== 0) || !payload.data) {
+        throw new Error(payload.message || 'MCP Hub 中国详情返回错误状态。')
+      }
+      const item = payload.data
+      const parsedConnections = parseMcpCnConnections(item.connections)
+      const primary = parsedConnections[0]
+
+      return McpMarketServerDetailSchema.parse({
+        qualifiedName: item.qualified_name,
+        displayName: item.display_name || item.qualified_name,
+        description: item.description || '',
+        ...(item.logo ? { iconUrl: item.logo } : {}),
+        remote: Boolean(primary?.deploymentUrl),
+        ...(primary?.command ? { command: primary.command } : {}),
+        ...(primary?.args ? { args: primary.args } : {}),
+        ...(primary?.env ? { env: primary.env } : {}),
+        ...(primary?.deploymentUrl ? { deploymentUrl: primary.deploymentUrl } : {}),
+        connections: parsedConnections
+      })
     } catch (error) {
       /** 对 Renderer 公开的脱敏错误。 */
       const message = error instanceof Error && error.name === 'AbortError'
-        ? 'Smithery MCP 详情请求超时。'
-        : readableError(error, 'Smithery MCP 详情请求失败。')
+        ? 'MCP Hub 中国详情请求超时。'
+        : readableError(error, 'MCP Hub 中国详情请求失败。')
       throw new Error(redactSensitiveText(message).slice(0, 500), { cause: error })
     } finally {
       clearTimeout(timeout)
@@ -441,6 +551,89 @@ export class ExtensionCoordinator {
     }
   }
 
+  /** 从 SkillHub 公开接口搜索 Skill 市场。 */
+  private async searchSkillMarket(request: SkillMarketSearchRequest): Promise<SkillMarketSearchResult> {
+    /** 组装后的查询参数。 */
+    const parameters = new URLSearchParams({
+      page: String(request.page),
+      pageSize: String(request.pageSize),
+      sortBy: request.sortBy ?? 'downloads'
+    })
+    if (request.q) parameters.set('keyword', request.q)
+    if (request.category) parameters.set('category', request.category)
+
+    /** 本次请求的取消控制器。 */
+    const controller = new AbortController()
+    /** 本次请求的超时计时器。 */
+    const timeout = setTimeout(() => controller.abort(), SKILL_MARKET_TIMEOUT_MS)
+    try {
+      /** SkillHub 公开目录响应。 */
+      const response = await fetch(`${SKILLHUB_MARKET_URL}?${parameters.toString()}`, {
+        method: 'GET',
+        headers: { accept: 'application/json' },
+        signal: controller.signal
+      })
+      if (!response.ok) throw new Error(`SkillHub 市场请求失败（HTTP ${response.status}）。`)
+      /** 未信任的远程 JSON。 */
+      const payload = (await response.json()) as {
+        code?: number
+        data?: {
+          total?: number
+          skills?: Array<Record<string, unknown>>
+        }
+      }
+      if (payload?.code !== 0 && payload?.code !== undefined) {
+        throw new Error('SkillHub 市场返回异常响应。')
+      }
+      const totalCount = payload?.data?.total ?? 0
+      const rawSkills = payload?.data?.skills ?? []
+      const pageSize = request.pageSize
+      const totalPages = Math.max(1, Math.ceil(totalCount / pageSize))
+      const skills = rawSkills.map((item) => ({
+        slug: String(item['slug'] || ''),
+        name: String(item['name'] || item['slug'] || ''),
+        version: String(item['version'] || '1.0.0'),
+        description: typeof item['description'] === 'string' ? item['description'] : '',
+        descriptionZh: typeof item['description_zh'] === 'string' ? item['description_zh'] : '',
+        category: typeof item['category'] === 'string' ? item['category'] : '',
+        subCategories: Array.isArray(item['subCategories'])
+          ? item['subCategories'].map((sc: Record<string, unknown>) => ({
+              key: String(sc['key'] || ''),
+              name: String(sc['name'] || '')
+            }))
+          : [],
+        downloads: typeof item['downloads'] === 'number' ? item['downloads'] : 0,
+        stars: typeof item['stars'] === 'number' ? item['stars'] : 0,
+        installs: typeof item['installs'] === 'number' ? item['installs'] : 0,
+        iconUrl: typeof item['iconUrl'] === 'string' && item['iconUrl'] ? item['iconUrl'] : undefined,
+        ownerName: typeof item['ownerName'] === 'string' ? item['ownerName'] : '',
+        source: typeof item['source'] === 'string' ? item['source'] : '',
+        verified: Boolean(item['verified']),
+        homepage: typeof item['homepage'] === 'string' ? item['homepage'] : undefined,
+        createdAt: typeof item['created_at'] === 'number' ? item['created_at'] : undefined,
+        updatedAt: typeof item['updated_at'] === 'number' ? item['updated_at'] : undefined
+      })).filter((item) => Boolean(item.slug))
+
+      return SkillMarketSearchResultSchema.parse({
+        skills,
+        pagination: {
+          currentPage: request.page,
+          pageSize,
+          totalPages,
+          totalCount
+        }
+      })
+    } catch (error) {
+      /** 对 Renderer 公开的脱敏错误。 */
+      const message = error instanceof Error && error.name === 'AbortError'
+        ? 'SkillHub 市场请求超时。'
+        : readableError(error, 'SkillHub 市场请求失败。')
+      throw new Error(redactSensitiveText(message).slice(0, 500), { cause: error })
+    } finally {
+      clearTimeout(timeout)
+    }
+  }
+
   /** 在 Main 权威仓库重验并执行 Agent 已批准的生命周期动作。 */
   private async handleAgentLifecycle(
     request: ReturnType<typeof ExtensionLifecycleRequestSchema.parse>
@@ -448,10 +641,18 @@ export class ExtensionCoordinator {
     try {
       if (request.resource === 'skill') {
         if (request.action === 'install') {
-          await this.handle(ExtensionSettingsRequestSchema.parse({
-            operation: 'skill.installGit',
-            url: request.payload['url']
-          }))
+          if (request.payload['slug']) {
+            await this.handle(ExtensionSettingsRequestSchema.parse({
+              operation: 'skill.installMarket',
+              slug: request.payload['slug'],
+              version: request.payload['version']
+            }))
+          } else {
+            await this.handle(ExtensionSettingsRequestSchema.parse({
+              operation: 'skill.installGit',
+              url: request.payload['url']
+            }))
+          }
         } else {
           /** Agent Skill 动作到设置请求动作。 */
           const operation = request.action === 'uninstall'
@@ -518,4 +719,81 @@ export function selectedSkillSource(path: string, isDirectory: boolean): Selecte
   if (isDirectory) return { type: 'folder', path }
   if (extname(path).toLowerCase() !== '.zip') throw new Error('只允许选择 Skill 文件夹或 ZIP。')
   return { type: 'zip', path }
+}
+
+/** 解析 mcp-cn 接口返回的 loose connections 字符串或对象数组。 */
+export function parseMcpCnConnections(raw: unknown): Array<{
+  type: string
+  command?: string
+  args?: string[]
+  env?: Record<string, string>
+  deploymentUrl?: string
+}> {
+  if (!raw) return []
+  if (Array.isArray(raw)) {
+    return raw.map((item) => {
+      const entry = item as Record<string, unknown>
+      const cfg = (entry['config'] as Record<string, unknown> | undefined) ?? {}
+      const command = typeof cfg['command'] === 'string' ? cfg['command'] : (typeof entry['command'] === 'string' ? entry['command'] : undefined)
+      const args = Array.isArray(cfg['args']) ? (cfg['args'] as string[]) : (Array.isArray(entry['args']) ? (entry['args'] as string[]) : undefined)
+      const env = typeof cfg['env'] === 'object' && cfg['env'] !== null ? (cfg['env'] as Record<string, string>) : (typeof entry['env'] === 'object' && entry['env'] !== null ? (entry['env'] as Record<string, string>) : undefined)
+      const deploymentUrl = typeof entry['deploymentUrl'] === 'string' ? entry['deploymentUrl'] : undefined
+      return {
+        type: String(entry['type'] || 'stdio'),
+        ...(command ? { command } : {}),
+        ...(args ? { args } : {}),
+        ...(env && Object.keys(env).length > 0 ? { env } : {}),
+        ...(deploymentUrl ? { deploymentUrl } : {})
+      }
+    })
+  }
+  if (typeof raw !== 'string') return []
+  const str = raw.trim()
+  if (!str || str === '[]') return []
+
+  try {
+    const parsed = JSON.parse(str) as unknown
+    if (Array.isArray(parsed)) return parseMcpCnConnections(parsed)
+  } catch (_error) {
+    // 忽略非法 JSON，走正则兼容提取
+    void _error
+  }
+
+  // 容错解析形如 [{type:stdio,config:{command:npx,args:[-y,@foo/bar],env:{A:B}}}]
+  const commandMatch = str.match(/command\s*:\s*([^,}\]]+)/u)
+  const command = commandMatch?.[1]?.trim()
+
+  const argsMatch = str.match(/args\s*:\s*\[([^\]]*)\]/u)
+  let args: string[] | undefined
+  if (argsMatch?.[1]) {
+    args = argsMatch[1]
+      .split(',')
+      .map((a) => a.trim())
+      .filter(Boolean)
+  }
+
+  const envMatch = str.match(/env\s*:\s*\{([^}]*)\}/u)
+  let env: Record<string, string> | undefined
+  if (envMatch?.[1]) {
+    env = {}
+    const entries = envMatch[1].split(',')
+    for (const entry of entries) {
+      const idx = entry.indexOf(':')
+      if (idx > 0) {
+        const key = entry.slice(0, idx).trim()
+        const val = entry.slice(idx + 1).trim()
+        if (key) env[key] = val
+      }
+    }
+  }
+
+  const typeMatch = str.match(/type\s*:\s*([^,}\]]+)/u)
+  const type = typeMatch?.[1]?.trim() || 'stdio'
+
+  return [{
+    type,
+    ...(command ? { command } : {}),
+    ...(args ? { args } : {}),
+    ...(env && Object.keys(env).length > 0 ? { env } : {})
+  }]
 }

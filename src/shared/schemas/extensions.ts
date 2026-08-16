@@ -18,7 +18,7 @@ export const McpToolNameSchema = z.string().trim().min(1).max(128)
 export const ExtensionJsonSchema = z.record(z.string(), z.unknown())
 
 /** Skill 来源类型。 */
-export const SkillSourceTypeSchema = z.enum(['appdata', 'folder', 'zip', 'git'])
+export const SkillSourceTypeSchema = z.enum(['appdata', 'folder', 'zip', 'git', 'market'])
 
 /** Skill 生命周期状态。 */
 export const SkillStateSchema = z.enum(['disabled', 'enabled', 'error', 'trashed'])
@@ -149,28 +149,75 @@ export const McpMarketPaginationSchema = z.object({
   totalCount: z.number().int().nonnegative().default(0)
 })
 
-/** Smithery 市场搜索响应。 */
+/** MCP 市场搜索响应。 */
 export const McpMarketSearchResultSchema = z.object({
   servers: z.array(McpMarketServerSchema).default([]),
   pagination: McpMarketPaginationSchema
 })
 
-/** Smithery 市场单个连接配置描述。 */
+/** MCP 市场单个连接配置描述。 */
 export const McpMarketConnectionSchema = z.object({
   type: z.string().trim().min(1).max(50),
+  command: z.string().trim().max(1_024).nullish().transform((value) => value ?? undefined),
+  args: z.array(z.string().max(2_048)).nullish().transform((value) => value ?? undefined),
+  env: z.record(z.string(), z.string().max(2_048)).nullish().transform((value) => value ?? undefined),
   deploymentUrl: z.string().trim().max(2_048).nullish().transform((value) => value ?? undefined),
   configSchema: ExtensionJsonSchema.nullish().transform((value) => value ?? undefined)
 })
 
-/** Smithery 市场 MCP Server 详情（包含连接端点与配置 Schema）。 */
+/** MCP 市场 MCP Server 详情（包含连接端点、启动命令与配置 Schema）。 */
 export const McpMarketServerDetailSchema = z.object({
   qualifiedName: z.string().trim().min(1).max(200),
   displayName: z.string().trim().min(1).max(200),
   description: z.string().transform(normalizeMcpMarketDescription).nullish().transform((value) => value ?? ''),
   iconUrl: z.string().trim().max(2_048).nullish().transform((value) => value ?? undefined),
   remote: z.boolean().default(false),
+  command: z.string().trim().max(1_024).nullish().transform((value) => value ?? undefined),
+  args: z.array(z.string().max(2_048)).nullish().transform((value) => value ?? undefined),
+  env: z.record(z.string(), z.string().max(2_048)).nullish().transform((value) => value ?? undefined),
   deploymentUrl: z.string().trim().max(2_048).nullish().transform((value) => value ?? undefined),
   connections: z.array(McpMarketConnectionSchema).default([])
+})
+
+/** Skill 市场条目子分类。 */
+export const SkillMarketSubCategorySchema = z.object({
+  key: z.string().trim().max(100),
+  name: z.string().trim().max(100)
+})
+
+/** SkillHub 市场公开条目。 */
+export const SkillMarketItemSchema = z.object({
+  slug: z.string().trim().min(1).max(128),
+  name: z.string().trim().min(1).max(128),
+  version: z.string().trim().max(80).default('1.0.0'),
+  description: z.string().nullish().transform((value) => value ?? ''),
+  descriptionZh: z.string().nullish().transform((value) => value ?? ''),
+  category: z.string().trim().nullish().transform((value) => value ?? ''),
+  subCategories: z.array(SkillMarketSubCategorySchema).default([]),
+  downloads: z.number().int().nonnegative().default(0),
+  stars: z.number().int().nonnegative().default(0),
+  installs: z.number().int().nonnegative().default(0),
+  iconUrl: z.string().trim().max(2_048).nullish().transform((value) => value ?? undefined),
+  ownerName: z.string().trim().nullish().transform((value) => value ?? ''),
+  source: z.string().trim().nullish().transform((value) => value ?? ''),
+  verified: z.boolean().default(false),
+  homepage: z.string().trim().max(2_048).nullish().transform((value) => value ?? undefined),
+  createdAt: z.number().int().nullish().transform((value) => value ?? undefined),
+  updatedAt: z.number().int().nullish().transform((value) => value ?? undefined)
+})
+
+/** Skill 市场公开分页信息。 */
+export const SkillMarketPaginationSchema = z.object({
+  currentPage: z.number().int().positive().default(1),
+  pageSize: z.number().int().positive().max(100).default(10),
+  totalPages: z.number().int().nonnegative().default(1),
+  totalCount: z.number().int().nonnegative().default(0)
+})
+
+/** Skill 市场搜索响应。 */
+export const SkillMarketSearchResultSchema = z.object({
+  skills: z.array(SkillMarketItemSchema).default([]),
+  pagination: SkillMarketPaginationSchema
 })
 
 /** 扩展设置页完整公开快照。 */
@@ -189,6 +236,19 @@ export const ExtensionSettingsRequestSchema = z.discriminatedUnion('operation', 
     sourceType: z.enum(['folder', 'zip']).default('folder')
   }),
   z.strictObject({ operation: z.literal('skill.installGit'), url: z.url().max(2_048) }),
+  z.strictObject({
+    operation: z.literal('skill.installMarket'),
+    slug: z.string().trim().min(1).max(128),
+    version: z.string().trim().max(80).optional()
+  }),
+  z.strictObject({
+    operation: z.literal('skill.market.search'),
+    page: z.number().int().min(1).default(1),
+    pageSize: z.number().int().min(1).max(100).default(10),
+    q: z.string().trim().min(1).max(200).optional(),
+    category: z.string().trim().max(100).optional(),
+    sortBy: z.enum(['downloads', 'stars', 'updated_at', 'score']).default('downloads')
+  }),
   z.strictObject({
     operation: z.enum(['skill.enable', 'skill.disable', 'skill.update', 'skill.rollback', 'skill.uninstall']),
     name: SkillNameSchema
@@ -230,6 +290,7 @@ export const ExtensionSettingsResultSchema = z.strictObject({
   exportDocument: z.string().max(1_000_000).optional(),
   importPreview: z.array(McpServerEditableSchema).max(128).optional(),
   importToken: z.uuid().optional(),
+  skillMarket: SkillMarketSearchResultSchema.optional(),
   mcpMarket: McpMarketSearchResultSchema.optional(),
   marketDetail: McpMarketServerDetailSchema.optional()
 })
@@ -348,6 +409,15 @@ export type SkillToolManifest = z.infer<typeof SkillToolManifestSchema>
 
 /** 公开 Skill 快照类型。 */
 export type SkillSnapshot = z.infer<typeof SkillSnapshotSchema>
+
+/** Skill 市场条目子分类类型。 */
+export type SkillMarketSubCategory = z.infer<typeof SkillMarketSubCategorySchema>
+
+/** SkillHub 市场公开条目类型。 */
+export type SkillMarketItem = z.infer<typeof SkillMarketItemSchema>
+
+/** Skill 市场搜索结果类型。 */
+export type SkillMarketSearchResult = z.infer<typeof SkillMarketSearchResultSchema>
 
 /** Utility 可消费的 Skill 描述。 */
 export type SkillRuntimeDescriptor = z.infer<typeof SkillRuntimeDescriptorSchema>

@@ -20,6 +20,7 @@ import type {
   McpMarketServer,
   McpServerEditable,
   McpServerSnapshot,
+  SkillMarketItem,
   SkillSnapshot
 } from '../../../shared/schemas/extensions'
 import {
@@ -48,6 +49,9 @@ type McpAction = 'enable' | 'disable' | 'test' | 'rollback' | 'delete'
 
 /** 当前扩展设置面板展示的独立能力。 */
 type ExtensionSettingsMode = 'mcp' | 'skill'
+
+/** Skill 设置页内部标签。 */
+type SkillSettingsTab = 'installed' | 'market'
 
 /** MCP 设置页内部标签。 */
 type McpSettingsTab = 'installed' | 'market'
@@ -104,10 +108,13 @@ const props = defineProps<ExtensionsSettingsPanelProps>()
 /** 空扩展快照。 */
 const EMPTY_SNAPSHOT: ExtensionSettingsSnapshot = { skills: [], mcpServers: [], updatedAt: 0 }
 
-/** MCP 设置页统一分页大小。 */
-const MCP_PAGE_SIZE = 6
+/** Skill 设置页统一分页大小（每页 12 条）。 */
+const SKILL_PAGE_SIZE = 12
 
-/** Smithery 搜索时考虑的候选集上限。 */
+/** MCP 设置页统一分页大小（每页 12 条）。 */
+const MCP_PAGE_SIZE = 12
+
+/** MCP 市场搜索候选集上限。 */
 const MCP_MARKET_TOP_K = 100
 
 /** 当前公开扩展快照。 */
@@ -116,8 +123,50 @@ const snapshot = ref<ExtensionSettingsSnapshot>(EMPTY_SNAPSHOT)
 /** 设置请求是否执行中。 */
 const busy = ref<boolean>(false)
 
+/** Skill 设置页当前标签。 */
+const activeSkillTab = ref<SkillSettingsTab>('installed')
+
+/** Skill 新增弹窗显示状态。 */
+const skillDialogVisible = ref<boolean>(false)
+
 /** HTTPS Git Skill URL。 */
 const gitUrl = ref<string>('')
+
+/** SkillHub 快捷安装 slug。 */
+const skillHubSlug = ref<string>('')
+
+/** 已安装 Skill 当前页。 */
+const installedSkillPage = ref<number>(1)
+
+/** Skill 市场搜索输入框草稿。 */
+const skillMarketSearchDraft = ref<string>('')
+
+/** Skill 市场已提交搜索词。 */
+const skillMarketQuery = ref<string>('')
+
+/** Skill 市场当前页。 */
+const skillMarketPage = ref<number>(1)
+
+/** Skill 市场当前页条目。 */
+const skillMarketItems = ref<SkillMarketItem[]>([])
+
+/** Skill 市场总页数。 */
+const skillMarketTotalPages = ref<number>(1)
+
+/** Skill 市场总条目数。 */
+const skillMarketTotalCount = ref<number>(0)
+
+/** Skill 市场是否正在加载。 */
+const skillMarketLoading = ref<boolean>(false)
+
+/** Skill 市场加载错误文案。 */
+const skillMarketError = ref<string>('')
+
+/** 正在执行直接安装的 Skill slug。 */
+const installingSkillSlug = ref<string>('')
+
+/** 最近一次 Skill 市场请求 ID，用于丢弃迟到响应。 */
+let latestSkillMarketRequestId = ''
 
 /** MCP 导入 JSON 文本。 */
 const importDocument = ref<string>('')
@@ -186,6 +235,28 @@ const transportOptions: CommonOption[] = [
 const useCountFormatter = new Intl.NumberFormat('zh-CN', {
   notation: 'compact',
   maximumFractionDigits: 1
+})
+
+/** Skill 标签页选项。 */
+const skillTabOptions = computed<CommonOption[]>(() => {
+  /** 已安装标签项。 */
+  const installedOption: CommonOption = { label: '已安装', value: 'installed', badge: snapshot.value.skills.length }
+  /** 市场标签项。 */
+  const marketOption: CommonOption = { label: '市场', value: 'market' }
+  if (skillMarketTotalCount.value > 0) marketOption.badge = skillMarketTotalCount.value
+  return [installedOption, marketOption]
+})
+
+/** 已安装 Skill 总页数。 */
+const installedSkillTotalPages = computed<number>(() =>
+  Math.max(1, Math.ceil(snapshot.value.skills.length / SKILL_PAGE_SIZE))
+)
+
+/** 当前页展示的已安装 Skill。 */
+const paginatedSkills = computed<SkillSnapshot[]>(() => {
+  /** 当前页的起始下标。 */
+  const start = (installedSkillPage.value - 1) * SKILL_PAGE_SIZE
+  return snapshot.value.skills.slice(start, start + SKILL_PAGE_SIZE)
 })
 
 /** 当前选中的 MCP Server。 */
@@ -259,6 +330,158 @@ async function refresh(): Promise<void> {
   }
 }
 
+/** 打开 Skill 新增弹窗。 */
+function openCreateSkillDialog(): void {
+  gitUrl.value = ''
+  skillHubSlug.value = ''
+  skillDialogVisible.value = true
+}
+
+/** 关闭 Skill 新增弹窗。 */
+function closeSkillDialog(): void {
+  if (busy.value) return
+  skillDialogVisible.value = false
+  gitUrl.value = ''
+  skillHubSlug.value = ''
+}
+
+/** 切换 Skill 设置页标签。 */
+function setSkillTab(value: string): void {
+  if (value !== 'installed' && value !== 'market') return
+  activeSkillTab.value = value
+  if (value === 'market' && skillMarketItems.value.length === 0 && !skillMarketLoading.value) {
+    void loadSkillMarket()
+  }
+}
+
+/** 从 SkillHub 市场读取公开 Skill 列表。 */
+async function loadSkillMarket(): Promise<void> {
+  /** 当前请求的唯一 ID。 */
+  const requestId = crypto.randomUUID()
+  latestSkillMarketRequestId = requestId
+  skillMarketLoading.value = true
+  skillMarketError.value = ''
+  try {
+    /** 已提交搜索词。 */
+    const query = skillMarketQuery.value.trim()
+    /** Main 代理返回的市场结果。 */
+    const result = await window.ncx.extensions.request({
+      operation: 'skill.market.search',
+      page: skillMarketPage.value,
+      pageSize: SKILL_PAGE_SIZE,
+      sortBy: 'downloads',
+      ...(query ? { q: query } : {})
+    })
+    if (requestId !== latestSkillMarketRequestId) return
+    snapshot.value = result.snapshot
+    skillMarketItems.value = result.skillMarket?.skills ?? []
+    skillMarketTotalPages.value = Math.max(1, result.skillMarket?.pagination.totalPages ?? 1)
+    skillMarketTotalCount.value = result.skillMarket?.pagination.totalCount ?? skillMarketItems.value.length
+  } catch (error) {
+    if (requestId !== latestSkillMarketRequestId) return
+    skillMarketItems.value = []
+    skillMarketTotalPages.value = 1
+    skillMarketTotalCount.value = 0
+    skillMarketError.value = readableError(error)
+  } finally {
+    if (requestId === latestSkillMarketRequestId) skillMarketLoading.value = false
+  }
+}
+
+/** 提交 Skill 市场搜索并回到第一页。 */
+function submitSkillMarketSearch(): void {
+  skillMarketQuery.value = skillMarketSearchDraft.value.trim()
+  skillMarketPage.value = 1
+  void loadSkillMarket()
+}
+
+/** 清空 Skill 市场搜索并回到推荐列表。 */
+function clearSkillMarketSearch(): void {
+  skillMarketSearchDraft.value = ''
+  skillMarketQuery.value = ''
+  skillMarketPage.value = 1
+  void loadSkillMarket()
+}
+
+/** 跳转已安装 Skill 分页。 */
+function goToInstalledSkillPage(page: number): void {
+  installedSkillPage.value = Math.min(installedSkillTotalPages.value, Math.max(1, page))
+}
+
+/** 跳转 Skill 市场分页。 */
+function goToSkillMarketPage(page: number): void {
+  skillMarketPage.value = Math.min(skillMarketTotalPages.value, Math.max(1, page))
+  void loadSkillMarket()
+}
+
+/** 判断市场中的条目是否已在本地安装。 */
+function isInstalledSkill(item: SkillMarketItem): boolean {
+  /** 小写规范化 slug。 */
+  const normalizedSlug = item.slug.trim().toLowerCase()
+  /** 小写规范化 name。 */
+  const normalizedName = item.name.trim().toLowerCase()
+  return snapshot.value.skills.some((skill) => {
+    const skillName = skill.name.toLowerCase()
+    return skillName === normalizedSlug || skillName === normalizedName
+  })
+}
+
+/** 从 SkillHub 市场一键安装指定技能。 */
+function installMarketSkill(item: SkillMarketItem): void {
+  requestConfirmation({
+    title: `安装 ${item.name}？`,
+    description: `将从 SkillHub 下载并校验 ${item.slug}（v${item.version}）安装包；新 Skill 默认处于禁用状态。`,
+    confirmText: '立即安装',
+    type: 'warning',
+    task: async () => {
+      installingSkillSlug.value = item.slug
+      try {
+        await runRequest(() => window.ncx.extensions.request({
+          operation: 'skill.installMarket',
+          slug: item.slug,
+          version: item.version
+        }))
+      } finally {
+        installingSkillSlug.value = ''
+      }
+    }
+  })
+}
+
+/** 通过 SkillHub 技能标识安装。 */
+async function installSlugSkill(): Promise<void> {
+  /** 去除空白后的 slug。 */
+  const slug = skillHubSlug.value.trim()
+  if (!slug) {
+    showToast('请输入 SkillHub 技能标识（Slug）。', 'warning')
+    return
+  }
+  requestConfirmation({
+    title: `安装 SkillHub 技能 ${slug}？`,
+    description: '将从 SkillHub 市场拉取该技能安装包并校验安装，默认保持禁用。',
+    confirmText: '安装 Skill',
+    type: 'warning',
+    task: async () => {
+      const ok = await runRequest(() => window.ncx.extensions.request({
+        operation: 'skill.installMarket',
+        slug
+      }))
+      if (ok) {
+        skillHubSlug.value = ''
+        closeSkillDialog()
+      }
+    }
+  })
+}
+
+/** 打开 Skill 市场条目的外部主页。 */
+function openSkillHomepage(item: SkillMarketItem): void {
+  const url = item.homepage && /^https?:\/\//iu.test(item.homepage)
+    ? item.homepage
+    : `https://skillhub.cn/skills/${encodeURIComponent(item.slug)}`
+  window.open(url, '_blank', 'noopener,noreferrer')
+}
+
 /** 选择文件夹或 ZIP 导入 Skill。 */
 async function chooseSkill(sourceType: 'folder' | 'zip'): Promise<void> {
   requestConfirmation({
@@ -266,10 +489,13 @@ async function chooseSkill(sourceType: 'folder' | 'zip'): Promise<void> {
     description: '所选第三方代码将先经过完整校验并以禁用状态安装；启用后会在独立 Skill Host 中运行。',
     confirmText: '选择并导入',
     type: 'warning',
-    task: () => runRequest(() => window.ncx.extensions.request({
-      operation: 'skill.chooseImport',
-      sourceType
-    }))
+    task: async () => {
+      const ok = await runRequest(() => window.ncx.extensions.request({
+        operation: 'skill.chooseImport',
+        sourceType
+      }))
+      if (ok) closeSkillDialog()
+    }
   })
 }
 
@@ -288,7 +514,10 @@ async function installGitSkill(): Promise<void> {
     type: 'warning',
     task: async () => {
       const ok = await runRequest(() => window.ncx.extensions.request({ operation: 'skill.installGit', url }))
-      if (ok) gitUrl.value = ''
+      if (ok) {
+        gitUrl.value = ''
+        closeSkillDialog()
+      }
     }
   })
 }
@@ -528,7 +757,7 @@ function mcpActionCopy(
     },
     delete: {
       title: `删除 ${server.displayName}？`,
-      description: '只删除 NcxMusic 内的配置、加密 Secret 与应用缓存，不删除外部目录、远程服务或第三方系统中的数据。',
+      description: '只删除 Ncxmusic 内的配置、加密 Secret 与应用缓存，不删除外部目录、远程服务或第三方系统中的数据。',
       confirmText: '删除 Server',
       type: 'danger'
     }
@@ -541,7 +770,7 @@ async function importMcp(confirm: boolean): Promise<void> {
   /** 待解析导入文档。 */
   const document = importDocument.value.trim()
   if (!document) {
-    showToast('请粘贴 .mcp.json 或 NcxMusic 导出文档。', 'warning')
+    showToast('请粘贴 .mcp.json 或 Ncxmusic 导出文档。', 'warning')
     return
   }
   busy.value = true
@@ -662,13 +891,13 @@ async function useMarketServer(server: McpMarketServer): Promise<void> {
     const detail = result.marketDetail
     const primaryConnection = detail?.connections?.[0]
     const deploymentUrl = primaryConnection?.deploymentUrl || detail?.deploymentUrl
-    const configSchema = primaryConnection?.configSchema as Record<string, unknown> | undefined
-    const requiredKeys = Array.isArray(configSchema?.['required'])
-      ? (configSchema['required'] as unknown[]).filter((k): k is string => typeof k === 'string')
-      : []
+    const command = primaryConnection?.command || detail?.command || 'npx'
+    const args = primaryConnection?.args || detail?.args || ['-y', server.qualifiedName]
+    const envObj = primaryConnection?.env || detail?.env || {}
+    const envKeys = Object.keys(envObj)
 
     // 分支 1：免必填 Key 的 Remote MCP，支持一键直接安装并自动测试
-    if (deploymentUrl && requiredKeys.length === 0) {
+    if (deploymentUrl && envKeys.length === 0) {
       requestConfirmation({
         title: `直接安装 ${server.displayName}？`,
         description: `将配置远程 MCP Server (${deploymentUrl})，安装后将自动测试连接并发现实际工具。`,
@@ -701,23 +930,55 @@ async function useMarketServer(server: McpMarketServer): Promise<void> {
       return
     }
 
-    // 分支 2：需要输入必填凭据（如 API Key）或 stdio 本地命令，智能预填弹窗
+    // 分支 2：免环境变量的本地 stdio MCP，支持一键直接安装并自动测试
+    if (!deploymentUrl && envKeys.length === 0) {
+      requestConfirmation({
+        title: `直接安装 ${server.displayName}？`,
+        description: `将配置本地 stdio MCP (${command} ${args.join(' ')})，安装后将自动测试连接并发现实际工具。`,
+        confirmText: '立即安装',
+        type: 'warning',
+        task: async () => {
+          const config: McpServerEditable = {
+            serverId,
+            displayName: server.displayName,
+            transport: 'stdio',
+            command,
+            args,
+            environmentNames: [],
+            headerNames: [],
+            enabled: true
+          }
+          const saved = await runRequest(() => window.ncx.extensions.request({
+            operation: 'mcp.upsert',
+            config,
+            environment: {},
+            headers: {}
+          }), { silentSuccess: true })
+          if (!saved) return
+          await runRequest(() => window.ncx.extensions.request({
+            operation: 'mcp.test',
+            serverId
+          }))
+        }
+      })
+      return
+    }
+
+    // 分支 3：需要输入环境变量凭据（如 API Key）等，智能预填打开弹窗
     const isRemote = Boolean(deploymentUrl || server.remote)
     openCreateMcpDialog({
       serverId,
       displayName: server.displayName,
       transport: isRemote ? 'streamable_http' : 'stdio',
+      command: isRemote ? '' : command,
+      args: isRemote ? '' : args.join('\n'),
       url: deploymentUrl ?? '',
-      headers: isRemote && requiredKeys.length > 0
-        ? requiredKeys.map((k) => `${k}=`).join('\n')
-        : '',
-      environment: !isRemote && requiredKeys.length > 0
-        ? requiredKeys.map((k) => `${k}=`).join('\n')
-        : '',
+      headers: '',
+      environment: envKeys.map((k) => `${k}=`).join('\n'),
       enabled: true
     })
-    if (requiredKeys.length > 0) {
-      showToast(`已预填连接信息；该 MCP 需要 ${requiredKeys.join('、')}，请补齐凭据后保存。`, 'info')
+    if (envKeys.length > 0) {
+      showToast(`已预填连接信息；该 MCP 需要配置 ${envKeys.join('、')}，请补齐凭据后保存。`, 'info')
     }
   } catch {
     // 降级兜底：在线解析失败时打开基础弹窗
@@ -725,6 +986,8 @@ async function useMarketServer(server: McpMarketServer): Promise<void> {
       serverId,
       displayName: server.displayName,
       transport: server.remote ? 'streamable_http' : 'stdio',
+      command: server.remote ? '' : 'npx',
+      args: server.remote ? '' : `-y\n${server.qualifiedName}`,
       enabled: true
     })
     showToast('未能获取在线连接配置，已打开基础创建弹窗。', 'warning')
@@ -734,7 +997,7 @@ async function useMarketServer(server: McpMarketServer): Promise<void> {
   }
 }
 
-/** 从 Smithery 公开市场读取 MCP Server 列表。 */
+/** 从 MCP Hub 中国公开市场读取 MCP Server 列表。 */
 async function loadMcpMarket(): Promise<void> {
   /** 当前请求的唯一 ID。 */
   const requestId = crypto.randomUUID()
@@ -823,6 +1086,10 @@ function openMarketHomepage(server: McpMarketServer): void {
 
 // ========= 生命周期 =========
 
+watch(installedSkillTotalPages, (totalPages) => {
+  if (installedSkillPage.value > totalPages) installedSkillPage.value = totalPages
+})
+
 watch(installedTotalPages, (totalPages) => {
   if (installedPage.value > totalPages) installedPage.value = totalPages
 })
@@ -836,25 +1103,19 @@ onMounted(() => { void refresh() })
       v-if="props.mode === 'skill'"
       section-id="setting-skill-install"
       title="Skill 管理"
-      description="新安装默认禁用；JavaScript Skill 在独立受限 Host 中运行，更新仅保留一版回滚。"
+      description="默认展示已安装列表；市场来自 SkillHub 社区生态，支持一键下载安装与版本管理。"
     >
       <template #actions>
         <div class="settings-inline-actions">
           <CommonButton
-            variant="secondary"
-            :loading="busy"
-            @click="chooseSkill('folder')"
+            size="compact"
+            variant="primary"
+            @click="openCreateSkillDialog"
           >
-            <PackagePlus :size="14" />文件夹
+            <Plus :size="14" />新增 Skill
           </CommonButton>
           <CommonButton
-            variant="secondary"
-            :loading="busy"
-            @click="chooseSkill('zip')"
-          >
-            <Upload :size="14" />ZIP
-          </CommonButton>
-          <CommonButton
+            size="compact"
             variant="ghost"
             :loading="busy"
             @click="refresh"
@@ -863,82 +1124,228 @@ onMounted(() => { void refresh() })
           </CommonButton>
         </div>
       </template>
+
       <div class="extensions-section-body">
-        <div class="extensions-import-row">
-          <CommonInput
-            v-model="gitUrl"
-            type="url"
-            autocomplete="off"
-            placeholder="https://github.com/org/skill.git"
-            aria-label="Skill HTTPS Git URL"
-          />
-          <CommonButton
-            :loading="busy"
-            @click="installGitSkill"
-          >
-            导入 Git Skill
-          </CommonButton>
-        </div>
-        <div
-          id="setting-skill-list"
-          class="extension-card-list"
-        >
+        <CommonTabs
+          :model-value="activeSkillTab"
+          :options="skillTabOptions"
+          @update:model-value="setSkillTab"
+        />
+
+        <template v-if="activeSkillTab === 'installed'">
           <div
             v-if="snapshot.skills.length === 0"
-            class="extensions-empty"
+            class="mcp-empty-state"
           >
-            尚未发现 Skill。
+            <Boxes :size="28" />
+            <p>尚未安装 Skill</p>
+            <span>点击右上角“新增 Skill”打开弹窗导入，或切换到“市场”标签浏览并安装社区技能。</span>
           </div>
-          <article
-            v-for="skill in snapshot.skills"
-            :key="`${skill.name}-${skill.updatedAt}`"
-            class="extension-card"
+
+          <div
+            v-else
+            id="setting-skill-list"
+            class="extension-card-list"
           >
-            <span class="settings-row-icon"><Boxes :size="18" /></span>
-            <div class="extension-card-copy">
-              <strong>{{ skill.name }} <small>v{{ skill.version }}</small></strong>
-              <p>{{ skill.description }}</p>
-              <small>{{ skill.sourceType }} · {{ skill.sourceLabel }} · {{ skill.tools.length }} tools · {{ skill.state }}</small>
-            </div>
-            <div class="settings-inline-actions">
-              <CommonButton
-                v-if="skill.state === 'enabled'"
-                variant="secondary"
-                @click="mutateSkill(skill, 'disable')"
-              >
-                禁用
-              </CommonButton>
-              <CommonButton
-                v-else-if="skill.state !== 'trashed'"
-                variant="secondary"
-                @click="mutateSkill(skill, 'enable')"
-              >
-                启用
-              </CommonButton>
-              <CommonButton
-                v-if="skill.sourceType !== 'appdata' && skill.state !== 'trashed'"
-                variant="ghost"
-                @click="mutateSkill(skill, 'update')"
-              >
-                检查更新
-              </CommonButton>
-              <CommonButton
-                v-if="skill.previousVersionAvailable && skill.state !== 'trashed'"
-                variant="ghost"
-                @click="mutateSkill(skill, 'rollback')"
-              >
-                回滚
-              </CommonButton>
-              <CommonButton
-                v-if="skill.state !== 'trashed'"
-                variant="danger"
-                @click="mutateSkill(skill, 'uninstall')"
-              >
-                卸载
-              </CommonButton>
-            </div>
-          </article>
-        </div>
+            <article
+              v-for="skill in paginatedSkills"
+              :key="`${skill.name}-${skill.updatedAt}`"
+              class="extension-card mcp-installed-card"
+            >
+              <span class="settings-row-icon"><Boxes :size="18" /></span>
+              <div class="extension-card-copy">
+                <strong>{{ skill.name }} <small>v{{ skill.version }}</small></strong>
+                <p>{{ skill.description }}</p>
+                <small>{{ skill.sourceType }} · {{ skill.sourceLabel }} · {{ skill.tools.length }} tools · {{ skill.state }}</small>
+              </div>
+              <div class="settings-inline-actions mcp-card-actions">
+                <CommonButton
+                  v-if="skill.state === 'enabled'"
+                  size="compact"
+                  variant="secondary"
+                  @click="mutateSkill(skill, 'disable')"
+                >
+                  禁用
+                </CommonButton>
+                <CommonButton
+                  v-else-if="skill.state !== 'trashed'"
+                  size="compact"
+                  variant="secondary"
+                  @click="mutateSkill(skill, 'enable')"
+                >
+                  启用
+                </CommonButton>
+                <CommonButton
+                  v-if="skill.sourceType !== 'appdata' && skill.state !== 'trashed'"
+                  size="compact"
+                  variant="ghost"
+                  @click="mutateSkill(skill, 'update')"
+                >
+                  检查更新
+                </CommonButton>
+                <CommonButton
+                  v-if="skill.previousVersionAvailable && skill.state !== 'trashed'"
+                  size="compact"
+                  variant="ghost"
+                  @click="mutateSkill(skill, 'rollback')"
+                >
+                  回滚
+                </CommonButton>
+                <CommonButton
+                  v-if="skill.state !== 'trashed'"
+                  size="compact"
+                  variant="danger"
+                  @click="mutateSkill(skill, 'uninstall')"
+                >
+                  卸载
+                </CommonButton>
+              </div>
+            </article>
+          </div>
+
+          <CommonPagination
+            v-if="snapshot.skills.length > 0"
+            :current-page="installedSkillPage"
+            :total-pages="installedSkillTotalPages"
+            :total-count="snapshot.skills.length"
+            @page-change="goToInstalledSkillPage"
+          />
+        </template>
+
+        <template v-else>
+          <div class="mcp-market-toolbar">
+            <CommonSearchInput
+              v-model="skillMarketSearchDraft"
+              placeholder="在 SkillHub 搜索技能名称或描述…"
+              :disabled="skillMarketLoading"
+              @submit="submitSkillMarketSearch"
+              @clear="clearSkillMarketSearch"
+            />
+            <CommonButton
+              size="compact"
+              variant="secondary"
+              :loading="skillMarketLoading"
+              @click="submitSkillMarketSearch"
+            >
+              搜索
+            </CommonButton>
+            <CommonButton
+              v-if="skillMarketQuery"
+              size="compact"
+              variant="ghost"
+              :disabled="skillMarketLoading"
+              @click="clearSkillMarketSearch"
+            >
+              推荐
+            </CommonButton>
+          </div>
+
+          <p class="mcp-market-caption">
+            {{ skillMarketQuery
+              ? `搜索 “${skillMarketQuery}” · 共 ${skillMarketTotalCount} 项`
+              : `推荐 Skill · 共 ${skillMarketTotalCount} 项` }}
+          </p>
+
+          <div
+            v-if="skillMarketError"
+            class="mcp-market-error"
+          >
+            <span>{{ skillMarketError }}</span>
+            <CommonButton
+              size="compact"
+              variant="secondary"
+              @click="loadSkillMarket"
+            >
+              重试
+            </CommonButton>
+          </div>
+
+          <div
+            v-else-if="skillMarketLoading && skillMarketItems.length === 0"
+            class="mcp-empty-state"
+          >
+            <RefreshCw
+              :size="24"
+              class="is-spinning"
+            />
+            <p>正在拉取 SkillHub 市场…</p>
+          </div>
+
+          <div
+            v-else-if="skillMarketItems.length === 0"
+            class="mcp-empty-state"
+          >
+            <Globe2 :size="28" />
+            <p>未找到匹配的 Skill</p>
+            <span>换个关键词试试，或直接在“新增 Skill”弹窗中通过 Git / 本地方式导入。</span>
+          </div>
+
+          <div
+            v-else
+            class="mcp-market-list"
+          >
+            <article
+              v-for="item in skillMarketItems"
+              :key="item.slug"
+              class="mcp-market-card"
+            >
+              <span class="mcp-market-icon">
+                <img
+                  v-if="item.iconUrl"
+                  :src="item.iconUrl"
+                  :alt="item.name"
+                  loading="lazy"
+                >
+                <Boxes
+                  v-else
+                  :size="18"
+                />
+              </span>
+              <div class="mcp-market-copy">
+                <strong>
+                  {{ item.name }}
+                  <small v-if="item.verified"><ShieldCheck :size="12" />已验证</small>
+                </strong>
+                <p>{{ item.descriptionZh || item.description || '暂无描述。' }}</p>
+                <small>{{ item.slug }} · {{ formatUseCount(item.downloads) }} 次下载 · {{ item.stars }} 收藏 · v{{ item.version }}</small>
+              </div>
+              <div class="settings-inline-actions mcp-card-actions">
+                <CommonButton
+                  v-if="isInstalledSkill(item)"
+                  size="compact"
+                  variant="secondary"
+                  disabled
+                >
+                  已安装
+                </CommonButton>
+                <CommonButton
+                  v-else
+                  size="compact"
+                  variant="primary"
+                  :loading="installingSkillSlug === item.slug"
+                  @click="installMarketSkill(item)"
+                >
+                  直接安装
+                </CommonButton>
+                <CommonButton
+                  size="compact"
+                  variant="ghost"
+                  @click="openSkillHomepage(item)"
+                >
+                  <ExternalLink :size="14" />
+                </CommonButton>
+              </div>
+            </article>
+          </div>
+
+          <CommonPagination
+            v-if="skillMarketItems.length > 0"
+            :current-page="skillMarketPage"
+            :total-pages="skillMarketTotalPages"
+            :total-count="skillMarketTotalCount"
+            @page-change="goToSkillMarketPage"
+          />
+        </template>
       </div>
     </SettingsSection>
 
@@ -946,7 +1353,7 @@ onMounted(() => { void refresh() })
       v-else
       section-id="setting-mcp-servers"
       title="MCP Servers"
-      description="默认展示已安装列表；市场来自 Smithery 公开目录，安装仍需在弹窗中补齐连接配置。"
+      description="默认展示已安装列表；市场来自 MCP Hub 中国精选目录，支持预填 stdio 命令与环境变量。"
     >
       <template #actions>
         <div class="settings-inline-actions">
@@ -1077,7 +1484,7 @@ onMounted(() => { void refresh() })
             <CommonTextarea
               v-model="importDocument"
               :rows="5"
-              placeholder="粘贴 .mcp.json 或 NcxMusic 导出文档"
+              placeholder="粘贴 .mcp.json 或 Ncxmusic 导出文档"
             />
             <div
               v-if="importPreview.length > 0"
@@ -1147,7 +1554,7 @@ onMounted(() => { void refresh() })
             v-if="marketLoading"
             class="extensions-empty"
           >
-            正在读取 Smithery MCP 市场…
+            正在读取 MCP Hub 中国精选服务…
           </div>
           <div
             v-else-if="marketError"
@@ -1330,6 +1737,87 @@ onMounted(() => { void refresh() })
           @click="saveMcp"
         >
           保存配置
+        </CommonButton>
+      </template>
+    </CommonDialog>
+
+    <CommonDialog
+      :visible="skillDialogVisible"
+      title="新增 Skill"
+      subtitle="支持从 SkillHub 市场导入、Git 仓库导入，或选择本地代码包与 ZIP 压缩包。"
+      width="560px"
+      :close-on-overlay-click="!busy"
+      :close-on-esc="!busy"
+      @close="closeSkillDialog"
+    >
+      <div class="skill-dialog-content">
+        <div class="skill-dialog-section">
+          <span class="skill-dialog-section-title">方式一：SkillHub 技能标识导入</span>
+          <div class="extensions-import-row">
+            <CommonInput
+              v-model="skillHubSlug"
+              autocomplete="off"
+              placeholder="例如 agent-phone-call"
+              aria-label="SkillHub 技能标识"
+            />
+            <CommonButton
+              variant="secondary"
+              :loading="busy"
+              @click="installSlugSkill"
+            >
+              从市场安装
+            </CommonButton>
+          </div>
+        </div>
+
+        <div class="skill-dialog-section">
+          <span class="skill-dialog-section-title">方式二：HTTPS Git 仓库导入</span>
+          <div class="extensions-import-row">
+            <CommonInput
+              v-model="gitUrl"
+              type="url"
+              autocomplete="off"
+              placeholder="https://github.com/org/skill.git"
+              aria-label="Skill HTTPS Git URL"
+            />
+            <CommonButton
+              variant="secondary"
+              :loading="busy"
+              @click="installGitSkill"
+            >
+              导入 Git
+            </CommonButton>
+          </div>
+        </div>
+
+        <div class="skill-dialog-section">
+          <span class="skill-dialog-section-title">方式三：本地代码包导入</span>
+          <div class="skill-local-import-actions">
+            <CommonButton
+              variant="secondary"
+              :loading="busy"
+              @click="chooseSkill('folder')"
+            >
+              <PackagePlus :size="14" />选择文件夹
+            </CommonButton>
+            <CommonButton
+              variant="secondary"
+              :loading="busy"
+              @click="chooseSkill('zip')"
+            >
+              <Upload :size="14" />选择 ZIP 压缩包
+            </CommonButton>
+          </div>
+        </div>
+      </div>
+
+      <template #actions>
+        <CommonButton
+          variant="secondary"
+          :disabled="busy"
+          @click="closeSkillDialog"
+        >
+          关闭
         </CommonButton>
       </template>
     </CommonDialog>

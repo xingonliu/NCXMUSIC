@@ -499,6 +499,27 @@
   white-space: nowrap;
 }
 
+.skill-dialog-content {
+  display: grid;
+  gap: var(--ncx-space-4);
+}
+
+.skill-dialog-section {
+  display: grid;
+  gap: var(--ncx-space-2);
+}
+
+.skill-dialog-section-title {
+  color: var(--ncx-color-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.skill-local-import-actions {
+  display: flex;
+  gap: var(--ncx-space-2);
+}
+
 .model-profile-row {
   display: grid;
   min-height: 68px;
