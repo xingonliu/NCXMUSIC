@@ -522,7 +522,7 @@ onBeforeUnmount(() => {
       <div class="music-search-bar-inner">
         <form class="music-search-input-wrapper" @submit.prevent="handleSubmit">
           <span class="music-search-icon" aria-hidden="true">
-            <Search :size="18" />
+            <Search :size="16" />
           </span>
           <input
             ref="inputRef"
@@ -544,7 +544,7 @@ onBeforeUnmount(() => {
             @mousedown.prevent
             @click="clearSearch"
           >
-            <X :size="15" />
+            <X :size="14" />
           </button>
         </form>
 
