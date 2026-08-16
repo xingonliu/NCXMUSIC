@@ -158,6 +158,15 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('pointer-events: none;')
     expect(css).toContain('linear-gradient(')
   })
+
+  it('回到底部悬浮按钮去掉边框并配置立体阴影', () => {
+    /** CSS 源代码。 */
+    const css = source('src/renderer/features/agent/agent-page.css')
+
+    expect(css).toContain('.agent-scroll-to-bottom-btn {')
+    expect(css).toContain('border: none;')
+    expect(css).toContain('box-shadow: 0 4px 18px rgb(0 0 0 / 18%), 0 2px 6px rgb(0 0 0 / 8%);')
+  })
 })
 
 
