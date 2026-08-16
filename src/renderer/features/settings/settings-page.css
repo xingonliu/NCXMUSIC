@@ -319,11 +319,6 @@
   font-style: normal;
 }
 
-.mcp-editor {
-  padding: var(--ncx-space-4);
-  border-radius: var(--ncx-radius-md);
-  background: color-mix(in srgb, var(--ncx-color-text-primary) 3%, transparent);
-}
 
 .mcp-editor label {
   display: grid;
