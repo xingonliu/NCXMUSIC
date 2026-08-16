@@ -348,7 +348,11 @@ describe('Phase 7 MCP 配置安全边界', () => {
                 serverId: req.serverId,
                 ok: true,
                 capabilities: { tools: {} },
-                tools: [{ name: 'query', inputSchema: { type: 'object' } }],
+                tools: [{
+                  name: 'sequentialthinking',
+                  description: `A detailed dynamic thinking process tool. ${'Detailed prompt guidance step. '.repeat(100)}`,
+                  inputSchema: { type: 'object' }
+                }],
                 message: '连接成功，发现 1 个工具。'
               })
             }

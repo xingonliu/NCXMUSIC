@@ -381,7 +381,7 @@ export class McpManager {
       for (const tool of result.tools) {
         tools.push(McpToolSnapshotSchema.parse({
           name: tool.name,
-          ...(tool.description ? { description: tool.description } : {}),
+          ...(tool.description ? { description: tool.description.slice(0, 32_000) } : {}),
           inputSchema: tool.inputSchema,
           ...(tool.annotations ? { annotations: tool.annotations } : {})
         }))

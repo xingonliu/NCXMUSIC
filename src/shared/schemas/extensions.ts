@@ -71,7 +71,7 @@ export const McpTransportSchema = z.enum(['stdio', 'streamable_http'])
 /** MCP 实际工具的最小可信快照。 */
 export const McpToolSnapshotSchema = z.strictObject({
   name: McpToolNameSchema,
-  description: z.string().max(1_000).optional(),
+  description: z.string().max(32_000).optional(),
   inputSchema: ExtensionJsonSchema,
   annotations: ExtensionJsonSchema.optional()
 })
