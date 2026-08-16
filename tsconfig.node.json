@@ -19,6 +19,7 @@
   ],
   "exclude": [
     "tests/unit/player-bar.test.ts",
+    "tests/unit/player-keyboard-shortcuts.test.ts",
     "tests/unit/immersive-player.test.ts",
     "tests/unit/fluid-mesh-background.test.ts",
     "tests/unit/music-progress-bar.test.ts",

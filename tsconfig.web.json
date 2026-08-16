@@ -5,11 +5,13 @@
     "types": ["vite/client"]
   },
   "include": [
+    "src/renderer/**/*.d.ts",
     "src/renderer/**/*.ts",
     "src/renderer/**/*.vue",
     "src/shared/**/*.ts",
     "src/domains/player/**/*.ts",
     "tests/unit/player-bar.test.ts",
+    "tests/unit/player-keyboard-shortcuts.test.ts",
     "tests/unit/immersive-player.test.ts",
     "tests/unit/fluid-mesh-background.test.ts",
     "tests/unit/lyrics-engine.test.ts",

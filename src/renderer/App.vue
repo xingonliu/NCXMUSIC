@@ -14,6 +14,7 @@ import ImmersiveLyricsPage from './features/music/ImmersiveLyricsPage.vue'
 import AudioHost from './features/music/components/AudioHost.vue'
 import PlayerBar from './features/music/components/PlayerBar.vue'
 import { useImmersivePlayerPresentation } from './features/music/immersive-player-presentation'
+import { usePlayerKeyboardShortcuts } from './features/music/use-player-keyboard-shortcuts'
 import VoiceInputLayer from './features/voice/VoiceInputLayer.vue'
 
 // ========= 变量 =========
@@ -29,6 +30,15 @@ const isImmersivePlayerOpen = immersivePlayer.isOpen
 
 /** 当前页面是否展示通用 PlayerBar。 */
 const showPlayerBar = computed<boolean>(() => route.meta.playerBar === 'show')
+
+// ========= 快捷键注册 =========
+
+/** 注册全局播放控制快捷键（支持空格、左右切歌、上下调音量）。 */
+usePlayerKeyboardShortcuts({
+  showPlayerBar,
+  isImmersivePlayerOpen,
+  route
+})
 
 // ========= 生命周期与监听 =========
 
