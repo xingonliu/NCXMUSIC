@@ -375,6 +375,11 @@
   border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 10%, transparent);
   border-radius: 12px;
   background: color-mix(in srgb, var(--ncx-color-surface) 95%, transparent);
+  transition: border-color 140ms ease, background 140ms ease;
+}
+
+.agent-tool-card:hover {
+  border-color: color-mix(in srgb, var(--ncx-color-text-primary) 16%, transparent);
 }
 
 .agent-tool-card-main {
@@ -383,6 +388,13 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.agent-tool-card-main:hover .agent-tool-toggle-btn {
+  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
 }
 
 .agent-tool-card-left {
@@ -432,10 +444,39 @@
   flex-shrink: 0;
 }
 
+.agent-tool-chevron {
+  display: inline-block;
+  transition: transform 220ms cubic-bezier(0.2, 0, 0, 1), color 140ms ease;
+  color: var(--ncx-color-text-tertiary);
+}
+
+.agent-tool-chevron.is-expanded {
+  transform: rotate(180deg);
+  color: var(--ncx-color-text-primary);
+}
+
+.agent-tool-details-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  transition: grid-template-rows 240ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease, margin-top 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.agent-tool-details-wrapper.is-expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 10px;
+}
+
+.agent-tool-details-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
 .agent-tool-card-details {
   display: grid;
   gap: 6px;
-  margin-top: 10px;
   color: var(--ncx-color-text-secondary);
   font-size: 10px;
 }

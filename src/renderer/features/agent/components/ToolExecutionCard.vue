@@ -125,8 +125,20 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <article class="agent-tool-card">
-    <div class="agent-tool-card-main">
+  <article
+    class="agent-tool-card"
+    :class="{ 'is-expanded': expanded }"
+  >
+    <div
+      class="agent-tool-card-main"
+      role="button"
+      tabindex="0"
+      :aria-expanded="expanded"
+      aria-label="展开或收起工具执行明细"
+      @click="expanded = !expanded"
+      @keydown.enter.prevent="expanded = !expanded"
+      @keydown.space.prevent="expanded = !expanded"
+    >
       <div class="agent-tool-card-left">
         <span class="agent-tool-card-icon-box">
           <component
@@ -142,28 +154,36 @@ onUnmounted(() => {
       <div class="agent-tool-card-actions">
         <button
           type="button"
-          class="agent-action-btn"
-          @click="expanded = !expanded"
+          class="agent-action-btn agent-tool-toggle-btn"
+          :aria-label="expanded ? '收起明细' : '展开明细'"
+          :aria-expanded="expanded"
+          tabindex="-1"
+          @click.stop="expanded = !expanded"
         >
           <ChevronDown
             :size="16"
+            class="agent-tool-chevron"
             :class="{ 'is-expanded': expanded }"
           />
         </button>
       </div>
     </div>
     <div
-      v-if="expanded"
-      class="agent-tool-card-details"
+      class="agent-tool-details-wrapper"
+      :class="{ 'is-expanded': expanded }"
     >
-      <span>参数明细:</span>
-      <code>{{ card.parameterSummary || '无参数' }}</code>
-      <template v-if="card.toolName === 'execute_shell' && shellTerminal">
-        <span>stdout:</span>
-        <pre>{{ shellTerminal.stdout || '—' }}{{ shellTerminal.stdoutTruncated ? '\n…已截断' : '' }}</pre>
-        <span>stderr:</span>
-        <pre>{{ shellTerminal.stderr || '—' }}{{ shellTerminal.stderrTruncated ? '\n…已截断' : '' }}</pre>
-      </template>
+      <div class="agent-tool-details-inner">
+        <div class="agent-tool-card-details">
+          <span>参数明细:</span>
+          <code>{{ card.parameterSummary || '无参数' }}</code>
+          <template v-if="card.toolName === 'execute_shell' && shellTerminal">
+            <span>stdout:</span>
+            <pre>{{ shellTerminal.stdout || '—' }}{{ shellTerminal.stdoutTruncated ? '\n…已截断' : '' }}</pre>
+            <span>stderr:</span>
+            <pre>{{ shellTerminal.stderr || '—' }}{{ shellTerminal.stderrTruncated ? '\n…已截断' : '' }}</pre>
+          </template>
+        </div>
+      </div>
     </div>
   </article>
 </template>

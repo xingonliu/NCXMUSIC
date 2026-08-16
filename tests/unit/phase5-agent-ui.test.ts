@@ -129,5 +129,21 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('bottom: calc(100% + 12px);')
     expect(css).toContain('transform: translateX(-50%);')
   })
+
+  it('ToolExecutionCard 展开与收起具有顺滑旋转动画与平滑容器高度过渡', () => {
+    /** ToolExecutionCard 源代码。 */
+    const card = source('src/renderer/features/agent/components/ToolExecutionCard.vue')
+    /** CSS 源代码。 */
+    const css = source('src/renderer/features/agent/agent-page.css')
+
+    expect(card).toContain('agent-tool-chevron')
+    expect(card).toContain(":class=\"{ 'is-expanded': expanded }\"")
+    expect(card).toContain('agent-tool-details-wrapper')
+    expect(css).toContain('.agent-tool-chevron.is-expanded')
+    expect(css).toContain('transform: rotate(180deg);')
+    expect(css).toContain('.agent-tool-details-wrapper.is-expanded')
+    expect(css).toContain('grid-template-rows: 1fr;')
+  })
 })
+
 
