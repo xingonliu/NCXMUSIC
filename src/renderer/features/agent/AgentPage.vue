@@ -359,7 +359,7 @@ watch(
 <template>
   <section
     class="agent-page"
-    aria-label="NCX Agent 小云"
+    aria-label="Ncxmusic Agent 小云"
   >
     <div
       ref="conversation"
@@ -386,7 +386,7 @@ watch(
         class="agent-welcome-state"
       >
         <span class="agent-welcome-icon"><Terminal :size="28" /></span>
-        <h2>我们应该在 <span class="underline-target">NCX Music</span> 中做些什么？</h2>
+        <h2>我们应该在 <span class="underline-target">Ncxmusic</span> 中做些什么？</h2>
         <div class="agent-welcome-grid">
           <button
             type="button"

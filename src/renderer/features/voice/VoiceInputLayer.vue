@@ -51,7 +51,7 @@ onUnmounted(() => {
   <CommonAlertDialog
     :visible="voice.disclosureRequired.value"
     title="启用云端语音识别？"
-    description="录音将仅发送给当前大模型 Provider 用于本次识别；NcxMusic 不把原始音频写入磁盘、聊天、缓存或日志。云端处理与留存仍受该 Provider 的政策约束。"
+    description="录音将仅发送给当前大模型 Provider 用于本次识别；Ncxmusic 不把原始音频写入磁盘、聊天、缓存或日志。云端处理与留存仍受该 Provider 的政策约束。"
     type="warning"
     confirm-text="了解并启用"
     @cancel="voice.declineDisclosure"

@@ -47,7 +47,7 @@ const account = useAccountSessionStore()
 
 /** 冻结七步引导。 */
 const steps: readonly OnboardingStep[] = [
-  { id: 1, icon: Sparkles, title: '欢迎使用 NcxMusic', description: '一个高颜值音乐客户端，也是一位真正能替你操作音乐的小云助手。' },
+  { id: 1, icon: Sparkles, title: '欢迎使用 Ncxmusic', description: '一个高颜值音乐客户端，也是一位真正能替你操作音乐的小云助手。' },
   { id: 2, icon: Headphones, title: '认识播放器', description: '从发现、搜索、歌单到歌词，所有播放入口共享同一队列与真实播放状态。' },
   { id: 3, icon: Bot, title: '认识小云', description: '说出“下一首”或“播放一首周杰伦”，小云会调用工具并等待真实回执。' },
   { id: 4, icon: LogIn, title: '连接网易云账户', description: '使用官方网页登录解锁我喜欢、歌单与评论写入；也可以先以游客身份继续。' },
@@ -107,7 +107,7 @@ function complete(): void {
   >
     <header class="onboarding-header">
       <div class="onboarding-brand">
-        <Music2 :size="18" /><strong>NcxMusic</strong>
+        <Music2 :size="18" /><strong>Ncxmusic</strong>
       </div>
       <button
         type="button"
@@ -215,7 +215,7 @@ function complete(): void {
         variant="primary"
         @click="next"
       >
-        {{ isLastStep ? '进入 NcxMusic' : '下一步' }}<ChevronRight
+        {{ isLastStep ? '进入 Ncxmusic' : '下一步' }}<ChevronRight
           v-if="!isLastStep"
           :size="15"
         />

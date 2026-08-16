@@ -1,9 +1,9 @@
 {
   "name": "ncxmusic",
-  "version": "0.1.0",
+  "version": "1.0 beta-v1",
   "private": true,
-  "description": "NcxMusic Agent-native desktop music client",
-  "author": "NcxMusic Contributors",
+  "description": "Ncxmusic Agent-native desktop music client",
+  "author": "Ncxmusic Contributors",
   "license": "AGPL-3.0-only",
   "main": "./out/main/index.js",
   "packageManager": "pnpm@11.20.0",
@@ -74,7 +74,7 @@
   },
   "build": {
     "appId": "io.github.ncxmusic.app",
-    "productName": "NcxMusic",
+    "productName": "Ncxmusic",
     "directories": {
       "output": "release",
       "buildResources": "build"

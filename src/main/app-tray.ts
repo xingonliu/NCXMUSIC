@@ -64,7 +64,7 @@ export async function createApplicationTray(actions: ApplicationTrayActions): Pr
     { label: '退出应用', click: actions.quitApplication }
   ])
 
-  tray.setToolTip('NcxMusic')
+  tray.setToolTip('Ncxmusic')
   tray.setContextMenu(contextMenu)
   tray.on('click', actions.showMainWindow)
   return tray

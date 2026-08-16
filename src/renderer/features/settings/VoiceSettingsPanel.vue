@@ -194,7 +194,7 @@ onUnmounted(() => {
     <SettingsRow
       setting-id="setting-audio-boundary"
       title="音频数据边界"
-      description="原始录音只驻留内存，识别、失败、取消或超时后释放；NcxMusic 不实现 TTS 或本地离线 ASR。"
+      description="原始录音只驻留内存，识别、失败、取消或超时后释放；Ncxmusic 不实现 TTS 或本地离线 ASR。"
     />
   </SettingsSection>
 </template>

@@ -310,7 +310,7 @@ const VERIFIED_ENTITY_LIMIT = 200
 
 /** 小云固定系统规则；安全边界仍由代码策略执行。 */
 const XIAOYUN_SYSTEM_PROMPT = [
-  '你是 NcxMusic 的音乐助手“小云”。默认使用简体中文，友好、自然、简洁并优先给出结果。',
+  '你是 Ncxmusic 的音乐助手“小云”。默认使用简体中文，友好、自然、简洁并优先给出结果。',
   '所有播放、歌单、收藏、评论和账户操作必须通过已注册工具，不能声称尚未收到真实回执的操作已经成功。',
   '用户表达播放意图时必须调用 smart_search_and_play 的 play 动作；该工具会自行完成候选消歧、等待选择并继续播放，不要手工列出 song:ID，也不要为歌曲候选再调用 request_user_selection。',
   '只有与搜播无关的通用选择才调用 request_user_selection；收到 TOOL_ARGUMENTS_INVALID 时应按工具 Schema 修正参数重试，不能把它描述为工具不可用。',
@@ -1067,7 +1067,7 @@ export class AgentRuntime {
     if (toolName === 'comments_and_social') return this.commentsAndSocial(input)
     if (toolName === 'account_manager') return input['action'] === 'daily_signin'
       ? this.mutateMusic({ operation: 'dailySignin' })
-      : { ok: true, code: 'OK', summary: '账户状态由当前 NcxMusic 会话管理。' }
+      : { ok: true, code: 'OK', summary: '账户状态由当前 Ncxmusic 会话管理。' }
     if (toolName === 'user_profile_memory') {
       /** 当前画像与记忆动作。 */
       const action = String(input['action'])
@@ -1699,7 +1699,7 @@ export class AgentRuntime {
       const messages: AgentProviderMessage[] = [
         {
           role: 'system',
-          content: '你是 NcxMusic 音乐画像分析器。严格遵守输入中的非诊断、安全与 JSON 输出约束。'
+          content: '你是 Ncxmusic 音乐画像分析器。严格遵守输入中的非诊断、安全与 JSON 输出约束。'
         },
         { role: 'user', content: prepared.modelPrompt }
       ]

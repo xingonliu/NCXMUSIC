@@ -30,8 +30,7 @@ export const appPrimaryNavigationSections: readonly AppNavigationSection[] = [
       { label: t('navigation.discover'), routeName: 'discover', icon: 'discover' },
       { label: t('navigation.browse'), routeName: 'browse', icon: 'browse' },
       { label: t('navigation.search'), routeName: 'search', icon: 'search' },
-      { label: t('navigation.agent'), routeName: 'agent', icon: 'agent' },
-      { label: t('navigation.designSystem'), routeName: 'design-system-lab', icon: 'settings' }
+      { label: t('navigation.agent'), routeName: 'agent', icon: 'agent' }
     ]
   }
 ] as const

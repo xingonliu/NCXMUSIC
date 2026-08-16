@@ -1,6 +1,6 @@
 export const zhCN = {
   app: {
-    name: 'NcxMusic',
+    name: 'Ncxmusic',
     caption: 'Agent 原生音乐客户端'
   },
   routes: {
