@@ -558,7 +558,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.browse-page { display: grid; width: min(1240px, calc(100% - 40px)); gap: 72px; margin: 0 auto; padding: 52px 0 148px; }
+.browse-page { display: grid; width: min(1240px, calc(100% - 40px)); gap: 72px; margin: 0 auto; padding: 52px 0 0; }
 .browse-heading p, .browse-heading h1, .browse-heading span { margin: 0; }
 .browse-heading p { color: var(--ncx-color-accent); font-size: 12px; font-weight: 750; letter-spacing: .04em; }
 .browse-heading h1 { margin-top: 6px; font-size: clamp(36px, 5vw, 58px); line-height: 1.02; letter-spacing: -.035em; }

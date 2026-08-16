@@ -65,7 +65,7 @@ function openImmersiveLyrics(event: MouseEvent): void {
   width: min(920px, calc(100% - 48px));
   min-height: calc(100vh - 180px);
   margin: 0 auto;
-  padding: 84px 0 144px;
+  padding: 84px 0 0;
   align-items: center;
   grid-template-columns: minmax(260px, 420px) minmax(260px, 1fr);
   gap: clamp(32px, 7vw, 88px);

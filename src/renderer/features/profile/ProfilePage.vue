@@ -395,7 +395,7 @@ watch(
 </template>
 
 <style scoped>
-.profile-page { display: grid; width: min(1120px, calc(100% - 36px)); gap: 28px; margin: 0 auto; padding: 40px 0 128px; }
+.profile-page { display: grid; width: min(1120px, calc(100% - 36px)); gap: 28px; margin: 0 auto; padding: 40px 0 0; }
 .profile-loading { display: flex; min-height: 280px; align-items: center; justify-content: center; gap: 9px; color: var(--ncx-color-text-secondary); }
 .profile-hero { position: relative; display: flex; overflow: hidden; min-height: 340px; align-items: end; gap: 24px; padding: 32px; border-radius: 30px; color: #fff; background: color-mix(in srgb, var(--ncx-color-accent) 24%, #24242a); }
 .profile-cover, .profile-hero-scrim { position: absolute; inset: 0; }

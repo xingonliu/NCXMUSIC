@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: var(--ncx-space-5);
   min-height: 100%;
-  padding: 16px var(--ncx-space-6) 140px;
+  padding: 16px var(--ncx-space-6) 0;
   overflow: auto;
 }
 

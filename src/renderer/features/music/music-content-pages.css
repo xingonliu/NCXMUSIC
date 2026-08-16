@@ -68,7 +68,7 @@
 .music-search-page {
   width: min(720px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 108px 0 132px;
+  padding: 108px 0 0;
 }
 
 .music-search-intro {
@@ -177,7 +177,7 @@
 .artist-page {
   width: min(1120px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 52px 0 132px;
+  padding: 52px 0 0;
 }
 
 .search-results-header,
@@ -641,7 +641,7 @@
   width: min(980px, calc(100% - 48px));
   min-height: calc(100vh - 180px);
   margin: 0 auto;
-  padding: 52px 0 132px;
+  padding: 52px 0 0;
   align-items: start;
 }
 

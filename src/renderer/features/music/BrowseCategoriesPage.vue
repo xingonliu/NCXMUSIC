@@ -383,7 +383,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.category-explore-page { display: grid; width: min(1240px, calc(100% - 40px)); gap: 28px; margin: 0 auto; padding: 52px 0 148px; }
+.category-explore-page { display: grid; width: min(1240px, calc(100% - 40px)); gap: 28px; margin: 0 auto; padding: 52px 0 0; }
 .category-explore-heading p, .category-explore-heading h1 { margin: 0; }
 .category-explore-heading h1 { margin-top: 7px; font-size: clamp(36px, 5vw, 54px); line-height: 1.04; letter-spacing: -.03em; }
 .category-explore-heading > p:last-child { max-width: 720px; margin-top: 10px; color: var(--ncx-color-text-secondary); line-height: 1.55; }

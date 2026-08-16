@@ -483,14 +483,14 @@
 .ncx-content-area {
   min-height: 0;
   flex: 1;
-  padding: calc(var(--ncx-header-height) + 8px) 48px 112px 24px;
+  padding: calc(var(--ncx-header-height) + 8px) 48px 94px 24px;
   overflow: auto;
   user-select: text;
 }
 
 .ncx-app-shell--settings .ncx-content-area {
   padding-right: 48px;
-  padding-bottom: 64px;
+  padding-bottom: 48px;
   padding-left: 48px;
 }
 

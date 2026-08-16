@@ -213,7 +213,7 @@ onMounted(async () => {
 .liked-page {
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 52px 0 132px;
+  padding: 52px 0 0;
 }
 
 .liked-heading,

@@ -592,7 +592,7 @@ watch(
   width: min(1180px, calc(100% - 32px));
   gap: var(--ncx-space-12);
   margin: 0 auto;
-  padding: 48px 0 132px;
+  padding: 48px 0 0;
 }
 
 .discover-heading {
