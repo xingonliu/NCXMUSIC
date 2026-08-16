@@ -315,7 +315,8 @@ const XIAOYUN_SYSTEM_PROMPT = [
   '用户表达播放意图时必须调用 smart_search_and_play 的 play 动作；该工具会自行完成候选消歧、等待选择并继续播放，不要手工列出 song:ID，也不要为歌曲候选再调用 request_user_selection。',
   '只有与搜播无关的通用选择才调用 request_user_selection；收到 TOOL_ARGUMENTS_INVALID 时应按工具 Schema 修正参数重试，不能把它描述为工具不可用。',
   '不要猜测网易云实体 ID，不要请求或输出 Cookie、API Key、认证 Header、权限内部判断或未注册能力。',
-  '支付、购买、订阅、下单和代购不在可用能力范围。'
+  '支付、购买、订阅、下单和代购不在可用能力范围。',
+  '当需要调用工具时，直接生成 tool_calls，不要在同一轮输出多余的过渡闲聊；当收到工具执行结果后，必须在最终回复中向用户完整总结并呈现结果。'
 ].join('\n')
 
 /** 相似歌手能力参数，只接受本轮事实池引用。 */
@@ -774,6 +775,7 @@ export class AgentRuntime {
       if (signal.aborted) return
       if (response.toolCalls.length === 0) {
         this.enforceGroundedPlaybackResponse(assistant)
+        this.enforceTurnCompletionFallback(assistant)
         this.turnStatus = 'completed'
         this.endReason = 'completed'
         this.publish()
@@ -1566,6 +1568,36 @@ export class AgentRuntime {
     /** 真实失败摘要。 */
     const reason = failure?.resultSummary ?? '播放器尚未返回成功回执。'
     assistant.content = `未能完成播放：${trimSentence(reason)}。`
+  }
+
+  /** 当模型未返回有效文本总结时，依据本轮工具卡执行结果生成确定性兜底回复。 */
+  private enforceTurnCompletionFallback(assistant: AgentMessage): void {
+    if (assistant.content.trim().length > 0) return
+    /** 当前 Turn 从开始索引至今执行的全部工具卡。 */
+    const turnTools = this.tools.slice(this.turnToolStartIndex)
+    if (turnTools.length === 0) {
+      assistant.content = '模型未返回有效回复。'
+      return
+    }
+    /** 当前 Turn 执行失败的工具卡。 */
+    const failedTools = turnTools.filter((tool) =>
+      ['failed', 'cancelled', 'rejected', 'expired'].includes(tool.status)
+    )
+    if (failedTools.length === 0) {
+      if (turnTools.length === 1) {
+        /** 单工具成功摘要。 */
+        const singleSummary = turnTools[0]?.resultSummary || turnTools[0]?.title || '操作已完成'
+        assistant.content = `已完成操作：${trimSentence(singleSummary)}。`
+      } else {
+        /** 多工具成功摘要列表。 */
+        const summaries = turnTools.map((tool) => trimSentence(tool.resultSummary || tool.title)).filter(Boolean)
+        assistant.content = `已为你完成相关操作：\n${summaries.map((summary) => `- ${summary}`).join('\n')}`
+      }
+    } else {
+      /** 失败工具摘要列表。 */
+      const failedSummaries = failedTools.map((tool) => trimSentence(tool.resultSummary || tool.title)).filter(Boolean)
+      assistant.content = `部分操作未能成功完成：\n${failedSummaries.map((summary) => `- ${summary}`).join('\n')}`
+    }
   }
 
   /** 收集标准响应中的实体。 */

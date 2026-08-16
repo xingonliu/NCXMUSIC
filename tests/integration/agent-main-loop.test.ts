@@ -207,4 +207,62 @@ describe('agent main loop', () => {
     expect(fixture.events.some((event) => event.type === 'player-command')).toBe(false)
     expect(completed.tools[0]).toMatchObject({ status: 'rejected', errorCode: 'USER_REJECTED' })
   })
+
+  it('当模型第二轮未返回有效文本时，自动依据工具卡摘要生成确定性兜底回复', async () => {
+    /** 当前 Provider 请求轮次。 */
+    let requestIndex = 0
+    /** 第二轮返回空文本的 Provider。 */
+    const emptyFollowupProvider: AgentProviderPort = {
+      stream: async function* () {
+        requestIndex += 1
+        if (requestIndex === 1) {
+          yield { type: 'tool-call-delta', id: 'call-search', name: 'smart_search_and_play', argumentsDelta: '{"action":"play","query":"晴天"}' }
+          yield { type: 'completed', finishReason: 'tool_calls' }
+          return
+        }
+        // 第二轮返回空文本，直接 stop
+        yield { type: 'completed', finishReason: 'stop' }
+      }
+    }
+    /** 已观察到的快照监听器。 */
+    const listeners: Array<(snapshot: AgentSnapshot) => void> = []
+    /** 被测 Agent Runtime。 */
+    const runtime = new AgentRuntime({
+      provider: emptyFollowupProvider,
+      music: {
+        read: async () => searchResult,
+        mutate: async () => ({ operation: 'dailySignin', applied: true }),
+        cancel: () => {}
+      },
+      musicSafetyLevel: 'M2',
+      emit: (event) => {
+        if (event.type === 'snapshot') listeners.forEach((listener) => listener(event.snapshot))
+        if (event.type === 'player-command') {
+          void runtime.command({
+            operation: 'playerCommandResult',
+            toolCallId: event.request.toolCallId,
+            ok: true,
+            summary: '已真实播放《晴天》。',
+            latestRevision: 1
+          })
+        }
+      }
+    })
+    runtime.configureProvider({
+      profileId: crypto.randomUUID(),
+      protocol: 'openai-compatible',
+      model: 'model-a',
+      baseUrl: 'https://provider.example.com/v1'
+    })
+
+    const completed = waitForSnapshot(
+      (listener) => listeners.push(listener),
+      (snapshot) => snapshot.turnStatus === 'completed'
+    )
+    await runtime.command({ operation: 'sendMessage', content: '播放晴天' })
+    const snapshot = await completed
+
+    expect(snapshot.tools[0]).toMatchObject({ status: 'succeeded', resultSummary: '已真实播放《晴天》。' })
+    expect(snapshot.messages.at(-1)?.content).toBe('已完成操作：已真实播放《晴天》。')
+  })
 })

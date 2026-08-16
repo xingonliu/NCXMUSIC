@@ -577,8 +577,8 @@ function parseOpenAIStreamPayload(value: unknown): ProviderStreamEvent[] {
     const choiceRecord = getRecord(choice)
     /** OpenAI delta 对象。 */
     const delta = getRecord(choiceRecord.delta)
-    /** OpenAI 文本增量。 */
-    const content = getString(delta.content)
+    /** OpenAI 文本增量，优先使用 content，无 content 时兼容 reasoning_content 与 reasoning 思考链字段。 */
+    const content = getString(delta.content) || getString(delta.reasoning_content) || getString(delta.reasoning)
     if (content) events.push({ type: 'text-delta', text: content })
 
     /** OpenAI tool_calls 增量数组。 */

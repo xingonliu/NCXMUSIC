@@ -176,6 +176,14 @@ describe('provider protocol fixtures', () => {
     ])
   })
 
+  it('解析 OpenAI Compatible 流中推理模型的 reasoning_content 思考链增量', () => {
+    const events = parseProviderStreamLine(
+      'openai-compatible',
+      'data: {"choices":[{"delta":{"reasoning_content":"正在思考中..."}}]}'
+    )
+    expect(events).toEqual([{ type: 'text-delta', text: '正在思考中...' }])
+  })
+
   it('构造并解析 Anthropic Messages 文本流和 tool_use 增量', async () => {
     const profile = createProfile({
       protocol: 'anthropic-messages',
