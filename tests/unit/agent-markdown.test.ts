@@ -141,13 +141,17 @@ describe('Agent Markdown 解析与流式渲染测试', () => {
 
     it('点击代码块复制按钮能提取代码文本并更新复制反馈状态', async () => {
       let copiedText = ''
-      window.ncx = {
-        clipboard: {
-          writeText: async (text: string) => {
-            copiedText = text
+      Object.defineProperty(window, 'ncx', {
+        value: {
+          clipboard: {
+            writeText: async (text: string) => {
+              copiedText = text
+            }
           }
-        }
-      } as unknown as typeof window.ncx
+        },
+        configurable: true,
+        writable: true
+      })
 
       const wrapper = mount(AgentMarkdown, {
         props: {

@@ -825,10 +825,26 @@ if (!hasSingleInstanceLock) {
       supervisor.onStatus((status) => {
         broadcastStatus(status)
         if (status.state === 'ready') {
-          syncAgentSafetyToUtility()
-          providerProfileCoordinator?.syncUtility()
-          extensionCoordinator?.syncUtility()
-          shellSettingsCoordinator?.syncUtility()
+          try {
+            syncAgentSafetyToUtility()
+          } catch (error) {
+            console.error('[Supervisor] 同步 Agent 安全设置失败:', error)
+          }
+          try {
+            providerProfileCoordinator?.syncUtility()
+          } catch (error) {
+            console.error('[Supervisor] 同步 Provider Profile 失败:', error)
+          }
+          try {
+            extensionCoordinator?.syncUtility()
+          } catch (error) {
+            console.error('[Supervisor] 同步扩展配置失败:', error)
+          }
+          try {
+            shellSettingsCoordinator?.syncUtility()
+          } catch (error) {
+            console.error('[Supervisor] 同步 Shell 设置失败:', error)
+          }
         }
         void (authController?.handleUtilityStatus(status) ?? Promise.resolve())
           .catch(() => {

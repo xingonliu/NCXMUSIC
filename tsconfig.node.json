@@ -25,6 +25,7 @@
     "tests/unit/music-progress-bar.test.ts",
     "tests/unit/design-system-lab-page.test.ts",
     "tests/unit/phase4-music-ui.test.ts",
-    "tests/unit/secondary-music-page-ui.test.ts"
+    "tests/unit/secondary-music-page-ui.test.ts",
+    "tests/unit/agent-markdown.test.ts"
   ]
 }
