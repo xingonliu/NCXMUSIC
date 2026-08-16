@@ -170,6 +170,9 @@ const marketLoading = ref<boolean>(false)
 /** MCP 市场加载错误文案。 */
 const marketError = ref<string>('')
 
+/** 正在解析详情或执行直接安装的市场条目 ID。 */
+const resolvingServerId = ref<string>('')
+
 /** 最近一次 MCP 市场请求 ID，用于丢弃迟到响应。 */
 let latestMarketRequestId = ''
 
@@ -629,8 +632,14 @@ function normalizeMarketServerId(server: McpMarketServer): string {
   return trimmed.length >= 2 ? trimmed : 'mcp-server'
 }
 
-/** 使用市场条目打开 MCP 创建弹窗。 */
-function useMarketServer(server: McpMarketServer): void {
+/** 检查市场条目是否已被本地安装。 */
+function isInstalledServer(server: McpMarketServer): boolean {
+  const serverId = normalizeMarketServerId(server)
+  return snapshot.value.mcpServers.some((item) => item.serverId === serverId)
+}
+
+/** 使用市场条目直接安装免密 MCP 或智能预填打开 MCP 弹窗。 */
+async function useMarketServer(server: McpMarketServer): Promise<void> {
   /** 从市场条目推导出的本地 Server ID。 */
   const serverId = normalizeMarketServerId(server)
   /** 已经安装的同名 MCP Server。 */
@@ -640,11 +649,89 @@ function useMarketServer(server: McpMarketServer): void {
     showToast('该 MCP Server 已安装，已打开编辑弹窗。', 'info')
     return
   }
-  openCreateMcpDialog({
-    serverId,
-    displayName: server.displayName,
-    transport: server.remote ? 'streamable_http' : 'stdio'
-  })
+
+  resolvingServerId.value = server.id
+  busy.value = true
+  try {
+    /** 向 Main 请求在线解析该 MCP 的连接详情与参数要求。 */
+    const result = await window.ncx.extensions.request({
+      operation: 'mcp.market.resolve',
+      qualifiedName: server.qualifiedName
+    })
+    const detail = result.marketDetail
+    const primaryConnection = detail?.connections?.[0]
+    const deploymentUrl = primaryConnection?.deploymentUrl || detail?.deploymentUrl
+    const configSchema = primaryConnection?.configSchema as Record<string, unknown> | undefined
+    const requiredKeys = Array.isArray(configSchema?.['required'])
+      ? (configSchema['required'] as unknown[]).filter((k): k is string => typeof k === 'string')
+      : []
+
+    // 分支 1：免必填 Key 的 Remote MCP，支持一键直接安装并自动测试
+    if (deploymentUrl && requiredKeys.length === 0) {
+      requestConfirmation({
+        title: `直接安装 ${server.displayName}？`,
+        description: `将配置远程 MCP Server (${deploymentUrl})，安装后将自动测试连接并发现实际工具。`,
+        confirmText: '立即安装',
+        type: 'warning',
+        task: async () => {
+          const config: McpServerEditable = {
+            serverId,
+            displayName: server.displayName,
+            transport: 'streamable_http',
+            url: deploymentUrl,
+            args: [],
+            environmentNames: [],
+            headerNames: [],
+            enabled: true
+          }
+          const saved = await runRequest(() => window.ncx.extensions.request({
+            operation: 'mcp.upsert',
+            config,
+            environment: {},
+            headers: {}
+          }))
+          if (!saved) return
+          await runRequest(() => window.ncx.extensions.request({
+            operation: 'mcp.test',
+            serverId
+          }))
+          showToast(`MCP ${server.displayName} 安装并测试就绪。`, 'success')
+        }
+      })
+      return
+    }
+
+    // 分支 2：需要输入必填凭据（如 API Key）或 stdio 本地命令，智能预填弹窗
+    const isRemote = Boolean(deploymentUrl || server.remote)
+    openCreateMcpDialog({
+      serverId,
+      displayName: server.displayName,
+      transport: isRemote ? 'streamable_http' : 'stdio',
+      url: deploymentUrl ?? '',
+      headers: isRemote && requiredKeys.length > 0
+        ? requiredKeys.map((k) => `${k}=`).join('\n')
+        : '',
+      environment: !isRemote && requiredKeys.length > 0
+        ? requiredKeys.map((k) => `${k}=`).join('\n')
+        : '',
+      enabled: true
+    })
+    if (requiredKeys.length > 0) {
+      showToast(`已预填连接信息；该 MCP 需要 ${requiredKeys.join('、')}，请补齐凭据后保存。`, 'info')
+    }
+  } catch {
+    // 降级兜底：在线解析失败时打开基础弹窗
+    openCreateMcpDialog({
+      serverId,
+      displayName: server.displayName,
+      transport: server.remote ? 'streamable_http' : 'stdio',
+      enabled: true
+    })
+    showToast('未能获取在线连接配置，已打开基础创建弹窗。', 'warning')
+  } finally {
+    resolvingServerId.value = ''
+    busy.value = false
+  }
 }
 
 /** 从 Smithery 公开市场读取 MCP Server 列表。 */
@@ -1114,10 +1201,12 @@ onMounted(() => { void refresh() })
               <div class="settings-inline-actions mcp-card-actions">
                 <CommonButton
                   size="compact"
-                  variant="primary"
+                  :variant="isInstalledServer(server) ? 'secondary' : 'primary'"
+                  :loading="resolvingServerId === server.id"
+                  :disabled="busy && resolvingServerId !== server.id"
                   @click="useMarketServer(server)"
                 >
-                  用此创建
+                  {{ isInstalledServer(server) ? '已安装' : '用此创建' }}
                 </CommonButton>
                 <CommonButton
                   v-if="server.homepage"

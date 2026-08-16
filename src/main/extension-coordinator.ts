@@ -11,11 +11,13 @@ import {
   ExtensionRuntimeStatusEventSchema,
   ExtensionToolScopeChangedEventSchema,
   McpMarketSearchResultSchema,
+  McpMarketServerDetailSchema,
   ExtensionSettingsRequestSchema,
   ExtensionSettingsResultSchema,
   type ExtensionSettingsRequest,
   type ExtensionSettingsResult,
-  type McpMarketSearchResult
+  type McpMarketSearchResult,
+  type McpMarketServerDetail
 } from '../shared/schemas/extensions'
 import { redactSensitiveText } from '../shared/errors/redact-sensitive-text'
 
@@ -128,6 +130,8 @@ export class ExtensionCoordinator {
     let importToken: string | undefined
     /** 可选 MCP 市场搜索结果。 */
     let mcpMarket: McpMarketSearchResult | undefined
+    /** 可选 MCP 市场条目详情。 */
+    let marketDetail: McpMarketServerDetail | undefined
 
     if (request.operation === 'skill.discover') {
       this.skills.discover()
@@ -206,16 +210,19 @@ export class ExtensionCoordinator {
       }
     } else if (request.operation === 'mcp.market.search') {
       mcpMarket = await this.searchMcpMarket(request)
+    } else if (request.operation === 'mcp.market.resolve') {
+      marketDetail = await this.resolveMcpMarketDetail(request.qualifiedName)
     }
 
-    if (!['snapshot', 'mcp.test', 'mcp.market.search'].includes(request.operation)) this.syncUtility()
+    if (!['snapshot', 'mcp.test', 'mcp.market.search', 'mcp.market.resolve'].includes(request.operation)) this.syncUtility()
     return ExtensionSettingsResultSchema.parse({
       snapshot: this.snapshot(),
       ...(message ? { message } : {}),
       ...(exportDocument ? { exportDocument } : {}),
       ...(importPreview ? { importPreview } : {}),
       ...(importToken ? { importToken } : {}),
-      ...(mcpMarket ? { mcpMarket } : {})
+      ...(mcpMarket ? { mcpMarket } : {}),
+      ...(marketDetail ? { marketDetail } : {})
     })
   }
 
@@ -269,6 +276,36 @@ export class ExtensionCoordinator {
       const message = error instanceof Error && error.name === 'AbortError'
         ? 'Smithery MCP 市场请求超时。'
         : readableError(error, 'Smithery MCP 市场请求失败。')
+      throw new Error(redactSensitiveText(message).slice(0, 500), { cause: error })
+    } finally {
+      clearTimeout(timeout)
+    }
+  }
+
+  /** 从 Smithery 公开接口解析指定 MCP Server 详情与连接配置。 */
+  private async resolveMcpMarketDetail(qualifiedName: string): Promise<McpMarketServerDetail> {
+    /** 本次请求的取消控制器。 */
+    const controller = new AbortController()
+    /** 本次请求的超时计时器。 */
+    const timeout = setTimeout(() => controller.abort(), MCP_MARKET_TIMEOUT_MS)
+    try {
+      /** 对 qualifiedName 进行路径规范化。 */
+      const encodedName = encodeURIComponent(qualifiedName).replace(/%2F/gi, '/')
+      /** Smithery 单个 Server 详情响应。 */
+      const response = await fetch(`${SMITHERY_MCP_MARKET_URL}/${encodedName}`, {
+        method: 'GET',
+        headers: { accept: 'application/json' },
+        signal: controller.signal
+      })
+      if (!response.ok) throw new Error(`Smithery MCP 详情获取失败（HTTP ${response.status}）。`)
+      /** 未信任的远程 JSON。 */
+      const payload = await response.json() as unknown
+      return McpMarketServerDetailSchema.parse(payload)
+    } catch (error) {
+      /** 对 Renderer 公开的脱敏错误。 */
+      const message = error instanceof Error && error.name === 'AbortError'
+        ? 'Smithery MCP 详情请求超时。'
+        : readableError(error, 'Smithery MCP 详情请求失败。')
       throw new Error(redactSensitiveText(message).slice(0, 500), { cause: error })
     } finally {
       clearTimeout(timeout)

@@ -268,6 +268,55 @@ describe('Phase 7 MCP 配置安全边界', () => {
     expect(result.mcpMarket?.pagination).toMatchObject({ currentPage: 2, totalPages: 10 })
     coordinator.shutdown()
   })
+
+  it('MCP 市场条目详情解析支持获取 deploymentUrl 与 configSchema', async () => {
+    /** 无进程副作用的 Utility Supervisor 夹具。 */
+    const supervisor = {
+      onControlMessage: () => () => undefined,
+      postControl: () => true
+    } as unknown as UtilitySupervisor
+    /** 被测 Main 扩展协调器。 */
+    const coordinator = new ExtensionCoordinator({
+      dataRoot: temporaryDirectory('ncx-mcp-resolve-'),
+      protector: testProtector,
+      supervisor,
+      chooseSkillSource: async () => undefined
+    })
+    /** Smithery detail fetch mock。 */
+    const fetchMock = vi.fn(async (input: Parameters<typeof fetch>[0]) => {
+      const url = new URL(String(input))
+      expect(`${url.origin}${url.pathname}`).toBe('https://api.smithery.ai/servers/theagenttimes/news')
+      return new Response(JSON.stringify({
+        qualifiedName: 'theagenttimes/news',
+        displayName: 'Agent News',
+        description: 'Agent news server',
+        remote: true,
+        deploymentUrl: 'https://news--theagenttimes.run.tools',
+        connections: [{
+          type: 'http',
+          deploymentUrl: 'https://news--theagenttimes.run.tools',
+          configSchema: {}
+        }]
+      }), { status: 200, headers: { 'content-type': 'application/json' } })
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    const resolved = await coordinator.handle({
+      operation: 'mcp.market.resolve',
+      qualifiedName: 'theagenttimes/news'
+    })
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(resolved.marketDetail).toMatchObject({
+      qualifiedName: 'theagenttimes/news',
+      displayName: 'Agent News',
+      deploymentUrl: 'https://news--theagenttimes.run.tools',
+      connections: [{
+        type: 'http',
+        deploymentUrl: 'https://news--theagenttimes.run.tools'
+      }]
+    })
+    coordinator.shutdown()
+  })
 })
 
 describe('Phase 7 Dynamic Skill 生命周期', () => {

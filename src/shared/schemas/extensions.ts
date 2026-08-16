@@ -155,6 +155,24 @@ export const McpMarketSearchResultSchema = z.object({
   pagination: McpMarketPaginationSchema
 })
 
+/** Smithery 市场单个连接配置描述。 */
+export const McpMarketConnectionSchema = z.object({
+  type: z.string().trim().min(1).max(50),
+  deploymentUrl: z.string().trim().max(2_048).nullish().transform((value) => value ?? undefined),
+  configSchema: ExtensionJsonSchema.nullish().transform((value) => value ?? undefined)
+})
+
+/** Smithery 市场 MCP Server 详情（包含连接端点与配置 Schema）。 */
+export const McpMarketServerDetailSchema = z.object({
+  qualifiedName: z.string().trim().min(1).max(200),
+  displayName: z.string().trim().min(1).max(200),
+  description: z.string().transform(normalizeMcpMarketDescription).nullish().transform((value) => value ?? ''),
+  iconUrl: z.string().trim().max(2_048).nullish().transform((value) => value ?? undefined),
+  remote: z.boolean().default(false),
+  deploymentUrl: z.string().trim().max(2_048).nullish().transform((value) => value ?? undefined),
+  connections: z.array(McpMarketConnectionSchema).default([])
+})
+
 /** 扩展设置页完整公开快照。 */
 export const ExtensionSettingsSnapshotSchema = z.strictObject({
   skills: z.array(SkillSnapshotSchema),
@@ -198,6 +216,10 @@ export const ExtensionSettingsRequestSchema = z.discriminatedUnion('operation', 
     q: z.string().trim().min(1).max(200).optional(),
     topK: z.number().int().min(10).max(500).optional()
   }),
+  z.strictObject({
+    operation: z.literal('mcp.market.resolve'),
+    qualifiedName: z.string().trim().min(1).max(200)
+  }),
   z.strictObject({ operation: z.literal('mcp.export') })
 ])
 
@@ -208,7 +230,8 @@ export const ExtensionSettingsResultSchema = z.strictObject({
   exportDocument: z.string().max(1_000_000).optional(),
   importPreview: z.array(McpServerEditableSchema).max(128).optional(),
   importToken: z.uuid().optional(),
-  mcpMarket: McpMarketSearchResultSchema.optional()
+  mcpMarket: McpMarketSearchResultSchema.optional(),
+  marketDetail: McpMarketServerDetailSchema.optional()
 })
 
 /** Main → Utility：同步当前已验证扩展运行配置。 */
@@ -343,6 +366,12 @@ export type McpToolSnapshot = z.infer<typeof McpToolSnapshotSchema>
 
 /** MCP 市场公开条目类型。 */
 export type McpMarketServer = z.infer<typeof McpMarketServerSchema>
+
+/** MCP 市场单个连接类型。 */
+export type McpMarketConnection = z.infer<typeof McpMarketConnectionSchema>
+
+/** MCP 市场条目详情类型。 */
+export type McpMarketServerDetail = z.infer<typeof McpMarketServerDetailSchema>
 
 /** MCP 市场搜索结果类型。 */
 export type McpMarketSearchResult = z.infer<typeof McpMarketSearchResultSchema>
