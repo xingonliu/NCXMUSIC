@@ -394,8 +394,9 @@ export class ExtensionCoordinator {
     if (result.ok) {
       this.mcp.recordProbe(serverId, result.capabilities, result.tools)
       this.syncUtility()
+      return result.message
     }
-    return result.message
+    throw new Error(result.message)
   }
 
   /** 消费 Utility 的严格 Probe 或运行状态消息。 */

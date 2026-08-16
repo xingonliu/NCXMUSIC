@@ -317,6 +317,101 @@ describe('Phase 7 MCP 配置安全边界', () => {
     })
     coordinator.shutdown()
   })
+
+  it('MCP 连接测试失败时抛出错误，成功时返回工具发现消息', async () => {
+    /** 记录 control message 监听器。 */
+    let controlHandler: ((message: unknown) => void) | undefined
+    /** 被测 Utility Supervisor 夹具。 */
+    const supervisor = {
+      onControlMessage: (handler: (message: unknown) => void) => {
+        controlHandler = handler
+        return () => { controlHandler = undefined }
+      },
+      postControl: (msg: unknown) => {
+        const req = msg as { kind?: string; requestId?: string; serverId?: string }
+        if (req.kind === 'extension.probe.request' && req.requestId) {
+          setTimeout(() => {
+            if (req.serverId === 'failing-server') {
+              controlHandler?.({
+                kind: 'extension.probe.result',
+                requestId: req.requestId,
+                serverId: req.serverId,
+                ok: false,
+                capabilities: {},
+                tools: [],
+                message: 'Streamable HTTP error: Missing Authorization header'
+              })
+            } else {
+              controlHandler?.({
+                kind: 'extension.probe.result',
+                requestId: req.requestId,
+                serverId: req.serverId,
+                ok: true,
+                capabilities: { tools: {} },
+                tools: [{ name: 'query', inputSchema: { type: 'object' } }],
+                message: '连接成功，发现 1 个工具。'
+              })
+            }
+          }, 5)
+        }
+        return true
+      }
+    } as unknown as UtilitySupervisor
+
+    const coordinator = new ExtensionCoordinator({
+      dataRoot: temporaryDirectory('ncx-mcp-probe-test-'),
+      protector: testProtector,
+      supervisor,
+      chooseSkillSource: async () => undefined
+    })
+
+    // 先保存基础配置
+    await coordinator.handle({
+      operation: 'mcp.upsert',
+      config: {
+        serverId: 'failing-server',
+        displayName: 'Failing',
+        transport: 'streamable_http',
+        url: 'https://example.com/failing',
+        args: [],
+        environmentNames: [],
+        headerNames: [],
+        enabled: true
+      },
+      environment: {},
+      headers: {}
+    })
+    await coordinator.handle({
+      operation: 'mcp.upsert',
+      config: {
+        serverId: 'working-server',
+        displayName: 'Working',
+        transport: 'streamable_http',
+        url: 'https://example.com/working',
+        args: [],
+        environmentNames: [],
+        headerNames: [],
+        enabled: true
+      },
+      environment: {},
+      headers: {}
+    })
+
+    // 测试失败场景：必须拒绝并抛出错误，不能被当作成功返回
+    await expect(coordinator.handle({
+      operation: 'mcp.test',
+      serverId: 'failing-server'
+    })).rejects.toThrow('Streamable HTTP error: Missing Authorization header')
+
+    // 测试成功场景：必须正常返回 message
+    const successResult = await coordinator.handle({
+      operation: 'mcp.test',
+      serverId: 'working-server'
+    })
+    expect(successResult.message).toBe('连接成功，发现 1 个工具。')
+
+    coordinator.shutdown()
+  })
 })
 
 describe('Phase 7 Dynamic Skill 生命周期', () => {

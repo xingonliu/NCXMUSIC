@@ -571,14 +571,15 @@ async function importMcp(confirm: boolean): Promise<void> {
 
 /** 统一执行设置请求并刷新公开快照。 */
 async function runRequest(
-  task: () => ReturnType<typeof window.ncx.extensions.request>
+  task: () => ReturnType<typeof window.ncx.extensions.request>,
+  options?: { silentSuccess?: boolean }
 ): Promise<boolean> {
   busy.value = true
   try {
     /** Main 返回的扩展设置结果。 */
     const result = await task()
     snapshot.value = result.snapshot
-    if (result.message) showToast(result.message, 'success')
+    if (result.message && !options?.silentSuccess) showToast(result.message, 'success')
     return true
   } catch (error) {
     showToast(readableError(error), 'warning')
@@ -689,13 +690,12 @@ async function useMarketServer(server: McpMarketServer): Promise<void> {
             config,
             environment: {},
             headers: {}
-          }))
+          }), { silentSuccess: true })
           if (!saved) return
           await runRequest(() => window.ncx.extensions.request({
             operation: 'mcp.test',
             serverId
           }))
-          showToast(`MCP ${server.displayName} 安装并测试就绪。`, 'success')
         }
       })
       return
