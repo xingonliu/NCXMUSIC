@@ -1,3 +1,4 @@
+import { mkdirSync } from 'node:fs'
 import { RuntimeConnectionMetadataSchema } from '../shared/schemas/control-plane'
 import { AgentRuntime } from '../domains/agent/agent-runtime'
 import { AgentExternalTools } from '../infrastructure/extensions/agent-external-tools'
@@ -61,8 +62,16 @@ let accountStoreGeneration = 0
 /** 启动时先创建并迁移游客账户数据库。 */
 const accountStoreReady = accountStore.open('guest:local')
 
+/** Utility Shell 默认工作区根目录。 */
+const defaultShellRoot = ShellWorkspaceRegistry.defaultRoot()
+try {
+  mkdirSync(defaultShellRoot, { recursive: true })
+} catch {
+  // 容错处理：忽略初始默认目录创建失败
+}
+
 const shellWorkspaceRegistry = new ShellWorkspaceRegistry({
-  defaultWorkspaceRoot: ShellWorkspaceRegistry.defaultRoot(),
+  defaultWorkspaceRoot: defaultShellRoot,
   workspaces: []
 })
 const shellProcessSupervisor = new ShellProcessSupervisor({

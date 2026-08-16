@@ -1,3 +1,5 @@
+import { existsSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { resolve } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
@@ -152,5 +154,48 @@ describe('ShellExecutor', () => {
 
     expect(result.status).toBe('cancelled')
     expect(supervisor.runs).toHaveLength(0)
+  })
+
+  it('在执行命令前自动创建不存在的工作区目录', async () => {
+    /** 临时测试目录，确保在运行前不存在。 */
+    const uniqueWorkspaceDir = resolve(tmpdir(), 'ncx-test-workspace-' + crypto.randomUUID())
+    expect(existsSync(uniqueWorkspaceDir)).toBe(false)
+
+    try {
+      const workspaceRegistry = new ShellWorkspaceRegistry({
+        defaultWorkspaceRoot: uniqueWorkspaceDir,
+        workspaces: [{ id: 'temp-workspace', rootPath: uniqueWorkspaceDir }],
+        realpath: (path) => resolve(path)
+      })
+      const classifier = new ShellPolicyClassifier({
+        platform: 'win32',
+        safetyLevel: 'S2',
+        workspaceRegistry,
+        powershellAstInspector: astInspector
+      })
+      const supervisor = new FakeSupervisor('ok')
+      const executor = new ShellExecutor({
+        platform: 'win32',
+        classifier,
+        workspaceRegistry,
+        processSupervisor: supervisor,
+        tempRoot: resolve(tmpdir(), 'ncx-test-temp-' + crypto.randomUUID())
+      })
+
+      const result = await executor.execute(crypto.randomUUID(), {
+        command: 'Get-Location',
+        workspaceId: 'temp-workspace',
+        purpose: '验证工作目录自动创建'
+      })
+
+      expect(result.status).toBe('succeeded')
+      expect(existsSync(uniqueWorkspaceDir)).toBe(true)
+    } finally {
+      try {
+        rmSync(uniqueWorkspaceDir, { recursive: true, force: true })
+      } catch {
+        // 忽略测试清理错误
+      }
+    }
   })
 })

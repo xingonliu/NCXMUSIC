@@ -120,6 +120,14 @@ export class ShellExecutor {
 
     const timeoutMs = input.data.timeoutMs ?? SHELL_DEFAULT_TIMEOUT_MS
     const shell = this.createShellInvocation(input.data)
+
+    /** 确保执行工作目录在磁盘上真实存在，防止子进程 spawn 抛出 ENOENT 错误。 */
+    try {
+      mkdirSync(workspace.cwd, { recursive: true })
+    } catch {
+      // 容错处理：部分测试中注入的虚拟路径若无法写入文件系统，允许继续由 supervisor 托管
+    }
+
     const handle = this.processSupervisor.run({
       commandId,
       file: shell.file,
