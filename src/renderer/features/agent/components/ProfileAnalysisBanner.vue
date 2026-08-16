@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { AlertCircle, Sparkles, X } from '@lucide/vue'
-import { computed, type DeepReadonly } from 'vue'
+import { AlertCircle, Check, Copy, Sparkles, X } from '@lucide/vue'
+import { computed, ref, type DeepReadonly } from 'vue'
 
 import type { AgentSnapshot } from '../../../../shared/schemas/agent'
-import { CommonButton, CommonIconButton } from '../../../design-system/components'
+import { CommonButton, CommonDialog, CommonIconButton } from '../../../design-system/components'
+import { copyText } from '../../foundation/clipboard'
 
 // ========= 类型 =========
 
@@ -66,6 +67,41 @@ const description = computed<string>(() => {
   }
   return '开始后会在本地扫描并聚合授权音乐数据，只把聚合特征和有限代表样本发送给当前模型服务，可能产生 Token 费用。'
 })
+
+/** 是否展示原始返回详情弹窗。 */
+const detailModalVisible = ref(false)
+
+/** 复制成功提示状态。 */
+const copied = ref(false)
+
+// ========= 函数 =========
+
+/** 复制模型原始返回内容。 */
+async function handleCopyOutput(): Promise<void> {
+  const content = profile.value.rawOutput || ''
+  if (!content) return
+  await copyText(content)
+  copied.value = true
+  setTimeout(() => {
+    copied.value = false
+  }, 2000)
+}
+
+/** 打开详情弹窗。 */
+function handleOpenDetail(): void {
+  detailModalVisible.value = true
+}
+
+/** 关闭详情弹窗。 */
+function handleCloseDetail(): void {
+  detailModalVisible.value = false
+}
+
+/** 从弹窗中触发重试。 */
+function handleRetryFromModal(): void {
+  detailModalVisible.value = false
+  emit('start', startMode.value)
+}
 </script>
 
 <template>
@@ -86,15 +122,24 @@ const description = computed<string>(() => {
         <span :style="{ width: `${profile.progress}%` }" />
       </div>
     </div>
-    <CommonButton
-      v-if="!working"
-      variant="primary"
-      size="compact"
-      :disabled="!profile.eligible"
-      @click="emit('start', startMode)"
-    >
-      {{ failed ? '重试' : profile.prompt.kind === 'update' ? '更新画像' : '开始分析' }}
-    </CommonButton>
+    <div v-if="!working" class="profile-analysis-banner-actions">
+      <CommonButton
+        variant="primary"
+        size="compact"
+        :disabled="!profile.eligible"
+        @click="emit('start', startMode)"
+      >
+        {{ failed ? '重试' : profile.prompt.kind === 'update' ? '更新画像' : '开始分析' }}
+      </CommonButton>
+      <CommonButton
+        v-if="failed"
+        variant="secondary"
+        size="compact"
+        @click="handleOpenDetail"
+      >
+        查看详情
+      </CommonButton>
+    </div>
     <CommonIconButton
       v-if="!working && profile.prompt.visible"
       label="暂不分析"
@@ -104,5 +149,49 @@ const description = computed<string>(() => {
     >
       <X :size="15" />
     </CommonIconButton>
+
+    <!-- Phase 6 失败原始响应详情弹窗 -->
+    <CommonDialog
+      :visible="detailModalVisible"
+      title="画像分析异常详情"
+      subtitle="大模型返回的原始数据与异常信息"
+      width="640px"
+      @close="handleCloseDetail"
+    >
+      <div class="profile-raw-detail-content">
+        <section class="profile-raw-detail-section">
+          <div class="profile-raw-detail-label">错误原因</div>
+          <div class="profile-raw-detail-error">
+            {{ profile.errorMessage || '模型没有返回有效画像 JSON。' }}
+          </div>
+        </section>
+
+        <section class="profile-raw-detail-section">
+          <div class="profile-raw-detail-header">
+            <span class="profile-raw-detail-label">AI 原始返回</span>
+            <CommonButton
+              v-if="profile.rawOutput"
+              variant="ghost"
+              size="compact"
+              @click="handleCopyOutput"
+            >
+              <Check v-if="copied" :size="13" />
+              <Copy v-else :size="13" />
+              <span>{{ copied ? '已复制' : '复制内容' }}</span>
+            </CommonButton>
+          </div>
+          <pre class="profile-raw-detail-pre">{{ profile.rawOutput || '（模型未返回任何文本内容或响应为空）' }}</pre>
+        </section>
+      </div>
+
+      <template #actions>
+        <CommonButton variant="secondary" @click="handleCloseDetail">
+          关闭
+        </CommonButton>
+        <CommonButton variant="primary" :disabled="!profile.eligible" @click="handleRetryFromModal">
+          重试生成
+        </CommonButton>
+      </template>
+    </CommonDialog>
   </aside>
 </template>

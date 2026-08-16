@@ -127,7 +127,8 @@ export const MusicPersonalizationSnapshotSchema = z.strictObject({
   recommendationSeeds: z.array(z.string().max(120)).max(12),
   overrides: z.array(MusicProfileOverrideSchema).max(100),
   prompt: MusicProfilePromptSchema,
-  errorMessage: z.string().max(500).optional()
+  errorMessage: z.string().max(500).optional(),
+  rawOutput: z.string().max(200_000).optional()
 })
 
 /** 空的个性化快照，供游客、启动阶段和旧快照兼容使用。 */

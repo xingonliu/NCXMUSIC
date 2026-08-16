@@ -159,6 +159,8 @@ interface PersonalizationState {
   stageLabel: string
   /** 最近失败文案。 */
   errorMessage?: string | undefined
+  /** 最近失败时模型返回的原始文本。 */
+  rawOutput?: string | undefined
 }
 
 /** 画像服务变更监听器。 */
@@ -313,7 +315,8 @@ export class PersonalizationService {
           ? { dismissedUntil: this.state.dismissedAt + PROFILE_PROMPT_SILENCE_MS }
           : {})
       },
-      ...(this.state.errorMessage ? { errorMessage: this.state.errorMessage } : {})
+      ...(this.state.errorMessage ? { errorMessage: this.state.errorMessage } : {}),
+      ...(this.state.rawOutput ? { rawOutput: this.state.rawOutput } : {})
     })
   }
 
@@ -403,6 +406,7 @@ export class PersonalizationService {
       this.state.progress = 76
       this.state.stageLabel = '复用已采集数据，重新生成画像'
       this.state.errorMessage = undefined
+      this.state.rawOutput = undefined
       await this.persist()
       this.notify()
       return prepared
@@ -423,6 +427,7 @@ export class PersonalizationService {
     this.state.progress = 8
     this.state.stageLabel = '正在读取喜欢、歌单与听歌排行'
     this.state.errorMessage = undefined
+    this.state.rawOutput = undefined
     await this.persist()
     this.notify()
     try {
@@ -521,19 +526,21 @@ export class PersonalizationService {
     this.state.progress = 100
     this.state.stageLabel = '音乐人格画像已生成'
     this.state.errorMessage = undefined
+    this.state.rawOutput = undefined
     await this.persist()
     await this.appendJournal('profile.generated', { version: document.version, mode: job.mode })
     this.notify()
   }
 
   /** 画像 Job 失败时保留旧画像、旧基线与已采集证据。 */
-  async failAnalysis(jobId: string, message: string): Promise<void> {
+  async failAnalysis(jobId: string, message: string, rawOutput?: string): Promise<void> {
     if (this.state.activeJob?.jobId !== jobId) return
     this.state.activeJob = undefined
     this.state.status = 'failed'
     this.state.progress = 0
     this.state.stageLabel = ''
     this.state.errorMessage = message.slice(0, 500)
+    this.state.rawOutput = rawOutput ? rawOutput.slice(0, 200_000) : undefined
     await this.persist()
     await this.appendJournal('profile.failed', { hasUsableProfile: Boolean(this.state.document) })
     this.notify()

@@ -262,4 +262,24 @@ describe('Phase 6 画像持久化与删除边界', () => {
     await expect(service.prepareAnalysis(musicPort([], [], []), 'initialize')).rejects.toThrow('游客不能生成')
     await store.close()
   })
+
+  it('画像分析失败时记录 rawOutput 原始文本并在快照中透传', async () => {
+    /** 账户数据存储。 */
+    const store = new UtilityAccountStore({ dataRoot: createDataRoot() })
+    await store.open('netease:12345678', 0)
+    /** 画像服务。 */
+    const service = new PersonalizationService(store)
+    await service.restore()
+    /** 准备 Job。 */
+    const prepared = await service.prepareAnalysis(musicPort([song('1', 'A')], [], []), 'initialize')
+    /** 模型返回的非 JSON 原始响应文本。 */
+    const mockRawOutput = '模型思考中...好的，我分析了你的音乐喜好，你喜欢歌手 A。'
+    await service.failAnalysis(prepared.jobId, '模型没有返回有效画像 JSON。', mockRawOutput)
+    /** 失败后的快照。 */
+    const snapshot = service.snapshot(true)
+    expect(snapshot.status).toBe('failed')
+    expect(snapshot.errorMessage).toBe('模型没有返回有效画像 JSON。')
+    expect(snapshot.rawOutput).toBe(mockRawOutput)
+    await store.close()
+  })
 })

@@ -1745,7 +1745,11 @@ export class AgentRuntime {
       await personalization.completeAnalysis(prepared, analysis)
     } catch (error) {
       if (!controller.signal.aborted && prepared) {
-        await personalization.failAnalysis(prepared.jobId, readableError(error)).catch(() => undefined)
+        /** 失败时携带的模型原始文本。 */
+        const rawOutput = isRecord(error) && typeof error['rawOutput'] === 'string'
+          ? error['rawOutput']
+          : undefined
+        await personalization.failAnalysis(prepared.jobId, readableError(error), rawOutput).catch(() => undefined)
       }
     } finally {
       if (this.profileAnalysisController === controller) this.profileAnalysisController = undefined
@@ -1785,7 +1789,10 @@ export class AgentRuntime {
         if (event.type === 'text-delta') {
           output += event.text
           if (output.length > PROFILE_MODEL_OUTPUT_MAX_CHARS) {
-            throw Object.assign(new Error('画像模型输出超过 200,000 字符上限。'), { code: 'PROFILE_MODEL_LIMIT' })
+            throw Object.assign(new Error('画像模型输出超过 200,000 字符上限。'), {
+              code: 'PROFILE_MODEL_LIMIT',
+              rawOutput: output
+            })
           }
         } else if (event.type === 'tool-call-delta') {
           /** 当前内部调用 ID。 */
@@ -1807,7 +1814,16 @@ export class AgentRuntime {
       const completedCalls: CompletedAgentToolCall[] = calls
         .filter((call) => call.name.length > 0)
         .map((call) => ({ id: call.id, name: call.name, arguments: call.arguments || '{}' }))
-      if (completedCalls.length === 0) return parseMusicProfileAnalysis(output)
+      if (completedCalls.length === 0) {
+        try {
+          return parseMusicProfileAnalysis(output)
+        } catch (error) {
+          throw Object.assign(
+            error instanceof Error ? error : new Error(String(error)),
+            { rawOutput: output }
+          )
+        }
+      }
       if (completedCalls.some((call) => call.name !== 'get_profile_evidence_page')) {
         throw new Error('画像模型请求了未注册的内部工具。')
       }

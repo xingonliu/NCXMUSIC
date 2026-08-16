@@ -29,6 +29,7 @@ import { showToast } from '../../design-system/use-toast'
 import type { AgentSnapshot } from '../../../shared/schemas/agent'
 import { useAccountSessionStore } from '../account/account-session-store'
 import AgentComposer from './components/AgentComposer.vue'
+import AgentMarkdown from './components/AgentMarkdown.vue'
 import ApprovalCard from './components/ApprovalCard.vue'
 import SelectionCard from './components/SelectionCard.vue'
 import ToolExecutionCard from './components/ToolExecutionCard.vue'
@@ -507,14 +508,14 @@ watch(
               @cancel="agent.cancelSelection"
             />
 
-            <!-- Raw Response Text (No bubble container!) -->
+            <!-- Assistant Markdown Response (No bubble container!) -->
             <div
               v-if="message.content.trim().length > 0 || message.streaming"
               class="agent-assistant-content"
             >
-              <span>{{ message.content }}</span><span
-                v-if="message.streaming"
-                class="agent-streaming-caret"
+              <AgentMarkdown
+                :content="message.content"
+                :streaming="Boolean(message.streaming)"
               />
             </div>
 

@@ -40,8 +40,8 @@ export interface AgentPersonalizationPort {
   ): Promise<AgentPreparedProfileAnalysis>
   /** 成功后原子替换画像与变化基线。 */
   completeAnalysis(prepared: AgentPreparedProfileAnalysis, analysis: MusicProfileAnalysis): Promise<void>
-  /** 标记画像 Job 失败。 */
-  failAnalysis(jobId: string, message: string): Promise<void>
+  /** 标记画像 Job 失败，可附带模型原始响应。 */
+  failAnalysis(jobId: string, message: string, rawOutput?: string): Promise<void>
   /** 取消当前画像 Job 的底层音乐请求。 */
   cancelActiveJob(music: AgentMusicPort): void
   /** 关闭当前画像提示。 */

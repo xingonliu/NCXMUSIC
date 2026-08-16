@@ -62,4 +62,12 @@ describe('Phase 6 个性化 UI', () => {
     expect(discoverPageSource).toContain('agent.snapshot.value.personalization.usable')
     expect(discoverPageSource).toContain('title="小云为你推荐"')
   })
+
+  it('画像分析失败提示提供查看详情按钮与原始响应弹窗', () => {
+    expect(bannerSource).toContain('查看详情')
+    expect(bannerSource).toContain('<CommonDialog')
+    expect(bannerSource).toContain('画像分析异常详情')
+    expect(bannerSource).toContain('profile-raw-detail-pre')
+    expect(bannerSource).toContain('复制内容')
+  })
 })
