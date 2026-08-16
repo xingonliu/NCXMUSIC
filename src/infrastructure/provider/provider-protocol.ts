@@ -308,7 +308,7 @@ function buildOpenAITextStreamRequest(
     })),
     stream: true,
     max_tokens: input.maxTokens ?? DEFAULT_MAX_TOKENS,
-    tools
+    tools: tools && tools.length > 0 ? tools : undefined
   }
 
   return {
@@ -378,7 +378,7 @@ function buildAnthropicTextStreamRequest(
     stream: true,
     system: systemText.length > 0 ? systemText : undefined,
     messages,
-    tools
+    tools: tools && tools.length > 0 ? tools : undefined
   }
 
   return {
@@ -1042,7 +1042,13 @@ function extractErrorMessage(
     getString(errorRecord.status)
   if (providerMessage) return providerMessage
   if (typeof input.body === 'string') return input.body
-  if (input.cause instanceof Error) return input.cause.message
+  if (input.cause instanceof Error) {
+    /** 深度提取 Node.js / Undici 原生 fetch 嵌套的底层网络异常 (如 ECONNREFUSED/ETIMEDOUT/ENOTFOUND) */
+    const innerCause = 'cause' in input.cause && input.cause.cause instanceof Error
+      ? input.cause.cause.message
+      : undefined
+    return innerCause ? `${input.cause.message} (${innerCause})` : input.cause.message
+  }
   if (input.status) return `Provider request failed with HTTP ${input.status}.`
   return 'Provider request failed.'
 }
@@ -1282,12 +1288,15 @@ function isHtmlText(value: string): boolean {
   return normalized.startsWith('<!doctype html') || normalized.startsWith('<html')
 }
 
-/** 拼接 Provider base URL 与协议路径。 */
+/** 拼接 Provider base URL 与协议路径，防止路径重复。 */
 function joinProviderUrl(baseUrl: string, path: string): string {
   /** 去掉尾部斜杠后的 base URL。 */
   const cleanBase = baseUrl.replace(/\/+$/u, '')
   /** 确保 path 以斜杠开头。 */
   const cleanPath = path.startsWith('/') ? path : `/${path}`
+  if (cleanBase.endsWith(cleanPath)) {
+    return cleanBase
+  }
   return `${cleanBase}${cleanPath}`
 }
 

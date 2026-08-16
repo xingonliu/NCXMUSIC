@@ -297,7 +297,7 @@ const TOOL_DEFINITIONS: readonly AgentToolDefinition[] = [
             {
               type: 'object',
               properties: {
-                kind: { const: 'entity' },
+                kind: { enum: ['entity'] },
                 optionKey: { type: 'string', pattern: '^[A-Za-z0-9._-]{1,80}$' },
                 entityRef: { type: 'string', pattern: '^(song|artist|album|playlist):\\d{1,20}$', description: '必须来自此前工具结果的 ref。' }
               },
@@ -307,7 +307,7 @@ const TOOL_DEFINITIONS: readonly AgentToolDefinition[] = [
             {
               type: 'object',
               properties: {
-                kind: { const: 'text' },
+                kind: { enum: ['text'] },
                 optionKey: { type: 'string', pattern: '^[A-Za-z0-9._-]{1,80}$' },
                 label: { type: 'string' },
                 description: { type: 'string', description: '可选的补充说明。' }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+  AlertCircle,
   Bug,
   ChevronRight,
   Copy,
@@ -236,6 +237,19 @@ onUnmounted(() => {
 })
 
 watch(
+  () => agent.snapshot.value.turnStatus,
+  (newStatus, oldStatus) => {
+    if (newStatus === 'failed' && oldStatus !== 'failed') {
+      const lastSystemMsg = agent.snapshot.value.messages
+        .slice()
+        .reverse()
+        .find((msg) => msg.role === 'system')
+      showToast(lastSystemMsg?.content || '小云响应失败，请检查模型配置与网络。', 'warning')
+    }
+  }
+)
+
+watch(
   () => [
     agent.snapshot.value.updatedAt,
     agent.snapshot.value.messages.at(-1)?.content,
@@ -327,6 +341,30 @@ watch(
           >
             <div class="agent-user-bubble">
               {{ message.content }}
+            </div>
+          </div>
+
+          <!-- System Message: Error / Warning Callout -->
+          <div
+            v-else-if="message.role === 'system'"
+            class="agent-turn-block is-system"
+          >
+            <div class="agent-system-card">
+              <AlertCircle
+                :size="16"
+                class="agent-system-icon"
+              />
+              <div class="agent-system-content">
+                <p>{{ message.content }}</p>
+                <button
+                  v-if="!agent.snapshot.value.configured || message.content.includes('模型')"
+                  type="button"
+                  class="agent-system-action-btn"
+                  @click="openModelSettings"
+                >
+                  前往模型设置
+                </button>
+              </div>
             </div>
           </div>
 

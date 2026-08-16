@@ -511,4 +511,47 @@ describe('provider ASR support fixtures', () => {
 
     expect(fingerprints.size).toBe(6)
   })
+
+  it('当 tools 传入空数组时在请求体中省略 tools 字段，防止被 API 拒绝', () => {
+    const openaiProfile = createProfile({ protocol: 'openai-compatible' })
+    const openaiRequest = buildProviderTextStreamRequest(openaiProfile, {
+      messages: [{ role: 'user', content: '你好' }],
+      tools: []
+    })
+    const openaiBody = openaiRequest.body as Record<string, unknown>
+    expect(openaiBody['tools']).toBeUndefined()
+
+    const anthropicProfile = createProfile({ protocol: 'anthropic-messages', baseUrl: 'https://anthropic.example.com' })
+    const anthropicRequest = buildProviderTextStreamRequest(anthropicProfile, {
+      messages: [{ role: 'user', content: '你好' }],
+      tools: []
+    })
+    const anthropicBody = anthropicRequest.body as Record<string, unknown>
+    expect(anthropicBody['tools']).toBeUndefined()
+  })
+
+  it('当 Base URL 已经包含完整 endpoint 时，防止重复拼接路径', () => {
+    const openaiProfile = createProfile({
+      protocol: 'openai-compatible',
+      baseUrl: 'https://api.openai.com/v1/chat/completions'
+    })
+    const request = buildProviderTextStreamRequest(openaiProfile, {
+      messages: [{ role: 'user', content: '你好' }]
+    })
+    expect(request.url).toBe('https://api.openai.com/v1/chat/completions')
+  })
+
+  it('当底层网络请求抛出嵌套 Error 时提取根原因', () => {
+    const networkError = Object.assign(new TypeError('fetch failed'), {
+      cause: new Error('connect ECONNREFUSED 127.0.0.1:11434')
+    })
+    const normalized = normalizeProviderError({
+      protocol: 'openai-compatible',
+      cause: networkError
+    })
+    expect(normalized.code).toBe('network')
+    expect(normalized.message).toContain('fetch failed')
+    expect(normalized.message).toContain('connect ECONNREFUSED')
+  })
 })
+

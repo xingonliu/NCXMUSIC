@@ -715,6 +715,13 @@ export class AgentRuntime {
       if (controller.signal.aborted) return
       this.turnStatus = 'failed'
       this.endReason = 'provider_error'
+      /** 清理未输出任何内容且未发起 Tool Call 的空 Assistant 消息 */
+      const lastMsg = this.messages.at(-1)
+      if (lastMsg?.role === 'assistant' && !lastMsg.content.trim() && lastMsg.toolCallIds.length === 0) {
+        this.messages.pop()
+      } else if (lastMsg?.role === 'assistant') {
+        lastMsg.streaming = false
+      }
       this.messages.push(createMessage('system', readableError(error)))
       this.publish()
     } finally {
