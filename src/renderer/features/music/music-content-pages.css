@@ -63,110 +63,398 @@
     var(--ncx-shadow-elevation-1);
 }
 
-/* ========= 搜索入口 ========= */
+/* ========= 搜索入口与页面架构 ========= */
 
 .music-search-page {
-  width: min(720px, calc(100% - 48px));
+  width: min(1120px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 108px 0 0;
+  padding: 0 0 64px;
 }
 
-.music-search-intro {
-  max-width: 600px;
+/* 顶部黏性吸顶搜索栏 */
+.music-search-sticky-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 16px 0 12px;
+  background: color-mix(in srgb, var(--music-page-bg, var(--ncx-color-bg-base, #fff)) 82%, transparent);
+  backdrop-filter: blur(20px) saturate(180%);
+  margin-bottom: 20px;
+  transition: padding 0.2s ease;
 }
 
-.music-search-intro h1 {
-  margin: 0;
-  font-size: 32px;
-  line-height: 1.12;
-  letter-spacing: -0.025em;
+.music-search-bar-inner {
+  position: relative;
+  width: 100%;
+  max-width: 740px;
+  margin: 0 auto;
 }
 
-.music-search-box {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--ncx-space-3);
-  margin-top: var(--ncx-space-6);
-}
-
-.music-search-suggestion-section {
-  margin-top: var(--ncx-space-5);
-}
-
-.music-search-suggestion-section header,
-.music-search-suggestion-section header button,
-.music-search-suggestions button {
+/* 极简无边框阴影输入框容器 */
+.music-search-input-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px 0 14px;
+  border-radius: var(--ncx-radius-xl, 14px);
+  background: var(--ncx-color-surface-elevated, #fff);
+  box-shadow:
+    0 4px 20px -2px rgb(0 0 0 / 7%),
+    0 2px 6px -1px rgb(0 0 0 / 4%);
+  border: 0;
+  transition: box-shadow 0.25s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s ease;
 }
 
-.music-search-suggestion-section header {
-  justify-content: space-between;
+.music-search-input-wrapper:focus-within {
+  box-shadow:
+    0 8px 28px -4px rgb(0 0 0 / 12%),
+    0 3px 8px -1px rgb(0 0 0 / 6%);
 }
 
-.music-search-suggestion-section h2 {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 600;
+.music-search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ncx-color-text-tertiary);
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.music-search-input-minimal {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ncx-color-text-primary);
+  font-size: 15px;
+  font-weight: 500;
   letter-spacing: -0.01em;
 }
 
-.music-search-suggestion-section header button {
-  gap: var(--ncx-space-1);
-  padding: 4px 6px;
-  border: 0;
-  border-radius: var(--ncx-radius-sm);
+.music-search-input-minimal::placeholder {
   color: var(--ncx-color-text-tertiary);
-  background: transparent;
-  cursor: pointer;
-  font-size: 12px;
-  transition:
-    color var(--ncx-motion-fast) var(--music-page-easing),
-    background-color var(--ncx-motion-fast) var(--music-page-easing),
-    transform var(--ncx-motion-instant) var(--music-page-easing);
+  font-weight: 400;
 }
 
-.music-search-suggestion-section header button:hover {
+.music-search-input-minimal::-webkit-search-cancel-button,
+.music-search-input-minimal::-webkit-search-decoration {
+  appearance: none;
+}
+
+.music-search-clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--ncx-color-text-tertiary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
+}
+
+.music-search-clear-btn:hover {
+  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 14%, transparent);
+}
+
+.music-search-clear-btn:active {
+  transform: scale(0.92);
+}
+
+/* 实时建议下拉浮层菜单（纯文字列表，无多余标题） */
+.music-search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  max-height: 360px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: var(--ncx-radius-xl, 14px);
+  background: color-mix(in srgb, var(--ncx-color-surface-elevated, #fff) 94%, transparent);
+  backdrop-filter: blur(28px) saturate(190%);
+  box-shadow:
+    0 16px 36px -6px rgb(0 0 0 / 16%),
+    0 4px 12px -2px rgb(0 0 0 / 8%);
+  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
+}
+
+.music-search-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: var(--ncx-radius-md, 8px);
+  color: var(--ncx-color-text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.music-search-dropdown-item:hover,
+.music-search-dropdown-item.is-highlighted {
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
+  color: var(--ncx-color-primary, #0071e3);
+}
+
+.dropdown-item-icon {
+  color: var(--ncx-color-text-tertiary);
+  flex-shrink: 0;
+}
+
+.music-search-dropdown-item:hover .dropdown-item-icon,
+.music-search-dropdown-item.is-highlighted .dropdown-item-icon {
+  color: var(--ncx-color-primary, #0071e3);
+}
+
+.dropdown-item-text {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.music-dropdown-fade-enter-active,
+.music-dropdown-fade-leave-active {
+  transition: opacity 0.18s cubic-bezier(0.25, 1, 0.5, 1), transform 0.18s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.music-dropdown-fade-enter-from,
+.music-dropdown-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.99);
+}
+
+/* 主内容容器（未搜索状态） */
+.music-search-home {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* 区块通用头部 */
+.music-search-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.music-search-section-header h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ncx-color-text-primary);
+}
+
+.music-search-clear-history-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: var(--ncx-radius-sm, 6px);
+  color: var(--ncx-color-text-tertiary);
+  background: transparent;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.music-search-clear-history-btn:hover {
   color: var(--ncx-color-text-primary);
   background: var(--ncx-color-control-hover);
 }
 
-.music-search-suggestion-section header button:active {
-  transform: scale(0.97);
-}
-
-.music-search-suggestions {
+/* 最近搜索胶囊芯片 */
+.music-search-history-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--ncx-space-2);
-  margin-top: var(--ncx-space-3);
+  gap: 8px;
 }
 
-.music-search-suggestions button {
-  gap: var(--ncx-space-1);
-  height: 30px;
-  padding: 0 12px;
+.music-search-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
   border: 0;
-  border-radius: var(--ncx-radius-full);
+  border-radius: 999px;
   color: var(--ncx-color-text-secondary);
   background: var(--music-page-surface-subtle);
   box-shadow: inset 0 0 0 1px var(--music-page-edge);
+  font-size: 13px;
   cursor: pointer;
-  transition:
-    color var(--ncx-motion-fast) var(--music-page-easing),
-    background-color var(--ncx-motion-fast) var(--music-page-easing),
-    box-shadow var(--ncx-motion-fast) var(--music-page-easing),
-    transform var(--ncx-motion-instant) var(--music-page-easing);
+  user-select: none;
+  transition: color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
 }
 
-.music-search-suggestions button:hover {
+.music-search-chip:hover {
   color: var(--ncx-color-text-primary);
   background: var(--ncx-color-surface-raised);
   box-shadow: inset 0 0 0 1px var(--music-page-edge-strong);
 }
 
-.music-search-suggestions button:active {
-  transform: scale(0.97);
+.music-search-chip:active {
+  transform: scale(0.96);
+}
+
+/* 热搜榜头部 */
+.hot-songs-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hot-flame-icon {
+  color: #ff3b30;
+}
+
+.hot-songs-sub {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ncx-color-text-tertiary);
+  margin-left: 2px;
+}
+
+/* 热搜榜 20 首 Grid 响应式自适应网格 */
+.music-hot-songs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 20px 16px;
+}
+
+.hot-song-card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hot-song-cover-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.hot-song-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: rgb(0 0 0 / 55%);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
+}
+
+.hot-song-badge.is-top-three {
+  background: linear-gradient(135deg, #ff3b30 0%, #ff9500 100%);
+}
+
+.hot-song-info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+  min-width: 0;
+}
+
+.hot-song-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ncx-color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hot-song-card:hover .hot-song-name {
+  color: var(--ncx-color-primary, #0071e3);
+}
+
+.hot-song-artist {
+  font-size: 12px;
+  color: var(--ncx-color-text-tertiary);
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 骨架屏 */
+.hot-song-card-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-cover {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--ncx-radius-lg, 10px);
+  background: var(--music-page-surface-subtle);
+  animation: pulse-skeleton 1.5s ease-in-out infinite;
+}
+
+.skeleton-line {
+  height: 14px;
+  border-radius: 4px;
+  background: var(--music-page-surface-subtle);
+  animation: pulse-skeleton 1.5s ease-in-out infinite;
+}
+
+.skeleton-line.title {
+  width: 80%;
+}
+
+.skeleton-line.artist {
+  width: 50%;
+  height: 12px;
+}
+
+@keyframes pulse-skeleton {
+  0%, 100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* 搜索结果容器 */
+.music-search-results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* ========= 搜索结果 ========= */

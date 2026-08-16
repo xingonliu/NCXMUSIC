@@ -425,6 +425,12 @@ export const GetMusicCommentsPayloadSchema = z.strictObject({
   offset: z.number().int().min(0).max(5_000).default(0)
 })
 
+/** 读取热搜榜/热门歌曲请求。 */
+export const GetHotSongsPayloadSchema = z.strictObject({
+  operation: z.literal('getHotSongs'),
+  limit: z.number().int().min(1).max(50).default(20)
+})
+
 /** Music Service 只读请求载荷。 */
 export const MusicReadPayloadSchema = z.discriminatedUnion('operation', [
   MusicSearchPayloadSchema,
@@ -451,7 +457,8 @@ export const MusicReadPayloadSchema = z.discriminatedUnion('operation', [
   GetListeningHistoryPayloadSchema,
   GetArtistSongsPayloadSchema,
   GetBrowseFacetsPayloadSchema,
-  GetMusicCommentsPayloadSchema
+  GetMusicCommentsPayloadSchema,
+  GetHotSongsPayloadSchema
 ])
 
 /** 搜索响应结果。 */
@@ -480,7 +487,7 @@ export const MusicEntityResultSchema = z.discriminatedUnion('kind', [
 /** 标准歌曲集合响应。 */
 export const MusicSongCollectionResultSchema = z.strictObject({
   kind: z.literal('songCollection'),
-  collection: z.enum(['new', 'daily', 'liked', 'personalFm', 'historyWeek', 'historyAll', 'artistWorks']),
+  collection: z.enum(['new', 'daily', 'liked', 'personalFm', 'historyWeek', 'historyAll', 'artistWorks', 'hot']),
   ownerId: MusicUserIdSchema.optional(),
   artistId: ArtistIdSchema.optional(),
   songs: z.array(StandardSongSchema).default([]),

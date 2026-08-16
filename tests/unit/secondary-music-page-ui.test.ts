@@ -37,7 +37,7 @@ describe('二级音乐内容页视觉结构', () => {
     vi.restoreAllMocks()
   })
 
-  it('保持搜索页为单一搜索控件而不叠加装饰卡片', async () => {
+  it('渲染极简吸顶搜索栏与热搜榜结构', async () => {
     /** 搜索页结构测试使用的内存路由。 */
     const router = createRouter({
       history: createMemoryHistory(),
@@ -52,9 +52,9 @@ describe('二级音乐内容页视觉结构', () => {
     })
 
     expect(wrapper.classes()).toContain('music-content-page')
-    expect(wrapper.get('h1').text()).toBe('搜索')
-    expect(wrapper.find('.music-search-box').exists()).toBe(true)
-    expect(wrapper.find('.music-search-panel').exists()).toBe(false)
+    expect(wrapper.find('.music-search-sticky-bar').exists()).toBe(true)
+    expect(wrapper.find('.music-search-input-minimal').exists()).toBe(true)
+    expect(wrapper.find('.music-hot-songs-section').exists()).toBe(true)
   })
 
   it('分类请求晚于其他内容区完成时仍会结束每行加载状态', async () => {

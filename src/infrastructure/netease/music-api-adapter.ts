@@ -869,6 +869,9 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
     if (parsed.operation === 'getSearchSuggestions') {
       return this.getSearchSuggestions(parsed.query, parsed.limit, cookie, signal)
     }
+    if (parsed.operation === 'getHotSongs') {
+      return this.getHotSongs(parsed.limit, cookie, signal)
+    }
     if (parsed.operation === 'getListeningHistory') {
       return this.getListeningHistory(parsed.userId, parsed.period, parsed.limit, cookie, signal)
     }
@@ -1626,6 +1629,39 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
       artists: array(result['artists']).slice(0, limit).map((item) => normalizeArtist(item, 'ncm.search_suggest', observedAt)).filter(Boolean),
       albums: array(result['albums']).slice(0, limit).map((item) => normalizeAlbum(item, [], 'ncm.search_suggest', observedAt)).filter(Boolean),
       playlists: array(result['playlists']).slice(0, limit).map((item) => normalizePlaylist(item, 'ncm.search_suggest', observedAt)).filter(Boolean),
+      updatedAt: observedAt
+    })
+  }
+
+  /** 读取热搜榜/热门歌曲（网易云官方热歌榜前 N 首）。 */
+  private async getHotSongs(
+    limit: number,
+    cookie: string,
+    signal?: AbortSignal
+  ): Promise<MusicReadResult> {
+    /** 已加载的网易云 API。 */
+    const api = await this.requiredApi()
+    /** 本次热门歌曲观测时间。 */
+    const observedAt = new Date().toISOString()
+    signal?.throwIfAborted()
+    /** 热歌榜歌单上游响应（网易云官方热歌榜固定 ID: 3778678）。 */
+    const response = await withoutThirdPartyConsole(() =>
+      api.playlist_detail({ id: '3778678', cookie, timeout: NETEASE_API_TIMEOUT_MS })
+    )
+    signal?.throwIfAborted()
+    /** 歌单详情实体记录。 */
+    const playlistRecord = record(bodyRecord(response)['playlist'])
+    /** 歌单内的曲目原始数组。 */
+    const rawTracks = array(playlistRecord?.['tracks'])
+    /** 归一化后的热门歌曲列表。 */
+    const songs = rawTracks
+      .slice(0, limit)
+      .map((item) => normalizeSong(item, 'ncm.playlist_detail', observedAt))
+      .filter(Boolean)
+    return MusicReadResultSchema.parse({
+      kind: 'songCollection',
+      collection: 'hot',
+      songs,
       updatedAt: observedAt
     })
   }
