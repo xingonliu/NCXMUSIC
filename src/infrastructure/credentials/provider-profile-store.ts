@@ -148,8 +148,15 @@ export class ProviderProfileStore {
     const existing = input.profileId
       ? this.profiles.find((profile) => profile.profileId === input.profileId)
       : undefined
-    /** 已有秘密。 */
-    const previousSecrets = existing ? this.readSecrets(existing) : { customHeaders: {} }
+    /** 已有秘密。解密失败时安全降级为空对象，不阻塞新密钥保存。 */
+    let previousSecrets: ProviderSecrets = { customHeaders: {} }
+    if (existing) {
+      try {
+        previousSecrets = this.readSecrets(existing)
+      } catch (error) {
+        console.warn(`[ProviderProfileStore] 读取已有 Profile (${existing.profileId}) 秘密失败，使用空秘密兜底:`, error)
+      }
+    }
     /** 本次持久化秘密。 */
     const secrets: ProviderSecrets = {
       ...(input.apiKey !== undefined
@@ -234,22 +241,27 @@ export class ProviderProfileStore {
     const stored = this.profiles.find((profile) => profile.profileId === profileId && profile.enabled)
     if (!stored) return undefined
     /** 解密秘密。 */
-    const secrets = this.readSecrets(stored)
-    /** 协议默认认证头。 */
-    const credentialHeaders = createCredentialHeaders(stored.protocol, secrets.apiKey)
-    /** 凭据指纹，不包含可逆原文。 */
-    const credentialFingerprint = createHash('sha256')
-      .update(JSON.stringify(secrets))
-      .digest('hex')
-    return ProviderRuntimeProfileSchema.parse({
-      profileId: stored.profileId,
-      protocol: stored.protocol,
-      model: stored.modelId,
-      baseUrl: stored.baseUrl,
-      headers: { ...credentialHeaders, ...secrets.customHeaders },
-      credentialFingerprint,
-      ...(stored.capabilitySnapshot ? { capabilitySnapshot: stored.capabilitySnapshot } : {})
-    })
+    try {
+      const secrets = this.readSecrets(stored)
+      /** 协议默认认证头。 */
+      const credentialHeaders = createCredentialHeaders(stored.protocol, secrets.apiKey)
+      /** 凭据指纹，不包含可逆原文。 */
+      const credentialFingerprint = createHash('sha256')
+        .update(JSON.stringify(secrets))
+        .digest('hex')
+      return ProviderRuntimeProfileSchema.parse({
+        profileId: stored.profileId,
+        protocol: stored.protocol,
+        model: stored.modelId,
+        baseUrl: stored.baseUrl,
+        headers: { ...credentialHeaders, ...secrets.customHeaders },
+        credentialFingerprint,
+        ...(stored.capabilitySnapshot ? { capabilitySnapshot: stored.capabilitySnapshot } : {})
+      })
+    } catch (error) {
+      console.warn(`[ProviderProfileStore] 解密 Profile (${stored.profileId} - ${stored.displayName}) 秘密失败:`, error)
+      return undefined
+    }
   }
 
   /** 将磁盘记录转换为公开快照，包含 API Key 回显。 */
@@ -263,7 +275,7 @@ export class ProviderProfileStore {
       apiKey = secrets.apiKey
       hasCredential ||= Boolean(apiKey)
     } catch {
-      hasCredential = true
+      hasCredential = false
     }
     return PublicProviderProfileSchema.parse({
       profileId: profile.profileId,

@@ -400,10 +400,17 @@ export class McpConfigStore {
 
   /** 只在 Main 内存解密 Secret 字典。 */
   private decryptMap(values: Readonly<Record<string, string>>): Readonly<Record<string, string>> {
-    return Object.fromEntries(Object.entries(values).map(([name, value]) => [
-      name,
-      this.protector.decrypt(Buffer.from(value, 'base64'))
-    ]))
+    if (!this.protector.isAvailable()) return {}
+    /** 解密后的键值对。 */
+    const result: Record<string, string> = {}
+    for (const [name, value] of Object.entries(values)) {
+      try {
+        result[name] = this.protector.decrypt(Buffer.from(value, 'base64'))
+      } catch (error) {
+        console.warn(`[McpConfigStore] 解密 Secret (${name}) 失败:`, error)
+      }
+    }
+    return result
   }
 
   /** 原子持久化 MCP 私有文档。 */

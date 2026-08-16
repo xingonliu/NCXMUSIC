@@ -257,12 +257,17 @@ export class ExtensionCoordinator {
   /** Utility 启动/重启后重新注入当前扩展运行配置。 */
   syncUtility(): boolean {
     this.revision += 1
-    return this.options.supervisor.postControl({
-      kind: 'extension.runtime.sync',
-      revision: this.revision,
-      skills: this.skills.runtimeDescriptors(),
-      mcpServers: this.mcp.runtimeConfigs()
-    })
+    try {
+      return this.options.supervisor.postControl({
+        kind: 'extension.runtime.sync',
+        revision: this.revision,
+        skills: this.skills.runtimeDescriptors(),
+        mcpServers: this.mcp.runtimeConfigs()
+      })
+    } catch (error) {
+      console.warn('[ExtensionCoordinator] 同步 Utility 扩展配置失败:', error)
+      return false
+    }
   }
 
   /** 返回最新公开设置快照。 */

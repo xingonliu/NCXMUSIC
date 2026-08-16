@@ -77,18 +77,23 @@ export class ProviderProfileCoordinator {
 
   /** Utility 启动/重启后重新注入唯一默认 Profile。 */
   syncUtility(): boolean {
-    /** 当前默认可执行 Profile。 */
-    const profile = this.store.runtimeProfile()
-    return this.supervisor.postControl(profile
-      ? { kind: 'agent.provider.configure', profile }
-      : { kind: 'agent.provider.clear' })
+    try {
+      /** 当前默认可执行 Profile。 */
+      const profile = this.store.runtimeProfile()
+      return this.supervisor.postControl(profile
+        ? { kind: 'agent.provider.configure', profile }
+        : { kind: 'agent.provider.clear' })
+    } catch (error) {
+      console.warn('[ProviderProfileCoordinator] 同步 Utility 默认 Profile 失败:', error)
+      return false
+    }
   }
 
   /** 执行最小流式与 Tool Call 验证；失败不会删除 Profile。 */
   private async verify(profileId: string): Promise<string> {
     /** 待验证执行 Profile。 */
     const profile = this.store.runtimeProfile(profileId)
-    if (!profile) throw new Error('Provider Profile 不存在或已停用。')
+    if (!profile) throw new Error('Provider Profile 不存在、已停用或密钥解密失败，请重新配置 API Key。')
     /** 验证开始时间。 */
     const startedAt = Date.now()
     /** 已观察事件。 */

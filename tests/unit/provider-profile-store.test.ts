@@ -133,4 +133,56 @@ describe('provider profile store', () => {
       authorization: 'Bearer initial-secret-key'
     })
   })
+
+  it('当安全存储历史密钥解密失败时允许重新保存新 API Key 并恢复', () => {
+    /** 当前测试隔离目录。 */
+    const directory = mkdtempSync(join(tmpdir(), 'ncx-provider-corrupt-'))
+    temporaryDirectories.push(directory)
+    /** 初始写入 Profile。 */
+    const store = new ProviderProfileStore(directory, testCipher)
+    store.load()
+    const saved = store.save({
+      displayName: '测试模型',
+      protocol: 'openai-compatible',
+      baseUrl: 'https://provider.example.com/v1',
+      modelId: 'model-a',
+      apiKey: 'old-key',
+      customHeaders: {},
+      enabled: true
+    })
+
+    /** 模拟环境变更导致解密失败的 Cipher。 */
+    let decryptFails = true
+    const flakyCipher: ProviderSecretCipher = {
+      isAvailable: () => true,
+      encrypt: (value) => Buffer.from([...value].reverse().join(''), 'utf8'),
+      decrypt: (value) => {
+        if (decryptFails) throw new Error('safeStorage.decryptString failed')
+        return [...value.toString('utf8')].reverse().join('')
+      }
+    }
+
+    /** 用失效 Cipher 打开仓库。 */
+    const brokenStore = new ProviderProfileStore(directory, flakyCipher)
+    brokenStore.load()
+    expect(brokenStore.runtimeProfile()).toBeUndefined()
+
+    /** 重新保存新 API Key，不应因为旧密钥无法解密而崩溃。 */
+    const recovered = brokenStore.save({
+      profileId: saved.profileId,
+      displayName: '测试模型',
+      protocol: 'openai-compatible',
+      baseUrl: 'https://provider.example.com/v1',
+      modelId: 'model-a',
+      apiKey: 'new-working-key',
+      customHeaders: {},
+      enabled: true
+    })
+
+    expect(recovered.profileId).toBe(saved.profileId)
+    decryptFails = false
+    expect(brokenStore.runtimeProfile()?.headers).toMatchObject({
+      authorization: 'Bearer new-working-key'
+    })
+  })
 })
