@@ -15,6 +15,7 @@ export const VoiceShortcutKeySchema = z.enum([
   'MetaRight',
   'ShiftLeft',
   'ShiftRight',
+  'KeyQ',
   'Space'
 ])
 

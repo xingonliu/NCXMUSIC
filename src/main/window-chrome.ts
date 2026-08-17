@@ -65,6 +65,8 @@ export function createMainWindowOptions(
       contextIsolation: true,
       sandbox: true,
       nodeIntegration: false,
+      /** 隐藏到托盘后仍需处理全局语音录音、VAD 与实时波形。 */
+      backgroundThrottling: false,
       webSecurity: true,
       allowRunningInsecureContent: false
     }

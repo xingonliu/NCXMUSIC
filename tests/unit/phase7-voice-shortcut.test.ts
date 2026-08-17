@@ -111,6 +111,19 @@ afterEach(() => {
 // ========= 测试 =========
 
 describe('Phase 7 voice shortcut atomic registration', () => {
+  it('新安装默认注册 Ctrl+Shift+Q', async () => {
+    /** 被测协调器。 */
+    const coordinator = createCoordinator()
+    electronFixture.hostStatuses.push('ready')
+
+    coordinator.start()
+    await vi.waitFor(() => expect(coordinator.snapshot().availability).toBe('ready'))
+
+    expect(coordinator.snapshot().chord).toEqual(['ControlLeft', 'ShiftLeft', 'KeyQ'])
+    expect(electronFixture.registered).toEqual(new Set(['Control+Shift+Q']))
+    coordinator.shutdown()
+  })
+
   it('重复保存相同组合键复用本应用注册且退出不注销其他快捷键', async () => {
     /** 被测协调器。 */
     const coordinator = createCoordinator()

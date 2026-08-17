@@ -36,7 +36,7 @@ export interface VoiceShortcutCoordinatorOptions {
 /** 磁盘只保存非敏感的快捷键配置。 */
 interface PersistedVoiceShortcutConfig {
   /** 配置 Schema 版本。 */
-  readonly schemaVersion: 1
+  readonly schemaVersion: 2
   /** 是否启用全局按住说话。 */
   readonly enabled: boolean
   /** 受限组合键。 */
@@ -45,11 +45,11 @@ interface PersistedVoiceShortcutConfig {
 
 // ========= 变量 =========
 
-/** 新安装默认使用 Alt+Space。 */
+/** 新安装默认使用 Ctrl+Shift+Q。 */
 const DEFAULT_VOICE_SHORTCUT: PersistedVoiceShortcutConfig = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   enabled: true,
-  chord: ['AltLeft', 'Space']
+  chord: ['ControlLeft', 'ShiftLeft', 'KeyQ']
 }
 
 /** Electron Accelerator 中按键的固定顺序。 */
@@ -62,6 +62,7 @@ const ACCELERATOR_ORDER: Readonly<Record<VoiceShortcutKey, number>> = {
   ShiftRight: 2,
   MetaLeft: 3,
   MetaRight: 3,
+  KeyQ: 4,
   Space: 4
 }
 
@@ -88,7 +89,7 @@ export class VoiceShortcutCoordinator {
   private snapshotValue: VoiceShortcutSnapshot = VoiceShortcutSnapshotSchema.parse({
     enabled: true,
     chord: DEFAULT_VOICE_SHORTCUT.chord,
-    accelerator: 'Alt+Space',
+    accelerator: 'Control+Shift+Q',
     availability: 'registering',
     generation: 0,
     updatedAt: Date.now()
@@ -119,7 +120,7 @@ export class VoiceShortcutCoordinator {
   /** 原子应用启停与改键；新配置失败时恢复旧绑定和旧 Host。 */
   async configure(enabled: boolean, chord: readonly VoiceShortcutKey[]): Promise<VoiceShortcutSnapshot> {
     if (!enabled) {
-      this.config = { schemaVersion: 1, enabled: false, chord: [...chord] }
+      this.config = { schemaVersion: 2, enabled: false, chord: [...chord] }
       this.persistConfig()
       this.stopHost()
       this.unregisterVoiceShortcut()
@@ -201,7 +202,7 @@ export class VoiceShortcutCoordinator {
     const oldHost = this.host
     this.host = candidate
     this.generation = candidateGeneration
-    this.config = { schemaVersion: 1, enabled: true, chord: normalizedChord }
+    this.config = { schemaVersion: 2, enabled: true, chord: normalizedChord }
     this.persistConfig()
     if (oldAccelerator && oldAccelerator !== accelerator) globalShortcut.unregister(oldAccelerator)
     this.registeredAccelerator = accelerator
@@ -298,14 +299,21 @@ export class VoiceShortcutCoordinator {
     try {
       if (!existsSync(this.configPath)) return DEFAULT_VOICE_SHORTCUT
       /** 未信任磁盘配置。 */
-      const decoded = JSON.parse(readFileSync(this.configPath, 'utf8')) as Partial<PersistedVoiceShortcutConfig>
-      if (decoded.schemaVersion !== 1 || typeof decoded.enabled !== 'boolean' || !Array.isArray(decoded.chord)) {
+      const decoded = JSON.parse(readFileSync(this.configPath, 'utf8')) as Partial<Omit<PersistedVoiceShortcutConfig, 'schemaVersion'>> & { schemaVersion?: 1 | 2 }
+      if ((decoded.schemaVersion !== 1 && decoded.schemaVersion !== 2) || typeof decoded.enabled !== 'boolean' || !Array.isArray(decoded.chord)) {
         return DEFAULT_VOICE_SHORTCUT
       }
+      /** v1 的旧默认值迁移为新默认值，用户自定义组合键保持不变。 */
+      const chord = decoded.schemaVersion === 1
+        && decoded.chord.length === 2
+        && decoded.chord.includes('AltLeft')
+        && decoded.chord.includes('Space')
+        ? DEFAULT_VOICE_SHORTCUT.chord
+        : decoded.chord as VoiceShortcutKey[]
       return {
-        schemaVersion: 1,
+        schemaVersion: 2,
         enabled: decoded.enabled,
-        chord: normalizeChord(decoded.chord as VoiceShortcutKey[])
+        chord: normalizeChord(chord)
       }
     } catch {
       return DEFAULT_VOICE_SHORTCUT
@@ -326,11 +334,12 @@ export class VoiceShortcutCoordinator {
 
 // ========= 函数 =========
 
-/** 将组合键去重、排序并强制包含 Space 与至少一个修饰键。 */
+/** 将组合键去重、排序并强制包含一个受限触发键与至少一个修饰键。 */
 export function normalizeChord(chord: readonly VoiceShortcutKey[]): VoiceShortcutKey[] {
   /** 去重后的候选按键。 */
   const normalized = [...new Set(chord)].sort((left, right) => ACCELERATOR_ORDER[left] - ACCELERATOR_ORDER[right])
-  if (!normalized.includes('Space')) throw new Error('语音快捷键必须包含 Space。')
+  if (!normalized.includes('Space') && !normalized.includes('KeyQ')) throw new Error('语音快捷键必须包含 Q 或 Space。')
+  if (normalized.includes('Space') && normalized.includes('KeyQ')) throw new Error('语音快捷键只能包含一个触发键。')
   if (normalized.length < 2) throw new Error('语音快捷键必须包含至少一个修饰键。')
   return normalized
 }
@@ -344,6 +353,7 @@ export function toAccelerator(chord: readonly VoiceShortcutKey[]): string {
     else if (key.startsWith('Alt')) parts.add('Alt')
     else if (key.startsWith('Shift')) parts.add('Shift')
     else if (key.startsWith('Meta')) parts.add(process.platform === 'darwin' ? 'Command' : 'Super')
+    else if (key === 'KeyQ') parts.add('Q')
     else if (key === 'Space') parts.add('Space')
   }
   return [...parts].join('+')

@@ -64,6 +64,7 @@ function normalizeNativeEvent(type: InputHookNativeEvent['type'], event: unknown
     [54, 'ShiftRight'],
     [56, 'AltLeft'],
     [57, 'Space'],
+    [16, 'KeyQ'],
     [3613, 'ControlRight'],
     [3640, 'AltRight'],
     [3675, 'MetaLeft'],

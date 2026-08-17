@@ -14,7 +14,7 @@ export const InputHookStatusSchema = z.enum([
   'stopped'
 ])
 
-/** Host 仅保留可用于语音组合键的修饰键与 Space，不转发其他输入。 */
+/** Host 仅保留可用于语音组合键的修饰键与受限触发键，不转发其他输入。 */
 export const InputHookKeySchema = z.enum([
   'AltLeft',
   'AltRight',
@@ -24,6 +24,7 @@ export const InputHookKeySchema = z.enum([
   'MetaRight',
   'ShiftLeft',
   'ShiftRight',
+  'KeyQ',
   'Space'
 ])
 

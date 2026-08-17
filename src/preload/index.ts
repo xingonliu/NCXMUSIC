@@ -27,6 +27,10 @@ import {
   type VoiceShortcutBridge
 } from '../shared/contracts/voice-bridge'
 import {
+  VOICE_SETTINGS_CHANNELS,
+  type VoiceSettingsBridge
+} from '../shared/contracts/voice-settings-bridge'
+import {
   SHELL_SETTINGS_CHANNELS,
   type ShellSettingsBridge
 } from '../shared/contracts/shell-settings-bridge'
@@ -63,6 +67,18 @@ import {
   VoiceShortcutSnapshotSchema
 } from '../shared/schemas/voice'
 import {
+  VoiceCloudTranscriptionInputSchema,
+  VoiceAgentNotificationInputSchema,
+  VoiceLocalPcmChunkSchema,
+  VoiceLocalSessionEndSchema,
+  VoiceLocalSessionStartSchema,
+  VoiceServiceEventSchema,
+  VoiceOverlayStateSchema,
+  VoiceSettingsRequestSchema,
+  VoiceSettingsResultSchema,
+  VoiceTranscriptionResultSchema
+} from '../shared/schemas/voice-settings'
+import {
   ShellSettingsRequestSchema,
   ShellSettingsResultSchema
 } from '../shared/schemas/shell'
@@ -74,6 +90,8 @@ const windowSnapshotListeners = new Set<(snapshot: WindowSnapshot) => void>()
 const accountSnapshotListeners = new Set<(snapshot: AccountSessionSnapshot) => void>()
 /** Renderer 订阅的全局语音快捷键事件监听器。 */
 const voiceShortcutListeners = new Set<Parameters<VoiceShortcutBridge['onEvent']>[0]>()
+/** Renderer 订阅的模型进度与增量转写监听器。 */
+const voiceSettingsListeners = new Set<Parameters<VoiceSettingsBridge['onEvent']>[0]>()
 /** Renderer 注册的退出前异步刷新处理器。 */
 const lifecycleFlushHandlers = new Set<() => Promise<void>>()
 let latestStatus: RuntimeStatus = {
@@ -349,6 +367,65 @@ const voiceShortcutBridge: VoiceShortcutBridge = {
   }
 }
 
+/** 只暴露经过共享 Schema 校验的语音设置与专用识别桥。 */
+const voiceSettingsBridge: VoiceSettingsBridge = {
+  request: async (rawInput) => {
+    /** 经校验设置请求。 */
+    const input = VoiceSettingsRequestSchema.parse(rawInput)
+    /** Main 返回结果。 */
+    const result = await ipcRenderer.invoke(VOICE_SETTINGS_CHANNELS.request, input)
+    return VoiceSettingsResultSchema.parse(result)
+  },
+  startLocalSession: async (rawInput) => {
+    /** 经校验会话启动输入。 */
+    const input = VoiceLocalSessionStartSchema.parse(rawInput)
+    await ipcRenderer.invoke(VOICE_SETTINGS_CHANNELS.localStart, input)
+  },
+  sendLocalChunk: (rawInput) => {
+    /** 经校验 PCM 数据块。 */
+    const input = VoiceLocalPcmChunkSchema.parse(rawInput)
+    ipcRenderer.send(VOICE_SETTINGS_CHANNELS.localChunk, input)
+  },
+  finishLocalSession: async (rawInput) => {
+    /** 经校验会话结束输入。 */
+    const input = VoiceLocalSessionEndSchema.parse(rawInput)
+    /** Main 返回最终文本。 */
+    const result = await ipcRenderer.invoke(VOICE_SETTINGS_CHANNELS.localFinish, input)
+    return VoiceTranscriptionResultSchema.parse(result)
+  },
+  cancelLocalSession: (rawInput) => {
+    /** 经校验会话取消输入。 */
+    const input = VoiceLocalSessionEndSchema.parse(rawInput)
+    ipcRenderer.send(VOICE_SETTINGS_CHANNELS.localCancel, input)
+  },
+  transcribeCloud: async (rawInput) => {
+    /** 经校验云端转写输入。 */
+    const input = VoiceCloudTranscriptionInputSchema.parse(rawInput)
+    /** Main 返回最终文本。 */
+    const result = await ipcRenderer.invoke(VOICE_SETTINGS_CHANNELS.cloudTranscribe, input)
+    return VoiceTranscriptionResultSchema.parse(result)
+  },
+  cancelCloud: (rawInput) => {
+    /** 经校验云端取消输入。 */
+    const input = VoiceLocalSessionEndSchema.parse(rawInput)
+    ipcRenderer.send(VOICE_SETTINGS_CHANNELS.cloudCancel, input)
+  },
+  publishOverlayState: (rawInput) => {
+    /** 经校验的胶囊展示状态。 */
+    const input = VoiceOverlayStateSchema.parse(rawInput)
+    ipcRenderer.send(VOICE_SETTINGS_CHANNELS.overlayState, input)
+  },
+  notifyAgentComplete: (rawInput) => {
+    /** 经校验的原生通知文案。 */
+    const input = VoiceAgentNotificationInputSchema.parse(rawInput)
+    ipcRenderer.send(VOICE_SETTINGS_CHANNELS.notifyAgentComplete, input)
+  },
+  onEvent: (listener) => {
+    voiceSettingsListeners.add(listener)
+    return () => voiceSettingsListeners.delete(listener)
+  }
+}
+
 /** 只允许管理用户通过系统对话框授权的 Shell 工作区。 */
 const shellSettingsBridge: ShellSettingsBridge = {
   request: async (input) => {
@@ -387,6 +464,13 @@ ipcRenderer.on(VOICE_SHORTCUT_CHANNELS.event, (_event, rawEvent: unknown) => {
   for (const listener of voiceShortcutListeners) listener(event.data)
 })
 
+ipcRenderer.on(VOICE_SETTINGS_CHANNELS.event, (_event, rawEvent: unknown) => {
+  /** Main 发来的模型进度或增量转写事件。 */
+  const event = VoiceServiceEventSchema.safeParse(rawEvent)
+  if (!event.success) return
+  for (const listener of voiceSettingsListeners) listener(event.data)
+})
+
 ipcRenderer.on(LIFECYCLE_CHANNELS.flushRequest, (_event, rawRequest: unknown) => {
   /** Main 发来的退出刷新请求。 */
   const request = rawRequest as Partial<LifecycleFlushRequest> | null
@@ -415,6 +499,7 @@ const bridge: DesktopBridge = Object.freeze({
   providerProfiles: providerProfileBridge,
   runtime: runtimeBridge,
   shellSettings: shellSettingsBridge,
+  voiceSettings: voiceSettingsBridge,
   voiceShortcut: voiceShortcutBridge,
   windowControls: windowControlBridge
 })

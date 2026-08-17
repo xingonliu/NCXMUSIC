@@ -12,6 +12,7 @@
     "src/preload/**/*.ts",
     "src/utility/**/*.ts",
     "src/input-hook/**/*.ts",
+    "src/local-asr/**/*.ts",
     "src/domains/**/*.ts",
     "src/shared/**/*.ts",
     "src/infrastructure/**/*.ts",

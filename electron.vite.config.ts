@@ -15,9 +15,10 @@ export default defineConfig({
           index: resolve(__dirname, 'src/main/index.ts'),
           utility: resolve(__dirname, 'src/utility/index.ts'),
           inputHook: resolve(__dirname, 'src/input-hook/index.ts'),
+          localAsr: resolve(__dirname, 'src/local-asr/index.ts'),
           skillHost: resolve(__dirname, 'src/skill-host/index.ts')
         },
-        external: ['uiohook-napi'],
+        external: ['uiohook-napi', 'sherpa-onnx-node'],
         output: {
           entryFileNames: '[name].js'
         }

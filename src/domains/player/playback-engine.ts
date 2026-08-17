@@ -278,7 +278,7 @@ export class PlaybackEngine {
   }
 
   /**
-   * 设置临时输出增益，用于 Alt+Space 聆听阶段 ducking。
+   * 设置临时输出增益，用于全局语音聆听阶段 ducking。
    * 不修改持久化的用户音量，也不改变 status/intent。
    *
    * @param gain 有效输出比例（0~1），恢复时传 1

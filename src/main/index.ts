@@ -7,7 +7,9 @@ import {
   clipboard,
   dialog,
   ipcMain,
+  Notification,
   safeStorage,
+  screen,
   type Session,
   type Tray,
   session,
@@ -32,6 +34,7 @@ import { EXTENSION_CHANNELS } from '../shared/contracts/extension-bridge'
 import { LIFECYCLE_CHANNELS } from '../shared/contracts/lifecycle-bridge'
 import { SHELL_SETTINGS_CHANNELS } from '../shared/contracts/shell-settings-bridge'
 import { VOICE_SHORTCUT_CHANNELS } from '../shared/contracts/voice-bridge'
+import { VOICE_SETTINGS_CHANNELS } from '../shared/contracts/voice-settings-bridge'
 import {
   WINDOW_CONTROL_CHANNELS,
   type WindowCommand,
@@ -48,8 +51,20 @@ import { RuntimeStatusSchema } from '../shared/schemas/control-plane'
 import { ProviderProfileRequestSchema } from '../shared/schemas/provider-profile'
 import { ExtensionSettingsRequestSchema } from '../shared/schemas/extensions'
 import { VoiceShortcutCommandSchema, VoiceShortcutEventSchema } from '../shared/schemas/voice'
+import {
+  VoiceCloudTranscriptionInputSchema,
+  VoiceAgentNotificationInputSchema,
+  VoiceLocalPcmChunkSchema,
+  VoiceLocalSessionEndSchema,
+  VoiceLocalSessionStartSchema,
+  VoiceServiceEventSchema,
+  VoiceOverlayStateSchema,
+  VoiceSettingsRequestSchema
+} from '../shared/schemas/voice-settings'
 import { ShellSettingsRequestSchema } from '../shared/schemas/shell'
 import { ProviderProfileStore } from '../infrastructure/credentials/provider-profile-store'
+import { VoiceSettingsStore } from '../infrastructure/credentials/voice-settings-store'
+import { LocalModelInstaller } from '../infrastructure/voice/local-model-installer'
 import { AuthSessionController, type EstablishResult } from './auth/auth-session-controller'
 import { AccountStoreCoordinator } from './auth/account-store-coordinator'
 import {
@@ -65,6 +80,8 @@ import { ExtensionCoordinator, selectedSkillSource } from './extension-coordinat
 import { createApplicationTray } from './app-tray'
 import { UtilitySupervisor } from './utility-supervisor'
 import { VoiceShortcutCoordinator } from './voice-shortcut-coordinator'
+import { LocalAsrCoordinator } from './local-asr-coordinator'
+import { VoiceSettingsCoordinator } from './voice-settings-coordinator'
 import { ShellSettingsCoordinator } from './shell-settings-coordinator'
 import {
   createMainWindowOptions,
@@ -89,6 +106,16 @@ let providerProfileCoordinator: ProviderProfileCoordinator | undefined
 let extensionCoordinator: ExtensionCoordinator | undefined
 /** Main 独占的全局语音快捷键与 InputHookHost 协调器。 */
 let voiceShortcutCoordinator: VoiceShortcutCoordinator | undefined
+/** Main 独占的语音来源、模型安装和识别协调器。 */
+let voiceSettingsCoordinator: VoiceSettingsCoordinator | undefined
+/** 主窗口后台时显示在鼠标所在屏幕底部的无焦点语音胶囊。 */
+let voiceOverlayWindow: BrowserWindow | undefined
+/** 外置语音胶囊最近展示状态。 */
+let latestVoiceOverlayState = VoiceOverlayStateSchema.parse({
+  phase: 'idle',
+  text: '',
+  waveform: Array.from({ length: 12 }, () => 0.08)
+})
 /** Main 独占的 Shell 授权工作区协调器。 */
 let shellSettingsCoordinator: ShellSettingsCoordinator | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
@@ -208,6 +235,11 @@ function inputHookEntryPath(): string {
     return join(process.resourcesPath, 'app.asar.unpacked', 'out', 'main', 'inputHook.js')
   }
   return join(__dirname, 'inputHook.js')
+}
+
+/** 返回本地 ASR utilityProcess 的构建入口。 */
+function localAsrEntryPath(): string {
+  return join(__dirname, 'localAsr.js')
 }
 
 /** 解析应用程序主图标绝对路径，统一指向 resources/icon.png。 */
@@ -414,7 +446,112 @@ function publishVoiceShortcutEvent(rawEvent: unknown): void {
   const event = VoiceShortcutEventSchema.safeParse(rawEvent)
   const window = mainWindow
   if (!event.success || !window || window.isDestroyed()) return
+  if (event.data.type === 'pressed' && window.isFullScreen()) {
+    window.webContents.send(VOICE_SHORTCUT_CHANNELS.event, {
+      type: 'cancelled',
+      generation: event.data.generation,
+      reason: '全屏演示或沉浸模式下已暂停语音快捷键。'
+    })
+    return
+  }
+  if (event.data.type === 'pressed' && !window.isFocused()) {
+    updateVoiceOverlay({ phase: 'starting', text: '准备中', waveform: Array.from({ length: 12 }, () => 0.08) })
+  }
   window.webContents.send(VOICE_SHORTCUT_CHANNELS.event, event.data)
+}
+
+/** 创建鼠标所在显示器底部的外置语音胶囊。 */
+function ensureVoiceOverlayWindow(): BrowserWindow {
+  if (voiceOverlayWindow && !voiceOverlayWindow.isDestroyed()) return voiceOverlayWindow
+  /** 无焦点透明胶囊窗口。 */
+  const window = new BrowserWindow({
+    width: 460,
+    height: 104,
+    show: false,
+    frame: false,
+    transparent: true,
+    resizable: false,
+    movable: false,
+    focusable: false,
+    skipTaskbar: true,
+    hasShadow: false,
+    alwaysOnTop: true,
+    webPreferences: {
+      contextIsolation: true,
+      sandbox: true,
+      nodeIntegration: false
+    }
+  })
+  voiceOverlayWindow = window
+  window.setAlwaysOnTop(true, 'floating')
+  if (process.platform === 'darwin') window.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: false })
+  window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }))
+  window.webContents.on('will-navigate', (event) => event.preventDefault())
+  window.webContents.once('did-finish-load', () => renderVoiceOverlay(latestVoiceOverlayState))
+  void window.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(VOICE_OVERLAY_HTML)}`)
+  window.once('closed', () => {
+    if (voiceOverlayWindow === window) voiceOverlayWindow = undefined
+  })
+  return window
+}
+
+/** 更新并定位外置语音胶囊；主窗口前台时只保留应用内胶囊。 */
+function updateVoiceOverlay(rawState: unknown): void {
+  /** 经校验的纯展示状态。 */
+  const state = VoiceOverlayStateSchema.safeParse(rawState)
+  if (!state.success) return
+  latestVoiceOverlayState = state.data
+  /** 当前主窗口。 */
+  const owner = mainWindow
+  if (owner?.isFocused()) {
+    voiceOverlayWindow?.hide()
+    return
+  }
+  if (state.data.phase === 'idle') {
+    renderVoiceOverlay(state.data)
+    setTimeout(() => voiceOverlayWindow?.hide(), 220)
+    return
+  }
+  /** 当前鼠标所在显示器。 */
+  const display = screen.getDisplayNearestPoint(screen.getCursorScreenPoint())
+  /** 胶囊窗口。 */
+  const window = ensureVoiceOverlayWindow()
+  /** 任务栏或 Dock 内侧可用区域。 */
+  const workArea = display.workArea
+  window.setBounds({
+    x: Math.round(workArea.x + (workArea.width - 460) / 2),
+    y: Math.round(workArea.y + workArea.height - 104 - 20),
+    width: 460,
+    height: 104
+  })
+  renderVoiceOverlay(state.data)
+  window.showInactive()
+}
+
+/** 将受限状态写入隔离的 data URL 胶囊 DOM。 */
+function renderVoiceOverlay(state: typeof latestVoiceOverlayState): void {
+  /** 当前外置窗口。 */
+  const window = voiceOverlayWindow
+  if (!window || window.isDestroyed() || window.webContents.isLoading()) return
+  /** 只包含 Schema 校验值的 JSON。 */
+  const payload = JSON.stringify(state)
+  void window.webContents.executeJavaScript(`window.__renderVoiceOverlay(${payload})`, true).catch(() => undefined)
+}
+
+/** 外置语音胶囊的无权限静态页面。 */
+const VOICE_OVERLAY_HTML = `<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{position:absolute;left:10px;right:10px;bottom:10px;display:flex;align-items:center;gap:16px;min-height:68px;padding:13px 20px;color:#fff;background:rgba(27,27,32,.88);border:1px solid rgba(255,255,255,.14);border-radius:999px;box-shadow:0 14px 38px rgba(0,0,0,.32);backdrop-filter:blur(24px) saturate(150%);transition:opacity .2s,transform .2s}.wrap.idle{opacity:0;transform:translateY(10px)}.orb{width:27px;height:27px;flex:none;border:3px solid rgba(120,160,255,.25);border-top-color:#80a0ff;border-radius:50%;animation:spin .8s linear infinite}.listening .orb{border:0;background:#80a0ff;animation:pulse 1.2s ease-in-out infinite}.copy{min-width:0;flex:1}.label{font-size:12px;color:rgba(255,255,255,.62)}.text{overflow:hidden;margin-top:2px;font-size:14px;font-weight:600;text-overflow:ellipsis;white-space:nowrap}.wave{display:flex;align-items:center;gap:3px;height:32px}.wave i{width:3px;height:calc(4px + 25px * var(--v));background:#80a0ff;border-radius:99px;transition:height 70ms linear}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(.72);box-shadow:0 0 0 10px rgba(128,160,255,.12)}}@media(prefers-reduced-motion:reduce){.orb{animation:none}.wave i{transition:none}}</style></head><body><div id="wrap" class="wrap idle"><div class="orb"></div><div class="copy"><div id="label" class="label">准备中</div><div id="text" class="text">正在加载语音识别</div></div><div id="wave" class="wave"></div></div><script>const wrap=document.getElementById('wrap'),label=document.getElementById('label'),text=document.getElementById('text'),wave=document.getElementById('wave');for(let i=0;i<12;i++){wave.appendChild(document.createElement('i'))}window.__renderVoiceOverlay=s=>{wrap.className='wrap '+s.phase;label.textContent=s.phase==='starting'?'准备中':s.phase==='listening'?'倾听中':s.phase==='reviewing'?'已识别':'识别中';text.textContent=s.text|| (s.phase==='starting'?'正在加载语音识别':s.phase==='listening'?'请说话，松手或停顿后结束':'正在转写');[...wave.children].forEach((bar,i)=>bar.style.setProperty('--v',String(s.waveform[i]||.08)))}</script></body></html>`
+
+/** 向所有主窗口 Renderer 广播经 Schema 校验的语音服务事件。 */
+function publishVoiceServiceEvent(rawEvent: unknown): void {
+  /** 已校验事件。 */
+  const event = VoiceServiceEventSchema.safeParse(rawEvent)
+  if (!event.success) return
+  for (const window of BrowserWindow.getAllWindows()) {
+    if (!window.isDestroyed() && !window.webContents.isDestroyed()) {
+      window.webContents.send(VOICE_SETTINGS_CHANNELS.event, event.data)
+    }
+  }
 }
 
 /** 将 Main 持久化的 Agent 安全设置同步给当前 Utility 代次。 */
@@ -496,6 +633,71 @@ function registerControlPlane(): void {
       return voiceShortcutCoordinator.openPermissionSettings()
     }
     return voiceShortcutCoordinator.configure(command.enabled, command.chord)
+  })
+
+  ipcMain.handle(VOICE_SETTINGS_CHANNELS.request, (event, rawRequest: unknown) => {
+    if (!isTrustedSender(event) || !voiceSettingsCoordinator) throw new Error('语音设置服务不可用。')
+    /** Renderer 发来的严格语音设置请求。 */
+    const request = VoiceSettingsRequestSchema.parse(rawRequest)
+    return voiceSettingsCoordinator.request(request)
+  })
+
+  ipcMain.handle(VOICE_SETTINGS_CHANNELS.localStart, async (event, rawInput: unknown) => {
+    if (!isTrustedSender(event) || !voiceSettingsCoordinator) throw new Error('本地语音识别服务不可用。')
+    await voiceSettingsCoordinator.startLocal(VoiceLocalSessionStartSchema.parse(rawInput))
+  })
+
+  ipcMain.on(VOICE_SETTINGS_CHANNELS.localChunk, (event, rawInput: unknown) => {
+    if (!isTrustedSender(event) || !voiceSettingsCoordinator) return
+    /** 受限 PCM 数据块。 */
+    const input = VoiceLocalPcmChunkSchema.safeParse(rawInput)
+    if (input.success) voiceSettingsCoordinator.sendLocalChunk(input.data)
+  })
+
+  ipcMain.handle(VOICE_SETTINGS_CHANNELS.localFinish, async (event, rawInput: unknown) => {
+    if (!isTrustedSender(event) || !voiceSettingsCoordinator) throw new Error('本地语音识别服务不可用。')
+    return voiceSettingsCoordinator.finishLocal(VoiceLocalSessionEndSchema.parse(rawInput))
+  })
+
+  ipcMain.on(VOICE_SETTINGS_CHANNELS.localCancel, (event, rawInput: unknown) => {
+    if (!isTrustedSender(event) || !voiceSettingsCoordinator) return
+    /** 待取消本地会话。 */
+    const input = VoiceLocalSessionEndSchema.safeParse(rawInput)
+    if (input.success) voiceSettingsCoordinator.cancelLocal(input.data)
+  })
+
+  ipcMain.handle(VOICE_SETTINGS_CHANNELS.cloudTranscribe, async (event, rawInput: unknown) => {
+    if (!isTrustedSender(event) || !voiceSettingsCoordinator) throw new Error('独立云端语音识别服务不可用。')
+    return voiceSettingsCoordinator.transcribeCloud(VoiceCloudTranscriptionInputSchema.parse(rawInput))
+  })
+
+  ipcMain.on(VOICE_SETTINGS_CHANNELS.cloudCancel, (event, rawInput: unknown) => {
+    if (!isTrustedSender(event) || !voiceSettingsCoordinator) return
+    /** 待取消云端会话。 */
+    const input = VoiceLocalSessionEndSchema.safeParse(rawInput)
+    if (input.success) voiceSettingsCoordinator.cancelCloud(input.data)
+  })
+
+  ipcMain.on(VOICE_SETTINGS_CHANNELS.overlayState, (event, rawInput: unknown) => {
+    if (!isTrustedSender(event)) return
+    updateVoiceOverlay(rawInput)
+  })
+
+  ipcMain.on(VOICE_SETTINGS_CHANNELS.notifyAgentComplete, (event, rawInput: unknown) => {
+    if (!isTrustedSender(event)) return
+    /** 经校验的通知文案。 */
+    const input = VoiceAgentNotificationInputSchema.safeParse(rawInput)
+    if (!input.success || !Notification.isSupported()) return
+    /** 操作系统原生通知。 */
+    const notification = new Notification({ title: input.data.title, body: input.data.body })
+    notification.on('click', () => {
+      /** 当前可恢复主窗口。 */
+      const window = mainWindow
+      if (!window || window.isDestroyed()) return
+      showMainWindow(window)
+      publishVoiceServiceEvent({ type: 'open-agent' })
+    })
+    notification.show()
   })
 
   ipcMain.handle(SHELL_SETTINGS_CHANNELS.request, async (event, rawRequest: unknown) => {
@@ -619,6 +821,9 @@ function shutdownApplicationServices(): void {
   authController?.shutdown()
   accountStoreCoordinator?.shutdown()
   voiceShortcutCoordinator?.shutdown()
+  voiceSettingsCoordinator?.shutdown()
+  voiceOverlayWindow?.destroy()
+  voiceOverlayWindow = undefined
   extensionCoordinator?.shutdown()
   supervisor?.shutdown()
 }
@@ -674,6 +879,8 @@ async function createMainWindow(): Promise<void> {
     })
   )
   mainWindow = window
+
+  window.on('focus', () => voiceOverlayWindow?.hide())
 
   window.on('close', (event) => {
     /** 当前关闭请求对应的真实窗口生命周期动作。 */
@@ -741,6 +948,8 @@ if (!hasSingleInstanceLock) {
 
   app.whenReady()
     .then(async () => {
+      /** Windows 原生通知使用稳定应用标识归组并支持点击回到主窗口。 */
+      if (process.platform === 'win32') app.setAppUserModelId('io.github.ncxmusic.app')
       if (process.platform === 'darwin' && app.dock) {
         try {
           app.dock.setIcon(appIconEntryPath())
@@ -758,6 +967,30 @@ if (!hasSingleInstanceLock) {
       })
       providerProfileStore.load()
       providerProfileCoordinator = new ProviderProfileCoordinator(providerProfileStore, supervisor)
+      /** 语音设置与 Provider 共用的系统安全存储适配器。 */
+      const voiceSecretCipher = {
+        isAvailable: (): boolean => safeStorage.isEncryptionAvailable(),
+        encrypt: (value: string): Buffer => safeStorage.encryptString(value),
+        decrypt: (value: Buffer): string => safeStorage.decryptString(value)
+      }
+      /** Main 独占的语音设置仓库。 */
+      const voiceSettingsStore = new VoiceSettingsStore(app.getPath('userData'), voiceSecretCipher)
+      voiceSettingsStore.load(Boolean(providerProfileStore.activeProfileId()))
+      /** 应用私有目录中的本地模型安装器。 */
+      const localModelInstaller = new LocalModelInstaller(app.getPath('userData'))
+      /** 本地 ASR 进程协调器。 */
+      const localAsrCoordinator = new LocalAsrCoordinator({
+        entryPath: localAsrEntryPath(),
+        installer: localModelInstaller,
+        loadMode: () => voiceSettingsStore.snapshot().localLoadMode,
+        publish: publishVoiceServiceEvent
+      })
+      voiceSettingsCoordinator = new VoiceSettingsCoordinator({
+        store: voiceSettingsStore,
+        installer: localModelInstaller,
+        localAsr: localAsrCoordinator,
+        publish: publishVoiceServiceEvent
+      })
       extensionCoordinator = new ExtensionCoordinator({
         dataRoot: app.getPath('userData'),
         protector: {
