@@ -219,7 +219,7 @@ watch(content, () => {
 
     <!-- Composer Rounded Container -->
     <div class="agent-composer-box">
-      <!-- 待处理卡锚定输入框并脱离文档流，底部轻微覆盖输入框上沿。 -->
+      <!-- 待处理卡锚定输入框并脱离文档流，以同宽浮层完整覆盖输入区。 -->
       <div
         v-if="hasPendingInteraction"
         class="agent-interaction-dock"
