@@ -65,10 +65,12 @@ watch(
   <VoiceInputLayer />
 
   <!-- 独立于 RouterView 的应用级沉浸播放展示层。 -->
-  <ImmersiveLyricsPage
-    v-if="isImmersivePlayerOpen"
-    @close="immersivePlayer.close()"
-  />
+  <Transition name="ncx-immersive-page">
+    <ImmersiveLyricsPage
+      v-if="isImmersivePlayerOpen"
+      @close="immersivePlayer.close()"
+    />
+  </Transition>
 
   <!-- 全局轻提示 Toast 多通知堆叠容器（按触发顺序向上自然排列并支持单条关闭） -->
   <Teleport to="body">
@@ -149,3 +151,30 @@ watch(
     </div>
   </Teleport>
 </template>
+
+<style>
+.ncx-immersive-page-enter-active {
+  transition:
+    opacity 440ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ncx-immersive-page-leave-active {
+  transition:
+    opacity 360ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 360ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ncx-immersive-page-enter-from,
+.ncx-immersive-page-leave-to {
+  opacity: 0.8;
+  transform: translateY(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ncx-immersive-page-enter-active,
+  .ncx-immersive-page-leave-active {
+    transition-duration: 1ms;
+  }
+}
+</style>

@@ -298,7 +298,6 @@ onBeforeUnmount(() => {
           :adapt-source="false"
           loading="eager"
           class="immersive-artwork"
-          :style="{ viewTransitionName: 'ncx-now-playing-artwork' }"
         />
 
         <div class="immersive-track-title-row">
@@ -412,7 +411,6 @@ onBeforeUnmount(() => {
   background: rgb(17 23 25);
   isolation: isolate;
   outline: none;
-  view-transition-name: ncx-immersive-player;
 }
 
 .immersive-lyrics-page--macos {
@@ -655,100 +653,6 @@ onBeforeUnmount(() => {
   .immersive-lyrics-panel {
     height: calc(100vh - 104px);
     padding-left: 0;
-  }
-}
-</style>
-
-<style>
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-::view-transition-group(root) {
-  z-index: 0;
-}
-
-::view-transition-group(ncx-immersive-player) {
-  z-index: 1;
-}
-
-::view-transition-group(ncx-now-playing-artwork) {
-  z-index: 2;
-}
-
-::view-transition-image-pair(ncx-now-playing-artwork) {
-  overflow: hidden;
-  isolation: auto;
-}
-
-:root[data-ncx-immersive-transition='opening']::view-transition-group(ncx-now-playing-artwork) {
-  animation-duration: 480ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-:root[data-ncx-immersive-transition='closing']::view-transition-group(ncx-now-playing-artwork) {
-  animation-duration: 360ms;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-:root[data-ncx-immersive-transition='opening']::view-transition-image-pair(ncx-now-playing-artwork) {
-  animation: ncx-artwork-radius-enter 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-:root[data-ncx-immersive-transition='closing']::view-transition-image-pair(ncx-now-playing-artwork) {
-  animation: ncx-artwork-radius-exit 360ms cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-::view-transition-new(ncx-immersive-player) {
-  animation: ncx-immersive-enter 440ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-::view-transition-old(ncx-immersive-player) {
-  animation: ncx-immersive-exit 360ms cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-@keyframes ncx-immersive-enter {
-  from {
-    opacity: 0.84;
-    transform: translateY(100%);
-  }
-}
-
-@keyframes ncx-immersive-exit {
-  to {
-    opacity: 0.8;
-    transform: translateY(100%);
-  }
-}
-
-@keyframes ncx-artwork-radius-enter {
-  from {
-    border-radius: var(--ncx-radius-md, 14px);
-  }
-
-  to {
-    border-radius: 16px;
-  }
-}
-
-@keyframes ncx-artwork-radius-exit {
-  from {
-    border-radius: 16px;
-  }
-
-  to {
-    border-radius: var(--ncx-radius-md, 14px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(ncx-now-playing-artwork),
-  ::view-transition-image-pair(ncx-now-playing-artwork),
-  ::view-transition-new(ncx-immersive-player),
-  ::view-transition-old(ncx-immersive-player) {
-    animation-duration: 1ms;
   }
 }
 </style>

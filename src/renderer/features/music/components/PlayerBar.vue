@@ -32,7 +32,6 @@ import {
 import LiquidGlass from '../../../design-system/components/LiquidGlass.vue'
 import { zhCN } from '../../../locales/zh-CN'
 import { useImmersivePlayerPresentation } from '../immersive-player-presentation'
-import { adaptArtworkUrl } from '../music-entity'
 import { usePlayer } from '../use-player'
 import MediaArtwork from './MediaArtwork.vue'
 import MusicProgressBar from './MusicProgressBar.vue'
@@ -145,11 +144,9 @@ function toggleQueueDrawer(): void {
  */
 function openImmersivePlayer(event: MouseEvent): void {
   if (!track.value) return
-  /** 沉浸页需要预热的高清封面地址。 */
-  const heroArtworkUrl = adaptArtworkUrl(coverUrl.value, 'hero')
   /** 关闭展示层后需要恢复焦点的封面按钮。 */
   const trigger = event.currentTarget as HTMLElement | null
-  void immersivePlayer.open(heroArtworkUrl, trigger)
+  void immersivePlayer.open(trigger)
 }
 </script>
 
@@ -196,9 +193,6 @@ function openImmersivePlayer(event: MouseEvent): void {
               size="thumbnail"
               :adapt-source="false"
               class="player-track-cover"
-              :style="{
-                viewTransitionName: isImmersivePlayerOpen ? 'none' : 'ncx-now-playing-artwork'
-              }"
             />
           </button>
           <div class="player-track-info">

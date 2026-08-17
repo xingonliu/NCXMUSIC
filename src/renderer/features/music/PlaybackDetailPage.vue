@@ -27,10 +27,11 @@ const artworkUrl = computed<string | undefined>(() => track.value?.artwork?.[0]?
 
 // ========= 函数 =========
 
-/** 打开具有正式路由的沉浸歌词页。 */
+/** 打开应用根层的沉浸歌词页。 */
 function openImmersiveLyrics(event: MouseEvent): void {
+  /** 关闭沉浸歌词页后需要恢复焦点的触发按钮。 */
   const trigger = event.currentTarget instanceof HTMLElement ? event.currentTarget : null
-  void immersivePlayer.open(artworkUrl.value, trigger)
+  void immersivePlayer.open(trigger)
 }
 </script>
 

@@ -3,11 +3,13 @@ import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinator'
+import appSource from '../../src/renderer/App.vue?raw'
 import LyricsPanel from '../../src/renderer/features/music/components/LyricsPanel.vue'
 import PlaybackControls from '../../src/renderer/features/music/components/PlaybackControls.vue'
 import ImmersiveLyricsPage from '../../src/renderer/features/music/ImmersiveLyricsPage.vue'
 import immersiveLyricsPageSource from '../../src/renderer/features/music/ImmersiveLyricsPage.vue?raw'
 import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
+import immersivePlayerPresentationSource from '../../src/renderer/features/music/immersive-player-presentation.ts?raw'
 import { disposePlayer } from '../../src/renderer/features/music/use-player'
 import { useAppPreferences } from '../../src/renderer/features/settings/app-preferences'
 
@@ -24,13 +26,6 @@ const originalScrollTo = HTMLElement.prototype.scrollTo
 
 /** happy-dom 原始 Web Animations 入口。 */
 const originalAnimate = HTMLElement.prototype.animate
-
-/** 测试环境原始的 View Transition 入口。 */
-const originalStartViewTransition = (
-  document as unknown as {
-    startViewTransition?: Document['startViewTransition']
-  }
-).startViewTransition
 
 // ========= 函数 =========
 
@@ -117,11 +112,6 @@ afterEach(async () => {
   })
   disposePlayer()
   await useImmersivePlayerPresentation().close()
-  Object.defineProperty(document, 'startViewTransition', {
-    configurable: true,
-    value: originalStartViewTransition
-  })
-  document.documentElement.removeAttribute('data-ncx-immersive-transition')
   document.body.innerHTML = ''
 })
 
@@ -201,7 +191,7 @@ describe('应用级沉浸播放展示', () => {
 
     /** 应用级沉浸播放展示控制器。 */
     const immersivePlayer = useImmersivePlayerPresentation()
-    await immersivePlayer.open(undefined, trigger)
+    await immersivePlayer.open(trigger)
 
     expect(immersivePlayer.isOpen.value).toBe(true)
     expect(window.location.hash).toBe(originalHash)
@@ -213,75 +203,13 @@ describe('应用级沉浸播放展示', () => {
     expect(document.activeElement).toBe(trigger)
   })
 
-  it('共享元素开合期间写入明确方向并在动画结束后清理标记', async () => {
-    /** 由测试手动结束的每一次 View Transition。 */
-    const transitionResolvers: Array<() => void> = []
-    /** 模拟浏览器执行状态更新并保持动画进行中的 View Transition 入口。 */
-    const startViewTransition = vi.fn((
-      updateCallback: () => Promise<void> | void
-    ) => {
-      void updateCallback()
-
-      /** 当前过渡由测试控制完成时机的结束任务。 */
-      const finished = new Promise<void>((resolve) => {
-        transitionResolvers.push(resolve)
-      })
-
-      return { finished }
-    })
-    Object.defineProperty(document, 'startViewTransition', {
-      configurable: true,
-      value: startViewTransition
-    })
-
-    /** 应用级沉浸播放展示控制器。 */
-    const immersivePlayer = useImmersivePlayerPresentation()
-    /** 保持原生动画未结束的打开任务。 */
-    const opening = immersivePlayer.open()
-
-    await vi.waitFor(() => expect(immersivePlayer.isOpen.value).toBe(true))
-    expect(document.documentElement.getAttribute(
-      'data-ncx-immersive-transition'
-    )).toBe('opening')
-    transitionResolvers[0]?.()
-    await opening
-    expect(document.documentElement.hasAttribute(
-      'data-ncx-immersive-transition'
-    )).toBe(false)
-
-    /** 保持原生动画未结束的关闭任务。 */
-    const closing = immersivePlayer.close()
-
-    await vi.waitFor(() => expect(immersivePlayer.isOpen.value).toBe(false))
-    expect(document.documentElement.getAttribute(
-      'data-ncx-immersive-transition'
-    )).toBe('closing')
-    transitionResolvers[1]?.()
-    await closing
-    expect(document.documentElement.hasAttribute(
-      'data-ncx-immersive-transition'
-    )).toBe(false)
-    expect(startViewTransition).toHaveBeenCalledTimes(2)
-  })
-
-  it('高清封面预热未完成时也立即进入展开状态', async () => {
-    /** 测试前浏览器图片解码实现。 */
-    const originalDecode = Image.prototype.decode
-    /** 永不提前完成的高清封面解码任务。 */
-    const pendingDecode = new Promise<void>(() => undefined)
-    Image.prototype.decode = vi.fn(() => pendingDecode)
-
-    try {
-      /** 应用级沉浸播放展示控制器。 */
-      const immersivePlayer = useImmersivePlayerPresentation()
-      /** 不应等待高清封面预热的展开任务。 */
-      const opening = immersivePlayer.open('https://example.com/high-resolution.jpg')
-
-      await vi.waitFor(() => expect(immersivePlayer.isOpen.value).toBe(true))
-      await opening
-    } finally {
-      Image.prototype.decode = originalDecode
-    }
+  it('使用根层 Vue 过渡并让封面随沉浸页从底部进入', () => {
+    expect(appSource).toContain('<Transition name="ncx-immersive-page">')
+    expect(appSource).toContain('transform: translateY(100%);')
+    expect(immersiveLyricsPageSource).not.toContain('view-transition')
+    expect(immersiveLyricsPageSource).not.toContain('ncx-now-playing-artwork')
+    expect(immersivePlayerPresentationSource).not.toContain('startViewTransition')
+    expect(immersivePlayerPresentationSource).not.toContain('preloadArtwork')
   })
 
 
