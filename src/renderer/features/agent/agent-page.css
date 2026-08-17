@@ -295,8 +295,8 @@
   display: flex;
   width: 100%;
   max-width: 780px;
+  margin: 0 auto 28px;
   flex-direction: column;
-  margin-bottom: 28px;
 }
 
 /* User Message: Right-aligned pill bubble */

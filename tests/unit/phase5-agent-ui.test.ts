@@ -212,4 +212,13 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('border: none;')
     expect(css).toContain('box-shadow: 0 4px 18px rgb(0 0 0 / 18%), 0 2px 6px rgb(0 0 0 / 8%);')
   })
+
+  it('对话消息块水平居中并与底部输入框保持相同最大宽度', () => {
+    /** CSS 源代码。 */
+    const css = source('src/renderer/features/agent/agent-page.css')
+
+    expect(css).toContain('.agent-turn-block {')
+    expect(css).toMatch(/\.agent-turn-block\s*\{[^}]*margin:\s*0\s+auto\s+28px;/)
+  })
 })
+
