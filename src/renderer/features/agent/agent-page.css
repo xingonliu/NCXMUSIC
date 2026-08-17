@@ -80,7 +80,7 @@
   background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
 }
 
-.profile-analysis-progress > span {
+.profile-analysis-progress>span {
   display: block;
   height: 100%;
   border-radius: inherit;
@@ -107,7 +107,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .profile-analysis-progress > span {
+  .profile-analysis-progress>span {
     transition: none;
   }
 }
@@ -247,10 +247,21 @@
   align-items: center;
 }
 
-.agent-welcome-card-icon.is-blue { color: #3b82f6; }
-.agent-welcome-card-icon.is-purple { color: #a855f7; }
-.agent-welcome-card-icon.is-green { color: #22c55e; }
-.agent-welcome-card-icon.is-orange { color: #f97316; }
+.agent-welcome-card-icon.is-blue {
+  color: #3b82f6;
+}
+
+.agent-welcome-card-icon.is-purple {
+  color: #a855f7;
+}
+
+.agent-welcome-card-icon.is-green {
+  color: #22c55e;
+}
+
+.agent-welcome-card-icon.is-orange {
+  color: #f97316;
+}
 
 .agent-welcome-card p {
   margin: 0;
@@ -457,10 +468,13 @@
 }
 
 @keyframes agent-thought-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.6;
     transform: scale(0.95);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.08);
@@ -548,11 +562,11 @@
   line-height: 1.65;
 }
 
-.agent-thought-body > *:first-child {
+.agent-thought-body>*:first-child {
   margin-top: 0;
 }
 
-.agent-thought-body > *:last-child {
+.agent-thought-body>*:last-child {
   margin-bottom: 0;
 }
 
@@ -581,11 +595,11 @@
   overflow-wrap: anywhere;
 }
 
-.agent-markdown > *:first-child {
+.agent-markdown>*:first-child {
   margin-top: 0;
 }
 
-.agent-markdown > *:last-child {
+.agent-markdown>*:last-child {
   margin-bottom: 0;
 }
 
@@ -644,12 +658,12 @@
   line-height: 1.65;
 }
 
-.agent-markdown li > p {
+.agent-markdown li>p {
   margin: 0.2em 0;
 }
 
-.agent-markdown li > ul,
-.agent-markdown li > ol {
+.agent-markdown li>ul,
+.agent-markdown li>ol {
   margin: 0.25em 0;
 }
 
@@ -669,7 +683,7 @@
   color: var(--ncx-color-text-secondary);
 }
 
-.agent-markdown blockquote > p {
+.agent-markdown blockquote>p {
   margin: 0.3em 0;
 }
 
@@ -1150,7 +1164,7 @@
   margin-top: 8px;
 }
 
-.agent-selection-options > button {
+.agent-selection-options>button {
   display: flex;
   min-height: 40px;
   align-items: center;
@@ -1165,15 +1179,15 @@
   transition: background var(--ncx-motion-fast), transform var(--ncx-motion-instant);
 }
 
-.agent-selection-options > button:hover:not(:disabled) {
+.agent-selection-options>button:hover:not(:disabled) {
   background: color-mix(in srgb, var(--ncx-color-text-primary) 10%, transparent);
 }
 
-.agent-selection-options > button.is-selected {
+.agent-selection-options>button.is-selected {
   background: color-mix(in srgb, var(--ncx-color-accent) 16%, transparent);
 }
 
-.agent-selection-options > button:active:not(:disabled) {
+.agent-selection-options>button:active:not(:disabled) {
   transform: scale(0.99);
 }
 
@@ -1189,7 +1203,7 @@
 }
 
 .agent-selection-opt-cover,
-.agent-selection-options > button img {
+.agent-selection-options>button img {
   width: 32px;
   height: 32px;
   border-radius: 6px;
@@ -1277,7 +1291,7 @@
   left: 0;
 }
 
-.agent-composer > * {
+.agent-composer>* {
   pointer-events: auto;
 }
 
@@ -1465,8 +1479,15 @@
 }
 
 @keyframes agent-caret {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 @keyframes agent-composer-rise {
@@ -1482,8 +1503,13 @@
 }
 
 @keyframes agent-composer-fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes agent-interaction-materialize {
@@ -1508,15 +1534,6 @@
   .agent-interaction-dock .agent-approval-card,
   .agent-interaction-dock .agent-selection-card {
     animation: none;
-  }
-}
-
-@media (prefers-reduced-transparency: reduce) {
-  .agent-approval-card,
-  .agent-selection-card {
-    background: light-dark(rgb(232 232 236 / 98%), rgb(70 70 76 / 98%));
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
   }
 }
 
@@ -1605,12 +1622,10 @@
   height: 28px;
   pointer-events: none;
   z-index: 10;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    color-mix(in srgb, var(--ncx-color-canvas) 60%, transparent) 40%,
-    var(--ncx-color-canvas) 100%
-  );
+  background: linear-gradient(180deg,
+      transparent 0%,
+      color-mix(in srgb, var(--ncx-color-canvas) 60%, transparent) 40%,
+      var(--ncx-color-canvas) 100%);
   border-bottom-right-radius: var(--ncx-radius-xl);
 }
 
