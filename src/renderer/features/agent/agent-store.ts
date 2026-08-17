@@ -13,6 +13,7 @@ import {
 import type { AgentSafetyPreferences } from '../../../shared/schemas/agent-settings'
 import type { PlayerCommandAction } from '../../../shared/schemas/player-command'
 import type { TrackSummary } from '../../../domains/player/types'
+import { showAgentPlaybackToast } from './agent-playback-toast'
 
 // ========= 类型 =========
 
@@ -157,6 +158,7 @@ async function executePlayerCommand(toolCallId: string, action: PlayerCommandAct
     summary: result.ok ? summarizePlayerAction(action) : `播放器命令失败：${result.code}`,
     latestRevision: result.latestRevision
   })
+  showAgentPlaybackToast(action, result)
 }
 
 /** 读取唯一 PlaybackCoordinator 的真实状态并裁剪公开曲目信息。 */
