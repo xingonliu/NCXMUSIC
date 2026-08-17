@@ -126,6 +126,14 @@ async function initialize(): Promise<void> {
   initialized = true
   window.ncx.voiceShortcut.onEvent(handleShortcutEvent)
   window.ncx.voiceSettings.onEvent(handleVoiceServiceEvent)
+  window.addEventListener('keyup', (event) => {
+    if (state.value === 'listening' && heldSources.has('global-shortcut')) {
+      if (['KeyQ', 'ControlLeft', 'ControlRight', 'ShiftLeft', 'ShiftRight', 'AltLeft', 'AltRight', 'MetaLeft', 'MetaRight', 'Space'].includes(event.code)) {
+        console.info(`[VoiceInput] 窗口内监听到按键抬起 (${event.code})，立即触发 release`)
+        release('global-shortcut')
+      }
+    }
+  })
   await window.ncx.voiceShortcut.snapshot().catch(() => undefined)
 }
 

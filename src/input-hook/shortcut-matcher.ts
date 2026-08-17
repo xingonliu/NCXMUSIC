@@ -64,6 +64,16 @@ export class ShortcutMatcher {
     }
 
     const key = event.key
+
+    if (event.type === 'keyup') {
+      if (key) this.pressed.delete(key)
+      if (this.listening) {
+        this.listening = false
+        return reportFor(this.config, 'released')
+      }
+      return undefined
+    }
+
     if (!key || !this.chord.has(key)) return undefined
 
     if (event.type === 'keydown') {
@@ -73,10 +83,7 @@ export class ShortcutMatcher {
       return reportFor(this.config, 'pressed')
     }
 
-    this.pressed.delete(key)
-    if (!this.listening) return undefined
-    this.listening = false
-    return reportFor(this.config, 'released')
+    return undefined
   }
 
   /** 清空按键状态，用于 Host 断连、重配或退出。 */
