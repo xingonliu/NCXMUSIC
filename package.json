@@ -41,6 +41,7 @@
     "dompurify": "^3.4.13",
     "highlight.js": "^11.12.0",
     "marked": "^18.0.9",
+    "node-gyp-build": "^4.8.4",
     "pinia": "3.0.4",
     "pixi-filters": "6.1.5",
     "pixi.js": "8.16.0",
@@ -94,6 +95,7 @@
     ],
     "asar": true,
     "asarUnpack": [
+      "node_modules/node-gyp-build/**/*",
       "node_modules/uiohook-napi/**/*",
       "node_modules/sherpa-onnx-node/**/*",
       "node_modules/sherpa-onnx-*/**/*",
