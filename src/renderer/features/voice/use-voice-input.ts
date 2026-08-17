@@ -76,10 +76,6 @@ interface ActiveVoiceSession {
   animationFrame?: number
   /** 首次开始聆听时间。 */
   listeningStartedAt: number
-  /** 是否已经检测到人声。 */
-  voiceDetected: boolean
-  /** 连续静音起点。 */
-  silenceStartedAt?: number
   /** 1.2 秒确认计时器。 */
   reviewTimer?: ReturnType<typeof setTimeout>
 }
@@ -88,15 +84,6 @@ interface ActiveVoiceSession {
 
 /** 首次云端语音披露确认键。 */
 const VOICE_DISCLOSURE_KEY = 'ncx.voice-cloud-disclosure.v2'
-
-/** VAD 判定为人声的频谱能量阈值。 */
-const VOICE_ACTIVITY_THRESHOLD = 0.055
-
-/** 检测到人声后的自动收音静默时长。 */
-const VOICE_END_SILENCE_MS = 1_100
-
-/** 最短录音时长，避免按键瞬间抖动触发自动结束。 */
-const MIN_LISTENING_MS = 500
 
 /** 最终转写确认展示时长。 */
 const TRANSCRIPT_REVIEW_MS = 1_200
@@ -245,8 +232,7 @@ async function press(source: VoiceInputSource): Promise<void> {
       analyser,
       chunks: [],
       mimeType: '',
-      listeningStartedAt: performance.now(),
-      voiceDetected: false
+      listeningStartedAt: performance.now()
     }
     activeSession = session
     if (settings.source === 'local') await startLocalRecording(session)
@@ -318,7 +304,7 @@ function startCloudRecording(session: ActiveVoiceSession): void {
   recorder.start(250)
 }
 
-/** 更新实时波形并运行 Renderer 端自动收音 VAD。 */
+/** 更新实时波形动效。 */
 function updateMeter(session: ActiveVoiceSession): void {
   if (activeSession !== session || state.value !== 'listening') return
   /** 频谱数据。 */
@@ -327,24 +313,10 @@ function updateMeter(session: ActiveVoiceSession): void {
   /** 12 个等距频谱柱。 */
   const bars = Array.from({ length: 12 }, (_, index) => Math.max(0.08, bins[Math.floor((index / 12) * bins.length)]! / 255))
   waveform.value = bars
-  /** 平均频谱能量。 */
-  const energy = bins.reduce((total, value) => total + value, 0) / Math.max(1, bins.length * 255)
-  /** 当前高精度时间。 */
-  const now = performance.now()
-  if (energy >= VOICE_ACTIVITY_THRESHOLD) {
-    session.voiceDetected = true
-    delete session.silenceStartedAt
-  } else if (session.voiceDetected && now - session.listeningStartedAt >= MIN_LISTENING_MS) {
-    session.silenceStartedAt ??= now
-    if (now - session.silenceStartedAt >= VOICE_END_SILENCE_MS) {
-      release(session.source)
-      return
-    }
-  }
   session.animationFrame = requestAnimationFrame(() => updateMeter(session))
 }
 
-/** 松手或 VAD 收音完成后进入识别。 */
+/** 松手或手动停止录音后进入识别。 */
 function release(source: VoiceInputSource): void {
   console.info(`[VoiceInput] release 触发 (source=${source}, 当前状态=${state.value}, activeSession=${Boolean(activeSession)})`)
   heldSources.delete(source)
