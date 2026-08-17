@@ -50,6 +50,11 @@ export class ShortcutMatcher {
     this.chord = uniqueChordKeys(config.chord)
   }
 
+  /** 同步外部（如主进程 globalShortcut）发起的聆听状态。 */
+  setListening(listening: boolean): void {
+    this.listening = listening
+  }
+
   /** 处理一条归一化输入事件，必要时返回状态转换报告。 */
   handle(event: InputHookNativeEvent): InputHookReport | undefined {
     if (event.type === 'disconnect') {

@@ -60,4 +60,15 @@ describe('ShortcutMatcher', () => {
     })
     expect(matcher.snapshot()).toEqual({ pressedKeys: [], listening: false })
   })
+
+  it('releases on keyup after external setListening(true)', () => {
+    const matcher = new ShortcutMatcher(config)
+
+    matcher.setListening(true)
+    expect(matcher.handle({ type: 'keyup', key: 'KeyQ' })).toMatchObject({
+      status: 'released',
+      sessionGeneration: 7
+    })
+    expect(matcher.snapshot().listening).toBe(false)
+  })
 })

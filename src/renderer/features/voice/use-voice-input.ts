@@ -147,6 +147,11 @@ function handleShortcutEvent(event: VoiceShortcutEvent): void {
   console.info('[VoiceInput] 渲染进程收到语音快捷键事件:', JSON.stringify(event))
   if (event.type === 'status') return
   if (event.type === 'pressed') {
+    if (state.value === 'listening') {
+      console.info('[VoiceInput] 处于录音中再次收到快捷键按下事件，触发松开以结束录音')
+      release('global-shortcut')
+      return
+    }
     shortcutGeneration = event.generation
     void press('global-shortcut')
     return

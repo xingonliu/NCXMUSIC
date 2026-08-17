@@ -151,7 +151,14 @@ async function configure(message: unknown): Promise<void> {
 
 // ========= 生命周期 =========
 parentPort?.on('message', (event) => {
-  void configure(event.data)
+  const message = event.data
+  if (typeof message === 'object' && message && Reflect.get(message, 'type') === 'setListening') {
+    const listening = Boolean(Reflect.get(message, 'listening'))
+    console.info(`[InputHook] 收到主进程会话状态同步: listening=${listening}`)
+    matcher?.setListening(listening)
+    return
+  }
+  void configure(message)
 })
 
 process.once('exit', () => {

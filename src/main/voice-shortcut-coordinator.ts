@@ -179,6 +179,11 @@ export class VoiceShortcutCoordinator {
     const onShortcutPress = (): void => {
       console.info(`[VoiceShortcutCoordinator] Electron globalShortcut 捕获到快捷键: accelerator=${accelerator}, generation=${candidateGeneration}`)
       this.options.publish({ type: 'pressed', generation: candidateGeneration })
+      this.host?.postMessage({
+        type: 'setListening',
+        listening: true,
+        sessionGeneration: candidateGeneration
+      })
     }
     /** 同一失败 Host 的重试可复用本应用已经占有的 Accelerator。 */
     const candidateAlreadyRegistered = oldAccelerator === accelerator
