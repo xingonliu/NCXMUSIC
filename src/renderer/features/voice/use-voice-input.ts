@@ -446,6 +446,7 @@ function cancel(reason = '语音输入已取消。'): void {
   console.info(`[VoiceInput] cancel 触发: reason=${reason}, 当前状态=${state.value}`)
   heldSources.clear()
   startGeneration += 1
+  usePlayerRuntime().engine.setDuckGain(1)
   /** 当前会话。 */
   const session = activeSession
   if (!session) {
@@ -468,6 +469,7 @@ function cancelSession(session: ActiveVoiceSession): void {
   if (activeSession === session) activeSession = undefined
   state.value = 'idle'
   transcriptPreview.value = ''
+  usePlayerRuntime().engine.setDuckGain(1)
 }
 
 /** 统一清理媒体节点、轨道、音频块和确认计时器。 */
@@ -482,12 +484,13 @@ function cleanupSession(session: ActiveVoiceSession): void {
   usePlayerRuntime().engine.setDuckGain(1)
 }
 
-/** 停止频谱循环和麦克风轨道。 */
+/** 停止频谱循环和麦克风轨道，并立即恢复音乐音量。 */
 function stopMeterAndTracks(session: ActiveVoiceSession): void {
   if (session.animationFrame !== undefined) cancelAnimationFrame(session.animationFrame)
   delete session.animationFrame
   stopTracks(session.stream)
   waveform.value = Array.from({ length: 12 }, () => 0.08)
+  usePlayerRuntime().engine.setDuckGain(1)
 }
 
 /** 停止媒体流中的全部轨道。 */
@@ -510,6 +513,7 @@ function failStart(source: VoiceInputSource, message: string): void {
   console.warn(`[VoiceInput] 语音输入启动阶段失败 (source=${source}):`, message)
   heldSources.delete(source)
   state.value = 'idle'
+  usePlayerRuntime().engine.setDuckGain(1)
   showToast(message, 'warning')
 }
 
