@@ -304,7 +304,7 @@ export class McpManager {
 
     this.publishStatus(config.serverId, 'connecting')
     /** 官方 SDK Client。 */
-    const client = new Client({ name: 'ncxmusic', version: '1.0 beta-v1' })
+    const client = new Client({ name: 'ncxmusic', version: '1.0.0-beta.1' })
     /** 仅 stdio/Streamable HTTP 的官方 SDK Transport。 */
     const transport = this.createTransport(config)
     /** SDK 的可选 sessionId 与项目 exactOptionalPropertyTypes 存在声明差异。 */
