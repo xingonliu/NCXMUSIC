@@ -396,7 +396,6 @@ watch(
 <template>
   <section
     class="agent-page"
-    :class="{ 'has-pending-interaction': hasPendingInteraction }"
     aria-label="Ncxmusic Agent 小云"
   >
     <div

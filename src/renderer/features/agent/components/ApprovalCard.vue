@@ -47,7 +47,7 @@ onUnmounted(() => clearInterval(timer))
   >
     <header>
       <ShieldAlert
-        :size="16"
+        :size="14"
         :stroke-width="2"
       />
       <div>

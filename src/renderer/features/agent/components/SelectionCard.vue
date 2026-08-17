@@ -98,7 +98,7 @@ onUnmounted(() => clearInterval(timer))
   >
     <header>
       <ListChecks
-        :size="16"
+        :size="14"
         :stroke-width="2"
       />
       <div>

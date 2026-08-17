@@ -191,10 +191,10 @@ watch(content, () => {
     :class="{ 'has-pending-interaction': hasPendingInteraction }"
     aria-label="给 Agent 发送消息"
   >
-    <!-- 滚动到底部按钮以整个输入区为锚点，交互卡出现时自动移动到卡片上方。 -->
+    <!-- 待处理卡展示时隐藏回到底部按钮，避免两个浮层争夺同一锚点。 -->
     <Transition name="agent-scroll-btn-fade">
       <button
-        v-if="showScrollToBottom"
+        v-if="showScrollToBottom && !hasPendingInteraction"
         type="button"
         class="agent-scroll-to-bottom-btn"
         aria-label="滚动到底部"
@@ -208,15 +208,6 @@ watch(content, () => {
       </button>
     </Transition>
 
-    <!-- 页面级待处理卡片插槽：固定显示在输入框上方，不进入消息时间线。 -->
-    <div
-      v-if="hasPendingInteraction"
-      class="agent-interaction-dock"
-      aria-label="等待处理的交互"
-    >
-      <slot name="interaction" />
-    </div>
-
     <!-- Floating Context Pill above composer -->
     <div
       v-if="contextLabel"
@@ -228,6 +219,15 @@ watch(content, () => {
 
     <!-- Composer Rounded Container -->
     <div class="agent-composer-box">
+      <!-- 待处理卡锚定输入框并脱离文档流，底部轻微覆盖输入框上沿。 -->
+      <div
+        v-if="hasPendingInteraction"
+        class="agent-interaction-dock"
+        aria-label="等待处理的交互"
+      >
+        <slot name="interaction" />
+      </div>
+
       <textarea
         ref="textareaRef"
         v-model="content"

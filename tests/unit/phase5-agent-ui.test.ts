@@ -68,9 +68,20 @@ describe('phase 5 agent UI contract', () => {
     expect(page).toContain("if (status === 'selected') return '已选择'")
     expect(composer).toContain('agent-interaction-dock')
     expect(composer).toContain('<slot name="interaction" />')
+    expect(composer.indexOf('class="agent-interaction-dock"')).toBeGreaterThan(
+      composer.indexOf('class="agent-composer-box"')
+    )
     expect(css).toContain('.agent-interaction-dock')
     expect(css).toContain('.agent-interaction-status-message')
     expect(css).toContain('background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);')
+    expect(css).toContain('position: absolute;')
+    expect(css).toContain('bottom: calc(100% - 8px);')
+    expect(css).not.toContain('.agent-page.has-pending-interaction .agent-conversation')
+    expect(css).toContain('background: light-dark(rgb(232 232 236 / 78%), rgb(112 112 120 / 52%));')
+    expect(css).toContain('backdrop-filter: var(--ncx-glass-backdrop-deep);')
+    expect(css).toContain('box-shadow: 0 18px 48px rgb(0 0 0 / 24%), 0 4px 14px rgb(0 0 0 / 12%);')
+    expect(css).toContain('.agent-selection-options > button {')
+    expect(css).toContain('border: 0;')
   })
 
   it('输入框组件根据输入文本自适应高度且限制最大高度 350px', () => {
@@ -103,8 +114,8 @@ describe('phase 5 agent UI contract', () => {
 
     expect(selection).toContain('agent-selection-opt-cover')
     expect(css).toContain('.agent-selection-opt-cover')
-    expect(css).toContain('width: 40px;')
-    expect(css).toContain('height: 40px;')
+    expect(css).toContain('width: 32px;')
+    expect(css).toContain('height: 32px;')
     expect(css).toContain('object-fit: cover;')
   })
 
@@ -192,4 +203,3 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('box-shadow: 0 4px 18px rgb(0 0 0 / 18%), 0 2px 6px rgb(0 0 0 / 8%);')
   })
 })
-

@@ -175,7 +175,7 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 | `layer-voice` | 800 | 语音悬浮组件 |
 | `layer-toast` | 900 | Toast 容器，始终高于应用内浮层与语音悬浮层 |
 
-业务组件不能使用任意 Z-Index。ApprovalCard 与 SelectionCard 位于 AgentComposer 上方的同一输入区层，不进入 Agent 会话流，也不提升到 `layer-modal`；只有跨页面的未决审批恢复层才使用 `layer-modal`。
+业务组件不能使用任意 Z-Index。ApprovalCard 与 SelectionCard 以绝对定位浮层覆盖 AgentComposer 上沿，不参与文档流、不推动 Agent 会话，也不提升到 `layer-modal`；只有跨页面的未决审批恢复层才使用 `layer-modal`。
 
 ### 3.8 颜色 Token
 
@@ -271,7 +271,7 @@ Token 使用 CSS Custom Properties，并分成三层：基础刻度、语义 Tok
 
 `SelectionCard` 是 `request_user_selection` Tool 的快捷提问组件，固定显示在 AgentComposer 上方，帮助用户在 2~5 个结构化答案中选择、减少文字输入。它允许在同一卡片混排两种 Option Row：音乐实体使用 `MediaArtwork thumbnail` 并展示名称、歌手、专辑和权益小标；普通文字选项展示标题和一行可选说明。单选模式整行点击后立即提交；多选模式使用明确的选中标记，允许勾选 1~5 项，并在至少一项已选时启用“完成”按钮。两种模式都支持方向键移动焦点；单选用 Enter 选择并提交，多选用 Space 切换选项，再聚焦“完成”并按 Enter 提交。卡片始终提供“取消”次要按钮，不使用“批准/拒绝”文案；提交只返回回答，绝不执行选项文案描述的动作。固定 10 分钟到期后移除活动卡片，并在原消息位置保留只读过期状态。
 
-ApprovalCard 与 SelectionCard 只在待处理期间显示于输入框上方；对话时间线用灰底轻量消息记录“等待批准/等待选择”，完成后原位更新为“已批准/已拒绝/已选择”或对应的取消、过期状态。状态消息只用于记录，不提供任何重复提交入口。
+ApprovalCard 与 SelectionCard 只在待处理期间以紧凑的浅灰磨砂卡片覆盖输入框上沿，使用背景高斯模糊与阴影建立层级，不使用卡片或选项描边，也不为浮层预留会话空间；对话时间线用灰底轻量消息记录“等待批准/等待选择”，完成后原位更新为“已批准/已拒绝/已选择”或对应的取消、过期状态。状态消息只用于记录，不提供任何重复提交入口。
 
 ApprovalCard 与 SelectionCard 外层可以复用 Card、状态区域和动效 Token，但不能合并成一个按参数切换语义的万能组件；前者回答“是否允许执行”，后者回答“具体选择哪个对象”。
 
