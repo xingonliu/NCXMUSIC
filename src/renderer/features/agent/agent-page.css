@@ -1072,9 +1072,7 @@
   padding: 10px 12px;
   overflow: hidden;
   border: 0;
-  border-radius: 14px;
-  clip-path: inset(0 round 14px);
-  isolation: isolate;
+  border-radius: 18px;
   background: light-dark(rgb(232 232 236 / 30%), rgb(78 78 86 / 30%));
   box-shadow: 0 24px 64px rgb(0 0 0 / 28%), 0 6px 18px rgb(0 0 0 / 16%);
   backdrop-filter: blur(32px);
@@ -1305,8 +1303,8 @@
   max-height: min(58vh, 420px);
   gap: 8px;
   padding: 0;
-  border-radius: 14px;
-  clip-path: inset(0 round 14px);
+  border-radius: 18px;
+  box-shadow: 0 24px 64px rgb(0 0 0 / 28%), 0 6px 18px rgb(0 0 0 / 16%);
   box-sizing: border-box;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -1318,6 +1316,7 @@
 .agent-interaction-dock .agent-selection-card {
   max-width: none;
   margin: 0;
+  border-radius: 18px;
   box-sizing: border-box;
   animation: agent-interaction-materialize 180ms var(--ncx-spring-smooth) both;
   transform-origin: center bottom;
@@ -1351,6 +1350,17 @@
   pointer-events: auto;
 }
 
+.agent-composer-box.has-dock {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.agent-composer-box.has-dock textarea,
+.agent-composer-box.has-dock .agent-composer-bottom-bar {
+  opacity: 0;
+  pointer-events: none;
+}
 
 .agent-composer-box textarea {
   width: 100%;

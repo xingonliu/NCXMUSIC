@@ -703,6 +703,12 @@ async function createMainWindow(): Promise<void> {
   registerWindowStatePublisher(window)
   configureSmokeExit(window)
 
+  window.webContents.on('before-input-event', (_event, input) => {
+    if (input.type === 'keyDown' && (input.key === 'F12' || (input.control && input.shift && input.key.toLowerCase() === 'i'))) {
+      window.webContents.toggleDevTools()
+    }
+  })
+
   const developmentUrl = process.env['ELECTRON_RENDERER_URL']
   if (developmentUrl) {
     const url = new URL(developmentUrl)
