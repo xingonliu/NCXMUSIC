@@ -145,9 +145,8 @@ function getScrollContainer(): HTMLElement | null {
   }
   const element = conversation.value
   if (!element) return null
-  const parent = (element.closest('.ncx-content-area') as HTMLElement | null) || element.parentElement
-  scrollContainerEl = parent
-  return parent
+  scrollContainerEl = element
+  return element
 }
 
 /** 检查并更新滚动条是否处于底部的状态。 */
@@ -473,6 +472,16 @@ watch(
             <div class="agent-user-bubble">
               {{ message.content }}
             </div>
+            <div class="agent-user-footer">
+              <CommonIconButton
+                label="复制内容"
+                size="compact"
+                variant="ghost"
+                @click="copyMessageText(message.messageId, message.content)"
+              >
+                <Copy :size="14" />
+              </CommonIconButton>
+            </div>
           </div>
 
           <!-- System Message: Error / Warning Callout -->
@@ -597,41 +606,44 @@ watch(
       </template>
     </div>
 
-    <ProfileAnalysisBanner
-      :snapshot="agent.snapshot.value"
-      @start="agent.startProfileAnalysis"
-      @dismiss="agent.dismissProfilePrompt"
-    />
+    <!-- 底部停靠区域：与上方对话流统一在同一个父容器下，同宽居中对齐 -->
+    <div class="agent-dock">
+      <ProfileAnalysisBanner
+        :snapshot="agent.snapshot.value"
+        @start="agent.startProfileAnalysis"
+        @dismiss="agent.dismissProfilePrompt"
+      />
 
-    <AgentComposer
-      :snapshot="agent.snapshot.value"
-      :context-label="contextLabel"
-      :show-scroll-to-bottom="!isAtBottom"
-      :has-pending-interaction="hasPendingInteraction"
-      @send="sendMessage"
-      @stop="agent.stop"
-      @music-safety="agent.setMusicSafetyLevel"
-      @command-safety="agent.setCommandSafetyLevel"
-      @scroll-to-bottom="scrollToBottom('smooth')"
-    >
-      <template #interaction>
-        <ApprovalCard
-          v-for="approval in pendingApprovals"
-          :key="approval.approvalId"
-          :approval="approval"
-          @approve="agent.respondApproval($event, 'approve')"
-          @reject="agent.respondApproval($event, 'reject')"
-        />
+      <AgentComposer
+        :snapshot="agent.snapshot.value"
+        :context-label="contextLabel"
+        :show-scroll-to-bottom="!isAtBottom"
+        :has-pending-interaction="hasPendingInteraction"
+        @send="sendMessage"
+        @stop="agent.stop"
+        @music-safety="agent.setMusicSafetyLevel"
+        @command-safety="agent.setCommandSafetyLevel"
+        @scroll-to-bottom="scrollToBottom('smooth')"
+      >
+        <template #interaction>
+          <ApprovalCard
+            v-for="approval in pendingApprovals"
+            :key="approval.approvalId"
+            :approval="approval"
+            @approve="agent.respondApproval($event, 'approve')"
+            @reject="agent.respondApproval($event, 'reject')"
+          />
 
-        <SelectionCard
-          v-for="selection in pendingSelections"
-          :key="selection.selectionId"
-          :selection="selection"
-          @submit="agent.respondSelection"
-          @cancel="agent.cancelSelection"
-        />
-      </template>
-    </AgentComposer>
+          <SelectionCard
+            v-for="selection in pendingSelections"
+            :key="selection.selectionId"
+            :selection="selection"
+            @submit="agent.respondSelection"
+            @cancel="agent.cancelSelection"
+          />
+        </template>
+      </AgentComposer>
+    </div>
 
     <!-- 底部渐变遮罩：在输入框下方平滑渐变，遮挡滚动到底部的消息边缘 -->
     <div

@@ -124,9 +124,11 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('object-fit: cover;')
   })
 
-  it('Agent 消息底部工具栏移除重新生成按钮且点赞点踩复制包含相应交互与提示', () => {
+  it('Agent 消息底部工具栏移除重新生成按钮且点赞点踩复制包含相应交互与提示，用户消息支持 hover 复制', () => {
     /** Agent 页面源代码。 */
     const page = source('src/renderer/features/agent/AgentPage.vue')
+    /** CSS 源代码。 */
+    const css = source('src/renderer/features/agent/agent-page.css')
 
     expect(page).not.toContain('label="重新生成"')
     expect(page).toContain('handleLike')
@@ -135,6 +137,9 @@ describe('phase 5 agent UI contract', () => {
     expect(page).toContain('差评也没用，0人收到你的反馈')
     expect(page).toContain('copyMessageText')
     expect(page).toContain('已复制到剪贴板')
+    expect(page).toContain('agent-user-footer')
+    expect(css).toContain('.agent-user-footer')
+    expect(css).toContain('.agent-turn-block.is-user:hover .agent-user-footer')
   })
 
   it('执行中工具包含动态耗时计算与实时计时器', () => {
