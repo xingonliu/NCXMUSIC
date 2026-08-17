@@ -1296,7 +1296,6 @@
   overscroll-behavior: contain;
   pointer-events: auto;
   scrollbar-width: thin;
-  filter: drop-shadow(0 18px 24px rgb(0 0 0 / 18%));
 }
 
 .agent-interaction-dock .agent-approval-card,

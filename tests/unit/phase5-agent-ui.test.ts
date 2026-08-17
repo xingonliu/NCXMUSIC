@@ -82,6 +82,7 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('-webkit-backdrop-filter: blur(32px) saturate(180%);')
     expect(css).toContain('backdrop-filter: blur(32px) saturate(180%);')
     expect(css).toContain('box-shadow: 0 24px 64px rgb(0 0 0 / 28%), 0 6px 18px rgb(0 0 0 / 16%);')
+    expect(css).not.toContain('filter: drop-shadow(')
     expect(css).toContain('.agent-selection-options > button {')
     expect(css).toContain('border: 0;')
   })
