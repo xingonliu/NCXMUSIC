@@ -212,6 +212,7 @@ export class VoiceShortcutCoordinator {
       const reason = isPermissionDenied
         ? '未授予辅助功能权限，无法全局监听按键。'
         : rawReason
+      console.warn(`[VoiceShortcutCoordinator] 快捷键 Host 就绪失败:`, reason)
       this.updateSnapshot(isPermissionDenied ? 'permission_denied' : 'hook_failed', reason, previous.chord)
       return
     }
@@ -226,6 +227,7 @@ export class VoiceShortcutCoordinator {
     this.registeredAccelerator = accelerator
     oldHost?.kill()
     this.bindStableHost(candidate, candidateGeneration)
+    console.info(`[VoiceShortcutCoordinator] 语音快捷键已成功就绪: accelerator=${accelerator}, generation=${candidateGeneration}`)
     this.updateSnapshot('ready', undefined, normalizedChord)
   }
 
@@ -265,6 +267,7 @@ export class VoiceShortcutCoordinator {
       if (this.host !== host) return
       const report = InputHookReportSchema.safeParse(message)
       if (!report.success || report.data.sessionGeneration !== generation) return
+      console.info(`[VoiceShortcutCoordinator] 收到 Hook 进程报告: status=${report.data.status}, generation=${generation}`)
       if (report.data.status === 'pressed' || report.data.status === 'released') {
         this.options.publish({ type: report.data.status, generation })
       } else if (report.data.status === 'permission_denied' || report.data.status === 'hook_failed') {
@@ -275,6 +278,7 @@ export class VoiceShortcutCoordinator {
     host.once('exit', () => {
       if (this.host !== host) return
       this.host = undefined
+      console.warn(`[VoiceShortcutCoordinator] InputHookHost 意外退出`)
       this.updateSnapshot('hook_failed', 'InputHookHost 意外退出；应用内麦克风仍可使用。')
       this.options.publish({ type: 'cancelled', generation, reason: 'InputHookHost 意外退出。' })
     })

@@ -84,7 +84,10 @@ function dispatch(event: InputHookNativeEvent): void {
   const current = matcher
   if (!current) return
   const next = current.handle(event)
-  if (next) post(next)
+  if (next) {
+    console.info(`[InputHook] 组合键状态触发: status=${next.status}, generation=${next.sessionGeneration}`)
+    post(next)
+  }
 }
 
 /** 停止并卸载当前原生 Hook，防止重配或退出后残留监听。 */
@@ -113,6 +116,7 @@ async function attachNativeHook(config: InputHookConfig): Promise<void> {
   nativeHook.on('keydown', keydownListener)
   nativeHook.on('keyup', keyupListener)
   nativeHook.start()
+  console.info(`[InputHook] 原生全局键盘 Hook 启动成功 (ready)，正在监听:`, config.chord)
   post(report(config, 'ready'))
 }
 
@@ -122,6 +126,7 @@ async function configure(message: unknown): Promise<void> {
   if (!parsed.success) return
   detachNativeHook()
   matcher = new ShortcutMatcher(parsed.data)
+  console.info(`[InputHook] 正在配置快捷键 Hook:`, parsed.data.chord)
   try {
     await attachNativeHook(parsed.data)
   } catch (error) {
@@ -131,6 +136,7 @@ async function configure(message: unknown): Promise<void> {
       text.includes('assistive devices') ||
       text.toLowerCase().includes('permission') ||
       text.includes('Accessibility API')
+    console.error(`[InputHook] 原生键盘 Hook 启动失败:`, text, isPermissionDenied ? '(缺少系统辅助功能/Accessibility 权限)' : '')
     post(report(parsed.data, isPermissionDenied ? 'permission_denied' : 'hook_failed', text))
   }
 }

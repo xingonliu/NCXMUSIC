@@ -144,6 +144,7 @@ async function initialize(): Promise<void> {
 
 /** 响应 Main 已过滤的 pressed/released/cancelled 事件。 */
 function handleShortcutEvent(event: VoiceShortcutEvent): void {
+  console.info('[VoiceInput] 渲染进程收到语音快捷键事件:', JSON.stringify(event))
   if (event.type === 'status') return
   if (event.type === 'pressed') {
     shortcutGeneration = event.generation
@@ -163,7 +164,11 @@ function handleVoiceServiceEvent(event: VoiceServiceEvent): void {
 
 /** 开始一次按住说话。 */
 async function press(source: VoiceInputSource): Promise<void> {
-  if (activeSession || state.value !== 'idle') return
+  console.info(`[VoiceInput] 收到按住录音请求 (source=${source}, 当前状态=${state.value})`)
+  if (activeSession || state.value !== 'idle') {
+    console.warn(`[VoiceInput] 忽略录音请求: 存在活跃会话或状态非 idle (activeSession=${Boolean(activeSession)}, state=${state.value})`)
+    return
+  }
   heldSources.add(source)
   /** 当前异步启动 generation。 */
   const generation = startGeneration + 1
@@ -172,7 +177,10 @@ async function press(source: VoiceInputSource): Promise<void> {
   transcriptPreview.value = ''
   /** 本次固定语音设置。 */
   const settingsResult = await window.ncx.voiceSettings.request({ operation: 'snapshot' }).catch(() => undefined)
-  if (!isCurrentStart(source, generation)) return
+  if (!isCurrentStart(source, generation)) {
+    console.warn(`[VoiceInput] 启动已失效 (松手过快或已被新请求取代): generation=${generation}`)
+    return
+  }
   if (!settingsResult) return failStart(source, '语音设置服务不可用。')
   /** 本次固定设置快照。 */
   const settings = settingsResult.snapshot
@@ -333,6 +341,7 @@ function updateMeter(session: ActiveVoiceSession): void {
 
 /** 松手或 VAD 收音完成后进入识别。 */
 function release(source: VoiceInputSource): void {
+  console.info(`[VoiceInput] release 触发 (source=${source}, 当前状态=${state.value}, activeSession=${Boolean(activeSession)})`)
   heldSources.delete(source)
   /** 当前会话。 */
   const session = activeSession
@@ -429,6 +438,7 @@ async function reviewTranscript(session: ActiveVoiceSession, rawText: string): P
 
 /** 取消当前录音或识别并释放全部内存媒体。 */
 function cancel(reason = '语音输入已取消。'): void {
+  console.info(`[VoiceInput] cancel 触发: reason=${reason}, 当前状态=${state.value}`)
   heldSources.clear()
   startGeneration += 1
   /** 当前会话。 */
@@ -485,12 +495,14 @@ function finishWithError(session: ActiveVoiceSession, error: unknown): void {
   if (activeSession !== session) return
   /** 安全错误文案。 */
   const message = error instanceof Error ? error.message : '语音识别失败。'
+  console.warn(`[VoiceInput] 语音识别报错:`, message, error)
   cancelSession(session)
   showToast(message, 'warning')
 }
 
 /** 在启动阶段失败并复位。 */
 function failStart(source: VoiceInputSource, message: string): void {
+  console.warn(`[VoiceInput] 语音输入启动阶段失败 (source=${source}):`, message)
   heldSources.delete(source)
   state.value = 'idle'
   showToast(message, 'warning')

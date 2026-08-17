@@ -445,8 +445,17 @@ function publishVoiceShortcutEvent(rawEvent: unknown): void {
   /** 已校验的最小语音事件。 */
   const event = VoiceShortcutEventSchema.safeParse(rawEvent)
   const window = mainWindow
-  if (!event.success || !window || window.isDestroyed()) return
+  console.info('[Main] 收到语音快捷键事件:', JSON.stringify(rawEvent))
+  if (!event.success) {
+    console.warn('[Main] 语音快捷键事件校验失败:', event.error)
+    return
+  }
+  if (!window || window.isDestroyed()) {
+    console.warn('[Main] 主窗口不存在或已销毁，忽略语音快捷键事件')
+    return
+  }
   if (event.data.type === 'pressed' && window.isFullScreen()) {
+    console.warn('[Main] 主窗口处于全屏模式，已暂停并取消语音快捷键')
     window.webContents.send(VOICE_SHORTCUT_CHANNELS.event, {
       type: 'cancelled',
       generation: event.data.generation,
@@ -455,6 +464,7 @@ function publishVoiceShortcutEvent(rawEvent: unknown): void {
     return
   }
   if (event.data.type === 'pressed' && !window.isFocused()) {
+    console.info('[Main] 主窗口不在前台，正在显示外置悬浮语音胶囊')
     updateVoiceOverlay({ phase: 'starting', text: '准备中', waveform: Array.from({ length: 12 }, () => 0.08) })
   }
   window.webContents.send(VOICE_SHORTCUT_CHANNELS.event, event.data)
