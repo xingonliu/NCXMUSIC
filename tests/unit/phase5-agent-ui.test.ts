@@ -80,7 +80,7 @@ describe('phase 5 agent UI contract', () => {
     expect(css).not.toContain('.agent-page.has-pending-interaction .agent-conversation')
     expect(css).not.toContain('.agent-composer.has-pending-interaction .agent-composer-box')
     expect(css).not.toContain('.agent-page.has-pending-interaction .agent-bottom-mask')
-    expect(css).toContain('background: light-dark(rgb(232 232 236 / 60%), rgb(78 78 86 / 60%));')
+    expect(css).toContain('background: light-dark(rgb(232 232 236 / 30%), rgb(78 78 86 / 30%));')
     expect(css).toContain('backdrop-filter: blur(32px);')
     expect(css).not.toContain('saturate(180%)')
     expect(css).toContain('box-shadow: 0 24px 64px rgb(0 0 0 / 28%), 0 6px 18px rgb(0 0 0 / 16%);')
