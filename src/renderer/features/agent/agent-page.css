@@ -1064,7 +1064,7 @@
   max-height: 220px;
 }
 
-/* Approval & Selection Cards in Codex style */
+/* 审批卡与选择卡共用单层半透明灰色材质，避免底层明暗差异形成假渐变。 */
 .agent-approval-card,
 .agent-selection-card {
   width: 100%;
@@ -1074,10 +1074,9 @@
   overflow: hidden;
   border: 0;
   border-radius: 14px;
-  background: light-dark(rgb(228 228 232 / 54%), rgb(150 150 158 / 26%));
+  background: light-dark(rgb(232 232 236 / 60%), rgb(78 78 86 / 60%));
   box-shadow: 0 24px 64px rgb(0 0 0 / 28%), 0 6px 18px rgb(0 0 0 / 16%);
-  -webkit-backdrop-filter: blur(32px) saturate(180%);
-  backdrop-filter: blur(32px) saturate(180%);
+  backdrop-filter: blur(32px);
 }
 
 /* 消息时间线只保留交互结果，避免历史卡片持续占用对话空间。 */
