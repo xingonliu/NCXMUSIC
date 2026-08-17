@@ -19,6 +19,8 @@ interface AgentComposerProps {
   readonly snapshot: DeepReadonly<AgentSnapshot>
   readonly contextLabel?: string
   readonly showScrollToBottom?: boolean
+  /** 当前输入框上方是否存在等待用户处理的交互卡片。 */
+  readonly hasPendingInteraction?: boolean
 }
 
 interface AgentComposerEmits {
@@ -186,8 +188,35 @@ watch(content, () => {
 <template>
   <section
     class="agent-composer"
+    :class="{ 'has-pending-interaction': hasPendingInteraction }"
     aria-label="给 Agent 发送消息"
   >
+    <!-- 滚动到底部按钮以整个输入区为锚点，交互卡出现时自动移动到卡片上方。 -->
+    <Transition name="agent-scroll-btn-fade">
+      <button
+        v-if="showScrollToBottom"
+        type="button"
+        class="agent-scroll-to-bottom-btn"
+        aria-label="滚动到底部"
+        title="滚动到底部"
+        @click="emit('scroll-to-bottom')"
+      >
+        <ArrowDown
+          :size="16"
+          :stroke-width="2.2"
+        />
+      </button>
+    </Transition>
+
+    <!-- 页面级待处理卡片插槽：固定显示在输入框上方，不进入消息时间线。 -->
+    <div
+      v-if="hasPendingInteraction"
+      class="agent-interaction-dock"
+      aria-label="等待处理的交互"
+    >
+      <slot name="interaction" />
+    </div>
+
     <!-- Floating Context Pill above composer -->
     <div
       v-if="contextLabel"
@@ -199,23 +228,6 @@ watch(content, () => {
 
     <!-- Composer Rounded Container -->
     <div class="agent-composer-box">
-      <!-- 滚动到底部圆形按钮：在输入框上方水平居中，当不在最底部时展示 -->
-      <Transition name="agent-scroll-btn-fade">
-        <button
-          v-if="showScrollToBottom"
-          type="button"
-          class="agent-scroll-to-bottom-btn"
-          aria-label="滚动到底部"
-          title="滚动到底部"
-          @click="emit('scroll-to-bottom')"
-        >
-          <ArrowDown
-            :size="16"
-            :stroke-width="2.2"
-          />
-        </button>
-      </Transition>
-
       <textarea
         ref="textareaRef"
         v-model="content"

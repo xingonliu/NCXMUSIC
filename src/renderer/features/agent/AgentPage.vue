@@ -26,7 +26,11 @@ import { useRoute, useRouter } from 'vue-router'
 
 import { CommonButton, CommonIconButton } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
-import type { AgentSnapshot } from '../../../shared/schemas/agent'
+import type {
+  AgentSnapshot,
+  ApprovalSnapshot,
+  SelectionSnapshot
+} from '../../../shared/schemas/agent'
 import { useAccountSessionStore } from '../account/account-session-store'
 import AgentComposer from './components/AgentComposer.vue'
 import AgentMarkdown from './components/AgentMarkdown.vue'
@@ -104,6 +108,21 @@ const hasRunningTools = computed<boolean>(() => {
   return agent.snapshot.value.tools.some(
     (tool) => tool.status === 'running' || tool.status === 'queued'
   )
+})
+
+/** 当前仍等待用户处理的审批卡列表。 */
+const pendingApprovals = computed(() => {
+  return agent.snapshot.value.approvals.filter((approval) => approval.status === 'pending')
+})
+
+/** 当前仍等待用户处理的选择卡列表。 */
+const pendingSelections = computed(() => {
+  return agent.snapshot.value.selections.filter((selection) => selection.status === 'pending')
+})
+
+/** 输入框上方是否需要展示待处理交互卡片。 */
+const hasPendingInteraction = computed<boolean>(() => {
+  return pendingApprovals.value.length > 0 || pendingSelections.value.length > 0
 })
 
 // ========= 函数 =========
@@ -217,6 +236,23 @@ function selectionsForMessage(message: DeepReadonly<AgentSnapshot['messages'][nu
   /** 当前消息关联的 Tool Call ID 集合。 */
   const toolCallIds = new Set(message.toolCallIds)
   return agent.snapshot.value.selections.filter((selection) => toolCallIds.has(selection.toolCallId))
+}
+
+/** 将审批状态转换为对话流中的中文状态消息。 */
+function approvalStatusLabel(status: ApprovalSnapshot['status']): string {
+  if (status === 'pending') return '等待批准'
+  if (status === 'approved') return '已批准'
+  if (status === 'rejected') return '已拒绝'
+  if (status === 'expired') return '批准请求已过期'
+  return '批准请求已取消'
+}
+
+/** 将选择状态转换为对话流中的中文状态消息。 */
+function selectionStatusLabel(status: SelectionSnapshot['status']): string {
+  if (status === 'pending') return '等待选择'
+  if (status === 'selected') return '已选择'
+  if (status === 'expired') return '选择请求已过期'
+  return '选择请求已取消'
 }
 
 /** 动态更新全局耗时计时器状态。 */
@@ -360,6 +396,7 @@ watch(
 <template>
   <section
     class="agent-page"
+    :class="{ 'has-pending-interaction': hasPendingInteraction }"
     aria-label="Ncxmusic Agent 小云"
   >
     <div
@@ -492,21 +529,27 @@ watch(
               />
             </section>
 
-            <ApprovalCard
-              v-for="approval in approvalsForMessage(message)"
-              :key="approval.approvalId"
-              :approval="approval"
-              @approve="agent.respondApproval($event, 'approve')"
-              @reject="agent.respondApproval($event, 'reject')"
-            />
-
-            <SelectionCard
-              v-for="selection in selectionsForMessage(message)"
-              :key="selection.selectionId"
-              :selection="selection"
-              @submit="agent.respondSelection"
-              @cancel="agent.cancelSelection"
-            />
+            <!-- 交互卡从消息流抽离后，此处仅保留可追溯的轻量状态消息。 -->
+            <section
+              v-if="approvalsForMessage(message).length > 0 || selectionsForMessage(message).length > 0"
+              class="agent-interaction-status-stack"
+              aria-label="交互状态"
+            >
+              <div
+                v-for="approval in approvalsForMessage(message)"
+                :key="approval.approvalId"
+                class="agent-interaction-status-message"
+              >
+                {{ approvalStatusLabel(approval.status) }}
+              </div>
+              <div
+                v-for="selection in selectionsForMessage(message)"
+                :key="selection.selectionId"
+                class="agent-interaction-status-message"
+              >
+                {{ selectionStatusLabel(selection.status) }}
+              </div>
+            </section>
 
             <!-- Assistant Markdown Response (No bubble container!) -->
             <div
@@ -565,12 +608,31 @@ watch(
       :snapshot="agent.snapshot.value"
       :context-label="contextLabel"
       :show-scroll-to-bottom="!isAtBottom"
+      :has-pending-interaction="hasPendingInteraction"
       @send="sendMessage"
       @stop="agent.stop"
       @music-safety="agent.setMusicSafetyLevel"
       @command-safety="agent.setCommandSafetyLevel"
       @scroll-to-bottom="scrollToBottom('smooth')"
-    />
+    >
+      <template #interaction>
+        <ApprovalCard
+          v-for="approval in pendingApprovals"
+          :key="approval.approvalId"
+          :approval="approval"
+          @approve="agent.respondApproval($event, 'approve')"
+          @reject="agent.respondApproval($event, 'reject')"
+        />
+
+        <SelectionCard
+          v-for="selection in pendingSelections"
+          :key="selection.selectionId"
+          :selection="selection"
+          @submit="agent.respondSelection"
+          @cancel="agent.cancelSelection"
+        />
+      </template>
+    </AgentComposer>
 
     <!-- 底部渐变遮罩：在输入框下方平滑渐变，遮挡滚动到底部的消息边缘 -->
     <div

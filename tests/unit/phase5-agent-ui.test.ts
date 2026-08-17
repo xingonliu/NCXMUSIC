@@ -49,6 +49,30 @@ describe('phase 5 agent UI contract', () => {
     expect(selection).toContain('selection.mode === \'multiple\'')
   })
 
+  it('待处理交互卡抽离到输入框上方且消息流仅保留灰底状态消息', () => {
+    /** Agent 页面源代码。 */
+    const page = source('src/renderer/features/agent/AgentPage.vue')
+    /** AgentComposer 源代码。 */
+    const composer = source('src/renderer/features/agent/components/AgentComposer.vue')
+    /** Agent 页面 CSS 源代码。 */
+    const css = source('src/renderer/features/agent/agent-page.css')
+
+    expect(page).toContain('pendingApprovals')
+    expect(page).toContain('pendingSelections')
+    expect(page).toContain('#interaction')
+    expect(page).toContain('agent-interaction-status-message')
+    expect(page).toContain("if (status === 'pending') return '等待批准'")
+    expect(page).toContain("if (status === 'approved') return '已批准'")
+    expect(page).toContain("if (status === 'rejected') return '已拒绝'")
+    expect(page).toContain("if (status === 'pending') return '等待选择'")
+    expect(page).toContain("if (status === 'selected') return '已选择'")
+    expect(composer).toContain('agent-interaction-dock')
+    expect(composer).toContain('<slot name="interaction" />')
+    expect(css).toContain('.agent-interaction-dock')
+    expect(css).toContain('.agent-interaction-status-message')
+    expect(css).toContain('background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);')
+  })
+
   it('输入框组件根据输入文本自适应高度且限制最大高度 350px', () => {
     /** AgentComposer 源代码。 */
     const composer = source('src/renderer/features/agent/components/AgentComposer.vue')
@@ -168,5 +192,4 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('box-shadow: 0 4px 18px rgb(0 0 0 / 18%), 0 2px 6px rgb(0 0 0 / 8%);')
   })
 })
-
 

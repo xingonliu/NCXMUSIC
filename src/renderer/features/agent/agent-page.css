@@ -175,6 +175,11 @@
   padding: 16px 0 0;
 }
 
+/* 待处理卡固定在输入区时，为消息流预留等量可滚动空间。 */
+.agent-page.has-pending-interaction .agent-conversation {
+  padding-bottom: min(55vh, 480px);
+}
+
 /* ==========================================================================
    Welcome State (Codex 4-Card Grid Style)
    ========================================================================== */
@@ -1062,6 +1067,27 @@
   background: color-mix(in srgb, var(--ncx-color-surface) 94%, var(--ncx-color-warning) 4%);
 }
 
+/* 消息时间线只保留交互结果，避免历史卡片持续占用对话空间。 */
+.agent-interaction-status-stack {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  margin: 10px 0 14px;
+}
+
+.agent-interaction-status-message {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  padding: 7px 11px;
+  border-radius: 10px;
+  color: var(--ncx-color-text-secondary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 1.4;
+}
+
 .agent-approval-card header,
 .agent-selection-card header {
   display: flex;
@@ -1250,6 +1276,35 @@
 
 .agent-composer > * {
   pointer-events: auto;
+}
+
+/* 待处理交互卡片固定在输入框上方，较高选择卡在小窗口内独立滚动。 */
+.agent-interaction-dock {
+  display: grid;
+  width: 100%;
+  max-width: 780px;
+  max-height: min(55vh, 480px);
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 2px 4px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.agent-interaction-dock .agent-approval-card,
+.agent-interaction-dock .agent-selection-card {
+  max-width: none;
+  margin: 0;
+  box-sizing: border-box;
+  background: var(--ncx-modal-bg, #fff);
+  box-shadow: 0 8px 28px rgb(0 0 0 / 14%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+
+/* 交互卡出现时限制输入框扩张，确保卡片与输入区始终留在可视窗口内。 */
+.agent-composer.has-pending-interaction .agent-composer-box textarea {
+  max-height: min(140px, calc(45vh - 140px));
 }
 
 .agent-composer-context-pill {
@@ -1548,4 +1603,3 @@
 .ncx-app-shell--standalone.ncx-app-shell--fullscreen .agent-bottom-mask {
   left: 0;
 }
-
