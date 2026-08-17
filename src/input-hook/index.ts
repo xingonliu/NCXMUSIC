@@ -106,12 +106,20 @@ async function attachNativeHook(config: InputHookConfig): Promise<void> {
   const loaded = (await import('uiohook-napi')) as UiohookModule
   nativeHook = loaded.uIOhook
   keydownListener = (event) => {
+    const rawKeycode = typeof event === 'object' && event ? Reflect.get(event, 'keycode') : undefined
     const normalized = normalizeNativeEvent('keydown', event)
-    if (normalized) dispatch(normalized)
+    if (normalized) {
+      console.info(`[InputHook] 检测到目标按键 keydown: key=${normalized.key}, keycode=${rawKeycode}`)
+      dispatch(normalized)
+    }
   }
   keyupListener = (event) => {
+    const rawKeycode = typeof event === 'object' && event ? Reflect.get(event, 'keycode') : undefined
     const normalized = normalizeNativeEvent('keyup', event)
-    if (normalized) dispatch(normalized)
+    if (normalized) {
+      console.info(`[InputHook] 检测到目标按键 keyup: key=${normalized.key}, keycode=${rawKeycode}`)
+      dispatch(normalized)
+    }
   }
   nativeHook.on('keydown', keydownListener)
   nativeHook.on('keyup', keyupListener)

@@ -173,12 +173,24 @@ export class VoiceShortcutCoordinator {
       return
     }
     this.updateSnapshot('registering', undefined, normalizedChord)
+    /** 新候选配置 generation。 */
+    const candidateGeneration = this.generation + 1
+    /** 全局快捷键按下时的回调分发。 */
+    const onShortcutPress = (): void => {
+      console.info(`[VoiceShortcutCoordinator] Electron globalShortcut 捕获到快捷键: accelerator=${accelerator}, generation=${candidateGeneration}`)
+      this.options.publish({ type: 'pressed', generation: candidateGeneration })
+    }
     /** 同一失败 Host 的重试可复用本应用已经占有的 Accelerator。 */
     const candidateAlreadyRegistered = oldAccelerator === accelerator
-    if (!candidateAlreadyRegistered && !globalShortcut.register(accelerator, () => undefined)) {
-      this.config = previous
-      this.updateSnapshot('conflict', `快捷键 ${accelerator} 已被系统或其他应用占用。`, previous.chord)
-      return
+    if (!candidateAlreadyRegistered) {
+      if (!globalShortcut.register(accelerator, onShortcutPress)) {
+        this.config = previous
+        this.updateSnapshot('conflict', `快捷键 ${accelerator} 已被系统或其他应用占用。`, previous.chord)
+        return
+      }
+    } else {
+      globalShortcut.unregister(accelerator)
+      globalShortcut.register(accelerator, onShortcutPress)
     }
 
     /** 候选 Host，只有报告 ready 后才替换旧 Host。 */
@@ -186,8 +198,12 @@ export class VoiceShortcutCoordinator {
       serviceName: 'NcxMusic Input Hook',
       stdio: 'pipe'
     })
-    /** 新候选配置 generation。 */
-    const candidateGeneration = this.generation + 1
+    candidate.stdout?.on('data', (chunk: Buffer | string) => {
+      process.stdout.write(chunk)
+    })
+    candidate.stderr?.on('data', (chunk: Buffer | string) => {
+      process.stderr.write(chunk)
+    })
     /** 下发给 Host 的最小配置。 */
     const hostConfig: InputHookConfig = {
       protocolVersion: INPUT_HOOK_PROTOCOL_VERSION,
