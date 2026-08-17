@@ -4,6 +4,7 @@ import { dirname, join } from 'node:path'
 import {
   globalShortcut,
   shell,
+  systemPreferences,
   utilityProcess,
   type UtilityProcess
 } from 'electron'
@@ -131,13 +132,23 @@ export class VoiceShortcutCoordinator {
     return this.snapshot()
   }
 
-  /** 打开当前平台的麦克风/辅助功能权限设置。 */
+  /** 打开当前平台的麦克风/辅助功能权限设置并尝试重新检测。 */
   async openPermissionSettings(): Promise<VoiceShortcutSnapshot> {
+    if (process.platform === 'darwin') {
+      try {
+        systemPreferences.isTrustedAccessibilityClient(true)
+      } catch {
+        // 测试环境或不支持的环境静默跳过
+      }
+    }
     /** 平台权限页 URI；无法打开时保留当前状态。 */
     const target = process.platform === 'darwin'
       ? 'x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility'
       : 'ms-settings:privacy-microphone'
     await shell.openExternal(target).catch(() => undefined)
+    if (this.config.enabled && this.snapshotValue.availability !== 'ready') {
+      await this.applyConfiguration(this.config.chord)
+    }
     return this.snapshot()
   }
 
@@ -190,11 +201,18 @@ export class VoiceShortcutCoordinator {
       candidate.kill()
       if (!candidateAlreadyRegistered) globalShortcut.unregister(accelerator)
       this.config = previous
-      /** Host 失败的公开原因。 */
-      const reason = error instanceof Error ? error.message : 'InputHookHost 启动失败。'
-      this.updateSnapshot(reason.includes('permission') || reason.includes('AXAPI')
-        ? 'permission_denied'
-        : 'hook_failed', reason, previous.chord)
+      /** Host 失败的原始原因。 */
+      const rawReason = error instanceof Error ? error.message : 'InputHookHost 启动失败。'
+      /** 检查是否为 macOS 辅助功能或无障碍权限缺失。 */
+      const isPermissionDenied = rawReason.includes('permission') ||
+        rawReason.includes('AXAPI') ||
+        rawReason.includes('assistive devices') ||
+        rawReason.includes('Accessibility API')
+      /** 规范化用户提示文案。 */
+      const reason = isPermissionDenied
+        ? '未授予辅助功能权限，无法全局监听按键。'
+        : rawReason
+      this.updateSnapshot(isPermissionDenied ? 'permission_denied' : 'hook_failed', reason, previous.chord)
       return
     }
 

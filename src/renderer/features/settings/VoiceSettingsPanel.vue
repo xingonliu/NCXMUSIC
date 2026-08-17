@@ -85,6 +85,9 @@ const shortcutStatusText = computed<string>(() => {
   if (!shortcut.value) return '读取中'
   if (shortcut.value.availability === 'ready') return '全局按住说话可用'
   if (shortcut.value.availability === 'disabled') return '全局按住说话已关闭'
+  if (shortcut.value.availability === 'permission_denied') return shortcut.value.reason ?? '未授予辅助功能权限（需在系统设置中允许）'
+  if (shortcut.value.availability === 'conflict') return shortcut.value.reason ?? '快捷键已被系统或其他应用占用'
+  if (shortcut.value.availability === 'hook_failed') return shortcut.value.reason ?? '按键监听服务启动失败'
   return shortcut.value.reason ?? shortcut.value.availability
 })
 
@@ -488,6 +491,13 @@ onUnmounted(() => {
       :description="`${shortcut?.accelerator ?? 'Control+Shift+Q'} · ${shortcutStatusText}`"
     >
       <div class="settings-inline-actions">
+        <CommonButton
+          v-if="shortcut?.enabled && shortcut?.availability !== 'ready'"
+          variant="secondary"
+          @click="openPermissionSettings"
+        >
+          授权/重新检测
+        </CommonButton>
         <CommonButton
           variant="secondary"
           @click="startShortcutRecording"

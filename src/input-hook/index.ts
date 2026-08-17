@@ -126,7 +126,12 @@ async function configure(message: unknown): Promise<void> {
     await attachNativeHook(parsed.data)
   } catch (error) {
     const text = error instanceof Error ? error.message : String(error)
-    post(report(parsed.data, text.includes('AXAPI') ? 'permission_denied' : 'hook_failed', text))
+    /** 检查是否为 macOS 辅助功能或无障碍权限缺失。 */
+    const isPermissionDenied = text.includes('AXAPI') ||
+      text.includes('assistive devices') ||
+      text.toLowerCase().includes('permission') ||
+      text.includes('Accessibility API')
+    post(report(parsed.data, isPermissionDenied ? 'permission_denied' : 'hook_failed', text))
   }
 }
 

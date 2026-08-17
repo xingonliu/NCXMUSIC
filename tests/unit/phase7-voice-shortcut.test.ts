@@ -9,10 +9,12 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 /** Electron 全局快捷键和 Host 的可控夹具。 */
 const electronFixture = vi.hoisted(() => ({
   registered: new Set<string>(),
-  hostStatuses: [] as Array<'ready' | 'hook_failed'>,
+  hostStatuses: [] as Array<'ready' | 'hook_failed' | { status: 'hook_failed' | 'permission_denied'; reason?: string }>,
   register: vi.fn<(accelerator: string, callback: () => void) => boolean>(),
   unregister: vi.fn<(accelerator: string) => void>(),
-  unregisterAll: vi.fn<() => void>()
+  unregisterAll: vi.fn<() => void>(),
+  openExternal: vi.fn<() => Promise<void>>(),
+  isTrustedAccessibilityClient: vi.fn<(prompt: boolean) => boolean>()
 }))
 
 /** 每项测试创建并回收的配置目录。 */
@@ -31,14 +33,16 @@ vi.mock('electron', async () => {
     /** 接收配置后异步返回夹具指定状态。 */
     postMessage(config: { readonly sessionGeneration: number }): void {
       /** 本次候选启动状态。 */
-      const status = electronFixture.hostStatuses.shift() ?? 'ready'
+      const item = electronFixture.hostStatuses.shift() ?? 'ready'
+      const status = typeof item === 'object' ? item.status : item
+      const reason = typeof item === 'object' ? item.reason : (status === 'hook_failed' ? 'fixture hook failure' : undefined)
       queueMicrotask(() => {
         if (this.stopped) return
         this.emit('message', {
           protocolVersion: 1,
           sessionGeneration: config.sessionGeneration,
           status,
-          ...(status === 'hook_failed' ? { reason: 'fixture hook failure' } : {})
+          ...(reason ? { reason } : {})
         })
       })
     }
@@ -61,6 +65,8 @@ vi.mock('electron', async () => {
     electronFixture.registered.delete(accelerator)
   })
   electronFixture.unregisterAll.mockImplementation(() => electronFixture.registered.clear())
+  electronFixture.openExternal.mockImplementation(async () => undefined)
+  electronFixture.isTrustedAccessibilityClient.mockImplementation(() => true)
 
   return {
     globalShortcut: {
@@ -68,7 +74,8 @@ vi.mock('electron', async () => {
       unregister: electronFixture.unregister,
       unregisterAll: electronFixture.unregisterAll
     },
-    shell: { openExternal: vi.fn(async () => undefined) },
+    shell: { openExternal: electronFixture.openExternal },
+    systemPreferences: { isTrustedAccessibilityClient: electronFixture.isTrustedAccessibilityClient },
     utilityProcess: {
       fork: vi.fn(() => {
         /** 新的 InputHookHost 夹具。 */
@@ -103,6 +110,8 @@ afterEach(() => {
   electronFixture.register.mockClear()
   electronFixture.unregister.mockClear()
   electronFixture.unregisterAll.mockClear()
+  electronFixture.openExternal.mockClear()
+  electronFixture.isTrustedAccessibilityClient.mockClear()
   for (const directory of temporaryDirectories.splice(0)) {
     rmSync(directory, { recursive: true, force: true })
   }
@@ -152,6 +161,27 @@ describe('Phase 7 voice shortcut atomic registration', () => {
     expect(failed.availability).toBe('hook_failed')
     expect(electronFixture.registered).toEqual(new Set(['Alt+Space']))
     expect(electronFixture.unregister).toHaveBeenCalledWith('Control+Space')
+    coordinator.shutdown()
+  })
+
+  it('辅助功能权限不足时精准识别 permission_denied 并在打开权限设置后支持重新检测恢复', async () => {
+    /** 被测协调器。 */
+    const coordinator = createCoordinator()
+    electronFixture.hostStatuses.push({
+      status: 'hook_failed',
+      reason: 'Failed to enable access for assistive devices.'
+    })
+
+    coordinator.start()
+    await vi.waitFor(() => expect(coordinator.snapshot().availability).toBe('permission_denied'))
+    expect(coordinator.snapshot().reason).toContain('未授予辅助功能权限')
+
+    /** 模拟用户在系统授权后点击打开权限设置/重新检测。 */
+    electronFixture.hostStatuses.push('ready')
+    const result = await coordinator.openPermissionSettings()
+
+    expect(result.availability).toBe('ready')
+    expect(electronFixture.openExternal).toHaveBeenCalled()
     coordinator.shutdown()
   })
 })
