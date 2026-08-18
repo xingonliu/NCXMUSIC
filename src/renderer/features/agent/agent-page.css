@@ -175,10 +175,9 @@
   flex: 1 1 auto;
   min-height: 0;
   width: 100%;
-  padding: calc(var(--ncx-header-height, 72px) + 8px) 24px 16px;
+  padding: calc(var(--ncx-header-height, 72px) + 8px) 24px calc(var(--agent-dock-height, 120px) + 24px);
   overflow: hidden auto;
   scrollbar-gutter: stable;
-  margin-bottom: 20px;
 }
 
 .agent-conversation::-webkit-scrollbar {

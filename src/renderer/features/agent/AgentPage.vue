@@ -58,6 +58,15 @@ const account = useAccountSessionStore()
 /** 对话流 DOM 容器引用。 */
 const conversation = ref<HTMLElement | null>(null)
 
+/** 底部 Dock 容器引用。 */
+const dockRef = ref<HTMLElement | null>(null)
+
+/** 底部 Dock 实时高度（用于动态对话流下边距，保证最后一条消息完整可见）。 */
+const dockHeight = ref<number>(120)
+
+/** 底部 Dock 尺寸监听器。 */
+let dockObserver: ResizeObserver | null = null
+
 /** 当前复制成功提示 index。 */
 const copiedMessageId = ref<string | null>(null)
 
@@ -320,15 +329,37 @@ function handleDislike(): void {
   showToast('差评也没用，0人收到你的反馈', 'info')
 }
 
+/** 更新底部 Dock 实际渲染高度。 */
+function updateDockHeight(): void {
+  if (dockRef.value) {
+    const rect = dockRef.value.getBoundingClientRect()
+    if (rect.height > 0) {
+      dockHeight.value = Math.ceil(rect.height)
+    }
+  }
+}
+
 // ========= 生命周期 =========
 
 onMounted(async () => {
   await Promise.all([agent.initialize(), account.initialize()])
   await nextTick()
+  updateDockHeight()
+  if (dockRef.value && typeof ResizeObserver !== 'undefined') {
+    dockObserver = new ResizeObserver(() => {
+      const wasAtBottom = isAtBottom.value
+      updateDockHeight()
+      if (wasAtBottom) {
+        void scrollToBottom('auto')
+      }
+    })
+    dockObserver.observe(dockRef.value)
+  }
   // 首次进入小云页面默认瞬间置底，不从顶部滚动下来
   await scrollToBottom('auto')
   bindScrollListener()
   requestAnimationFrame(() => {
+    updateDockHeight()
     void scrollToBottom('auto')
     updateScrollState()
   })
@@ -336,6 +367,7 @@ onMounted(async () => {
 
 onActivated(async () => {
   bindScrollListener()
+  updateDockHeight()
   await nextTick()
   updateScrollState()
 })
@@ -357,6 +389,10 @@ onUnmounted(() => {
     clearInterval(timerId)
     timerId = null
   }
+  if (dockObserver) {
+    dockObserver.disconnect()
+    dockObserver = null
+  }
   unbindScrollListener()
 })
 
@@ -376,11 +412,13 @@ watch(
 watch(
   () => [
     agent.snapshot.value.updatedAt,
+    agent.snapshot.value.messages.length,
     agent.snapshot.value.messages.at(-1)?.content,
     agent.snapshot.value.tools.length,
     agent.snapshot.value.shellTerminals.at(-1)?.updatedAt,
     agent.snapshot.value.approvals.length,
-    agent.snapshot.value.selections.length
+    agent.snapshot.value.selections.length,
+    agent.snapshot.value.turnStatus
   ],
   () => {
     if (isAtBottom.value) {
@@ -395,6 +433,7 @@ watch(
 <template>
   <section
     class="agent-page"
+    :style="{ '--agent-dock-height': `${dockHeight}px` }"
     aria-label="Ncxmusic Agent 小云"
   >
     <div
@@ -607,7 +646,10 @@ watch(
     </div>
 
     <!-- 底部停靠区域：与上方对话流统一在同一个父容器下，同宽居中对齐 -->
-    <div class="agent-dock">
+    <div
+      ref="dockRef"
+      class="agent-dock"
+    >
       <ProfileAnalysisBanner
         :snapshot="agent.snapshot.value"
         @start="agent.startProfileAnalysis"

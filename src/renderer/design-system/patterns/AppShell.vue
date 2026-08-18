@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  Bot,
   ChevronLeft,
   Compass,
   LayoutGrid,
@@ -10,6 +9,7 @@ import {
   RotateCcw,
   Search,
   Settings,
+  Sparkles,
   UserRound,
   X
 } from '@lucide/vue'
@@ -117,7 +117,7 @@ const isSecondaryNavActive = computed<boolean>(() => {
 /** 根据导航配置返回对应图标组件。 */
 function resolveNavIcon(item: AppNavigationItem) {
   const iconMap = {
-    agent: Bot,
+    agent: Sparkles,
     browse: LayoutGrid,
     discover: Compass,
     profile: UserRound,
