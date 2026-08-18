@@ -7,8 +7,6 @@ import { CommonCard } from '../../design-system/components'
 interface SettingsSectionProps {
   /** 分组标题。 */
   readonly title: string
-  /** 可选的分组辅助说明。 */
-  readonly description?: string
   /** 页面内可搜索定位的分组 ID。 */
   readonly sectionId?: string
 }
@@ -25,12 +23,7 @@ defineProps<SettingsSectionProps>()
     class="settings-section"
   >
     <header class="settings-section-header">
-      <div>
-        <h2>{{ title }}</h2>
-        <p v-if="description">
-          {{ description }}
-        </p>
-      </div>
+      <h2>{{ title }}</h2>
       <div
         v-if="$slots.actions"
         class="settings-section-actions"

@@ -30,7 +30,11 @@ withDefaults(defineProps<SettingsRowProps>(), {
     :class="{ 'settings-row--start': align === 'start' }"
   >
     <div class="settings-row-copy">
-      <h3>{{ title }}</h3>
+      <h3>
+        <slot name="title">
+          {{ title }}
+        </slot>
+      </h3>
       <p v-if="description || $slots.description">
         <slot name="description">
           {{ description }}

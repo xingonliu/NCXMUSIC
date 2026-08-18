@@ -430,7 +430,6 @@ onBeforeUnmount(() => {
     <SettingsSection
       v-if="activeTab === 'general'"
       title="应用行为"
-      description="控制主窗口关闭后应用如何继续运行。"
     >
       <SettingsRow
         setting-id="setting-close-window"
@@ -449,7 +448,6 @@ onBeforeUnmount(() => {
     <SettingsSection
       v-else-if="activeTab === 'music'"
       title="播放"
-      description="这些偏好会立即应用到当前账户和播放会话。"
     >
       <SettingsRow
         setting-id="setting-playback-quality"
@@ -500,7 +498,6 @@ onBeforeUnmount(() => {
     <template v-else-if="activeTab === 'appearance'">
       <SettingsSection
         title="界面"
-        description="主题会跟随当前账户保存，并即时更新整个应用。"
       >
         <SettingsRow
           setting-id="setting-theme"
@@ -536,7 +533,6 @@ onBeforeUnmount(() => {
 
       <SettingsSection
         title="歌词页"
-        description="选择当前歌词在沉浸视图中的焦点、动效与排版样式。"
       >
         <SettingsRow
           setting-id="setting-lyric-alignment"
@@ -603,7 +599,6 @@ onBeforeUnmount(() => {
     <SettingsSection
       v-else
       title="本地存储"
-      description="危险操作只影响当前账户在本机保存的数据。"
     >
       <SettingsRow
         setting-id="setting-account-data"

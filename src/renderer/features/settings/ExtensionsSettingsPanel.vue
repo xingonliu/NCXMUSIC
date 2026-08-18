@@ -1103,7 +1103,6 @@ onMounted(() => { void refresh() })
       v-if="props.mode === 'skill'"
       section-id="setting-skill-install"
       title="Skill 管理"
-      description="默认展示已安装列表；市场来自 SkillHub 社区生态，支持一键下载安装与版本管理。"
     >
       <template #actions>
         <div class="settings-inline-actions">
@@ -1353,7 +1352,6 @@ onMounted(() => { void refresh() })
       v-else
       section-id="setting-mcp-servers"
       title="MCP Servers"
-      description="默认展示已安装列表；市场来自 MCP Hub 中国精选目录，支持预填 stdio 命令与环境变量。"
     >
       <template #actions>
         <div class="settings-inline-actions">

@@ -492,7 +492,6 @@ onMounted(() => {
   <SettingsSection
     section-id="setting-provider-profiles"
     title="模型列表"
-    description="管理小云可用的模型配置；API Key 始终由系统安全存储加密。"
   >
     <template #actions>
       <CommonButton

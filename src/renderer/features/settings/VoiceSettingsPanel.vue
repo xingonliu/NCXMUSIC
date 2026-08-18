@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Check } from '@lucide/vue'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 import type {
@@ -9,11 +10,13 @@ import type {
 import type {
   VoiceLocalLoadMode,
   VoiceLocalModelId,
+  VoiceLocalModelSnapshot,
   VoiceRecognitionSource,
   VoiceServiceEvent,
   VoiceSettingsSnapshot
 } from '../../../shared/schemas/voice-settings'
 import {
+  CommonAlertDialog,
   CommonButton,
   CommonInput,
   CommonProgress,
@@ -45,6 +48,12 @@ const recordingShortcut = ref<boolean>(false)
 
 /** 本次录制期间按下的受限按键。 */
 const recordedKeys = new Set<VoiceShortcutKey>()
+
+/** 待安装确认的模型。 */
+const pendingInstallModel = ref<VoiceLocalModelSnapshot | null>(null)
+
+/** 安装确认弹窗是否显示。 */
+const installDialogVisible = ref<boolean>(false)
 
 /** 云端服务地址编辑值。 */
 const cloudBaseUrl = ref<string>('https://api.openai.com/v1')
@@ -172,6 +181,25 @@ async function manageModel(modelId: VoiceLocalModelId, operation: 'installModel'
   }
 }
 
+/** 用户点击“选择”模型时的处理逻辑。 */
+function handleSelectModel(model: VoiceLocalModelSnapshot): void {
+  if (model.installState === 'installed') {
+    void saveLocal({ modelId: model.id })
+    return
+  }
+  pendingInstallModel.value = model
+  installDialogVisible.value = true
+}
+
+/** 确认下载并安装模型。 */
+function confirmInstall(): void {
+  if (!pendingInstallModel.value) return
+  const modelId = pendingInstallModel.value.id
+  installDialogVisible.value = false
+  pendingInstallModel.value = null
+  void manageModel(modelId, 'installModel')
+}
+
 /** 保存独立云端 OpenAI Transcriptions 兼容配置。 */
 async function saveCloud(): Promise<void> {
   if (!voiceSettings.value) return
@@ -296,89 +324,125 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <SettingsSection
-    title="语音输入"
-    description="选择默认识别来源；本地模型按需下载，不进入应用安装包。"
-  >
-    <SettingsRow
-      setting-id="setting-voice-source"
-      title="默认使用"
-      description="本地不上传音频；独立大模型使用单独配置；当前对话模型强制非流式。"
+  <div class="voice-settings-panel">
+    <!-- 1、语音输入 -->
+    <SettingsSection
+      section-id="setting-section-voice"
+      title="语音输入"
     >
-      <CommonRadioGroup
-        :model-value="voiceSettings?.source ?? 'local'"
-        :options="sourceOptions"
-        name="voice-source"
-        @update:model-value="setSource"
-      />
-    </SettingsRow>
+      <SettingsRow
+        setting-id="setting-voice-source"
+        title="默认使用"
+        description="本地不上传音频；独立大模型使用单独配置；当前对话模型强制非流式。"
+      >
+        <CommonSelect
+          class="settings-control"
+          :model-value="voiceSettings?.source ?? 'local'"
+          :options="sourceOptions"
+          @update:model-value="setSource"
+        />
+      </SettingsRow>
+      <SettingsRow
+        setting-id="setting-voice-shortcut"
+        title="麦克风快捷键"
+        :description="`${shortcut?.accelerator ?? 'Control+Shift+Q'} · ${shortcutStatusText}`"
+      >
+        <div class="settings-inline-actions">
+          <CommonButton
+            v-if="shortcut?.enabled && shortcut?.availability !== 'ready'"
+            variant="secondary"
+            @click="openPermissionSettings"
+          >
+            授权/重新检测
+          </CommonButton>
+          <CommonButton
+            variant="secondary"
+            @click="startShortcutRecording"
+          >
+            {{ recordingShortcut ? '等待组合键…' : '录制新快捷键' }}
+          </CommonButton>
+          <CommonSwitch
+            :model-value="shortcut?.enabled ?? false"
+            label="启用全局语音快捷键"
+            @update:model-value="setShortcutEnabled"
+          />
+        </div>
+      </SettingsRow>
+      <SettingsRow
+        setting-id="setting-microphone"
+        title="麦克风权限"
+        :description="microphoneStatusText"
+      >
+        <CommonButton
+          variant="secondary"
+          @click="openPermissionSettings"
+        >
+          系统权限设置
+        </CommonButton>
+      </SettingsRow>
+    </SettingsSection>
 
-    <template v-if="voiceSettings?.source === 'local'">
-      <div class="voice-model-list">
-        <article
+    <!-- 2、本地 -->
+    <SettingsSection
+      section-id="setting-section-local"
+      title="本地"
+    >
+      <template v-if="voiceSettings?.models">
+        <SettingsRow
           v-for="model in voiceSettings.models"
           :key="model.id"
-          class="voice-model-card"
-          :class="{ 'voice-model-card--selected': voiceSettings.local.modelId === model.id }"
-          @click="saveLocal({ modelId: model.id })"
+          :setting-id="`setting-local-model-${model.id}`"
+          :title="model.name"
+          :description="`${model.description}（${model.languages.join(' / ')} · 下载 ${formatBytes(model.downloadBytes)} · 安装 ${formatBytes(model.installedBytes)} · 约 ${model.estimatedMemoryMiB} MiB 内存）`"
         >
-          <div class="voice-model-card__copy">
-            <strong>{{ model.name }}</strong>
-            <span>{{ model.description }}</span>
-            <small>
-              {{ model.languages.join(' / ') }} · 下载 {{ formatBytes(model.downloadBytes) }} · 安装 {{ formatBytes(model.installedBytes) }} · 约 {{ model.estimatedMemoryMiB }} MiB 内存
-            </small>
-            <a
-              :href="model.licenseUrl"
-              target="_blank"
-              rel="noreferrer"
-              @click.stop
-            >{{ model.licenseName }}</a>
-            <CommonProgress
-              v-if="model.installState === 'downloading'"
-              :value="model.progress ?? 0"
-            />
-            <small
-              v-if="model.error"
-              class="voice-model-card__error"
-            >{{ model.error }}</small>
-          </div>
+          <template #title>
+            <span class="voice-model-title">
+              {{ model.name }}
+              <span
+                v-if="model.installState === 'installed'"
+                class="voice-downloaded-badge"
+              >
+                <Check :size="12" />
+                已下载
+              </span>
+            </span>
+          </template>
+
           <div
-            class="voice-model-card__actions"
-            @click.stop
+            v-if="model.installState === 'downloading'"
+            class="voice-model-progress-control"
           >
-            <CommonButton
-              v-if="model.installState === 'not-installed' || model.installState === 'failed'"
-              variant="secondary"
-              @click="manageModel(model.id, 'installModel')"
-            >
-              安装
-            </CommonButton>
-            <CommonButton
-              v-else-if="model.installState === 'downloading'"
-              variant="secondary"
-              @click="manageModel(model.id, 'cancelModelInstall')"
-            >
-              取消
-            </CommonButton>
-            <CommonButton
-              v-else
-              variant="ghost"
-              @click="manageModel(model.id, 'removeModel')"
-            >
-              删除
-            </CommonButton>
+            <CommonProgress
+              :value="model.progress ?? 0"
+              size="compact"
+              show-value
+            />
           </div>
-        </article>
-      </div>
+          <CommonButton
+            v-else-if="voiceSettings.local.modelId === model.id"
+            variant="secondary"
+            disabled
+          >
+            已选
+          </CommonButton>
+          <CommonButton
+            v-else
+            variant="secondary"
+            @click="handleSelectModel(model)"
+          >
+            选择
+          </CommonButton>
+        </SettingsRow>
+      </template>
+
       <SettingsRow
         setting-id="setting-local-streaming"
         title="使用流式识别"
-        :description="voiceSettings.local.modelId === 'light' ? '边说边出字。' : 'SenseVoice 通过 VAD 按语音片段增量出字。'"
+        :description="voiceSettings?.local.modelId === 'light' ? '边说边出字。' : 'SenseVoice 通过 VAD 按语音片段增量出字。'"
       >
         <CommonSwitch
-          :model-value="voiceSettings.local.streaming"
-          label="启用本地流式结果"
+          :model-value="voiceSettings?.local.streaming ?? true"
+          label="启用本地流式识别"
           @update:model-value="saveLocal({ streaming: $event })"
         />
       </SettingsRow>
@@ -388,22 +452,27 @@ onUnmounted(() => {
         description="按需加载会在识别结束并空闲 15 秒后释放进程；常驻可缩短下一次启动时间。"
       >
         <CommonRadioGroup
-          :model-value="voiceSettings.local.loadMode"
+          :model-value="voiceSettings?.local.loadMode ?? 'on-demand'"
           :options="loadModeOptions"
           name="voice-load-mode"
           @update:model-value="saveLocal({ loadMode: String($event) as VoiceLocalLoadMode })"
         />
       </SettingsRow>
-    </template>
+    </SettingsSection>
 
-    <template v-else-if="voiceSettings?.source === 'cloud'">
+    <!-- 3、大模型 -->
+    <SettingsSection
+      section-id="setting-section-cloud"
+      title="大模型"
+    >
       <SettingsRow
         setting-id="setting-cloud-protocol"
         title="厂商协议"
         description="首版支持 OpenAI Audio Transcriptions 兼容接口。"
       >
         <CommonSelect
-          :model-value="voiceSettings.cloud.protocol"
+          class="settings-control"
+          :model-value="voiceSettings?.cloud.protocol ?? 'openai-transcriptions'"
           :options="cloudProtocolOptions"
           disabled
         />
@@ -431,7 +500,7 @@ onUnmounted(() => {
       <SettingsRow
         setting-id="setting-cloud-key"
         title="API Key"
-        :description="voiceSettings.cloud.hasApiKey ? '已安全保存；留空将保留现有 Key。' : '使用系统安全存储加密，仅 Main 进程解密。'"
+        :description="voiceSettings?.cloud.hasApiKey ? '已安全保存；留空将保留现有 Key。' : '使用系统安全存储加密，仅 Main 进程解密。'"
       >
         <CommonInput
           v-model="cloudApiKey"
@@ -442,7 +511,7 @@ onUnmounted(() => {
       <SettingsRow
         setting-id="setting-cloud-headers"
         title="自定义 Headers"
-        :description="`JSON 对象；当前已保存：${voiceSettings.cloud.headerNames.join(', ') || '无'}。保存会替换已有自定义 Header。`"
+        :description="`JSON 对象；当前已保存：${voiceSettings?.cloud.headerNames.join(', ') || '无'}。保存会替换已有自定义 Header。`"
       >
         <CommonInput
           v-model="cloudHeaders"
@@ -455,7 +524,7 @@ onUnmounted(() => {
         description="录音结束上传后接收 SSE 增量文本；这不是实时上传麦克风音频。"
       >
         <CommonSwitch
-          :model-value="voiceSettings.cloud.streaming"
+          :model-value="voiceSettings?.cloud.streaming ?? false"
           :disabled="cloudModelId.trim().toLowerCase() === 'whisper-1'"
           label="启用云端流式响应"
           @update:model-value="setCloudStreaming"
@@ -466,117 +535,54 @@ onUnmounted(() => {
           :loading="savingCloud"
           @click="saveCloud"
         >
-          保存大模型设置
+          保存大模型配置
         </CommonButton>
       </div>
-    </template>
+    </SettingsSection>
 
-    <SettingsRow
-      v-else-if="voiceSettings?.source === 'conversation'"
-      setting-id="setting-conversation-asr"
-      title="当前对话模型"
-      :description="`${conversationStatusText}；此路径只允许非流式转写，并复用当前 Agent Provider。`"
-    >
-      <CommonButton
-        variant="secondary"
-        @click="refreshStatus"
-      >
-        刷新状态
-      </CommonButton>
-    </SettingsRow>
-
-    <SettingsRow
-      setting-id="setting-voice-shortcut"
-      title="全局按住说话"
-      :description="`${shortcut?.accelerator ?? 'Control+Shift+Q'} · ${shortcutStatusText}`"
-    >
-      <div class="settings-inline-actions">
-        <CommonButton
-          v-if="shortcut?.enabled && shortcut?.availability !== 'ready'"
-          variant="secondary"
-          @click="openPermissionSettings"
-        >
-          授权/重新检测
-        </CommonButton>
-        <CommonButton
-          variant="secondary"
-          @click="startShortcutRecording"
-        >
-          {{ recordingShortcut ? '等待组合键…' : '录制新快捷键' }}
-        </CommonButton>
-        <CommonSwitch
-          :model-value="shortcut?.enabled ?? false"
-          label="启用全局语音快捷键"
-          @update:model-value="setShortcutEnabled"
-        />
-      </div>
-    </SettingsRow>
-    <SettingsRow
-      setting-id="setting-microphone"
-      title="麦克风"
-      :description="microphoneStatusText"
-    >
-      <CommonButton
-        variant="secondary"
-        @click="openPermissionSettings"
-      >
-        系统权限设置
-      </CommonButton>
-    </SettingsRow>
-    <SettingsRow
-      setting-id="setting-audio-boundary"
-      title="音频数据边界"
-      description="本地模式不上传；大模型模式上传给独立 ASR 服务；当前对话模型上传给当前 Provider。原始录音只驻留内存并在结束后清零。"
+    <CommonAlertDialog
+      :visible="installDialogVisible"
+      title="安装模型"
+      :description="`该模型（${pendingInstallModel?.name ?? ''}）未安装，是否下载并安装？`"
+      type="info"
+      confirm-text="安装"
+      cancel-text="取消"
+      @cancel="installDialogVisible = false"
+      @confirm="confirmInstall"
     />
-  </SettingsSection>
+  </div>
 </template>
 
 <style scoped>
-.voice-model-list {
-  display: grid;
-  gap: 10px;
-  padding: 12px 0;
+.voice-settings-panel {
+  display: contents;
 }
 
-.voice-model-card {
-  display: flex;
-  gap: 16px;
+.voice-model-title {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
-  cursor: pointer;
-  background: var(--ncx-surface-secondary);
-  border: 1px solid var(--ncx-border-subtle);
-  border-radius: 14px;
+  gap: 8px;
 }
 
-.voice-model-card--selected {
-  border-color: var(--ncx-accent);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ncx-accent) 35%, transparent);
+.voice-downloaded-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  border-radius: var(--ncx-radius-sm);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
+  color: var(--ncx-color-text-secondary);
 }
 
-.voice-model-card__copy {
-  display: grid;
-  gap: 5px;
-  min-width: 0;
+.voice-model-progress-control {
+  width: 100px;
+  display: flex;
+  align-items: center;
 }
 
-.voice-model-card__copy span,
-.voice-model-card__copy small {
-  color: var(--ncx-text-secondary);
-}
-
-.voice-model-card__copy a {
-  width: fit-content;
-  color: var(--ncx-accent);
-  font-size: 12px;
-}
-
-.voice-model-card__error {
-  color: var(--ncx-color-danger) !important;
-}
-
-.voice-model-card__actions,
 .settings-inline-actions,
 .voice-save-row {
   display: flex;
@@ -586,6 +592,7 @@ onUnmounted(() => {
 
 .voice-save-row {
   justify-content: flex-end;
-  padding: 14px 0;
+  padding: 14px 16px;
+  border-top: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
 }
 </style>

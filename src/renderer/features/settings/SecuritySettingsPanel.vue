@@ -54,7 +54,6 @@ onMounted(() => {
 <template>
   <SettingsSection
     title="权限与执行"
-    description="这些限制只作用于 Agent 代操作，不改变你在界面中的直接操作。"
   >
     <SettingsRow
       setting-id="setting-music-safety"
