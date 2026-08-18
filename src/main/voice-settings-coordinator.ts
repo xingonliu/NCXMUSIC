@@ -198,7 +198,7 @@ export class VoiceSettingsCoordinator {
     this.options.publish({ type: 'snapshot', snapshot: this.snapshot() })
   }
 
-  /** 常驻模式下后台预热当前模型；按需模式保持低内存语义。 */
+  /** 仅常驻模式预热当前模型；按需模式不会启动本地 ASR 进程。 */
   private prewarmConfiguredModel(): void {
     /** 当前本地模型与加载策略。 */
     const settings = this.options.store.snapshot()

@@ -73,7 +73,7 @@ export class LocalAsrCoordinator {
   /** 按需卸载计时器。 */
   private idleTimer: ReturnType<typeof setTimeout> | undefined
 
-  /** 后台常驻模型预热任务。 */
+  /** 仅常驻模式使用的后台模型预热任务。 */
   private prewarmPromise: Promise<void> | undefined
 
   /** 后台预热使用的内部会话 ID。 */
@@ -93,7 +93,7 @@ export class LocalAsrCoordinator {
     return { ...this.stateValue }
   }
 
-  /** 常驻模式下后台加载所选模型，避免首次按键承担冷启动耗时。 */
+  /** 仅常驻模式后台加载所选模型；按需模式不会创建 ASR Host。 */
   async prewarm(modelId: VoiceLocalSessionStart['modelId']): Promise<void> {
     if (this.options.loadMode() !== 'resident' || !this.options.installer.isInstalled(modelId)) return
     this.clearIdleTimer()
@@ -137,7 +137,7 @@ export class LocalAsrCoordinator {
 
   /** 创建本地识别会话并等待模型就绪。 */
   async start(input: VoiceLocalSessionStart): Promise<void> {
-    /** 正在进行的后台模型预热。 */
+    /** 正在进行的常驻模型预热。 */
     const pendingPrewarm = this.prewarmPromise
     if (pendingPrewarm && input.voiceSessionId !== this.prewarmSessionId) await pendingPrewarm
     if (this.session) throw new Error('已有本地语音识别正在进行。')

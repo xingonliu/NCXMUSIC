@@ -108,14 +108,22 @@ let extensionCoordinator: ExtensionCoordinator | undefined
 let voiceShortcutCoordinator: VoiceShortcutCoordinator | undefined
 /** Main 独占的语音来源、模型安装和识别协调器。 */
 let voiceSettingsCoordinator: VoiceSettingsCoordinator | undefined
-/** 主窗口后台时显示在鼠标所在屏幕底部的无焦点语音胶囊。 */
+/** 统一显示在鼠标所在屏幕任务栏上方的无焦点语音胶囊。 */
 let voiceOverlayWindow: BrowserWindow | undefined
+/** 外置语音胶囊延迟隐藏计时器。 */
+let voiceOverlayHideTimer: ReturnType<typeof setTimeout> | undefined
 /** 外置语音胶囊最近展示状态。 */
 let latestVoiceOverlayState = VoiceOverlayStateSchema.parse({
   phase: 'idle',
   text: '',
   waveform: Array.from({ length: 12 }, () => 0.08)
 })
+/** 外置语音胶囊窗口宽度。 */
+const VOICE_OVERLAY_WIDTH = 420
+/** 外置语音胶囊窗口高度。 */
+const VOICE_OVERLAY_HEIGHT = 88
+/** 外置语音胶囊与任务栏工作区底边的间距。 */
+const VOICE_OVERLAY_BOTTOM_GAP = 12
 /** Main 独占的 Shell 授权工作区协调器。 */
 let shellSettingsCoordinator: ShellSettingsCoordinator | undefined
 let smokeTimer: ReturnType<typeof setTimeout> | undefined
@@ -463,20 +471,20 @@ function publishVoiceShortcutEvent(rawEvent: unknown): void {
     })
     return
   }
-  if (event.data.type === 'pressed' && !window.isFocused()) {
-    console.info('[Main] 主窗口不在前台，正在显示外置悬浮语音胶囊')
+  if (event.data.type === 'pressed') {
+    console.info('[Main] 正在显示任务栏上方的外置语音胶囊')
     updateVoiceOverlay({ phase: 'starting', text: '准备中', waveform: Array.from({ length: 12 }, () => 0.08) })
   }
   window.webContents.send(VOICE_SHORTCUT_CHANNELS.event, event.data)
 }
 
-/** 创建鼠标所在显示器底部的外置语音胶囊。 */
+/** 创建并预加载鼠标所在显示器底部的外置语音胶囊。 */
 function ensureVoiceOverlayWindow(): BrowserWindow {
   if (voiceOverlayWindow && !voiceOverlayWindow.isDestroyed()) return voiceOverlayWindow
-  /** 无焦点透明胶囊窗口。 */
+  /** 无焦点胶囊窗口；窗口外围透明，胶囊实体背景完全不透明。 */
   const window = new BrowserWindow({
-    width: 460,
-    height: 104,
+    width: VOICE_OVERLAY_WIDTH,
+    height: VOICE_OVERLAY_HEIGHT,
     show: false,
     frame: false,
     transparent: true,
@@ -505,21 +513,20 @@ function ensureVoiceOverlayWindow(): BrowserWindow {
   return window
 }
 
-/** 更新并定位外置语音胶囊；主窗口前台时只保留应用内胶囊。 */
+/** 更新并定位统一外置语音胶囊，不依赖主窗口焦点状态。 */
 function updateVoiceOverlay(rawState: unknown): void {
   /** 经校验的纯展示状态。 */
   const state = VoiceOverlayStateSchema.safeParse(rawState)
   if (!state.success) return
   latestVoiceOverlayState = state.data
-  /** 当前主窗口。 */
-  const owner = mainWindow
-  if (owner?.isFocused()) {
-    voiceOverlayWindow?.hide()
-    return
-  }
+  if (voiceOverlayHideTimer) clearTimeout(voiceOverlayHideTimer)
+  voiceOverlayHideTimer = undefined
   if (state.data.phase === 'idle') {
     renderVoiceOverlay(state.data)
-    setTimeout(() => voiceOverlayWindow?.hide(), 220)
+    voiceOverlayHideTimer = setTimeout(() => {
+      voiceOverlayWindow?.hide()
+      voiceOverlayHideTimer = undefined
+    }, 220)
     return
   }
   /** 当前鼠标所在显示器。 */
@@ -529,10 +536,10 @@ function updateVoiceOverlay(rawState: unknown): void {
   /** 任务栏或 Dock 内侧可用区域。 */
   const workArea = display.workArea
   window.setBounds({
-    x: Math.round(workArea.x + (workArea.width - 460) / 2),
-    y: Math.round(workArea.y + workArea.height - 104 - 20),
-    width: 460,
-    height: 104
+    x: Math.round(workArea.x + (workArea.width - VOICE_OVERLAY_WIDTH) / 2),
+    y: Math.round(workArea.y + workArea.height - VOICE_OVERLAY_HEIGHT - VOICE_OVERLAY_BOTTOM_GAP),
+    width: VOICE_OVERLAY_WIDTH,
+    height: VOICE_OVERLAY_HEIGHT
   })
   renderVoiceOverlay(state.data)
   window.showInactive()
@@ -550,7 +557,7 @@ function renderVoiceOverlay(state: typeof latestVoiceOverlayState): void {
 
 /** 外置语音胶囊的无权限静态页面。 */
 const VOICE_OVERLAY_HTML = `<!doctype html><html><head><meta charset="utf-8"><style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{position:absolute;left:10px;right:10px;bottom:10px;display:flex;align-items:center;gap:16px;min-height:68px;padding:13px 20px;color:#fff;background:rgba(27,27,32,.88);border:1px solid rgba(255,255,255,.14);border-radius:999px;box-shadow:0 14px 38px rgba(0,0,0,.32);backdrop-filter:blur(24px) saturate(150%);transition:opacity .2s,transform .2s}.wrap.idle{opacity:0;transform:translateY(10px)}.orb{width:27px;height:27px;flex:none;border:3px solid rgba(120,160,255,.25);border-top-color:#80a0ff;border-radius:50%;animation:spin .8s linear infinite}.listening .orb{border:0;background:#80a0ff;animation:pulse 1.2s ease-in-out infinite}.copy{min-width:0;flex:1}.label{font-size:12px;color:rgba(255,255,255,.62)}.text{overflow:hidden;margin-top:2px;font-size:14px;font-weight:600;text-overflow:ellipsis;white-space:nowrap}.wave{display:flex;align-items:center;gap:3px;height:32px}.wave i{width:3px;height:calc(4px + 25px * var(--v));background:#80a0ff;border-radius:99px;transition:height 70ms linear}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(.72);box-shadow:0 0 0 10px rgba(128,160,255,.12)}}@media(prefers-reduced-motion:reduce){.orb{animation:none}.wave i{transition:none}}</style></head><body><div id="wrap" class="wrap idle"><div class="orb"></div><div class="copy"><div id="label" class="label">准备中</div><div id="text" class="text">正在加载语音识别</div></div><div id="wave" class="wave"></div></div><script>const wrap=document.getElementById('wrap'),label=document.getElementById('label'),text=document.getElementById('text'),wave=document.getElementById('wave');for(let i=0;i<12;i++){wave.appendChild(document.createElement('i'))}window.__renderVoiceOverlay=s=>{wrap.className='wrap '+s.phase;label.textContent=s.phase==='starting'?'准备中':s.phase==='listening'?'倾听中':s.phase==='reviewing'?'已识别':'识别中';text.textContent=s.text|| (s.phase==='starting'?'正在加载语音识别':s.phase==='listening'?'请说话，松手或停顿后结束':'正在转写');[...wave.children].forEach((bar,i)=>bar.style.setProperty('--v',String(s.waveform[i]||.08)))}</script></body></html>`
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{position:absolute;left:6px;right:6px;bottom:6px;display:flex;align-items:center;gap:12px;min-height:56px;padding:9px 15px;color:#fff;background:#1b1b20;border:1px solid rgba(255,255,255,.14);border-radius:999px;box-shadow:0 10px 28px rgba(0,0,0,.3);transition:opacity .2s,transform .2s}.wrap.idle{opacity:0;transform:translateY(8px)}.orb{width:23px;height:23px;flex:none;border:3px solid rgba(120,160,255,.25);border-top-color:#80a0ff;border-radius:50%;animation:spin .8s linear infinite}.listening .orb{border:0;background:#80a0ff;animation:pulse 1.2s ease-in-out infinite}.copy{min-width:0;flex:1}.label{font-size:11px;color:rgba(255,255,255,.68)}.text{overflow:hidden;margin-top:1px;font-size:13px;font-weight:600;text-overflow:ellipsis;white-space:nowrap}.wave{display:flex;align-items:center;gap:3px;height:26px}.wave i{width:3px;height:calc(4px + 20px * var(--v));background:#80a0ff;border-radius:99px;transition:height 70ms linear}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(.72);box-shadow:0 0 0 8px rgba(128,160,255,.12)}}@media(prefers-reduced-motion:reduce){.orb{animation:none}.wave i{transition:none}}</style></head><body><div id="wrap" class="wrap idle"><div class="orb"></div><div class="copy"><div id="label" class="label">准备中</div><div id="text" class="text">正在加载语音识别</div></div><div id="wave" class="wave"></div></div><script>const wrap=document.getElementById('wrap'),label=document.getElementById('label'),text=document.getElementById('text'),wave=document.getElementById('wave');for(let i=0;i<12;i++){wave.appendChild(document.createElement('i'))}window.__renderVoiceOverlay=s=>{wrap.className='wrap '+s.phase;label.textContent=s.phase==='starting'?'准备中':s.phase==='listening'?'倾听中':s.phase==='reviewing'?'已识别':'识别中';text.textContent=s.text|| (s.phase==='starting'?'正在加载语音识别':s.phase==='listening'?'请说话，松手后结束':'正在转写');[...wave.children].forEach((bar,i)=>bar.style.setProperty('--v',String(s.waveform[i]||.08)))}</script></body></html>`
 
 /** 向所有主窗口 Renderer 广播经 Schema 校验的语音服务事件。 */
 function publishVoiceServiceEvent(rawEvent: unknown): void {
@@ -832,6 +839,8 @@ function shutdownApplicationServices(): void {
   accountStoreCoordinator?.shutdown()
   voiceShortcutCoordinator?.shutdown()
   voiceSettingsCoordinator?.shutdown()
+  if (voiceOverlayHideTimer) clearTimeout(voiceOverlayHideTimer)
+  voiceOverlayHideTimer = undefined
   voiceOverlayWindow?.destroy()
   voiceOverlayWindow = undefined
   extensionCoordinator?.shutdown()
@@ -889,8 +898,6 @@ async function createMainWindow(): Promise<void> {
     })
   )
   mainWindow = window
-
-  window.on('focus', () => voiceOverlayWindow?.hide())
 
   window.on('close', (event) => {
     /** 当前关闭请求对应的真实窗口生命周期动作。 */
@@ -1108,6 +1115,7 @@ if (!hasSingleInstanceLock) {
         await runLoginSpike()
         return
       }
+      if (!isSmokeTest) ensureVoiceOverlayWindow()
       await createMainWindow()
       if (!isSmokeTest) {
         applicationTray = await createApplicationTray({

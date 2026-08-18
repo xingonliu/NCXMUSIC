@@ -37,7 +37,7 @@ Windows x64 未打包目录实测新增 sherpa-onnx Native 运行时 23,062,546 
 
 默认全局按住说话组合键为 `Ctrl+Shift+Q`。按下后立即开始收音，模型冷启动在后台并行进行；Web Audio Analyser 同步生成实时频谱。任一组合键松开后结束收音，重复的按下事件只作为幂等状态同步，不得切换为停止。最终转写在胶囊中展示 1.2 秒后才提交 Agent。
 
-主窗口处于前台时使用应用内胶囊。主窗口不在前台时，Main 通过 `screen.getDisplayNearestPoint(screen.getCursorScreenPoint())` 定位鼠标所在显示器，并在该显示器 `workArea` 底部水平居中展示无焦点、无任务栏项的独立胶囊窗口。
+应用启动时只预创建并加载隐藏的外置胶囊窗口；模型是否预热仍完全由“按需加载 / 常驻内存后台”设置决定。无论主窗口是否激活，语音状态都统一通过该无焦点、无任务栏项窗口展示，不再渲染应用内胶囊。Main 使用 `screen.getDisplayNearestPoint(screen.getCursorScreenPoint())` 定位鼠标所在显示器，并在该显示器 `workArea` 底部水平居中显示 420 × 88 的完全不透明胶囊实体。
 
 语音启动的 Agent Turn 完成后由 Main 创建 Windows/macOS 原生通知。点击通知会恢复主窗口并打开 Agent 页面。操作系统负责在勿扰模式下抑制通知。
 

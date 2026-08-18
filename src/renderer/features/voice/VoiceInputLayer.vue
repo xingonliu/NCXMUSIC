@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { LoaderCircle } from '@lucide/vue'
 import { onMounted, onUnmounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -41,7 +40,7 @@ let stopOverlayWatch: (() => void) | undefined
 
 // ========= 函数 =========
 
-/** 将语音胶囊状态镜像给 Main；Main 只在主窗口后台时展示。 */
+/** 将语音胶囊状态镜像给 Main，由统一外置窗口负责展示。 */
 function publishOverlayState(force = false): void {
   /** 当前时间。 */
   const now = performance.now()
@@ -114,43 +113,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Teleport to="body">
-    <div
-      v-if="voice.state.value !== 'idle'"
-      class="voice-capsule"
-      :class="[`voice-capsule--${voice.state.value}`, { 'voice-capsule--expanded': voice.state.value === 'reviewing' }]"
-      role="status"
-      aria-live="polite"
-    >
-      <span
-        class="voice-capsule__orb"
-        aria-hidden="true"
-      >
-        <LoaderCircle
-          v-if="voice.state.value !== 'listening'"
-          :size="22"
-        />
-      </span>
-      <span class="voice-capsule__copy">
-        <small>
-          {{ voice.state.value === 'starting' ? '准备中' : voice.state.value === 'listening' ? '倾听中' : voice.state.value === 'reviewing' ? '已识别' : '识别中' }}
-        </small>
-        <strong v-if="voice.state.value === 'reviewing'">{{ voice.transcriptPreview.value }}</strong>
-      </span>
-      <span
-        v-if="voice.state.value !== 'reviewing'"
-        class="voice-capsule__wave"
-        aria-hidden="true"
-      >
-        <i
-          v-for="(height, index) in voice.waveform.value"
-          :key="index"
-          :style="{ '--voice-wave-height': `${Math.max(4, height * 27)}px` }"
-        />
-      </span>
-    </div>
-  </Teleport>
-
   <CommonAlertDialog
     :visible="voice.disclosureRequired.value"
     title="启用云端语音识别？"
@@ -161,109 +123,3 @@ onUnmounted(() => {
     @confirm="voice.acceptDisclosure"
   />
 </template>
-
-<style scoped>
-.voice-capsule {
-  position: fixed;
-  z-index: 1200;
-  bottom: 34px;
-  left: 50%;
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  min-width: 240px;
-  max-width: min(640px, calc(100vw - 40px));
-  min-height: 62px;
-  padding: 11px 18px;
-  color: var(--ncx-text-primary);
-  background: color-mix(in srgb, var(--ncx-surface-elevated) 84%, transparent);
-  border: 1px solid var(--ncx-border-subtle);
-  border-radius: 999px;
-  box-shadow: var(--ncx-shadow-overlay);
-  backdrop-filter: blur(24px) saturate(150%);
-  transform: translateX(-50%);
-  transition: width 220ms ease, opacity 200ms ease, transform 200ms ease;
-}
-
-.voice-capsule--expanded {
-  width: min(620px, calc(100vw - 40px));
-  border-radius: 24px;
-}
-
-.voice-capsule__orb {
-  display: grid;
-  flex: 0 0 28px;
-  width: 28px;
-  height: 28px;
-  place-items: center;
-  color: var(--ncx-accent);
-  border: 3px solid color-mix(in srgb, var(--ncx-accent) 25%, transparent);
-  border-top-color: var(--ncx-accent);
-  border-radius: 50%;
-}
-
-.voice-capsule:not(.voice-capsule--listening) .voice-capsule__orb {
-  animation: voice-spin 800ms linear infinite;
-}
-
-.voice-capsule--listening .voice-capsule__orb {
-  background: var(--ncx-accent);
-  border: 0;
-  animation: voice-pulse 1.15s ease-in-out infinite;
-}
-
-.voice-capsule__copy {
-  display: grid;
-  flex: 1;
-  gap: 2px;
-  min-width: 0;
-}
-
-.voice-capsule__copy small {
-  color: var(--ncx-text-secondary);
-  font-size: 11px;
-}
-
-.voice-capsule__copy strong {
-  overflow: hidden;
-  font-size: 14px;
-  line-height: 1.45;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.voice-capsule__wave {
-  display: inline-flex;
-  gap: 3px;
-  align-items: center;
-  height: 30px;
-}
-
-.voice-capsule__wave i {
-  width: 3px;
-  height: var(--voice-wave-height);
-  background: var(--ncx-accent);
-  border-radius: 99px;
-  transition: height 70ms linear;
-}
-
-@keyframes voice-spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes voice-pulse {
-  50% {
-    box-shadow: 0 0 0 10px color-mix(in srgb, var(--ncx-accent) 14%, transparent);
-    transform: scale(0.74);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .voice-capsule,
-  .voice-capsule__orb,
-  .voice-capsule__wave i {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-</style>
