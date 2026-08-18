@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { AppThemeSchema } from './storage'
 import { VOICE_AUDIO_MAX_BYTES } from './voice'
 
 // ========= 变量 =========
@@ -175,7 +176,8 @@ export const VoiceTranscriptionResultSchema = z.strictObject({
 export const VoiceOverlayStateSchema = z.strictObject({
   phase: z.enum(['idle', 'starting', 'listening', 'transcribing', 'reviewing']),
   text: z.string().max(500),
-  waveform: z.array(z.number().min(0).max(1)).length(12)
+  waveform: z.array(z.number().min(0).max(1)).length(12),
+  theme: AppThemeSchema
 })
 
 /** Agent 完成后创建原生通知的受限文案。 */

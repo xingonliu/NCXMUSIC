@@ -116,7 +116,8 @@ let voiceOverlayHideTimer: ReturnType<typeof setTimeout> | undefined
 let latestVoiceOverlayState = VoiceOverlayStateSchema.parse({
   phase: 'idle',
   text: '',
-  waveform: Array.from({ length: 12 }, () => 0.08)
+  waveform: Array.from({ length: 12 }, () => 0.08),
+  theme: 'system'
 })
 /** 外置语音胶囊透明承载窗口宽度，容纳最大 480px 胶囊与阴影。 */
 const VOICE_OVERLAY_WIDTH = 500
@@ -473,7 +474,12 @@ function publishVoiceShortcutEvent(rawEvent: unknown): void {
   }
   if (event.data.type === 'pressed') {
     console.info('[Main] 正在显示任务栏上方的外置语音胶囊')
-    updateVoiceOverlay({ phase: 'starting', text: '准备中', waveform: Array.from({ length: 12 }, () => 0.08) })
+    updateVoiceOverlay({
+      phase: 'starting',
+      text: '准备中',
+      waveform: Array.from({ length: 12 }, () => 0.08),
+      theme: latestVoiceOverlayState.theme
+    })
   }
   window.webContents.send(VOICE_SHORTCUT_CHANNELS.event, event.data)
 }
@@ -565,11 +571,25 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
     :root {
       --voice-overlay-bg: rgba(22, 22, 26, 0.88);
       --voice-overlay-text: #ffffff;
-      --voice-overlay-shadow: 0 14px 36px -4px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.3);
+      --voice-overlay-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.46), 0 2px 6px rgba(0, 0, 0, 0.22);
       --voice-overlay-radius: 9999px;
       --voice-overlay-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
       --voice-overlay-spring: cubic-bezier(0.175, 0.885, 0.32, 1.25);
       --voice-overlay-exit: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .voice-overlay-shell[data-theme="light"] {
+      --voice-overlay-bg: rgba(255, 255, 255, 0.88);
+      --voice-overlay-text: #1d1d1f;
+      --voice-overlay-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    @media (prefers-color-scheme: light) {
+      .voice-overlay-shell:not([data-theme="dark"]) {
+        --voice-overlay-bg: rgba(255, 255, 255, 0.88);
+        --voice-overlay-text: #1d1d1f;
+        --voice-overlay-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
+      }
     }
 
     * { box-sizing: border-box; }
@@ -587,7 +607,7 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      padding-bottom: 8px;
+      padding-bottom: 20px;
       font-family: var(--voice-overlay-font);
       pointer-events: none;
       user-select: none;
@@ -645,7 +665,10 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
       backdrop-filter: blur(28px) saturate(190%);
       transition:
         min-width 0.32s var(--voice-overlay-spring),
-        max-width 0.32s var(--voice-overlay-spring);
+        max-width 0.32s var(--voice-overlay-spring),
+        background 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease;
     }
 
     .voice-overlay-orb-container {
@@ -696,6 +719,7 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
       line-height: 1;
       letter-spacing: -0.01em;
       text-overflow: ellipsis;
+      transition: color 0.3s ease;
       white-space: nowrap;
     }
 
@@ -756,7 +780,7 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
   </style>
 </head>
 <body>
-  <div id="voice-overlay-shell" class="voice-overlay-shell">
+  <div id="voice-overlay-shell" class="voice-overlay-shell" data-theme="system">
     <div id="voice-overlay-capsule" class="voice-overlay-capsule" data-state="starting">
       <div class="voice-overlay-orb-container" aria-hidden="true">
         <div class="voice-overlay-orb"></div>
@@ -867,6 +891,7 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
     window.__renderVoiceOverlay = function renderVoiceOverlayState(state) {
       voiceOverlayPhase = state.phase;
       voiceOverlayWaveform = state.waveform;
+      voiceOverlayShell.dataset.theme = state.theme;
       voiceOverlayCapsule.dataset.state = state.phase;
       voiceOverlayTitle.textContent = resolveVoiceOverlayTitle(state);
       syncVoiceOverlayWaveAnimation();

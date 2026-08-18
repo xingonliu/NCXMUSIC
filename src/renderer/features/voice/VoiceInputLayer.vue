@@ -4,12 +4,16 @@ import { useRouter } from 'vue-router'
 
 import { CommonAlertDialog } from '../../design-system/components'
 import { useAgentStore } from '../agent/agent-store'
+import { useAppPreferences } from '../settings/app-preferences'
 import { useVoiceInput } from './use-voice-input'
 
 // ========= 变量 =========
 
 /** 应用作用域语音输入控制器。 */
 const voice = useVoiceInput()
+
+/** 外置语音胶囊需要实时跟随的应用界面偏好。 */
+const appPreferences = useAppPreferences()
 
 /** 识别文本进入唯一 Agent Runtime 的应用 Store。 */
 const agent = useAgentStore()
@@ -38,6 +42,9 @@ let stopAgentStatusWatch: (() => void) | undefined
 /** 胶囊状态监听清理函数。 */
 let stopOverlayWatch: (() => void) | undefined
 
+/** 胶囊主题监听清理函数。 */
+let stopOverlayThemeWatch: (() => void) | undefined
+
 // ========= 函数 =========
 
 /** 将语音胶囊状态镜像给 Main，由统一外置窗口负责展示。 */
@@ -49,7 +56,8 @@ function publishOverlayState(force = false): void {
   window.ncx.voiceSettings.publishOverlayState({
     phase: voice.state.value,
     text: voice.transcriptPreview.value,
-    waveform: [...voice.waveform.value]
+    waveform: [...voice.waveform.value],
+    theme: appPreferences.preferences.value.theme
   })
 }
 
@@ -92,6 +100,10 @@ onMounted(() => {
     () => publishOverlayState(voice.state.value !== 'listening'),
     { deep: true, immediate: true }
   )
+  stopOverlayThemeWatch = watch(
+    () => appPreferences.preferences.value.theme,
+    () => publishOverlayState(true)
+  )
   stopAgentStatusWatch = watch(
     () => agent.snapshot.value.turnStatus,
     (status) => handleAgentStatus(status),
@@ -103,11 +115,13 @@ onUnmounted(() => {
   unsubscribeTranscript?.()
   unsubscribeVoiceEvents?.()
   stopOverlayWatch?.()
+  stopOverlayThemeWatch?.()
   stopAgentStatusWatch?.()
   window.ncx.voiceSettings.publishOverlayState({
     phase: 'idle',
     text: '',
-    waveform: Array.from({ length: 12 }, () => 0.08)
+    waveform: Array.from({ length: 12 }, () => 0.08),
+    theme: appPreferences.preferences.value.theme
   })
 })
 </script>
