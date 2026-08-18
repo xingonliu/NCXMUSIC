@@ -44,7 +44,11 @@ export class VoiceSettingsCoordinator {
   private readonly unsubscribeInstaller: () => void
 
   constructor(private readonly options: VoiceSettingsCoordinatorOptions) {
-    this.unsubscribeInstaller = options.installer.onChange(() => this.publishSnapshot())
+    this.unsubscribeInstaller = options.installer.onChange(() => {
+      this.publishSnapshot()
+      this.prewarmConfiguredModel()
+    })
+    this.prewarmConfiguredModel()
   }
 
   /** 读取或更新设置。 */
@@ -52,7 +56,11 @@ export class VoiceSettingsCoordinator {
     /** 操作结果提示。 */
     let message: string | undefined
     if (input.operation === 'setSource') this.options.store.setSource(input.source)
-    else if (input.operation === 'setLocal') this.options.store.setLocal(input.modelId, input.streaming, input.loadMode)
+    else if (input.operation === 'setLocal') {
+      this.options.store.setLocal(input.modelId, input.streaming, input.loadMode)
+      this.options.localAsr.refreshLoadMode()
+      this.prewarmConfiguredModel()
+    }
     else if (input.operation === 'saveCloud') this.options.store.saveCloud(input.cloud)
     else if (input.operation === 'installModel') {
       this.options.installer.install(input.modelId)
@@ -188,6 +196,14 @@ export class VoiceSettingsCoordinator {
   /** 广播最新设置和安装状态。 */
   private publishSnapshot(): void {
     this.options.publish({ type: 'snapshot', snapshot: this.snapshot() })
+  }
+
+  /** 常驻模式下后台预热当前模型；按需模式保持低内存语义。 */
+  private prewarmConfiguredModel(): void {
+    /** 当前本地模型与加载策略。 */
+    const settings = this.options.store.snapshot()
+    if (settings.localLoadMode !== 'resident') return
+    void this.options.localAsr.prewarm(settings.localModelId)
   }
 }
 

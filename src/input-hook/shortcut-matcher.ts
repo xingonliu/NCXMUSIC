@@ -66,7 +66,8 @@ export class ShortcutMatcher {
     const key = event.key
 
     if (event.type === 'keyup') {
-      if (key) this.pressed.delete(key)
+      if (!key || !this.chord.has(key)) return undefined
+      this.pressed.delete(key)
       if (this.listening) {
         this.listening = false
         return reportFor(this.config, 'released')

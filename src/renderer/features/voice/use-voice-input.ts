@@ -1,7 +1,13 @@
 import { readonly, ref, type Ref } from 'vue'
 
 import type { VoiceShortcutEvent } from '../../../shared/schemas/voice'
-import type { VoiceRecognitionSource, VoiceServiceEvent, VoiceSettingsSnapshot } from '../../../shared/schemas/voice-settings'
+import {
+  VOICE_PCM_CHUNK_MAX_SAMPLES,
+  VOICE_PCM_SAMPLE_RATE,
+  type VoiceRecognitionSource,
+  type VoiceServiceEvent,
+  type VoiceSettingsSnapshot
+} from '../../../shared/schemas/voice-settings'
 import { showToast } from '../../design-system/use-toast'
 import { usePlayerRuntime } from '../music/use-player'
 
@@ -64,6 +70,16 @@ interface ActiveVoiceSession {
   processor?: ScriptProcessorNode
   /** 防止 PCM 节点输出声音的静音增益。 */
   silentGain?: GainNode
+  /** 本地模型加载与识别会话就绪 Promise。 */
+  localReady?: Promise<void>
+  /** 本地模型是否已经可以接收 PCM。 */
+  localModelReady?: boolean
+  /** 模型冷启动期间暂存在 Renderer 内存的 PCM 块。 */
+  localPendingChunks?: Float32Array<ArrayBuffer>[]
+  /** 当前内存 PCM 缓冲的总样本数。 */
+  localPendingSamples?: number
+  /** 当前会话已经采集的 PCM 总样本数。 */
+  localRecordedSamples?: number
   /** 云端录音器。 */
   recorder?: MediaRecorder
   /** 尚在内存的云端音频块。 */
@@ -88,6 +104,9 @@ const VOICE_DISCLOSURE_KEY = 'ncx.voice-cloud-disclosure.v2'
 /** 最终转写确认展示时长。 */
 const TRANSCRIPT_REVIEW_MS = 1_200
 
+/** 单次本地录音最多缓存 5 分钟 PCM，防止长按或 Native 异常无限占用内存。 */
+const LOCAL_RECORDING_BUFFER_MAX_SAMPLES = VOICE_PCM_SAMPLE_RATE * 300
+
 /** 当前应用级语音状态。 */
 const state = ref<VoiceInputState>('idle')
 
@@ -105,6 +124,9 @@ let activeSession: ActiveVoiceSession | undefined
 
 /** 最近一次有效全局快捷键 generation。 */
 let shortcutGeneration: number | undefined
+
+/** 当前 generation 的全局快捷键是否仍处于按下状态。 */
+let shortcutHeld = false
 
 /** 当前仍保持按下的入口。 */
 const heldSources = new Set<VoiceInputSource>()
@@ -130,6 +152,7 @@ async function initialize(): Promise<void> {
     if (state.value === 'listening' && heldSources.has('global-shortcut')) {
       if (['KeyQ', 'ControlLeft', 'ControlRight', 'ShiftLeft', 'ShiftRight', 'AltLeft', 'AltRight', 'MetaLeft', 'MetaRight', 'Space'].includes(event.code)) {
         console.info(`[VoiceInput] 窗口内监听到按键抬起 (${event.code})，立即触发 release`)
+        shortcutHeld = false
         release('global-shortcut')
       }
     }
@@ -142,16 +165,14 @@ function handleShortcutEvent(event: VoiceShortcutEvent): void {
   console.info('[VoiceInput] 渲染进程收到语音快捷键事件:', JSON.stringify(event))
   if (event.type === 'status') return
   if (event.type === 'pressed') {
-    if (state.value === 'listening') {
-      console.info('[VoiceInput] 处于录音中再次收到快捷键按下事件，触发松开以结束录音')
-      release('global-shortcut')
-      return
-    }
+    if (shortcutHeld && shortcutGeneration === event.generation) return
     shortcutGeneration = event.generation
+    shortcutHeld = true
     void press('global-shortcut')
     return
   }
   if (shortcutGeneration !== event.generation) return
+  shortcutHeld = false
   if (event.type === 'released') release('global-shortcut')
   else cancel(event.reason ?? '全局快捷键已中断。')
 }
@@ -243,8 +264,12 @@ async function press(source: VoiceInputSource): Promise<void> {
       listeningStartedAt: performance.now()
     }
     activeSession = session
-    if (settings.source === 'local') await startLocalRecording(session)
-    else startCloudRecording(session)
+    if (settings.source === 'local') {
+      session.localReady = startLocalRecording(session)
+      void session.localReady.catch((error: unknown) => finishWithError(session, error))
+    } else {
+      startCloudRecording(session)
+    }
     if (!isCurrentStart(source, generation) || activeSession !== session) {
       if (session.recognitionSource === 'local') {
         window.ncx.voiceSettings.cancelLocalSession({ voiceSessionId: session.voiceSessionId })
@@ -262,12 +287,21 @@ async function press(source: VoiceInputSource): Promise<void> {
   }
 }
 
-/** 启动本地 16 kHz PCM 管线。 */
-async function startLocalRecording(session: ActiveVoiceSession): Promise<void> {
-  await window.ncx.voiceSettings.startLocalSession({
+/** 立即建立本地 16 kHz PCM 管线，并在子进程中并行加载模型。 */
+function startLocalRecording(session: ActiveVoiceSession): Promise<void> {
+  session.localModelReady = false
+  session.localPendingChunks = []
+  session.localPendingSamples = 0
+  session.localRecordedSamples = 0
+  /** 与音频采集并行执行的本地模型加载及缓冲冲刷 Promise。 */
+  const ready = window.ncx.voiceSettings.startLocalSession({
     voiceSessionId: session.voiceSessionId,
     modelId: session.settings.local.modelId,
     streaming: session.settings.local.streaming
+  }).then(() => {
+    if (activeSession !== session) return
+    session.localModelReady = true
+    if (session.settings.local.streaming) flushLocalSamples(session)
   })
   /** 旧版但跨 Electron 稳定的 PCM 回调节点。 */
   const processor = session.audioContext.createScriptProcessor(4_096, 1, 1)
@@ -279,19 +313,72 @@ async function startLocalRecording(session: ActiveVoiceSession): Promise<void> {
     /** 浏览器采样率 PCM 副本。 */
     const sourceSamples = event.inputBuffer.getChannelData(0)
     /** 重采样到 sherpa-onnx 统一采样率。 */
-    const resampled = resamplePcm(sourceSamples, session.audioContext.sampleRate, 16_000)
+    const resampled = resamplePcm(sourceSamples, session.audioContext.sampleRate, VOICE_PCM_SAMPLE_RATE)
     /** 使用独立 ArrayBuffer，避免 SharedArrayBuffer 穿过桥接边界。 */
     const samples = new Float32Array(new ArrayBuffer(resampled.byteLength))
     samples.set(resampled)
-    if (samples.length > 0) {
-      window.ncx.voiceSettings.sendLocalChunk({ voiceSessionId: session.voiceSessionId, sampleRate: 16_000, samples })
+    if (samples.length === 0) return
+    /** 加入当前块后的会话录音总样本数。 */
+    const recordedSamples = (session.localRecordedSamples ?? 0) + samples.length
+    if (recordedSamples > LOCAL_RECORDING_BUFFER_MAX_SAMPLES) {
+      cancel('单次本地录音最长支持 5 分钟。')
+      return
     }
+    session.localRecordedSamples = recordedSamples
+    if (session.settings.local.streaming && session.localModelReady) {
+      sendLocalSamples(session, samples)
+      return
+    }
+    bufferLocalSamples(session, samples)
   })
   session.sourceNode.connect(processor)
   processor.connect(silentGain)
   silentGain.connect(session.audioContext.destination)
   session.processor = processor
   session.silentGain = silentGain
+  return ready
+}
+
+/** 将冷启动音频或非流式完整录音暂存在会话内存队列。 */
+function bufferLocalSamples(session: ActiveVoiceSession, samples: Float32Array<ArrayBuffer>): void {
+  /** 加入当前块后的缓冲样本总数。 */
+  const nextTotal = (session.localPendingSamples ?? 0) + samples.length
+  session.localPendingChunks?.push(samples)
+  session.localPendingSamples = nextTotal
+}
+
+/** 按录制顺序把当前内存 PCM 队列完整提交给本地识别会话。 */
+function flushLocalSamples(session: ActiveVoiceSession): void {
+  /** 等待提交给模型的有序 PCM 块。 */
+  const pendingChunks = session.localPendingChunks?.splice(0) ?? []
+  /** 等待提交给模型的样本总数。 */
+  const pendingSamples = session.localPendingSamples ?? 0
+  session.localPendingSamples = 0
+  if (pendingSamples === 0) return
+  /** 合并后的连续完整录音。 */
+  const recording = new Float32Array(new ArrayBuffer(pendingSamples * Float32Array.BYTES_PER_ELEMENT))
+  /** 当前合并写入位置。 */
+  let writeOffset = 0
+  for (const samples of pendingChunks) {
+    recording.set(samples, writeOffset)
+    writeOffset += samples.length
+    samples.fill(0)
+  }
+  for (let offset = 0; offset < recording.length; offset += VOICE_PCM_CHUNK_MAX_SAMPLES) {
+    /** 满足 IPC 上限的连续录音分块。 */
+    const samples = recording.slice(offset, offset + VOICE_PCM_CHUNK_MAX_SAMPLES)
+    sendLocalSamples(session, samples)
+  }
+  recording.fill(0)
+}
+
+/** 将一个 16 kHz PCM 块发送给当前本地识别会话。 */
+function sendLocalSamples(session: ActiveVoiceSession, samples: Float32Array<ArrayBuffer>): void {
+  window.ncx.voiceSettings.sendLocalChunk({
+    voiceSessionId: session.voiceSessionId,
+    sampleRate: VOICE_PCM_SAMPLE_RATE,
+    samples
+  })
 }
 
 /** 启动独立云端或当前对话模型的内存录音。 */
@@ -353,6 +440,9 @@ function release(source: VoiceInputSource): void {
 /** 完成本地识别并展示确认文本。 */
 async function finalizeLocalRecording(session: ActiveVoiceSession): Promise<void> {
   try {
+    await session.localReady
+    if (activeSession !== session) return
+    if (!session.settings.local.streaming) flushLocalSamples(session)
     /** Main 返回的最终文本。 */
     const result = await window.ncx.voiceSettings.finishLocalSession({ voiceSessionId: session.voiceSessionId })
     await reviewTranscript(session, result.text)
@@ -461,6 +551,10 @@ function cleanupSession(session: ActiveVoiceSession): void {
   session.sourceNode.disconnect()
   void session.audioContext.close().catch(() => undefined)
   session.chunks.splice(0)
+  for (const samples of session.localPendingChunks ?? []) samples.fill(0)
+  session.localPendingChunks?.splice(0)
+  session.localPendingSamples = 0
+  session.localRecordedSamples = 0
   usePlayerRuntime().engine.setDuckGain(1)
 }
 

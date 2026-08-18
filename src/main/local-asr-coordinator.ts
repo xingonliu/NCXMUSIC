@@ -1,3 +1,5 @@
+import { randomUUID } from 'node:crypto'
+
 import { utilityProcess, type UtilityProcess } from 'electron'
 
 import type { LocalModelInstaller } from '../infrastructure/voice/local-model-installer'
@@ -71,6 +73,12 @@ export class LocalAsrCoordinator {
   /** 按需卸载计时器。 */
   private idleTimer: ReturnType<typeof setTimeout> | undefined
 
+  /** 后台常驻模型预热任务。 */
+  private prewarmPromise: Promise<void> | undefined
+
+  /** 后台预热使用的内部会话 ID。 */
+  private prewarmSessionId: string | undefined
+
   /** 公开运行状态。 */
   private stateValue: {
     state: 'stopped' | 'starting' | 'ready' | 'recognizing' | 'failed'
@@ -85,8 +93,53 @@ export class LocalAsrCoordinator {
     return { ...this.stateValue }
   }
 
+  /** 常驻模式下后台加载所选模型，避免首次按键承担冷启动耗时。 */
+  async prewarm(modelId: VoiceLocalSessionStart['modelId']): Promise<void> {
+    if (this.options.loadMode() !== 'resident' || !this.options.installer.isInstalled(modelId)) return
+    this.clearIdleTimer()
+    if (this.prewarmPromise) {
+      await this.prewarmPromise
+      if (this.hostModelId === modelId && this.stateValue.state === 'ready') return
+    }
+    if (this.session) return
+    if (this.hostModelId === modelId && this.stateValue.state === 'ready') return
+    /** 仅用于模型预热、不会接收用户音频的内部会话 ID。 */
+    const voiceSessionId = randomUUID()
+    /** 预热开始时刻，用于定位 Native 模型实际冷启动耗时。 */
+    const startedAt = Date.now()
+    this.prewarmSessionId = voiceSessionId
+    /** 当前唯一预热任务。 */
+    const task = this.start({ voiceSessionId, modelId, streaming: false })
+      .then(() => {
+        this.cancel({ voiceSessionId })
+        console.info(`[LocalAsrCoordinator] 常驻模型预热完成: model=${modelId}, durationMs=${Date.now() - startedAt}`)
+      })
+      .catch((error: unknown) => {
+        this.cancel({ voiceSessionId })
+        console.warn('[LocalAsrCoordinator] 常驻模型预热失败:', error instanceof Error ? error.message : error)
+      })
+      .finally(() => {
+        if (this.prewarmSessionId === voiceSessionId) {
+          this.prewarmPromise = undefined
+          this.prewarmSessionId = undefined
+        }
+      })
+    this.prewarmPromise = task
+    await task
+  }
+
+  /** 设置变化后同步模型生命周期，按需模式在空闲窗口后释放已有 Host。 */
+  refreshLoadMode(): void {
+    if (this.session) return
+    if (this.options.loadMode() === 'resident') this.clearIdleTimer()
+    else if (this.host) this.scheduleUnload()
+  }
+
   /** 创建本地识别会话并等待模型就绪。 */
   async start(input: VoiceLocalSessionStart): Promise<void> {
+    /** 正在进行的后台模型预热。 */
+    const pendingPrewarm = this.prewarmPromise
+    if (pendingPrewarm && input.voiceSessionId !== this.prewarmSessionId) await pendingPrewarm
     if (this.session) throw new Error('已有本地语音识别正在进行。')
     if (!this.options.installer.isInstalled(input.modelId)) throw new Error('请先安装所选本地语音模型。')
     this.clearIdleTimer()

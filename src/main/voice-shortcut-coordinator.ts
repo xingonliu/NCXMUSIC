@@ -83,6 +83,9 @@ export class VoiceShortcutCoordinator {
   /** 当前配置 generation。 */
   private generation = 0
 
+  /** 当前稳定 generation 的快捷键是否仍处于按下状态。 */
+  private shortcutHeld = false
+
   /** 当前稳定配置。 */
   private config: PersistedVoiceShortcutConfig = DEFAULT_VOICE_SHORTCUT
 
@@ -177,8 +180,9 @@ export class VoiceShortcutCoordinator {
     const candidateGeneration = this.generation + 1
     /** 全局快捷键按下时的回调分发。 */
     const onShortcutPress = (): void => {
+      if (this.generation !== candidateGeneration || this.snapshotValue.availability !== 'ready') return
       console.info(`[VoiceShortcutCoordinator] Electron globalShortcut 捕获到快捷键: accelerator=${accelerator}, generation=${candidateGeneration}`)
-      this.options.publish({ type: 'pressed', generation: candidateGeneration })
+      this.publishShortcutTransition('pressed', candidateGeneration)
       this.host?.postMessage({
         type: 'setListening',
         listening: true,
@@ -242,6 +246,7 @@ export class VoiceShortcutCoordinator {
     const oldHost = this.host
     this.host = candidate
     this.generation = candidateGeneration
+    this.shortcutHeld = false
     this.config = { schemaVersion: 2, enabled: true, chord: normalizedChord }
     this.persistConfig()
     if (oldAccelerator && oldAccelerator !== accelerator) globalShortcut.unregister(oldAccelerator)
@@ -290,8 +295,9 @@ export class VoiceShortcutCoordinator {
       if (!report.success || report.data.sessionGeneration !== generation) return
       console.info(`[VoiceShortcutCoordinator] 收到 Hook 进程报告: status=${report.data.status}, generation=${generation}`)
       if (report.data.status === 'pressed' || report.data.status === 'released') {
-        this.options.publish({ type: report.data.status, generation })
+        this.publishShortcutTransition(report.data.status, generation)
       } else if (report.data.status === 'permission_denied' || report.data.status === 'hook_failed') {
+        this.shortcutHeld = false
         this.updateSnapshot(report.data.status, report.data.reason)
         this.options.publish({ type: 'cancelled', generation, reason: report.data.reason })
       }
@@ -299,6 +305,7 @@ export class VoiceShortcutCoordinator {
     host.once('exit', () => {
       if (this.host !== host) return
       this.host = undefined
+      this.shortcutHeld = false
       console.warn(`[VoiceShortcutCoordinator] InputHookHost 意外退出`)
       this.updateSnapshot('hook_failed', 'InputHookHost 意外退出；应用内麦克风仍可使用。')
       this.options.publish({ type: 'cancelled', generation, reason: 'InputHookHost 意外退出。' })
@@ -310,7 +317,21 @@ export class VoiceShortcutCoordinator {
     /** 待停止 Host。 */
     const current = this.host
     this.host = undefined
+    this.shortcutHeld = false
     current?.kill()
+  }
+
+  /** 合并 globalShortcut 与原生 Hook 的重复事件，只发布真实状态转换。 */
+  private publishShortcutTransition(type: 'pressed' | 'released', generation: number): void {
+    if (generation !== this.generation) return
+    if (type === 'pressed') {
+      if (this.shortcutHeld) return
+      this.shortcutHeld = true
+    } else {
+      if (!this.shortcutHeld) return
+      this.shortcutHeld = false
+    }
+    this.options.publish({ type, generation })
   }
 
   /** 只注销语音协调器拥有的 Accelerator，不影响未来其他全局快捷键。 */

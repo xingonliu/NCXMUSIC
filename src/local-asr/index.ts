@@ -80,6 +80,10 @@ function isOnlineSession(session: ActiveSession): session is OnlineSession {
 /** 创建并加载指定模型会话。 */
 function start(command: Extract<LocalAsrCommand, { type: 'start' }>): void {
   if (activeSession) throw new Error('本地识别进程已有活动会话。')
+  /** 当前会话是否直接复用已加载的 Native 识别器。 */
+  const reusedRecognizer = cachedRecognizer?.modelId === command.modelId
+  /** Native 识别器与会话创建开始时刻。 */
+  const startedAt = Date.now()
   if (command.modelId === 'light') {
     /** 在线识别器。 */
     const recognizer = cachedRecognizer?.modelId === 'light' ? cachedRecognizer.recognizer : new OnlineRecognizer({
@@ -145,6 +149,7 @@ function start(command: Extract<LocalAsrCommand, { type: 'start' }>): void {
       texts: []
     }
   }
+  console.info(`[LocalAsr] 模型会话就绪: model=${command.modelId}, reused=${reusedRecognizer}, durationMs=${Date.now() - startedAt}`)
   post({
     type: 'ready',
     protocolVersion: LOCAL_ASR_PROTOCOL_VERSION,

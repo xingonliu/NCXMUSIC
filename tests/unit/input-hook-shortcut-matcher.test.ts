@@ -71,4 +71,13 @@ describe('ShortcutMatcher', () => {
     })
     expect(matcher.snapshot().listening).toBe(false)
   })
+
+  it('does not release an active session for an unrelated keyup', () => {
+    const matcher = new ShortcutMatcher(config)
+
+    matcher.setListening(true)
+    expect(matcher.handle({ type: 'keyup' })).toBeUndefined()
+    expect(matcher.handle({ type: 'keyup', key: 'AltRight' })).toBeUndefined()
+    expect(matcher.snapshot().listening).toBe(true)
+  })
 })

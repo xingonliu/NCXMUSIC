@@ -9,6 +9,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 /** Electron 全局快捷键和 Host 的可控夹具。 */
 const electronFixture = vi.hoisted(() => ({
   registered: new Set<string>(),
+  callbacks: new Map<string, () => void>(),
+  hosts: [] as Array<{ emit(event: string, ...args: unknown[]): boolean }>,
   hostStatuses: [] as Array<'ready' | 'hook_failed' | { status: 'hook_failed' | 'permission_denied'; reason?: string }>,
   register: vi.fn<(accelerator: string, callback: () => void) => boolean>(),
   unregister: vi.fn<(accelerator: string) => void>(),
@@ -56,15 +58,20 @@ vi.mock('electron', async () => {
     }
   }
 
-  electronFixture.register.mockImplementation((accelerator) => {
+  electronFixture.register.mockImplementation((accelerator, callback) => {
     if (electronFixture.registered.has(accelerator)) return false
     electronFixture.registered.add(accelerator)
+    electronFixture.callbacks.set(accelerator, callback)
     return true
   })
   electronFixture.unregister.mockImplementation((accelerator) => {
     electronFixture.registered.delete(accelerator)
+    electronFixture.callbacks.delete(accelerator)
   })
-  electronFixture.unregisterAll.mockImplementation(() => electronFixture.registered.clear())
+  electronFixture.unregisterAll.mockImplementation(() => {
+    electronFixture.registered.clear()
+    electronFixture.callbacks.clear()
+  })
   electronFixture.openExternal.mockImplementation(async () => undefined)
   electronFixture.isTrustedAccessibilityClient.mockImplementation(() => true)
 
@@ -80,6 +87,7 @@ vi.mock('electron', async () => {
       fork: vi.fn(() => {
         /** 新的 InputHookHost 夹具。 */
         const host = new MockInputHookHost()
+        electronFixture.hosts.push(host)
         return host
       })
     }
@@ -91,14 +99,14 @@ import { VoiceShortcutCoordinator } from '../../src/main/voice-shortcut-coordina
 // ========= 函数 =========
 
 /** 创建隔离的语音快捷键协调器。 */
-function createCoordinator(): VoiceShortcutCoordinator {
+function createCoordinator(publish: (event: { readonly type: string; readonly generation?: number }) => void = () => undefined): VoiceShortcutCoordinator {
   /** 本次测试配置目录。 */
   const userDataPath = mkdtempSync(join(tmpdir(), 'ncx-voice-shortcut-'))
   temporaryDirectories.push(userDataPath)
   return new VoiceShortcutCoordinator({
     userDataPath,
     hostEntryPath: join(userDataPath, 'inputHook.js'),
-    publish: () => undefined
+    publish
   })
 }
 
@@ -106,6 +114,8 @@ function createCoordinator(): VoiceShortcutCoordinator {
 
 afterEach(() => {
   electronFixture.registered.clear()
+  electronFixture.callbacks.clear()
+  electronFixture.hosts.splice(0)
   electronFixture.hostStatuses.splice(0)
   electronFixture.register.mockClear()
   electronFixture.unregister.mockClear()
@@ -182,6 +192,34 @@ describe('Phase 7 voice shortcut atomic registration', () => {
 
     expect(result.availability).toBe('ready')
     expect(electronFixture.openExternal).toHaveBeenCalled()
+    coordinator.shutdown()
+  })
+
+  it('合并 globalShortcut 与原生 Hook 的重复按下事件，并由松开事件结束', async () => {
+    /** Renderer 可见的快捷键状态事件。 */
+    const published: Array<{ readonly type: string; readonly generation?: number }> = []
+    /** 被测协调器。 */
+    const coordinator = createCoordinator((event) => published.push(event))
+    electronFixture.hostStatuses.push('ready')
+
+    coordinator.start()
+    await vi.waitFor(() => expect(coordinator.snapshot().availability).toBe('ready'))
+    /** 当前稳定 generation。 */
+    const generation = coordinator.snapshot().generation
+    electronFixture.callbacks.get('Control+Shift+Q')?.()
+    electronFixture.hosts[0]?.emit('message', {
+      protocolVersion: 1,
+      sessionGeneration: generation,
+      status: 'pressed'
+    })
+    electronFixture.hosts[0]?.emit('message', {
+      protocolVersion: 1,
+      sessionGeneration: generation,
+      status: 'released'
+    })
+
+    expect(published.filter((event) => event.type === 'pressed')).toHaveLength(1)
+    expect(published.filter((event) => event.type === 'released')).toHaveLength(1)
     coordinator.shutdown()
   })
 })
