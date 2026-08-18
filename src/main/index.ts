@@ -118,10 +118,10 @@ let latestVoiceOverlayState = VoiceOverlayStateSchema.parse({
   text: '',
   waveform: Array.from({ length: 12 }, () => 0.08)
 })
-/** 外置语音胶囊窗口宽度。 */
-const VOICE_OVERLAY_WIDTH = 420
-/** 外置语音胶囊窗口高度。 */
-const VOICE_OVERLAY_HEIGHT = 88
+/** 外置语音胶囊透明承载窗口宽度，容纳最大 480px 胶囊与阴影。 */
+const VOICE_OVERLAY_WIDTH = 500
+/** 外置语音胶囊透明承载窗口高度。 */
+const VOICE_OVERLAY_HEIGHT = 70
 /** 外置语音胶囊与任务栏工作区底边的间距。 */
 const VOICE_OVERLAY_BOTTOM_GAP = 12
 /** Main 独占的 Shell 授权工作区协调器。 */
@@ -481,7 +481,7 @@ function publishVoiceShortcutEvent(rawEvent: unknown): void {
 /** 创建并预加载鼠标所在显示器底部的外置语音胶囊。 */
 function ensureVoiceOverlayWindow(): BrowserWindow {
   if (voiceOverlayWindow && !voiceOverlayWindow.isDestroyed()) return voiceOverlayWindow
-  /** 无焦点胶囊窗口；窗口外围透明，胶囊实体背景完全不透明。 */
+  /** 无焦点胶囊窗口；窗口外围透明，仅展示磨砂 HUD 实体。 */
   const window = new BrowserWindow({
     width: VOICE_OVERLAY_WIDTH,
     height: VOICE_OVERLAY_HEIGHT,
@@ -526,7 +526,7 @@ function updateVoiceOverlay(rawState: unknown): void {
     voiceOverlayHideTimer = setTimeout(() => {
       voiceOverlayWindow?.hide()
       voiceOverlayHideTimer = undefined
-    }, 220)
+    }, 280)
     return
   }
   /** 当前鼠标所在显示器。 */
@@ -556,8 +556,331 @@ function renderVoiceOverlay(state: typeof latestVoiceOverlayState): void {
 }
 
 /** 外置语音胶囊的无权限静态页面。 */
-const VOICE_OVERLAY_HTML = `<!doctype html><html><head><meta charset="utf-8"><style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{position:absolute;left:6px;right:6px;bottom:6px;display:flex;align-items:center;gap:12px;min-height:56px;padding:9px 15px;color:#fff;background:#1b1b20;border:1px solid rgba(255,255,255,.14);border-radius:999px;box-shadow:0 10px 28px rgba(0,0,0,.3);transition:opacity .2s,transform .2s}.wrap.idle{opacity:0;transform:translateY(8px)}.orb{width:23px;height:23px;flex:none;border:3px solid rgba(120,160,255,.25);border-top-color:#80a0ff;border-radius:50%;animation:spin .8s linear infinite}.listening .orb{border:0;background:#80a0ff;animation:pulse 1.2s ease-in-out infinite}.copy{min-width:0;flex:1}.label{font-size:11px;color:rgba(255,255,255,.68)}.text{overflow:hidden;margin-top:1px;font-size:13px;font-weight:600;text-overflow:ellipsis;white-space:nowrap}.wave{display:flex;align-items:center;gap:3px;height:26px}.wave i{width:3px;height:calc(4px + 20px * var(--v));background:#80a0ff;border-radius:99px;transition:height 70ms linear}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(.72);box-shadow:0 0 0 8px rgba(128,160,255,.12)}}@media(prefers-reduced-motion:reduce){.orb{animation:none}.wave i{transition:none}}</style></head><body><div id="wrap" class="wrap idle"><div class="orb"></div><div class="copy"><div id="label" class="label">准备中</div><div id="text" class="text">正在加载语音识别</div></div><div id="wave" class="wave"></div></div><script>const wrap=document.getElementById('wrap'),label=document.getElementById('label'),text=document.getElementById('text'),wave=document.getElementById('wave');for(let i=0;i<12;i++){wave.appendChild(document.createElement('i'))}window.__renderVoiceOverlay=s=>{wrap.className='wrap '+s.phase;label.textContent=s.phase==='starting'?'准备中':s.phase==='listening'?'倾听中':s.phase==='reviewing'?'已识别':'识别中';text.textContent=s.text|| (s.phase==='starting'?'正在加载语音识别':s.phase==='listening'?'请说话，松手后结束':'正在转写');[...wave.children].forEach((bar,i)=>bar.style.setProperty('--v',String(s.waveform[i]||.08)))}</script></body></html>`
+const VOICE_OVERLAY_HTML = `<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    :root {
+      --voice-overlay-bg: rgba(22, 22, 26, 0.88);
+      --voice-overlay-text: #ffffff;
+      --voice-overlay-shadow: 0 14px 36px -4px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.3);
+      --voice-overlay-radius: 9999px;
+      --voice-overlay-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      --voice-overlay-spring: cubic-bezier(0.175, 0.885, 0.32, 1.25);
+      --voice-overlay-exit: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    body {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 8px;
+      font-family: var(--voice-overlay-font);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .voice-overlay-shell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+      opacity: 0;
+      visibility: hidden;
+      border-radius: var(--voice-overlay-radius);
+      pointer-events: none;
+      transform: translateY(18px) scale(0.88);
+      transition:
+        opacity 0.28s var(--voice-overlay-exit),
+        transform 0.35s var(--voice-overlay-spring),
+        visibility 0.35s;
+      will-change: transform, opacity;
+    }
+
+    .voice-overlay-shell.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .voice-overlay-shell.is-exiting {
+      opacity: 0;
+      visibility: visible;
+      transform: translateY(14px) scale(0.92);
+      transition:
+        opacity 0.25s var(--voice-overlay-exit),
+        transform 0.25s var(--voice-overlay-exit);
+    }
+
+    .voice-overlay-capsule {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      height: 42px;
+      min-width: 120px;
+      max-width: 480px;
+      padding: 0 16px 0 10px;
+      overflow: hidden;
+      color: var(--voice-overlay-text);
+      background: var(--voice-overlay-bg);
+      border: 0;
+      border-radius: var(--voice-overlay-radius);
+      box-shadow: var(--voice-overlay-shadow);
+      outline: 0;
+      backdrop-filter: blur(28px) saturate(190%);
+      transition:
+        min-width 0.32s var(--voice-overlay-spring),
+        max-width 0.32s var(--voice-overlay-spring);
+    }
+
+    .voice-overlay-orb-container {
+      position: relative;
+      display: flex;
+      flex: 0 0 24px;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+
+    .voice-overlay-orb {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      background: conic-gradient(
+        from 180deg at 50% 50%,
+        #ff2d55 0deg,
+        #af52de 70deg,
+        #5e5ce6 140deg,
+        #007aff 200deg,
+        #30d158 270deg,
+        #ff9500 320deg,
+        #ff2d55 360deg
+      );
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(94, 92, 230, 0.6), inset 0 0 3px rgba(255, 255, 255, 0.6);
+      filter: blur(0.5px);
+      transition: transform 0.3s var(--voice-overlay-spring), filter 0.3s ease;
+    }
+
+    .voice-overlay-content {
+      display: flex;
+      flex: 1;
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .voice-overlay-title {
+      max-width: 400px;
+      overflow: hidden;
+      color: var(--voice-overlay-text);
+      font-size: 13.5px;
+      font-weight: 550;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .voice-overlay-wave {
+      display: none;
+      flex: 0 0 65px;
+      width: 65px;
+      height: 20px;
+      border-radius: 4px;
+    }
+
+    .voice-overlay-capsule[data-state="starting"] { min-width: 110px; }
+    .voice-overlay-capsule[data-state="listening"] { min-width: 175px; }
+    .voice-overlay-capsule[data-state="transcribing"] { min-width: 130px; }
+    .voice-overlay-capsule[data-state="reviewing"] { min-width: 145px; max-width: 460px; }
+
+    .voice-overlay-capsule[data-state="listening"] .voice-overlay-orb {
+      animation: voice-overlay-spin 2s linear infinite, voice-overlay-pulse-glow 1.4s ease-in-out infinite;
+    }
+
+    .voice-overlay-capsule[data-state="listening"] .voice-overlay-wave { display: block; }
+
+    .voice-overlay-capsule[data-state="transcribing"] .voice-overlay-orb {
+      animation: voice-overlay-spin 0.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+      filter: blur(1px) brightness(1.25);
+    }
+
+    .voice-overlay-capsule[data-state="reviewing"] .voice-overlay-orb {
+      box-shadow: 0 0 10px rgba(48, 209, 88, 0.7);
+      transform: scale(1.06);
+    }
+
+    @keyframes voice-overlay-spin {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.08); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    @keyframes voice-overlay-pulse-glow {
+      0%, 100% {
+        filter: blur(0.5px) brightness(1);
+        box-shadow: 0 0 8px rgba(94, 92, 230, 0.5);
+      }
+      50% {
+        filter: blur(1.2px) brightness(1.3);
+        box-shadow: 0 0 14px rgba(0, 199, 255, 0.8), 0 0 18px rgba(255, 45, 85, 0.6);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .voice-overlay-shell,
+      .voice-overlay-capsule,
+      .voice-overlay-orb {
+        animation: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="voice-overlay-shell" class="voice-overlay-shell">
+    <div id="voice-overlay-capsule" class="voice-overlay-capsule" data-state="starting">
+      <div class="voice-overlay-orb-container" aria-hidden="true">
+        <div class="voice-overlay-orb"></div>
+      </div>
+      <div class="voice-overlay-content">
+        <div id="voice-overlay-title" class="voice-overlay-title">准备中</div>
+        <canvas id="voice-overlay-wave" class="voice-overlay-wave" width="130" height="40" aria-hidden="true"></canvas>
+      </div>
+    </div>
+  </div>
+  <script>
+    // ========= 变量 =========
+
+    /** 胶囊显隐动画容器。 */
+    const voiceOverlayShell = document.getElementById('voice-overlay-shell');
+    /** 根据识别阶段切换视觉状态的胶囊实体。 */
+    const voiceOverlayCapsule = document.getElementById('voice-overlay-capsule');
+    /** 单行识别状态或转写文本。 */
+    const voiceOverlayTitle = document.getElementById('voice-overlay-title');
+    /** 收音状态下的三色流体波形画布。 */
+    const voiceOverlayWave = document.getElementById('voice-overlay-wave');
+    /** 波形二维绘图上下文。 */
+    const voiceOverlayWaveContext = voiceOverlayWave.getContext('2d');
+    /** 当前录音频谱，固定为十二个归一化采样点。 */
+    let voiceOverlayWaveform = Array.from({ length: 12 }, () => 0.08);
+    /** 当前识别展示阶段。 */
+    let voiceOverlayPhase = 'idle';
+    /** 流体波形动画相位。 */
+    let voiceOverlayWavePhase = 0;
+    /** 仅收音状态运行的流体波形动画帧。 */
+    let voiceOverlayAnimationFrame;
+    /** 用户是否要求减少动画。 */
+    const voiceOverlayReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ========= 函数 =========
+
+    /** 返回阶段对应的默认单行文案。 */
+    function resolveVoiceOverlayTitle(state) {
+      if (state.text) return state.text;
+      if (state.phase === 'starting') return '正在启动语音识别…';
+      if (state.phase === 'listening') return '正在收音…';
+      if (state.phase === 'transcribing') return '正在转写…';
+      if (state.phase === 'reviewing') return '识别完成';
+      return '';
+    }
+
+    /** 根据十二点频谱插值当前横坐标的归一化振幅。 */
+    function resolveVoiceOverlayAmplitude(progress) {
+      const waveformIndex = Math.min(voiceOverlayWaveform.length - 1, Math.floor(progress * voiceOverlayWaveform.length));
+      return Math.max(0.08, voiceOverlayWaveform[waveformIndex] || 0.08);
+    }
+
+    /** 绘制与彩虹光球呼应的三层流体声波。 */
+    function drawVoiceOverlayWave() {
+      const width = voiceOverlayWave.width;
+      const height = voiceOverlayWave.height;
+      const centerY = height / 2;
+      const ribbons = [
+        { color: 'rgba(255, 45, 85, 0.85)', frequency: 0.045, speed: 1.2, amplitude: 10 },
+        { color: 'rgba(94, 92, 230, 0.9)', frequency: 0.055, speed: -1, amplitude: 9 },
+        { color: 'rgba(0, 199, 255, 0.85)', frequency: 0.04, speed: 1.5, amplitude: 7 }
+      ];
+
+      voiceOverlayWaveContext.clearRect(0, 0, width, height);
+      if (voiceOverlayPhase !== 'listening') return;
+
+      for (const ribbon of ribbons) {
+        voiceOverlayWaveContext.beginPath();
+        voiceOverlayWaveContext.strokeStyle = ribbon.color;
+        voiceOverlayWaveContext.lineWidth = 1.8;
+        voiceOverlayWaveContext.lineCap = 'round';
+        for (let x = 0; x <= width; x += 3) {
+          const progress = x / width;
+          const envelope = Math.sin(progress * Math.PI);
+          const volume = 0.25 + resolveVoiceOverlayAmplitude(progress) * 0.75;
+          const offset = Math.sin(x * ribbon.frequency + voiceOverlayWavePhase * ribbon.speed) * ribbon.amplitude * volume * envelope;
+          if (x === 0) voiceOverlayWaveContext.moveTo(x, centerY + offset);
+          else voiceOverlayWaveContext.lineTo(x, centerY + offset);
+        }
+        voiceOverlayWaveContext.stroke();
+      }
+    }
+
+    /** 收音期间推进一帧波形动画。 */
+    function animateVoiceOverlayWave() {
+      if (!voiceOverlayReducedMotion) voiceOverlayWavePhase += 0.08;
+      drawVoiceOverlayWave();
+      if (voiceOverlayReducedMotion || voiceOverlayPhase !== 'listening') {
+        voiceOverlayAnimationFrame = undefined;
+        return;
+      }
+      voiceOverlayAnimationFrame = window.requestAnimationFrame(animateVoiceOverlayWave);
+    }
+
+    /** 只在胶囊处于收音状态时占用动画帧，隐藏预热时保持零循环。 */
+    function syncVoiceOverlayWaveAnimation() {
+      if (voiceOverlayPhase === 'listening' && voiceOverlayAnimationFrame === undefined) {
+        animateVoiceOverlayWave();
+        return;
+      }
+      if (voiceOverlayPhase === 'listening' || voiceOverlayAnimationFrame === undefined) return;
+      window.cancelAnimationFrame(voiceOverlayAnimationFrame);
+      voiceOverlayAnimationFrame = undefined;
+      drawVoiceOverlayWave();
+    }
+
+    /** 接收 Main 校验后的纯展示状态并更新 HUD。 */
+    window.__renderVoiceOverlay = function renderVoiceOverlayState(state) {
+      voiceOverlayPhase = state.phase;
+      voiceOverlayWaveform = state.waveform;
+      voiceOverlayCapsule.dataset.state = state.phase;
+      voiceOverlayTitle.textContent = resolveVoiceOverlayTitle(state);
+      syncVoiceOverlayWaveAnimation();
+      if (state.phase === 'idle') {
+        voiceOverlayShell.classList.remove('is-visible');
+        voiceOverlayShell.classList.add('is-exiting');
+        return;
+      }
+      voiceOverlayShell.classList.remove('is-exiting');
+      voiceOverlayShell.classList.add('is-visible');
+    };
+  </script>
+</body>
+</html>`
 
 /** 向所有主窗口 Renderer 广播经 Schema 校验的语音服务事件。 */
 function publishVoiceServiceEvent(rawEvent: unknown): void {

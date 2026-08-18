@@ -34,11 +34,22 @@ describe('voice overlay window contract', () => {
     expect(voiceLayerSource).not.toContain('class="voice-capsule"')
   })
 
-  it('胶囊缩小为 420 × 88 且实体背景完全不透明', () => {
-    expect(mainSource).toContain('const VOICE_OVERLAY_WIDTH = 420')
-    expect(mainSource).toContain('const VOICE_OVERLAY_HEIGHT = 88')
-    expect(mainSource).toContain('background:#1b1b20')
-    expect(mainSource).not.toContain('background:rgba(27,27,32,.88)')
-    expect(mainSource).not.toContain('backdrop-filter:blur(24px)')
+  it('使用参考 HUD 的紧凑磨砂胶囊、彩虹光球和流体波形', () => {
+    expect(mainSource).toContain('height: 42px')
+    expect(mainSource).toContain('--voice-overlay-bg: rgba(22, 22, 26, 0.88)')
+    expect(mainSource).toContain('background: conic-gradient(')
+    expect(mainSource).toContain('class="voice-overlay-wave"')
+    expect(mainSource).toContain('function drawVoiceOverlayWave()')
+    expect(mainSource).toContain('function syncVoiceOverlayWaveAnimation()')
+    expect(mainSource).toContain("voiceOverlayPhase === 'listening'")
+    expect(mainSource).not.toContain('background:#1b1b20')
+  })
+
+  it('参考样式的类名和动画名全部改为 voice-overlay 语义', () => {
+    expect(mainSource).toContain('class="voice-overlay-shell"')
+    expect(mainSource).toContain('class="voice-overlay-capsule"')
+    expect(mainSource).toContain('@keyframes voice-overlay-spin')
+    expect(mainSource).not.toMatch(/class="siri-/i)
+    expect(mainSource).not.toMatch(/@keyframes siri-/i)
   })
 })
