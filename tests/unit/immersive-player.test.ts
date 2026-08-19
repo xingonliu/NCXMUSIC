@@ -29,6 +29,16 @@ const originalAnimate = HTMLElement.prototype.animate
 
 // ========= 函数 =========
 
+/** 无动画宿主的测试环境中完成沉浸播放展示层关闭。 */
+async function closeImmersivePlayerImmediately(): Promise<void> {
+  /** 应用级沉浸播放展示控制器。 */
+  const immersivePlayer = useImmersivePlayerPresentation()
+  /** 当前可能等待根层 after-leave 的关闭任务。 */
+  const closing = immersivePlayer.close()
+  await immersivePlayer.completeClose()
+  await closing
+}
+
 /** 创建足以驱动歌词引擎单元测试的 Web Animation 替身。 */
 function createAnimationMock(
   _keyframes: Keyframe[] | PropertyIndexedKeyframes | null,
@@ -100,7 +110,7 @@ beforeEach(async () => {
     value: vi.fn(createAnimationMock)
   })
   getLyrics.mockReset()
-  await useImmersivePlayerPresentation().close()
+  await closeImmersivePlayerImmediately()
 })
 
 afterEach(async () => {
@@ -111,7 +121,7 @@ afterEach(async () => {
     value: originalAnimate
   })
   disposePlayer()
-  await useImmersivePlayerPresentation().close()
+  await closeImmersivePlayerImmediately()
   document.body.innerHTML = ''
 })
 
@@ -194,18 +204,43 @@ describe('应用级沉浸播放展示', () => {
     await immersivePlayer.open(trigger)
 
     expect(immersivePlayer.isOpen.value).toBe(true)
+    expect(immersivePlayer.isVisible.value).toBe(true)
     expect(window.location.hash).toBe(originalHash)
 
-    await immersivePlayer.close()
+    /** 模拟沉浸页在展示期间接管的焦点目标。 */
+    const immersiveFocusTarget = document.createElement('button')
+    document.body.append(immersiveFocusTarget)
+    immersiveFocusTarget.focus()
+
+    /** 等待根层 after-leave 完成的关闭任务。 */
+    const closing = immersivePlayer.close()
+    /** 关闭任务是否已在离场动画前错误完成。 */
+    let closingResolved = false
+    void closing.then(() => {
+      closingResolved = true
+    })
+    await vi.waitFor(() => expect(immersivePlayer.isVisible.value).toBe(false))
+
+    expect(immersivePlayer.isOpen.value).toBe(true)
+    expect(closingResolved).toBe(false)
+    expect(document.activeElement).toBe(immersiveFocusTarget)
+
+    await immersivePlayer.completeClose()
+    await closing
 
     expect(immersivePlayer.isOpen.value).toBe(false)
     expect(window.location.hash).toBe(originalHash)
     expect(document.activeElement).toBe(trigger)
   })
 
-  it('使用根层 Vue 过渡并让封面随沉浸页从底部进入', () => {
-    expect(appSource).toContain('<Transition name="ncx-immersive-page">')
+  it('使用仅位移的根层 Vue 过渡并在离场完成后才卸载 WebGL 页面', () => {
+    expect(appSource).toContain('name="ncx-immersive-page"')
+    expect(appSource).toContain('@after-leave="immersivePlayer.completeClose()"')
+    expect(appSource).toContain('v-show="isImmersivePlayerVisible"')
+    expect(appSource).toContain('v-if="isImmersivePlayerOpen"')
     expect(appSource).toContain('transform: translateY(100%);')
+    expect(appSource).not.toContain('opacity 360ms')
+    expect(appSource).not.toContain('opacity: 0.8')
     expect(immersiveLyricsPageSource).not.toContain('view-transition')
     expect(immersiveLyricsPageSource).not.toContain('ncx-now-playing-artwork')
     expect(immersivePlayerPresentationSource).not.toContain('startViewTransition')

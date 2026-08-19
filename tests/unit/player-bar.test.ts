@@ -18,17 +18,29 @@ type PropsReadableWrapper = {
   props: (name: string) => unknown
 }
 
+// ========= 函数 =========
+
+/** 无动画宿主的测试环境中完成沉浸播放展示层关闭。 */
+async function closeImmersivePlayerImmediately(): Promise<void> {
+  /** 应用级沉浸播放展示控制器。 */
+  const immersivePlayer = useImmersivePlayerPresentation()
+  /** 当前可能等待根层 after-leave 的关闭任务。 */
+  const closing = immersivePlayer.close()
+  await immersivePlayer.completeClose()
+  await closing
+}
+
 // ========= 生命周期 =========
 
 describe('PlayerBar 控件区域 UI 规范测试', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     disposePlayer()
-    void useImmersivePlayerPresentation().close()
+    await closeImmersivePlayerImmediately()
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     disposePlayer()
-    void useImmersivePlayerPresentation().close()
+    await closeImmersivePlayerImmediately()
   })
 
   it('控件区域渲染 player-transport 容器并使用 CommonIconButton 组件呈现控件', () => {
@@ -273,7 +285,7 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
 
     await coverButton.trigger('click')
     await vi.waitFor(() => expect(immersivePlayer.isOpen.value).toBe(true))
-    await immersivePlayer.close()
+    await closeImmersivePlayerImmediately()
   })
 
   it('当存在播放 notice 时渲染 CommonToast 浮窗组件并能在关闭时清除提示', async () => {

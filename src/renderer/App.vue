@@ -25,8 +25,11 @@ const route = useRoute()
 /** 应用级沉浸播放展示控制器。 */
 const immersivePlayer = useImmersivePlayerPresentation()
 
-/** 沉浸播放展示层是否已打开。 */
+/** 沉浸播放展示层是否仍处于挂载状态。 */
 const isImmersivePlayerOpen = immersivePlayer.isOpen
+
+/** 沉浸播放展示层是否处于可见状态。 */
+const isImmersivePlayerVisible = immersivePlayer.isVisible
 
 /** 当前页面是否展示通用 PlayerBar。 */
 const showPlayerBar = computed<boolean>(() => route.meta.playerBar === 'show')
@@ -65,11 +68,20 @@ watch(
   <VoiceInputLayer />
 
   <!-- 独立于 RouterView 的应用级沉浸播放展示层。 -->
-  <Transition name="ncx-immersive-page">
-    <ImmersiveLyricsPage
-      v-if="isImmersivePlayerOpen"
-      @close="immersivePlayer.close()"
-    />
+  <Transition
+    name="ncx-immersive-page"
+    @after-leave="immersivePlayer.completeClose()"
+  >
+    <!-- 常驻容器负责离场，内部页面在动画结束后才卸载并释放 WebGL。 -->
+    <div
+      v-show="isImmersivePlayerVisible"
+      class="ncx-immersive-page-transition"
+    >
+      <ImmersiveLyricsPage
+        v-if="isImmersivePlayerOpen"
+        @close="immersivePlayer.close()"
+      />
+    </div>
   </Transition>
 
   <!-- 全局轻提示 Toast 多通知堆叠容器（按触发顺序向上自然排列并支持单条关闭） -->
@@ -153,21 +165,25 @@ watch(
 </template>
 
 <style>
+.ncx-immersive-page-transition {
+  position: fixed;
+  z-index: var(--ncx-layer-presentation);
+  inset: 0;
+}
+
 .ncx-immersive-page-enter-active {
-  transition:
-    opacity 440ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
 .ncx-immersive-page-leave-active {
-  transition:
-    opacity 360ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 360ms cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  transition: transform 360ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
 .ncx-immersive-page-enter-from,
 .ncx-immersive-page-leave-to {
-  opacity: 0.8;
   transform: translateY(100%);
 }
 
