@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { AlertCircle, Check, Copy, Sparkles, X } from '@lucide/vue'
-import { computed, ref, type DeepReadonly } from 'vue'
+import { computed, ref, watch, type DeepReadonly } from 'vue'
 
 import type { AgentSnapshot } from '../../../../shared/schemas/agent'
 import { CommonButton, CommonDialog, CommonIconButton } from '../../../design-system/components'
@@ -30,6 +30,9 @@ const props = defineProps<ProfileAnalysisBannerProps>()
 /** 组件事件。 */
 const emit = defineEmits<ProfileAnalysisBannerEmits>()
 
+/** 本次会话中用户是否主动关闭了提示。 */
+const sessionDismissed = ref<boolean>(false)
+
 /** 当前脱敏画像快照。 */
 const profile = computed(() => props.snapshot.personalization)
 
@@ -40,8 +43,27 @@ const working = computed<boolean>(() =>
 /** 是否显示失败重试。 */
 const failed = computed<boolean>(() => profile.value.status === 'failed')
 
-/** 当前提示是否需要渲染。 */
-const visible = computed<boolean>(() => working.value || failed.value || profile.value.prompt.visible)
+/** 当前提示是否需要渲染。
+ * 1. 若当前会话已被用户关闭，则不再显示；
+ * 2. 正在执行任务中始终展示进度条；
+ * 3. 若已有可用画像（usable 为 true），仅在有更新提示（update 且 prompt.visible）时展示；
+ * 4. 若尚未生成画像（usable 为 false），在 prompt.visible 为 true 或失败状态下展示。
+ */
+const visible = computed<boolean>(() => {
+  if (sessionDismissed.value) return false
+  if (working.value) return true
+  if (profile.value.usable) {
+    return profile.value.prompt.kind === 'update' && profile.value.prompt.visible
+  }
+  return profile.value.prompt.visible || (failed.value && profile.value.eligible)
+})
+
+/** 监听任务执行状态：当重新发起分析时，恢复提示展示。 */
+watch(working, (isWorking) => {
+  if (isWorking) {
+    sessionDismissed.value = false
+  }
+})
 
 /** 当前开始按钮对应的 Job 模式。 */
 const startMode = computed<'initialize' | 'update' | 'regenerate'>(() => {
@@ -76,6 +98,18 @@ const copied = ref(false)
 
 // ========= 函数 =========
 
+/** 关闭当前画像提示。 */
+function handleDismiss(): void {
+  sessionDismissed.value = true
+  emit('dismiss')
+}
+
+/** 触发开始或重试画像分析。 */
+function handleStart(mode: 'initialize' | 'update' | 'regenerate'): void {
+  sessionDismissed.value = false
+  emit('start', mode)
+}
+
 /** 复制模型原始返回内容。 */
 async function handleCopyOutput(): Promise<void> {
   const content = profile.value.rawOutput || ''
@@ -100,6 +134,7 @@ function handleCloseDetail(): void {
 /** 从弹窗中触发重试。 */
 function handleRetryFromModal(): void {
   detailModalVisible.value = false
+  sessionDismissed.value = false
   emit('start', startMode.value)
 }
 </script>
@@ -127,7 +162,7 @@ function handleRetryFromModal(): void {
         variant="primary"
         size="compact"
         :disabled="!profile.eligible"
-        @click="emit('start', startMode)"
+        @click="handleStart(startMode)"
       >
         {{ failed ? '重试' : profile.prompt.kind === 'update' ? '更新画像' : '开始分析' }}
       </CommonButton>
@@ -141,11 +176,11 @@ function handleRetryFromModal(): void {
       </CommonButton>
     </div>
     <CommonIconButton
-      v-if="!working && profile.prompt.visible"
+      v-if="!working"
       label="暂不分析"
       size="compact"
       variant="ghost"
-      @click="emit('dismiss')"
+      @click="handleDismiss"
     >
       <X :size="15" />
     </CommonIconButton>

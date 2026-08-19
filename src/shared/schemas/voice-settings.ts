@@ -211,6 +211,9 @@ export type VoiceRecognitionSource = z.infer<typeof VoiceRecognitionSourceSchema
 /** 本地模型 ID 类型。 */
 export type VoiceLocalModelId = z.infer<typeof VoiceLocalModelIdSchema>
 
+/** 本地模型元数据快照类型。 */
+export type VoiceLocalModelSnapshot = z.infer<typeof VoiceLocalModelSnapshotSchema>
+
 /** 本地模型加载策略类型。 */
 export type VoiceLocalLoadMode = z.infer<typeof VoiceLocalLoadModeSchema>
 

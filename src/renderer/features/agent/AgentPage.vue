@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import {
   AlertCircle,
-  Bug,
   ChevronRight,
   Copy,
-  Hammer,
-  RefreshCw,
-  Search,
   Terminal,
   ThumbsDown,
   ThumbsUp
@@ -460,42 +456,7 @@ watch(
         v-else-if="!hasConversation"
         class="agent-welcome-state"
       >
-        <span class="agent-welcome-icon"><Terminal :size="28" /></span>
-        <h2>我们应该在 <span class="underline-target">Ncxmusic</span> 中做些什么？</h2>
-        <div class="agent-welcome-grid">
-          <button
-            type="button"
-            class="agent-welcome-card"
-            @click="sendMessage('播放一首适合现在听的歌')"
-          >
-            <span class="agent-welcome-card-icon is-blue"><Search :size="20" /></span>
-            <p>探索并智能搜播</p>
-          </button>
-          <button
-            type="button"
-            class="agent-welcome-card"
-            @click="sendMessage('把当前歌曲加入我的歌单')"
-          >
-            <span class="agent-welcome-card-icon is-purple"><Hammer :size="20" /></span>
-            <p>构建与管理歌单</p>
-          </button>
-          <button
-            type="button"
-            class="agent-welcome-card"
-            @click="sendMessage('帮我找适合专注沉浸的歌')"
-          >
-            <span class="agent-welcome-card-icon is-green"><RefreshCw :size="20" /></span>
-            <p>推荐专注与工作流</p>
-          </button>
-          <button
-            type="button"
-            class="agent-welcome-card"
-            @click="sendMessage('分析我的听歌风格与画像')"
-          >
-            <span class="agent-welcome-card-icon is-orange"><Bug :size="20" /></span>
-            <p>分析偏好与解决疑问</p>
-          </button>
-        </div>
+        <h2>你好，今天想听点什么？</h2>
       </section>
 
       <template v-else>

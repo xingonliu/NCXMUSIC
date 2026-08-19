@@ -468,13 +468,12 @@ onUnmounted(() => {
       <SettingsRow
         setting-id="setting-cloud-protocol"
         title="厂商协议"
-        description="首版支持 OpenAI Audio Transcriptions 兼容接口。"
+        description="仅支持 OpenAI Audio Transcriptions 兼容接口。"
       >
         <CommonSelect
           class="settings-control"
           :model-value="voiceSettings?.cloud.protocol ?? 'openai-transcriptions'"
           :options="cloudProtocolOptions"
-          disabled
         />
       </SettingsRow>
       <SettingsRow

@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { Crown, Headphones, ListMusic, LockKeyhole, LogIn, LogOut, Play, Sparkles, UserRound } from '@lucide/vue'
+import {
+  FolderPlus,
+  Heart,
+  ListPlus,
+  Play,
+  Users
+} from '@lucide/vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -12,15 +18,24 @@ import {
   CommonAlertDialog,
   CommonAvatar,
   CommonButton,
+  CommonContextMenu,
   CommonEmptyState,
   CommonErrorState,
-  CommonSpinner
+  CommonIconButton,
+  CommonSpinner,
+  type CommonMenuItem
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
-import { useAgentStore } from '../agent/agent-store'
+import { copyText } from '../foundation/clipboard'
+import AddTrackToPlaylistDialog from '../music/components/AddTrackToPlaylistDialog.vue'
 import Cover from '../music/components/Cover.vue'
-import { standardSongToTrackSummary } from '../music/music-entity'
+import { mutateMusic, playSongNext } from '../music/music-actions'
+import {
+  formatMusicDuration,
+  standardSongToTrackSummary,
+  standardSongsToTrackSummaries
+} from '../music/music-entity'
 import { usePlayer } from '../music/use-player'
 
 // ========= 类型 =========
@@ -38,9 +53,6 @@ type AccountAction = 'login' | 'logout' | 'switch'
 
 /** 应用账户公开状态。 */
 const account = useAccountSessionStore()
-
-/** 应用作用域 Agent Store，用于展示账户隔离音乐画像。 */
-const agent = useAgentStore()
 
 /** 页面路由实例。 */
 const router = useRouter()
@@ -78,19 +90,23 @@ const logoutDialogVisible = ref<boolean>(false)
 /** 当前进行中的账户操作。 */
 const busyAction = ref<AccountAction | null>(null)
 
+/** 当前等待选择目标歌单的歌曲。 */
+const playlistTarget = ref<StandardSong | null>(null)
+
 /** 最近一次资料请求 ID，用于丢弃旧账户迟到响应。 */
 let latestProfileRequestId = ''
 
+/** 当前播放歌曲 ID。 */
+const activeTrackId = computed<string | null>(() => player.snapshot.value.playback.track?.trackId ?? null)
+
 /** 当前网易云用户 ID。 */
 const userId = computed<string | null>(() => {
-  /** 当前活动账户。 */
   const active = account.snapshot.value?.activeAccount
   return active?.kind === 'netease' ? active.neteaseUserId : null
 })
 
 /** 页面展示名称。 */
 const displayName = computed<string>(() => {
-  /** 当前账户快照。 */
   const snapshot = account.snapshot.value
   if (snapshot?.activeAccount.kind === 'netease') {
     return user.value?.nickname ?? snapshot.activeAccount.displayName ?? '正在加载账户资料'
@@ -100,7 +116,6 @@ const displayName = computed<string>(() => {
 
 /** 页面头像地址。 */
 const avatarUrl = computed<string>(() => {
-  /** 当前活动账户。 */
   const active = account.snapshot.value?.activeAccount
   return user.value?.avatarUrl ?? (active?.kind === 'netease' ? active.avatarUrl ?? '' : '')
 })
@@ -119,7 +134,6 @@ const subscribedPlaylists = computed<StandardPlaylist[]>(() => playlists.value.f
 /** 用户村龄展示文本。 */
 const villageAge = computed<string>(() => {
   if (!user.value?.createTime) return '暂未公开'
-  /** 从注册时间至今的完整年数。 */
   const years = Math.max(0, Math.floor((Date.now() - user.value.createTime) / (365.2425 * 24 * 60 * 60 * 1000)))
   return `${years} 年`
 })
@@ -129,9 +143,6 @@ const genderLabel = computed<string>(() => ({ 1: '男', 2: '女' })[user.value?.
 
 /** 用户星座展示文本。 */
 const zodiacLabel = computed<string>(() => formatZodiac(user.value?.birthday))
-
-/** 当前账户脱敏音乐人格画像。 */
-const musicProfile = computed(() => agent.snapshot.value.personalization)
 
 // ========= 函数 =========
 
@@ -143,32 +154,26 @@ function isLikedPlaylist(playlist: StandardPlaylist): boolean {
 /** 根据生日时间戳计算星座。 */
 function formatZodiac(birthday: number | undefined): string {
   if (!birthday || birthday <= 0) return '未公开'
-  /** 生日日期。 */
   const date = new Date(birthday)
-  /** 星座切换日期与名称。 */
   const signs: ReadonlyArray<[number, string]> = [
     [120, '摩羯座'], [219, '水瓶座'], [321, '双鱼座'], [420, '白羊座'],
     [521, '金牛座'], [622, '双子座'], [723, '巨蟹座'], [823, '狮子座'],
     [923, '处女座'], [1024, '天秤座'], [1123, '天蝎座'], [1222, '射手座'], [1232, '摩羯座']
   ]
-  /** 用月日组合出的比较值。 */
   const marker = (date.getMonth() + 1) * 100 + date.getDate()
   return signs.find(([boundary]) => marker < boundary)?.[1] ?? '摩羯座'
 }
 
 /** 格式化大数字。 */
 function formatCount(value: number | undefined): string {
-  if (value === undefined) return '—'
+  if (value === undefined) return '0'
   return new Intl.NumberFormat('zh-CN', { notation: value >= 10_000 ? 'compact' : 'standard', maximumFractionDigits: 1 }).format(value)
 }
 
 /** 读取当前网易云用户资料和个人核心内容。 */
 async function loadProfile(): Promise<void> {
-  /** 发起请求时绑定的账户快照。 */
   const snapshot = account.snapshot.value
-  /** 发起请求时绑定的网易云账户。 */
   const active = snapshot?.activeAccount
-  /** 当前资料请求唯一 ID。 */
   const requestId = crypto.randomUUID()
   latestProfileRequestId = requestId
   user.value = null
@@ -181,14 +186,12 @@ async function loadProfile(): Promise<void> {
     return
   }
   loading.value = true
-  /** 用户资料、歌单与两种听歌排行并行响应。 */
   const [profileResponse, playlistsResponse, weekResponse, allResponse] = await Promise.all([
     window.ncx.runtime.getUser({ id: active.neteaseUserId, requestId }),
     window.ncx.runtime.getUserPlaylists({ userId: active.neteaseUserId, limit: 100 }),
     window.ncx.runtime.readMusic({ operation: 'getListeningHistory', userId: active.neteaseUserId, period: 'week', limit: 100 }),
     window.ncx.runtime.readMusic({ operation: 'getListeningHistory', userId: active.neteaseUserId, period: 'all', limit: 100 })
   ])
-  /** 响应到达时的最新账户快照。 */
   const current = account.snapshot.value
   if (
     requestId !== latestProfileRequestId ||
@@ -233,7 +236,46 @@ async function confirmLogout(): Promise<void> {
 
 /** 播放听歌排行中的歌曲。 */
 async function playHistorySong(song: StandardSong): Promise<void> {
-  await player.playTrack(standardSongToTrackSummary(song), { kind: 'discover' })
+  const startIndex = visibleHistory.value.findIndex((item) => item.id === song.id)
+  await player.playContext({
+    tracks: standardSongsToTrackSummaries(visibleHistory.value),
+    source: { kind: 'discover' },
+    startIndex: Math.max(0, startIndex)
+  })
+}
+
+/** 追加听歌排行歌曲到队列。 */
+function enqueueHistorySong(song: StandardSong): void {
+  player.enqueue([standardSongToTrackSummary(song)], { kind: 'discover' })
+  showToast(`已将《${song.name}》加入播放队列。`, 'info')
+}
+
+/** 收藏当前歌曲。 */
+async function toggleLikeSong(song: StandardSong): Promise<void> {
+  const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
+  if (!response.ok) {
+    showToast(response.error.message, 'warning')
+    return
+  }
+  showToast(`已收藏《${song.name}》。`, 'success')
+}
+
+/** 打开共享的自建歌单选择对话框。 */
+function openAddToPlaylist(song: StandardSong): void {
+  playlistTarget.value = song
+}
+
+/** 打开正式歌曲详情页。 */
+function openSongDetails(song: StandardSong): void {
+  void router.push({ name: 'song-detail', params: { songId: song.id } })
+}
+
+/** 将歌曲标准上下文交给小云入口。 */
+function giveSongToAgent(song: StandardSong): void {
+  void router.push({
+    name: 'agent',
+    query: { intent: 'track', trackId: song.id, title: song.name }
+  })
 }
 
 /** 打开个人页歌单。 */
@@ -241,15 +283,40 @@ function openPlaylist(playlist: StandardPlaylist): void {
   void router.push({ name: 'playlist-detail', params: { playlistId: playlist.id } })
 }
 
-/** 打开设置页的小云画像管理入口。 */
-function openPersonalizationSettings(): void {
-  void router.push({ name: 'settings', query: { tab: 'agent' } })
+/** 获取单首歌曲右键上下文动作。 */
+function getSongMenuItems(song: StandardSong): CommonMenuItem[] {
+  return [
+    { value: 'play', label: '立即播放' },
+    { value: 'play-next', label: '下一首播放' },
+    { value: 'enqueue', label: '添加到队列末尾' },
+    { value: 'separator-a', type: 'separator' },
+    { value: 'like', label: '收藏歌曲' },
+    { value: 'add-to-playlist', label: '添加到歌单' },
+    { value: 'details', label: '查看歌曲详情' },
+    { value: 'give-agent', label: '交给小云' },
+    { value: 'copy-link', label: '复制网易云歌曲链接' }
+  ]
+}
+
+/** 执行单首歌曲上下文菜单动作。 */
+function handleSongMenuSelect(song: StandardSong, value: string | number): void {
+  const action = String(value)
+  if (action === 'play') void playHistorySong(song)
+  else if (action === 'play-next') playSongNext(song, { kind: 'discover' })
+  else if (action === 'enqueue') enqueueHistorySong(song)
+  else if (action === 'like') void toggleLikeSong(song)
+  else if (action === 'add-to-playlist') openAddToPlaylist(song)
+  else if (action === 'details') openSongDetails(song)
+  else if (action === 'give-agent') giveSongToAgent(song)
+  else if (action === 'copy-link') {
+    void copyText(`https://music.163.com/song?id=${song.id}`, '歌曲链接已复制。')
+  }
 }
 
 // ========= 生命周期 =========
 
 onMounted(async () => {
-  await Promise.all([account.initialize(), agent.initialize()])
+  await account.initialize()
 })
 
 watch(
@@ -266,196 +333,774 @@ watch(
 </script>
 
 <template>
-  <section class="profile-page" aria-labelledby="profile-title">
-    <div v-if="loading" class="profile-loading"><CommonSpinner label="正在加载个人资料" /><span>正在加载</span></div>
-    <CommonErrorState v-else-if="errorMessage" title="个人资料读取失败" :description="errorMessage" @retry="loadProfile" />
-    <CommonEmptyState v-else-if="!userId" title="游客" description="登录后查看个人信息、听歌排行和歌单收藏。">
-      <CommonButton variant="primary" :loading="busyAction === 'login'" :disabled="!account.snapshot.value?.canLogin" @click="runAccountAction('login')"><LogIn :size="14" />登录账户</CommonButton>
+  <div class="profile-container">
+    <div v-if="loading" class="profile-state">
+      <CommonSpinner label="正在加载个人资料" />
+      <span>正在加载个人空间...</span>
+    </div>
+
+    <CommonErrorState
+      v-else-if="errorMessage"
+      title="个人资料读取失败"
+      :description="errorMessage"
+      @retry="loadProfile"
+    />
+
+    <CommonEmptyState
+      v-else-if="!userId"
+      title="未登录网易云"
+      description="登录后查看个人听歌记录、自建歌单和收藏内容。"
+    >
+      <CommonButton
+        variant="primary"
+        :loading="busyAction === 'login'"
+        :disabled="!account.snapshot.value?.canLogin"
+        @click="runAccountAction('login')"
+      >
+        <Users :size="14" />
+        登录账户
+      </CommonButton>
     </CommonEmptyState>
 
-    <template v-else>
-      <header class="profile-hero">
-        <div class="profile-cover" :style="user?.backgroundUrl ? { backgroundImage: `url(${user.backgroundUrl})` } : {}" aria-hidden="true" />
-        <div class="profile-hero-scrim" />
-        <div class="profile-identity">
-          <CommonAvatar :name="displayName" :src="avatarUrl" :size="112" />
-          <div>
-            <span class="profile-eyebrow">个人信息</span>
-            <h1 id="profile-title">{{ displayName }}</h1>
-            <p>{{ user?.signature || '网易云音乐用户' }}</p>
-            <span v-if="(user?.vipType ?? 0) > 0" class="profile-vip"><Crown :size="13" fill="currentColor" /> VIP</span>
+    <div v-else class="profile-content">
+      <!-- 极简自然个人 Header (左右对齐、无多余大框) -->
+      <header class="profile-header">
+        <div
+          v-if="user?.backgroundUrl"
+          class="profile-header-bg"
+          :style="{ backgroundImage: `url(${user.backgroundUrl})` }"
+          aria-hidden="true"
+        />
+
+        <div class="profile-header-main">
+          <div class="profile-avatar-box">
+            <CommonAvatar :name="displayName" :src="avatarUrl" :size="84" />
+          </div>
+
+          <div class="profile-info">
+            <div class="profile-name-row">
+              <h1 id="profile-title">{{ displayName }}</h1>
+              <span v-if="(user?.vipType ?? 0) > 0" class="profile-vip-tag">VIP</span>
+              <span v-if="user?.level" class="profile-level-tag">Lv.{{ user.level }}</span>
+            </div>
+
+            <p v-if="user?.signature" class="profile-bio">
+              {{ user.signature }}
+            </p>
+
+            <div class="profile-meta-text">
+              <span>村龄 {{ villageAge }}</span>
+              <span v-if="zodiacLabel !== '未公开'">·</span>
+              <span v-if="zodiacLabel !== '未公开'">{{ zodiacLabel }}</span>
+              <span v-if="user?.location">·</span>
+              <span v-if="user?.location">{{ user.location }}</span>
+              <span>·</span>
+              <span>{{ formatCount(user?.follows) }} 关注</span>
+              <span>·</span>
+              <span>{{ formatCount(user?.followeds) }} 粉丝</span>
+              <span>·</span>
+              <span>累积听歌 {{ formatCount(user?.listenSongs) }} 首</span>
+            </div>
           </div>
         </div>
-        <div class="profile-session-actions">
-          <CommonButton variant="secondary" size="compact" :loading="busyAction === 'switch'" @click="runAccountAction('switch')">切换账户</CommonButton>
-          <CommonButton variant="ghost" size="compact" @click="logoutDialogVisible = true"><LogOut :size="14" />退出</CommonButton>
+
+        <div class="profile-header-actions">
+          <CommonButton
+            variant="secondary"
+            size="compact"
+            :loading="busyAction === 'switch'"
+            @click="runAccountAction('switch')"
+          >
+            切换账户
+          </CommonButton>
+          <CommonButton
+            variant="ghost"
+            size="compact"
+            @click="logoutDialogVisible = true"
+          >
+            退出
+          </CommonButton>
         </div>
       </header>
 
-      <section class="profile-summary" aria-label="基本资料与社交数据">
-        <div class="profile-basics">
-          <h2>基本信息</h2>
-          <dl>
-            <div><dt>昵称</dt><dd>{{ displayName }}</dd></div>
-            <div><dt>村龄</dt><dd>{{ villageAge }}</dd></div>
-            <div><dt>等级</dt><dd>Lv.{{ user?.level ?? '—' }}</dd></div>
-            <div><dt>性别</dt><dd>{{ genderLabel }}</dd></div>
-            <div><dt>星座</dt><dd>{{ zodiacLabel }}</dd></div>
-            <div><dt>IP 属地</dt><dd>{{ user?.location || '未公开' }}</dd></div>
-          </dl>
-        </div>
-        <dl class="profile-social">
-          <div><dt>关注</dt><dd>{{ formatCount(user?.follows) }}</dd></div>
-          <div><dt>粉丝</dt><dd>{{ formatCount(user?.followeds) }}</dd></div>
-          <div title="网易云公开资料接口暂不提供全站获赞总数"><dt>获赞</dt><dd>暂未公开</dd></div>
-        </dl>
-      </section>
-
-      <section class="profile-music-personality" aria-labelledby="profile-music-personality-title">
-        <header>
-          <span><Sparkles :size="16" /></span>
-          <div>
-            <h2 id="profile-music-personality-title">音乐人格画像</h2>
-            <p v-if="musicProfile.usable">v{{ musicProfile.version }} · {{ musicProfile.paused ? '已暂停更新' : '可用于推荐与小云上下文' }}</p>
-            <p v-else>只分析音乐证据支持的偏好，不推断敏感真实人格。</p>
-          </div>
-          <CommonButton variant="secondary" size="compact" @click="openPersonalizationSettings">
-            {{ musicProfile.usable ? '管理画像' : '开始分析' }}
-          </CommonButton>
-        </header>
-        <template v-if="musicProfile.usable">
-          <p class="profile-music-personality-summary">{{ musicProfile.summary }}</p>
-          <div class="profile-music-personality-insights">
-            <article v-for="insight in musicProfile.insights.slice(0, 6)" :key="insight.insightId">
-              <span>{{ insight.category }} · {{ Math.round(insight.confidence * 100) }}%</span>
-              <strong>{{ insight.label }}</strong>
-              <p>{{ insight.value }}</p>
-            </article>
-          </div>
-        </template>
-      </section>
-
-      <nav class="profile-tabs" aria-label="个人内容">
-        <button type="button" :class="{ active: activeTab === 'history' }" @click="activeTab = 'history'"><Headphones :size="15" />听歌排行</button>
-        <button type="button" :class="{ active: activeTab === 'created' }" @click="activeTab = 'created'"><ListMusic :size="15" />创建的歌单</button>
-        <button type="button" :class="{ active: activeTab === 'subscribed' }" @click="activeTab = 'subscribed'"><UserRound :size="15" />收藏的歌单</button>
+      <!-- Tab 切换 (极简纯净下划线 Tab) -->
+      <nav class="profile-tab-nav" aria-label="个人内容分类">
+        <button
+          type="button"
+          class="profile-tab-btn"
+          :class="{ active: activeTab === 'history' }"
+          @click="activeTab = 'history'"
+        >
+          听歌排行
+        </button>
+        <button
+          type="button"
+          class="profile-tab-btn"
+          :class="{ active: activeTab === 'created' }"
+          @click="activeTab = 'created'"
+        >
+          创建的歌单 <span class="profile-tab-num">{{ createdPlaylists.length }}</span>
+        </button>
+        <button
+          type="button"
+          class="profile-tab-btn"
+          :class="{ active: activeTab === 'subscribed' }"
+          @click="activeTab = 'subscribed'"
+        >
+          收藏的歌单 <span class="profile-tab-num">{{ subscribedPlaylists.length }}</span>
+        </button>
       </nav>
 
-      <section v-if="activeTab === 'history'" class="profile-tab-panel">
-        <header class="profile-panel-heading">
-          <div><span>Listening History</span><h2>累积听歌 {{ formatCount(user?.listenSongs) }} 首</h2></div>
-          <div class="profile-period-toggle" role="tablist" aria-label="听歌排行周期">
-            <button type="button" :class="{ active: historyPeriod === 'week' }" @click="historyPeriod = 'week'">最近一周</button>
-            <button type="button" :class="{ active: historyPeriod === 'all' }" @click="historyPeriod = 'all'">所有时间</button>
+      <!-- 模块一：听歌排行 -->
+      <section v-if="activeTab === 'history'" class="profile-pane">
+        <div class="profile-pane-toolbar">
+          <span class="profile-pane-count">共 {{ visibleHistory.length }} 首歌曲</span>
+          <div class="profile-period-switch">
+            <button
+              type="button"
+              :class="{ selected: historyPeriod === 'week' }"
+              @click="historyPeriod = 'week'"
+            >
+              最近一周
+            </button>
+            <button
+              type="button"
+              :class="{ selected: historyPeriod === 'all' }"
+              @click="historyPeriod = 'all'"
+            >
+              所有时间
+            </button>
           </div>
-        </header>
-        <CommonEmptyState v-if="visibleHistory.length === 0" title="暂无听歌排行" description="该账户尚未公开当前周期的听歌记录。" />
-        <div v-else class="profile-history-list">
-          <button v-for="(song, index) in visibleHistory" :key="song.id" type="button" @click="playHistorySong(song)">
-            <span class="profile-history-rank">{{ index + 1 }}</span>
-            <Cover :src="song.album?.artworkUrl" :alt="song.name" size="compact" :show-play-button="false" />
-            <span class="profile-history-copy"><strong>{{ song.name }}</strong><small>{{ song.artists.map((artist) => artist.name).join(' / ') }}</small></span>
-            <span class="profile-play-count">听过 {{ song.listeningCount ?? 0 }} 次</span>
-            <Play :size="15" fill="currentColor" />
-          </button>
+        </div>
+
+        <CommonEmptyState
+          v-if="visibleHistory.length === 0"
+          title="暂无听歌排行"
+          description="该账户暂无当前周期的听歌记录。"
+        />
+
+        <div v-else class="profile-track-table">
+          <div class="profile-track-header">
+            <span class="col-index">#</span>
+            <span class="col-title">标题</span>
+            <span class="col-album">专辑</span>
+            <span class="col-plays">听歌次数</span>
+            <span class="col-time">时长</span>
+          </div>
+
+          <CommonContextMenu
+            v-for="(song, index) in visibleHistory"
+            :key="`${song.id}-${index}`"
+            :items="getSongMenuItems(song)"
+            @select="handleSongMenuSelect(song, $event)"
+          >
+            <div
+              class="profile-track-item"
+              :class="{ 'is-active': activeTrackId === song.id }"
+              role="button"
+              tabindex="0"
+              @click="playHistorySong(song)"
+              @keydown.enter.prevent="playHistorySong(song)"
+              @keydown.space.prevent="playHistorySong(song)"
+            >
+              <!-- 序号 / 播放中图标 -->
+              <div class="col-index">
+                <span v-if="activeTrackId !== song.id" class="track-number">{{ index + 1 }}</span>
+                <Play v-else :size="12" fill="currentColor" class="playing-icon" />
+              </div>
+
+              <!-- 封面与标题歌手 -->
+              <div class="col-title">
+                <Cover
+                  :src="song.album?.artworkUrl"
+                  :alt="song.name"
+                  size="compact"
+                  :show-play-button="false"
+                />
+                <div class="track-info">
+                  <div class="track-name-row">
+                    <span class="track-name">{{ song.name }}</span>
+                    <span v-if="song.access?.badges?.includes('vip')" class="badge-vip">VIP</span>
+                  </div>
+                  <span class="track-artist">
+                    {{ song.artists.map((artist) => artist.name).join(' / ') || '未知歌手' }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- 专辑 -->
+              <div class="col-album">
+                <span class="track-album-text">{{ song.album?.name || '—' }}</span>
+              </div>
+
+              <!-- 听歌次数 -->
+              <div class="col-plays">
+                <span class="track-plays-text">{{ song.listeningCount ?? 0 }} 次</span>
+              </div>
+
+              <!-- 时长 & 快捷动作 -->
+              <div class="col-time">
+                <div class="track-hover-actions">
+                  <CommonIconButton
+                    size="compact"
+                    variant="ghost"
+                    label="加入队列"
+                    @click.stop="enqueueHistorySong(song)"
+                  >
+                    <ListPlus :size="13" />
+                  </CommonIconButton>
+                  <CommonIconButton
+                    size="compact"
+                    variant="ghost"
+                    label="收藏"
+                    @click.stop="toggleLikeSong(song)"
+                  >
+                    <Heart :size="13" />
+                  </CommonIconButton>
+                  <CommonIconButton
+                    size="compact"
+                    variant="ghost"
+                    label="添加到歌单"
+                    @click.stop="openAddToPlaylist(song)"
+                  >
+                    <FolderPlus :size="13" />
+                  </CommonIconButton>
+                </div>
+                <span class="track-duration-text">{{ formatMusicDuration(song.durationMs) }}</span>
+              </div>
+            </div>
+          </CommonContextMenu>
         </div>
       </section>
 
-      <section v-else class="profile-tab-panel">
-        <header class="profile-panel-heading"><div><span>{{ activeTab === 'created' ? 'Created Playlists' : 'Subscribed Playlists' }}</span><h2>{{ activeTab === 'created' ? '创建的歌单' : '收藏的歌单' }}</h2></div></header>
-        <div class="profile-playlist-grid">
-          <button
+      <!-- 模块二 & 三：歌单列表 -->
+      <section v-else class="profile-pane">
+        <CommonEmptyState
+          v-if="(activeTab === 'created' ? createdPlaylists : subscribedPlaylists).length === 0"
+          :title="activeTab === 'created' ? '暂无创建的歌单' : '暂无收藏的歌单'"
+          description="可在歌曲菜单或歌单页面中添加。"
+        />
+
+        <div v-else class="profile-grid">
+          <div
             v-for="playlist in activeTab === 'created' ? createdPlaylists : subscribedPlaylists"
             :key="playlist.id"
-            type="button"
+            class="profile-grid-card"
+            role="button"
+            tabindex="0"
             @click="openPlaylist(playlist)"
+            @keydown.enter.prevent="openPlaylist(playlist)"
+            @keydown.space.prevent="openPlaylist(playlist)"
           >
-            <span class="profile-playlist-cover">
-              <Cover :src="playlist.artworkUrl" :alt="playlist.name" size="feature" :show-play-button="false" />
-              <span v-if="isLikedPlaylist(playlist)" class="profile-lock"><LockKeyhole :size="13" /></span>
-            </span>
-            <strong>{{ playlist.name }}</strong>
-            <span>{{ playlist.trackCount ?? 0 }} 首 · {{ formatCount(playlist.playCount) }} 次播放</span>
-            <small>{{ formatCount(playlist.subscribedCount) }} 人收藏</small>
-          </button>
+            <div class="profile-grid-cover">
+              <Cover
+                :src="playlist.artworkUrl"
+                :alt="playlist.name"
+                size="feature"
+                :hover-effect="true"
+                :show-play-button="false"
+              />
+              <span v-if="isLikedPlaylist(playlist)" class="liked-heart-mark" title="我喜欢的音乐">
+                <Heart :size="12" fill="currentColor" />
+              </span>
+            </div>
+            <div class="profile-grid-details">
+              <h3 class="profile-grid-title" :title="playlist.name">{{ playlist.name }}</h3>
+              <p class="profile-grid-subtitle">
+                {{ playlist.trackCount ?? 0 }} 首
+                <template v-if="!playlist.owned && playlist.creator?.nickname">
+                  · by {{ playlist.creator.nickname }}
+                </template>
+              </p>
+            </div>
+          </div>
         </div>
       </section>
-    </template>
+    </div>
 
+    <!-- 添加到歌单对话框 -->
+    <AddTrackToPlaylistDialog
+      :song="playlistTarget"
+      @close="playlistTarget = null"
+    />
+
+    <!-- 退出登录确认弹窗 -->
     <CommonAlertDialog
       :visible="logoutDialogVisible"
       title="退出当前账户？"
-      description="播放队列会切换到游客空间，本地账户数据仍会保留。"
+      description="退出后播放队列将切换到游客空间，本地保存的账户数据仍会保留。"
       type="warning"
       confirm-text="退出登录"
       @cancel="logoutDialogVisible = false"
       @confirm="confirmLogout"
     />
-  </section>
+  </div>
 </template>
 
 <style scoped>
-.profile-page { display: grid; width: min(1120px, calc(100% - 36px)); gap: 28px; margin: 0 auto; padding: 40px 0 0; }
-.profile-loading { display: flex; min-height: 280px; align-items: center; justify-content: center; gap: 9px; color: var(--ncx-color-text-secondary); }
-.profile-hero { position: relative; display: flex; overflow: hidden; min-height: 340px; align-items: end; gap: 24px; padding: 32px; border-radius: 30px; color: #fff; background: color-mix(in srgb, var(--ncx-color-accent) 24%, #24242a); }
-.profile-cover, .profile-hero-scrim { position: absolute; inset: 0; }
-.profile-cover { background-position: center; background-size: cover; transform: scale(1.03); }
-.profile-hero-scrim { background: linear-gradient(180deg, rgba(0, 0, 0, .05) 20%, rgba(0, 0, 0, .82) 100%); }
-.profile-identity, .profile-session-actions { position: relative; z-index: 2; }
-.profile-identity { display: flex; min-width: 0; flex: 1; align-items: end; gap: 20px; }
-.profile-identity h1, .profile-identity p { margin: 0; }
-.profile-identity h1 { margin-top: 5px; font-size: clamp(34px, 5vw, 54px); line-height: 1; letter-spacing: -.035em; }
-.profile-identity p { max-width: 50ch; margin-top: 9px; overflow: hidden; color: rgba(255, 255, 255, .75); text-overflow: ellipsis; white-space: nowrap; }
-.profile-eyebrow { color: rgba(255, 255, 255, .7); font-size: 11px; font-weight: 750; letter-spacing: .05em; text-transform: uppercase; }
-.profile-vip { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; padding: 5px 8px; border-radius: 999px; color: #fff4c6; background: rgba(181, 133, 27, .58); backdrop-filter: blur(12px); font-size: 10px; font-weight: 800; }
-.profile-session-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
-.profile-summary { display: grid; grid-template-columns: 1.35fr .85fr; gap: 16px; }
-.profile-basics, .profile-social { margin: 0; padding: 22px; border-radius: var(--ncx-radius-xl); background: var(--ncx-color-surface); }
-.profile-basics h2 { margin: 0 0 16px; font-size: 16px; }
-.profile-basics dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; }
-.profile-basics dt, .profile-social dt { color: var(--ncx-color-text-secondary); font-size: 11px; }
-.profile-basics dd, .profile-social dd { margin: 4px 0 0; font-weight: 700; }
-.profile-social { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; text-align: center; }
-.profile-social div + div { border-left: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent); }
-.profile-social dd { font-size: 20px; }
-.profile-tabs { display: flex; gap: 7px; padding: 5px; border-radius: 999px; background: color-mix(in srgb, var(--ncx-color-surface) 80%, transparent); }
-.profile-tabs button, .profile-period-toggle button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 10px 15px; border: 0; border-radius: 999px; color: var(--ncx-color-text-secondary); background: transparent; cursor: pointer; }
-.profile-tabs button.active, .profile-tabs button:hover, .profile-period-toggle button.active, .profile-period-toggle button:hover { color: var(--ncx-color-text-primary); background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent); }
-.profile-tabs button:active, .profile-period-toggle button:active { transform: scale(.96); }
-.profile-tab-panel { min-height: 320px; padding: 24px; border-radius: var(--ncx-radius-xl); background: var(--ncx-color-surface); }
-.profile-panel-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
-.profile-panel-heading span, .profile-panel-heading h2 { margin: 0; }
-.profile-panel-heading span { color: var(--ncx-color-accent); font-size: 10px; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
-.profile-panel-heading h2 { margin-top: 4px; font-size: 22px; letter-spacing: -.015em; }
-.profile-period-toggle { display: flex; gap: 4px; padding: 3px; border-radius: 999px; background: color-mix(in srgb, var(--ncx-color-text-primary) 5%, transparent); }
-.profile-period-toggle button { padding: 8px 12px; font-size: 12px; }
-.profile-history-list { display: grid; gap: 4px; }
-.profile-history-list > button { display: grid; grid-template-columns: 32px auto minmax(0, 1fr) auto 24px; align-items: center; gap: 12px; padding: 7px 10px; border: 0; border-radius: 14px; color: inherit; text-align: left; background: transparent; cursor: pointer; }
-.profile-history-list > button:hover { background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent); }
-.profile-history-list > button:active { transform: scale(.99); }
-.profile-history-rank { color: var(--ncx-color-text-tertiary); font-size: 12px; text-align: center; }
-.profile-history-copy { display: grid; min-width: 0; }
-.profile-history-copy strong, .profile-history-copy small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.profile-history-copy strong { font-size: 13px; }
-.profile-history-copy small, .profile-play-count { margin-top: 3px; color: var(--ncx-color-text-secondary); font-size: 11px; }
-.profile-playlist-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px 18px; }
-.profile-playlist-grid > button { display: grid; min-width: 0; gap: 5px; padding: 0; border: 0; color: inherit; text-align: left; background: transparent; cursor: pointer; }
-.profile-playlist-cover { position: relative; display: block; }
-.profile-lock { position: absolute; right: 8px; bottom: 8px; display: inline-flex; width: 28px; height: 28px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: rgba(18, 18, 20, .58); backdrop-filter: blur(12px); }
-.profile-playlist-grid strong, .profile-playlist-grid > button > span:not(.profile-playlist-cover), .profile-playlist-grid small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.profile-playlist-grid strong { margin-top: 8px; font-size: 13px; }
-.profile-playlist-grid > button > span:not(.profile-playlist-cover), .profile-playlist-grid small { color: var(--ncx-color-text-secondary); font-size: 11px; }
-.profile-music-personality { display: grid; gap: 14px; padding: 20px; border: 1px solid var(--ncx-color-border); border-radius: var(--ncx-radius-xl); background: var(--ncx-color-surface); }
-.profile-music-personality > header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; }
-.profile-music-personality > header > span { display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 12px; color: var(--ncx-color-accent); background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent); }
-.profile-music-personality h2, .profile-music-personality p { margin: 0; }
-.profile-music-personality > header p, .profile-music-personality-summary { margin-top: 4px; color: var(--ncx-color-text-secondary); font-size: 12px; line-height: 1.55; }
-.profile-music-personality-insights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.profile-music-personality-insights article { display: grid; gap: 4px; padding: 12px; border-radius: 12px; background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent); }
-.profile-music-personality-insights span { color: var(--ncx-color-text-secondary); font-size: 10px; }
-.profile-music-personality-insights strong { font-size: 13px; }
-.profile-music-personality-insights p { color: var(--ncx-color-text-secondary); font-size: 11px; line-height: 1.45; }
-@media (width < 900px) { .profile-summary { grid-template-columns: 1fr; } .profile-playlist-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (width < 680px) { .profile-hero { align-items: start; flex-direction: column; } .profile-identity { align-items: start; flex-direction: column; } .profile-basics dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } .profile-music-personality > header { grid-template-columns: auto 1fr; } .profile-music-personality > header > .ncx-common-button { grid-column: 1 / -1; justify-self: start; } .profile-music-personality-insights { grid-template-columns: 1fr; } .profile-tabs { overflow-x: auto; border-radius: 18px; } .profile-tabs button { flex: 0 0 auto; } .profile-panel-heading { align-items: start; flex-direction: column; } .profile-play-count { display: none; } .profile-history-list > button { grid-template-columns: 24px auto minmax(0, 1fr) 20px; } .profile-playlist-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (prefers-reduced-motion: reduce) { .profile-page button { transition: none !important; } .profile-page button:active { transform: none; } }
+/* ========= 页面整体容器 ========= */
+
+.profile-container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 32px 0 64px;
+}
+
+.profile-state {
+  display: flex;
+  min-height: 280px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--ncx-color-text-secondary);
+  font-size: 13px;
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ========= 个人 Header ========= */
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--ncx-color-border-subtle);
+}
+
+.profile-header-main {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+  flex: 1;
+}
+
+.profile-avatar-box {
+  flex-shrink: 0;
+}
+
+.profile-info {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-name-row h1 {
+  margin: 0;
+  color: var(--ncx-color-text-primary);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.profile-vip-tag {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: #c98800;
+  background: color-mix(in srgb, #ff9f0a 14%, transparent);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+}
+
+.profile-level-tag {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--ncx-color-text-secondary);
+  background: var(--ncx-color-control-hover);
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.profile-bio {
+  max-width: 600px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--ncx-color-text-secondary);
+  font-size: 12.5px;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-meta-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  color: var(--ncx-color-text-tertiary);
+  font-size: 12px;
+}
+
+.profile-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ========= Tab 导航 ========= */
+
+.profile-tab-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid var(--ncx-color-border-subtle);
+}
+
+.profile-tab-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 0;
+  border: 0;
+  color: var(--ncx-color-text-secondary);
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.12s ease;
+}
+
+.profile-tab-btn:hover {
+  color: var(--ncx-color-text-primary);
+}
+
+.profile-tab-btn.active {
+  color: var(--ncx-color-text-primary);
+}
+
+.profile-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--ncx-color-accent);
+}
+
+.profile-tab-num {
+  color: var(--ncx-color-text-tertiary);
+  font-size: 11.5px;
+  font-weight: 500;
+}
+
+/* ========= 内容面板与工具栏 ========= */
+
+.profile-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-pane-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.profile-pane-count {
+  color: var(--ncx-color-text-tertiary);
+  font-size: 12.5px;
+}
+
+.profile-period-switch {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--ncx-radius-sm);
+  background: var(--ncx-color-control-hover);
+}
+
+.profile-period-switch button {
+  padding: 4px 10px;
+  border: 0;
+  border-radius: var(--ncx-radius-xs);
+  color: var(--ncx-color-text-secondary);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.profile-period-switch button.selected {
+  color: var(--ncx-color-text-primary);
+  background: var(--ncx-color-surface-overlay);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 6%);
+}
+
+/* ========= 听歌排行表格 ========= */
+
+.profile-track-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-track-header {
+  display: grid;
+  grid-template-columns: 36px minmax(200px, 2.5fr) minmax(140px, 1.5fr) 90px 72px;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--ncx-color-border-subtle);
+  color: var(--ncx-color-text-tertiary);
+  font-size: 11.5px;
+  font-weight: 550;
+  user-select: none;
+}
+
+.profile-track-item {
+  display: grid;
+  grid-template-columns: 36px minmax(200px, 2.5fr) minmax(140px, 1.5fr) 90px 72px;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 8px;
+  border-radius: var(--ncx-radius-md);
+  color: var(--ncx-color-text-primary);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.profile-track-item:hover {
+  background: var(--ncx-color-control-hover);
+}
+
+.profile-track-item.is-active {
+  background: var(--ncx-color-control-selected);
+}
+
+.col-index {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ncx-color-text-tertiary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.playing-icon {
+  color: var(--ncx-color-accent);
+}
+
+.col-title {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.track-info {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.track-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.track-name {
+  overflow: hidden;
+  font-size: 13.5px;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge-vip {
+  display: inline-block;
+  padding: 0 3px;
+  border: 1px solid color-mix(in srgb, #ff9f0a 50%, transparent);
+  border-radius: 3px;
+  color: #ff9f0a;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.track-artist {
+  overflow: hidden;
+  color: var(--ncx-color-text-secondary);
+  font-size: 11.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.col-album {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-album-text {
+  color: var(--ncx-color-text-tertiary);
+  font-size: 12px;
+}
+
+.col-plays {
+  color: var(--ncx-color-text-tertiary);
+  font-size: 12px;
+}
+
+.col-time {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.track-hover-actions {
+  display: none;
+  align-items: center;
+  gap: 2px;
+}
+
+.profile-track-item:hover .track-hover-actions,
+.profile-track-item:focus-within .track-hover-actions {
+  display: flex;
+}
+
+.profile-track-item:hover .track-duration-text,
+.profile-track-item:focus-within .track-duration-text {
+  display: none;
+}
+
+.track-duration-text {
+  color: var(--ncx-color-text-tertiary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ========= 歌单网格 ========= */
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px 16px;
+  padding-top: 6px;
+}
+
+.profile-grid-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  user-select: none;
+}
+
+.profile-grid-cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.liked-heart-mark {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  display: flex;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--ncx-color-accent);
+}
+
+.profile-grid-details {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profile-grid-title {
+  margin: 0;
+  overflow: hidden;
+  color: var(--ncx-color-text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-grid-subtitle {
+  margin: 0;
+  overflow: hidden;
+  color: var(--ncx-color-text-tertiary);
+  font-size: 11.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ========= 响应式 ========= */
+
+@media (width < 860px) {
+  .col-album {
+    display: none;
+  }
+
+  .profile-track-header,
+  .profile-track-item {
+    grid-template-columns: 32px minmax(160px, 1fr) 80px 64px;
+  }
+}
+
+@media (width < 640px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-header-actions {
+    width: 100%;
+  }
+
+  .col-plays {
+    display: none;
+  }
+
+  .profile-track-header,
+  .profile-track-item {
+    grid-template-columns: 28px minmax(0, 1fr) 56px;
+  }
+
+  .profile-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 14px 10px;
+  }
+}
 </style>

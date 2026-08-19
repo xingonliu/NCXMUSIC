@@ -56,9 +56,8 @@ describe('Phase 6 个性化 UI', () => {
     expect(settingsSource).toContain('聊天、长期记忆、基础资料与网易云云端数据不会被删除')
   })
 
-  it('个人信息页展示画像，并只在画像可用时装配推荐 Section', () => {
-    expect(profilePageSource).toContain('profile-music-personality-title')
-    expect(profilePageSource).toContain('musicProfile.insights.slice(0, 6)')
+  it('设置页管理画像，并在画像可用时装配发现页推荐 Section', () => {
+    expect(settingsSource).toContain('音乐人格画像')
     expect(discoverPageSource).toContain('agent.snapshot.value.personalization.usable')
     expect(discoverPageSource).toContain('title="小云为你推荐"')
   })
