@@ -7,9 +7,7 @@ import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinator'
 import {
   calculateVolumeStep,
-  isAgentRoute,
   isEditableTarget,
-  isExcludedRoute,
   isSearchRoute,
   isSliderTarget,
   usePlayerKeyboardShortcuts
@@ -116,19 +114,6 @@ describe('播放器全局快捷键单元测试', () => {
       expect(isSearchRoute({ name: 'browse', path: '/browse' })).toBe(false)
     })
 
-    it('isAgentRoute 正确识别小云 (Agent) 助手页面', () => {
-      expect(isAgentRoute({ name: 'agent', path: '/agent' })).toBe(true)
-      expect(isAgentRoute({ name: 'custom', path: '/agent/sub' })).toBe(true)
-      expect(isAgentRoute({ name: 'discover', path: '/discover' })).toBe(false)
-      expect(isAgentRoute({ name: 'search', path: '/search' })).toBe(false)
-    })
-
-    it('isExcludedRoute 综合判定搜索与小云页排除规则', () => {
-      expect(isExcludedRoute({ name: 'search', path: '/search' })).toBe(true)
-      expect(isExcludedRoute({ name: 'agent', path: '/agent' })).toBe(true)
-      expect(isExcludedRoute({ name: 'discover', path: '/discover' })).toBe(false)
-    })
-
     it('calculateVolumeStep 正确按 5% 步进并限定在 [0, 1] 范围', () => {
       expect(calculateVolumeStep(0.8, 'up')).toBe(0.85)
       expect(calculateVolumeStep(0.85, 'down')).toBe(0.8)
@@ -214,14 +199,14 @@ describe('播放器全局快捷键单元测试', () => {
       wrapper.unmount()
     })
 
-    it('在小云页即使音乐条显示也禁用快捷键', () => {
+    it('在小云页音乐条隐藏时禁用快捷键', () => {
       const toggleSpy = vi.spyOn(PlaybackCoordinator.prototype, 'toggle').mockResolvedValue(undefined)
       const prevSpy = vi.spyOn(PlaybackCoordinator.prototype, 'previous').mockResolvedValue(undefined)
       const nextSpy = vi.spyOn(PlaybackCoordinator.prototype, 'next').mockResolvedValue(undefined)
       const volSpy = vi.spyOn(PlaybackCoordinator.prototype, 'setVolume')
 
       const Host = createShortcutTestHost({
-        showPlayerBar: true,
+        showPlayerBar: false,
         isImmersivePlayerOpen: false,
         routeName: 'agent',
         routePath: '/agent'
@@ -242,11 +227,11 @@ describe('播放器全局快捷键单元测试', () => {
       wrapper.unmount()
     })
 
-    it('在沉浸歌词页中（哪怕底层在搜索页或小云页）快捷键正常生效', () => {
+    it('在沉浸歌词页中即使底层音乐条隐藏也正常启用快捷键', () => {
       const toggleSpy = vi.spyOn(PlaybackCoordinator.prototype, 'toggle').mockResolvedValue(undefined)
 
       const Host = createShortcutTestHost({
-        showPlayerBar: true,
+        showPlayerBar: false,
         isImmersivePlayerOpen: true,
         routeName: 'agent',
         routePath: '/agent'

@@ -6,6 +6,7 @@ import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinat
 import MusicProgressBar from '../../src/renderer/features/music/components/MusicProgressBar.vue'
 import PlayerBar from '../../src/renderer/features/music/components/PlayerBar.vue'
 import playerBarSource from '../../src/renderer/features/music/components/PlayerBar.vue?raw'
+import routerSource from '../../src/renderer/app/router.ts?raw'
 import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
 import { disposePlayer, usePlayer, usePlayerRuntime } from '../../src/renderer/features/music/use-player'
 
@@ -61,19 +62,16 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     expect(playerBarSource).not.toContain('backdrop-filter: none !important')
   })
 
-  it('进入小云页时仅收窄右锚定外壳并淡出非封面内容', () => {
-    expect(playerBarSource).toContain("['player-bar-glass', { 'is-compact': isAgentPage }]")
-    expect(playerBarSource).toContain('.player-bar-glass.is-compact')
-    expect(playerBarSource).toContain('right 280ms cubic-bezier(0.22, 1, 0.36, 1)')
-    expect(playerBarSource).toContain('width 280ms cubic-bezier(0.22, 1, 0.36, 1)')
-    expect(playerBarSource).not.toContain("transition: 'all")
-    expect(playerBarSource).not.toContain('width: 0 !important')
-    expect(playerBarSource).not.toContain('.player-track.is-compact')
+  it('小云页直接隐藏 PlayerBar 且组件不保留页面特判与收缩动画', () => {
+    expect(routerSource).toMatch(/path: '\/agent'[\s\S]*?playerBar: 'hide'[\s\S]*?keepAlive: true/)
+    expect(playerBarSource).not.toContain('isAgentPage')
+    expect(playerBarSource).not.toContain('is-compact')
+    expect(playerBarSource).not.toContain("from 'vue-router'")
   })
 
-  it('PlayerBar 页面形态切换尊重系统减少动态效果设置', () => {
+  it('PlayerBar 加载脉冲尊重系统减少动态效果设置', () => {
     expect(playerBarSource).toContain('@media (prefers-reduced-motion: reduce)')
-    expect(playerBarSource).toMatch(/\.player-bar-glass,[\s\S]*?\.player-bar-content[\s\S]*?transition: none;/)
+    expect(playerBarSource).toMatch(/@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.player-busy[\s\S]*?animation: none;/)
   })
 
   it('支持在设置中动态切换深色/浅色模式时更新 PlayerBar 内阴影变量', () => {

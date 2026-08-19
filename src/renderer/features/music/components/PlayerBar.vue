@@ -20,7 +20,6 @@ import {
   VolumeX
 } from '@lucide/vue'
 import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
 
 import type { PlayMode } from '../../../../domains/player/types'
 import {
@@ -38,9 +37,6 @@ import MusicProgressBar from './MusicProgressBar.vue'
 import QueueDrawer from './QueueDrawer.vue'
 
 // ========= 变量 =========
-
-/** 当前路由对象，用于监听当前所属页面。 */
-const route = useRoute()
 
 /** 播放器组合式接口，只发送命令并读取快照。 */
 const player = usePlayer()
@@ -62,9 +58,6 @@ const text = zhCN.player
 
 /** 播放队列抽屉开闭状态。 */
 const isQueueOpen = ref<boolean>(false)
-
-/** 是否处于小云 (AI 助手) 页面。 */
-const isAgentPage = computed<boolean>(() => route?.name === 'agent')
 
 /** 当前曲目摘要 */
 const track = computed(() => snapshot.value.playback.track)
@@ -157,7 +150,7 @@ function openImmersivePlayer(event: MouseEvent): void {
     :aria-hidden="isImmersivePlayerOpen ? 'true' : undefined"
   >
     <LiquidGlass
-      :container-class="['player-bar-glass', { 'is-compact': isAgentPage }]"
+      container-class="player-bar-glass"
       role="contentinfo"
       :aria-label="text.regionLabel"
       :radius="28"
@@ -172,10 +165,7 @@ function openImmersivePlayer(event: MouseEvent): void {
       :lightness="72"
       :alpha="0.9"
     >
-      <div
-        class="player-bar-content"
-        :class="{ 'is-compact': isAgentPage }"
-      >
+      <div class="player-bar-content">
         <!-- 曲目信息 -->
         <div
           class="player-track"
@@ -380,15 +370,7 @@ function openImmersivePlayer(event: MouseEvent): void {
   height: 56px;
   color: var(--ncx-color-text-primary);
   isolation: isolate;
-  transition:
-    right 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    width 280ms cubic-bezier(0.22, 1, 0.36, 1);
   -webkit-app-region: no-drag;
-}
-
-.player-bar-glass.is-compact {
-  right: 28px;
-  width: 56px;
 }
 
 :deep(.player-bar-glass.effect),
@@ -409,36 +391,6 @@ function openImmersivePlayer(event: MouseEvent): void {
   row-gap: 0;
   align-items: center;
   overflow: hidden;
-  transition: padding 280ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.player-bar-content.is-compact {
-  padding: 8px;
-  min-height: 56px;
-  height: 56px;
-}
-
-.player-bar-content .player-track-info,
-.player-bar-content .player-transport,
-.player-bar-content .player-progress,
-.player-bar-content .player-output {
-  opacity: 1;
-  visibility: visible;
-  transition:
-    opacity 140ms ease-out 100ms,
-    visibility 0s linear;
-}
-
-.player-bar-content.is-compact .player-track-info,
-.player-bar-content.is-compact .player-transport,
-.player-bar-content.is-compact .player-progress,
-.player-bar-content.is-compact .player-output {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition:
-    opacity 100ms ease-out,
-    visibility 0s linear 100ms;
 }
 
 .player-track {
@@ -661,15 +613,6 @@ function openImmersivePlayer(event: MouseEvent): void {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .player-bar-glass,
-  .player-bar-content,
-  .player-bar-content .player-track-info,
-  .player-bar-content .player-transport,
-  .player-bar-content .player-progress,
-  .player-bar-content .player-output {
-    transition: none;
-  }
-
   .player-busy {
     animation: none;
   }

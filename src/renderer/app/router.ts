@@ -147,7 +147,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       pageLevel: 1,
       title: 'routes.agent',
-      playerBar: 'show',
+      playerBar: 'hide',
       keepAlive: true
     }
   },
