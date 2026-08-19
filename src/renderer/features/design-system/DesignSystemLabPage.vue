@@ -225,13 +225,17 @@ function showToast(): void {
   ]
   const type: 'success' | 'info' | 'warning' | 'danger' =
     types[(toastCounter - 1) % types.length] ?? 'info'
+  const sampleMessages: Record<string, string> = {
+    success: '已收藏当前歌曲到我的歌单',
+    info: '播放列表已同步至最新版本',
+    warning: '网络连接稍有延迟，正在重试',
+    danger: '未能解析当前音源链接，请稍后'
+  }
   toast.showToast({
-    title: `系统通知 #${toastCounter}`,
-    message: `按顺序堆叠展示，可随时点击右侧关闭按钮移除（${type}）`,
+    message: `${sampleMessages[type]} (#${toastCounter})`,
     type,
-    duration: 4500
+    duration: 5000
   })
-  toastVisible.value = true
   recordAction(`Toast #${toastCounter} (${type}) 已触发`)
 }
 

@@ -166,13 +166,13 @@ describe('CommonContextMenu macOS Design System', () => {
 })
 
 describe('CommonToast macOS Design System', () => {
-  it('正确渲染 Toast 浮窗与 Teleport 结构', async () => {
+  it('正确渲染 Toast 浮窗与 Teleport 结构，仅展示 desc 正文而无 title', async () => {
+    document.body.innerHTML = ''
     const wrapper = mount(CommonToast, {
       attachTo: document.body,
       props: {
         visible: true,
         type: 'success',
-        title: '操作成功',
         message: '已经成功提交更新'
       }
     })
@@ -181,17 +181,19 @@ describe('CommonToast macOS Design System', () => {
     const toastEl = document.querySelector('.ncx-common-toast')
     expect(toastEl).not.toBeNull()
     expect(toastEl?.classList.contains('ncx-common-toast-success')).toBe(true)
-    expect(toastEl?.querySelector('.ncx-common-toast-title')?.textContent).toBe('操作成功')
+    expect(toastEl?.querySelector('.ncx-common-toast-title')).toBeNull()
     expect(toastEl?.querySelector('.ncx-common-toast-message')?.textContent).toBe('已经成功提交更新')
     wrapper.unmount()
+    document.body.innerHTML = ''
   })
 
   it('点击关闭按钮触发 close 事件', async () => {
+    document.body.innerHTML = ''
     const wrapper = mount(CommonToast, {
       attachTo: document.body,
       props: {
         visible: true,
-        title: '测试 Toast'
+        message: '测试 Toast'
       }
     })
     await nextTick()
@@ -203,6 +205,7 @@ describe('CommonToast macOS Design System', () => {
 
     expect(wrapper.emitted('close')).toHaveLength(1)
     wrapper.unmount()
+    document.body.innerHTML = ''
   })
 })
 

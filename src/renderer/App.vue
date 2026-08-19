@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import AppShell from './design-system/patterns/AppShell.vue'
 import './design-system/patterns/app-shell.css'
 import {
   dismissToast,
-  pauseToastTimer,
-  resumeToastTimer,
-  toastList
+  pauseAllToastTimers,
+  resumeAllToastTimers,
+  toastList,
+  type ToastItem
 } from './design-system/use-toast'
 import ImmersiveLyricsPage from './features/music/ImmersiveLyricsPage.vue'
 import AudioHost from './features/music/components/AudioHost.vue'
@@ -33,6 +34,110 @@ const isImmersivePlayerVisible = immersivePlayer.isVisible
 
 /** 当前页面是否展示通用 PlayerBar。 */
 const showPlayerBar = computed<boolean>(() => route.meta.playerBar === 'show')
+
+// ========= Toast 堆叠与展开交互 =========
+
+/** 是否正在悬停 Toast 通知区域。 */
+const isToastHovered = ref(false)
+
+/** 逆序排列的 Toast 列表，让最新生成的 Toast 始终处于最前（index 0）。 */
+const orderedToasts = computed<ToastItem[]>(() => [...toastList.value].reverse())
+
+/** 动态记录各 Toast 卡片实测渲染高度。 */
+const toastHeights = ref<Record<string, number>>({})
+
+/** 注册/解注册 Toast 元素并测量高度。 */
+function setToastEl(id: string, el: unknown): void {
+  if (el && el instanceof HTMLElement) {
+    toastHeights.value[id] = el.offsetHeight
+  } else {
+    delete toastHeights.value[id]
+  }
+}
+
+/** 鼠标移入 Toast 容器：展开所有通知并暂停所有计时器。 */
+function handleToastContainerEnter(): void {
+  isToastHovered.value = true
+  pauseAllToastTimers()
+}
+
+/** 鼠标移出 Toast 容器：恢复折叠堆叠并重置计时器。 */
+function handleToastContainerLeave(): void {
+  isToastHovered.value = false
+  resumeAllToastTimers()
+}
+
+/** 计算各 Toast 卡片的位移、缩放与可见性。 */
+function getToastStyle(toast: ToastItem, index: number) {
+  if (!isToastHovered.value) {
+    // 默认折叠堆叠状态：最多显示 3 层（index 0 为正面卡片，index 1/2 露出底部边缘）
+    if (index === 0) {
+      return {
+        transform: 'translateX(-50%) translateY(0px) scale(1)',
+        opacity: '1',
+        zIndex: 30,
+        pointerEvents: 'auto' as const
+      }
+    }
+    if (index === 1) {
+      return {
+        transform: 'translateX(-50%) translateY(10px) scale(0.94)',
+        opacity: '0.92',
+        zIndex: 20,
+        pointerEvents: 'none' as const
+      }
+    }
+    if (index === 2) {
+      return {
+        transform: 'translateX(-50%) translateY(20px) scale(0.88)',
+        opacity: '0.8',
+        zIndex: 10,
+        pointerEvents: 'none' as const
+      }
+    }
+    // 超过 3 层在折叠时隐藏
+    return {
+      transform: 'translateX(-50%) translateY(24px) scale(0.85)',
+      opacity: '0',
+      zIndex: 0,
+      pointerEvents: 'none' as const
+    }
+  }
+
+  // 鼠标悬浮展开状态：向下自然展开所有通知
+  let offsetY = 0
+  for (let i = 0; i < index; i++) {
+    const prev = orderedToasts.value[i]
+    const h = prev ? (toastHeights.value[prev.id] ?? 54) : 54
+    offsetY += h + 8 // 8px 间距
+  }
+
+  return {
+    transform: `translateX(-50%) translateY(${offsetY}px) scale(1)`,
+    opacity: '1',
+    zIndex: 30 - index,
+    pointerEvents: 'auto' as const
+  }
+}
+
+/** 计算容器总高度，确保悬浮区域平滑包裹展开卡片。 */
+const toastContainerHeight = computed<string>(() => {
+  const len = orderedToasts.value.length
+  if (len === 0) return '0px'
+  if (!isToastHovered.value) {
+    if (len === 1) return '56px'
+    if (len === 2) return '66px'
+    return '76px'
+  }
+  let total = 0
+  for (let i = 0; i < len; i++) {
+    const t = orderedToasts.value[i]
+    const h = t ? (toastHeights.value[t.id] ?? 54) : 54
+    total += h
+    if (i > 0) total += 8
+  }
+  return `${total}px`
+})
 
 // ========= 快捷键注册 =========
 
@@ -84,23 +189,37 @@ watch(
     </div>
   </Transition>
 
-  <!-- 全局轻提示 Toast 多通知堆叠容器（按触发顺序向上自然排列并支持单条关闭） -->
+  <!-- 全局轻提示 Toast 多通知堆叠容器（最多堆叠 3 条，Hover 展开全部） -->
   <Teleport to="body">
     <div
-      v-if="toastList.length > 0"
-      class="ncx-common-toast-container"
+      v-if="orderedToasts.length > 0"
+      :class="[
+        'ncx-common-toast-container',
+        { 'ncx-common-toast-container--expanded': isToastHovered }
+      ]"
+      :style="{ height: toastContainerHeight }"
       role="region"
       aria-label="系统通知"
+      @mouseenter="handleToastContainerEnter"
+      @mouseleave="handleToastContainerLeave"
     >
       <TransitionGroup name="ncx-toast-stack">
         <div
-          v-for="toast in toastList"
+          v-for="(toast, index) in orderedToasts"
           :key="toast.id"
-          :class="['ncx-common-toast', `ncx-common-toast-${toast.type}`]"
+          :ref="(el) => setToastEl(toast.id, el)"
+          :class="[
+            'ncx-common-toast',
+            `ncx-common-toast-${toast.type}`,
+            {
+              'ncx-common-toast--stacked': !isToastHovered && index > 0,
+              'ncx-common-toast--expanded': isToastHovered
+            }
+          ]"
+          :style="getToastStyle(toast, index)"
           role="status"
-          @mouseenter="pauseToastTimer(toast.id)"
-          @mouseleave="resumeToastTimer(toast.id)"
         >
+          <!-- 状态图标 -->
           <div :class="['ncx-common-toast-icon', `ncx-common-toast-icon-${toast.type}`]">
             <svg
               viewBox="0 0 24 24"
@@ -133,10 +252,13 @@ watch(
               </template>
             </svg>
           </div>
+
+          <!-- 仅显示 desc 描述正文，不显示标题 -->
           <div class="ncx-common-toast-content">
-            <strong class="ncx-common-toast-title">{{ toast.title }}</strong>
-            <span v-if="toast.message" class="ncx-common-toast-message">{{ toast.message }}</span>
+            <span class="ncx-common-toast-message">{{ toast.message }}</span>
           </div>
+
+          <!-- 关闭按钮 -->
           <button
             type="button"
             class="ncx-common-toast-close"

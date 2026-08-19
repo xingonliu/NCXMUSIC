@@ -1761,7 +1761,7 @@ export const CommonSwitch = defineComponent({
           h('span', { class: 'ncx-common-switch-track' }, [
             h('span', { class: 'ncx-common-switch-knob' })
           ]),
-          labelNode ? h('strong', { class: 'ncx-common-switch-label' }, labelNode) : null
+          labelNode ? h('span', { class: 'ncx-common-switch-label' }, labelNode) : null
         ]
       )
     }
@@ -3035,13 +3035,13 @@ export const CommonInlineMessage = defineComponent({
 
 // ========= 浮层组件 (macOS / WWDC25 视觉与交互规范) =========
 
-/** 通用组件Toast：统一 Toast。完全按照 macOS Notification / HUD 浮窗规范重构。 */
+/** 通用组件Toast：统一 Toast。完全按照 macOS Capsule / HUD 浮窗规范重构。 */
 export const CommonToast = defineComponent({
   name: '通用组件Toast',
   props: {
     visible: Boolean,
     type: messageTypeProp,
-    title: { type: String, required: true },
+    title: { type: String, default: '' },
     message: { type: String, default: '' },
     duration: { type: Number, default: 4000 },
     closable: { type: Boolean, default: true }
@@ -3139,8 +3139,7 @@ export const CommonToast = defineComponent({
             }, [
               renderToastIcon(),
               h('div', { class: 'ncx-common-toast-content' }, [
-                h('strong', { class: 'ncx-common-toast-title' }, props.title),
-                props.message ? h('span', { class: 'ncx-common-toast-message' }, props.message) : null
+                h('span', { class: 'ncx-common-toast-message' }, props.message || props.title)
               ]),
               props.closable
                 ? h('button', {

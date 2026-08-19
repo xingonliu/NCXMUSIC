@@ -10,23 +10,23 @@ export interface ToastOptions {
   /** Toast 提示消息文本。 */
   message: string
   /** Toast 提示类型。 */
-  type?: ToastType
+  type?: ToastType | undefined
   /** Toast 提示标题。 */
-  title?: string
+  title?: string | undefined
   /** Toast 自动关闭延迟时长（毫秒），传 0 表示不自动关闭。 */
-  duration?: number
+  duration?: number | undefined
 }
 
 /** 内部定义的激活 Toast 结构。 */
 export interface ToastItem {
   /** Toast 唯一标识 UUID。 */
   id: string
-  /** Toast 正文消息。 */
+  /** Toast 正文消息（描述内容）。 */
   message: string
   /** Toast 类型。 */
   type: ToastType
-  /** Toast 标题。 */
-  title: string
+  /** Toast 可选标题（向后兼容）。 */
+  title?: string | undefined
   /** Toast 关闭延迟时长 (ms)。 */
   duration: number
   /** 创建时间戳。 */
@@ -47,7 +47,7 @@ export const activeToast = computed<ToastItem | null>(() => {
 /** 每个 Toast ID 对应的独立自动关闭定时器映射表。 */
 const timerMap = new Map<string, ReturnType<typeof setTimeout>>()
 
-/** 最大允许同时堆叠显示的 Toast 数量。 */
+/** 最大允许同时入队堆叠记录的 Toast 数量。 */
 const MAX_TOAST_STACK = 5
 
 // ========= 函数 =========
@@ -66,37 +66,20 @@ export function showToast(
   let item: ToastItem
 
   if (typeof optionsOrMessage === 'string') {
-    const defaultTitle =
-      type === 'danger'
-        ? '请求失败'
-        : type === 'warning'
-          ? '操作提示'
-          : type === 'success'
-            ? '操作成功'
-            : '提示'
     item = {
       id,
       message: optionsOrMessage,
       type,
-      title: defaultTitle,
       duration: 3500,
       createdAt: Date.now()
     }
   } else {
     const itemType = optionsOrMessage.type ?? 'info'
-    const defaultTitle =
-      itemType === 'danger'
-        ? '请求失败'
-        : itemType === 'warning'
-          ? '操作提示'
-          : itemType === 'success'
-            ? '操作成功'
-            : '提示'
     item = {
       id,
       message: optionsOrMessage.message,
       type: itemType,
-      title: optionsOrMessage.title ?? defaultTitle,
+      ...(optionsOrMessage.title !== undefined ? { title: optionsOrMessage.title } : {}),
       duration: optionsOrMessage.duration ?? 3500,
       createdAt: Date.now()
     }
@@ -157,9 +140,9 @@ export function pauseToastTimer(id: string): void {
 /**
  * 恢复指定 Toast 的自动关闭倒计时（用户移出后）。
  * @param id Toast 唯一 ID
- * @param remainingDuration 剩余时长，默认 2000ms
+ * @param remainingDuration 剩余时长，默认 2500ms
  */
-export function resumeToastTimer(id: string, remainingDuration = 2000): void {
+export function resumeToastTimer(id: string, remainingDuration = 2500): void {
   pauseToastTimer(id)
   const target = toastList.value.find((t) => t.id === id)
   if (target && target.duration > 0) {
@@ -168,6 +151,32 @@ export function resumeToastTimer(id: string, remainingDuration = 2000): void {
     }, remainingDuration)
     timerMap.set(id, timer)
   }
+}
+
+/**
+ * 暂停所有 Toast 的倒计时（鼠标移入 Toast 容器展开时）。
+ */
+export function pauseAllToastTimers(): void {
+  for (const timer of timerMap.values()) {
+    clearTimeout(timer)
+  }
+  timerMap.clear()
+}
+
+/**
+ * 恢复所有 Toast 的倒计时（鼠标移出 Toast 容器折叠后）。
+ * @param remainingDuration 恢复时的统一展示时长，默认 2500ms
+ */
+export function resumeAllToastTimers(remainingDuration = 2500): void {
+  pauseAllToastTimers()
+  toastList.value.forEach((item) => {
+    if (item.duration > 0) {
+      const timer = setTimeout(() => {
+        dismissToast(item.id)
+      }, remainingDuration)
+      timerMap.set(item.id, timer)
+    }
+  })
 }
 
 /** Composable 钩子函数入口。 */
@@ -179,13 +188,15 @@ export function useToast() {
     dismissToast,
     pauseToastTimer,
     resumeToastTimer,
-    info: (message: string, title?: string) =>
-      showToast({ message, type: 'info', ...(title ? { title } : {}) }),
-    success: (message: string, title?: string) =>
-      showToast({ message, type: 'success', ...(title ? { title } : {}) }),
-    warning: (message: string, title?: string) =>
-      showToast({ message, type: 'warning', ...(title ? { title } : {}) }),
-    danger: (message: string, title?: string) =>
-      showToast({ message, type: 'danger', ...(title ? { title } : {}) })
+    pauseAllToastTimers,
+    resumeAllToastTimers,
+    info: (message: string, duration?: number) =>
+      showToast({ message, type: 'info', ...(duration !== undefined ? { duration } : {}) }),
+    success: (message: string, duration?: number) =>
+      showToast({ message, type: 'success', ...(duration !== undefined ? { duration } : {}) }),
+    warning: (message: string, duration?: number) =>
+      showToast({ message, type: 'warning', ...(duration !== undefined ? { duration } : {}) }),
+    danger: (message: string, duration?: number) =>
+      showToast({ message, type: 'danger', ...(duration !== undefined ? { duration } : {}) })
   }
 }

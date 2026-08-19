@@ -7,6 +7,7 @@ import {
   CommonBadge,
   CommonCard,
   CommonSeparator,
+  CommonSwitch,
   CommonTag,
   CommonTooltip
 } from '../../src/renderer/design-system/components'
@@ -115,6 +116,37 @@ describe('macOS HIG & WWDC25 规范组件测试', () => {
 
       expect(wrapper.find('.ncx-common-tooltip-panel').exists()).toBe(true)
       expect(wrapper.find('.ncx-common-tooltip-content').text()).toBe('Help text')
+    })
+  })
+
+  describe('CommonSwitch (开关)', () => {
+    it('正确生成开关结构、无障碍属性及尺寸 Class', async () => {
+      const wrapper = mount(CommonSwitch, {
+        props: { modelValue: true, size: 'default', label: '启用快捷键' }
+      })
+      expect(wrapper.attributes('role')).toBe('switch')
+      expect(wrapper.attributes('aria-checked')).toBe('true')
+      expect(wrapper.classes()).toContain('ncx-common-switch--on')
+      expect(wrapper.classes()).toContain('ncx-common-switch--default')
+      expect(wrapper.find('.ncx-common-switch-track').exists()).toBe(true)
+      expect(wrapper.find('.ncx-common-switch-knob').exists()).toBe(true)
+      expect(wrapper.find('.ncx-common-switch-label').text()).toBe('启用快捷键')
+
+      await wrapper.trigger('click')
+      expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([false])
+      expect(wrapper.emitted('change')?.[0]).toEqual([false])
+    })
+
+    it('disabled 状态下不触发状态切换', async () => {
+      const wrapper = mount(CommonSwitch, {
+        props: { modelValue: false, disabled: true, label: '已禁用' }
+      })
+      expect(wrapper.classes()).toContain('ncx-common-switch--disabled')
+      expect(wrapper.attributes('disabled')).toBeDefined()
+
+      await wrapper.trigger('click')
+      expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+      expect(wrapper.emitted('change')).toBeFalsy()
     })
   })
 })
