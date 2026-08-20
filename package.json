@@ -1,5 +1,6 @@
 {
   "name": "ncxmusic",
+  "productName": "Ncxmusic",
   "version": "1.0.0-beta.1",
   "private": true,
   "description": "Ncxmusic Agent-native desktop music client",
@@ -83,6 +84,7 @@
   "build": {
     "appId": "io.github.ncxmusic.app",
     "productName": "Ncxmusic",
+    "executableName": "Ncxmusic",
     "directories": {
       "output": "release",
       "buildResources": "build"
@@ -98,6 +100,8 @@
       "node_modules/uiohook-napi/**/*",
       "node_modules/sherpa-onnx-node/**/*",
       "node_modules/sherpa-onnx-*/**/*",
+      "node_modules/ajv/**/*",
+      "node_modules/ajv-formats/**/*",
       "out/main/**/*"
     ],
     "win": {
@@ -105,6 +109,16 @@
       "target": [
         "nsis"
       ]
+    },
+    "nsis": {
+      "artifactName": "Ncxmusic Setup ${version}.${ext}",
+      "installerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "shortcutName": "Ncxmusic",
+      "uninstallDisplayName": "Ncxmusic ${version}",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     },
     "mac": {
       "icon": "build/icon.icns",

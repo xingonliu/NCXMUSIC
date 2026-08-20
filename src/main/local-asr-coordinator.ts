@@ -244,7 +244,7 @@ export class LocalAsrCoordinator {
   private spawnHost(modelId: VoiceLocalSessionStart['modelId']): void {
     /** 新子进程。 */
     const host = utilityProcess.fork(this.options.entryPath, [], {
-      serviceName: 'NcxMusic Local Speech Recognition',
+      serviceName: 'Ncxmusic Local Speech Recognition',
       stdio: 'pipe'
     })
     this.host = host

@@ -193,7 +193,7 @@ export class ExtensionCoordinator {
     } else if (request.operation === 'mcp.delete') {
       this.mcp.delete(request.serverId)
       delete this.observations[request.serverId]
-      message = '已删除 NcxMusic 中的 MCP 配置和凭据；未触碰 Server 外部数据。'
+      message = '已删除 Ncxmusic 中的 MCP 配置和凭据；未触碰 Server 外部数据。'
     } else if (request.operation === 'mcp.export') {
       exportDocument = this.mcp.exportDocument()
       message = '已生成不含 Secret 的可逆配置文档。'

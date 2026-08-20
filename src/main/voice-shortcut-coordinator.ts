@@ -204,7 +204,7 @@ export class VoiceShortcutCoordinator {
 
     /** 候选 Host，只有报告 ready 后才替换旧 Host。 */
     const candidate = utilityProcess.fork(this.options.hostEntryPath, [], {
-      serviceName: 'NcxMusic Input Hook',
+      serviceName: 'Ncxmusic Input Hook',
       stdio: 'pipe'
     })
     candidate.stdout?.on('data', (chunk: Buffer | string) => {

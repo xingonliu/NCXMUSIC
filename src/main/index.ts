@@ -84,10 +84,13 @@ import { LocalAsrCoordinator } from './local-asr-coordinator'
 import { VoiceSettingsCoordinator } from './voice-settings-coordinator'
 import { ShellSettingsCoordinator } from './shell-settings-coordinator'
 import {
+  APPLICATION_DISPLAY_NAME,
   createMainWindowOptions,
+  createWindowsAppDetails,
   createWindowSnapshot,
   resolveCloseWindowAction,
-  showMainWindow
+  showMainWindow,
+  WINDOWS_APP_USER_MODEL_ID
 } from './window-chrome'
 
 const isSmokeTest = process.env['NCX_SMOKE_TEST'] === '1'
@@ -251,9 +254,28 @@ function localAsrEntryPath(): string {
   return join(__dirname, 'localAsr.js')
 }
 
-/** 解析应用程序主图标绝对路径，统一指向 resources/icon.png。 */
+/** 解析应用程序主图标绝对路径，Windows 使用多尺寸 ICO，其余平台使用 PNG。 */
 function appIconEntryPath(): string {
-  return join(__dirname, '../../resources/icon.png')
+  /** 当前平台适用的应用图标文件名。 */
+  const iconFileName = process.platform === 'win32' ? 'icon.ico' : 'icon.png'
+  return join(__dirname, '../../resources', iconFileName)
+}
+
+/** 解析 Windows 从任务栏重新启动当前应用时执行的完整命令。 */
+function windowsRelaunchCommand(): string {
+  if (app.isPackaged) return `"${process.execPath}"`
+  return `"${process.execPath}" "${app.getAppPath()}"`
+}
+
+/** 将 Ncxmusic 名称、AppUserModelID 与图标写入指定 Windows 窗口的任务栏身份。 */
+function applyWindowsWindowIdentity(window: BrowserWindow): void {
+  if (process.platform !== 'win32') return
+  /** 已打包应用优先使用 EXE 内嵌图标，开发环境使用工作区 ICO。 */
+  const taskbarIconPath = app.isPackaged ? process.execPath : appIconEntryPath()
+  window.setAppDetails(createWindowsAppDetails({
+    iconPath: taskbarIconPath,
+    relaunchCommand: windowsRelaunchCommand()
+  }))
 }
 
 function createSupervisor(): UtilitySupervisor {
@@ -268,7 +290,7 @@ function createSupervisor(): UtilitySupervisor {
           NCXMUSIC_DATA_ROOT: resolveNcxDataRoot(app.getPath('userData')),
           NCXMUSIC_CACHE_ROOT: resolveNcxCacheRoot(app.getPath('sessionData'))
         },
-        serviceName: 'NcxMusic Runtime',
+        serviceName: 'Ncxmusic Runtime',
         stdio: 'pipe'
       })
     },
@@ -491,6 +513,7 @@ function ensureVoiceOverlayWindow(): BrowserWindow {
   const window = new BrowserWindow({
     width: VOICE_OVERLAY_WIDTH,
     height: VOICE_OVERLAY_HEIGHT,
+    icon: appIconEntryPath(),
     show: false,
     frame: false,
     transparent: true,
@@ -506,6 +529,7 @@ function ensureVoiceOverlayWindow(): BrowserWindow {
       nodeIntegration: false
     }
   })
+  applyWindowsWindowIdentity(window)
   voiceOverlayWindow = window
   window.setAlwaysOnTop(true, 'floating')
   if (process.platform === 'darwin') window.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: false })
@@ -1245,6 +1269,7 @@ async function createMainWindow(): Promise<void> {
       iconPath: appIconEntryPath()
     })
   )
+  applyWindowsWindowIdentity(window)
   mainWindow = window
 
   window.on('close', (event) => {
@@ -1296,8 +1321,11 @@ async function createMainWindow(): Promise<void> {
 // ========= 应用主入口与单实例锁 =========
 
 /** 设置应用跨平台权威显示名称。 */
-app.name = 'Ncxmusic'
-app.setName('Ncxmusic')
+app.name = APPLICATION_DISPLAY_NAME
+app.setName(APPLICATION_DISPLAY_NAME)
+
+/** Windows 在创建任何窗口前固定通知、任务栏与快捷方式归组标识。 */
+if (process.platform === 'win32') app.setAppUserModelId(WINDOWS_APP_USER_MODEL_ID)
 
 const hasSingleInstanceLock = app.requestSingleInstanceLock()
 
@@ -1313,8 +1341,6 @@ if (!hasSingleInstanceLock) {
 
   app.whenReady()
     .then(async () => {
-      /** Windows 原生通知使用稳定应用标识归组并支持点击回到主窗口。 */
-      if (process.platform === 'win32') app.setAppUserModelId('io.github.ncxmusic.app')
       if (process.platform === 'darwin' && app.dock) {
         try {
           app.dock.setIcon(appIconEntryPath())

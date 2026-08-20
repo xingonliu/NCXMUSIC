@@ -37,7 +37,7 @@ function redact(value) {
 
 function packagedExecutable(packagedRoot) {
   if (process.platform === 'win32') {
-    const executable = join(packagedRoot, 'win-unpacked', 'NcxMusic.exe')
+    const executable = join(packagedRoot, 'win-unpacked', 'Ncxmusic.exe')
     if (existsSync(executable)) return executable
   }
   if (process.platform === 'darwin') {
@@ -45,10 +45,10 @@ function packagedExecutable(packagedRoot) {
       const executable = join(
         packagedRoot,
         candidate,
-        'NcxMusic.app',
+        'Ncxmusic.app',
         'Contents',
         'MacOS',
-        'NcxMusic'
+        'Ncxmusic'
       )
       if (existsSync(executable)) return executable
     }
@@ -89,7 +89,7 @@ delete environment.ELECTRON_RUN_AS_NODE
 
 console.info(`T-02 ${scenario} (${target})；profile=${profileName}`)
 if (scenario === 'interactive') {
-  console.info('请只在网易云官方登录窗口内完成交互；NcxMusic 不收集账号或密码。')
+  console.info('请只在网易云官方登录窗口内完成交互；Ncxmusic 不收集账号或密码。')
 }
 
 const child = spawn(command, args, {

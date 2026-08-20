@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  APPLICATION_DISPLAY_NAME,
   createMainWindowOptions,
+  createWindowsAppDetails,
   createWindowSnapshot,
   resolveCloseWindowAction,
-  showMainWindow
+  showMainWindow,
+  WINDOWS_APP_USER_MODEL_ID
 } from '../../src/main/window-chrome'
 
 // ========= 变量 =========
@@ -54,6 +57,22 @@ describe('WindowChrome options', () => {
     expect(options.titleBarStyle).toBeUndefined()
     expect(options.trafficLightPosition).toBeUndefined()
     expect(options.icon).toBe('/path/to/icon.png')
+  })
+
+  it('为 Windows 任务栏与重启入口生成完整 Ncxmusic 身份', () => {
+    /** Windows 任务栏应用详情。 */
+    const details = createWindowsAppDetails({
+      iconPath: 'C:\\Program Files\\Ncxmusic\\Ncxmusic.exe',
+      relaunchCommand: 'C:\\Program Files\\Ncxmusic\\Ncxmusic.exe'
+    })
+
+    expect(details).toEqual({
+      appId: WINDOWS_APP_USER_MODEL_ID,
+      appIconPath: 'C:\\Program Files\\Ncxmusic\\Ncxmusic.exe',
+      appIconIndex: 0,
+      relaunchCommand: 'C:\\Program Files\\Ncxmusic\\Ncxmusic.exe',
+      relaunchDisplayName: APPLICATION_DISPLAY_NAME
+    })
   })
 
   it('窗口快照只暴露 Renderer 需要的只读状态', () => {

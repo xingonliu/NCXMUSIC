@@ -25,6 +25,8 @@ describe('voice overlay window contract', () => {
     expect(overlayWarmupIndex).toBeLessThan(mainWindowCreationIndex)
     expect(mainSource).toContain('show: false')
     expect(mainSource).toContain('window.showInactive()')
+    expect(mainSource).toContain('icon: appIconEntryPath()')
+    expect(mainSource.match(/applyWindowsWindowIdentity\(window\)/gu)).toHaveLength(2)
   })
 
   it('主窗口前后台统一展示外置窗口且不再渲染应用内胶囊', () => {

@@ -15,7 +15,7 @@ delete environment.ELECTRON_RUN_AS_NODE
 
 function packagedExecutable() {
   if (process.platform === 'win32') {
-    return join(packagedRoot, 'win-unpacked', 'NcxMusic.exe')
+    return join(packagedRoot, 'win-unpacked', 'Ncxmusic.exe')
   }
   if (process.platform === 'darwin') {
     const candidates = ['mac-arm64', 'mac', 'mac-universal']
@@ -23,10 +23,10 @@ function packagedExecutable() {
       const executable = join(
         packagedRoot,
         candidate,
-        'NcxMusic.app',
+        'Ncxmusic.app',
         'Contents',
         'MacOS',
-        'NcxMusic'
+        'Ncxmusic'
       )
       if (existsSync(executable)) return executable
     }

@@ -365,7 +365,7 @@ function lifecycleResolution(
       effect: 'write',
       conflictKeys: ['extensions:lifecycle'],
       title,
-      requiresApproval: '扩展生命周期变更需要逐次批准，并只影响 NcxMusic 管理的配置或安装目录。'
+      requiresApproval: '扩展生命周期变更需要逐次批准，并只影响 Ncxmusic 管理的配置或安装目录。'
     }
   }
 }

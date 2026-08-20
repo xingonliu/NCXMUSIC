@@ -27,7 +27,35 @@ export interface MainWindowOptionsInput {
   readonly iconPath?: string
 }
 
+/** 创建 Windows 任务栏身份参数所需输入。 */
+export interface WindowsAppDetailsInput {
+  /** Windows Shell 读取的应用图标路径。 */
+  readonly iconPath: string
+  /** Windows 从任务栏重新启动应用时执行的完整命令。 */
+  readonly relaunchCommand: string
+}
+
+/** Windows 任务栏按钮使用的完整应用身份。 */
+export interface WindowsAppDetails {
+  /** 稳定的 Windows AppUserModelID。 */
+  readonly appId: string
+  /** 任务栏重新启动入口的图标路径。 */
+  readonly appIconPath: string
+  /** 图标文件或可执行文件中的资源索引。 */
+  readonly appIconIndex: number
+  /** Windows 从任务栏重新启动应用时执行的完整命令。 */
+  readonly relaunchCommand: string
+  /** Windows 任务栏与重启入口展示的应用名称。 */
+  readonly relaunchDisplayName: string
+}
+
 // ========= 变量 =========
+
+/** 所有平台统一使用的应用显示名称。 */
+export const APPLICATION_DISPLAY_NAME = 'Ncxmusic'
+
+/** Windows 安装器、通知与任务栏共享的稳定应用标识。 */
+export const WINDOWS_APP_USER_MODEL_ID = 'io.github.ncxmusic.app'
 
 /** macOS 原生交通灯在隐藏标题栏窗口中的固定对齐位置。 */
 export const MACOS_TRAFFIC_LIGHT_POSITION = { x: 24, y: 24 } as const
@@ -41,6 +69,17 @@ const MAIN_WINDOW_BOUNDS = {
 } as const
 
 // ========= 函数 =========
+
+/** 构造 Windows 任务栏按钮与重启入口的完整品牌身份。 */
+export function createWindowsAppDetails(input: WindowsAppDetailsInput): WindowsAppDetails {
+  return {
+    appId: WINDOWS_APP_USER_MODEL_ID,
+    appIconPath: input.iconPath,
+    appIconIndex: 0,
+    relaunchCommand: input.relaunchCommand,
+    relaunchDisplayName: APPLICATION_DISPLAY_NAME
+  }
+}
 
 /** 构造双平台 WindowChrome 参数，macOS 保留原生交通灯，Windows 使用自绘控件。 */
 export function createMainWindowOptions(

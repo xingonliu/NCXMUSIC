@@ -1087,7 +1087,7 @@ function buildProfileModelPrompt(features: LocalMusicProfileFeatures): string {
   /** 默认发送的有限代表样本。 */
   const representativeSamples = features.evidence.slice(0, DEFAULT_MODEL_SAMPLE_LIMIT)
   return [
-    '你正在为 NcxMusic 生成“音乐人格画像”。只描述音乐证据支持的偏好、变化与场景，不得推断医学、政治、心理诊断或其他敏感真实人格。',
+    '你正在为 Ncxmusic 生成“音乐人格画像”。只描述音乐证据支持的偏好、变化与场景，不得推断医学、政治、心理诊断或其他敏感真实人格。',
     '低覆盖或证据冲突必须降低 confidence。严格返回单个 JSON 对象，不要 Markdown。',
     'JSON 结构：{"summary":string,"agentPrompt":string,"insights":[{"insightId":string,"category":"artist|genre|language|era|mood|scene|exploration","label":string,"value":string,"evidence":string[],"coverage":0..1,"confidence":0..1}],"recentChanges":string[],"recommendationSeeds":string[]}',
     `数据覆盖：${JSON.stringify(features.coverage)}`,

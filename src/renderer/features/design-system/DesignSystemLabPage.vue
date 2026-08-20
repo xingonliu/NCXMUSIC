@@ -89,7 +89,7 @@ const categoryTabs = [
 ]
 
 /** UI Lab 单行输入示例值。 */
-const inputValue = ref('NcxMusic')
+const inputValue = ref('Ncxmusic')
 
 /** UI Lab 多行输入示例值。 */
 const textareaValue = ref('用通用组件搭建页面，不复制业务样式。')

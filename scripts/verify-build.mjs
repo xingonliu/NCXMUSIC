@@ -1,4 +1,5 @@
 import { readFile, stat } from 'node:fs/promises'
+import { builtinModules } from 'node:module'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -36,6 +37,28 @@ if (!utility.includes('parentPort')) {
 }
 if (!utility.includes('createRequire') || !utility.includes('app.asar')) {
   throw new Error('Utility 缺少 packaged API Adapter 的确定模块解析入口')
+}
+/** Node.js 内置模块的带前缀与无前缀名称集合。 */
+const builtinModuleNames = new Set(builtinModules.flatMap((name) => (
+  name.startsWith('node:') ? [name, name.slice(5)] : [name, `node:${name}`]
+)))
+// Node.js 22 的实验性 SQLite 可能尚未出现在 builtinModules 列表中。
+builtinModuleNames.add('node:sqlite')
+builtinModuleNames.add('sqlite')
+/** Utility 构建结果中保留的全部 CommonJS 模块引用。 */
+const utilityRequires = [...utility.matchAll(/require\(["']([^"']+)["']\)/gu)]
+  .map((match) => match[1])
+  .filter((name) => name !== undefined)
+/** 已由 electron-builder 明确解包、可供 Utility 直接解析的依赖前缀。 */
+const unpackedUtilityDependencyPrefixes = ['ajv/', 'ajv-formats/']
+/** 无法由解包入口安全解析的第三方外部模块。 */
+const unsafeUtilityExternals = [...new Set(utilityRequires.filter((name) => (
+  !name.startsWith('.') &&
+  !builtinModuleNames.has(name) &&
+  !unpackedUtilityDependencyPrefixes.some((prefix) => name.startsWith(prefix))
+)))]
+if (unsafeUtilityExternals.length > 0) {
+  throw new Error(`Utility 不得外置第三方依赖：${unsafeUtilityExternals.join(', ')}`)
 }
 
 const inputHook = await readFile(join(projectRoot, 'out/main/inputHook.js'), 'utf8')

@@ -8,7 +8,7 @@ export default defineConfig({
   main: {
     build: {
       externalizeDeps: {
-        exclude: ['zod']
+        exclude: ['zod', '@modelcontextprotocol/sdk', 'ajv', 'ajv-formats']
       },
       rollupOptions: {
         input: {
