@@ -19,6 +19,8 @@ describe('phase 5 agent UI contract', () => {
     expect(router).toContain('component: AgentPage')
     expect(router).toContain('component: OnboardingPage')
     expect(router).toContain("shell: 'standalone'")
+    expect(router).toContain('const ONBOARDING_GATE_ENABLED = false')
+    expect(router).toContain('if (!ONBOARDING_GATE_ENABLED) return true')
   })
 
   it('ToolExecutionCard 只展示工具名、调用方式与状态，不展示工具结果', () => {
@@ -221,4 +223,3 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toMatch(/\.agent-turn-block\s*\{[^}]*margin:\s*0\s+auto\s+28px;/)
   })
 })
-

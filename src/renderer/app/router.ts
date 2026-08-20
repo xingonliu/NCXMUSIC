@@ -25,6 +25,9 @@ import OnboardingPage from '../features/onboarding/OnboardingPage.vue'
 /** 空内容区页面占位组件。 */
 const RouteSkeletonView = RoutePlaceholder
 
+/** 是否启用首次启动引导门禁；欢迎页暂时隐藏期间保持关闭。 */
+const ONBOARDING_GATE_ENABLED = false
+
 /** 应用 Vue Router 路由表。 */
 const routes: RouteRecordRaw[] = [
   {
@@ -276,8 +279,10 @@ export const router = createRouter({
 
 // ========= 路由门禁 =========
 
-/** 首次安装在完成或跳过七步引导前统一进入 onboarding。 */
+/** 按临时开关决定是否在首次安装时统一进入 onboarding。 */
 router.beforeEach((to) => {
+  if (!ONBOARDING_GATE_ENABLED) return true
+
   /** 当前浏览器空间的引导完成标记。 */
   const completed = localStorage.getItem('ncx.onboarding.completed.v1') === 'true'
   if (!completed && to.name !== 'onboarding') return { name: 'onboarding' }
