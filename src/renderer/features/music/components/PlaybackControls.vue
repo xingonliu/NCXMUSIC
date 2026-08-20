@@ -23,7 +23,7 @@ import {
   CommonSpinner,
   type CommonOption
 } from '../../../design-system/components'
-import { zhCN } from '../../../locales/zh-CN'
+import { useI18n } from '../../../i18n'
 import { usePlayer } from '../use-player'
 import MusicProgressBar from './MusicProgressBar.vue'
 
@@ -48,8 +48,11 @@ const player = usePlayer()
 /** 播放器只读快照。 */
 const snapshot = player.snapshot
 
+/** 播放控制组件使用的国际化状态。 */
+const i18n = useI18n()
+
 /** 本地化文案集合。 */
-const text = zhCN.player
+const text = computed(() => i18n.messages.value.player)
 
 /** 当前是否有曲目可控制。 */
 const hasTrack = computed<boolean>(() => snapshot.value.playback.track !== null)
@@ -94,22 +97,22 @@ const nextMode = computed<PlayMode>(() => {
 const qualityLabel = computed<string | null>(() => {
   const actualQuality = snapshot.value.playback.actualQuality
   if (!actualQuality) return null
-  return text.quality[actualQuality] ?? null
+  return text.value.quality[actualQuality] ?? null
 })
 
 /** 可选择的音质偏好。 */
-const qualityOptions: CommonOption[] = [
+const qualityOptions = computed<CommonOption[]>(() => [
   { label: '自动（最高可用）', value: 'auto' },
-  { label: text.quality.standard, value: 'standard' },
-  { label: text.quality.higher, value: 'higher' },
-  { label: text.quality.exhigh, value: 'exhigh' },
-  { label: text.quality.lossless, value: 'lossless' },
-  { label: text.quality.hires, value: 'hires' },
-  { label: text.quality.jyeffect, value: 'jyeffect' },
-  { label: text.quality.sky, value: 'sky' },
-  { label: text.quality.dolby, value: 'dolby' },
-  { label: text.quality.jymaster, value: 'jymaster' }
-]
+  { label: text.value.quality.standard, value: 'standard' },
+  { label: text.value.quality.higher, value: 'higher' },
+  { label: text.value.quality.exhigh, value: 'exhigh' },
+  { label: text.value.quality.lossless, value: 'lossless' },
+  { label: text.value.quality.hires, value: 'hires' },
+  { label: text.value.quality.jyeffect, value: 'jyeffect' },
+  { label: text.value.quality.sky, value: 'sky' },
+  { label: text.value.quality.dolby, value: 'dolby' },
+  { label: text.value.quality.jymaster, value: 'jymaster' }
+])
 
 // ========= 函数 =========
 

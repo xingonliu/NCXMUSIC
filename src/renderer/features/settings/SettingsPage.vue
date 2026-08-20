@@ -15,7 +15,7 @@ import {
   type CommonOption
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
-import { zhCN } from '../../locales/zh-CN'
+import { isSupportedLocale, SUPPORTED_LOCALES, useI18n } from '../../i18n'
 import { useAccountSessionStore } from '../account/account-session-store'
 import { usePlayer } from '../music/use-player'
 import {
@@ -50,6 +50,9 @@ const player = usePlayer()
 /** 应用界面偏好。 */
 const appPreferences = useAppPreferences()
 
+/** 响应当前语言变化的界面文案。 */
+const i18n = useI18n()
+
 /** 当前设置路由。 */
 const route = useRoute()
 
@@ -57,7 +60,7 @@ const route = useRoute()
 const router = useRouter()
 
 /** 播放文案集合。 */
-const playerText = zhCN.player
+const playerText = computed(() => i18n.messages.value.player)
 
 /** 当前路由对应的合法设置标签。 */
 const activeTab = computed<SettingsTab>(() => normalizeSettingsTab(route.query['tab']))
@@ -81,18 +84,24 @@ const dataBusy = ref<boolean>(false)
 let highlightTimer: number | undefined
 
 /** 音质偏好选项。 */
-const qualityOptions: CommonOption[] = [
+const qualityOptions = computed<CommonOption[]>(() => [
   { label: '自动（最高可用）', value: 'auto' },
-  { label: playerText.quality.standard, value: 'standard' },
-  { label: playerText.quality.higher, value: 'higher' },
-  { label: playerText.quality.exhigh, value: 'exhigh' },
-  { label: playerText.quality.lossless, value: 'lossless' },
-  { label: playerText.quality.hires, value: 'hires' },
-  { label: playerText.quality.jyeffect, value: 'jyeffect' },
-  { label: playerText.quality.sky, value: 'sky' },
-  { label: playerText.quality.dolby, value: 'dolby' },
-  { label: playerText.quality.jymaster, value: 'jymaster' }
-]
+  { label: playerText.value.quality.standard, value: 'standard' },
+  { label: playerText.value.quality.higher, value: 'higher' },
+  { label: playerText.value.quality.exhigh, value: 'exhigh' },
+  { label: playerText.value.quality.lossless, value: 'lossless' },
+  { label: playerText.value.quality.hires, value: 'hires' },
+  { label: playerText.value.quality.jyeffect, value: 'jyeffect' },
+  { label: playerText.value.quality.sky, value: 'sky' },
+  { label: playerText.value.quality.dolby, value: 'dolby' },
+  { label: playerText.value.quality.jymaster, value: 'jymaster' }
+])
+
+/** 应用支持的界面语言选项。 */
+const languageOptions: CommonOption[] = SUPPORTED_LOCALES.map((option) => ({
+  label: option.label,
+  value: option.value
+}))
 
 /** 关闭窗口行为选项。 */
 const closeBehaviorOptions: CommonOption[] = [
@@ -151,6 +160,13 @@ function setPlaybackQuality(value: string | number): void {
 function setTheme(theme: AppTheme): void {
   appPreferences.setTheme(theme)
   persistAccountPreference('appearance.theme', theme)
+}
+
+/** 设置应用界面语言；未知值不会覆盖当前偏好。 */
+function setApplicationLocale(value: string | number): void {
+  /** 通用选择器返回的候选语言标签。 */
+  const locale = String(value)
+  if (isSupportedLocale(locale)) appPreferences.setLocale(locale)
 }
 
 /** 设置是否展示歌词翻译。 */
@@ -269,7 +285,7 @@ async function loadAccountPreferences(): Promise<void> {
   }
   /** 已校验的账户播放音质偏好。 */
   const quality = preferences['playback.quality']
-  if (typeof quality === 'string' && qualityOptions.some((option) => option.value === quality)) {
+  if (typeof quality === 'string' && qualityOptions.value.some((option) => option.value === quality)) {
     await player.setQuality(quality as MusicQualityPreference)
   }
 }
@@ -441,6 +457,18 @@ onBeforeUnmount(() => {
           :model-value="appPreferences.preferences.value.closeWindowBehavior"
           :options="closeBehaviorOptions"
           @update:model-value="setCloseBehavior"
+        />
+      </SettingsRow>
+      <SettingsRow
+        setting-id="setting-language"
+        title="界面语言"
+        description="选择应用界面使用的语言；切换后立即生效。"
+      >
+        <CommonSelect
+          class="settings-control"
+          :model-value="appPreferences.preferences.value.locale"
+          :options="languageOptions"
+          @update:model-value="setApplicationLocale"
         />
       </SettingsRow>
     </SettingsSection>

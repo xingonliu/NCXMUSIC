@@ -29,7 +29,7 @@ import {
   CommonToast
 } from '../../../design-system/components'
 import LiquidGlass from '../../../design-system/components/LiquidGlass.vue'
-import { zhCN } from '../../../locales/zh-CN'
+import { useI18n } from '../../../i18n'
 import { useImmersivePlayerPresentation } from '../immersive-player-presentation'
 import { usePlayer } from '../use-player'
 import MediaArtwork from './MediaArtwork.vue'
@@ -53,8 +53,11 @@ const snapshot = player.snapshot
 /** 当前播放域轻提示文案。 */
 const notice = player.notice
 
+/** PlayerBar 使用的国际化状态。 */
+const i18n = useI18n()
+
 /** PlayerBar 本地化文案集合。 */
-const text = zhCN.player
+const text = computed(() => i18n.messages.value.player)
 
 /** 播放队列抽屉开闭状态。 */
 const isQueueOpen = ref<boolean>(false)
@@ -88,7 +91,7 @@ const canSeek = computed<boolean>(() => {
 })
 
 /** 状态文案 */
-const statusLabel = computed(() => text.status[snapshot.value.playback.status])
+const statusLabel = computed(() => text.value.status[snapshot.value.playback.status])
 
 
 /** 播放模式循环顺序 */

@@ -25,7 +25,7 @@ import {
   CommonIconButton
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
-import { zhCN } from '../../locales/zh-CN'
+import { useI18n } from '../../i18n'
 import { copyText } from '../foundation/clipboard'
 import { DEFAULT_LYRIC_ACCENT_COLOR } from './artwork-accent-color'
 import FluidMeshBackground from './components/FluidMeshBackground.vue'
@@ -79,8 +79,11 @@ const artistText = computed<string>(() => track.value?.artists.join(' / ') ?? ''
 /** 当前曲目是否已在本次沉浸会话中完成收藏。 */
 const isLiked = ref<boolean>(false)
 
+/** 沉浸页使用的国际化状态。 */
+const i18n = useI18n()
+
 /** 沉浸页本地化文案集合。 */
-const text = zhCN.player
+const text = computed(() => i18n.messages.value.player)
 
 /** 播放模式循环顺序。 */
 const MODE_CYCLE: PlayMode[] = ['loop', 'loop-one', 'shuffle']

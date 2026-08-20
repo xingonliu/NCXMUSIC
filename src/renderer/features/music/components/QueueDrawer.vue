@@ -15,7 +15,7 @@ import {
   CommonDrawer,
   CommonIconButton
 } from '../../../design-system/components'
-import { zhCN } from '../../../locales/zh-CN'
+import { useI18n } from '../../../i18n'
 import { usePlayer } from '../use-player'
 
 // ========= 属性与事件 =========
@@ -39,8 +39,11 @@ const player = usePlayer()
 /** 播放器只读快照引用。 */
 const snapshot = player.snapshot
 
+/** 播放队列使用的国际化状态。 */
+const i18n = useI18n()
+
 /** PlayerBar 本地化文案集合。 */
-const text = zhCN.player
+const text = computed(() => i18n.messages.value.player)
 
 /** 播放队列列表。 */
 const queueItems = computed<QueueItem[]>(() => snapshot.value.queue.items)
@@ -65,7 +68,9 @@ const nextMode = computed<PlayMode>(() => {
 
 /** 抽屉标题：包含动态歌曲数量。 */
 const drawerTitle = computed<string>(() => {
-  return queueCount.value > 0 ? `${text.queueTitle} (${queueCount.value})` : text.queueTitle
+  return queueCount.value > 0
+    ? `${text.value.queueTitle} (${queueCount.value})`
+    : text.value.queueTitle
 })
 
 /** 当前正在拖动的队列项 ID。 */

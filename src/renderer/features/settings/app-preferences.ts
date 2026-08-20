@@ -1,6 +1,11 @@
 import { readonly, ref, type Ref } from 'vue'
 
 import { AppThemeSchema, type AppTheme } from '../../../shared/schemas/storage'
+import {
+  isSupportedLocale,
+  setLocale as applyLocale,
+  type AppLocale
+} from '../../i18n'
 
 // ========= 类型 =========
 
@@ -20,6 +25,8 @@ export type LyricFontWeightPreset = 'light' | 'regular' | 'semibold' | 'bold' | 
 export interface AppPreferences {
   /** 应用主题模式。 */
   theme: AppTheme
+  /** 应用界面语言。 */
+  locale: AppLocale
   /** 是否展示歌词翻译。 */
   showLyricTranslation: boolean
   /** 当前歌词在沉浸视图中的垂直焦点。 */
@@ -44,6 +51,7 @@ const PREFERENCES_STORAGE_KEY = 'ncx.app-preferences.v1'
 /** 默认界面偏好。 */
 const DEFAULT_PREFERENCES: AppPreferences = {
   theme: 'system',
+  locale: 'zh-CN',
   showLyricTranslation: true,
   lyricAlignment: 'center',
   lyricMotion: 'full',
@@ -99,6 +107,7 @@ function readPreferences(): AppPreferences {
     const theme = AppThemeSchema.safeParse(parsed.theme)
     return {
       theme: theme.success ? theme.data : DEFAULT_PREFERENCES.theme,
+      locale: isSupportedLocale(parsed.locale) ? parsed.locale : DEFAULT_PREFERENCES.locale,
       showLyricTranslation: typeof parsed.showLyricTranslation === 'boolean'
         ? parsed.showLyricTranslation
         : DEFAULT_PREFERENCES.showLyricTranslation,
@@ -126,6 +135,7 @@ function savePreferences(next: AppPreferences): void {
   preferences.value = next
   localStorage.setItem(PREFERENCES_STORAGE_KEY, JSON.stringify(next))
   applyTheme(next.theme)
+  applyLocale(next.locale)
 }
 
 /** 更新主题模式。 */
@@ -136,6 +146,11 @@ function setTheme(theme: AppTheme): void {
 /** 使用账户 SQLite 权威值同步主题展示镜像。 */
 function hydrateTheme(theme: AppTheme): void {
   savePreferences({ ...preferences.value, theme })
+}
+
+/** 更新应用界面语言。 */
+function setAppLocale(locale: AppLocale): void {
+  savePreferences({ ...preferences.value, locale })
 }
 
 /** 更新歌词翻译显示偏好。 */
@@ -217,12 +232,14 @@ function clearRendererCache(): void {
 }
 
 applyTheme(preferences.value.theme)
+applyLocale(preferences.value.locale)
 
 /** 使用应用界面偏好。 */
 export function useAppPreferences(): {
   preferences: Readonly<Ref<AppPreferences>>
   setTheme: (theme: AppTheme) => void
   hydrateTheme: (theme: AppTheme) => void
+  setLocale: (locale: AppLocale) => void
   setShowLyricTranslation: (value: boolean) => void
   hydrateShowLyricTranslation: (value: boolean) => void
   setLyricAlignment: (value: LyricAlignmentPreset) => void
@@ -243,6 +260,7 @@ export function useAppPreferences(): {
     preferences: readonly(preferences),
     setTheme,
     hydrateTheme,
+    setLocale: setAppLocale,
     setShowLyricTranslation,
     hydrateShowLyricTranslation,
     setLyricAlignment,

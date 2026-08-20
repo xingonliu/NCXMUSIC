@@ -27,24 +27,46 @@ export const appPrimaryNavigationSections: readonly AppNavigationSection[] = [
   {
     label: '',
     items: [
-      { label: t('navigation.discover'), routeName: 'discover', icon: 'discover' },
-      { label: t('navigation.browse'), routeName: 'browse', icon: 'browse' },
-      { label: t('navigation.search'), routeName: 'search', icon: 'search' },
-      { label: t('navigation.agent'), routeName: 'agent', icon: 'agent' }
+      {
+        /** 当前语言下的发现入口文案。 */
+        get label() { return t('navigation.discover') },
+        routeName: 'discover',
+        icon: 'discover'
+      },
+      {
+        /** 当前语言下的浏览入口文案。 */
+        get label() { return t('navigation.browse') },
+        routeName: 'browse',
+        icon: 'browse'
+      },
+      {
+        /** 当前语言下的搜索入口文案。 */
+        get label() { return t('navigation.search') },
+        routeName: 'search',
+        icon: 'search'
+      },
+      {
+        /** 当前语言下的 Agent 入口文案。 */
+        get label() { return t('navigation.agent') },
+        routeName: 'agent',
+        icon: 'agent'
+      }
     ]
   }
 ] as const
 
 /** 底部账户行入口，保持与设置行分离。 */
 export const appAccountNavigationItem: AppNavigationItem = {
-  label: t('navigation.profile'),
+  /** 当前语言下的个人资料入口文案。 */
+  get label() { return t('navigation.profile') },
   routeName: 'profile',
   icon: 'profile'
 }
 
 /** 底部第二行设置入口，仍复用普通页面激活样式。 */
 export const appSettingsNavigationItem: AppNavigationItem = {
-  label: t('navigation.settings'),
+  /** 当前语言下的设置入口文案。 */
+  get label() { return t('navigation.settings') },
   routeName: 'settings',
   icon: 'settings'
 }

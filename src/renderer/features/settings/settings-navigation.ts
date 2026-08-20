@@ -86,6 +86,7 @@ export const SETTINGS_NAVIGATION_ITEMS: readonly SettingsNavigationItem[] =
 /** 设置搜索索引；只包含用户可以在界面中找到或操作的现有能力。 */
 export const SETTINGS_SEARCH_ITEMS: readonly SettingsSearchItem[] = [
   { tab: 'general', title: '关闭窗口', description: '设置关闭到托盘或直接退出应用。', targetId: 'setting-close-window', keywords: ['托盘', '退出', '后台', 'close'] },
+  { tab: 'general', title: '界面语言', description: '在简体中文与英语之间切换应用界面。', targetId: 'setting-language', keywords: ['语言', '英语', '中文', 'language', 'english', 'locale'] },
   { tab: 'music', title: '播放音质', description: '选择自动、无损或其他播放音质。', targetId: 'setting-playback-quality', keywords: ['音频', '无损', 'hires', 'quality'] },
   { tab: 'music', title: '歌词翻译', description: '控制普通歌词和沉浸歌词中的翻译行。', targetId: 'setting-lyric-translation', keywords: ['翻译', '歌词', 'translation'] },
   { tab: 'appearance', title: '主题', description: '选择跟随系统、浅色或深色外观。', targetId: 'setting-theme', keywords: ['颜色', '浅色', '深色', 'dark', 'light'] },
