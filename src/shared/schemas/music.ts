@@ -22,7 +22,7 @@ export const MusicUserIdSchema = z.string().regex(/^\d{1,20}$/u, '用户 ID 必�
 /** 网易云评论 ID（纯数字字符串，最长 20 位）。 */
 export const MusicCommentIdSchema = z.string().regex(/^\d{1,20}$/u, '评论 ID 必须为纯数字')
 
-/** 首版已经登记评论能力的资源类型。 */
+/** 已登记评论能力的资源类型。 */
 export const MusicCommentResourceTypeSchema = z.enum(['song', 'album', 'playlist'])
 
 /** 标准实体更新时间，统一使用 ISO 字符串。 */

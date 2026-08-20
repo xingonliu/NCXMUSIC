@@ -1,6 +1,6 @@
 declare module 'uiohook-napi' {
   // ========= 类型 =========
-  /** 当前任务只依赖的原生键盘事件字段。 */
+  /** 输入钩子消费的原生键盘事件字段。 */
   export interface UiohookNativeEvent {
     /** 平台可用时的物理按键名。 */
     code?: string

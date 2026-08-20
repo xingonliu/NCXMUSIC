@@ -19,7 +19,7 @@ import {
 
 // ========= 类型 =========
 
-/** MCP Client 可用的首版稳定传输。 */
+/** MCP Client 支持的稳定传输。 */
 type ManagedMcpTransport = StdioClientTransport | StreamableHTTPClientTransport
 
 /** 已建立或正在建立的单 Server 连接。 */

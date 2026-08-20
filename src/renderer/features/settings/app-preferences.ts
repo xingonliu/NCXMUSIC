@@ -16,7 +16,7 @@ export type LyricFontSizePreset = 'compact' | 'standard' | 'large' | 'extraLarge
 /** 歌词字重预设。 */
 export type LyricFontWeightPreset = 'light' | 'regular' | 'semibold' | 'bold' | 'heavy'
 
-/** Phase 4 可由 Renderer 安全持久化的界面偏好。 */
+/** 可由 Renderer 安全持久化的界面偏好。 */
 export interface AppPreferences {
   /** 应用主题模式。 */
   theme: AppTheme

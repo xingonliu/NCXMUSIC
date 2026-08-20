@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 // ========= 变量 =========
 
-/** 首版支持的模型协议。 */
+/** 支持的模型协议。 */
 export const ProviderProtocolSchema = z.enum([
   'openai-compatible',
   'anthropic-messages',
@@ -116,7 +116,7 @@ export const ProviderRuntimeControlSchema = z.discriminatedUnion('kind', [
 
 // ========= 类型 =========
 
-/** 首版 Provider 协议类型。 */
+/** Provider 协议类型。 */
 export type ProviderProtocol = z.infer<typeof ProviderProtocolSchema>
 
 /** Provider 实测能力快照类型。 */

@@ -68,7 +68,7 @@ interface McpEditor {
   serverId: string
   /** 展示名称。 */
   displayName: string
-  /** 首版稳定传输。 */
+  /** MCP 稳定传输选项。 */
   transport: 'stdio' | 'streamable_http'
   /** stdio 命令。 */
   command: string

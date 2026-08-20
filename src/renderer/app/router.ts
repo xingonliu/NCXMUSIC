@@ -22,10 +22,10 @@ import OnboardingPage from '../features/onboarding/OnboardingPage.vue'
 
 // ========= 变量 =========
 
-/** 首版空内容区页面占位组件。 */
+/** 空内容区页面占位组件。 */
 const RouteSkeletonView = RoutePlaceholder
 
-/** 首版冻结的 Vue Router 路由表。 */
+/** 应用 Vue Router 路由表。 */
 const routes: RouteRecordRaw[] = [
   {
     path: '/',

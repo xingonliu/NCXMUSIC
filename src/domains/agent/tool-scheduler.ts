@@ -40,7 +40,7 @@ export class ToolScheduler {
   /** 当前被副作用任务持有的冲突锁。 */
   private readonly activeLocks = new Set<string>()
 
-  /** 当前运行中的副作用任务数；首版默认全部串行。 */
+  /** 当前运行中的副作用任务数；副作用任务统一串行。 */
   private activeEffects = 0
 
   /** 调度器是否已取消。 */

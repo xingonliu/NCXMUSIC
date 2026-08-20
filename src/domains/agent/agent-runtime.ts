@@ -330,7 +330,7 @@ const CommentsCapabilityParamsSchema = z.strictObject({
 /** 每日签到能力无参数。 */
 const DailySigninCapabilityParamsSchema = z.strictObject({})
 
-/** Capability Catalog 中 Phase 5 已接通的少量兜底能力。 */
+/** Capability Catalog 中已登记的兜底能力。 */
 const CAPABILITY_CATALOG = [
   {
     capabilityId: 'music.similar-artists',
@@ -510,7 +510,7 @@ export class AgentRuntime {
     this.publish()
   }
 
-  /** 接收 Phase 0 Shell Supervisor 的有限流式输出并发布给 Agent 页面。 */
+  /** 接收 Shell Supervisor 的有限流式输出并发布给 Agent 页面。 */
   publishShellOutput(event: ShellOutputEvent): void {
     /** 当前命令已有终端。 */
     const existing = this.shellTerminals.find((item) => item.commandId === event.commandId)

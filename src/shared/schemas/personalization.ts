@@ -8,7 +8,7 @@ export const MUSIC_PROFILE_SCHEMA_VERSION = 1 as const
 /** Working Memory 持久化结构版本。 */
 export const WORKING_MEMORY_SCHEMA_VERSION = 1 as const
 
-/** Phase 6 冻结的音乐画像生命周期状态。 */
+/** 持久化兼容的音乐画像生命周期状态。 */
 export const MusicProfileStatusSchema = z.enum([
   'unavailable',
   'collecting',

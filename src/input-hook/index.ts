@@ -15,7 +15,7 @@ interface ProcessPort {
   postMessage(message: unknown): void
 }
 
-/** `uiohook-napi` 本任务只使用键盘 Hook 的最小接口。 */
+/** `uiohook-napi` 键盘 Hook 的最小消费接口。 */
 interface UiohookModule {
   uIOhook: {
     on(event: 'keydown' | 'keyup', listener: (event: unknown) => void): void

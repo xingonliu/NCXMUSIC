@@ -2,7 +2,7 @@ import { spawnSync } from 'node:child_process'
 
 // ========= 变量 =========
 
-/** T-06 需要串行执行的窗口契约验证命令。 */
+/** 需要串行执行的窗口契约验证命令。 */
 const checks = [
   {
     name: 'target-typecheck',
@@ -42,7 +42,7 @@ const checks = [
 
 // ========= 函数 =========
 
-/** 执行一个 T-06 验证命令，失败时直接终止脚本。 */
+/** 执行一个窗口契约验证命令，失败时直接终止脚本。 */
 function runCheck(check) {
   console.info(`[T-06] ${check.name}`)
   const result = spawnSync(check.command, check.args, {

@@ -148,7 +148,7 @@ export function buildActionJournalCleanupSql(
 
 // ========= SQLite 迁移 =========
 
-/** 首版账户数据库迁移：建立 Action Journal 与播放快照事实表。 */
+/** 账户数据库版本 1 迁移：建立 Action Journal 与播放快照事实表。 */
 export const ACCOUNT_SQLITE_MIGRATIONS: readonly SQLiteMigration[] = [
   {
     version: 1,

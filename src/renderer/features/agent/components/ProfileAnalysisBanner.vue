@@ -185,7 +185,7 @@ function handleRetryFromModal(): void {
       <X :size="15" />
     </CommonIconButton>
 
-    <!-- Phase 6 失败原始响应详情弹窗 -->
+    <!-- 画像分析失败的原始响应详情弹窗 -->
     <CommonDialog
       :visible="detailModalVisible"
       title="画像分析异常详情"

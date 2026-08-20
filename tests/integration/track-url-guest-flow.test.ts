@@ -4,7 +4,7 @@ import { CredentialLeaseService } from '../../src/utility/credential-lease-servi
 import { TrackUrlService } from '../../src/utility/track-url-service'
 
 // ─────────────────────────────────────────────────────────────────────────────
-// T-03 真实网络集成测试：访客（无登录）播放地址解析
+// 真实网络集成测试：访客（无登录）播放地址解析
 //
 // 验证 TrackUrlService 在无凭据租约时仍能调用 song_url_v1 并返回可播放 URL。
 // 不依赖 Electron、不启动 IPC、不打 Mock —— 走真实的 @neteasecloudmusicapienhanced/api。

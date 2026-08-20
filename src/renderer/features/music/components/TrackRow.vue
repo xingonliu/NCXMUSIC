@@ -77,7 +77,7 @@ const hasVipBadge = computed<boolean>(() => props.song.access.badges.includes('v
 /** 是否需要展示付费标签。 */
 const hasPaidBadge = computed<boolean>(() => props.song.access.badges.includes('paid'))
 
-/** 当前歌曲右键菜单，按冻结矩阵提供首批通用动作。 */
+/** 当前歌曲右键菜单，提供播放、收藏和列表管理等通用动作。 */
 const contextMenuItems = computed<CommonMenuItem[]>(() => {
   /** 当前歌曲可用的通用上下文动作。 */
   const items: CommonMenuItem[] = [

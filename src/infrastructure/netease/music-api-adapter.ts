@@ -50,7 +50,7 @@ export interface NeteaseUpstreamErrorMetadata {
   message?: string
 }
 
-/** NeteaseCloudMusicApiEnhanced 中 Phase 2 首批只读能力。 */
+/** NeteaseCloudMusicApiEnhanced 中已登记的只读能力。 */
 export interface NeteaseMusicApi {
   search(params: Record<string, unknown>): Promise<NeteaseResponse>
   cloudsearch?(params: Record<string, unknown>): Promise<NeteaseResponse>

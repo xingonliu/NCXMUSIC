@@ -2,7 +2,7 @@ import { spawnSync } from 'node:child_process'
 
 // ========= 变量 =========
 
-/** T-07 需要串行执行的系统媒体集成验证命令。 */
+/** 需要串行执行的系统媒体集成验证命令。 */
 const checks = [
   {
     name: 'target-typecheck',
@@ -50,7 +50,7 @@ const checks = [
 
 // ========= 函数 =========
 
-/** 执行一个 T-07 验证命令，失败时直接终止脚本。 */
+/** 执行一个系统媒体集成验证命令，失败时直接终止脚本。 */
 function runCheck(check) {
   console.info(`[T-07] ${check.name}`)
   const result = spawnSync(check.command, check.args, {

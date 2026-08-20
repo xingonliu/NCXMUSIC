@@ -31,7 +31,7 @@ export interface ExtensionLifecyclePort {
 
 /** 外部工具网关构造参数。 */
 export interface AgentExternalToolsOptions {
-  /** Phase 0 Shell 执行器。 */
+  /** Shell 执行器。 */
   readonly shellExecutor: ShellExecutor
   /** 同一 CommandSafetyControl 的分类器。 */
   readonly shellClassifier: ShellPolicyClassifier
@@ -199,7 +199,7 @@ export class AgentExternalTools implements AgentExternalToolPort {
         }
       }
       this.options.shellClassifier.setSafetyLevel(input.commandSafetyLevel)
-      /** Phase 0 确定性策略结论。 */
+      /** Shell 确定性策略结论。 */
       const decision = await this.options.shellClassifier.classify(parsed.data)
       return {
         input: parsed.data,

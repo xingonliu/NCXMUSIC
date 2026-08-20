@@ -34,7 +34,7 @@ async function initialConnectionChecks(): Promise<BeforeReloadState> {
   const cancelled: RuntimeResult<unknown> = await delayedPing
   checks.cancelled = !cancelled.ok && cancelled.error.code === 'REQUEST_CANCELLED'
 
-  // T-03 媒体链路：访客模式解析免费曲目并验证真实 <audio> 可播放
+  // 媒体链路：访客模式解析免费曲目并验证真实 <audio> 可播放
   const trackId = '457264737'
   const resolved = await window.ncx.runtime.resolveTrackUrl({ trackId, quality: 'standard' })
   checks.audioResolved = resolved.ok && resolved.data.url.length > 10

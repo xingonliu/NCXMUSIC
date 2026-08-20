@@ -1,6 +1,6 @@
 # NcxMusic
 
-NcxMusic 是一个基于 Electron、Vue 3 和 TypeScript 的 Agent 原生桌面音乐客户端。项目目前已经具备网易云音乐账户、发现与资料库浏览、播放队列、沉浸播放、逐字歌词、系统媒体控制，以及 Agent、MCP、Skill、语音和安全设置等基础能力；后续工作仍按 [最终开发顺序](docs/development/NcxMusic-Development-Roadmap.md) 推进。
+NcxMusic 是一个基于 Electron、Vue 3 和 TypeScript 的 Agent 原生桌面音乐客户端。项目目前已经具备网易云音乐账户、发现与资料库浏览、播放队列、沉浸播放、逐字歌词、系统媒体控制，以及 Agent、MCP、Skill、语音和安全设置等基础能力。
 
 ## 当前体验
 
@@ -14,7 +14,7 @@ NcxMusic 是一个基于 Electron、Vue 3 和 TypeScript 的 Agent 原生桌面�
 
 - Node.js 22.22.x
 - pnpm 11.20.0
-- Windows 或 macOS（V1 不承诺 Linux 支持）
+- Windows 或 macOS
 
 ```powershell
 pnpm install --frozen-lockfile

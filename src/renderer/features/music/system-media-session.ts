@@ -8,7 +8,7 @@ import type { PlaybackSnapshot, TrackArtwork, TrackSummary } from '../../../doma
 // 类型区
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** T-07 当前纳入自动化契约的系统媒体动作。 */
+/** 自动化契约覆盖的系统媒体动作。 */
 type SupportedSystemMediaAction =
   | 'play'
   | 'pause'

@@ -65,7 +65,7 @@ export const SkillRuntimeDescriptorSchema = z.strictObject({
   tools: z.array(SkillToolManifestSchema).max(32)
 })
 
-/** MCP 首版唯一支持的传输。 */
+/** MCP 支持的传输。 */
 export const McpTransportSchema = z.enum(['stdio', 'streamable_http'])
 
 /** MCP 实际工具的最小可信快照。 */

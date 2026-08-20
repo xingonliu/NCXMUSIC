@@ -20,7 +20,7 @@ export const VoiceLocalModelIdSchema = z.enum(['light', 'accurate'])
 /** 本地模型内存生命周期。 */
 export const VoiceLocalLoadModeSchema = z.enum(['on-demand', 'resident'])
 
-/** 独立云端 ASR 首版协议。 */
+/** 独立云端 ASR 支持的协议。 */
 export const VoiceCloudProtocolSchema = z.enum(['openai-transcriptions'])
 
 /** 本地模型安装状态。 */

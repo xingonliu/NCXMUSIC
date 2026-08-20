@@ -154,9 +154,9 @@ const musicService = new MusicService(
 const playbackSnapshotService = new PlaybackSnapshotService(accountStore)
 /** Agent 当前连续会话服务：在时间分块前持续保存完整消息与工具时间线。 */
 const agentConversationService = new AgentConversationService(accountStore)
-/** Phase 6 会话块、FTS5 与 Working Memory 服务。 */
+/** 会话分块、FTS5 与 Working Memory 服务。 */
 const conversationMemoryService = new ConversationMemoryService(accountStore)
-/** Phase 6 音乐人格画像、变化评分与证据分页服务。 */
+/** 音乐人格画像、变化评分与证据分页服务。 */
 const personalizationService = new PersonalizationService(accountStore)
 /** 当前 Provider Profile 唯一云端 ASR 服务。 */
 const voiceTranscriptionService = new VoiceTranscriptionService()

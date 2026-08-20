@@ -2,7 +2,7 @@ import { spawnSync } from 'node:child_process'
 
 // ========= 变量 =========
 
-/** T-08 需要串行执行的 Provider 与 ASR 协议验证命令。 */
+/** 需要串行执行的 Provider 与 ASR 协议验证命令。 */
 const checks = [
   {
     name: 'target-typecheck',
@@ -42,7 +42,7 @@ const checks = [
 
 // ========= 函数 =========
 
-/** 执行一个 T-08 验证命令，失败时直接终止脚本。 */
+/** 执行一个 Provider 与 ASR 协议验证命令，失败时直接终止脚本。 */
 function runCheck(check) {
   console.info(`[T-08] ${check.name}`)
   const result = spawnSync(check.command, check.args, {

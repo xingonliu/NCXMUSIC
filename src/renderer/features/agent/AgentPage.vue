@@ -429,7 +429,7 @@ watch(
 <template>
   <section
     class="agent-page"
-    :style="{ '--agent-dock-height': `${dockHeight}px` }"
+    :style="{ '--ncx-agent-dock-height': `${dockHeight}px` }"
     aria-label="Ncxmusic Agent 小云"
   >
     <div

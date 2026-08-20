@@ -4,7 +4,7 @@ import { sanitizeErrorMessage } from '../../shared/errors/public-error'
 // 类型区
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** T-08 首批需要验证的 Provider 协议族。 */
+/** Provider 请求支持的协议族。 */
 export type ProviderProtocol = 'openai-compatible' | 'anthropic-messages' | 'gemini-generate-content'
 
 /** Provider Profile 中足以决定协议能力和 ASR 缓存边界的公开配置。 */
@@ -218,7 +218,7 @@ export type AsrTranscriptionResult =
 // 常量区
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Anthropic Messages 协议固定版本头，后续产品化可移入模型目录。 */
+/** Anthropic Messages 协议固定版本头。 */
 const ANTHROPIC_VERSION = '2023-06-01'
 
 /** Provider 文本请求默认输出上限。 */

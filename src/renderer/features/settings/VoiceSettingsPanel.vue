@@ -86,7 +86,7 @@ const loadModeOptions = [
   { label: '常驻内存后台', value: 'resident' }
 ]
 
-/** 首版独立云端协议适配器。 */
+/** 独立云端 ASR 协议选项。 */
 const cloudProtocolOptions = [{ label: 'OpenAI Transcriptions 兼容', value: 'openai-transcriptions' }]
 
 /** 快捷键状态文案。 */

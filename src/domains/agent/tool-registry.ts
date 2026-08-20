@@ -4,7 +4,7 @@ import type { MusicRiskAction } from '../security/agent-policy'
 
 // ========= 类型 =========
 
-/** 首版内置 Tool 名。 */
+/** 内置 Tool 名。 */
 export type CoreAgentToolName =
   | 'smart_search_and_play'
   | 'control_player'
@@ -187,7 +187,7 @@ const AccountManagerInputSchema = z.strictObject({
   action: z.enum(['get_status', 'daily_signin'])
 })
 
-/** Phase 6 画像与长期记忆只读输入。 */
+/** 画像与长期记忆只读输入。 */
 const UserProfileMemoryInputSchema = z.strictObject({
   action: z.enum(['get_status', 'get_profile', 'search_memory']),
   query: z.string().trim().min(1).max(240).optional()
