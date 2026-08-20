@@ -12,9 +12,82 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <title>Ncxmusic</title>
+    <script>
+      // ========= 开屏主题 =========
+
+      try {
+        /** Renderer 持久化的界面偏好。 */
+        const storedPreferences = localStorage.getItem('ncx.app-preferences.v1')
+        /** 持久化偏好中经过最小白名单校验的主题。 */
+        const storedTheme = storedPreferences
+          ? JSON.parse(storedPreferences).theme
+          : 'system'
+        if (storedTheme === 'system' || storedTheme === 'light' || storedTheme === 'dark') {
+          document.documentElement.dataset.theme = storedTheme
+        }
+      } catch {
+        document.documentElement.dataset.theme = 'system'
+      }
+    </script>
+    <style>
+      html,
+      body,
+      #app {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .ncx-startup-splash {
+        position: fixed;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        inset: 0;
+        -webkit-app-region: drag;
+      }
+
+      .ncx-startup-splash__logo {
+        width: clamp(80px, 10vw, 112px);
+        height: clamp(80px, 10vw, 112px);
+        object-fit: contain;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      :root[data-theme='dark'] body,
+      :root[data-theme='dark'] .ncx-startup-splash {
+        background: #1c1c1f;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) body,
+        :root:not([data-theme='light']) .ncx-startup-splash {
+          background: #1c1c1f;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div
+        class="ncx-startup-splash"
+        role="status"
+        aria-label="Ncxmusic 正在启动"
+      >
+        <img
+          class="ncx-startup-splash__logo"
+          src="/icon.png"
+          alt=""
+          draggable="false"
+        />
+      </div>
+    </div>
     <script type="module" src="/main.ts"></script>
   </body>
 </html>
