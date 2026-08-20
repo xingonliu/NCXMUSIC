@@ -189,7 +189,7 @@ watch(content, () => {
   <section
     class="agent-composer"
     :class="{ 'has-pending-interaction': hasPendingInteraction }"
-    aria-label="给 Agent 发送消息"
+    :aria-label="$tSource('给 Agent 发送消息')"
   >
     <!-- 待处理卡展示时隐藏回到底部按钮，避免两个浮层争夺同一锚点。 -->
     <Transition name="agent-scroll-btn-fade">
@@ -197,8 +197,8 @@ watch(content, () => {
         v-if="showScrollToBottom && !hasPendingInteraction"
         type="button"
         class="agent-scroll-to-bottom-btn"
-        aria-label="滚动到底部"
-        title="滚动到底部"
+        :aria-label="$tSource('滚动到底部')"
+        :title="$tSource('滚动到底部')"
         @click="emit('scroll-to-bottom')"
       >
         <ArrowDown
@@ -214,7 +214,7 @@ watch(content, () => {
       class="agent-composer-context-pill"
     >
       <Folder :size="13" />
-      <span>{{ contextLabel }}</span>
+      <span>{{ $tSource(contextLabel) }}</span>
     </div>
 
     <!-- Composer Rounded Container -->
@@ -226,7 +226,7 @@ watch(content, () => {
       <div
         v-if="hasPendingInteraction"
         class="agent-interaction-dock"
-        aria-label="等待处理的交互"
+        :aria-label="$tSource('等待处理的交互')"
       >
         <slot name="interaction" />
       </div>
@@ -236,7 +236,7 @@ watch(content, () => {
         v-model="content"
         rows="1"
         :disabled="!snapshot.configured"
-        :placeholder="snapshot.configured ? '随心输入' : '请先配置语言模型'"
+        :placeholder="$tSource(snapshot.configured ? '随心输入' : '请先配置语言模型')"
         @keydown="handleKeydown"
         @input="adjustTextareaHeight"
       />
@@ -255,7 +255,7 @@ watch(content, () => {
         </div>
         <div class="agent-composer-right-controls">
           <CommonIconButton
-            label="按住说话"
+            :label="$tSource('按住说话')"
             size="default"
             variant="ghost"
             :class="{ 'is-voice-listening': voice.state.value === 'listening' }"
@@ -280,7 +280,7 @@ watch(content, () => {
 
           <CommonIconButton
             v-if="active"
-            label="停止当前任务"
+            :label="$tSource('停止当前任务')"
             class="agent-composer-send-btn is-stop"
             @click="emit('stop')"
           >
@@ -291,7 +291,7 @@ watch(content, () => {
           </CommonIconButton>
           <CommonIconButton
             v-else
-            label="发送消息"
+            :label="$tSource('发送消息')"
             class="agent-composer-send-btn"
             :disabled="!canSend"
             @click="submit"

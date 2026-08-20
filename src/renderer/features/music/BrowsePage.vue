@@ -11,6 +11,7 @@ import type {
   StandardSong
 } from '../../../shared/schemas/music'
 import { CommonButton, CommonSkeleton } from '../../design-system/components'
+import { translatePublicError } from '../../i18n'
 import Cover from './components/Cover.vue'
 import EntityCard from './components/EntityCard.vue'
 import MusicSection from './components/MusicSection.vue'
@@ -113,7 +114,7 @@ async function loadNewSongs(): Promise<void> {
   newSongsSection.value.state = 'loading'
   /** 最新单曲标准响应。 */
   const response = await window.ncx.runtime.getNewSongs({ limit: 20 })
-  if (!response.ok) return failSection(newSongsSection.value, response.error.message)
+  if (!response.ok) return failSection(newSongsSection.value, translatePublicError(response.error))
   if (response.data.kind !== 'songCollection') return failSection(newSongsSection.value, '最新单曲响应类型不匹配。')
   settleSection(newSongsSection.value, response.data.songs)
 }
@@ -123,7 +124,7 @@ async function loadNewAlbums(): Promise<void> {
   newAlbumsSection.value.state = 'loading'
   /** 最新专辑标准响应。 */
   const response = await window.ncx.runtime.readMusic({ operation: 'getNewAlbums', area: 'ALL', limit: 20, offset: 0 })
-  if (!response.ok) return failSection(newAlbumsSection.value, response.error.message)
+  if (!response.ok) return failSection(newAlbumsSection.value, translatePublicError(response.error))
   if (response.data.kind !== 'albumCollection' || response.data.collection !== 'new') {
     return failSection(newAlbumsSection.value, '最新专辑响应类型不匹配。')
   }
@@ -135,7 +136,7 @@ async function loadFeaturedPlaylists(): Promise<void> {
   featuredSection.value.state = 'loading'
   /** 推荐歌单标准响应。 */
   const response = await window.ncx.runtime.getFeaturedPlaylists({ limit: 10 })
-  if (!response.ok) return failSection(featuredSection.value, response.error.message)
+  if (!response.ok) return failSection(featuredSection.value, translatePublicError(response.error))
   if (response.data.kind !== 'playlistCollection') return failSection(featuredSection.value, '推荐歌单响应类型不匹配。')
   settleSection(featuredSection.value, response.data.playlists)
 }
@@ -145,7 +146,7 @@ async function loadCharts(): Promise<void> {
   chartsSection.value.state = 'loading'
   /** 排行榜标准响应。 */
   const response = await window.ncx.runtime.readMusic({ operation: 'getCharts' })
-  if (!response.ok) return failSection(chartsSection.value, response.error.message)
+  if (!response.ok) return failSection(chartsSection.value, translatePublicError(response.error))
   if (response.data.kind !== 'playlistCollection' || response.data.collection !== 'charts') {
     return failSection(chartsSection.value, '排行榜响应类型不匹配。')
   }
@@ -163,7 +164,7 @@ async function loadArtists(): Promise<void> {
     limit: 16,
     offset: 0
   })
-  if (!response.ok) return failSection(artistsSection.value, response.error.message)
+  if (!response.ok) return failSection(artistsSection.value, translatePublicError(response.error))
   if (response.data.kind !== 'artistCollection') return failSection(artistsSection.value, '歌手探索响应类型不匹配。')
   settleSection(artistsSection.value, response.data.artists)
 }
@@ -181,7 +182,7 @@ async function loadCategoryPreview(row: BrowseCategoryPreviewRow): Promise<void>
     limit: CATEGORY_PREVIEW_LIMIT,
     offset: 0
   })
-  if (!response.ok) return failSection(row.section, response.error.message)
+  if (!response.ok) return failSection(row.section, translatePublicError(response.error))
   if (response.data.kind !== 'playlistCollection' || response.data.collection !== 'category') {
     return failSection(row.section, '分类歌单响应类型不匹配。')
   }
@@ -197,7 +198,7 @@ async function loadBrowseFacets(): Promise<void> {
     categoryPreviewSection.value = {
       state: 'error',
       data: [],
-      error: response.ok ? '分类筛选响应类型不匹配。' : response.error.message
+      error: response.ok ? '分类筛选响应类型不匹配。' : translatePublicError(response.error)
     }
     return
   }
@@ -279,62 +280,138 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="browse-page" aria-labelledby="browse-title">
+  <section
+    class="browse-page"
+    aria-labelledby="browse-title"
+  >
     <header class="browse-heading">
-      <p>浏览</p>
-      <h1 id="browse-title">更大的音乐世界</h1>
-      <span>最新发行、全球榜单与风格探索，保持一条清晰的浏览路径。</span>
+      <p>{{ $tSource("浏览") }}</p>
+      <h1 id="browse-title">
+        {{ $tSource("更大的音乐世界") }}
+      </h1>
+      <span>{{ $tSource("最新发行、全球榜单与风格探索，保持一条清晰的浏览路径。") }}</span>
     </header>
 
     <MusicSection
       section-id="latest-releases"
-      title="最新发行"
+      :title="$tSource('最新发行')"
       :state="newSongsSection.state === 'error' && newAlbumsSection.state === 'error' ? 'error' : 'ready'"
       :error-text="newSongsSection.error || newAlbumsSection.error"
       @retry="loadPage"
     >
       <div class="browse-release-layout">
-        <section class="browse-subsection" aria-labelledby="latest-songs-title">
-          <header><h3 id="latest-songs-title">最新单曲</h3><span>{{ newSongPreview.length }} 首</span></header>
-          <div v-if="newSongsSection.state === 'loading'" class="browse-song-list" aria-hidden="true">
+        <section
+          class="browse-subsection"
+          aria-labelledby="latest-songs-title"
+        >
+          <header>
+            <h3 id="latest-songs-title">
+              {{ $tSource("最新单曲") }}
+            </h3><span>{{ newSongPreview.length }} {{ $tSource("首") }}</span>
+          </header>
+          <div
+            v-if="newSongsSection.state === 'loading'"
+            class="browse-song-list"
+            aria-hidden="true"
+          >
             <div
               v-for="index in 6"
               :key="index"
               class="browse-skeleton-song-item"
             >
-              <CommonSkeleton variant="rectangular" width="48px" height="48px" style="border-radius: var(--ncx-radius-md); flex-shrink: 0" />
+              <CommonSkeleton
+                variant="rectangular"
+                width="48px"
+                height="48px"
+                style="border-radius: var(--ncx-radius-md); flex-shrink: 0"
+              />
               <div class="browse-skeleton-song-copy">
-                <CommonSkeleton variant="rectangular" width="65%" height="14px" />
-                <CommonSkeleton variant="rectangular" width="40%" height="11px" style="margin-top: 3px" />
+                <CommonSkeleton
+                  variant="rectangular"
+                  width="65%"
+                  height="14px"
+                />
+                <CommonSkeleton
+                  variant="rectangular"
+                  width="40%"
+                  height="11px"
+                  style="margin-top: 3px"
+                />
               </div>
-              <CommonSkeleton variant="avatar" width="16px" height="16px" style="opacity: 0.3; flex-shrink: 0" />
+              <CommonSkeleton
+                variant="avatar"
+                width="16px"
+                height="16px"
+                style="opacity: 0.3; flex-shrink: 0"
+              />
             </div>
           </div>
-          <div v-else class="browse-song-list">
-            <button v-for="song in newSongPreview" :key="song.id" type="button" @click="playSong(song)">
-              <Cover :src="song.album?.artworkUrl" :alt="song.name" size="compact" :show-play-button="false" />
+          <div
+            v-else
+            class="browse-song-list"
+          >
+            <button
+              v-for="song in newSongPreview"
+              :key="song.id"
+              type="button"
+              @click="playSong(song)"
+            >
+              <Cover
+                :src="song.album?.artworkUrl"
+                :alt="song.name"
+                size="compact"
+                :show-play-button="false"
+              />
               <span><strong>{{ song.name }}</strong><small>{{ song.artists.map((artist) => artist.name).join(' / ') }}</small></span>
-              <Play :size="15" fill="currentColor" />
+              <Play
+                :size="15"
+                fill="currentColor"
+              />
             </button>
           </div>
         </section>
 
-        <section class="browse-subsection" aria-labelledby="latest-albums-title">
-          <header><h3 id="latest-albums-title">最新专辑</h3><span>{{ newAlbumPreview.length }} 张</span></header>
-          <div v-if="newAlbumsSection.state === 'loading'" class="browse-album-grid" aria-hidden="true">
+        <section
+          class="browse-subsection"
+          aria-labelledby="latest-albums-title"
+        >
+          <header>
+            <h3 id="latest-albums-title">
+              {{ $tSource("最新专辑") }}
+            </h3><span>{{ newAlbumPreview.length }} {{ $tSource("张") }}</span>
+          </header>
+          <div
+            v-if="newAlbumsSection.state === 'loading'"
+            class="browse-album-grid"
+            aria-hidden="true"
+          >
             <div
               v-for="index in 6"
               :key="index"
               class="browse-skeleton-card"
             >
-              <CommonSkeleton variant="card" class="browse-skeleton-square-cover" />
+              <CommonSkeleton
+                variant="card"
+                class="browse-skeleton-square-cover"
+              />
               <div class="browse-skeleton-card-copy">
-                <CommonSkeleton variant="rectangular" width="80%" height="14px" />
-                <CommonSkeleton variant="rectangular" width="50%" height="12px" />
+                <CommonSkeleton
+                  variant="rectangular"
+                  width="80%"
+                  height="14px"
+                />
+                <CommonSkeleton
+                  variant="rectangular"
+                  width="50%"
+                  height="12px"
+                />
               </div>
             </div>
           </div>
-          <div v-else class="browse-album-grid">
+          <div
+            v-else
+            class="browse-album-grid"
+          >
             <EntityCard
               v-for="album in newAlbumPreview"
               :key="album.id"
@@ -350,22 +427,36 @@ onMounted(() => {
 
     <MusicSection
       section-id="browse-featured"
-      title="新歌推荐歌单"
+      :title="$tSource('新歌推荐歌单')"
       :state="featuredSection.state"
       :error-text="featuredSection.error"
       @retry="loadFeaturedPlaylists"
     >
       <template #skeleton>
-        <div class="browse-card-strip" aria-hidden="true">
+        <div
+          class="browse-card-strip"
+          aria-hidden="true"
+        >
           <div
             v-for="index in 6"
             :key="index"
             class="browse-skeleton-card"
           >
-            <CommonSkeleton variant="card" class="browse-skeleton-square-cover" />
+            <CommonSkeleton
+              variant="card"
+              class="browse-skeleton-square-cover"
+            />
             <div class="browse-skeleton-card-copy">
-              <CommonSkeleton variant="rectangular" width="80%" height="14px" />
-              <CommonSkeleton variant="rectangular" width="50%" height="12px" />
+              <CommonSkeleton
+                variant="rectangular"
+                width="80%"
+                height="14px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="50%"
+                height="12px"
+              />
             </div>
           </div>
         </div>
@@ -385,34 +476,70 @@ onMounted(() => {
 
     <MusicSection
       section-id="popular-charts"
-      title="热门排行榜"
+      :title="$tSource('热门排行榜')"
       :state="chartsSection.state"
       :error-text="chartsSection.error"
       @retry="loadCharts"
     >
       <template #skeleton>
-        <div class="browse-chart-grid" aria-hidden="true">
+        <div
+          class="browse-chart-grid"
+          aria-hidden="true"
+        >
           <div
             v-for="index in 6"
             :key="index"
             class="browse-skeleton-chart-card"
           >
-            <CommonSkeleton variant="card" class="browse-skeleton-chart-cover" />
+            <CommonSkeleton
+              variant="card"
+              class="browse-skeleton-chart-cover"
+            />
             <div class="browse-skeleton-chart-copy">
-              <CommonSkeleton variant="rectangular" width="70%" height="14px" />
-              <CommonSkeleton variant="rectangular" width="45%" height="12px" style="margin-top: 4px" />
+              <CommonSkeleton
+                variant="rectangular"
+                width="70%"
+                height="14px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="45%"
+                height="12px"
+                style="margin-top: 4px"
+              />
             </div>
-            <CommonSkeleton variant="rectangular" width="14px" height="14px" style="opacity: 0.3; margin-left: auto" />
+            <CommonSkeleton
+              variant="rectangular"
+              width="14px"
+              height="14px"
+              style="opacity: 0.3; margin-left: auto"
+            />
           </div>
         </div>
       </template>
       <template #actions>
-        <CommonButton variant="ghost" size="compact" @click="openAllCharts">查看全部 <ChevronRight :size="14" /></CommonButton>
+        <CommonButton
+          variant="ghost"
+          size="compact"
+          @click="openAllCharts"
+        >
+          {{ $tSource("查看全部") }} <ChevronRight :size="14" />
+        </CommonButton>
       </template>
       <div class="browse-chart-grid">
-        <button v-for="chart in chartPreview" :key="chart.id" type="button" @click="openPlaylist(chart)">
-          <Cover :src="chart.artworkUrl" :alt="chart.name" size="card" :show-play-button="false" />
-          <span><strong>{{ chart.name }}</strong><small>{{ chart.updateFrequency || '持续更新' }}</small></span>
+        <button
+          v-for="chart in chartPreview"
+          :key="chart.id"
+          type="button"
+          @click="openPlaylist(chart)"
+        >
+          <Cover
+            :src="chart.artworkUrl"
+            :alt="chart.name"
+            size="card"
+            :show-play-button="false"
+          />
+          <span><strong>{{ chart.name }}</strong><small>{{ $tSource(chart.updateFrequency || '持续更新') }}</small></span>
           <ChevronRight :size="16" />
         </button>
       </div>
@@ -420,22 +547,39 @@ onMounted(() => {
 
     <MusicSection
       section-id="browse-categories"
-      title="按分类探索歌单"
+      :title="$tSource('按分类探索歌单')"
       :state="categoryPreviewSection.state"
       :error-text="categoryPreviewSection.error"
       @retry="loadBrowseFacets"
     >
       <template #skeleton>
-        <div class="browse-category-preview-list" aria-hidden="true">
+        <div
+          class="browse-category-preview-list"
+          aria-hidden="true"
+        >
           <section
             v-for="rowIndex in 5"
             :key="rowIndex"
             class="browse-category-preview-row"
           >
             <header>
-              <CommonSkeleton variant="rectangular" width="36px" height="12px" />
-              <CommonSkeleton variant="rectangular" width="68px" height="18px" style="margin-top: 4px" />
-              <CommonSkeleton variant="rectangular" width="48px" height="11px" style="margin-top: 4px" />
+              <CommonSkeleton
+                variant="rectangular"
+                width="36px"
+                height="12px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="68px"
+                height="18px"
+                style="margin-top: 4px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="48px"
+                height="11px"
+                style="margin-top: 4px"
+              />
             </header>
             <div class="browse-category-skeleton-strip">
               <div
@@ -443,10 +587,21 @@ onMounted(() => {
                 :key="cardIndex"
                 class="browse-skeleton-card"
               >
-                <CommonSkeleton variant="card" class="browse-skeleton-square-cover" />
+                <CommonSkeleton
+                  variant="card"
+                  class="browse-skeleton-square-cover"
+                />
                 <div class="browse-skeleton-card-copy">
-                  <CommonSkeleton variant="rectangular" width="80%" height="14px" />
-                  <CommonSkeleton variant="rectangular" width="50%" height="12px" />
+                  <CommonSkeleton
+                    variant="rectangular"
+                    width="80%"
+                    height="14px"
+                  />
+                  <CommonSkeleton
+                    variant="rectangular"
+                    width="50%"
+                    height="12px"
+                  />
                 </div>
               </div>
             </div>
@@ -459,7 +614,7 @@ onMounted(() => {
           size="compact"
           @click="openAllCategories"
         >
-          查看更多 <ChevronRight :size="14" />
+          {{ $tSource("查看更多") }} <ChevronRight :size="14" />
         </CommonButton>
       </template>
       <div class="browse-category-preview-list">
@@ -471,22 +626,33 @@ onMounted(() => {
           <header>
             <p>{{ row.group.label }}</p>
             <h3>{{ row.category }}</h3>
-            <span>{{ row.section.data.length }} 个歌单</span>
+            <span>{{ row.section.data.length }} {{ $tSource("个歌单") }}</span>
           </header>
           <div
             v-if="row.section.state === 'loading'"
             class="browse-category-row-state browse-category-skeleton-strip"
           >
-            <span class="sr-only">正在加载</span>
+            <span class="sr-only">{{ $tSource("正在加载") }}</span>
             <div
               v-for="cardIndex in CATEGORY_PREVIEW_LIMIT"
               :key="cardIndex"
               class="browse-skeleton-card"
             >
-              <CommonSkeleton variant="card" class="browse-skeleton-square-cover" />
+              <CommonSkeleton
+                variant="card"
+                class="browse-skeleton-square-cover"
+              />
               <div class="browse-skeleton-card-copy">
-                <CommonSkeleton variant="rectangular" width="80%" height="14px" />
-                <CommonSkeleton variant="rectangular" width="50%" height="12px" />
+                <CommonSkeleton
+                  variant="rectangular"
+                  width="80%"
+                  height="14px"
+                />
+                <CommonSkeleton
+                  variant="rectangular"
+                  width="50%"
+                  height="12px"
+                />
               </div>
             </div>
           </div>
@@ -494,21 +660,24 @@ onMounted(() => {
             v-else-if="row.section.state === 'error'"
             class="browse-category-row-state"
           >
-            <span>{{ row.section.error }}</span>
+            <span>{{ translatePublicError({ message: row.section.error }) }}</span>
             <button
               type="button"
               @click="loadCategoryPreview(row)"
             >
-              重试
+              {{ $tSource("重试") }}
             </button>
           </div>
           <div
             v-else-if="row.section.state === 'empty'"
             class="browse-category-row-state"
           >
-            当前分类暂无歌单
+            {{ $tSource("当前分类暂无歌单") }}
           </div>
-          <div v-else class="browse-category-preview-strip">
+          <div
+            v-else
+            class="browse-category-preview-strip"
+          >
             <EntityCard
               v-for="playlist in row.section.data"
               :key="playlist.id"
@@ -525,32 +694,64 @@ onMounted(() => {
 
     <MusicSection
       section-id="artist-explore"
-      title="歌手探索"
+      :title="$tSource('歌手探索')"
       :state="artistsSection.state"
       :error-text="artistsSection.error"
       @retry="loadArtists"
     >
       <template #skeleton>
-        <div class="browse-artist-strip" aria-hidden="true">
+        <div
+          class="browse-artist-strip"
+          aria-hidden="true"
+        >
           <div
             v-for="index in 8"
             :key="index"
             class="browse-skeleton-artist-card"
           >
-            <CommonSkeleton variant="avatar" class="browse-skeleton-circle-avatar" />
-            <CommonSkeleton variant="rectangular" width="60%" height="13px" style="margin-top: 8px" />
-            <CommonSkeleton variant="rectangular" width="40%" height="11px" />
+            <CommonSkeleton
+              variant="avatar"
+              class="browse-skeleton-circle-avatar"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="60%"
+              height="13px"
+              style="margin-top: 8px"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="40%"
+              height="11px"
+            />
           </div>
         </div>
       </template>
       <template #actions>
-        <CommonButton variant="ghost" size="compact" @click="openAllArtists">查看全部 <ChevronRight :size="14" /></CommonButton>
+        <CommonButton
+          variant="ghost"
+          size="compact"
+          @click="openAllArtists"
+        >
+          {{ $tSource("查看全部") }} <ChevronRight :size="14" />
+        </CommonButton>
       </template>
       <div class="browse-artist-strip">
-        <button v-for="artist in artistPreview" :key="artist.id" type="button" @click="openArtist(artist)">
-          <Cover :src="artist.artworkUrl" :alt="artist.name" size="card" shape="circle" :show-play-button="false" />
+        <button
+          v-for="artist in artistPreview"
+          :key="artist.id"
+          type="button"
+          @click="openArtist(artist)"
+        >
+          <Cover
+            :src="artist.artworkUrl"
+            :alt="artist.name"
+            size="card"
+            shape="circle"
+            :show-play-button="false"
+          />
           <strong>{{ artist.name }}</strong>
-          <span>{{ artist.alias.join(' / ') || '歌手' }}</span>
+          <span>{{ $tSource(artist.alias.join(' / ') || '歌手') }}</span>
         </button>
       </div>
     </MusicSection>

@@ -134,7 +134,7 @@ onUnmounted(() => {
       role="button"
       tabindex="0"
       :aria-expanded="expanded"
-      aria-label="展开或收起工具执行明细"
+      :aria-label="$tSource('展开或收起工具执行明细')"
       @click="expanded = !expanded"
       @keydown.enter.prevent="expanded = !expanded"
       @keydown.space.prevent="expanded = !expanded"
@@ -147,15 +147,15 @@ onUnmounted(() => {
           />
         </span>
         <div class="agent-tool-card-info">
-          <span class="agent-tool-card-title">{{ toolLabel }} {{ card.title }}</span>
-          <span class="agent-tool-card-sub">{{ card.status === 'succeeded' ? '完成' : card.status === 'running' ? '执行中…' : '失败' }} · {{ formattedDuration }}</span>
+          <span class="agent-tool-card-title">{{ $tSource(toolLabel) }} {{ card.title }}</span>
+          <span class="agent-tool-card-sub">{{ $tSource(card.status === 'succeeded' ? '完成' : card.status === 'running' ? '执行中…' : '失败') }} · {{ $tSource(formattedDuration) }}</span>
         </div>
       </div>
       <div class="agent-tool-card-actions">
         <button
           type="button"
           class="agent-action-btn agent-tool-toggle-btn"
-          :aria-label="expanded ? '收起明细' : '展开明细'"
+          :aria-label="$tSource(expanded ? '收起明细' : '展开明细')"
           :aria-expanded="expanded"
           tabindex="-1"
           @click.stop="expanded = !expanded"
@@ -174,13 +174,13 @@ onUnmounted(() => {
     >
       <div class="agent-tool-details-inner">
         <div class="agent-tool-card-details">
-          <span>参数明细:</span>
-          <code>{{ card.parameterSummary || '无参数' }}</code>
+          <span>{{ $tSource("参数明细:") }}</span>
+          <code>{{ $tSource(card.parameterSummary || '无参数') }}</code>
           <template v-if="card.toolName === 'execute_shell' && shellTerminal">
             <span>stdout:</span>
-            <pre>{{ shellTerminal.stdout || '—' }}{{ shellTerminal.stdoutTruncated ? '\n…已截断' : '' }}</pre>
+            <pre>{{ shellTerminal.stdout || '—' }}{{ $tSource(shellTerminal.stdoutTruncated ? '\n…已截断' : '') }}</pre>
             <span>stderr:</span>
-            <pre>{{ shellTerminal.stderr || '—' }}{{ shellTerminal.stderrTruncated ? '\n…已截断' : '' }}</pre>
+            <pre>{{ shellTerminal.stderr || '—' }}{{ $tSource(shellTerminal.stderrTruncated ? '\n…已截断' : '') }}</pre>
           </template>
         </div>
       </div>

@@ -18,6 +18,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 import { navigateBack } from '../../app/navigation-history'
 import { CommonButton, CommonSearchInput } from '../../design-system/components'
+import { translateSourceText } from '../../i18n'
 import {
   getSettingsNavigationItem,
   normalizeSettingsTab,
@@ -59,15 +60,20 @@ const searchResults = computed<SettingsSearchResult[]>(() => {
       /** 当前设置项参与检索的完整文本。 */
       const haystack = [
         item.title,
+        translateSourceText(item.title),
         item.description,
+        translateSourceText(item.description),
         getSettingsNavigationItem(item.tab).label,
+        translateSourceText(getSettingsNavigationItem(item.tab).label),
         ...item.keywords
       ].join(' ').toLocaleLowerCase('zh-CN')
       return haystack.includes(normalizedQuery)
     })
     .map((item) => ({
       ...item,
-      tabLabel: getSettingsNavigationItem(item.tab).label
+      title: translateSourceText(item.title),
+      description: translateSourceText(item.description),
+      tabLabel: translateSourceText(getSettingsNavigationItem(item.tab).label)
     }))
 })
 
@@ -124,22 +130,21 @@ function resolveSettingsIcon(tab: SettingsTab): Component {
       variant="ghost"
       @click="returnToApplication"
     >
-      <ArrowLeft :size="16" />
-      返回应用
+      <ArrowLeft :size="16" /> {{ $tSource("返回应用") }}
     </CommonButton>
 
     <CommonSearchInput
       v-model="searchQuery"
       class="settings-sidebar-search"
       size="compact"
-      placeholder="搜索设置…"
-      aria-label="搜索设置"
+      :placeholder="$tSource('搜索设置…')"
+      :aria-label="$tSource('搜索设置')"
     />
 
     <nav
       v-if="!isSearching"
       class="settings-sidebar-navigation"
-      aria-label="设置分类"
+      :aria-label="$tSource('设置分类')"
     >
       <section
         v-for="group in SETTINGS_NAVIGATION_GROUPS"
@@ -147,7 +152,7 @@ function resolveSettingsIcon(tab: SettingsTab): Component {
         class="settings-sidebar-group"
       >
         <p class="settings-sidebar-group-title">
-          {{ group.label }}
+          {{ $tSource(group.label) }}
         </p>
         <CommonButton
           v-for="item in group.items"
@@ -163,7 +168,7 @@ function resolveSettingsIcon(tab: SettingsTab): Component {
             :size="16"
             :stroke-width="1.8"
           />
-          <span>{{ item.label }}</span>
+          <span>{{ $tSource(item.label) }}</span>
         </CommonButton>
       </section>
     </nav>
@@ -171,11 +176,11 @@ function resolveSettingsIcon(tab: SettingsTab): Component {
     <section
       v-else
       class="settings-search-results"
-      aria-label="设置搜索结果"
+      :aria-label="$tSource('设置搜索结果')"
       aria-live="polite"
     >
       <p class="settings-sidebar-group-title">
-        搜索结果
+        {{ $tSource("搜索结果") }}
       </p>
       <CommonButton
         v-for="result in searchResults"
@@ -198,7 +203,7 @@ function resolveSettingsIcon(tab: SettingsTab): Component {
         v-if="searchResults.length === 0"
         class="settings-search-empty"
       >
-        没有匹配的设置
+        {{ $tSource("没有匹配的设置") }}
       </p>
     </section>
   </div>

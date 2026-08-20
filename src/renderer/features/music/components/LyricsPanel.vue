@@ -13,6 +13,7 @@ import {
   type LyricLineMouseEvent
 } from '../lyrics-engine'
 import { adaptStandardLyrics } from '../lyrics-engine/standard-lyrics-adapter'
+import { translatePublicError } from '../../../i18n'
 
 // ========= 属性 =========
 
@@ -320,7 +321,7 @@ async function loadLyrics(trackId: string | undefined): Promise<void> {
     const result = await window.ncx.runtime.getLyrics({ id: trackId, requestId })
     if (requestId !== latestRequestId) return
     if (!result.ok) {
-      errorMessage.value = result.error.message
+      errorMessage.value = translatePublicError(result.error)
       return
     }
     if (result.data.kind !== 'lyrics') {
@@ -393,7 +394,7 @@ onBeforeUnmount(() => {
     class="lyrics-panel"
     :class="{ 'lyrics-panel--immersive': props.immersive }"
     :style="lyricPlayerStyle"
-    aria-label="歌词"
+    :aria-label="$tSource('歌词')"
   >
     <div
       ref="lyricPlayerHost"
@@ -408,9 +409,9 @@ onBeforeUnmount(() => {
     >
       <CommonSpinner
         size="default"
-        label="正在加载歌词"
+        :label="$tSource('正在加载歌词')"
       />
-      <span>正在加载歌词</span>
+      <span>{{ $tSource("正在加载歌词") }}</span>
     </div>
 
     <div
@@ -418,7 +419,7 @@ onBeforeUnmount(() => {
       class="lyrics-panel-state"
     >
       <CommonErrorState
-        title="歌词读取失败"
+        :title="$tSource('歌词读取失败')"
         :description="errorMessage"
         @retry="retryLyrics"
       />
@@ -429,8 +430,8 @@ onBeforeUnmount(() => {
       class="lyrics-panel-state"
     >
       <CommonEmptyState
-        title="暂无歌词"
-        description="当前歌曲没有可展示的时间轴歌词。"
+        :title="$tSource('暂无歌词')"
+        :description="$tSource('当前歌曲没有可展示的时间轴歌词。')"
       />
     </div>
   </section>

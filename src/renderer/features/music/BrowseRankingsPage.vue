@@ -7,6 +7,7 @@ import type { StandardPlaylist } from '../../../shared/schemas/music'
 import { CommonEmptyState, CommonErrorState, CommonSearchInput, CommonSpinner } from '../../design-system/components'
 import Cover from './components/Cover.vue'
 import './music-content-pages.css'
+import { translatePublicError } from '../../i18n'
 
 // ========= 变量 =========
 
@@ -61,7 +62,7 @@ async function loadCharts(): Promise<void> {
   const response = await window.ncx.runtime.readMusic({ operation: 'getCharts' })
   loading.value = false
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    errorMessage.value = translatePublicError(response.error)
     return
   }
   if (response.data.kind !== 'playlistCollection' || response.data.collection !== 'charts') {
@@ -84,15 +85,26 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="rankings-page music-content-page" aria-labelledby="rankings-title">
+  <section
+    class="rankings-page music-content-page"
+    aria-labelledby="rankings-title"
+  >
     <header class="rankings-heading">
-      <p class="music-page-eyebrow"><TrendingUp :size="13" /> 浏览</p>
-      <h1 id="rankings-title">排行榜</h1>
-      <p>当前可用榜单及其更新节奏集中在一个可筛选的目录中。</p>
+      <p class="music-page-eyebrow">
+        <TrendingUp :size="13" /> {{ $tSource("浏览") }}
+      </p>
+      <h1 id="rankings-title">
+        {{ $tSource("排行榜") }}
+      </h1>
+      <p>{{ $tSource("当前可用榜单及其更新节奏集中在一个可筛选的目录中。") }}</p>
     </header>
 
     <div class="rankings-controls music-surface">
-      <div class="rankings-tabs" role="tablist" aria-label="榜单分类">
+      <div
+        class="rankings-tabs"
+        role="tablist"
+        :aria-label="$tSource('榜单分类')"
+      >
         <button
           v-for="tab in tabs"
           :key="tab.value"
@@ -102,20 +114,54 @@ onMounted(() => {
           :class="{ active: activeFrequency === tab.value }"
           @click="activeFrequency = tab.value"
         >
-          <Clock3 v-if="tab.value" :size="14" />
-          {{ tab.label }}
+          <Clock3
+            v-if="tab.value"
+            :size="14"
+          />
+          {{ $tSource(tab.label) }}
         </button>
       </div>
-      <CommonSearchInput v-model="filterQuery" placeholder="筛选榜单" aria-label="筛选榜单" />
+      <CommonSearchInput
+        v-model="filterQuery"
+        :placeholder="$tSource('筛选榜单')"
+        :aria-label="$tSource('筛选榜单')"
+      />
     </div>
 
-    <div v-if="loading" class="rankings-state"><CommonSpinner label="正在加载榜单" /><span>正在加载榜单</span></div>
-    <CommonErrorState v-else-if="errorMessage" title="榜单读取失败" :description="errorMessage" @retry="loadCharts" />
-    <CommonEmptyState v-else-if="visibleCharts.length === 0" title="没有匹配的榜单" description="调整标签或筛选词后再试。" />
-    <div v-else class="rankings-grid">
-      <button v-for="chart in visibleCharts" :key="chart.id" type="button" @click="openChart(chart)">
-        <Cover :src="chart.artworkUrl" :alt="chart.name" size="card" :show-play-button="false" />
-        <span><strong>{{ chart.name }}</strong><small>{{ chart.updateFrequency || '持续更新' }}</small></span>
+    <div
+      v-if="loading"
+      class="rankings-state"
+    >
+      <CommonSpinner :label="$tSource('正在加载榜单')" /><span>{{ $tSource("正在加载榜单") }}</span>
+    </div>
+    <CommonErrorState
+      v-else-if="errorMessage"
+      :title="$tSource('榜单读取失败')"
+      :description="errorMessage"
+      @retry="loadCharts"
+    />
+    <CommonEmptyState
+      v-else-if="visibleCharts.length === 0"
+      :title="$tSource('没有匹配的榜单')"
+      :description="$tSource('调整标签或筛选词后再试。')"
+    />
+    <div
+      v-else
+      class="rankings-grid"
+    >
+      <button
+        v-for="chart in visibleCharts"
+        :key="chart.id"
+        type="button"
+        @click="openChart(chart)"
+      >
+        <Cover
+          :src="chart.artworkUrl"
+          :alt="chart.name"
+          size="card"
+          :show-play-button="false"
+        />
+        <span><strong>{{ chart.name }}</strong><small>{{ $tSource(chart.updateFrequency || '持续更新') }}</small></span>
         <ChevronRight :size="17" />
       </button>
     </div>

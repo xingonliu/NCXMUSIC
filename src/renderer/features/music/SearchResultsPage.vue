@@ -18,7 +18,7 @@ import {
   CommonSpinner
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
-import { t } from '../../i18n'
+import { t , translatePublicError} from '../../i18n'
 import Cover from './components/Cover.vue'
 import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
@@ -128,7 +128,7 @@ async function loadSearchResults(): Promise<void> {
     })
     if (requestId !== latestRequestId) return
     if (!response.ok) {
-      errorMessage.value = response.error.message
+      errorMessage.value = translatePublicError(response.error)
       return
     }
     if (response.data.kind !== 'search') {
@@ -172,7 +172,7 @@ function enqueueSong(song: StandardSong): void {
 async function likeSong(song: StandardSong): Promise<void> {
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   showToast(t('music.search.liked', { song: song.name }), 'success')
@@ -224,37 +224,51 @@ watch([query, activeCategory], () => {
     class="search-results-page music-content-page"
     aria-labelledby="search-results-title"
   >
-    <form class="search-results-input" @submit.prevent="submitDraftSearch">
+    <form
+      class="search-results-input"
+      @submit.prevent="submitDraftSearch"
+    >
       <CommonSearchInput
         v-model="draftQuery"
         size="prominent"
-        placeholder="搜索歌曲、歌手、专辑、歌单或歌词"
-        aria-label="搜索音乐"
+        :placeholder="$tSource('搜索歌曲、歌手、专辑、歌单或歌词')"
+        :aria-label="$tSource('搜索音乐')"
         @search="submitDraftSearch"
       />
-      <CommonButton variant="primary" size="prominent" type="submit"><Search :size="16" />搜索</CommonButton>
+      <CommonButton
+        variant="primary"
+        size="prominent"
+        type="submit"
+      >
+        <Search :size="16" />{{ $tSource("搜索") }}
+      </CommonButton>
     </form>
 
-    <nav class="search-category-tabs" aria-label="搜索结果分类">
+    <nav
+      class="search-category-tabs"
+      :aria-label="$tSource('搜索结果分类')"
+    >
       <button
         v-for="tab in searchTabs"
         :key="tab.value"
         type="button"
         :class="{ active: activeCategory === tab.value }"
         @click="activeCategory = tab.value"
-      >{{ tab.label }}</button>
+      >
+        {{ $tSource(tab.label) }}
+      </button>
     </nav>
 
     <div class="search-results-header">
       <div class="music-page-heading">
         <p class="music-page-eyebrow">
-          搜索结果
+          {{ $tSource("搜索结果") }}
         </p>
         <h1 id="search-results-title">
-          {{ query || '搜索' }}
+          {{ $tSource(query || '搜索') }}
         </h1>
         <p class="search-results-summary">
-          {{ result ? `已整理 ${resultCount} 项内容` : '结果会按歌曲、歌手、专辑、歌单与歌词分类' }}
+          {{ $tSource(result ? `已整理 ${resultCount} 项内容` : '结果会按歌曲、歌手、专辑、歌单与歌词分类') }}
         </p>
       </div>
       <CommonButton
@@ -265,8 +279,7 @@ watch([query, activeCategory], () => {
         <Play
           :size="15"
           fill="currentColor"
-        />
-        播放全部
+        /> {{ $tSource("播放全部") }}
       </CommonButton>
     </div>
 
@@ -279,8 +292,8 @@ watch([query, activeCategory], () => {
         key="loading"
         class="search-results-state search-results-loading"
       >
-        <CommonSpinner label="搜索中" />
-        <span>正在搜索</span>
+        <CommonSpinner :label="$tSource('搜索中')" />
+        <span>{{ $tSource("正在搜索") }}</span>
       </div>
 
       <div
@@ -289,7 +302,7 @@ watch([query, activeCategory], () => {
         class="search-results-state"
       >
         <CommonErrorState
-          title="搜索失败"
+          :title="$tSource('搜索失败')"
           :description="errorMessage"
           @retry="loadSearchResults"
         />
@@ -301,8 +314,8 @@ watch([query, activeCategory], () => {
         class="search-results-state"
       >
         <CommonEmptyState
-          title="暂无结果"
-          description="换个关键词试试。"
+          :title="$tSource('暂无结果')"
+          :description="$tSource('换个关键词试试。')"
         />
       </div>
 
@@ -316,8 +329,8 @@ watch([query, activeCategory], () => {
           class="music-result-section music-surface"
         >
           <header class="music-section-heading">
-            <h2>歌曲</h2>
-            <span>{{ songs.length }} 首</span>
+            <h2>{{ $tSource("歌曲") }}</h2>
+            <span>{{ songs.length }} {{ $tSource("首") }}</span>
           </header>
           <VirtualTrackList
             class="track-list"
@@ -338,8 +351,8 @@ watch([query, activeCategory], () => {
           class="music-result-section music-surface"
         >
           <header class="music-section-heading">
-            <h2>专辑与歌单</h2>
-            <span>{{ albums.length + playlists.length }} 个</span>
+            <h2>{{ $tSource("专辑与歌单") }}</h2>
+            <span>{{ albums.length + playlists.length }} {{ $tSource("个") }}</span>
           </header>
           <div class="collection-grid">
             <button
@@ -355,7 +368,7 @@ watch([query, activeCategory], () => {
                 size="card"
               />
               <strong>{{ album.name }}</strong>
-              <span><Disc3 :size="13" /> 专辑</span>
+              <span><Disc3 :size="13" /> {{ $tSource("专辑") }}</span>
             </button>
 
             <button
@@ -371,7 +384,7 @@ watch([query, activeCategory], () => {
                 size="card"
               />
               <strong>{{ playlist.name }}</strong>
-              <span><ListMusic :size="13" /> 歌单</span>
+              <span><ListMusic :size="13" /> {{ $tSource("歌单") }}</span>
             </button>
           </div>
         </section>
@@ -381,8 +394,8 @@ watch([query, activeCategory], () => {
           class="music-result-section music-surface"
         >
           <header class="music-section-heading">
-            <h2>歌手</h2>
-            <span>{{ artists.length }} 位</span>
+            <h2>{{ $tSource("歌手") }}</h2>
+            <span>{{ artists.length }} {{ $tSource("位") }}</span>
           </header>
           <div class="artist-strip">
             <button
@@ -400,7 +413,7 @@ watch([query, activeCategory], () => {
               />
               <span class="artist-card-copy">
                 <strong>{{ artist.name }}</strong>
-                <span><UserRound :size="13" /> 歌手</span>
+                <span><UserRound :size="13" /> {{ $tSource("歌手") }}</span>
               </span>
             </button>
           </div>
@@ -411,8 +424,8 @@ watch([query, activeCategory], () => {
           class="music-result-section music-surface"
         >
           <header class="music-section-heading">
-            <h2>歌词</h2>
-            <span>{{ lyrics.length }} 首含关键词</span>
+            <h2>{{ $tSource("歌词") }}</h2>
+            <span>{{ lyrics.length }} {{ $tSource("首含关键词") }}</span>
           </header>
           <VirtualTrackList
             class="track-list"

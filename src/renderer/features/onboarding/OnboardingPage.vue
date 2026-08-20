@@ -113,13 +113,13 @@ function complete(): void {
         type="button"
         @click="complete"
       >
-        跳过
+        {{ $tSource("跳过") }}
       </button>
     </header>
 
     <nav
       class="onboarding-progress"
-      aria-label="首次引导进度"
+      :aria-label="$tSource('首次引导进度')"
     >
       <span
         v-for="step in steps"
@@ -140,36 +140,36 @@ function complete(): void {
         /></span>
         <small>0{{ currentStep.id }} / 07</small>
         <h1 id="onboarding-title">
-          {{ currentStep.title }}
+          {{ $tSource(currentStep.title) }}
         </h1>
-        <p>{{ currentStep.description }}</p>
+        <p>{{ $tSource(currentStep.description) }}</p>
       </section>
 
       <section
         v-if="currentStep.id === 2"
         class="onboarding-demo player-demo"
-        aria-label="播放器能力演示"
+        :aria-label="$tSource('播放器能力演示')"
       >
         <div class="demo-artwork">
           <Music2 :size="36" />
         </div>
-        <div><strong>雨后的城市</strong><span>小云精选 · 正在播放</span></div>
+        <div><strong>{{ $tSource("雨后的城市") }}</strong><span>{{ $tSource("小云精选 · 正在播放") }}</span></div>
         <span class="demo-wave"><i /><i /><i /><i /></span>
       </section>
 
       <section
         v-else-if="currentStep.id === 3"
         class="onboarding-demo agent-demo"
-        aria-label="小云工具演示"
+        :aria-label="$tSource('小云工具演示')"
       >
         <div class="demo-user-message">
-          下一首
+          {{ $tSource("下一首") }}
         </div>
         <div class="demo-tool-line">
-          <Bot :size="15" /><span>控制播放器</span><i />
+          <Bot :size="15" /><span>{{ $tSource("控制播放器") }}</span><i />
         </div>
         <div class="demo-agent-message">
-          已经切换到下一首。
+          {{ $tSource("已经切换到下一首。") }}
         </div>
       </section>
 
@@ -178,12 +178,12 @@ function complete(): void {
         class="onboarding-action-card"
       >
         <LogIn :size="22" />
-        <div><strong>官方网页登录</strong><span>Cookie 只由 Main 持有，不向页面或模型暴露。</span></div>
+        <div><strong>{{ $tSource("官方网页登录") }}</strong><span>{{ $tSource("Cookie 只由 Main 持有，不向页面或模型暴露。") }}</span></div>
         <CommonButton
           variant="primary"
           @click="login"
         >
-          登录网易云
+          {{ $tSource("登录网易云") }}
         </CommonButton>
       </section>
 
@@ -191,9 +191,9 @@ function complete(): void {
         v-else-if="currentStep.id === 5"
         class="onboarding-security-grid"
       >
-        <article><LockKeyhole :size="18" /><strong>本地加密</strong><span>API Key 不进普通配置</span></article>
-        <article><Music2 :size="18" /><strong>M1～M4</strong><span>音乐代操作权限</span></article>
-        <article><Cloud :size="18" /><strong>S1～S4</strong><span>命令执行权限</span></article>
+        <article><LockKeyhole :size="18" /><strong>{{ $tSource("本地加密") }}</strong><span>{{ $tSource("API Key 不进普通配置") }}</span></article>
+        <article><Music2 :size="18" /><strong>M1～M4</strong><span>{{ $tSource("音乐代操作权限") }}</span></article>
+        <article><Cloud :size="18" /><strong>S1～S4</strong><span>{{ $tSource("命令执行权限") }}</span></article>
       </section>
 
       <ModelSettingsPanel
@@ -208,14 +208,14 @@ function complete(): void {
         :disabled="currentIndex === 0"
         @click="previous"
       >
-        <ChevronLeft :size="15" />返回
+        <ChevronLeft :size="15" />{{ $tSource("返回") }}
       </CommonButton>
-      <span v-if="isAccountStep || isModelStep">可以跳过，稍后在设置中完成</span>
+      <span v-if="isAccountStep || isModelStep">{{ $tSource("可以跳过，稍后在设置中完成") }}</span>
       <CommonButton
         variant="primary"
         @click="next"
       >
-        {{ isLastStep ? '进入 Ncxmusic' : '下一步' }}<ChevronRight
+        {{ $tSource(isLastStep ? '进入 Ncxmusic' : '下一步') }}<ChevronRight
           v-if="!isLastStep"
           :size="15"
         />

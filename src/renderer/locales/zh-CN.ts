@@ -34,6 +34,25 @@ export const zhCN = {
     unknownArtist: '未知歌手',
     unknownAlbum: '未知专辑'
   },
+  errors: {
+    protocolInvalidMessage: '应用收到的响应格式无效，请重试。',
+    protocolVersionMismatch: '应用服务版本不匹配，请重启应用。',
+    connectionReplaced: '服务连接已更新，请重试。',
+    requestTimeout: '请求超时，请稍后重试。',
+    requestCancelled: '请求已取消。',
+    upstream: '上游服务返回错误，请稍后重试。',
+    utilityUnavailable: '本地服务暂不可用，请稍后重试。',
+    capabilityUnavailable: '当前能力不可用。',
+    authRequired: '此操作需要先登录。',
+    alreadyCompleted: '此操作已经完成，无需重复执行。',
+    serviceUnavailable: '服务暂不可用，请稍后重试。',
+    accountStale: '账户已切换，请刷新后重试。',
+    policyDenied: '当前安全策略不允许此操作。',
+    argumentsInvalid: '操作参数无效，请检查后重试。',
+    notFound: '没有找到匹配内容。',
+    providerTimeout: '模型服务响应超时，请稍后重试。',
+    generic: '操作失败，请稍后重试。'
+  },
   navigation: {
     discover: '发现音乐',
     browse: '浏览',

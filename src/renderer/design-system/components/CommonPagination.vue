@@ -103,7 +103,7 @@ function requestPage(page: number): void {
         type="button"
         :class="{ active: page === normalizedCurrentPage }"
         :aria-current="page === normalizedCurrentPage ? 'page' : undefined"
-        :aria-label="`第 ${page} 页`"
+        :aria-label="$tSource(`第 ${page} 页`)"
         :disabled="disabled"
         @click="requestPage(page)"
       >

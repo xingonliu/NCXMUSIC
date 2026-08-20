@@ -36,26 +36,39 @@ function openImmersiveLyrics(event: MouseEvent): void {
 </script>
 
 <template>
-  <section class="playback-detail-page" aria-labelledby="playback-detail-title">
+  <section
+    class="playback-detail-page"
+    aria-labelledby="playback-detail-title"
+  >
     <template v-if="track">
-      <Cover :src="artworkUrl" :alt="track.name" size="hero" />
+      <Cover
+        :src="artworkUrl"
+        :alt="track.name"
+        size="hero"
+      />
       <div class="playback-detail-copy">
-        <p>正在播放</p>
-        <h1 id="playback-detail-title">{{ track.name }}</h1>
+        <p>{{ $tSource("正在播放") }}</p>
+        <h1 id="playback-detail-title">
+          {{ track.name }}
+        </h1>
         <h2>{{ artistText }}</h2>
         <PlaybackControls />
-        <CommonButton variant="secondary" @click="openImmersiveLyrics">
-          <Maximize2 :size="15" />
-          打开沉浸歌词
+        <CommonButton
+          variant="secondary"
+          @click="openImmersiveLyrics"
+        >
+          <Maximize2 :size="15" /> {{ $tSource("打开沉浸歌词") }}
         </CommonButton>
       </div>
     </template>
     <CommonEmptyState
       v-else
-      title="尚未播放歌曲"
-      description="从发现、搜索或音乐库选择一首歌曲。"
+      :title="$tSource('尚未播放歌曲')"
+      :description="$tSource('从发现、搜索或音乐库选择一首歌曲。')"
     >
-      <template #icon><Music2 :size="28" /></template>
+      <template #icon>
+        <Music2 :size="28" />
+      </template>
     </CommonEmptyState>
   </section>
 </template>

@@ -3,6 +3,7 @@ import type {
   ResolvedMediaSource,
   TrackResolver
 } from '../../../domains/player/types'
+import { translatePublicError } from '../../i18n'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // IpcTrackResolver
@@ -51,7 +52,7 @@ export class IpcTrackResolver implements TrackResolver {
       signal.throwIfAborted()
 
       if (!result.ok) {
-        throw Object.assign(new Error(result.error.message), {
+        throw Object.assign(new Error(translatePublicError(result.error)), {
           code: result.error.code,
           retryable: result.error.retryable
         })

@@ -17,6 +17,7 @@
     "electron:install": "install-electron --no && node scripts/sync-electron-icon.mjs",
     "dev": "node scripts/sync-electron-icon.mjs && electron-vite dev",
     "typecheck": "tsc -p tsconfig.node.json --noEmit && vue-tsc -p tsconfig.web.json --noEmit",
+    "i18n:audit": "node scripts/audit-i18n-coverage.mjs src/renderer --unmapped",
     "lint": "eslint . && stylelint \"src/renderer/**/*.css\" && node scripts/check-boundaries.mjs",
     "test": "vitest run",
     "test:e2e": "playwright test",

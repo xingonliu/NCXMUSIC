@@ -20,6 +20,7 @@ import { showToast } from '../../../design-system/use-toast'
 import { useAccountSessionStore } from '../../account/account-session-store'
 import { mutateMusic } from '../music-actions'
 import Cover from './Cover.vue'
+import { translatePublicError } from '../../../i18n'
 
 // ========= 类型 =========
 
@@ -164,10 +165,10 @@ async function loadComments(reset = true): Promise<void> {
   loadingMore.value = false
   if (!response.ok) {
     if (reset) {
-      errorMessage.value = response.error.message
+      errorMessage.value = translatePublicError(response.error)
       state.value = 'error'
     } else {
-      showToast(response.error.message, 'warning')
+      showToast(translatePublicError(response.error), 'warning')
     }
     return
   }
@@ -211,7 +212,7 @@ async function submitComment(): Promise<void> {
   })
   submitting.value = false
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   draft.value = ''
@@ -235,7 +236,7 @@ async function toggleCommentLike(comment: StandardMusicComment): Promise<void> {
   })
   likingCommentId.value = null
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   updateComment(comment.id, (current) => ({
@@ -260,7 +261,7 @@ async function deleteComment(): Promise<void> {
   })
   deleting.value = false
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   deleteTarget.value = null
@@ -316,10 +317,10 @@ watch(
           v-if="props.mode === 'surface'"
           class="music-page-eyebrow"
         >
-          乐评
+          {{ $tSource("乐评") }}
         </p>
         <h2 id="music-comments-title">
-          {{ countText }}
+          {{ $tSource(countText) }}
         </h2>
       </div>
       <CommonButton
@@ -328,7 +329,7 @@ watch(
         size="compact"
         @click="loadComments(true)"
       >
-        重试
+        {{ $tSource("重试") }}
       </CommonButton>
     </header>
 
@@ -337,10 +338,10 @@ watch(
         v-model="draft"
         :disabled="!canMutate || submitting"
         :invalid="draft.length > MAX_COMMENT_LENGTH"
-        :placeholder="canMutate ? '分享你对这段音乐的感受' : '登录网易云后即可发表评论'"
+        :placeholder="$tSource(canMutate ? '分享你对这段音乐的感受' : '登录网易云后即可发表评论')"
         :rows="3"
         resize="none"
-        aria-label="评论内容"
+        :aria-label="$tSource('评论内容')"
       />
       <div class="music-comment-composer-footer">
         <span :class="{ 'music-comment-limit--invalid': draft.length > MAX_COMMENT_LENGTH }">
@@ -353,8 +354,7 @@ watch(
           :loading="submitting"
           @click="submitComment"
         >
-          <Send :size="14" />
-          发表
+          <Send :size="14" /> {{ $tSource("发表") }}
         </CommonButton>
       </div>
     </div>
@@ -367,26 +367,26 @@ watch(
         v-if="state === 'loading'"
         class="music-comments-state"
       >
-        <CommonSpinner label="正在加载评论" />
-        <span>正在加载评论</span>
+        <CommonSpinner :label="$tSource('正在加载评论')" />
+        <span>{{ $tSource("正在加载评论") }}</span>
       </div>
       <CommonErrorState
         v-else-if="state === 'error'"
-        title="评论读取失败"
+        :title="$tSource('评论读取失败')"
         :description="errorMessage"
         @retry="loadComments(true)"
       />
       <CommonEmptyState
         v-else-if="state === 'empty'"
-        title="还没有评论"
-        description="来写下第一条评论吧。"
+        :title="$tSource('还没有评论')"
+        :description="$tSource('来写下第一条评论吧。')"
       />
       <template v-else>
         <div
           v-if="hotComments.length > 0"
           class="music-comments-group"
         >
-          <h3>热门评论</h3>
+          <h3>{{ $tSource("热门评论") }}</h3>
           <article
             v-for="comment in hotComments"
             :key="`hot-${comment.id}`"
@@ -403,7 +403,7 @@ watch(
             <div class="music-comment-main">
               <div class="music-comment-meta">
                 <strong>{{ comment.author.nickname }}</strong>
-                <span>{{ formatCommentTime(comment.time) }}{{ comment.location ? ` · ${comment.location}` : '' }}</span>
+                <span>{{ $tSource(formatCommentTime(comment.time)) }}{{ comment.location ? ` · ${comment.location}` : '' }}</span>
               </div>
               <p>{{ comment.content }}</p>
               <div class="music-comment-actions">
@@ -423,7 +423,7 @@ watch(
                   v-if="comment.owner"
                   variant="ghost"
                   size="compact"
-                  label="删除评论"
+                  :label="$tSource('删除评论')"
                   @click="deleteTarget = comment"
                 >
                   <Trash2 :size="13" />
@@ -437,7 +437,7 @@ watch(
           v-if="comments.length > 0"
           class="music-comments-group"
         >
-          <h3>最新评论</h3>
+          <h3>{{ $tSource("最新评论") }}</h3>
           <article
             v-for="comment in comments"
             :key="comment.id"
@@ -454,7 +454,7 @@ watch(
             <div class="music-comment-main">
               <div class="music-comment-meta">
                 <strong>{{ comment.author.nickname }}</strong>
-                <span>{{ formatCommentTime(comment.time) }}{{ comment.location ? ` · ${comment.location}` : '' }}</span>
+                <span>{{ $tSource(formatCommentTime(comment.time)) }}{{ comment.location ? ` · ${comment.location}` : '' }}</span>
               </div>
               <p>{{ comment.content }}</p>
               <div class="music-comment-actions">
@@ -474,7 +474,7 @@ watch(
                   v-if="comment.owner"
                   variant="ghost"
                   size="compact"
-                  label="删除评论"
+                  :label="$tSource('删除评论')"
                   @click="deleteTarget = comment"
                 >
                   <Trash2 :size="13" />
@@ -490,7 +490,7 @@ watch(
             :disabled="loadingMore"
             @click="loadComments(false)"
           >
-            加载更多
+            {{ $tSource("加载更多") }}
           </CommonButton>
         </div>
       </template>
@@ -498,9 +498,9 @@ watch(
 
     <CommonAlertDialog
       :visible="Boolean(deleteTarget)"
-      title="删除这条评论？"
-      description="删除后无法恢复。"
-      confirm-text="删除"
+      :title="$tSource('删除这条评论？')"
+      :description="$tSource('删除后无法恢复。')"
+      :confirm-text="$tSource('删除')"
       @cancel="deleteTarget = null"
       @confirm="deleteComment"
     />

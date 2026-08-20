@@ -20,8 +20,8 @@ const modelCatalogSource = readFileSync(
 
 describe('model settings UI contract', () => {
   it('默认展示模型列表，并将新增与删除放入通用弹窗', () => {
-    expect(modelSettingsSource).toContain('title="模型列表"')
-    expect(modelSettingsSource).toContain('title="新增模型"')
+    expect(modelSettingsSource).toContain("$tSource('模型列表')")
+    expect(modelSettingsSource).toContain("$tSource('新增模型')")
     expect(modelSettingsSource).toContain('<CommonDialog')
     expect(modelSettingsSource).toContain('<CommonAlertDialog')
     expect(modelSettingsSource).toContain('class="model-profile-actions"')
@@ -38,7 +38,7 @@ describe('model settings UI contract', () => {
   })
 
   it('提供编辑模型功能与 Pencil 编辑按钮并回显 API Key', () => {
-    expect(modelSettingsSource).toContain('title="编辑模型"')
+    expect(modelSettingsSource).toContain("$tSource('编辑模型')")
     expect(modelSettingsSource).toContain('<Pencil')
     expect(modelSettingsSource).toContain('openEditDialog')
     expect(modelSettingsSource).toContain("editEditor.apiKey = profile.apiKey ?? ''")

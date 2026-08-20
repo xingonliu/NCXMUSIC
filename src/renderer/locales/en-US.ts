@@ -40,6 +40,25 @@ export const enUS = {
     unknownArtist: 'Unknown artist',
     unknownAlbum: 'Unknown album'
   },
+  errors: {
+    protocolInvalidMessage: 'The app received an invalid response. Try again.',
+    protocolVersionMismatch: 'The app service version does not match. Restart the app.',
+    connectionReplaced: 'The service connection changed. Try again.',
+    requestTimeout: 'The request timed out. Try again later.',
+    requestCancelled: 'The request was cancelled.',
+    upstream: 'The upstream service returned an error. Try again later.',
+    utilityUnavailable: 'The local service is temporarily unavailable. Try again later.',
+    capabilityUnavailable: 'This capability is currently unavailable.',
+    authRequired: 'Sign in before performing this action.',
+    alreadyCompleted: 'This action has already been completed.',
+    serviceUnavailable: 'The service is temporarily unavailable. Try again later.',
+    accountStale: 'The account changed. Refresh and try again.',
+    policyDenied: 'The current safety policy does not allow this action.',
+    argumentsInvalid: 'The action parameters are invalid. Check them and try again.',
+    notFound: 'No matching content was found.',
+    providerTimeout: 'The model service timed out. Try again later.',
+    generic: 'The operation failed. Try again later.'
+  },
   navigation: {
     discover: 'Discover',
     browse: 'Browse',

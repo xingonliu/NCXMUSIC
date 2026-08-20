@@ -37,6 +37,7 @@ import {
 } from '../../design-system/components'
 import CommonPagination from '../../design-system/components/CommonPagination.vue'
 import { showToast } from '../../design-system/use-toast'
+import { translatePublicError } from '../../i18n'
 import SettingsSection from './SettingsSection.vue'
 
 // ========= 类型 =========
@@ -1102,7 +1103,7 @@ onMounted(() => { void refresh() })
     <SettingsSection
       v-if="props.mode === 'skill'"
       section-id="setting-skill-install"
-      title="Skill 管理"
+      :title="$tSource('Skill 管理')"
     >
       <template #actions>
         <div class="settings-inline-actions">
@@ -1111,7 +1112,7 @@ onMounted(() => { void refresh() })
             variant="primary"
             @click="openCreateSkillDialog"
           >
-            <Plus :size="14" />新增 Skill
+            <Plus :size="14" />{{ $tSource("新增 Skill") }}
           </CommonButton>
           <CommonButton
             size="compact"
@@ -1119,7 +1120,7 @@ onMounted(() => { void refresh() })
             :loading="busy"
             @click="refresh"
           >
-            <RefreshCw :size="14" />扫描
+            <RefreshCw :size="14" />{{ $tSource("扫描") }}
           </CommonButton>
         </div>
       </template>
@@ -1137,8 +1138,8 @@ onMounted(() => { void refresh() })
             class="mcp-empty-state"
           >
             <Boxes :size="28" />
-            <p>尚未安装 Skill</p>
-            <span>点击右上角“新增 Skill”打开弹窗导入，或切换到“市场”标签浏览并安装社区技能。</span>
+            <p>{{ $tSource("尚未安装 Skill") }}</p>
+            <span>{{ $tSource("点击右上角“新增 Skill”打开弹窗导入，或切换到“市场”标签浏览并安装社区技能。") }}</span>
           </div>
 
           <div
@@ -1164,7 +1165,7 @@ onMounted(() => { void refresh() })
                   variant="secondary"
                   @click="mutateSkill(skill, 'disable')"
                 >
-                  禁用
+                  {{ $tSource("禁用") }}
                 </CommonButton>
                 <CommonButton
                   v-else-if="skill.state !== 'trashed'"
@@ -1172,7 +1173,7 @@ onMounted(() => { void refresh() })
                   variant="secondary"
                   @click="mutateSkill(skill, 'enable')"
                 >
-                  启用
+                  {{ $tSource("启用") }}
                 </CommonButton>
                 <CommonButton
                   v-if="skill.sourceType !== 'appdata' && skill.state !== 'trashed'"
@@ -1180,7 +1181,7 @@ onMounted(() => { void refresh() })
                   variant="ghost"
                   @click="mutateSkill(skill, 'update')"
                 >
-                  检查更新
+                  {{ $tSource("检查更新") }}
                 </CommonButton>
                 <CommonButton
                   v-if="skill.previousVersionAvailable && skill.state !== 'trashed'"
@@ -1188,7 +1189,7 @@ onMounted(() => { void refresh() })
                   variant="ghost"
                   @click="mutateSkill(skill, 'rollback')"
                 >
-                  回滚
+                  {{ $tSource("回滚") }}
                 </CommonButton>
                 <CommonButton
                   v-if="skill.state !== 'trashed'"
@@ -1196,7 +1197,7 @@ onMounted(() => { void refresh() })
                   variant="danger"
                   @click="mutateSkill(skill, 'uninstall')"
                 >
-                  卸载
+                  {{ $tSource("卸载") }}
                 </CommonButton>
               </div>
             </article>
@@ -1215,7 +1216,7 @@ onMounted(() => { void refresh() })
           <div class="mcp-market-toolbar">
             <CommonSearchInput
               v-model="skillMarketSearchDraft"
-              placeholder="在 SkillHub 搜索技能名称或描述…"
+              :placeholder="$tSource('在 SkillHub 搜索技能名称或描述…')"
               :disabled="skillMarketLoading"
               @submit="submitSkillMarketSearch"
               @clear="clearSkillMarketSearch"
@@ -1226,7 +1227,7 @@ onMounted(() => { void refresh() })
               :loading="skillMarketLoading"
               @click="submitSkillMarketSearch"
             >
-              搜索
+              {{ $tSource("搜索") }}
             </CommonButton>
             <CommonButton
               v-if="skillMarketQuery"
@@ -1235,27 +1236,27 @@ onMounted(() => { void refresh() })
               :disabled="skillMarketLoading"
               @click="clearSkillMarketSearch"
             >
-              推荐
+              {{ $tSource("推荐") }}
             </CommonButton>
           </div>
 
           <p class="mcp-market-caption">
-            {{ skillMarketQuery
+            {{ $tSource(skillMarketQuery
               ? `搜索 “${skillMarketQuery}” · 共 ${skillMarketTotalCount} 项`
-              : `推荐 Skill · 共 ${skillMarketTotalCount} 项` }}
+              : `推荐 Skill · 共 ${skillMarketTotalCount} 项`) }}
           </p>
 
           <div
             v-if="skillMarketError"
             class="mcp-market-error"
           >
-            <span>{{ skillMarketError }}</span>
+            <span>{{ translatePublicError({ message: skillMarketError }) }}</span>
             <CommonButton
               size="compact"
               variant="secondary"
               @click="loadSkillMarket"
             >
-              重试
+              {{ $tSource("重试") }}
             </CommonButton>
           </div>
 
@@ -1267,7 +1268,7 @@ onMounted(() => { void refresh() })
               :size="24"
               class="is-spinning"
             />
-            <p>正在拉取 SkillHub 市场…</p>
+            <p>{{ $tSource("正在拉取 SkillHub 市场…") }}</p>
           </div>
 
           <div
@@ -1275,8 +1276,8 @@ onMounted(() => { void refresh() })
             class="mcp-empty-state"
           >
             <Globe2 :size="28" />
-            <p>未找到匹配的 Skill</p>
-            <span>换个关键词试试，或直接在“新增 Skill”弹窗中通过 Git / 本地方式导入。</span>
+            <p>{{ $tSource("未找到匹配的 Skill") }}</p>
+            <span>{{ $tSource("换个关键词试试，或直接在“新增 Skill”弹窗中通过 Git / 本地方式导入。") }}</span>
           </div>
 
           <div
@@ -1303,10 +1304,10 @@ onMounted(() => { void refresh() })
               <div class="mcp-market-copy">
                 <strong>
                   {{ item.name }}
-                  <small v-if="item.verified"><ShieldCheck :size="12" />已验证</small>
+                  <small v-if="item.verified"><ShieldCheck :size="12" />{{ $tSource("已验证") }}</small>
                 </strong>
-                <p>{{ item.descriptionZh || item.description || '暂无描述。' }}</p>
-                <small>{{ item.slug }} · {{ formatUseCount(item.downloads) }} 次下载 · {{ item.stars }} 收藏 · v{{ item.version }}</small>
+                <p>{{ $tSource(item.descriptionZh || item.description || '暂无描述。') }}</p>
+                <small>{{ item.slug }} · {{ formatUseCount(item.downloads) }} {{ $tSource("次下载 ·") }} {{ item.stars }} {{ $tSource("收藏 · v") }}{{ item.version }}</small>
               </div>
               <div class="settings-inline-actions mcp-card-actions">
                 <CommonButton
@@ -1315,7 +1316,7 @@ onMounted(() => { void refresh() })
                   variant="secondary"
                   disabled
                 >
-                  已安装
+                  {{ $tSource("已安装") }}
                 </CommonButton>
                 <CommonButton
                   v-else
@@ -1324,7 +1325,7 @@ onMounted(() => { void refresh() })
                   :loading="installingSkillSlug === item.slug"
                   @click="installMarketSkill(item)"
                 >
-                  直接安装
+                  {{ $tSource("直接安装") }}
                 </CommonButton>
                 <CommonButton
                   size="compact"
@@ -1360,7 +1361,7 @@ onMounted(() => { void refresh() })
             variant="primary"
             @click="openCreateMcpDialog()"
           >
-            <Plus :size="14" />新增 MCP
+            <Plus :size="14" />{{ $tSource("新增 MCP") }}
           </CommonButton>
           <CommonButton
             size="compact"
@@ -1368,7 +1369,7 @@ onMounted(() => { void refresh() })
             :loading="busy"
             @click="exportMcp"
           >
-            <Download :size="14" />复制导出
+            <Download :size="14" />{{ $tSource("复制导出") }}
           </CommonButton>
           <CommonButton
             size="compact"
@@ -1376,7 +1377,7 @@ onMounted(() => { void refresh() })
             :loading="busy"
             @click="refresh"
           >
-            <RefreshCw :size="14" />刷新
+            <RefreshCw :size="14" />{{ $tSource("刷新") }}
           </CommonButton>
         </div>
       </template>
@@ -1399,8 +1400,8 @@ onMounted(() => { void refresh() })
             class="mcp-empty-state"
           >
             <Server :size="24" />
-            <strong>尚未配置 MCP Server</strong>
-            <span>点击“新增 MCP”打开弹窗，或从市场选择一个条目作为起点。</span>
+            <strong>{{ $tSource("尚未配置 MCP Server") }}</strong>
+            <span>{{ $tSource("点击“新增 MCP”打开弹窗，或从市场选择一个条目作为起点。") }}</span>
           </div>
           <div
             v-else
@@ -1413,10 +1414,10 @@ onMounted(() => { void refresh() })
             >
               <span class="settings-row-icon"><Server :size="18" /></span>
               <div class="extension-card-copy">
-                <strong>{{ server.displayName }} <small>{{ server.enabled ? '启用' : '禁用' }}</small></strong>
-                <p>{{ server.serverId }} · {{ server.transport }} · {{ connectionStateLabel(server) }}</p>
-                <small>{{ server.lastKnownTools.length }} tools · {{ approvalStateLabel(server) }}</small>
-                <small v-if="server.lastError">{{ server.lastError }}</small>
+                <strong>{{ server.displayName }} <small>{{ $tSource(server.enabled ? '启用' : '禁用') }}</small></strong>
+                <p>{{ server.serverId }} · {{ server.transport }} · {{ $tSource(connectionStateLabel(server)) }}</p>
+                <small>{{ server.lastKnownTools.length }} tools · {{ $tSource(approvalStateLabel(server)) }}</small>
+                <small v-if="server.lastError">{{ translatePublicError({ message: server.lastError }) }}</small>
               </div>
               <div class="settings-inline-actions mcp-card-actions">
                 <CommonButton
@@ -1424,7 +1425,7 @@ onMounted(() => { void refresh() })
                   variant="secondary"
                   @click="openEditMcpDialog(server)"
                 >
-                  <Pencil :size="13" />编辑
+                  <Pencil :size="13" />{{ $tSource("编辑") }}
                 </CommonButton>
                 <CommonButton
                   v-if="server.enabled"
@@ -1432,7 +1433,7 @@ onMounted(() => { void refresh() })
                   variant="secondary"
                   @click="mutateMcp(server, 'disable')"
                 >
-                  禁用
+                  {{ $tSource("禁用") }}
                 </CommonButton>
                 <CommonButton
                   v-else
@@ -1440,14 +1441,14 @@ onMounted(() => { void refresh() })
                   variant="secondary"
                   @click="mutateMcp(server, 'enable')"
                 >
-                  启用
+                  {{ $tSource("启用") }}
                 </CommonButton>
                 <CommonButton
                   size="compact"
                   variant="ghost"
                   @click="mutateMcp(server, 'test')"
                 >
-                  测试
+                  {{ $tSource("测试") }}
                 </CommonButton>
                 <CommonButton
                   v-if="server.previousConfigAvailable"
@@ -1455,14 +1456,14 @@ onMounted(() => { void refresh() })
                   variant="ghost"
                   @click="mutateMcp(server, 'rollback')"
                 >
-                  回滚
+                  {{ $tSource("回滚") }}
                 </CommonButton>
                 <CommonButton
                   size="compact"
                   variant="danger"
                   @click="mutateMcp(server, 'delete')"
                 >
-                  <Trash2 :size="13" />删除
+                  <Trash2 :size="13" />{{ $tSource("删除") }}
                 </CommonButton>
               </div>
             </article>
@@ -1471,7 +1472,7 @@ onMounted(() => { void refresh() })
           <CommonPagination
             :current-page="installedPage"
             :total-pages="installedTotalPages"
-            aria-label="已安装 MCP 分页"
+            :aria-label="$tSource('已安装 MCP 分页')"
             @change="goToInstalledPage"
           />
 
@@ -1482,20 +1483,19 @@ onMounted(() => { void refresh() })
             <CommonTextarea
               v-model="importDocument"
               :rows="5"
-              placeholder="粘贴 .mcp.json 或 Ncxmusic 导出文档"
+              :placeholder="$tSource('粘贴 .mcp.json 或 Ncxmusic 导出文档')"
             />
             <div
               v-if="importPreview.length > 0"
               class="mcp-capabilities"
               aria-live="polite"
             >
-              <strong>待导入配置预览（{{ importPreview.length }}）</strong>
+              <strong>{{ $tSource("待导入配置预览（") }}{{ importPreview.length }}）</strong>
               <span
                 v-for="server in importPreview"
                 :key="server.serverId"
               >
-                {{ server.displayName }} · {{ server.serverId }} · {{ server.transport }} · 默认禁用
-              </span>
+                {{ server.displayName }} · {{ server.serverId }} · {{ server.transport }} {{ $tSource("· 默认禁用") }} </span>
             </div>
             <div class="settings-inline-actions">
               <CommonButton
@@ -1503,14 +1503,14 @@ onMounted(() => { void refresh() })
                 :loading="busy"
                 @click="importMcp(false)"
               >
-                预览导入
+                {{ $tSource("预览导入") }}
               </CommonButton>
               <CommonButton
                 v-if="importPreview.length > 0"
                 :loading="busy"
                 @click="importMcp(true)"
               >
-                确认导入 {{ importPreview.length }} 项
+                {{ $tSource("确认导入") }} {{ importPreview.length }} {{ $tSource("项") }}
               </CommonButton>
             </div>
           </div>
@@ -1523,7 +1523,7 @@ onMounted(() => { void refresh() })
           <div class="mcp-market-toolbar">
             <CommonSearchInput
               v-model="marketSearchDraft"
-              placeholder="搜索 MCP Server，例如 brave、github、postgres"
+              :placeholder="$tSource('搜索 MCP Server，例如 brave、github、postgres')"
               @search="submitMarketSearch"
               @clear="clearMarketSearch"
             />
@@ -1532,7 +1532,7 @@ onMounted(() => { void refresh() })
               :loading="marketLoading"
               @click="submitMarketSearch"
             >
-              搜索
+              {{ $tSource("搜索") }}
             </CommonButton>
             <CommonButton
               v-if="marketQuery"
@@ -1540,38 +1540,38 @@ onMounted(() => { void refresh() })
               :disabled="marketLoading"
               @click="clearMarketSearch"
             >
-              推荐
+              {{ $tSource("推荐") }}
             </CommonButton>
           </div>
 
           <p class="mcp-market-caption">
-            {{ marketQuery ? `搜索 “${marketQuery}”` : '推荐 MCP Server' }} · 共 {{ marketTotalCount }} 项
+            {{ $tSource(marketQuery ? `搜索 “${marketQuery}”` : '推荐 MCP Server') }} {{ $tSource("· 共") }} {{ marketTotalCount }} {{ $tSource("项") }}
           </p>
 
           <div
             v-if="marketLoading"
             class="extensions-empty"
           >
-            正在读取 MCP Hub 中国精选服务…
+            {{ $tSource("正在读取 MCP Hub 中国精选服务…") }}
           </div>
           <div
             v-else-if="marketError"
             class="mcp-market-error"
           >
-            <span>{{ marketError }}</span>
+            <span>{{ translatePublicError({ message: marketError }) }}</span>
             <CommonButton
               size="compact"
               variant="secondary"
               @click="loadMcpMarket"
             >
-              重试
+              {{ $tSource("重试") }}
             </CommonButton>
           </div>
           <div
             v-else-if="marketServers.length === 0"
             class="extensions-empty"
           >
-            没有找到匹配的 MCP Server。
+            {{ $tSource("没有找到匹配的 MCP Server。") }}
           </div>
           <div
             v-else
@@ -1597,11 +1597,11 @@ onMounted(() => { void refresh() })
               <div class="mcp-market-copy">
                 <strong>
                   {{ server.displayName }}
-                  <small v-if="server.verified"><ShieldCheck :size="12" />已验证</small>
-                  <small v-if="server.inactive">停用</small>
+                  <small v-if="server.verified"><ShieldCheck :size="12" />{{ $tSource("已验证") }}</small>
+                  <small v-if="server.inactive">{{ $tSource("停用") }}</small>
                 </strong>
-                <p>{{ server.description || '暂无介绍。' }}</p>
-                <small>{{ server.qualifiedName }} · {{ formatUseCount(server.useCount) }} 次使用 · {{ server.remote ? 'Remote' : 'Local' }}</small>
+                <p>{{ $tSource(server.description || '暂无介绍。') }}</p>
+                <small>{{ server.qualifiedName }} · {{ formatUseCount(server.useCount) }} {{ $tSource("次使用 ·") }} {{ server.remote ? 'Remote' : 'Local' }}</small>
               </div>
               <div class="settings-inline-actions mcp-card-actions">
                 <CommonButton
@@ -1611,7 +1611,7 @@ onMounted(() => { void refresh() })
                   :disabled="busy && resolvingServerId !== server.id"
                   @click="useMarketServer(server)"
                 >
-                  {{ isInstalledServer(server) ? '已安装' : '用此创建' }}
+                  {{ $tSource(isInstalledServer(server) ? '已安装' : '用此创建') }}
                 </CommonButton>
                 <CommonButton
                   v-if="server.homepage"
@@ -1619,7 +1619,7 @@ onMounted(() => { void refresh() })
                   variant="ghost"
                   @click="openMarketHomepage(server)"
                 >
-                  <ExternalLink :size="13" />主页
+                  <ExternalLink :size="13" />{{ $tSource("主页") }}
                 </CommonButton>
               </div>
             </article>
@@ -1629,7 +1629,7 @@ onMounted(() => { void refresh() })
             :current-page="marketPage"
             :total-pages="marketTotalPages"
             :disabled="marketLoading"
-            aria-label="MCP 市场分页"
+            :aria-label="$tSource('MCP 市场分页')"
             @change="goToMarketPage"
           />
         </div>
@@ -1655,11 +1655,11 @@ onMounted(() => { void refresh() })
           pattern="[a-z][a-z0-9-]{1,62}"
           :disabled="isEditingMcp"
         /></label>
-        <label><span>名称</span><CommonInput
+        <label><span>{{ $tSource("名称") }}</span><CommonInput
           v-model="editor.displayName"
           required
         /></label>
-        <label><span>传输</span><CommonSelect
+        <label><span>{{ $tSource("传输") }}</span><CommonSelect
           :model-value="editor.transport"
           :options="transportOptions"
           @update:model-value="setMcpTransport"
@@ -1672,11 +1672,11 @@ onMounted(() => { void refresh() })
         <label v-if="editor.transport === 'stdio'"><span>Args</span><CommonTextarea
           v-model="editor.args"
           :rows="3"
-          placeholder="每行一个参数；版本必须锁定"
+          :placeholder="$tSource('每行一个参数；版本必须锁定')"
         /></label>
         <label v-if="editor.transport === 'stdio'"><span>CWD</span><CommonInput
           v-model="editor.cwd"
-          placeholder="可选绝对目录"
+          :placeholder="$tSource('可选绝对目录')"
         /></label>
         <label v-else><span>URL</span><CommonInput
           v-model="editor.url"
@@ -1684,32 +1684,32 @@ onMounted(() => { void refresh() })
           required
           placeholder="https://example.com/mcp"
         /></label>
-        <label v-if="editor.transport === 'stdio'"><span>环境变量</span><CommonTextarea
+        <label v-if="editor.transport === 'stdio'"><span>{{ $tSource("环境变量") }}</span><CommonTextarea
           v-model="editor.environment"
           :rows="3"
-          placeholder="NAME=value；已有 Secret 不回显"
+          :placeholder="$tSource('NAME=value；已有 Secret 不回显')"
         /></label>
         <label v-else><span>Headers</span><CommonTextarea
           v-model="editor.headers"
           :rows="3"
-          placeholder="Authorization=Bearer …；已有 Secret 不回显"
+          :placeholder="$tSource('Authorization=Bearer …；已有 Secret 不回显')"
         /></label>
         <div class="mcp-editor-actions">
           <CommonSwitch
             v-model="editor.enabled"
-            label="保存后启用"
+            :label="$tSource('保存后启用')"
           />
         </div>
         <div
           v-if="selectedServer"
           class="mcp-capabilities"
         >
-          <strong>实际工具（{{ selectedServer.lastKnownTools.length }}）</strong>
+          <strong>{{ $tSource("实际工具（") }}{{ selectedServer.lastKnownTools.length }}）</strong>
           <span
             v-for="tool in selectedServer.lastKnownTools"
             :key="tool.name"
           >mcp.{{ selectedServer.serverId }}.{{ tool.name }}</span>
-          <small v-if="selectedServer.lastError">{{ selectedServer.lastError }}</small>
+          <small v-if="selectedServer.lastError">{{ translatePublicError({ message: selectedServer.lastError }) }}</small>
         </div>
       </form>
 
@@ -1719,7 +1719,7 @@ onMounted(() => { void refresh() })
           :disabled="busy"
           @click="closeMcpDialog"
         >
-          取消
+          {{ $tSource("取消") }}
         </CommonButton>
         <CommonButton
           v-if="selectedServer"
@@ -1727,22 +1727,22 @@ onMounted(() => { void refresh() })
           :loading="busy"
           @click="mutateMcp(selectedServer, 'test')"
         >
-          测试并读取工具
+          {{ $tSource("测试并读取工具") }}
         </CommonButton>
         <CommonButton
           variant="primary"
           :loading="busy"
           @click="saveMcp"
         >
-          保存配置
+          {{ $tSource("保存配置") }}
         </CommonButton>
       </template>
     </CommonDialog>
 
     <CommonDialog
       :visible="skillDialogVisible"
-      title="新增 Skill"
-      subtitle="支持从 SkillHub 市场导入、Git 仓库导入，或选择本地代码包与 ZIP 压缩包。"
+      :title="$tSource('新增 Skill')"
+      :subtitle="$tSource('支持从 SkillHub 市场导入、Git 仓库导入，或选择本地代码包与 ZIP 压缩包。')"
       width="560px"
       :close-on-overlay-click="!busy"
       :close-on-esc="!busy"
@@ -1750,26 +1750,26 @@ onMounted(() => { void refresh() })
     >
       <div class="skill-dialog-content">
         <div class="skill-dialog-section">
-          <span class="skill-dialog-section-title">方式一：SkillHub 技能标识导入</span>
+          <span class="skill-dialog-section-title">{{ $tSource("方式一：SkillHub 技能标识导入") }}</span>
           <div class="extensions-import-row">
             <CommonInput
               v-model="skillHubSlug"
               autocomplete="off"
-              placeholder="例如 agent-phone-call"
-              aria-label="SkillHub 技能标识"
+              :placeholder="$tSource('例如 agent-phone-call')"
+              :aria-label="$tSource('SkillHub 技能标识')"
             />
             <CommonButton
               variant="secondary"
               :loading="busy"
               @click="installSlugSkill"
             >
-              从市场安装
+              {{ $tSource("从市场安装") }}
             </CommonButton>
           </div>
         </div>
 
         <div class="skill-dialog-section">
-          <span class="skill-dialog-section-title">方式二：HTTPS Git 仓库导入</span>
+          <span class="skill-dialog-section-title">{{ $tSource("方式二：HTTPS Git 仓库导入") }}</span>
           <div class="extensions-import-row">
             <CommonInput
               v-model="gitUrl"
@@ -1783,27 +1783,27 @@ onMounted(() => { void refresh() })
               :loading="busy"
               @click="installGitSkill"
             >
-              导入 Git
+              {{ $tSource("导入 Git") }}
             </CommonButton>
           </div>
         </div>
 
         <div class="skill-dialog-section">
-          <span class="skill-dialog-section-title">方式三：本地代码包导入</span>
+          <span class="skill-dialog-section-title">{{ $tSource("方式三：本地代码包导入") }}</span>
           <div class="skill-local-import-actions">
             <CommonButton
               variant="secondary"
               :loading="busy"
               @click="chooseSkill('folder')"
             >
-              <PackagePlus :size="14" />选择文件夹
+              <PackagePlus :size="14" />{{ $tSource("选择文件夹") }}
             </CommonButton>
             <CommonButton
               variant="secondary"
               :loading="busy"
               @click="chooseSkill('zip')"
             >
-              <Upload :size="14" />选择 ZIP 压缩包
+              <Upload :size="14" />{{ $tSource("选择 ZIP 压缩包") }}
             </CommonButton>
           </div>
         </div>
@@ -1815,16 +1815,16 @@ onMounted(() => { void refresh() })
           :disabled="busy"
           @click="closeSkillDialog"
         >
-          关闭
+          {{ $tSource("关闭") }}
         </CommonButton>
       </template>
     </CommonDialog>
 
     <CommonAlertDialog
       :visible="Boolean(pendingConfirmation)"
-      :title="pendingConfirmation?.title ?? '确认扩展操作'"
+      :title="$tSource(pendingConfirmation?.title ?? '确认扩展操作')"
       :description="pendingConfirmation?.description ?? ''"
-      :confirm-text="pendingConfirmation?.confirmText ?? '确认'"
+      :confirm-text="$tSource(pendingConfirmation?.confirmText ?? '确认')"
       :type="pendingConfirmation?.type ?? 'warning'"
       @cancel="cancelConfirmation"
       @confirm="confirmPendingAction"

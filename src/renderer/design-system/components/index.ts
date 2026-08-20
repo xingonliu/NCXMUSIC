@@ -1,6 +1,8 @@
 /* eslint vue/multi-word-component-names: off, vue/one-component-per-file: off */
 import { Comment, Fragment, computed, defineComponent, h, nextTick, onMounted, onUnmounted, ref, Teleport, Transition, watch, type Component, type PropType, type Ref, type VNode } from 'vue'
 
+import { translatePublicError, translateSourceText } from '../../i18n'
+
 // ========= 类型 =========
 
 /** 通用组件尺寸。 */
@@ -105,6 +107,11 @@ function joinClasses(...classes: Array<string | false | undefined>): string {
 /** 读取输入控件的字符串值。 */
 function readInputValue(event: Event): string {
   return (event.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement).value
+}
+
+/** 翻译由业务层传入通用组件的固定界面文案。 */
+function localizeUiText(value: string | undefined): string | undefined {
+  return value === undefined ? undefined : translateSourceText(value)
 }
 
 /** 阻止禁用态点击事件继续执行。 */
@@ -390,7 +397,7 @@ export const CommonIconButton = defineComponent({
           type: 'button',
           disabled: props.disabled,
           'aria-disabled': props.disabled ? 'true' : undefined,
-          'aria-label': props.label,
+          'aria-label': localizeUiText(props.label),
           'aria-pressed': props.selected ? 'true' : undefined,
           onMouseenter: handleMouseEnter,
           onMouseleave: handleMouseLeave,
@@ -413,7 +420,7 @@ export const CommonIconButton = defineComponent({
                       class: joinClasses('ncx-common-tooltip-panel', `ncx-common-tooltip-panel--${resolvedTooltipPlacement.value}`),
                       role: 'tooltip'
                     },
-                    [h('span', { class: 'ncx-common-tooltip-content' }, props.label), h('span', { class: 'ncx-common-tooltip-arrow' })]
+                    [h('span', { class: 'ncx-common-tooltip-content' }, localizeUiText(props.label)), h('span', { class: 'ncx-common-tooltip-arrow' })]
                   )
                 )
               )
@@ -501,7 +508,7 @@ export const CommonHeaderButton = defineComponent({
           type: props.type,
           disabled: props.disabled,
           'aria-disabled': props.disabled ? 'true' : undefined,
-          'aria-label': props.label,
+          'aria-label': localizeUiText(props.label),
           onMouseenter: handleMouseEnter,
           onMouseleave: handleMouseLeave,
           onFocusin: handleFocusIn,
@@ -517,7 +524,7 @@ export const CommonHeaderButton = defineComponent({
                   class: joinClasses('ncx-common-tooltip-panel', `ncx-common-tooltip-panel--${props.tooltipPlacement}`),
                   role: 'tooltip'
                 },
-                [h('span', { class: 'ncx-common-tooltip-content' }, props.label), h('span', { class: 'ncx-common-tooltip-arrow' })]
+                [h('span', { class: 'ncx-common-tooltip-content' }, localizeUiText(props.label)), h('span', { class: 'ncx-common-tooltip-arrow' })]
               )
             : null
         ]
@@ -569,7 +576,7 @@ export const CommonHeaderGroupItem = defineComponent({
           type: 'button',
           disabled: props.disabled,
           'aria-disabled': props.disabled ? 'true' : undefined,
-          'aria-label': props.label,
+          'aria-label': localizeUiText(props.label),
           onMouseenter: handleMouseEnter,
           onMouseleave: handleMouseLeave,
           onFocusin: handleFocusIn,
@@ -585,7 +592,7 @@ export const CommonHeaderGroupItem = defineComponent({
                   class: joinClasses('ncx-common-tooltip-panel', `ncx-common-tooltip-panel--${props.tooltipPlacement}`),
                   role: 'tooltip'
                 },
-                [h('span', { class: 'ncx-common-tooltip-content' }, props.label), h('span', { class: 'ncx-common-tooltip-arrow' })]
+                [h('span', { class: 'ncx-common-tooltip-content' }, localizeUiText(props.label)), h('span', { class: 'ncx-common-tooltip-arrow' })]
               )
             : null
         ]
@@ -665,7 +672,7 @@ export const CommonHeaderGroupButton = defineComponent({
         {
           class: joinClasses('ncx-common-header-group-button', 'ncx-window-controls'),
           role: 'group',
-          'aria-label': props.label
+          'aria-label': localizeUiText(props.label)
         },
         children
       )
@@ -807,7 +814,7 @@ export const CommonInput = defineComponent({
         ),
         type: resolvedType,
         value: props.modelValue,
-        placeholder: props.placeholder,
+        placeholder: localizeUiText(props.placeholder),
         disabled: props.disabled,
         readonly: props.readonly,
         autocomplete: props.autocomplete,
@@ -943,7 +950,7 @@ export const CommonTextarea = defineComponent({
         ),
         style: { resize: props.resize },
         value: props.modelValue,
-        placeholder: props.placeholder,
+        placeholder: localizeUiText(props.placeholder),
         rows: props.rows,
         disabled: props.disabled,
         readonly: props.readonly,
@@ -1035,7 +1042,7 @@ export const CommonSearchInput = defineComponent({
             ref: inputRef,
             class: 'ncx-common-search-input',
             value: props.modelValue,
-            placeholder: props.placeholder,
+            placeholder: localizeUiText(props.placeholder),
             disabled: props.disabled,
             type: 'search',
             autofocus: props.autoFocus,
@@ -1241,10 +1248,10 @@ export const CommonSelect = defineComponent({
             },
             [
               props.placeholder
-                ? h('option', { value: '', disabled: true }, props.placeholder)
+                ? h('option', { value: '', disabled: true }, localizeUiText(props.placeholder))
                 : null,
               ...props.options.map((option) =>
-                h('option', { value: option.value, disabled: option.disabled }, option.label)
+                h('option', { value: option.value, disabled: option.disabled }, localizeUiText(option.label))
               )
             ]
           ),
@@ -1277,7 +1284,7 @@ export const CommonSelect = defineComponent({
                           }
                         },
                         [
-                          h('span', { class: 'ncx-common-select-option-text' }, option.label),
+                          h('span', { class: 'ncx-common-select-option-text' }, localizeUiText(option.label)),
                           isSelected
                             ? h(
                                 'span',
@@ -1479,7 +1486,7 @@ export const CommonCombobox = defineComponent({
             ),
             value: props.modelValue,
             list: listId,
-            placeholder: props.placeholder,
+            placeholder: localizeUiText(props.placeholder),
             disabled: props.disabled,
             readonly: props.readonly,
             autocomplete: 'off',
@@ -1530,7 +1537,7 @@ export const CommonCombobox = defineComponent({
           h(
             'datalist',
             { id: listId },
-            props.options.map((option) => h('option', { value: option.value }, option.label))
+            props.options.map((option) => h('option', { value: option.value }, localizeUiText(option.label)))
           ),
           open.value && filteredOptions.value.length > 0
             ? h(
@@ -1561,7 +1568,7 @@ export const CommonCombobox = defineComponent({
                         }
                       },
                       [
-                        h('span', { class: 'ncx-common-combobox-option-text' }, option.label),
+                        h('span', { class: 'ncx-common-combobox-option-text' }, localizeUiText(option.label)),
                         isSelected
                           ? h(
                               'span',
@@ -1622,7 +1629,7 @@ export const CommonCheckbox = defineComponent({
       const sizeClass = `ncx-common-check--${props.size || 'default'}`
       const disabledClass = props.disabled ? 'ncx-common-check--disabled' : ''
 
-      const labelNode = slots.default ? slots.default() : props.label ? props.label : null
+      const labelNode = slots.default ? slots.default() : props.label ? localizeUiText(props.label) : null
 
       return h('label', { class: joinClasses('ncx-common-check', stateClass, sizeClass, disabledClass) }, [
         h('input', {
@@ -1709,7 +1716,7 @@ export const CommonRadioGroup = defineComponent({
             h('span', { class: 'ncx-common-radio-circle', 'aria-hidden': 'true' }, [
               h('span', { class: 'ncx-common-radio-dot' })
             ]),
-            h('span', { class: 'ncx-common-radio-label' }, option.label)
+            h('span', { class: 'ncx-common-radio-label' }, localizeUiText(option.label))
           ])
         })
       )
@@ -1744,7 +1751,7 @@ export const CommonSwitch = defineComponent({
         `ncx-common-switch--${props.size || 'default'}`
       )
 
-      const labelNode = slots.default ? slots.default() : props.label ? props.label : null
+      const labelNode = slots.default ? slots.default() : props.label ? localizeUiText(props.label) : null
 
       return h(
         'button',
@@ -1754,7 +1761,7 @@ export const CommonSwitch = defineComponent({
           role: 'switch',
           disabled: props.disabled,
           'aria-checked': isOn ? 'true' : 'false',
-          'aria-label': props.label || undefined,
+          'aria-label': localizeUiText(props.label) || undefined,
           onClick: toggleSwitch
         },
         [
@@ -1812,7 +1819,7 @@ export const CommonSlider = defineComponent({
       const displayVal = props.formatValue ? props.formatValue(currentVal) : `${currentVal}`
 
       return h('div', { class: sliderClass }, [
-        props.label ? h('span', { class: 'ncx-common-slider-label' }, props.label) : null,
+        props.label ? h('span', { class: 'ncx-common-slider-label' }, localizeUiText(props.label)) : null,
         h('div', { class: 'ncx-common-slider-track-container' }, [
           h('div', { class: 'ncx-common-slider-rail' }),
           h('div', { class: 'ncx-common-slider-fill', style: { width: `${percent}%` } }),
@@ -1825,7 +1832,7 @@ export const CommonSlider = defineComponent({
             disabled: props.disabled,
             type: 'range',
             class: 'ncx-common-slider-input',
-            'aria-label': props.label || 'Slider',
+            'aria-label': localizeUiText(props.label) || 'Slider',
             'aria-valuenow': currentVal,
             'aria-valuemin': minVal,
             'aria-valuemax': maxVal,
@@ -1930,7 +1937,7 @@ export const CommonSegmentedControl = defineComponent({
                 onClick: () => selectOption(option)
               },
               [
-                h('span', { class: 'ncx-common-segmented-item-text' }, option.label),
+                h('span', { class: 'ncx-common-segmented-item-text' }, localizeUiText(option.label)),
                 showRightDivider ? h('span', { class: 'ncx-common-segmented-divider' }) : null
               ]
             )
@@ -2188,7 +2195,7 @@ export const CommonCard = defineComponent({
       return h('section', { class: cardClass, tabindex: props.interactive ? 0 : undefined }, [
         hasHeader
           ? h('div', { class: 'ncx-common-card-header' }, [
-              h('div', { class: 'ncx-common-card-title' }, slots.header ? slots.header() : props.title),
+              h('div', { class: 'ncx-common-card-title' }, slots.header ? slots.header() : localizeUiText(props.title)),
               slots.extra ? h('div', { class: 'ncx-common-card-extra' }, slots.extra()) : null
             ])
           : null,
@@ -2230,7 +2237,7 @@ export const CommonSeparator = defineComponent({
       if (hasLabel) {
         return h('div', { class: sepClass, role: 'separator', 'aria-orientation': 'horizontal' }, [
           h('span', { class: 'ncx-common-separator-line' }),
-          h('span', { class: 'ncx-common-separator-label' }, slots.default ? slots.default() : props.label),
+          h('span', { class: 'ncx-common-separator-label' }, slots.default ? slots.default() : localizeUiText(props.label)),
           h('span', { class: 'ncx-common-separator-line' })
         ])
       }
@@ -2357,7 +2364,7 @@ export const CommonTabs = defineComponent({
                   ? slots.tab({ option, active })
                   : [
                       option.icon ? h('span', { class: 'ncx-common-tabs-tab-icon' }, option.icon) : null,
-                      h('span', { class: 'ncx-common-tabs-tab-label' }, option.label),
+                      h('span', { class: 'ncx-common-tabs-tab-label' }, localizeUiText(option.label)),
                       option.badge !== undefined
                         ? h('span', { class: 'ncx-common-tabs-tab-badge' }, String(option.badge))
                         : null
@@ -2494,7 +2501,7 @@ export const CommonDropdownMenu = defineComponent({
         slots.trigger
           ? slots.trigger({ open: open.value, toggle: toggleOpen })
           : h(CommonButton, { variant: 'secondary', disabled: props.disabled, onClick: toggleOpen }, () => [
-              h('span', props.label),
+              h('span', localizeUiText(props.label)),
               h('span', { class: 'ncx-common-menu-chevron' }, '▾')
             ]),
         open.value
@@ -2513,7 +2520,7 @@ export const CommonDropdownMenu = defineComponent({
                     return h('div', { key: item.value, class: 'ncx-common-menu-separator', role: 'separator' })
                   }
                   if (item.type === 'header') {
-                    return h('div', { key: item.value, class: 'ncx-common-menu-header' }, item.label)
+                    return h('div', { key: item.value, class: 'ncx-common-menu-header' }, localizeUiText(item.label))
                   }
                   return h(
                     'button',
@@ -2534,7 +2541,7 @@ export const CommonDropdownMenu = defineComponent({
                     [
                       h('span', { class: 'ncx-common-menu-item-check' }, item.checked ? '✓' : ''),
                       item.icon ? h('span', { class: 'ncx-common-menu-item-icon' }, item.icon) : null,
-                      h('span', { class: 'ncx-common-menu-item-label' }, item.label ?? item.value),
+                      h('span', { class: 'ncx-common-menu-item-label' }, localizeUiText(item.label) ?? item.value),
                       item.shortcut ? h('kbd', { class: 'ncx-common-menu-item-shortcut' }, item.shortcut) : null
                     ]
                   )
@@ -2695,7 +2702,7 @@ export const CommonContextMenu = defineComponent({
                     return h('div', { key: item.value, class: 'ncx-common-menu-separator', role: 'separator' })
                   }
                   if (item.type === 'header') {
-                    return h('div', { key: item.value, class: 'ncx-common-menu-header' }, item.label)
+                    return h('div', { key: item.value, class: 'ncx-common-menu-header' }, localizeUiText(item.label))
                   }
                   return h(
                     'button',
@@ -2716,7 +2723,7 @@ export const CommonContextMenu = defineComponent({
                     [
                       h('span', { class: 'ncx-common-menu-item-check' }, item.checked ? '✓' : ''),
                       item.icon ? h('span', { class: 'ncx-common-menu-item-icon' }, item.icon) : null,
-                      h('span', { class: 'ncx-common-menu-item-label' }, item.label ?? item.value),
+                      h('span', { class: 'ncx-common-menu-item-label' }, localizeUiText(item.label) ?? item.value),
                       item.shortcut ? h('kbd', { class: 'ncx-common-menu-item-shortcut' }, item.shortcut) : null
                     ]
                   )
@@ -2744,7 +2751,7 @@ export const CommonSpinner = defineComponent({
         return h('span', {
           class: joinClasses('ncx-common-spinner', 'ncx-common-spinner-ring', `ncx-common-spinner-${props.size}`),
           role: 'status',
-          'aria-label': props.label
+          'aria-label': localizeUiText(props.label)
         })
       }
       return h(
@@ -2752,7 +2759,7 @@ export const CommonSpinner = defineComponent({
         {
           class: joinClasses('ncx-common-spinner', 'ncx-common-spinner-spokes', `ncx-common-spinner-${props.size}`),
           role: 'status',
-          'aria-label': props.label
+          'aria-label': localizeUiText(props.label)
         },
         [
           h(
@@ -2810,7 +2817,7 @@ export const CommonProgress = defineComponent({
           'aria-valuenow': isIndeterminate.value ? undefined : safeValue.value,
           'aria-valuemin': 0,
           'aria-valuemax': 100,
-          'aria-label': props.label
+          'aria-label': localizeUiText(props.label)
         },
         [
           h('div', { class: 'ncx-common-progress-track' }, [
@@ -2899,8 +2906,8 @@ export const CommonEmptyState = defineComponent({
               ])
         ]),
         h('div', { class: 'ncx-common-empty-content' }, [
-          h('h3', { class: 'ncx-common-empty-title' }, props.title),
-          props.description ? h('p', { class: 'ncx-common-empty-description' }, props.description) : null
+          h('h3', { class: 'ncx-common-empty-title' }, localizeUiText(props.title)),
+          props.description ? h('p', { class: 'ncx-common-empty-description' }, localizeUiText(props.description)) : null
         ]),
         slots.default ? h('div', { class: 'ncx-common-empty-actions' }, slots.default()) : null
       ])
@@ -2933,8 +2940,8 @@ export const CommonErrorState = defineComponent({
               ])
         ]),
         h('div', { class: 'ncx-common-error-content' }, [
-          h('h3', { class: 'ncx-common-error-title' }, props.title),
-          props.description ? h('p', { class: 'ncx-common-error-description' }, props.description) : null
+          h('h3', { class: 'ncx-common-error-title' }, localizeUiText(props.title)),
+          props.description ? h('p', { class: 'ncx-common-error-description' }, translatePublicError({ message: props.description })) : null
         ]),
         slots.default
           ? h('div', { class: 'ncx-common-error-actions' }, slots.default())
@@ -3008,7 +3015,7 @@ export const CommonInlineMessage = defineComponent({
         [
           renderStatusIcon(),
           h('div', { class: 'ncx-common-inline-message-content' }, [
-            props.title ? h('strong', { class: 'ncx-common-inline-message-title' }, props.title) : null,
+            props.title ? h('strong', { class: 'ncx-common-inline-message-title' }, localizeUiText(props.title)) : null,
             h('div', { class: 'ncx-common-inline-message-body' }, slots.default?.())
           ]),
           props.closable
@@ -3139,7 +3146,7 @@ export const CommonToast = defineComponent({
             }, [
               renderToastIcon(),
               h('div', { class: 'ncx-common-toast-content' }, [
-                h('span', { class: 'ncx-common-toast-message' }, props.message || props.title)
+                h('span', { class: 'ncx-common-toast-message' }, localizeUiText(props.message || props.title))
               ]),
               props.closable
                 ? h('button', {
@@ -3217,12 +3224,12 @@ export const CommonDialog = defineComponent({
                 tabindex: -1,
                 role: 'dialog',
                 'aria-modal': 'true',
-                'aria-label': props.title,
+                'aria-label': localizeUiText(props.title),
                 style: { width: props.width }
               }, [
                 h('header', { class: 'ncx-common-modal-header' }, [
                   h('div', { class: 'ncx-common-modal-title-group' }, [
-                    h('h2', { class: 'ncx-common-modal-title' }, props.title),
+                    h('h2', { class: 'ncx-common-modal-title' }, localizeUiText(props.title)),
                     props.subtitle ? h('p', { class: 'ncx-common-modal-subtitle' }, props.subtitle) : null
                   ]),
                   h('button', {
@@ -3305,13 +3312,13 @@ export const CommonAlertDialog = defineComponent({
                 tabindex: -1,
                 role: 'alertdialog',
                 'aria-modal': 'true',
-                'aria-label': props.title
+                'aria-label': localizeUiText(props.title)
               }, [
                 h('div', { class: 'ncx-common-alert-header' }, [
                   renderAlertIcon(),
-                  h('h2', { class: 'ncx-common-alert-title' }, props.title)
+                  h('h2', { class: 'ncx-common-alert-title' }, localizeUiText(props.title))
                 ]),
-                props.description ? h('p', { class: 'ncx-common-alert-description' }, props.description) : null,
+                props.description ? h('p', { class: 'ncx-common-alert-description' }, localizeUiText(props.description)) : null,
                 h('footer', { class: 'ncx-common-alert-footer' }, [
                   h(CommonButton, { variant: 'secondary', onClick: () => emit('cancel') }, () => props.cancelText),
                   h(CommonButton, { variant: props.type === 'danger' ? 'danger' : 'primary', onClick: () => emit('confirm') }, () => props.confirmText)
@@ -3381,10 +3388,10 @@ export const CommonDrawer = defineComponent({
                 role: 'dialog',
                 'aria-modal': 'true',
                 style: { width: props.width },
-                'aria-label': props.title
+                'aria-label': localizeUiText(props.title)
               }, [
                 h('header', { class: 'ncx-common-drawer-header' }, [
-                  h('h2', { class: 'ncx-common-drawer-title' }, props.title),
+                  h('h2', { class: 'ncx-common-drawer-title' }, localizeUiText(props.title)),
                   h('div', { class: 'ncx-common-drawer-header-actions' }, [
                     slots.headerActions?.(),
                     h('button', {
@@ -3461,7 +3468,7 @@ export const CommonPopover = defineComponent({
       h('div', { ref: popoverRef, class: 'ncx-common-popover' }, [
         slots.trigger
           ? slots.trigger({ open: open.value, toggle: toggleOpen })
-          : h(CommonButton, { onClick: toggleOpen }, () => props.label),
+          : h(CommonButton, { onClick: toggleOpen }, () => localizeUiText(props.label)),
         h(Transition, { name: 'ncx-popover-fade' }, () =>
           open.value
             ? h('div', { class: joinClasses('ncx-common-popover-panel', `ncx-common-popover-panel-${props.placement}`) }, [
@@ -3492,7 +3499,7 @@ export const CommonAccordion = defineComponent({
     /** 当前展开条目索引。 */
     const activeIndex = ref(0)
 
-    return () => h('div', { class: 'ncx-common-accordion' }, props.items.map((item, index) => h('section', { class: 'ncx-common-accordion-item' }, [h('button', { type: 'button', onClick: () => (activeIndex.value = activeIndex.value === index ? -1 : index) }, item.title), activeIndex.value === index ? h('p', item.content) : null])))
+    return () => h('div', { class: 'ncx-common-accordion' }, props.items.map((item, index) => h('section', { class: 'ncx-common-accordion-item' }, [h('button', { type: 'button', onClick: () => (activeIndex.value = activeIndex.value === index ? -1 : index) }, localizeUiText(item.title)), activeIndex.value === index ? h('p', localizeUiText(item.content)) : null])))
   }
 })
 
@@ -3504,7 +3511,7 @@ export const CommonVirtualList = defineComponent({
     /** 当前展示的轻量列表切片。 */
     const visibleItems = computed(() => props.items.slice(0, 24))
 
-    return () => h('div', { class: 'ncx-common-virtual-list', role: 'list' }, visibleItems.value.map((item) => h('article', { class: 'ncx-common-virtual-list-item', role: 'listitem', key: item.id }, [h('strong', item.title), h('span', item.description)])))
+    return () => h('div', { class: 'ncx-common-virtual-list', role: 'list' }, visibleItems.value.map((item) => h('article', { class: 'ncx-common-virtual-list-item', role: 'listitem', key: item.id }, [h('strong', localizeUiText(item.title)), h('span', localizeUiText(item.description))])))
   }
 })
 

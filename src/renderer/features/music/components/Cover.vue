@@ -136,9 +136,15 @@ watch(artworkUrl, () => {
         loading="lazy"
         decoding="async"
         @error="handleArtworkError"
-      />
-      <div v-else class="ncx-cover-placeholder">
-        <Music2 :size="props.size === 'hero' ? 56 : 28" aria-hidden="true" />
+      >
+      <div
+        v-else
+        class="ncx-cover-placeholder"
+      >
+        <Music2
+          :size="props.size === 'hero' ? 56 : 28"
+          aria-hidden="true"
+        />
       </div>
 
       <!-- Hover 播放悬浮层（仅在 showPlayButton 为 true 时在 Hover/alwaysShowShadow 下显示） -->
@@ -149,10 +155,13 @@ watch(artworkUrl, () => {
         <button
           type="button"
           class="ncx-cover-play-btn"
-          aria-label="播放"
+          :aria-label="$tSource('播放')"
           @click="handlePlayClick"
         >
-          <Play class="ncx-cover-play-icon" fill="currentColor" />
+          <Play
+            class="ncx-cover-play-icon"
+            fill="currentColor"
+          />
         </button>
       </div>
     </div>
@@ -164,7 +173,7 @@ watch(artworkUrl, () => {
         class="ncx-cover-shadow"
         :style="shadowStyles"
         aria-hidden="true"
-      ></div>
+      />
     </transition>
   </figure>
 </template>

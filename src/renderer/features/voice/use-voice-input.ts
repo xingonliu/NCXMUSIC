@@ -10,6 +10,7 @@ import {
 } from '../../../shared/schemas/voice-settings'
 import { showToast } from '../../design-system/use-toast'
 import { usePlayerRuntime } from '../music/use-player'
+import { translatePublicError } from '../../i18n'
 
 // ========= 类型 =========
 
@@ -222,7 +223,7 @@ async function press(source: VoiceInputSource): Promise<void> {
     const capability = await window.ncx.runtime.voice({ operation: 'status' }).catch(() => undefined)
     if (!isCurrentStart(source, generation)) return
     if (!capability?.ok || capability.data.operation !== 'status' || !capability.data.configured) {
-      return failStart(source, capability && !capability.ok ? capability.error.message : '请先配置当前对话模型。')
+      return failStart(source, capability && !capability.ok ? translatePublicError(capability.error) : '请先配置当前对话模型。')
     }
     if (capability.data.capability === 'unsupported') return failStart(source, capability.data.message ?? '当前对话模型不支持语音识别。')
   }
@@ -481,7 +482,7 @@ async function finalizeCloudRecording(session: ActiveVoiceSession): Promise<void
       audio,
       requestId
     })
-    if (!response.ok) throw new Error(response.error.message)
+    if (!response.ok) throw new Error(translatePublicError(response.error))
     if (response.data.operation !== 'transcribe') throw new Error('语音识别响应类型不匹配。')
     if (response.data.status === 'unsupported') throw new Error(response.data.message ?? '当前对话模型不支持语音识别。')
     await reviewTranscript(session, response.data.text ?? '')

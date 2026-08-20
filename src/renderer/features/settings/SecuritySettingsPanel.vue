@@ -53,12 +53,12 @@ onMounted(() => {
 
 <template>
   <SettingsSection
-    title="权限与执行"
+    :title="$tSource('权限与执行')"
   >
     <SettingsRow
       setting-id="setting-music-safety"
-      title="音乐安全"
-      description="M1～M4 只约束小云代操作；界面中的直接操作不经过 Agent 审批。"
+      :title="$tSource('音乐安全')"
+      :description="$tSource('M1～M4 只约束小云代操作；界面中的直接操作不经过 Agent 审批。')"
     >
       <SafetyControl
         kind="music"
@@ -68,8 +68,8 @@ onMounted(() => {
     </SettingsRow>
     <SettingsRow
       setting-id="setting-command-safety"
-      title="命令安全"
-      description="S1～S4 只影响通过结构、参数和授权工作区审查的 Shell 命令。"
+      :title="$tSource('命令安全')"
+      :description="$tSource('S1～S4 只影响通过结构、参数和授权工作区审查的 Shell 命令。')"
     >
       <SafetyControl
         kind="command"
@@ -80,18 +80,18 @@ onMounted(() => {
     <SettingsRow
       setting-id="setting-shell-tool"
       title="Shell Tool"
-      description="关闭后小云看不到 Shell Tool，提高 S 等级也不会重新启用。"
+      :description="$tSource('关闭后小云看不到 Shell Tool，提高 S 等级也不会重新启用。')"
     >
       <CommonSwitch
         :model-value="agent.snapshot.value.shellToolEnabled"
-        label="启用 Shell Tool"
+        :label="$tSource('启用 Shell Tool')"
         @update:model-value="agent.setShellToolEnabled"
       />
     </SettingsRow>
     <SettingsRow
       setting-id="setting-shell-workspaces"
-      title="授权工作区"
-      description="Shell 的 cwd 和路径参数必须留在以下目录；未授权时只使用应用临时工作区。"
+      :title="$tSource('授权工作区')"
+      :description="$tSource('Shell 的 cwd 和路径参数必须留在以下目录；未授权时只使用应用临时工作区。')"
       align="start"
     >
       <template #details>
@@ -104,16 +104,16 @@ onMounted(() => {
             <CommonButton
               variant="ghost"
               @click="removeShellWorkspace(workspace.id)"
-            >移除</CommonButton>
+            >{{ $tSource("移除") }}</CommonButton>
           </span>
-          <small v-if="shellWorkspaces.length === 0">尚未授权用户目录。</small>
+          <small v-if="shellWorkspaces.length === 0">{{ $tSource("尚未授权用户目录。") }}</small>
         </div>
       </template>
       <CommonButton
         variant="secondary"
         @click="chooseShellWorkspace"
       >
-        授权目录
+        {{ $tSource("授权目录") }}
       </CommonButton>
     </SettingsRow>
   </SettingsSection>

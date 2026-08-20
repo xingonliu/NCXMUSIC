@@ -19,6 +19,7 @@ import {
   type CommonOption
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
+import { translatePublicError } from '../../i18n'
 import ModelIconPicker from './components/ModelIconPicker.vue'
 import ModelIconView from './components/ModelIconView.vue'
 import SettingsSection from './SettingsSection.vue'
@@ -491,7 +492,7 @@ onMounted(() => {
 <template>
   <SettingsSection
     section-id="setting-provider-profiles"
-    title="模型列表"
+    :title="$tSource('模型列表')"
   >
     <template #actions>
       <CommonButton
@@ -499,7 +500,7 @@ onMounted(() => {
         variant="primary"
         @click="openAddDialog"
       >
-        <Plus :size="14" />新增模型
+        <Plus :size="14" />{{ $tSource("新增模型") }}
       </CommonButton>
     </template>
 
@@ -525,12 +526,12 @@ onMounted(() => {
           v-if="profile.capabilitySnapshot?.toolCalls"
           :size="15"
           class="model-profile-verified"
-          aria-label="已通过工具调用验证"
+          :aria-label="$tSource('已通过工具调用验证')"
         />
         <span
           v-if="profile.profileId === activeProfileId"
           class="model-profile-default"
-        >默认</span>
+        >{{ $tSource("默认") }}</span>
       </span>
       <span class="model-profile-actions">
         <CommonButton
@@ -539,8 +540,7 @@ onMounted(() => {
           :disabled="busyProfileId !== undefined"
           @click="openEditDialog(profile)"
         >
-          <Pencil :size="13" />编辑
-        </CommonButton>
+          <Pencil :size="13" />{{ $tSource("编辑") }} </CommonButton>
         <CommonButton
           v-if="profile.enabled"
           size="compact"
@@ -549,25 +549,21 @@ onMounted(() => {
           :disabled="busyProfileId !== undefined && busyProfileId !== profile.profileId"
           @click="verifyProfile(profile.profileId)"
         >
-          <RefreshCw :size="13" />验证
-        </CommonButton>
+          <RefreshCw :size="13" />{{ $tSource("验证") }} </CommonButton>
         <CommonButton
           v-if="profile.enabled && profile.profileId !== activeProfileId"
           size="compact"
           variant="secondary"
           :disabled="busyProfileId !== undefined"
           @click="setDefault(profile.profileId)"
-        >
-          设为默认
-        </CommonButton>
+        > {{ $tSource("设为默认") }} </CommonButton>
         <CommonButton
           size="compact"
           variant="danger"
           :disabled="busyProfileId !== undefined"
           @click="requestDelete(profile)"
         >
-          <Trash2 :size="13" />删除
-        </CommonButton>
+          <Trash2 :size="13" />{{ $tSource("删除") }} </CommonButton>
       </span>
     </div>
 
@@ -576,16 +572,16 @@ onMounted(() => {
       class="model-profile-empty"
     >
       <KeyRound :size="22" />
-      <strong>还没有模型</strong>
-      <span>新增预设或自定义模型后，小云即可开始工作。</span>
+      <strong>{{ $tSource("还没有模型") }}</strong>
+      <span>{{ $tSource("新增预设或自定义模型后，小云即可开始工作。") }}</span>
     </div>
   </SettingsSection>
 
   <!-- 新增模型弹窗 -->
   <CommonDialog
     :visible="addDialogVisible"
-    title="新增模型"
-    subtitle="从 OpenRouter 最新目录选择预设，或填写自定义兼容服务。"
+    :title="$tSource('新增模型')"
+    :subtitle="$tSource('从 OpenRouter 最新目录选择预设，或填写自定义兼容服务。')"
     width="580px"
     :close-on-overlay-click="!saveBusy"
     :close-on-esc="!saveBusy"
@@ -608,7 +604,7 @@ onMounted(() => {
         v-if="editor.mode === 'preset'"
         class="model-catalog-note"
       >
-        预设目录来自 OpenRouter，当前共 {{ catalog?.modelCount ?? 0 }} 个模型。Base URL 固定为 OpenRouter，需填写 OpenRouter API Key。
+        {{ $tSource("预设目录来自 OpenRouter，当前共") }} {{ catalog?.modelCount ?? 0 }} {{ $tSource("个模型。Base URL 固定为 OpenRouter，需填写 OpenRouter API Key。") }}
       </p>
 
       <div
@@ -616,7 +612,7 @@ onMounted(() => {
         class="model-editor-fields"
       >
         <label>
-          <span>选择厂商</span>
+          <span>{{ $tSource("选择厂商") }}</span>
           <CommonDropdownMenu
             class="model-provider-dropdown"
             :label="vendorDropdownLabel"
@@ -629,14 +625,14 @@ onMounted(() => {
           v-if="catalogError"
           class="model-catalog-error"
         >
-          <span>{{ catalogError }}</span>
+          <span>{{ translatePublicError({ message: catalogError }) }}</span>
           <CommonButton
             size="compact"
             variant="secondary"
             :loading="catalogLoading"
             @click="loadCatalog"
           >
-            重试
+            {{ $tSource("重试") }}
           </CommonButton>
         </div>
         <label>
@@ -644,7 +640,7 @@ onMounted(() => {
           <CommonInput
             :model-value="editor.baseUrl"
             disabled
-            placeholder="选择厂商后自动填写"
+            :placeholder="$tSource('选择厂商后自动填写')"
           />
         </label>
         <label>
@@ -659,12 +655,12 @@ onMounted(() => {
           />
         </label>
         <label>
-          <span>默认模型</span>
+          <span>{{ $tSource("默认模型") }}</span>
           <CommonSelect
             :model-value="editor.modelId"
             :options="modelOptions"
             :disabled="!selectedVendor"
-            placeholder="选择模型"
+            :placeholder="$tSource('选择模型')"
             @update:model-value="setPresetModel"
           />
         </label>
@@ -675,11 +671,11 @@ onMounted(() => {
         class="model-editor-fields"
       >
         <label>
-          <span>厂商</span>
+          <span>{{ $tSource("厂商") }}</span>
           <CommonInput
             v-model="editor.displayName"
             maxlength="80"
-            placeholder="例如：本地 Ollama"
+            :placeholder="$tSource('例如：本地 Ollama')"
           />
         </label>
         <label>
@@ -698,20 +694,20 @@ onMounted(() => {
             clearable
             revealable
             autocomplete="new-password"
-            placeholder="本地服务可留空"
+            :placeholder="$tSource('本地服务可留空')"
           />
         </label>
         <label>
-          <span>默认模型</span>
+          <span>{{ $tSource("默认模型") }}</span>
           <CommonInput
             v-model="editor.modelId"
-            placeholder="模型 ID"
+            :placeholder="$tSource('模型 ID')"
           />
         </label>
       </div>
 
       <p class="model-profile-data-disclosure">
-        对话时只发送当前消息与上下文选择器选中的必要画像/记忆；画像分析只发送本地聚合特征和有限代表样本。使用云端 Provider 可能产生 Token 费用，不会发送 Cookie、账户数据库或完整歌单文件。
+        {{ $tSource("对话时只发送当前消息与上下文选择器选中的必要画像/记忆；画像分析只发送本地聚合特征和有限代表样本。使用云端 Provider 可能产生 Token 费用，不会发送 Cookie、账户数据库或完整歌单文件。") }}
       </p>
     </div>
 
@@ -721,14 +717,14 @@ onMounted(() => {
         :disabled="saveBusy"
         @click="closeAddDialog"
       >
-        取消
+        {{ $tSource("取消") }}
       </CommonButton>
       <CommonButton
         variant="primary"
         :loading="saveBusy"
         @click="saveProfile"
       >
-        新增模型
+        {{ $tSource("新增模型") }}
       </CommonButton>
     </template>
   </CommonDialog>
@@ -736,8 +732,8 @@ onMounted(() => {
   <!-- 编辑模型弹窗 -->
   <CommonDialog
     :visible="editDialogVisible"
-    title="编辑模型"
-    subtitle="修改模型配置与凭据信息。"
+    :title="$tSource('编辑模型')"
+    :subtitle="$tSource('修改模型配置与凭据信息。')"
     width="580px"
     :close-on-overlay-click="!editSaveBusy"
     :close-on-esc="!editSaveBusy"
@@ -751,11 +747,11 @@ onMounted(() => {
 
       <div class="model-editor-fields">
         <label>
-          <span>厂商 / 展示名称</span>
+          <span>{{ $tSource("厂商 / 展示名称") }}</span>
           <CommonInput
             v-model="editEditor.displayName"
             maxlength="80"
-            placeholder="例如：OpenAI GPT-4o 或 本地 Ollama"
+            :placeholder="$tSource('例如：OpenAI GPT-4o 或 本地 Ollama')"
           />
         </label>
         <label>
@@ -774,20 +770,20 @@ onMounted(() => {
             clearable
             revealable
             autocomplete="new-password"
-            placeholder="本地服务可留空"
+            :placeholder="$tSource('本地服务可留空')"
           />
         </label>
         <label>
-          <span>默认模型 ID</span>
+          <span>{{ $tSource("默认模型 ID") }}</span>
           <CommonInput
             v-model="editEditor.modelId"
-            placeholder="例如：gpt-4o, claude-3-7-sonnet"
+            :placeholder="$tSource('例如：gpt-4o, claude-3-7-sonnet')"
           />
         </label>
       </div>
 
       <p class="model-profile-data-disclosure">
-        修改配置后可立即点击列表中的「验证」按钮测试连通性与工具调用。
+        {{ $tSource("修改配置后可立即点击列表中的「验证」按钮测试连通性与工具调用。") }}
       </p>
     </div>
 
@@ -797,23 +793,23 @@ onMounted(() => {
         :disabled="editSaveBusy"
         @click="closeEditDialog"
       >
-        取消
+        {{ $tSource("取消") }}
       </CommonButton>
       <CommonButton
         variant="primary"
         :loading="editSaveBusy"
         @click="saveEditProfile"
       >
-        保存修改
+        {{ $tSource("保存修改") }}
       </CommonButton>
     </template>
   </CommonDialog>
 
   <CommonAlertDialog
     :visible="Boolean(deleteCandidate)"
-    title="删除模型？"
+    :title="$tSource('删除模型？')"
     :description="deleteDescription"
-    confirm-text="删除"
+    :confirm-text="$tSource('删除')"
     @cancel="cancelDelete"
     @confirm="confirmDelete"
   />

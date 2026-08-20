@@ -32,12 +32,12 @@ withDefaults(defineProps<SettingsRowProps>(), {
     <div class="settings-row-copy">
       <h3>
         <slot name="title">
-          {{ title }}
+          {{ $tSource(title) }}
         </slot>
       </h3>
       <p v-if="description || $slots.description">
         <slot name="description">
-          {{ description }}
+          {{ $tSource(description) }}
         </slot>
       </p>
       <slot name="details" />

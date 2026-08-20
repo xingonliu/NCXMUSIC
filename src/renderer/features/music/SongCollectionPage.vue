@@ -21,6 +21,7 @@ import {
 } from './music-entity'
 import './music-content-pages.css'
 import { usePlayer } from './use-player'
+import { translatePublicError } from '../../i18n'
 
 // ========= 类型 =========
 
@@ -91,7 +92,7 @@ async function loadSongs(): Promise<void> {
   loading.value = false
 
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    errorMessage.value = translatePublicError(response.error)
     return
   }
 
@@ -133,7 +134,7 @@ function enqueueSong(song: StandardSong): void {
 async function likeSong(song: StandardSong): Promise<void> {
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   showToast(`已收藏《${song.name}》。`, 'success')
@@ -173,13 +174,13 @@ watch(collection, async () => {
     <header class="music-list-hero music-surface">
       <div>
         <p class="music-page-eyebrow">
-          <ListMusic :size="13" /> 歌曲集合
+          <ListMusic :size="13" /> {{ $tSource("歌曲集合") }}
         </p>
         <h1 id="song-collection-title">
-          {{ pageTitle }}
+          {{ $tSource(pageTitle) }}
         </h1>
         <p class="music-page-description">
-          {{ pageDescription }}
+          {{ $tSource(pageDescription) }}
         </p>
       </div>
       <CommonButton
@@ -190,8 +191,7 @@ watch(collection, async () => {
         <Play
           :size="15"
           fill="currentColor"
-        />
-        播放全部
+        /> {{ $tSource("播放全部") }}
       </CommonButton>
     </header>
 
@@ -204,8 +204,8 @@ watch(collection, async () => {
         key="loading"
         class="song-collection-state song-collection-loading"
       >
-        <CommonSpinner label="正在加载歌曲" />
-        <span>正在加载</span>
+        <CommonSpinner :label="$tSource('正在加载歌曲')" />
+        <span>{{ $tSource("正在加载") }}</span>
       </div>
 
       <div
@@ -214,14 +214,14 @@ watch(collection, async () => {
         class="song-collection-state"
       >
         <CommonEmptyState
-          title="登录后查看每日推荐"
-          description="游客不会读取网易云账户的每日推荐歌曲。"
+          :title="$tSource('登录后查看每日推荐')"
+          :description="$tSource('游客不会读取网易云账户的每日推荐歌曲。')"
         >
           <CommonButton
             variant="primary"
             @click="login"
           >
-            登录网易云
+            {{ $tSource("登录网易云") }}
           </CommonButton>
         </CommonEmptyState>
       </div>
@@ -232,7 +232,7 @@ watch(collection, async () => {
         class="song-collection-state"
       >
         <CommonErrorState
-          title="歌曲读取失败"
+          :title="$tSource('歌曲读取失败')"
           :description="errorMessage"
           @retry="loadSongs"
         />
@@ -244,8 +244,8 @@ watch(collection, async () => {
         class="song-collection-state"
       >
         <CommonEmptyState
-          title="暂无歌曲"
-          description="当前集合暂时没有可展示的歌曲。"
+          :title="$tSource('暂无歌曲')"
+          :description="$tSource('当前集合暂时没有可展示的歌曲。')"
         />
       </div>
 
@@ -255,8 +255,8 @@ watch(collection, async () => {
         class="music-track-surface music-surface"
       >
         <header class="music-section-heading">
-          <h2>歌曲</h2>
-          <span>{{ songs.length }} 首</span>
+          <h2>{{ $tSource("歌曲") }}</h2>
+          <span>{{ songs.length }} {{ $tSource("首") }}</span>
         </header>
         <VirtualTrackList
           :songs="songs"

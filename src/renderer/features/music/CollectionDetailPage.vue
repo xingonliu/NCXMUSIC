@@ -34,6 +34,7 @@ import {
 } from './music-entity'
 import './music-content-pages.css'
 import { usePlayer } from './use-player'
+import { translatePublicError } from '../../i18n'
 
 // ========= 类型 =========
 
@@ -175,7 +176,7 @@ async function loadCollection(): Promise<void> {
       : await window.ncx.runtime.getPlaylist({ id: collectionId.value, requestId })
     if (requestId !== latestRequestId) return
     if (!response.ok) {
-      errorMessage.value = response.error.message
+      errorMessage.value = translatePublicError(response.error)
       return
     }
     collection.value = normalizeCollectionResponse(response.data)
@@ -271,7 +272,7 @@ async function toggleSubscription(): Promise<void> {
     ? await mutateMusic({ operation: 'subscribeAlbum', albumId: current.id, subscribed })
     : await mutateMusic({ operation: 'subscribePlaylist', playlistId: current.id, subscribed })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   collection.value = { ...current, subscribed }
@@ -282,7 +283,7 @@ async function toggleSubscription(): Promise<void> {
 async function likeSong(song: StandardSong): Promise<void> {
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   showToast(`已收藏《${song.name}》。`, 'success')
@@ -303,7 +304,7 @@ async function removePlaylistSong(song: StandardSong): Promise<void> {
   })
   removingTrackId.value = null
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   if (collection.value?.id !== current.id) return
@@ -348,7 +349,7 @@ async function movePlaylistSong(song: StandardSong, direction: -1 | 1): Promise<
   if (collection.value?.id !== current.id) return
   if (!response.ok) {
     collection.value = { ...current, songs: previousSongs }
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   showToast('歌单顺序已保存。', 'success')
@@ -431,7 +432,7 @@ onMounted(() => {
         v-if="loading"
         key="loading"
         class="collection-detail-skeleton"
-        aria-label="正在加载专辑或歌单"
+        :aria-label="$tSource('正在加载专辑或歌单')"
       >
         <header class="collection-skeleton-hero">
           <CommonSkeleton
@@ -540,7 +541,7 @@ onMounted(() => {
         class="collection-detail-state"
       >
         <CommonErrorState
-          title="集合读取失败"
+          :title="$tSource('集合读取失败')"
           :description="errorMessage"
           @retry="loadCollection"
         />
@@ -552,8 +553,8 @@ onMounted(() => {
         class="collection-detail-state"
       >
         <CommonEmptyState
-          title="没有找到集合"
-          description="该专辑或歌单暂时不可用。"
+          :title="$tSource('没有找到集合')"
+          :description="$tSource('该专辑或歌单暂时不可用。')"
         />
       </div>
 
@@ -573,7 +574,7 @@ onMounted(() => {
           />
           <div class="music-detail-hero-copy">
             <p class="music-page-eyebrow">
-              {{ collection.kind === 'album' ? '专辑' : '歌单' }}
+              {{ $tSource(collection.kind === 'album' ? '专辑' : '歌单') }}
             </p>
             <h1 id="collection-title">
               {{ collection.name }}
@@ -582,7 +583,7 @@ onMounted(() => {
               {{ subtitle }}
             </p>
             <p class="music-detail-meta">
-              <span v-if="collectionDateMeta">{{ collectionDateMeta.label }} {{ collectionDateMeta.value }} · </span>{{ songs.length }} 首
+              <span v-if="collectionDateMeta">{{ $tSource(collectionDateMeta.label) }} {{ collectionDateMeta.value }} · </span>{{ songs.length }} {{ $tSource("首") }}
             </p>
             <p
               v-if="collection.description"
@@ -600,8 +601,7 @@ onMounted(() => {
                 <Play
                   :size="15"
                   fill="currentColor"
-                />
-                播放全部
+                /> {{ $tSource("播放全部") }}
               </CommonButton>
               <CommonButton
                 variant="secondary"
@@ -609,8 +609,7 @@ onMounted(() => {
                 :disabled="songs.length === 0"
                 @click="shuffleAll"
               >
-                <Shuffle :size="16" />
-                随机播放
+                <Shuffle :size="16" /> {{ $tSource("随机播放") }}
               </CommonButton>
               <CommonButton
                 class="collection-comments-button"
@@ -618,8 +617,7 @@ onMounted(() => {
                 size="prominent"
                 @click="openCommentsDrawer"
               >
-                <MessageCircle :size="16" />
-                评论
+                <MessageCircle :size="16" /> {{ $tSource("评论") }}
               </CommonButton>
               <CommonButton
                 v-if="collection.kind === 'album' || !isOwnedPlaylist"
@@ -635,7 +633,7 @@ onMounted(() => {
                   v-else
                   :size="15"
                 />
-                {{ collection.subscribed ? '已在资料库' : '添加至资料库' }}
+                {{ $tSource(collection.subscribed ? '已在资料库' : '添加至资料库') }}
               </CommonButton>
               <CommonButton
                 variant="secondary"
@@ -643,7 +641,7 @@ onMounted(() => {
                 :disabled="songs.length === 0"
                 @click="downloadCollection"
               >
-                <Download :size="15" />下载
+                <Download :size="15" />{{ $tSource("下载") }}
               </CommonButton>
               <CommonDropdownMenu
                 :items="moreMenuItems"
@@ -653,7 +651,7 @@ onMounted(() => {
                 <template #trigger="{ toggle }">
                   <CommonButton
                     variant="ghost"
-                    aria-label="更多操作"
+                    :aria-label="$tSource('更多操作')"
                     @click="toggle"
                   >
                     <Ellipsis :size="17" />
@@ -670,9 +668,9 @@ onMounted(() => {
         >
           <header class="music-section-heading">
             <h2 id="collection-tracks-title">
-              歌曲
+              {{ $tSource("歌曲") }}
             </h2>
-            <span>{{ songs.length }} 首{{ isOwnedPlaylist ? ' · 可管理' : '' }}</span>
+            <span>{{ songs.length }} {{ $tSource("首") }}{{ $tSource(isOwnedPlaylist ? ' · 可管理' : '') }}</span>
           </header>
           <VirtualTrackList
             class="track-list"
@@ -695,7 +693,7 @@ onMounted(() => {
 
         <CommonDrawer
           :visible="commentsDrawerVisible"
-          title="评论"
+          :title="$tSource('评论')"
           width="min(480px, 92vw)"
           placement="right"
           @close="closeCommentsDrawer"

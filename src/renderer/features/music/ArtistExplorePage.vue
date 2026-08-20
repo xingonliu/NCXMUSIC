@@ -7,6 +7,7 @@ import type { MusicBrowseFacetGroup, StandardArtist } from '../../../shared/sche
 import { CommonEmptyState, CommonErrorState, CommonSpinner } from '../../design-system/components'
 import Cover from './components/Cover.vue'
 import './music-content-pages.css'
+import { translatePublicError } from '../../i18n'
 
 // ========= 变量 =========
 
@@ -69,7 +70,7 @@ async function loadArtists(): Promise<void> {
   if (requestId !== latestRequestId) return
   loading.value = false
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    errorMessage.value = translatePublicError(response.error)
     return
   }
   if (response.data.kind !== 'artistCollection') {
@@ -84,7 +85,7 @@ async function loadArtistFacets(): Promise<void> {
   /** 浏览筛选标准响应。 */
   const response = await window.ncx.runtime.readMusic({ operation: 'getBrowseFacets' })
   if (!response.ok || response.data.kind !== 'playlistCollection' || response.data.collection !== 'facets') {
-    errorMessage.value = response.ok ? '歌手筛选响应类型不匹配。' : response.error.message
+    errorMessage.value = response.ok ? '歌手筛选响应类型不匹配。' : translatePublicError(response.error)
     loading.value = false
     return
   }
@@ -111,34 +112,108 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="artist-explore-page music-content-page" aria-labelledby="artist-explore-title">
+  <section
+    class="artist-explore-page music-content-page"
+    aria-labelledby="artist-explore-title"
+  >
     <header class="artist-explore-heading">
-      <p class="music-page-eyebrow"><UserRound :size="13" /> 浏览</p>
-      <h1 id="artist-explore-title">歌手探索</h1>
-      <p>按地区、类型与首字母逐步收敛，而不是把所有筛选塞进一个菜单。</p>
+      <p class="music-page-eyebrow">
+        <UserRound :size="13" /> {{ $tSource("浏览") }}
+      </p>
+      <h1 id="artist-explore-title">
+        {{ $tSource("歌手探索") }}
+      </h1>
+      <p>{{ $tSource("按地区、类型与首字母逐步收敛，而不是把所有筛选塞进一个菜单。") }}</p>
     </header>
 
-    <section class="artist-filter-panel music-surface" aria-label="歌手筛选">
-      <header><SlidersHorizontal :size="16" /><h2>筛选</h2></header>
-      <div class="artist-filter-row" role="tablist" aria-label="地区">
-        <button v-for="area in areaFacet?.options ?? []" :key="area.value" type="button" role="tab" :aria-selected="activeArea === area.value" :class="{ active: activeArea === area.value }" @click="activeArea = area.value">{{ area.label }}</button>
+    <section
+      class="artist-filter-panel music-surface"
+      :aria-label="$tSource('歌手筛选')"
+    >
+      <header><SlidersHorizontal :size="16" /><h2>{{ $tSource("筛选") }}</h2></header>
+      <div
+        class="artist-filter-row"
+        role="tablist"
+        :aria-label="$tSource('地区')"
+      >
+        <button
+          v-for="area in areaFacet?.options ?? []"
+          :key="area.value"
+          type="button"
+          role="tab"
+          :aria-selected="activeArea === area.value"
+          :class="{ active: activeArea === area.value }"
+          @click="activeArea = area.value"
+        >
+          {{ area.label }}
+        </button>
       </div>
-      <div class="artist-filter-row" aria-label="歌手类型">
-        <button v-for="artistType in typeFacet?.options ?? []" :key="artistType.value" type="button" :class="{ active: activeType === artistType.value }" @click="activeType = artistType.value">{{ artistType.label }}</button>
+      <div
+        class="artist-filter-row"
+        :aria-label="$tSource('歌手类型')"
+      >
+        <button
+          v-for="artistType in typeFacet?.options ?? []"
+          :key="artistType.value"
+          type="button"
+          :class="{ active: activeType === artistType.value }"
+          @click="activeType = artistType.value"
+        >
+          {{ artistType.label }}
+        </button>
       </div>
-      <div class="artist-filter-row artist-initials" aria-label="首字母">
-        <button v-for="initial in initialFacet?.options ?? []" :key="initial.value" type="button" :class="{ active: activeInitial === initial.value }" @click="activeInitial = initial.value">{{ initial.label }}</button>
+      <div
+        class="artist-filter-row artist-initials"
+        :aria-label="$tSource('首字母')"
+      >
+        <button
+          v-for="initial in initialFacet?.options ?? []"
+          :key="initial.value"
+          type="button"
+          :class="{ active: activeInitial === initial.value }"
+          @click="activeInitial = initial.value"
+        >
+          {{ initial.label }}
+        </button>
       </div>
     </section>
 
-    <div v-if="loading" class="artist-explore-state"><CommonSpinner label="正在加载歌手" /><span>正在加载歌手</span></div>
-    <CommonErrorState v-else-if="errorMessage" title="歌手读取失败" :description="errorMessage" @retry="loadArtists" />
-    <CommonEmptyState v-else-if="artists.length === 0" title="没有匹配的歌手" description="调整地区、类型或首字母后再试。" />
-    <div v-else class="artist-explore-grid">
-      <button v-for="artist in artists" :key="artist.id" type="button" @click="openArtist(artist)">
-        <Cover :src="artist.artworkUrl" :alt="artist.name" size="feature" shape="circle" :show-play-button="false" />
+    <div
+      v-if="loading"
+      class="artist-explore-state"
+    >
+      <CommonSpinner :label="$tSource('正在加载歌手')" /><span>{{ $tSource("正在加载歌手") }}</span>
+    </div>
+    <CommonErrorState
+      v-else-if="errorMessage"
+      :title="$tSource('歌手读取失败')"
+      :description="errorMessage"
+      @retry="loadArtists"
+    />
+    <CommonEmptyState
+      v-else-if="artists.length === 0"
+      :title="$tSource('没有匹配的歌手')"
+      :description="$tSource('调整地区、类型或首字母后再试。')"
+    />
+    <div
+      v-else
+      class="artist-explore-grid"
+    >
+      <button
+        v-for="artist in artists"
+        :key="artist.id"
+        type="button"
+        @click="openArtist(artist)"
+      >
+        <Cover
+          :src="artist.artworkUrl"
+          :alt="artist.name"
+          size="feature"
+          shape="circle"
+          :show-play-button="false"
+        />
         <strong>{{ artist.name }}</strong>
-        <span>{{ artist.alias.join(' / ') || `${artist.songCount ?? 0} 首作品` }}</span>
+        <span>{{ $tSource(artist.alias.join(' / ') || `${artist.songCount ?? 0} 首作品`) }}</span>
       </button>
     </div>
   </section>

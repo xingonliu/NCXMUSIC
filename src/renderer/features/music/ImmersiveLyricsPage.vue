@@ -25,7 +25,7 @@ import {
   CommonIconButton
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
-import { useI18n } from '../../i18n'
+import { useI18n , translatePublicError} from '../../i18n'
 import { copyText } from '../foundation/clipboard'
 import { DEFAULT_LYRIC_ACCENT_COLOR } from './artwork-accent-color'
 import FluidMeshBackground from './components/FluidMeshBackground.vue'
@@ -143,7 +143,7 @@ async function likeCurrentTrack(): Promise<void> {
   })
 
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
 
@@ -226,7 +226,7 @@ onBeforeUnmount(() => {
     <button
       type="button"
       class="immersive-close-handle"
-      aria-label="收起沉浸播放页"
+      :aria-label="$tSource('收起沉浸播放页')"
       @click="closeImmersivePlayer"
     >
       <svg
@@ -254,16 +254,16 @@ onBeforeUnmount(() => {
       <div class="immersive-toolbar-output">
         <CommonHeaderGroupButton
           v-if="isWindows"
-          label="窗口控制"
+          :label="$tSource('窗口控制')"
         >
           <CommonHeaderGroupItem
-            label="最小化"
+            :label="$tSource('最小化')"
             @click="runWindowCommand({ type: 'window.minimize' })"
           >
             <Minus :size="16" />
           </CommonHeaderGroupItem>
           <CommonHeaderGroupItem
-            :label="windowSnapshot.maximized ? '还原窗口' : '最大化窗口'"
+            :label="$tSource(windowSnapshot.maximized ? '还原窗口' : '最大化窗口')"
             @click="runWindowCommand({ type: 'window.toggleMaximize' })"
           >
             <Minimize2
@@ -276,7 +276,7 @@ onBeforeUnmount(() => {
             />
           </CommonHeaderGroupItem>
           <CommonHeaderGroupItem
-            label="关闭窗口"
+            :label="$tSource('关闭窗口')"
             variant="close"
             @click="runWindowCommand({ type: 'window.requestClose' })"
           >
@@ -292,7 +292,7 @@ onBeforeUnmount(() => {
     >
       <section
         class="immersive-now-playing"
-        aria-label="正在播放"
+        :aria-label="$tSource('正在播放')"
       >
         <MediaArtwork
           :src="displayArtworkUrl"
@@ -313,7 +313,7 @@ onBeforeUnmount(() => {
               size="default"
               variant="ghost"
               :selected="isLiked"
-              :label="isLiked ? '已收藏当前歌曲' : '收藏当前歌曲'"
+              :label="$tSource(isLiked ? '已收藏当前歌曲' : '收藏当前歌曲')"
               @click="likeCurrentTrack"
             >
               <Heart
@@ -324,7 +324,7 @@ onBeforeUnmount(() => {
             <CommonIconButton
               size="default"
               variant="ghost"
-              label="复制歌曲信息"
+              :label="$tSource('复制歌曲信息')"
               @click="copyTrackInformation"
             >
               <Copy :size="18" />
@@ -377,9 +377,9 @@ onBeforeUnmount(() => {
       class="immersive-empty-state"
     >
       <h1 id="immersive-lyrics-title">
-        还没有播放内容
+        {{ $tSource("还没有播放内容") }}
       </h1>
-      <p>收起页面并选择一首歌曲开始播放。</p>
+      <p>{{ $tSource("收起页面并选择一首歌曲开始播放。") }}</p>
     </div>
 
     <footer class="immersive-footer">
@@ -387,7 +387,7 @@ onBeforeUnmount(() => {
         size="default"
         variant="ghost"
         :selected="isQueueOpen"
-        label="播放队列"
+        :label="$tSource('播放队列')"
         @click="toggleQueueDrawer"
       >
         <ListMusic :size="18" />

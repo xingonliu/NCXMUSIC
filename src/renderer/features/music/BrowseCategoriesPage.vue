@@ -17,6 +17,7 @@ import {
 import CommonPagination from '../../design-system/components/CommonPagination.vue'
 import EntityCard from './components/EntityCard.vue'
 import './music-content-pages.css'
+import { translatePublicError } from '../../i18n'
 
 // ========= 类型 =========
 
@@ -162,7 +163,7 @@ async function loadCategoryPlaylists(): Promise<void> {
   if (requestId !== latestRequestId) return
   playlistsLoading.value = false
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    errorMessage.value = translatePublicError(response.error)
     return
   }
   if (response.data.kind !== 'playlistCollection' || response.data.collection !== 'category') {
@@ -221,7 +222,7 @@ async function loadBrowseFacets(): Promise<void> {
   const response = await window.ncx.runtime.readMusic({ operation: 'getBrowseFacets' })
   facetsLoading.value = false
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    errorMessage.value = translatePublicError(response.error)
     return
   }
   if (response.data.kind !== 'playlistCollection' || response.data.collection !== 'facets') {
@@ -295,18 +296,18 @@ onMounted(() => {
   >
     <header class="category-explore-heading">
       <p class="music-page-eyebrow">
-        <LibraryBig :size="13" /> 浏览
+        <LibraryBig :size="13" /> {{ $tSource("浏览") }}
       </p>
       <h1 id="category-explore-title">
-        分类歌单
+        {{ $tSource("分类歌单") }}
       </h1>
-      <p>在语种、风格、场景、情感与主题之间切换，并逐页浏览当前分类的全部歌单。</p>
+      <p>{{ $tSource("在语种、风格、场景、情感与主题之间切换，并逐页浏览当前分类的全部歌单。") }}</p>
     </header>
 
     <section
       v-if="!facetsLoading && facetsReady"
       class="category-explore-controls music-surface"
-      aria-label="歌单分类筛选"
+      :aria-label="$tSource('歌单分类筛选')"
     >
       <CommonTabs
         :model-value="activeTab"
@@ -317,7 +318,7 @@ onMounted(() => {
       />
       <div
         class="category-option-list"
-        aria-label="具体分类"
+        :aria-label="$tSource('具体分类')"
       >
         <button
           v-for="option in activeFacetGroup?.options ?? []"
@@ -336,19 +337,19 @@ onMounted(() => {
       v-if="facetsLoading || playlistsLoading"
       class="category-explore-state"
     >
-      <CommonSpinner label="正在加载分类歌单" />
-      <span>正在加载分类歌单</span>
+      <CommonSpinner :label="$tSource('正在加载分类歌单')" />
+      <span>{{ $tSource("正在加载分类歌单") }}</span>
     </div>
     <CommonErrorState
       v-else-if="errorMessage"
-      title="分类歌单读取失败"
+      :title="$tSource('分类歌单读取失败')"
       :description="errorMessage"
       @retry="retryPage"
     />
     <CommonEmptyState
       v-else-if="playlists.length === 0"
-      title="当前分类暂无歌单"
-      description="切换其他分类后再试。"
+      :title="$tSource('当前分类暂无歌单')"
+      :description="$tSource('切换其他分类后再试。')"
     />
     <template v-else>
       <header class="category-results-heading">
@@ -356,7 +357,7 @@ onMounted(() => {
           <p>{{ activeFacetGroup?.label }}</p>
           <h2>{{ activeCategory }}</h2>
         </div>
-        <span>共 {{ total }} 个歌单 · 第 {{ currentPage }} / {{ totalPages }} 页</span>
+        <span>{{ $tSource("共") }} {{ total }} {{ $tSource("个歌单 · 第") }} {{ currentPage }} / {{ totalPages }} {{ $tSource("页") }}</span>
       </header>
 
       <div class="category-playlist-grid">
@@ -375,7 +376,7 @@ onMounted(() => {
         v-if="totalPages > 1"
         :current-page="currentPage"
         :total-pages="totalPages"
-        aria-label="分类歌单分页"
+        :aria-label="$tSource('分类歌单分页')"
         @change="goToPage"
       />
     </template>

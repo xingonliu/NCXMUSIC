@@ -199,7 +199,7 @@ watch(
       ]"
       :style="{ height: toastContainerHeight }"
       role="region"
-      aria-label="系统通知"
+      :aria-label="$tSource('系统通知')"
       @mouseenter="handleToastContainerEnter"
       @mouseleave="handleToastContainerLeave"
     >
@@ -237,18 +237,56 @@ watch(
               </template>
               <template v-else-if="toast.type === 'warning'">
                 <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                <line x1="12" y1="9" x2="12" y2="13" />
-                <line x1="12" y1="17" x2="12.01" y2="17" />
+                <line
+                  x1="12"
+                  y1="9"
+                  x2="12"
+                  y2="13"
+                />
+                <line
+                  x1="12"
+                  y1="17"
+                  x2="12.01"
+                  y2="17"
+                />
               </template>
               <template v-else-if="toast.type === 'danger'">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="15" y1="9" x2="9" y2="15" />
-                <line x1="9" y1="9" x2="15" y2="15" />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                />
+                <line
+                  x1="15"
+                  y1="9"
+                  x2="9"
+                  y2="15"
+                />
+                <line
+                  x1="9"
+                  y1="9"
+                  x2="15"
+                  y2="15"
+                />
               </template>
               <template v-else>
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="16" x2="12" y2="12" />
-                <line x1="12" y1="8" x2="12.01" y2="8" />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                />
+                <line
+                  x1="12"
+                  y1="16"
+                  x2="12"
+                  y2="12"
+                />
+                <line
+                  x1="12"
+                  y1="8"
+                  x2="12.01"
+                  y2="8"
+                />
               </template>
             </svg>
           </div>
@@ -262,7 +300,7 @@ watch(
           <button
             type="button"
             class="ncx-common-toast-close"
-            aria-label="关闭通知"
+            :aria-label="$tSource('关闭通知')"
             @click.stop.prevent="dismissToast(toast.id)"
           >
             <svg
@@ -276,8 +314,18 @@ watch(
               stroke-linejoin="round"
               style="pointer-events: none;"
             >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
+              <line
+                x1="18"
+                y1="6"
+                x2="6"
+                y2="18"
+              />
+              <line
+                x1="6"
+                y1="6"
+                x2="18"
+                y2="18"
+              />
             </svg>
           </button>
         </div>

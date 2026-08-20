@@ -11,6 +11,8 @@ import {
   setLocale,
   SUPPORTED_LOCALES,
   t,
+  translatePublicError,
+  translateSourceText,
   useI18n
 } from '../../src/renderer/i18n'
 
@@ -91,5 +93,29 @@ describe('renderer i18n', () => {
   it('returns unknown keys unchanged for safe incremental migration', () => {
     setLocale('en-US')
     expect(t('missing.translation.key')).toBe('missing.translation.key')
+  })
+
+  it('translates legacy source text and numbered placeholders', () => {
+    setLocale('en-US')
+    expect(translateSourceText('返回应用')).toBe('Back to app')
+    expect(translateSourceText('已将《Golden Hour》加入队列。'))
+      .toBe('Added “Golden Hour” to the queue.')
+    expect(translateSourceText('  播放  ')).toBe('  Play  ')
+  })
+
+  it('localizes public errors by code and safely hides unknown Chinese internals', () => {
+    setLocale('en-US')
+    expect(translatePublicError({ code: 'AUTH_REQUIRED', message: '当前操作需要登录网易云账户。' }))
+      .toBe('Sign in before performing this action.')
+    expect(translatePublicError({ code: 'REQUEST_TIMEOUT', message: '请求超时。' }))
+      .toBe('The request timed out. Try again later.')
+    expect(translatePublicError({ code: 'UNMAPPED_INTERNAL', message: '数据库内部异常。' }))
+      .toBe('The operation failed. Try again later.')
+    expect(translatePublicError({ code: 'PROVIDER_ERROR', message: 'Provider rejected the request.' }))
+      .toBe('Provider rejected the request.')
+
+    setLocale('zh-CN')
+    expect(translatePublicError({ code: 'AUTH_REQUIRED', message: '当前操作需要登录网易云账户。' }))
+      .toBe('当前操作需要登录网易云账户。')
   })
 })

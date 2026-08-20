@@ -4,6 +4,7 @@ import { computed, ref, watch, type DeepReadonly } from 'vue'
 
 import type { AgentSnapshot } from '../../../../shared/schemas/agent'
 import { CommonButton, CommonDialog, CommonIconButton } from '../../../design-system/components'
+import { translatePublicError } from '../../../i18n'
 import { copyText } from '../../foundation/clipboard'
 
 // ========= 类型 =========
@@ -147,24 +148,40 @@ function handleRetryFromModal(): void {
     aria-live="polite"
   >
     <span class="profile-analysis-banner-icon">
-      <AlertCircle v-if="failed" :size="18" />
-      <Sparkles v-else :size="18" />
+      <AlertCircle
+        v-if="failed"
+        :size="18"
+      />
+      <Sparkles
+        v-else
+        :size="18"
+      />
     </span>
     <div class="profile-analysis-banner-copy">
-      <strong>{{ title }}</strong>
-      <p>{{ description }}</p>
-      <div v-if="working" class="profile-analysis-progress" role="progressbar" :aria-valuenow="profile.progress" aria-valuemin="0" aria-valuemax="100">
+      <strong>{{ $tSource(title) }}</strong>
+      <p>{{ failed ? translatePublicError({ message: description }) : $tSource(description) }}</p>
+      <div
+        v-if="working"
+        class="profile-analysis-progress"
+        role="progressbar"
+        :aria-valuenow="profile.progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
         <span :style="{ width: `${profile.progress}%` }" />
       </div>
     </div>
-    <div v-if="!working" class="profile-analysis-banner-actions">
+    <div
+      v-if="!working"
+      class="profile-analysis-banner-actions"
+    >
       <CommonButton
         variant="primary"
         size="compact"
         :disabled="!profile.eligible"
         @click="handleStart(startMode)"
       >
-        {{ failed ? '重试' : profile.prompt.kind === 'update' ? '更新画像' : '开始分析' }}
+        {{ $tSource(failed ? '重试' : profile.prompt.kind === 'update' ? '更新画像' : '开始分析') }}
       </CommonButton>
       <CommonButton
         v-if="failed"
@@ -172,12 +189,12 @@ function handleRetryFromModal(): void {
         size="compact"
         @click="handleOpenDetail"
       >
-        查看详情
+        {{ $tSource("查看详情") }}
       </CommonButton>
     </div>
     <CommonIconButton
       v-if="!working"
-      label="暂不分析"
+      :label="$tSource('暂不分析')"
       size="compact"
       variant="ghost"
       @click="handleDismiss"
@@ -188,43 +205,58 @@ function handleRetryFromModal(): void {
     <!-- 画像分析失败的原始响应详情弹窗 -->
     <CommonDialog
       :visible="detailModalVisible"
-      title="画像分析异常详情"
-      subtitle="大模型返回的原始数据与异常信息"
+      :title="$tSource('画像分析异常详情')"
+      :subtitle="$tSource('大模型返回的原始数据与异常信息')"
       width="640px"
       @close="handleCloseDetail"
     >
       <div class="profile-raw-detail-content">
         <section class="profile-raw-detail-section">
-          <div class="profile-raw-detail-label">错误原因</div>
+          <div class="profile-raw-detail-label">
+            {{ $tSource("错误原因") }}
+          </div>
           <div class="profile-raw-detail-error">
-            {{ profile.errorMessage || '模型没有返回有效画像 JSON。' }}
+            {{ translatePublicError({ message: profile.errorMessage || '模型没有返回有效画像 JSON。' }) }}
           </div>
         </section>
 
         <section class="profile-raw-detail-section">
           <div class="profile-raw-detail-header">
-            <span class="profile-raw-detail-label">AI 原始返回</span>
+            <span class="profile-raw-detail-label">{{ $tSource("AI 原始返回") }}</span>
             <CommonButton
               v-if="profile.rawOutput"
               variant="ghost"
               size="compact"
               @click="handleCopyOutput"
             >
-              <Check v-if="copied" :size="13" />
-              <Copy v-else :size="13" />
-              <span>{{ copied ? '已复制' : '复制内容' }}</span>
+              <Check
+                v-if="copied"
+                :size="13"
+              />
+              <Copy
+                v-else
+                :size="13"
+              />
+              <span>{{ $tSource(copied ? '已复制' : '复制内容') }}</span>
             </CommonButton>
           </div>
-          <pre class="profile-raw-detail-pre">{{ profile.rawOutput || '（模型未返回任何文本内容或响应为空）' }}</pre>
+          <pre class="profile-raw-detail-pre">{{ $tSource(profile.rawOutput || '（模型未返回任何文本内容或响应为空）') }}</pre>
         </section>
       </div>
 
       <template #actions>
-        <CommonButton variant="secondary" @click="handleCloseDetail">
-          关闭
+        <CommonButton
+          variant="secondary"
+          @click="handleCloseDetail"
+        >
+          {{ $tSource("关闭") }}
         </CommonButton>
-        <CommonButton variant="primary" :disabled="!profile.eligible" @click="handleRetryFromModal">
-          重试生成
+        <CommonButton
+          variant="primary"
+          :disabled="!profile.eligible"
+          @click="handleRetryFromModal"
+        >
+          {{ $tSource("重试生成") }}
         </CommonButton>
       </template>
     </CommonDialog>

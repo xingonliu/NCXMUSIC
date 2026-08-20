@@ -320,12 +320,12 @@ onUnmounted(() => {
     <!-- 1、语音输入 -->
     <SettingsSection
       section-id="setting-section-voice"
-      title="语音输入"
+      :title="$tSource('语音输入')"
     >
       <SettingsRow
         setting-id="setting-voice-source"
-        title="默认使用"
-        description="本地不上传音频；独立大模型使用单独配置；当前对话模型强制非流式。"
+        :title="$tSource('默认使用')"
+        :description="$tSource('本地不上传音频；独立大模型使用单独配置；当前对话模型强制非流式。')"
       >
         <CommonSelect
           class="settings-control"
@@ -336,7 +336,7 @@ onUnmounted(() => {
       </SettingsRow>
       <SettingsRow
         setting-id="setting-voice-shortcut"
-        title="麦克风快捷键"
+        :title="$tSource('麦克风快捷键')"
         :description="`${shortcut?.accelerator ?? 'Control+Shift+Q'} · ${shortcutStatusText}`"
       >
         <div class="settings-inline-actions">
@@ -345,31 +345,31 @@ onUnmounted(() => {
             variant="secondary"
             @click="openPermissionSettings"
           >
-            授权/重新检测
+            {{ $tSource("授权/重新检测") }}
           </CommonButton>
           <CommonButton
             variant="secondary"
             @click="startShortcutRecording"
           >
-            {{ recordingShortcut ? '等待组合键…' : '录制新快捷键' }}
+            {{ $tSource(recordingShortcut ? '等待组合键…' : '录制新快捷键') }}
           </CommonButton>
           <CommonSwitch
             :model-value="shortcut?.enabled ?? false"
-            label="启用全局语音快捷键"
+            :label="$tSource('启用全局语音快捷键')"
             @update:model-value="setShortcutEnabled"
           />
         </div>
       </SettingsRow>
       <SettingsRow
         setting-id="setting-microphone"
-        title="麦克风权限"
+        :title="$tSource('麦克风权限')"
         :description="microphoneStatusText"
       >
         <CommonButton
           variant="secondary"
           @click="openPermissionSettings"
         >
-          系统权限设置
+          {{ $tSource("系统权限设置") }}
         </CommonButton>
       </SettingsRow>
     </SettingsSection>
@@ -377,7 +377,7 @@ onUnmounted(() => {
     <!-- 2、本地 -->
     <SettingsSection
       section-id="setting-section-local"
-      title="本地"
+      :title="$tSource('本地')"
     >
       <template v-if="voiceSettings?.models">
         <SettingsRow
@@ -385,7 +385,7 @@ onUnmounted(() => {
           :key="model.id"
           :setting-id="`setting-local-model-${model.id}`"
           :title="model.name"
-          :description="`${model.description}（${model.languages.join(' / ')} · 下载 ${formatBytes(model.downloadBytes)} · 安装 ${formatBytes(model.installedBytes)} · 约 ${model.estimatedMemoryMiB} MiB 内存）`"
+          :description="$tSource(`${model.description}（${model.languages.join(' / ')} · 下载 ${formatBytes(model.downloadBytes)} · 安装 ${formatBytes(model.installedBytes)} · 约 ${model.estimatedMemoryMiB} MiB 内存）`)"
         >
           <template #title>
             <span class="voice-model-title">
@@ -394,9 +394,7 @@ onUnmounted(() => {
                 v-if="model.installState === 'installed'"
                 class="voice-downloaded-badge"
               >
-                <Check :size="12" />
-                已下载
-              </span>
+                <Check :size="12" /> {{ $tSource("已下载") }} </span>
             </span>
           </template>
 
@@ -415,33 +413,33 @@ onUnmounted(() => {
             variant="secondary"
             disabled
           >
-            已选
+            {{ $tSource("已选") }}
           </CommonButton>
           <CommonButton
             v-else
             variant="secondary"
             @click="handleSelectModel(model)"
           >
-            选择
+            {{ $tSource("选择") }}
           </CommonButton>
         </SettingsRow>
       </template>
 
       <SettingsRow
         setting-id="setting-local-streaming"
-        title="使用流式识别"
-        :description="voiceSettings?.local.modelId === 'light' ? '边说边出字。' : 'SenseVoice 通过 VAD 按语音片段增量出字。'"
+        :title="$tSource('使用流式识别')"
+        :description="$tSource(voiceSettings?.local.modelId === 'light' ? '边说边出字。' : 'SenseVoice 通过 VAD 按语音片段增量出字。')"
       >
         <CommonSwitch
           :model-value="voiceSettings?.local.streaming ?? true"
-          label="启用本地流式识别"
+          :label="$tSource('启用本地流式识别')"
           @update:model-value="saveLocal({ streaming: $event })"
         />
       </SettingsRow>
       <SettingsRow
         setting-id="setting-local-load-mode"
-        title="模型内存"
-        description="按需加载会在识别结束并空闲 15 秒后释放进程；常驻可缩短下一次启动时间。"
+        :title="$tSource('模型内存')"
+        :description="$tSource('按需加载会在识别结束并空闲 15 秒后释放进程；常驻可缩短下一次启动时间。')"
       >
         <CommonRadioGroup
           :model-value="voiceSettings?.local.loadMode ?? 'on-demand'"
@@ -455,12 +453,12 @@ onUnmounted(() => {
     <!-- 3、大模型 -->
     <SettingsSection
       section-id="setting-section-cloud"
-      title="大模型"
+      :title="$tSource('大模型')"
     >
       <SettingsRow
         setting-id="setting-cloud-protocol"
-        title="厂商协议"
-        description="仅支持 OpenAI Audio Transcriptions 兼容接口。"
+        :title="$tSource('厂商协议')"
+        :description="$tSource('仅支持 OpenAI Audio Transcriptions 兼容接口。')"
       >
         <CommonSelect
           class="settings-control"
@@ -471,7 +469,7 @@ onUnmounted(() => {
       <SettingsRow
         setting-id="setting-cloud-url"
         title="URL"
-        description="填写 API 根地址，应用会请求 /audio/transcriptions。"
+        :description="$tSource('填写 API 根地址，应用会请求 /audio/transcriptions。')"
       >
         <CommonInput
           v-model="cloudBaseUrl"
@@ -480,8 +478,8 @@ onUnmounted(() => {
       </SettingsRow>
       <SettingsRow
         setting-id="setting-cloud-model"
-        title="模型 ID"
-        description="例如 gpt-4o-mini-transcribe；whisper-1 不支持流式 SSE。"
+        :title="$tSource('模型 ID')"
+        :description="$tSource('例如 gpt-4o-mini-transcribe；whisper-1 不支持流式 SSE。')"
       >
         <CommonInput
           v-model="cloudModelId"
@@ -491,7 +489,7 @@ onUnmounted(() => {
       <SettingsRow
         setting-id="setting-cloud-key"
         title="API Key"
-        :description="voiceSettings?.cloud.hasApiKey ? '已安全保存；留空将保留现有 Key。' : '使用系统安全存储加密，仅 Main 进程解密。'"
+        :description="$tSource(voiceSettings?.cloud.hasApiKey ? '已安全保存；留空将保留现有 Key。' : '使用系统安全存储加密，仅 Main 进程解密。')"
       >
         <CommonInput
           v-model="cloudApiKey"
@@ -501,8 +499,8 @@ onUnmounted(() => {
       </SettingsRow>
       <SettingsRow
         setting-id="setting-cloud-headers"
-        title="自定义 Headers"
-        :description="`JSON 对象；当前已保存：${voiceSettings?.cloud.headerNames.join(', ') || '无'}。保存会替换已有自定义 Header。`"
+        :title="$tSource('自定义 Headers')"
+        :description="$tSource(`JSON 对象；当前已保存：${voiceSettings?.cloud.headerNames.join(', ') || '无'}。保存会替换已有自定义 Header。`)"
       >
         <CommonInput
           v-model="cloudHeaders"
@@ -511,13 +509,13 @@ onUnmounted(() => {
       </SettingsRow>
       <SettingsRow
         setting-id="setting-cloud-streaming"
-        title="使用流式响应"
-        description="录音结束上传后接收 SSE 增量文本；这不是实时上传麦克风音频。"
+        :title="$tSource('使用流式响应')"
+        :description="$tSource('录音结束上传后接收 SSE 增量文本；这不是实时上传麦克风音频。')"
       >
         <CommonSwitch
           :model-value="voiceSettings?.cloud.streaming ?? false"
           :disabled="cloudModelId.trim().toLowerCase() === 'whisper-1'"
-          label="启用云端流式响应"
+          :label="$tSource('启用云端流式响应')"
           @update:model-value="setCloudStreaming"
         />
       </SettingsRow>
@@ -526,18 +524,18 @@ onUnmounted(() => {
           :loading="savingCloud"
           @click="saveCloud"
         >
-          保存大模型配置
+          {{ $tSource("保存大模型配置") }}
         </CommonButton>
       </div>
     </SettingsSection>
 
     <CommonAlertDialog
       :visible="installDialogVisible"
-      title="安装模型"
-      :description="`该模型（${pendingInstallModel?.name ?? ''}）未安装，是否下载并安装？`"
+      :title="$tSource('安装模型')"
+      :description="$tSource(`该模型（${pendingInstallModel?.name ?? ''}）未安装，是否下载并安装？`)"
       type="info"
-      confirm-text="安装"
-      cancel-text="取消"
+      :confirm-text="$tSource('安装')"
+      :cancel-text="$tSource('取消')"
       @cancel="installDialogVisible = false"
       @confirm="confirmInstall"
     />

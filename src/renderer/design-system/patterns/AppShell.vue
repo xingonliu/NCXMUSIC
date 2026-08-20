@@ -232,7 +232,7 @@ onBeforeUnmount(() => {
         <CommonHeaderButton
           v-if="isSecondaryPage"
           class="ncx-back-button"
-          label="返回上一页"
+          :label="$tSource('返回上一页')"
           @click="handleBack"
         >
           <ChevronLeft :size="18" />
@@ -242,7 +242,7 @@ onBeforeUnmount(() => {
       <div class="ncx-page-actions">
         <CommonHeaderButton
           v-if="!isStandalonePage && !isSettingsPage && !isSearchPage"
-          label="搜索"
+          :label="$tSource('搜索')"
           @click="openSearch"
         >
           <Search :size="17" />
@@ -250,7 +250,7 @@ onBeforeUnmount(() => {
 
         <CommonHeaderButton
           v-if="!isStandalonePage && !isSettingsPage"
-          label="刷新当前页"
+          :label="$tSource('刷新当前页')"
           @click="refreshCurrentPage"
         >
           <RotateCcw :size="17" />
@@ -258,17 +258,17 @@ onBeforeUnmount(() => {
 
         <CommonHeaderGroupButton
           v-if="isWindows"
-          label="窗口控制"
+          :label="$tSource('窗口控制')"
         >
           <CommonHeaderGroupItem
-            label="最小化"
+            :label="$tSource('最小化')"
             @click="runWindowCommand({ type: 'window.minimize' })"
           >
             <Minus :size="16" />
           </CommonHeaderGroupItem>
 
           <CommonHeaderGroupItem
-            :label="windowSnapshot.maximized ? '还原窗口' : '最大化窗口'"
+            :label="$tSource(windowSnapshot.maximized ? '还原窗口' : '最大化窗口')"
             @click="runWindowCommand({ type: 'window.toggleMaximize' })"
           >
             <Minimize2
@@ -282,7 +282,7 @@ onBeforeUnmount(() => {
           </CommonHeaderGroupItem>
 
           <CommonHeaderGroupItem
-            label="关闭窗口"
+            :label="$tSource('关闭窗口')"
             variant="close"
             @click="runWindowCommand({ type: 'window.requestClose' })"
           >
@@ -295,7 +295,7 @@ onBeforeUnmount(() => {
     <aside
       v-if="!isStandalonePage"
       class="ncx-sidebar"
-      aria-label="主导航"
+      :aria-label="$tSource('主导航')"
     >
       <div
         v-if="isMacOS"
@@ -330,7 +330,7 @@ onBeforeUnmount(() => {
                 :size="17"
                 :stroke-width="1.9"
               />
-              <span>{{ item.label }}</span>
+              <span>{{ $tSource(item.label) }}</span>
             </RouterLink>
           </section>
         </nav>
@@ -339,7 +339,7 @@ onBeforeUnmount(() => {
 
         <nav
           class="ncx-account-nav"
-          aria-label="账户和设置"
+          :aria-label="$tSource('账户和设置')"
         >
           <RouterLink
             class="ncx-nav-item"

@@ -9,6 +9,7 @@ import {
   CommonInput
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
+import { translatePublicError } from '../../i18n'
 import { useAgentStore } from '../agent/agent-store'
 
 // ========= 类型 =========
@@ -126,9 +127,9 @@ onMounted(async () => {
     >
       <span class="personalization-settings-icon"><Sparkles :size="20" /></span>
       <div>
-        <h2>音乐人格画像</h2>
+        <h2>{{ $tSource("音乐人格画像") }}</h2>
         <p>
-          状态：{{ statusLabel }}<template v-if="profile.usable">
+          {{ $tSource("状态：") }}{{ $tSource(statusLabel) }}<template v-if="profile.usable">
             · v{{ profile.version }} · {{ formatUpdatedAt(profile.updatedAt) }}
           </template>
         </p>
@@ -149,7 +150,7 @@ onMounted(async () => {
             v-else
             :size="14"
           />
-          {{ profile.paused ? '恢复更新' : '暂停更新' }}
+          {{ $tSource(profile.paused ? '恢复更新' : '暂停更新') }}
         </CommonButton>
         <CommonButton
           v-if="profile.usable"
@@ -158,8 +159,7 @@ onMounted(async () => {
           :disabled="working || profile.paused"
           @click="runAnalysis('regenerate')"
         >
-          <RotateCcw :size="14" />
-          重新生成
+          <RotateCcw :size="14" /> {{ $tSource("重新生成") }}
         </CommonButton>
         <CommonButton
           variant="primary"
@@ -176,7 +176,7 @@ onMounted(async () => {
             v-else
             :size="14"
           />
-          {{ profile.usable ? '手动更新' : '开始分析' }}
+          {{ $tSource(profile.usable ? '手动更新' : '开始分析') }}
         </CommonButton>
       </div>
       <div
@@ -184,34 +184,34 @@ onMounted(async () => {
         class="personalization-settings-progress"
       >
         <span :style="{ width: `${profile.progress}%` }" />
-        <small>{{ profile.stageLabel }} · {{ profile.progress }}%</small>
+        <small>{{ $tSource(profile.stageLabel) }} · {{ profile.progress }}%</small>
       </div>
       <p
         v-if="profile.errorMessage"
         class="personalization-settings-error"
       >
-        {{ profile.errorMessage }}
+        {{ translatePublicError({ message: profile.errorMessage }) }}
       </p>
       <p class="personalization-settings-disclosure">
-        完整喜欢与歌单只在本机扫描。云端 Provider 默认只收到聚合特征、有限代表样本和完成当前请求所需的画像/记忆片段，可能产生 Token 费用；不会上传账户数据库、Cookie 或完整歌单文件。
+        {{ $tSource("完整喜欢与歌单只在本机扫描。云端 Provider 默认只收到聚合特征、有限代表样本和完成当前请求所需的画像/记忆片段，可能产生 Token 费用；不会上传账户数据库、Cookie 或完整歌单文件。") }}
       </p>
     </section>
 
     <CommonEmptyState
       v-if="!profile.usable"
-      title="尚未生成音乐人格画像"
-      description="游客不能生成画像；登录且配置可用模型后，由你手动开始完整分析。"
+      :title="$tSource('尚未生成音乐人格画像')"
+      :description="$tSource('游客不能生成画像；登录且配置可用模型后，由你手动开始完整分析。')"
     />
 
     <template v-else>
       <section class="personalization-settings-summary">
-        <h3>画像摘要</h3>
+        <h3>{{ $tSource("画像摘要") }}</h3>
         <p>{{ profile.summary }}</p>
         <dl v-if="profile.coverage">
-          <div><dt>喜欢歌曲</dt><dd>{{ profile.coverage.likedSongs }}</dd></div>
-          <div><dt>自建歌单</dt><dd>{{ profile.coverage.createdPlaylists }}</dd></div>
-          <div><dt>排行样本</dt><dd>{{ profile.coverage.listeningHistorySongs }}</dd></div>
-          <div><dt>去重歌曲</dt><dd>{{ profile.coverage.uniqueSongs }}</dd></div>
+          <div><dt>{{ $tSource("喜欢歌曲") }}</dt><dd>{{ profile.coverage.likedSongs }}</dd></div>
+          <div><dt>{{ $tSource("自建歌单") }}</dt><dd>{{ profile.coverage.createdPlaylists }}</dd></div>
+          <div><dt>{{ $tSource("排行样本") }}</dt><dd>{{ profile.coverage.listeningHistorySongs }}</dd></div>
+          <div><dt>{{ $tSource("去重歌曲") }}</dt><dd>{{ profile.coverage.uniqueSongs }}</dd></div>
         </dl>
       </section>
 
@@ -219,13 +219,13 @@ onMounted(async () => {
         id="setting-agent-insights"
         class="personalization-settings-insights"
       >
-        <header><h3>偏好结论</h3><span>变化分 {{ profile.prompt.changeScore }}</span></header>
+        <header><h3>{{ $tSource("偏好结论") }}</h3><span>{{ $tSource("变化分") }} {{ profile.prompt.changeScore }}</span></header>
         <article
           v-for="insight in profile.insights"
           :key="insight.insightId"
         >
           <div>
-            <span>{{ insight.category }} · 置信度 {{ formatConfidence(insight.confidence) }}</span>
+            <span>{{ insight.category }} {{ $tSource("· 置信度") }} {{ formatConfidence(insight.confidence) }}</span>
             <h4>{{ insight.label }}</h4>
             <p>{{ insight.value }}</p>
             <small>{{ insight.evidence.join(' · ') }}</small>
@@ -235,14 +235,14 @@ onMounted(async () => {
             size="compact"
             @click="hideInsight(insight.insightId)"
           >
-            隐藏
+            {{ $tSource("隐藏") }}
           </CommonButton>
           <label>
-            <span>纠正这条结论</span>
+            <span>{{ $tSource("纠正这条结论") }}</span>
             <CommonInput
               :model-value="correctionDrafts[insight.insightId] ?? ''"
               maxlength="500"
-              placeholder="写下你确认的真实偏好"
+              :placeholder="$tSource('写下你确认的真实偏好')"
               @update:model-value="correctionDrafts[insight.insightId] = String($event)"
             />
           </label>
@@ -252,7 +252,7 @@ onMounted(async () => {
             :disabled="!correctionDrafts[insight.insightId]?.trim()"
             @click="saveCorrection(insight.insightId)"
           >
-            保存纠正
+            {{ $tSource("保存纠正") }}
           </CommonButton>
         </article>
       </section>
@@ -261,19 +261,19 @@ onMounted(async () => {
         id="setting-agent-overrides"
         class="personalization-settings-overrides"
       >
-        <h3>你的补充与修正</h3>
+        <h3>{{ $tSource("你的补充与修正") }}</h3>
         <div class="personalization-settings-supplement">
           <CommonInput
             v-model="supplementDraft"
             maxlength="500"
-            placeholder="例如：工作时更喜欢无歌词的器乐"
+            :placeholder="$tSource('例如：工作时更喜欢无歌词的器乐')"
           />
           <CommonButton
             variant="secondary"
             :disabled="!supplementDraft.trim()"
             @click="saveSupplement"
           >
-            添加补充
+            {{ $tSource("添加补充") }}
           </CommonButton>
         </div>
         <ul v-if="profile.overrides.length">
@@ -281,13 +281,13 @@ onMounted(async () => {
             v-for="override in profile.overrides"
             :key="override.overrideId"
           >
-            <span>{{ override.kind === 'hidden' ? `已隐藏 ${override.insightId}` : override.value }}</span>
+            <span>{{ $tSource(override.kind === 'hidden' ? `已隐藏 ${override.insightId}` : (override.value ?? '')) }}</span>
             <CommonButton
               variant="ghost"
               size="compact"
               @click="agent.removeProfileOverride(override.overrideId)"
             >
-              移除
+              {{ $tSource("移除") }}
             </CommonButton>
           </li>
         </ul>
@@ -298,14 +298,14 @@ onMounted(async () => {
         class="personalization-settings-data"
       >
         <div>
-          <h3>记忆与账户数据</h3>
-          <p>查看当前账户的聊天数量、长期记忆块、画像版本、数据库与缓存，并可按账户清理。</p>
+          <h3>{{ $tSource("记忆与账户数据") }}</h3>
+          <p>{{ $tSource("查看当前账户的聊天数量、长期记忆块、画像版本、数据库与缓存，并可按账户清理。") }}</p>
         </div>
         <CommonButton
           variant="secondary"
           @click="emit('open-data')"
         >
-          查看账户数据
+          {{ $tSource("查看账户数据") }}
         </CommonButton>
       </section>
 
@@ -313,21 +313,21 @@ onMounted(async () => {
         id="setting-agent-delete-profile"
         class="personalization-settings-danger"
       >
-        <div><h3>删除画像</h3><p>只删除当前账户画像、代表样本缓存和用户修正，不删除聊天、长期记忆或网易云数据。</p></div>
+        <div><h3>{{ $tSource("删除画像") }}</h3><p>{{ $tSource("只删除当前账户画像、代表样本缓存和用户修正，不删除聊天、长期记忆或网易云数据。") }}</p></div>
         <CommonButton
           variant="danger"
           @click="deleteDialogVisible = true"
         >
-          <Trash2 :size="14" />删除画像
+          <Trash2 :size="14" />{{ $tSource("删除画像") }}
         </CommonButton>
       </section>
     </template>
 
     <CommonAlertDialog
       :visible="deleteDialogVisible"
-      title="删除当前账户的音乐人格画像？"
-      description="将删除画像、分析中间特征、代表样本和用户修正；聊天、长期记忆、基础资料与网易云云端数据不会被删除。"
-      confirm-text="删除画像"
+      :title="$tSource('删除当前账户的音乐人格画像？')"
+      :description="$tSource('将删除画像、分析中间特征、代表样本和用户修正；聊天、长期记忆、基础资料与网易云云端数据不会被删除。')"
+      :confirm-text="$tSource('删除画像')"
       @cancel="deleteDialogVisible = false"
       @confirm="deleteProfile"
     />

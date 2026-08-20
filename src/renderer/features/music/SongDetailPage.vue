@@ -17,6 +17,7 @@ import { mutateMusic } from './music-actions'
 import { formatMusicDuration, standardSongToTrackSummary } from './music-entity'
 import './music-content-pages.css'
 import { usePlayer } from './use-player'
+import { translatePublicError } from '../../i18n'
 
 // ========= 变量 =========
 
@@ -58,7 +59,7 @@ async function loadSong(): Promise<void> {
     const response = await window.ncx.runtime.getSong({ id: songId.value, requestId })
     if (requestId !== latestRequestId) return
     if (!response.ok) {
-      errorMessage.value = response.error.message
+      errorMessage.value = translatePublicError(response.error)
       return
     }
     song.value = normalizeSongResponse(response.data)
@@ -91,7 +92,7 @@ function enqueueSong(): void {
 async function likeSong(): Promise<void> {
   if (!song.value) return
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.value.id, liked: true })
-  showToast(response.ok ? `已收藏《${song.value.name}》。` : response.error.message, response.ok ? 'success' : 'warning')
+  showToast(response.ok ? `已收藏《${song.value.name}》。` : translatePublicError(response.error), response.ok ? 'success' : 'warning')
 }
 
 // ========= 生命周期 =========
@@ -113,7 +114,7 @@ watch(songId, () => void loadSong(), { immediate: true })
         key="loading"
         class="song-detail-state song-detail-status"
       >
-        <CommonSpinner label="正在加载歌曲" />
+        <CommonSpinner :label="$tSource('正在加载歌曲')" />
       </div>
 
       <div
@@ -122,7 +123,7 @@ watch(songId, () => void loadSong(), { immediate: true })
         class="song-detail-state"
       >
         <CommonErrorState
-          title="歌曲加载失败"
+          :title="$tSource('歌曲加载失败')"
           :description="errorMessage"
           @retry="loadSong"
         />
@@ -144,7 +145,7 @@ watch(songId, () => void loadSong(), { immediate: true })
           />
           <div class="music-detail-hero-copy">
             <p class="music-page-eyebrow">
-              歌曲
+              {{ $tSource("歌曲") }}
             </p>
             <h1 id="song-detail-title">
               {{ song.name }}
@@ -153,7 +154,7 @@ watch(songId, () => void loadSong(), { immediate: true })
               {{ artistText }}
             </p>
             <p class="music-detail-meta">
-              {{ song.album?.name ?? '未知专辑' }} · {{ formatMusicDuration(song.durationMs) }}
+              {{ $tSource(song.album?.name ?? '未知专辑') }} · {{ formatMusicDuration(song.durationMs) }}
             </p>
             <div class="music-detail-actions">
               <CommonButton
@@ -163,19 +164,19 @@ watch(songId, () => void loadSong(), { immediate: true })
                 <Play
                   :size="15"
                   fill="currentColor"
-                />播放
+                />{{ $tSource("播放") }}
               </CommonButton>
               <CommonButton
                 variant="secondary"
                 @click="enqueueSong"
               >
-                <ListPlus :size="15" />加入队列
+                <ListPlus :size="15" />{{ $tSource("加入队列") }}
               </CommonButton>
               <CommonButton
                 variant="secondary"
                 @click="likeSong"
               >
-                <Heart :size="15" />收藏
+                <Heart :size="15" />{{ $tSource("收藏") }}
               </CommonButton>
             </div>
           </div>
@@ -193,8 +194,8 @@ watch(songId, () => void loadSong(), { immediate: true })
         class="song-detail-state"
       >
         <CommonEmptyState
-          title="没有找到歌曲"
-          description="该歌曲暂时不可用。"
+          :title="$tSource('没有找到歌曲')"
+          :description="$tSource('该歌曲暂时不可用。')"
         />
       </div>
     </Transition>

@@ -30,11 +30,11 @@ describe('Skill 设置页与 Agent 工具 UI/架构规范测试', () => {
     expect(extensionSettingsSource).toContain('skillDialogVisible')
     expect(extensionSettingsSource).toContain('openCreateSkillDialog')
     expect(extensionSettingsSource).toContain('closeSkillDialog')
-    expect(extensionSettingsSource).toContain('<Plus :size="14" />新增 Skill')
+    expect(extensionSettingsSource).toContain('<Plus :size="14" />{{ $tSource("新增 Skill") }}')
 
     // 弹窗定义与三种导入模式
     expect(extensionSettingsSource).toContain(':visible="skillDialogVisible"')
-    expect(extensionSettingsSource).toContain('title="新增 Skill"')
+    expect(extensionSettingsSource).toContain("$tSource('新增 Skill')")
     expect(extensionSettingsSource).toContain('方式一：SkillHub 技能标识导入')
     expect(extensionSettingsSource).toContain('方式二：HTTPS Git 仓库导入')
     expect(extensionSettingsSource).toContain('方式三：本地代码包导入')

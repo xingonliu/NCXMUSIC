@@ -18,6 +18,7 @@ import { useAccountSessionStore } from '../../account/account-session-store'
 import { copyText } from '../../foundation/clipboard'
 import { mutateMusic } from '../music-actions'
 import { adaptArtworkUrl } from '../music-entity'
+import { translatePublicError } from '../../../i18n'
 
 // ========= 变量 =========
 
@@ -86,7 +87,7 @@ async function loadPlaylists(): Promise<void> {
   if (!userId.value) return
   const response = await window.ncx.runtime.getUserPlaylists({ userId: userId.value, limit: 100 })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   const result: MusicReadResult = response.data
@@ -103,7 +104,7 @@ async function createPlaylist(): Promise<void> {
   if (!name) return
   const response = await mutateMusic({ operation: 'createPlaylist', name, privacy: 'public' })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   createDialogVisible.value = false
@@ -125,7 +126,7 @@ async function renamePlaylist(): Promise<void> {
   if (!target || !name) return
   const response = await mutateMusic({ operation: 'renamePlaylist', playlistId: target.id, name })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   renameTarget.value = null
@@ -140,7 +141,7 @@ async function deletePlaylist(): Promise<void> {
   deleteTarget.value = null
   const response = await mutateMusic({ operation: 'deletePlaylist', playlistId: target.id })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   showToast('歌单已删除。', 'info')
@@ -155,7 +156,7 @@ async function unsubscribePlaylist(playlist: StandardPlaylist): Promise<void> {
     subscribed: false
   })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   playlists.value = playlists.value.filter((item) => item.id !== playlist.id)
@@ -200,15 +201,23 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
 </script>
 
 <template>
-  <div v-if="visible" class="ncx-playlist-nav-wrapper">
-    <nav class="ncx-playlist-nav" aria-label="歌单导航">
+  <div
+    v-if="visible"
+    class="ncx-playlist-nav-wrapper"
+  >
+    <nav
+      class="ncx-playlist-nav"
+      :aria-label="$tSource('歌单导航')"
+    >
       <section class="ncx-nav-section ncx-playlist-group">
         <div class="ncx-playlist-group-heading">
-          <p class="ncx-nav-section-title">我的歌单</p>
+          <p class="ncx-nav-section-title">
+            {{ $tSource("我的歌单") }}
+          </p>
           <CommonIconButton
             size="compact"
             variant="ghost"
-            label="创建歌单"
+            :label="$tSource('创建歌单')"
             @click="createDialogVisible = true"
           >
             <Plus :size="13" />
@@ -225,51 +234,89 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
             :class="{ 'ncx-nav-item--sub-active': isPlaylistActive(playlist) }"
             :to="{ name: 'playlist-detail', params: { playlistId: playlist.id } }"
           >
-            <span class="ncx-playlist-cover" aria-hidden="true">
+            <span
+              class="ncx-playlist-cover"
+              aria-hidden="true"
+            >
               <img
                 v-if="playlist.artworkUrl"
                 :src="adaptArtworkUrl(playlist.artworkUrl, 'thumbnail')"
                 alt=""
                 loading="lazy"
+              >
+              <Music2
+                v-else
+                :size="13"
               />
-              <Music2 v-else :size="13" />
             </span>
             <span>{{ playlist.name }}</span>
           </RouterLink>
         </CommonContextMenu>
       </section>
     </nav>
-    <div class="ncx-playlist-nav-mask" aria-hidden="true" />
+    <div
+      class="ncx-playlist-nav-mask"
+      aria-hidden="true"
+    />
 
     <CommonDialog
       :visible="createDialogVisible"
-      title="创建歌单"
+      :title="$tSource('创建歌单')"
       @close="createDialogVisible = false"
     >
-      <CommonInput v-model="createName" label="歌单名称" placeholder="输入歌单名称" />
+      <CommonInput
+        v-model="createName"
+        :label="$tSource('歌单名称')"
+        :placeholder="$tSource('输入歌单名称')"
+      />
       <template #actions>
-        <CommonButton variant="secondary" @click="createDialogVisible = false">取消</CommonButton>
-        <CommonButton variant="primary" :disabled="!createName.trim()" @click="createPlaylist">创建</CommonButton>
+        <CommonButton
+          variant="secondary"
+          @click="createDialogVisible = false"
+        >
+          {{ $tSource("取消") }}
+        </CommonButton>
+        <CommonButton
+          variant="primary"
+          :disabled="!createName.trim()"
+          @click="createPlaylist"
+        >
+          {{ $tSource("创建") }}
+        </CommonButton>
       </template>
     </CommonDialog>
 
     <CommonDialog
       :visible="Boolean(renameTarget)"
-      title="重命名歌单"
+      :title="$tSource('重命名歌单')"
       @close="renameTarget = null"
     >
-      <CommonInput v-model="renameName" label="歌单名称" />
+      <CommonInput
+        v-model="renameName"
+        :label="$tSource('歌单名称')"
+      />
       <template #actions>
-        <CommonButton variant="secondary" @click="renameTarget = null">取消</CommonButton>
-        <CommonButton variant="primary" :disabled="!renameName.trim()" @click="renamePlaylist">保存</CommonButton>
+        <CommonButton
+          variant="secondary"
+          @click="renameTarget = null"
+        >
+          {{ $tSource("取消") }}
+        </CommonButton>
+        <CommonButton
+          variant="primary"
+          :disabled="!renameName.trim()"
+          @click="renamePlaylist"
+        >
+          {{ $tSource("保存") }}
+        </CommonButton>
       </template>
     </CommonDialog>
 
     <CommonAlertDialog
       :visible="Boolean(deleteTarget)"
-      title="删除这个歌单？"
-      :description="deleteTarget ? `“${deleteTarget.name}”删除后无法恢复。` : ''"
-      confirm-text="删除"
+      :title="$tSource('删除这个歌单？')"
+      :description="$tSource(deleteTarget ? `“${deleteTarget.name}”删除后无法恢复。` : '')"
+      :confirm-text="$tSource('删除')"
       @cancel="deleteTarget = null"
       @confirm="deletePlaylist"
     />

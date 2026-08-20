@@ -17,7 +17,7 @@ import {
   CommonSpinner
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
-import { t } from '../../i18n'
+import { t , translatePublicError} from '../../i18n'
 import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import Cover from './components/Cover.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
@@ -287,7 +287,7 @@ async function executeSearch(keyword: string): Promise<void> {
     if (requestId !== latestSearchRequestId) return
 
     if (!response.ok) {
-      searchError.value = response.error.message
+      searchError.value = translatePublicError(response.error)
       return
     }
 
@@ -414,7 +414,7 @@ function enqueueSong(song: StandardSong): void {
 async function likeSong(song: StandardSong): Promise<void> {
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   showToast(t('music.search.liked', { song: song.name }), 'success')
@@ -516,12 +516,21 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section class="music-search-page music-content-page" aria-label="音乐搜索">
+  <section
+    class="music-search-page music-content-page"
+    :aria-label="$tSource('音乐搜索')"
+  >
     <!-- 极简黏性吸顶搜索栏 -->
     <header class="music-search-sticky-bar">
       <div class="music-search-bar-inner">
-        <form class="music-search-input-wrapper" @submit.prevent="handleSubmit">
-          <span class="music-search-icon" aria-hidden="true">
+        <form
+          class="music-search-input-wrapper"
+          @submit.prevent="handleSubmit"
+        >
+          <span
+            class="music-search-icon"
+            aria-hidden="true"
+          >
             <Search :size="16" />
           </span>
           <input
@@ -529,18 +538,18 @@ onBeforeUnmount(() => {
             v-model="query"
             type="search"
             class="music-search-input-minimal"
-            placeholder="搜索歌曲、歌手、专辑或歌单"
+            :placeholder="$tSource('搜索歌曲、歌手、专辑或歌单')"
             autocomplete="off"
-            aria-label="搜索音乐"
+            :aria-label="$tSource('搜索音乐')"
             @focus="handleInputFocus"
             @blur="handleInputBlur"
             @keydown="handleKeyDown"
-          />
+          >
           <button
             v-if="query"
             type="button"
             class="music-search-clear-btn"
-            aria-label="清空搜索内容"
+            :aria-label="$tSource('清空搜索内容')"
             @mousedown.prevent
             @click="clearSearch"
           >
@@ -566,7 +575,10 @@ onBeforeUnmount(() => {
               :aria-selected="index === highlightedSuggestionIndex"
               @mousedown.prevent="selectSuggestion(item)"
             >
-              <Search :size="14" class="dropdown-item-icon" />
+              <Search
+                :size="14"
+                class="dropdown-item-icon"
+              />
               <span class="dropdown-item-text">{{ item }}</span>
             </li>
           </ul>
@@ -575,22 +587,24 @@ onBeforeUnmount(() => {
     </header>
 
     <!-- 状态 A：输入框为空或未提交搜索时，展示“最近搜索”与“热搜榜 20 首” -->
-    <div v-if="!submittedQuery" class="music-search-home">
+    <div
+      v-if="!submittedQuery"
+      class="music-search-home"
+    >
       <!-- 最近搜索历史 -->
       <section
         v-if="searchHistory.length > 0"
         class="music-search-history-section"
-        aria-label="最近搜索"
+        :aria-label="$tSource('最近搜索')"
       >
         <header class="music-search-section-header">
-          <h2>最近搜索</h2>
+          <h2>{{ $tSource("最近搜索") }}</h2>
           <button
             type="button"
             class="music-search-clear-history-btn"
             @click="clearSearchHistory"
           >
-            <Trash2 :size="13" />
-            清除
+            <Trash2 :size="13" /> {{ $tSource("清除") }}
           </button>
         </header>
         <div class="music-search-history-chips">
@@ -608,30 +622,42 @@ onBeforeUnmount(() => {
       </section>
 
       <!-- 热搜榜 / 热门搜索 20 首卡片网格 -->
-      <section class="music-hot-songs-section" aria-label="热搜榜">
+      <section
+        class="music-hot-songs-section"
+        :aria-label="$tSource('热搜榜')"
+      >
         <header class="music-search-section-header">
           <div class="hot-songs-title-group">
-            <Flame :size="18" class="hot-flame-icon" />
-            <h2>热搜榜</h2>
-            <span class="hot-songs-sub">热门歌曲 TOP 20</span>
+            <Flame
+              :size="18"
+              class="hot-flame-icon"
+            />
+            <h2>{{ $tSource("热搜榜") }}</h2>
+            <span class="hot-songs-sub">{{ $tSource("热门歌曲 TOP 20") }}</span>
           </div>
         </header>
 
         <!-- 骨架屏 -->
-        <div v-if="hotSongsLoading" class="music-hot-songs-grid">
+        <div
+          v-if="hotSongsLoading"
+          class="music-hot-songs-grid"
+        >
           <div
             v-for="i in 20"
             :key="`skeleton-${i}`"
             class="hot-song-card-skeleton"
           >
-            <div class="skeleton-cover"></div>
-            <div class="skeleton-line title"></div>
-            <div class="skeleton-line artist"></div>
+            <div class="skeleton-cover" />
+            <div class="skeleton-line title" />
+            <div class="skeleton-line artist" />
           </div>
         </div>
 
         <!-- 20 首歌曲网格 -->
-        <div v-else class="music-hot-songs-grid">
+        <div
+          v-else
+          class="music-hot-songs-grid"
+        >
           <article
             v-for="(song, idx) in hotSongs"
             :key="song.id"
@@ -655,8 +681,14 @@ onBeforeUnmount(() => {
               </span>
             </div>
             <div class="hot-song-info">
-              <span class="hot-song-name" :title="song.name">{{ song.name }}</span>
-              <span class="hot-song-artist" :title="formatArtists(song.artists)">
+              <span
+                class="hot-song-name"
+                :title="song.name"
+              >{{ song.name }}</span>
+              <span
+                class="hot-song-artist"
+                :title="formatArtists(song.artists)"
+              >
                 {{ formatArtists(song.artists) }}
               </span>
             </div>
@@ -666,9 +698,15 @@ onBeforeUnmount(() => {
     </div>
 
     <!-- 状态 B：已提交搜索词，展示分类结果与详细列表 -->
-    <div v-else class="music-search-results-container">
+    <div
+      v-else
+      class="music-search-results-container"
+    >
       <!-- 搜索分类 Tab -->
-      <nav class="search-category-tabs" aria-label="搜索结果分类">
+      <nav
+        class="search-category-tabs"
+        :aria-label="$tSource('搜索结果分类')"
+      >
         <button
           v-for="tab in searchTabs"
           :key="tab.value"
@@ -676,22 +714,26 @@ onBeforeUnmount(() => {
           :class="{ active: activeCategory === tab.value }"
           @click="activeCategory = tab.value"
         >
-          {{ tab.label }}
+          {{ $tSource(tab.label) }}
         </button>
       </nav>
 
       <!-- 搜索结果统计与播放全部 -->
       <div class="search-results-header">
         <div class="music-page-heading">
-          <p class="music-page-eyebrow">搜索结果</p>
-          <h1 class="search-results-title">{{ submittedQuery }}</h1>
+          <p class="music-page-eyebrow">
+            {{ $tSource("搜索结果") }}
+          </p>
+          <h1 class="search-results-title">
+            {{ submittedQuery }}
+          </h1>
           <p class="search-results-summary">
             {{
-              searchLoading
+              $tSource(searchLoading
                 ? '正在搜索...'
                 : searchResult
                   ? `已找到 ${searchResultCount} 项内容`
-                  : '结果会按歌曲、歌手、专辑、歌单与歌词分类'
+                  : '结果会按歌曲、歌手、专辑、歌单与歌词分类')
             }}
           </p>
         </div>
@@ -700,20 +742,25 @@ onBeforeUnmount(() => {
           variant="primary"
           @click="playAllSongs"
         >
-          <Play :size="15" fill="currentColor" />
-          播放全部
+          <Play
+            :size="15"
+            fill="currentColor"
+          /> {{ $tSource("播放全部") }}
         </CommonButton>
       </div>
 
       <!-- 状态切换与结果展示 -->
-      <Transition name="music-page-state" mode="out-in">
+      <Transition
+        name="music-page-state"
+        mode="out-in"
+      >
         <div
           v-if="searchLoading"
           key="loading"
           class="search-results-state search-results-loading"
         >
-          <CommonSpinner label="搜索中" />
-          <span>正在搜索...</span>
+          <CommonSpinner :label="$tSource('搜索中')" />
+          <span>{{ $tSource("正在搜索...") }}</span>
         </div>
 
         <div
@@ -722,7 +769,7 @@ onBeforeUnmount(() => {
           class="search-results-state"
         >
           <CommonErrorState
-            title="搜索失败"
+            :title="$tSource('搜索失败')"
             :description="searchError"
             @retry="executeSearch(submittedQuery)"
           />
@@ -734,8 +781,8 @@ onBeforeUnmount(() => {
           class="search-results-state"
         >
           <CommonEmptyState
-            title="暂无结果"
-            description="换个关键词试试。"
+            :title="$tSource('暂无结果')"
+            :description="$tSource('换个关键词试试。')"
           />
         </div>
 
@@ -750,8 +797,8 @@ onBeforeUnmount(() => {
             class="music-result-section music-surface"
           >
             <header class="music-section-heading">
-              <h2>歌曲</h2>
-              <span>{{ resultSongs.length }} 首</span>
+              <h2>{{ $tSource("歌曲") }}</h2>
+              <span>{{ resultSongs.length }} {{ $tSource("首") }}</span>
             </header>
             <VirtualTrackList
               class="track-list"
@@ -771,18 +818,17 @@ onBeforeUnmount(() => {
           <section
             v-if="
               (resultAlbums.length > 0 && (activeCategory === 'all' || activeCategory === 'albums')) ||
-              (resultPlaylists.length > 0 && (activeCategory === 'all' || activeCategory === 'playlists'))
+                (resultPlaylists.length > 0 && (activeCategory === 'all' || activeCategory === 'playlists'))
             "
             class="music-result-section music-surface"
           >
             <header class="music-section-heading">
-              <h2>专辑与歌单</h2>
+              <h2>{{ $tSource("专辑与歌单") }}</h2>
               <span>
                 {{
                   (activeCategory === 'playlists' ? 0 : resultAlbums.length) +
-                  (activeCategory === 'albums' ? 0 : resultPlaylists.length)
-                }} 个
-              </span>
+                    (activeCategory === 'albums' ? 0 : resultPlaylists.length)
+                }} {{ $tSource("个") }} </span>
             </header>
             <div class="collection-grid">
               <button
@@ -798,7 +844,7 @@ onBeforeUnmount(() => {
                   size="card"
                 />
                 <strong>{{ album.name }}</strong>
-                <span><Disc3 :size="13" /> 专辑</span>
+                <span><Disc3 :size="13" /> {{ $tSource("专辑") }}</span>
               </button>
 
               <button
@@ -814,7 +860,7 @@ onBeforeUnmount(() => {
                   size="card"
                 />
                 <strong>{{ playlist.name }}</strong>
-                <span><ListMusic :size="13" /> 歌单</span>
+                <span><ListMusic :size="13" /> {{ $tSource("歌单") }}</span>
               </button>
             </div>
           </section>
@@ -825,8 +871,8 @@ onBeforeUnmount(() => {
             class="music-result-section music-surface"
           >
             <header class="music-section-heading">
-              <h2>歌手</h2>
-              <span>{{ resultArtists.length }} 位</span>
+              <h2>{{ $tSource("歌手") }}</h2>
+              <span>{{ resultArtists.length }} {{ $tSource("位") }}</span>
             </header>
             <div class="artist-strip">
               <button
@@ -844,7 +890,7 @@ onBeforeUnmount(() => {
                 />
                 <span class="artist-card-copy">
                   <strong>{{ artist.name }}</strong>
-                  <span><UserRound :size="13" /> 歌手</span>
+                  <span><UserRound :size="13" /> {{ $tSource("歌手") }}</span>
                 </span>
               </button>
             </div>
@@ -856,8 +902,8 @@ onBeforeUnmount(() => {
             class="music-result-section music-surface"
           >
             <header class="music-section-heading">
-              <h2>歌词</h2>
-              <span>{{ resultLyrics.length }} 首含关键词</span>
+              <h2>{{ $tSource("歌词") }}</h2>
+              <span>{{ resultLyrics.length }} {{ $tSource("首含关键词") }}</span>
             </header>
             <VirtualTrackList
               class="track-list"

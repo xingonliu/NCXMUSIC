@@ -129,10 +129,10 @@ onUnmounted(() => {
 <template>
   <CommonAlertDialog
     :visible="voice.disclosureRequired.value"
-    title="启用云端语音识别？"
-    description="选择“大模型”或“当前对话模型”时，录音会上传给相应 Provider。原始音频不写入磁盘、聊天、缓存或日志；云端处理与留存仍受 Provider 政策约束。本地模式不会上传音频。"
+    :title="$tSource('启用云端语音识别？')"
+    :description="$tSource('选择“大模型”或“当前对话模型”时，录音会上传给相应 Provider。原始音频不写入磁盘、聊天、缓存或日志；云端处理与留存仍受 Provider 政策约束。本地模式不会上传音频。')"
     type="warning"
-    confirm-text="了解并启用"
+    :confirm-text="$tSource('了解并启用')"
     @cancel="voice.declineDisclosure"
     @confirm="voice.acceptDisclosure"
   />

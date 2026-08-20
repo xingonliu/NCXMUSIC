@@ -87,7 +87,7 @@ describe('settings navigation UI contract', () => {
 
     /** 设置页源码。 */
     const settingsPageSource = settingsPanelSources[3] ?? ''
-    expect(settingsPageSource).toContain('title="歌词页"')
+    expect(settingsPageSource).toContain("$tSource('歌词页')")
   })
 
   it('让当前设置项复用 hover 背景且复用通用表单组件', () => {

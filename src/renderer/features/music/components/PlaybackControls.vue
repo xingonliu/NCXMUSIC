@@ -151,7 +151,7 @@ function handleQuality(value: string | number): void {
       'playback-controls--prominent': props.prominent,
       'playback-controls--immersive': props.immersive
     }"
-    aria-label="播放控制"
+    :aria-label="$tSource('播放控制')"
   >
     <div class="playback-controls-transport">
       <CommonIconButton
@@ -292,7 +292,7 @@ function handleQuality(value: string | number): void {
         :min="0"
         :max="100"
         :show-value="false"
-        label="音量"
+        :label="$tSource('音量')"
         @update:model-value="handleVolume"
       />
       <CommonSelect

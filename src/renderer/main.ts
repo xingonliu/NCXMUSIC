@@ -5,6 +5,7 @@ import { router } from './app/router'
 import { startRendererApplication } from './app/renderer-startup'
 import './design-system/styles/global.css'
 import FoundationPage from './features/foundation/FoundationPage.vue'
+import { translateSourceText } from './i18n'
 
 // ========= 变量 =========
 
@@ -20,7 +21,10 @@ const RootComponent = isRuntimeSmoke
 
 /** 创建并挂载当前入口对应的 Vue 根应用。 */
 function mountApplication(): void {
-  createApp(RootComponent).use(router).mount('#app')
+  /** Renderer 根 Vue 应用。 */
+  const application = createApp(RootComponent)
+  application.config.globalProperties.$tSource = translateSourceText
+  application.use(router).mount('#app')
 }
 
 // ========= 应用启动 =========

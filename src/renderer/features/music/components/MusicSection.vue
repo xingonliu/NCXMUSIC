@@ -80,14 +80,16 @@ watch(
     :style="{ minHeight: props.minHeight }"
   >
     <header class="music-section-header">
-      <h2 :id="`${props.sectionId}-title`">{{ props.title }}</h2>
+      <h2 :id="`${props.sectionId}-title`">
+        {{ $tSource(props.title) }}
+      </h2>
       <div class="music-section-actions">
         <slot name="actions" />
         <CommonIconButton
           v-if="props.state === 'error'"
           size="compact"
           variant="ghost"
-          label="重新加载"
+          :label="$tSource('重新加载')"
           @click="retrySection"
         >
           <RotateCcw :size="14" />
@@ -95,24 +97,32 @@ watch(
       </div>
     </header>
 
-    <div v-if="props.state === 'loading'" class="music-section-loading">
+    <div
+      v-if="props.state === 'loading'"
+      class="music-section-loading"
+    >
       <slot name="skeleton">
         <div class="music-section-fallback-spinner">
-          <CommonSpinner label="正在加载" />
-          <span>正在加载</span>
+          <CommonSpinner :label="$tSource('正在加载')" />
+          <span>{{ $tSource("正在加载") }}</span>
         </div>
       </slot>
     </div>
     <CommonErrorState
       v-else-if="props.state === 'error'"
-      title="读取失败"
+      :title="$tSource('读取失败')"
+      :description="props.errorText"
       @retry="retrySection"
     />
     <CommonEmptyState
       v-else-if="props.state === 'empty'"
-      title="暂无内容"
+      :title="$tSource('暂无内容')"
+      :description="props.emptyText"
     />
-    <div v-else class="music-section-content">
+    <div
+      v-else
+      class="music-section-content"
+    >
       <slot />
     </div>
   </section>

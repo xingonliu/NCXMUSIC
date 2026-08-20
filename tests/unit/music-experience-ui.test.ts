@@ -27,7 +27,7 @@ describe('十项音乐体验 UI 契约', () => {
     expect(source).toContain('grid-template-columns: repeat(2, minmax(0, 1fr))')
     expect(source).toContain('discover-personal-grid')
     expect(source).toContain('getPersonalFm')
-    expect(source).toContain('title="歌手推荐"')
+    expect(source).toContain("$tSource('歌手推荐')")
   })
 
   it('浏览是首页之后的一级入口，并具备分类、榜单与歌手二级页', async () => {

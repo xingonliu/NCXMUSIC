@@ -28,14 +28,14 @@ describe('MusicSection 提示反馈与骨架屏契约', () => {
     }
   })
 
-  it('使用全局 Toast 展示空状态和错误提示文案', () => {
+  it('使用全局 Toast 并在状态组件中展示空状态和错误提示文案', () => {
     expect(musicSectionSource).toContain("import { showToast } from '../../../design-system/use-toast'")
     expect(musicSectionSource).toContain("props.state === 'error'")
     expect(musicSectionSource).toContain('message: props.errorText')
     expect(musicSectionSource).toContain("props.state === 'empty'")
     expect(musicSectionSource).toContain('message: props.emptyText')
-    expect(musicSectionSource).not.toContain(':description="props.errorText"')
-    expect(musicSectionSource).not.toContain(':description="props.emptyText"')
+    expect(musicSectionSource).toContain(':description="props.errorText"')
+    expect(musicSectionSource).toContain(':description="props.emptyText"')
   })
 
   it('MusicSection 提供具名 skeleton 插槽并优雅降级为居中加载指示器', () => {

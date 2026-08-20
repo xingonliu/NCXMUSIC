@@ -43,7 +43,7 @@ onUnmounted(() => clearInterval(timer))
 <template>
   <article
     class="agent-approval-card"
-    aria-label="操作审批"
+    :aria-label="$tSource('操作审批')"
   >
     <header>
       <ShieldAlert
@@ -66,14 +66,14 @@ onUnmounted(() => clearInterval(timer))
         size="compact"
         @click="emit('reject', approval.approvalId)"
       >
-        拒绝 (Reject)
+        {{ $tSource("拒绝 (Reject)") }}
       </CommonButton>
       <CommonButton
         variant="primary"
         size="compact"
         @click="emit('approve', approval.approvalId)"
       >
-        批准 (Approve)
+        {{ $tSource("批准 (Approve)") }}
       </CommonButton>
     </footer>
   </article>

@@ -198,7 +198,7 @@ onUnmounted(() => {
         'is-expanded': isExpanded,
         'is-streaming': Boolean(streaming && parsedData.isThinking)
       }"
-      aria-label="思考过程"
+      :aria-label="$tSource('思考过程')"
     >
       <!-- 思考头部状态栏（点击展开/折叠） -->
       <div
@@ -215,16 +215,16 @@ onUnmounted(() => {
             <Sparkles :size="13" />
           </span>
           <span class="agent-thought-label">
-            {{ (streaming && parsedData.isThinking) ? '正在深度思考...' : '已深度思考' }}
+            {{ $tSource((streaming && parsedData.isThinking) ? '正在深度思考...' : '已深度思考') }}
           </span>
         </div>
         <button
           type="button"
           class="agent-thought-toggle-btn"
-          :aria-label="isExpanded ? '收起思考内容' : '展开思考内容'"
+          :aria-label="$tSource(isExpanded ? '收起思考内容' : '展开思考内容')"
           tabindex="-1"
         >
-          <span class="agent-thought-toggle-text">{{ isExpanded ? '收起' : '展开' }}</span>
+          <span class="agent-thought-toggle-text">{{ $tSource(isExpanded ? '收起' : '展开') }}</span>
           <ChevronDown
             :size="13"
             class="agent-thought-chevron"

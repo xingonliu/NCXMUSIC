@@ -28,6 +28,7 @@ import {
 } from './music-entity'
 import './music-content-pages.css'
 import { usePlayer } from './use-player'
+import { translatePublicError } from '../../i18n'
 
 // ========= 类型 =========
 
@@ -107,7 +108,7 @@ async function loadArtist(): Promise<void> {
   const response = await window.ncx.runtime.getArtist({ id: artistId.value })
   loading.value = false
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    errorMessage.value = translatePublicError(response.error)
     return
   }
   const result: MusicReadResult = response.data
@@ -123,7 +124,7 @@ async function loadArtistAlbums(): Promise<void> {
   albumsSection.value.state = 'loading'
   const response = await window.ncx.runtime.getArtistAlbums({ artistId: artistId.value, limit: 16 })
   if (!response.ok) {
-    albumsSection.value = { state: 'error', items: [], error: response.error.message }
+    albumsSection.value = { state: 'error', items: [], error: translatePublicError(response.error) }
     return
   }
   const result: MusicReadResult = response.data
@@ -151,7 +152,7 @@ async function loadSimilarArtists(): Promise<void> {
       similarSection.value = { state: artists.length > 0 ? 'ready' : 'empty', items: artists, error: '' }
       return
     }
-    similarSection.value = { state: 'error', items: [], error: response.error.message }
+    similarSection.value = { state: 'error', items: [], error: translatePublicError(response.error) }
     return
   }
   const result: MusicReadResult = response.data
@@ -178,7 +179,7 @@ async function loadArtistWorks(): Promise<void> {
     offset: 0
   })
   if (!response.ok) {
-    worksSection.value = { state: 'error', items: [], error: response.error.message }
+    worksSection.value = { state: 'error', items: [], error: translatePublicError(response.error) }
     return
   }
   if (response.data.kind !== 'songCollection') {
@@ -217,7 +218,7 @@ function enqueueSong(song: StandardSong): void {
 async function likeSong(song: StandardSong): Promise<void> {
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   showToast(`已收藏《${song.name}》。`, 'success')
@@ -261,7 +262,7 @@ async function toggleArtistFollow(): Promise<void> {
   /** 关注歌手标准写入响应。 */
   const response = await mutateMusic({ operation: 'subscribeArtist', artistId: current.id, subscribed })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   artist.value = { ...current, followed: subscribed }
@@ -294,8 +295,8 @@ watch(artistId, () => {
         key="loading"
         class="artist-page-state artist-loading"
       >
-        <CommonSpinner label="正在加载歌手" />
-        <span>正在加载歌手</span>
+        <CommonSpinner :label="$tSource('正在加载歌手')" />
+        <span>{{ $tSource("正在加载歌手") }}</span>
       </div>
 
       <div
@@ -304,7 +305,7 @@ watch(artistId, () => {
         class="artist-page-state"
       >
         <CommonErrorState
-          title="歌手读取失败"
+          :title="$tSource('歌手读取失败')"
           :description="errorMessage"
           @retry="loadArtist"
         />
@@ -316,8 +317,8 @@ watch(artistId, () => {
         class="artist-page-state"
       >
         <CommonEmptyState
-          title="没有找到歌手"
-          description="该歌手暂时不可用。"
+          :title="$tSource('没有找到歌手')"
+          :description="$tSource('该歌手暂时不可用。')"
         />
       </div>
 
@@ -341,16 +342,16 @@ watch(artistId, () => {
             <div class="artist-visual-scrim" />
             <div class="artist-visual-copy">
               <p class="music-page-eyebrow">
-                <Radio :size="13" /> 歌手
+                <Radio :size="13" /> {{ $tSource("歌手") }}
               </p>
               <h1 id="artist-title">
                 {{ artist.name }}
               </h1>
               <p class="music-detail-description">
-                {{ artist.alias.join(' / ') || artist.description || '网易云音乐歌手' }}
+                {{ $tSource(artist.alias.join(' / ') || artist.description || '网易云音乐歌手') }}
               </p>
               <p class="music-detail-meta">
-                {{ artist.songCount ?? hotSongs.length }} 首歌曲 · {{ artist.albumCount ?? albumsSection.items.length }} 张专辑
+                {{ artist.songCount ?? hotSongs.length }} {{ $tSource("首歌曲 ·") }} {{ artist.albumCount ?? albumsSection.items.length }} {{ $tSource("张专辑") }}
               </p>
               <div class="music-detail-actions">
                 <CommonButton
@@ -362,8 +363,7 @@ watch(artistId, () => {
                   <Play
                     :size="15"
                     fill="currentColor"
-                  />
-                  播放热门歌曲
+                  /> {{ $tSource("播放热门歌曲") }}
                 </CommonButton>
                 <CommonButton
                   variant="secondary"
@@ -374,7 +374,7 @@ watch(artistId, () => {
                     :size="15"
                     :fill="artist.followed ? 'currentColor' : 'none'"
                   />
-                  {{ artist.followed ? '已关注' : '关注' }}
+                  {{ $tSource(artist.followed ? '已关注' : '关注') }}
                 </CommonButton>
               </div>
             </div>
@@ -383,10 +383,10 @@ watch(artistId, () => {
 
         <MusicSection
           section-id="artist-latest-release"
-          title="最新发布"
+          :title="$tSource('最新发布')"
           :state="albumsSection.state"
           :error-text="albumsSection.error"
-          empty-text="暂时没有最新发布。"
+          :empty-text="$tSource('暂时没有最新发布。')"
           min-height="0"
           @retry="loadArtistAlbums"
         >
@@ -405,7 +405,7 @@ watch(artistId, () => {
             <span>
               <small>Latest Release</small>
               <strong>{{ latestRelease.name }}</strong>
-              <span>{{ latestRelease.publishTime ? new Date(latestRelease.publishTime).getFullYear() : '最新发行' }} · {{ latestRelease.size ?? 0 }} 首</span>
+              <span>{{ latestRelease.publishTime ? new Date(latestRelease.publishTime).getFullYear() : $tSource('最新发行') }} · {{ latestRelease.size ?? 0 }} {{ $tSource("首") }}</span>
             </span>
             <Play
               :size="18"
@@ -416,9 +416,9 @@ watch(artistId, () => {
 
         <MusicSection
           section-id="artist-hot-songs"
-          title="热门歌曲"
+          :title="$tSource('热门歌曲')"
           :state="hotSongs.length > 0 ? 'ready' : 'empty'"
-          empty-text="暂时没有热门歌曲。"
+          :empty-text="$tSource('暂时没有热门歌曲。')"
           min-height="0"
         >
           <VirtualTrackList
@@ -436,10 +436,10 @@ watch(artistId, () => {
 
         <MusicSection
           section-id="artist-albums"
-          title="专辑与 EP"
+          :title="$tSource('专辑与 EP')"
           :state="albumsSection.state"
           :error-text="albumsSection.error"
-          empty-text="暂时没有专辑。"
+          :empty-text="$tSource('暂时没有专辑。')"
           min-height="0"
           @retry="loadArtistAlbums"
         >
@@ -448,7 +448,7 @@ watch(artistId, () => {
               v-for="album in sortedAlbums"
               :key="album.id"
               :title="album.name"
-              :subtitle="album.publishTime ? new Date(album.publishTime).getFullYear().toString() : '专辑'"
+              :subtitle="$tSource(album.publishTime ? new Date(album.publishTime).getFullYear().toString() : '专辑')"
               :artwork-url="album.artworkUrl"
               @activate="openAlbum(album)"
             />
@@ -457,10 +457,10 @@ watch(artistId, () => {
 
         <MusicSection
           section-id="artist-appears-on"
-          title="参与作品与合集"
+          :title="$tSource('参与作品与合集')"
           :state="worksSection.state"
           :error-text="worksSection.error"
-          empty-text="暂时没有可识别的参与作品。"
+          :empty-text="$tSource('暂时没有可识别的参与作品。')"
           min-height="0"
           @retry="loadArtistWorks"
         >
@@ -479,10 +479,10 @@ watch(artistId, () => {
 
         <MusicSection
           section-id="similar-artists"
-          title="相似歌手"
+          :title="$tSource('相似歌手')"
           :state="similarSection.state"
           :error-text="similarSection.error"
-          empty-text="暂时没有相似歌手。"
+          :empty-text="$tSource('暂时没有相似歌手。')"
           min-height="0"
           @retry="loadSimilarArtists"
         >
@@ -491,7 +491,7 @@ watch(artistId, () => {
               v-for="item in similarSection.items"
               :key="item.id"
               :title="item.name"
-              :subtitle="item.alias.join(' / ') || '歌手'"
+              :subtitle="$tSource(item.alias.join(' / ') || '歌手')"
               :artwork-url="item.artworkUrl"
               @activate="openArtist(item)"
             />

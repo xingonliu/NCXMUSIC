@@ -23,7 +23,7 @@ defineProps<SettingsSectionProps>()
     class="settings-section"
   >
     <header class="settings-section-header">
-      <h2>{{ title }}</h2>
+      <h2>{{ $tSource(title) }}</h2>
       <div
         v-if="$slots.actions"
         class="settings-section-actions"

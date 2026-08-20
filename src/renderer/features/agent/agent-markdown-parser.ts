@@ -2,6 +2,8 @@ import DOMPurify from 'dompurify'
 import hljs from 'highlight.js'
 import { Marked } from 'marked'
 
+import { translateSourceText } from '../../i18n'
+
 // ========= 类型 =========
 
 /** 提取出的思考链与正文内容结构。 */
@@ -27,16 +29,20 @@ const markedInstance = new Marked({
       const displayLang = lang || 'text'
       const highlighted = highlightSourceCode(rawCode, lang)
       const encodedCode = encodeURIComponent(rawCode)
+      /** 代码块复制按钮的当前语言完整标签。 */
+      const copyCodeLabel = translateSourceText('复制代码')
+      /** 代码块复制按钮的当前语言短标签。 */
+      const copyLabel = translateSourceText('复制')
 
       return `<div class="agent-code-block" data-lang="${displayLang}">
   <div class="agent-code-header">
     <span class="agent-code-lang">${displayLang}</span>
-    <button class="agent-code-copy-btn" type="button" aria-label="复制代码" title="复制代码" data-code="${encodedCode}">
+    <button class="agent-code-copy-btn" type="button" aria-label="${copyCodeLabel}" title="${copyCodeLabel}" data-code="${encodedCode}">
       <svg class="agent-code-copy-icon" viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
         <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
       </svg>
-      <span class="agent-code-copy-text">复制</span>
+      <span class="agent-code-copy-text">${copyLabel}</span>
     </button>
   </div>
   <pre><code class="hljs language-${displayLang}">${highlighted}</code></pre>

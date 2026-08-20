@@ -1,5 +1,7 @@
 import { computed, ref } from 'vue'
 
+import { translatePublicError, translateSourceText } from '../i18n'
+
 // ========= 类型 =========
 
 /** Toast 提示框支持的视觉变体类型。 */
@@ -52,6 +54,16 @@ const MAX_TOAST_STACK = 5
 
 // ========= 函数 =========
 
+/** 翻译 Toast 文案；警告与错误类型对未知中文内部错误使用安全回退。 */
+function localizeToastText(message: string, type: ToastType): string {
+  /** 已在兼容目录中收录的固定界面文案。 */
+  const translatedMessage = translateSourceText(message)
+  if (translatedMessage !== message || type === 'info' || type === 'success') {
+    return translatedMessage
+  }
+  return translatePublicError({ message })
+}
+
 /**
  * 触发全局轻提示 Toast。支持多条消息有序堆叠展示。
  * @param optionsOrMessage 可直接传入消息文本或 ToastOptions 配置项
@@ -68,7 +80,7 @@ export function showToast(
   if (typeof optionsOrMessage === 'string') {
     item = {
       id,
-      message: optionsOrMessage,
+      message: localizeToastText(optionsOrMessage, type),
       type,
       duration: 3500,
       createdAt: Date.now()
@@ -77,9 +89,11 @@ export function showToast(
     const itemType = optionsOrMessage.type ?? 'info'
     item = {
       id,
-      message: optionsOrMessage.message,
+      message: localizeToastText(optionsOrMessage.message, itemType),
       type: itemType,
-      ...(optionsOrMessage.title !== undefined ? { title: optionsOrMessage.title } : {}),
+      ...(optionsOrMessage.title !== undefined
+        ? { title: translateSourceText(optionsOrMessage.title) }
+        : {}),
       duration: optionsOrMessage.duration ?? 3500,
       createdAt: Date.now()
     }

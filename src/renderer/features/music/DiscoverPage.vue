@@ -21,6 +21,7 @@ import {
   standardSongsToTrackSummaries
 } from './music-entity'
 import { usePlayer } from './use-player'
+import { translatePublicError } from '../../i18n'
 
 // ========= 类型 =========
 
@@ -137,7 +138,7 @@ async function loadFeaturedPlaylists(): Promise<void> {
   featuredSection.value.state = 'loading'
   const response = await window.ncx.runtime.getFeaturedPlaylists({ limit: 10 })
   if (!response.ok) {
-    failSection(featuredSection.value, response.error.message)
+    failSection(featuredSection.value, translatePublicError(response.error))
     return
   }
   const result: MusicReadResult = response.data
@@ -153,7 +154,7 @@ async function loadNewSongs(): Promise<void> {
   newSongsSection.value.state = 'loading'
   const response = await window.ncx.runtime.getNewSongs({ limit: 30 })
   if (!response.ok) {
-    failSection(newSongsSection.value, response.error.message)
+    failSection(newSongsSection.value, translatePublicError(response.error))
     return
   }
   const result: MusicReadResult = response.data
@@ -170,7 +171,7 @@ async function loadDailySongs(): Promise<void> {
   dailySection.value.state = 'loading'
   const response = await window.ncx.runtime.getDailySongs({ limit: 50 })
   if (!response.ok) {
-    failSection(dailySection.value, response.error.message)
+    failSection(dailySection.value, translatePublicError(response.error))
     return
   }
   const result: MusicReadResult = response.data
@@ -191,7 +192,7 @@ async function loadPersonalFm(): Promise<void> {
   /** 私人 FM 标准响应。 */
   const response = await window.ncx.runtime.readMusic({ operation: 'getPersonalFm', limit: 3 })
   if (!response.ok) {
-    failSection(personalFmSection.value, response.error.message)
+    failSection(personalFmSection.value, translatePublicError(response.error))
     return
   }
   if (response.data.kind !== 'songCollection' || response.data.collection !== 'personalFm') {
@@ -207,7 +208,7 @@ async function loadRecommendedArtists(): Promise<void> {
   /** 推荐歌手标准响应。 */
   const response = await window.ncx.runtime.readMusic({ operation: 'getRecommendedArtists', limit: 12, offset: 0 })
   if (!response.ok) {
-    failSection(artistsSection.value, response.error.message)
+    failSection(artistsSection.value, translatePublicError(response.error))
     return
   }
   if (response.data.kind !== 'artistCollection') {
@@ -295,11 +296,18 @@ watch(
 </script>
 
 <template>
-  <section class="discover-page" aria-labelledby="discover-title">
+  <section
+    class="discover-page"
+    aria-labelledby="discover-title"
+  >
     <header class="discover-heading">
       <div>
-        <p class="music-page-eyebrow">发现音乐</p>
-        <h1 id="discover-title">今天想听什么？</h1>
+        <p class="music-page-eyebrow">
+          {{ $tSource("发现音乐") }}
+        </p>
+        <h1 id="discover-title">
+          {{ $tSource("今天想听什么？") }}
+        </h1>
       </div>
       <CommonButton
         v-if="isAuthenticated"
@@ -310,29 +318,43 @@ watch(
         @click="dailySignin"
       >
         <CalendarCheck :size="14" />
-        {{ signinController.state.value === 'already-signed' ? '今日已签到' : '签到' }}
+        {{ $tSource(signinController.state.value === 'already-signed' ? '今日已签到' : '签到') }}
       </CommonButton>
     </header>
 
     <MusicSection
       v-if="agent.snapshot.value.personalization.usable && isAuthenticated"
       section-id="xiaoyun-profile-recommendations"
-      title="小云为你推荐"
+      :title="$tSource('小云为你推荐')"
       :state="dailySection.state"
       :error-text="dailySection.error"
-      empty-text="画像已就绪，但当前没有可展示的推荐歌曲。"
+      :empty-text="$tSource('画像已就绪，但当前没有可展示的推荐歌曲。')"
       @retry="loadDailySongs"
     >
       <template #skeleton>
-        <div class="discover-profile-recommendations" aria-hidden="true">
+        <div
+          class="discover-profile-recommendations"
+          aria-hidden="true"
+        >
           <div
             v-for="index in 8"
             :key="index"
             class="discover-skeleton-profile-card"
           >
-            <CommonSkeleton variant="card" class="discover-skeleton-square-cover" />
-            <CommonSkeleton variant="rectangular" width="75%" height="13px" />
-            <CommonSkeleton variant="rectangular" width="50%" height="11px" />
+            <CommonSkeleton
+              variant="card"
+              class="discover-skeleton-square-cover"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="75%"
+              height="13px"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="50%"
+              height="11px"
+            />
           </div>
         </div>
       </template>
@@ -343,8 +365,10 @@ watch(
           :disabled="profileRecommendationSongs.length === 0"
           @click="playAll(profileRecommendationSongs)"
         >
-          <Play :size="14" fill="currentColor" />
-          播放全部
+          <Play
+            :size="14"
+            fill="currentColor"
+          /> {{ $tSource("播放全部") }}
         </CommonButton>
       </template>
       <div class="discover-profile-recommendations">
@@ -354,7 +378,12 @@ watch(
           type="button"
           @click="playSong(song)"
         >
-          <Cover :src="song.album?.artworkUrl" :alt="song.name" size="card" :show-play-button="false" />
+          <Cover
+            :src="song.album?.artworkUrl"
+            :alt="song.name"
+            size="card"
+            :show-play-button="false"
+          />
           <strong>{{ song.name }}</strong>
           <span>{{ song.artists.map((artist) => artist.name).join(' / ') }}</span>
         </button>
@@ -363,23 +392,37 @@ watch(
 
     <MusicSection
       section-id="featured-playlists"
-      title="精选歌单"
+      :title="$tSource('精选歌单')"
       :state="featuredSection.state"
       :error-text="featuredSection.error"
-      empty-text="暂时没有可展示的推荐歌单。"
+      :empty-text="$tSource('暂时没有可展示的推荐歌单。')"
       @retry="loadFeaturedPlaylists"
     >
       <template #skeleton>
-        <div class="discover-card-grid" aria-hidden="true">
+        <div
+          class="discover-card-grid"
+          aria-hidden="true"
+        >
           <div
             v-for="index in 5"
             :key="index"
             class="discover-skeleton-card"
           >
-            <CommonSkeleton variant="card" class="discover-skeleton-square-cover" />
+            <CommonSkeleton
+              variant="card"
+              class="discover-skeleton-square-cover"
+            />
             <div class="discover-skeleton-card-copy">
-              <CommonSkeleton variant="rectangular" width="80%" height="15px" />
-              <CommonSkeleton variant="rectangular" width="55%" height="13px" />
+              <CommonSkeleton
+                variant="rectangular"
+                width="80%"
+                height="15px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="55%"
+                height="13px"
+              />
             </div>
           </div>
         </div>
@@ -399,62 +442,135 @@ watch(
 
     <MusicSection
       section-id="personal-recommendations"
-      title="猜你喜欢"
+      :title="$tSource('猜你喜欢')"
       :state="personalSectionState"
       min-height="260px"
     >
       <template #skeleton>
-        <div class="discover-personal-grid" aria-hidden="true">
+        <div
+          class="discover-personal-grid"
+          aria-hidden="true"
+        >
           <article class="discover-taste-card discover-skeleton-taste-card">
             <div class="discover-taste-copy">
-              <CommonSkeleton variant="rectangular" width="76px" height="14px" />
-              <CommonSkeleton variant="rectangular" width="160px" height="28px" style="margin-top: 9px" />
-              <CommonSkeleton variant="rectangular" width="220px" height="13px" style="margin-top: 9px" />
+              <CommonSkeleton
+                variant="rectangular"
+                width="76px"
+                height="14px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="160px"
+                height="28px"
+                style="margin-top: 9px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="220px"
+                height="13px"
+                style="margin-top: 9px"
+              />
               <div class="discover-taste-actions">
-                <CommonSkeleton variant="rectangular" width="72px" height="30px" style="border-radius: var(--ncx-radius-md)" />
-                <CommonSkeleton variant="rectangular" width="90px" height="30px" style="border-radius: var(--ncx-radius-md)" />
+                <CommonSkeleton
+                  variant="rectangular"
+                  width="72px"
+                  height="30px"
+                  style="border-radius: var(--ncx-radius-md)"
+                />
+                <CommonSkeleton
+                  variant="rectangular"
+                  width="90px"
+                  height="30px"
+                  style="border-radius: var(--ncx-radius-md)"
+                />
               </div>
             </div>
             <div class="discover-cover-stack">
-              <CommonSkeleton variant="card" class="discover-skeleton-stack-item" style="--stack-index: 0" />
-              <CommonSkeleton variant="card" class="discover-skeleton-stack-item" style="--stack-index: 1" />
-              <CommonSkeleton variant="card" class="discover-skeleton-stack-item" style="--stack-index: 2" />
+              <CommonSkeleton
+                variant="card"
+                class="discover-skeleton-stack-item"
+                style="--stack-index: 0"
+              />
+              <CommonSkeleton
+                variant="card"
+                class="discover-skeleton-stack-item"
+                style="--stack-index: 1"
+              />
+              <CommonSkeleton
+                variant="card"
+                class="discover-skeleton-stack-item"
+                style="--stack-index: 2"
+              />
             </div>
           </article>
 
           <article class="discover-radio-card discover-skeleton-radio-card">
-            <CommonSkeleton variant="rectangular" width="82px" height="26px" style="border-radius: 999px; position: absolute; top: 16px; left: 16px" />
+            <CommonSkeleton
+              variant="rectangular"
+              width="82px"
+              height="26px"
+              style="border-radius: 999px; position: absolute; top: 16px; left: 16px"
+            />
             <div class="discover-radio-copy">
-              <CommonSkeleton variant="rectangular" width="60px" height="12px" />
-              <CommonSkeleton variant="rectangular" width="140px" height="22px" style="margin-top: 6px" />
-              <CommonSkeleton variant="rectangular" width="180px" height="13px" style="margin-top: 4px" />
+              <CommonSkeleton
+                variant="rectangular"
+                width="60px"
+                height="12px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="140px"
+                height="22px"
+                style="margin-top: 6px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="180px"
+                height="13px"
+                style="margin-top: 4px"
+              />
             </div>
-            <CommonSkeleton variant="avatar" width="42px" height="42px" class="discover-radio-play" />
+            <CommonSkeleton
+              variant="avatar"
+              width="42px"
+              height="42px"
+              class="discover-radio-play"
+            />
           </article>
         </div>
       </template>
       <div class="discover-personal-grid">
         <article class="discover-taste-card">
           <div class="discover-taste-copy">
-            <span><Sparkles :size="14" /> 猜你喜欢</span>
-            <h3>{{ isAuthenticated ? '为今天挑选' : '先从新歌认识你' }}</h3>
-            <p>{{ isAuthenticated ? '根据当前账户的听歌偏好每日更新。' : '登录后会切换为专属每日推荐。' }}</p>
+            <span><Sparkles :size="14" /> {{ $tSource("猜你喜欢") }}</span>
+            <h3>{{ $tSource(isAuthenticated ? '为今天挑选' : '先从新歌认识你') }}</h3>
+            <p>{{ $tSource(isAuthenticated ? '根据当前账户的听歌偏好每日更新。' : '登录后会切换为专属每日推荐。') }}</p>
             <div class="discover-taste-actions">
               <CommonButton
                 variant="primary"
                 size="compact"
                 :disabled="isAuthenticated ? dailySection.data.length === 0 : newSongsSection.data.length === 0"
                 @click="playAll(isAuthenticated ? dailySection.data : newSongsSection.data)"
-              ><Play :size="14" fill="currentColor" />播放</CommonButton>
+              >
+                <Play
+                  :size="14"
+                  fill="currentColor"
+                />{{ $tSource("播放") }}
+              </CommonButton>
               <CommonButton
                 v-if="isAuthenticated"
                 variant="ghost"
                 size="compact"
                 @click="openSongCollection('daily')"
-              >查看全部<ChevronRight :size="14" /></CommonButton>
+              >
+                {{ $tSource("查看全部") }}<ChevronRight :size="14" />
+              </CommonButton>
             </div>
           </div>
-          <div class="discover-cover-stack" aria-label="猜你喜欢歌曲预览">
+          <div
+            class="discover-cover-stack"
+            :aria-label="$tSource('猜你喜欢歌曲预览')"
+          >
             <Cover
               v-for="(song, index) in (isAuthenticated ? dailyPreviewSongs : newSongsPreview.slice(0, 3))"
               :key="song.id"
@@ -472,50 +588,77 @@ watch(
           <div class="discover-radio-art">
             <Cover
               :src="personalFmSong?.album?.artworkUrl"
-              :alt="personalFmSong?.name || '私人电台'"
+              :alt="$tSource(personalFmSong?.name || '私人电台')"
               size="feature"
               :show-play-button="false"
               :hover-effect="false"
             />
-            <span class="discover-radio-badge"><Radio :size="14" /> 个人电台</span>
+            <span class="discover-radio-badge"><Radio :size="14" /> {{ $tSource("个人电台") }}</span>
           </div>
           <div class="discover-radio-copy">
-            <span>{{ isAuthenticated ? '私人 FM' : '灵感电台 · 预览' }}</span>
-            <h3>{{ personalFmSong?.name || '电台正在准备' }}</h3>
-            <p>{{ personalFmSong?.artists.map((artist) => artist.name).join(' / ') || '登录后获得不间断的个性播放' }}</p>
+            <span>{{ $tSource(isAuthenticated ? '私人 FM' : '灵感电台 · 预览') }}</span>
+            <h3>{{ $tSource(personalFmSong?.name || '电台正在准备') }}</h3>
+            <p>{{ $tSource(personalFmSong?.artists.map((artist) => artist.name).join(' / ') || '登录后获得不间断的个性播放') }}</p>
           </div>
           <button
             class="discover-radio-play"
             type="button"
             :disabled="!personalFmSong"
-            aria-label="播放个人电台"
+            :aria-label="$tSource('播放个人电台')"
             @click="personalFmSong && playSong(personalFmSong)"
-          ><Play :size="19" fill="currentColor" /></button>
+          >
+            <Play
+              :size="19"
+              fill="currentColor"
+            />
+          </button>
         </article>
       </div>
     </MusicSection>
 
     <MusicSection
       section-id="new-songs"
-      title="新歌速递"
+      :title="$tSource('新歌速递')"
       :state="newSongsSection.state"
       :error-text="newSongsSection.error"
-      empty-text="暂时没有推荐新歌。"
+      :empty-text="$tSource('暂时没有推荐新歌。')"
       @retry="loadNewSongs"
     >
       <template #skeleton>
-        <div class="discover-new-song-grid" aria-hidden="true">
+        <div
+          class="discover-new-song-grid"
+          aria-hidden="true"
+        >
           <div
             v-for="index in 10"
             :key="index"
             class="discover-skeleton-new-song-item"
           >
-            <CommonSkeleton variant="rectangular" width="48px" height="48px" style="border-radius: var(--ncx-radius-md); flex-shrink: 0" />
+            <CommonSkeleton
+              variant="rectangular"
+              width="48px"
+              height="48px"
+              style="border-radius: var(--ncx-radius-md); flex-shrink: 0"
+            />
             <div class="discover-skeleton-song-copy">
-              <CommonSkeleton variant="rectangular" width="65%" height="14px" />
-              <CommonSkeleton variant="rectangular" width="40%" height="11px" style="margin-top: 4px" />
+              <CommonSkeleton
+                variant="rectangular"
+                width="65%"
+                height="14px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="40%"
+                height="11px"
+                style="margin-top: 4px"
+              />
             </div>
-            <CommonSkeleton variant="avatar" width="16px" height="16px" style="opacity: 0.3; flex-shrink: 0" />
+            <CommonSkeleton
+              variant="avatar"
+              width="16px"
+              height="16px"
+              style="opacity: 0.3; flex-shrink: 0"
+            />
           </div>
         </div>
       </template>
@@ -526,8 +669,7 @@ watch(
           :disabled="newSongsSection.data.length === 0"
           @click="openSongCollection('new')"
         >
-          查看更多
-          <ChevronRight :size="14" />
+          {{ $tSource("查看更多") }} <ChevronRight :size="14" />
         </CommonButton>
         <CommonButton
           variant="secondary"
@@ -535,8 +677,10 @@ watch(
           :disabled="newSongsSection.data.length === 0"
           @click="playAll(newSongsSection.data)"
         >
-          <Play :size="14" fill="currentColor" />
-          播放全部
+          <Play
+            :size="14"
+            fill="currentColor"
+          /> {{ $tSource("播放全部") }}
         </CommonButton>
       </template>
       <div class="discover-new-song-grid">
@@ -546,43 +690,76 @@ watch(
           type="button"
           @click="playSong(song)"
         >
-          <Cover :src="song.album?.artworkUrl" :alt="song.name" size="compact" :show-play-button="false" />
+          <Cover
+            :src="song.album?.artworkUrl"
+            :alt="song.name"
+            size="compact"
+            :show-play-button="false"
+          />
           <span><strong>{{ song.name }}</strong><small>{{ song.artists.map((artist) => artist.name).join(' / ') }}</small></span>
-          <Play :size="14" fill="currentColor" />
+          <Play
+            :size="14"
+            fill="currentColor"
+          />
         </button>
       </div>
     </MusicSection>
 
     <MusicSection
       section-id="recommended-artists"
-      title="歌手推荐"
+      :title="$tSource('歌手推荐')"
       :state="artistsSection.state"
       :error-text="artistsSection.error"
-      empty-text="暂时没有推荐歌手。"
+      :empty-text="$tSource('暂时没有推荐歌手。')"
       @retry="loadRecommendedArtists"
     >
       <template #skeleton>
-        <div class="discover-artist-grid" aria-hidden="true">
+        <div
+          class="discover-artist-grid"
+          aria-hidden="true"
+        >
           <div
             v-for="index in 8"
             :key="index"
             class="discover-skeleton-artist-card"
           >
-            <CommonSkeleton variant="avatar" class="discover-skeleton-circle-avatar" />
-            <CommonSkeleton variant="rectangular" width="60%" height="13px" style="margin-top: 8px" />
-            <CommonSkeleton variant="rectangular" width="40%" height="11px" />
+            <CommonSkeleton
+              variant="avatar"
+              class="discover-skeleton-circle-avatar"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="60%"
+              height="13px"
+              style="margin-top: 8px"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="40%"
+              height="11px"
+            />
           </div>
         </div>
       </template>
       <div class="discover-artist-grid">
-        <button v-for="artist in artistsSection.data.slice(0, 8)" :key="artist.id" type="button" @click="openArtist(artist)">
-          <Cover :src="artist.artworkUrl" :alt="artist.name" size="card" shape="circle" :show-play-button="false" />
+        <button
+          v-for="artist in artistsSection.data.slice(0, 8)"
+          :key="artist.id"
+          type="button"
+          @click="openArtist(artist)"
+        >
+          <Cover
+            :src="artist.artworkUrl"
+            :alt="artist.name"
+            size="card"
+            shape="circle"
+            :show-play-button="false"
+          />
           <strong>{{ artist.name }}</strong>
-          <span>{{ artist.alias.join(' / ') || '歌手' }}</span>
+          <span>{{ $tSource(artist.alias.join(' / ') || '歌手') }}</span>
         </button>
       </div>
     </MusicSection>
-
   </section>
 </template>
 

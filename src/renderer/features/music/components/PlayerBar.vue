@@ -177,7 +177,7 @@ function openImmersivePlayer(event: MouseEvent): void {
             class="player-track-cover-button"
             type="button"
             :disabled="!track"
-            :aria-label="track ? `展开《${track.name}》沉浸播放页` : text.emptyTrack"
+            :aria-label="$tSource(track ? `展开《${track.name}》沉浸播放页` : text.emptyTrack)"
             @click="openImmersivePlayer"
           >
             <MediaArtwork

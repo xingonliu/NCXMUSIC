@@ -20,6 +20,7 @@ import {
   standardSongsToTrackSummaries
 } from './music-entity'
 import { usePlayer } from './use-player'
+import { translatePublicError } from '../../i18n'
 
 // ========= 变量 =========
 
@@ -67,7 +68,7 @@ async function loadLikedSongs(): Promise<void> {
   const response = await window.ncx.runtime.getLikedSongs({ userId: userId.value, limit: 500 })
   loading.value = false
   if (!response.ok) {
-    errorMessage.value = response.error.message
+    errorMessage.value = translatePublicError(response.error)
     return
   }
   const result: MusicReadResult = response.data
@@ -108,7 +109,7 @@ function enqueueSong(song: StandardSong): void {
 async function unlikeSong(song: StandardSong): Promise<void> {
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: false })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   songs.value = songs.value.filter((item) => item.id !== song.id)
@@ -142,14 +143,22 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="liked-page" aria-labelledby="liked-title">
+  <section
+    class="liked-page"
+    aria-labelledby="liked-title"
+  >
     <header class="liked-heading">
       <div class="liked-title-group">
-        <span class="liked-icon"><Heart :size="28" fill="currentColor" /></span>
+        <span class="liked-icon"><Heart
+          :size="28"
+          fill="currentColor"
+        /></span>
         <div>
-          <p>我的音乐</p>
-          <h1 id="liked-title">我喜欢</h1>
-          <small v-if="userId">{{ songs.length }} 首歌曲</small>
+          <p>{{ $tSource("我的音乐") }}</p>
+          <h1 id="liked-title">
+            {{ $tSource("我喜欢") }}
+          </h1>
+          <small v-if="userId">{{ songs.length }} {{ $tSource("首歌曲") }}</small>
         </div>
       </div>
       <CommonButton
@@ -158,35 +167,42 @@ onMounted(async () => {
         :disabled="songs.length === 0"
         @click="playAll"
       >
-        <Play :size="15" fill="currentColor" />
-        播放全部
+        <Play
+          :size="15"
+          fill="currentColor"
+        /> {{ $tSource("播放全部") }}
       </CommonButton>
     </header>
 
-    <div v-if="loading" class="liked-loading">
-      <CommonSpinner label="正在加载我喜欢" />
-      <span>正在加载</span>
+    <div
+      v-if="loading"
+      class="liked-loading"
+    >
+      <CommonSpinner :label="$tSource('正在加载我喜欢')" />
+      <span>{{ $tSource("正在加载") }}</span>
     </div>
     <CommonEmptyState
       v-else-if="!userId"
-      title="登录后查看我喜欢"
-      description="游客不会读取或创建网易云音乐资产。"
+      :title="$tSource('登录后查看我喜欢')"
+      :description="$tSource('游客不会读取或创建网易云音乐资产。')"
     >
-      <CommonButton variant="primary" @click="login">
-        <LogIn :size="14" />
-        登录网易云
+      <CommonButton
+        variant="primary"
+        @click="login"
+      >
+        <LogIn :size="14" /> {{ $tSource("登录网易云") }}
       </CommonButton>
     </CommonEmptyState>
     <CommonErrorState
       v-else-if="errorMessage"
-      title="我喜欢读取失败"
+      :title="$tSource('我喜欢读取失败')"
       :description="errorMessage"
       @retry="loadLikedSongs"
     />
     <CommonEmptyState
       v-else-if="songs.length === 0"
-      title="还没有喜欢的歌曲"
-      description="可在歌曲右键菜单或收藏按钮中添加。"
+      :title="$tSource('还没有喜欢的歌曲')"
+      :description="$tSource('可在歌曲右键菜单或收藏按钮中添加。')"
     />
     <VirtualTrackList
       v-else

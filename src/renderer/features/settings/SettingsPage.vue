@@ -15,7 +15,7 @@ import {
   type CommonOption
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
-import { isSupportedLocale, SUPPORTED_LOCALES, useI18n } from '../../i18n'
+import { isSupportedLocale, SUPPORTED_LOCALES, useI18n , translatePublicError} from '../../i18n'
 import { useAccountSessionStore } from '../account/account-session-store'
 import { usePlayer } from '../music/use-player'
 import {
@@ -314,7 +314,7 @@ async function clearCache(): Promise<void> {
   appPreferences.clearRendererCache()
   dataBusy.value = false
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   if (response.data.operation !== 'clearCache') {
@@ -355,7 +355,7 @@ async function deleteCurrentLocalData(): Promise<void> {
   if (response.ok) await player.clear()
   dataBusy.value = false
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   showToast('当前账户本地数据已删除，登录状态保持不变。', 'success')
@@ -438,19 +438,19 @@ onBeforeUnmount(() => {
   >
     <header class="settings-heading">
       <h1 id="settings-title">
-        {{ activeNavigationItem.label }}
+        {{ $tSource(activeNavigationItem.label) }}
       </h1>
-      <p>{{ activeNavigationItem.description }}</p>
+      <p>{{ $tSource(activeNavigationItem.description) }}</p>
     </header>
 
     <SettingsSection
       v-if="activeTab === 'general'"
-      title="应用行为"
+      :title="$tSource('应用行为')"
     >
       <SettingsRow
         setting-id="setting-close-window"
-        title="关闭窗口"
-        description="关闭到托盘时主窗口隐藏，AudioHost 与播放队列保持运行。"
+        :title="$tSource('关闭窗口')"
+        :description="$tSource('关闭到托盘时主窗口隐藏，AudioHost 与播放队列保持运行。')"
       >
         <CommonSelect
           class="settings-control"
@@ -461,8 +461,8 @@ onBeforeUnmount(() => {
       </SettingsRow>
       <SettingsRow
         setting-id="setting-language"
-        title="界面语言"
-        description="选择应用界面使用的语言；切换后立即生效。"
+        :title="$tSource('界面语言')"
+        :description="$tSource('选择应用界面使用的语言；切换后立即生效。')"
       >
         <CommonSelect
           class="settings-control"
@@ -475,12 +475,12 @@ onBeforeUnmount(() => {
 
     <SettingsSection
       v-else-if="activeTab === 'music'"
-      title="播放"
+      :title="$tSource('播放')"
     >
       <SettingsRow
         setting-id="setting-playback-quality"
-        title="播放音质"
-        description="播放中切换会重新解析当前歌曲并尽量保持进度。"
+        :title="$tSource('播放音质')"
+        :description="$tSource('播放中切换会重新解析当前歌曲并尽量保持进度。')"
       >
         <CommonSelect
           class="settings-control"
@@ -491,12 +491,12 @@ onBeforeUnmount(() => {
       </SettingsRow>
       <SettingsRow
         setting-id="setting-lyric-translation"
-        title="歌词翻译"
-        description="在普通歌词与沉浸歌词中显示翻译行。"
+        :title="$tSource('歌词翻译')"
+        :description="$tSource('在普通歌词与沉浸歌词中显示翻译行。')"
       >
         <CommonSwitch
           :model-value="appPreferences.preferences.value.showLyricTranslation"
-          label="显示歌词翻译"
+          :label="$tSource('显示歌词翻译')"
           @update:model-value="setLyricTranslation"
         />
       </SettingsRow>
@@ -525,47 +525,47 @@ onBeforeUnmount(() => {
 
     <template v-else-if="activeTab === 'appearance'">
       <SettingsSection
-        title="界面"
+        :title="$tSource('界面')"
       >
         <SettingsRow
           setting-id="setting-theme"
-          title="主题"
-          description="选择跟随系统、浅色或深色外观。"
+          :title="$tSource('主题')"
+          :description="$tSource('选择跟随系统、浅色或深色外观。')"
         >
           <div
             class="settings-theme-options"
             role="group"
-            aria-label="主题"
+            :aria-label="$tSource('主题')"
           >
             <CommonButton
               :variant="appPreferences.preferences.value.theme === 'system' ? 'primary' : 'secondary'"
               @click="setTheme('system')"
             >
-              <Palette :size="14" />系统
+              <Palette :size="14" />{{ $tSource("系统") }}
             </CommonButton>
             <CommonButton
               :variant="appPreferences.preferences.value.theme === 'light' ? 'primary' : 'secondary'"
               @click="setTheme('light')"
             >
-              <Sun :size="14" />浅色
+              <Sun :size="14" />{{ $tSource("浅色") }}
             </CommonButton>
             <CommonButton
               :variant="appPreferences.preferences.value.theme === 'dark' ? 'primary' : 'secondary'"
               @click="setTheme('dark')"
             >
-              <Moon :size="14" />深色
+              <Moon :size="14" />{{ $tSource("深色") }}
             </CommonButton>
           </div>
         </SettingsRow>
       </SettingsSection>
 
       <SettingsSection
-        title="歌词页"
+        :title="$tSource('歌词页')"
       >
         <SettingsRow
           setting-id="setting-lyric-alignment"
-          title="当前歌词位置"
-          description="选择当前歌词在沉浸视图中的垂直焦点。"
+          :title="$tSource('当前歌词位置')"
+          :description="$tSource('选择当前歌词在沉浸视图中的垂直焦点。')"
         >
           <CommonSelect
             class="settings-control"
@@ -576,8 +576,8 @@ onBeforeUnmount(() => {
         </SettingsRow>
         <SettingsRow
           setting-id="setting-lyric-motion"
-          title="歌词动效"
-          description="完整包含弹簧、缩放和模糊；轻柔移除模糊；简洁保留同步扫光。"
+          :title="$tSource('歌词动效')"
+          :description="$tSource('完整包含弹簧、缩放和模糊；轻柔移除模糊；简洁保留同步扫光。')"
         >
           <CommonSelect
             class="settings-control"
@@ -588,8 +588,8 @@ onBeforeUnmount(() => {
         </SettingsRow>
         <SettingsRow
           setting-id="setting-lyric-font-size"
-          title="歌词字号"
-          description="调整沉浸歌词主行的整体字号。"
+          :title="$tSource('歌词字号')"
+          :description="$tSource('调整沉浸歌词主行的整体字号。')"
         >
           <CommonSelect
             class="settings-control"
@@ -600,8 +600,8 @@ onBeforeUnmount(() => {
         </SettingsRow>
         <SettingsRow
           setting-id="setting-lyric-font-weight"
-          title="歌词字重"
-          description="调整主歌词、翻译与音译的粗细。"
+          :title="$tSource('歌词字重')"
+          :description="$tSource('调整主歌词、翻译与音译的粗细。')"
         >
           <CommonSelect
             class="settings-control"
@@ -612,12 +612,12 @@ onBeforeUnmount(() => {
         </SettingsRow>
         <SettingsRow
           setting-id="setting-hide-passed-lyrics"
-          title="已唱歌词"
-          description="隐藏后可减少视觉干扰，仍可滚动查看完整歌词。"
+          :title="$tSource('已唱歌词')"
+          :description="$tSource('隐藏后可减少视觉干扰，仍可滚动查看完整歌词。')"
         >
           <CommonSwitch
             :model-value="appPreferences.preferences.value.hidePassedLyrics"
-            label="隐藏已唱歌词"
+            :label="$tSource('隐藏已唱歌词')"
             @update:model-value="setHidePassedLyrics"
           />
         </SettingsRow>
@@ -626,55 +626,53 @@ onBeforeUnmount(() => {
 
     <SettingsSection
       v-else
-      title="本地存储"
+      :title="$tSource('本地存储')"
     >
       <SettingsRow
         setting-id="setting-account-data"
-        title="账户数据"
+        :title="$tSource('账户数据')"
       >
         <template #description>
-          当前空间 {{ accountReference }} · 数据库 {{ formatBytes(dataStats?.databaseBytes ?? 0) }} ·
-          对话 {{ dataStats?.chatMessages ?? 0 }} 条 · 记忆块 {{ dataStats?.conversationBlocks ?? 0 }} 个 ·
-          画像 v{{ dataStats?.profileVersion ?? 0 }} · Journal {{ dataStats?.journalEvents ?? 0 }} 条
+          {{ $tSource("当前空间") }} {{ accountReference }} {{ $tSource("· 数据库") }} {{ formatBytes(dataStats?.databaseBytes ?? 0) }} {{ $tSource("· 对话") }} {{ dataStats?.chatMessages ?? 0 }} {{ $tSource("条 · 记忆块") }} {{ dataStats?.conversationBlocks ?? 0 }} {{ $tSource("个 · 画像 v") }}{{ dataStats?.profileVersion ?? 0 }} · Journal {{ dataStats?.journalEvents ?? 0 }} {{ $tSource("条") }}
         </template>
         <CommonButton
           variant="danger"
           :loading="dataBusy"
           @click="deleteLocalDataDialogVisible = true"
         >
-          删除本地数据
+          {{ $tSource("删除本地数据") }}
         </CommonButton>
       </SettingsRow>
       <SettingsRow
         setting-id="setting-rebuildable-cache"
-        title="可重建缓存"
-        :description="`当前 ${formatBytes(dataStats?.cacheBytes ?? 0)}；清理后不删除账户数据库、Cookie 或播放快照。`"
+        :title="$tSource('可重建缓存')"
+        :description="$tSource(`当前 ${formatBytes(dataStats?.cacheBytes ?? 0)}；清理后不删除账户数据库、Cookie 或播放快照。`)"
       >
         <CommonButton
           variant="danger"
           :loading="dataBusy"
           @click="clearCacheDialogVisible = true"
         >
-          清理缓存
+          {{ $tSource("清理缓存") }}
         </CommonButton>
       </SettingsRow>
     </SettingsSection>
 
     <CommonAlertDialog
       :visible="clearCacheDialogVisible"
-      title="清理可重建缓存？"
-      description="账户数据库、登录会话和播放快照不会被删除。"
+      :title="$tSource('清理可重建缓存？')"
+      :description="$tSource('账户数据库、登录会话和播放快照不会被删除。')"
       type="warning"
-      confirm-text="清理"
+      :confirm-text="$tSource('清理')"
       @cancel="clearCacheDialogVisible = false"
       @confirm="clearCache"
     />
 
     <CommonAlertDialog
       :visible="deleteLocalDataDialogVisible"
-      title="删除当前账户本地数据？"
-      description="将删除当前账户的聊天、长期记忆、画像、基础资料、播放快照、偏好、Action Journal 与可重建缓存，但不会删除登录 Cookie 或网易云云端数据。此操作无法撤销。"
-      confirm-text="删除本地数据"
+      :title="$tSource('删除当前账户本地数据？')"
+      :description="$tSource('将删除当前账户的聊天、长期记忆、画像、基础资料、播放快照、偏好、Action Journal 与可重建缓存，但不会删除登录 Cookie 或网易云云端数据。此操作无法撤销。')"
+      :confirm-text="$tSource('删除本地数据')"
       @cancel="deleteLocalDataDialogVisible = false"
       @confirm="deleteCurrentLocalData"
     />

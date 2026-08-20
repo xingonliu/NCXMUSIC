@@ -131,9 +131,9 @@ watch(searchQuery, (newQuery) => {
       </div>
 
       <div class="model-icon-summary-info">
-        <span class="model-icon-summary-label">模型图标</span>
+        <span class="model-icon-summary-label">{{ $tSource("模型图标") }}</span>
         <span class="model-icon-summary-status">
-          {{ props.modelValue ? props.modelValue : `默认使用名称前两字「${getModelInitials(props.displayName)}」` }}
+          {{ $tSource(props.modelValue ? props.modelValue : `默认使用名称前两字「${getModelInitials(props.displayName)}」`) }}
         </span>
       </div>
 
@@ -144,7 +144,7 @@ watch(searchQuery, (newQuery) => {
           variant="secondary"
           @click="clearIcon"
         >
-          <X :size="13" />清除图标
+          <X :size="13" />{{ $tSource("清除图标") }}
         </CommonButton>
         <CommonButton
           size="compact"
@@ -155,7 +155,7 @@ watch(searchQuery, (newQuery) => {
             :is="expanded ? ChevronUp : ChevronDown"
             :size="13"
           />
-          {{ expanded ? '收起图标库' : '从 YesIcon 库选择' }}
+          {{ $tSource(expanded ? '收起图标库' : '从 YesIcon 库选择') }}
         </CommonButton>
       </div>
     </div>
@@ -169,7 +169,7 @@ watch(searchQuery, (newQuery) => {
         <CommonInput
           v-model="searchQuery"
           clearable
-          placeholder="在 YesIcon 库中搜索（如：openai, claude, bot, 机器人, ai...）"
+          :placeholder="$tSource('在 YesIcon 库中搜索（如：openai, claude, bot, 机器人, ai...）')"
         >
           <template #prefix>
             <Search :size="14" />
@@ -183,10 +183,10 @@ watch(searchQuery, (newQuery) => {
         class="model-icon-results-section"
       >
         <div class="model-icon-section-header">
-          <span>搜索结果</span>
-          <small v-if="searching">正在搜索 YesIcon 库…</small>
-          <small v-else-if="searchResults.length > 0">找到 {{ searchResults.length }} 个图标</small>
-          <small v-else>未找到匹配图标</small>
+          <span>{{ $tSource("搜索结果") }}</span>
+          <small v-if="searching">{{ $tSource("正在搜索 YesIcon 库…") }}</small>
+          <small v-else-if="searchResults.length > 0">{{ $tSource("找到") }} {{ searchResults.length }} {{ $tSource("个图标") }}</small>
+          <small v-else>{{ $tSource("未找到匹配图标") }}</small>
         </div>
 
         <div
@@ -222,7 +222,7 @@ watch(searchQuery, (newQuery) => {
             :class="{ 'is-active': activeCategory === 'all' }"
             @click="activeCategory = 'all'"
           >
-            全部预设
+            {{ $tSource("全部预设") }}
           </button>
           <button
             type="button"
@@ -230,7 +230,7 @@ watch(searchQuery, (newQuery) => {
             :class="{ 'is-active': activeCategory === 'brand' }"
             @click="activeCategory = 'brand'"
           >
-            品牌厂商
+            {{ $tSource("品牌厂商") }}
           </button>
           <button
             type="button"
@@ -238,7 +238,7 @@ watch(searchQuery, (newQuery) => {
             :class="{ 'is-active': activeCategory === 'generic' }"
             @click="activeCategory = 'generic'"
           >
-            通用概念
+            {{ $tSource("通用概念") }}
           </button>
         </div>
 

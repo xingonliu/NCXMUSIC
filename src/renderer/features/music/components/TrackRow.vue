@@ -190,7 +190,7 @@ function handleContextAction(value: string | number): void {
           <span
             v-if="hasPaidBadge"
             class="track-row-badge track-row-badge--paid"
-          >付费</span>
+          >{{ $tSource("付费") }}</span>
         </div>
         <p>{{ artistText }}</p>
       </div>
@@ -204,7 +204,7 @@ function handleContextAction(value: string | number): void {
           <CommonIconButton
             size="compact"
             variant="ghost"
-            label="播放"
+            :label="$tSource('播放')"
             @click.stop="handlePlay"
           >
             <Play
@@ -215,7 +215,7 @@ function handleContextAction(value: string | number): void {
           <CommonIconButton
             size="compact"
             variant="ghost"
-            label="加入队列"
+            :label="$tSource('加入队列')"
             @click="handleEnqueue"
           >
             <ListPlus :size="13" />
@@ -223,7 +223,7 @@ function handleContextAction(value: string | number): void {
           <CommonIconButton
             size="compact"
             variant="ghost"
-            :label="props.liked ? '取消收藏' : '收藏'"
+            :label="$tSource(props.liked ? '取消收藏' : '收藏')"
             @click.stop="emit('like', props.song)"
           >
             <Heart
@@ -234,7 +234,7 @@ function handleContextAction(value: string | number): void {
           <CommonIconButton
             size="compact"
             variant="ghost"
-            label="添加到歌单"
+            :label="$tSource('添加到歌单')"
             @click.stop="emit('add-to-playlist', props.song)"
           >
             <FolderPlus :size="13" />
@@ -243,7 +243,7 @@ function handleContextAction(value: string | number): void {
             <CommonIconButton
               size="compact"
               variant="ghost"
-              label="从当前歌单移除"
+              :label="$tSource('从当前歌单移除')"
               :disabled="props.managementBusy"
               @click.stop="emit('remove', props.song)"
             >

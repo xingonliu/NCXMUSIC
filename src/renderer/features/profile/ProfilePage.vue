@@ -37,6 +37,7 @@ import {
   standardSongsToTrackSummaries
 } from '../music/music-entity'
 import { usePlayer } from '../music/use-player'
+import { translatePublicError } from '../../i18n'
 
 // ========= 类型 =========
 
@@ -197,7 +198,7 @@ async function loadProfile(): Promise<void> {
   ) return
   loading.value = false
   if (!profileResponse.ok) {
-    errorMessage.value = profileResponse.error.message
+    errorMessage.value = translatePublicError(profileResponse.error)
     return
   }
   if (profileResponse.data.kind !== 'user') {
@@ -251,7 +252,7 @@ function enqueueHistorySong(song: StandardSong): void {
 async function toggleLikeSong(song: StandardSong): Promise<void> {
   const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   showToast(`已收藏《${song.name}》。`, 'success')
@@ -331,22 +332,25 @@ watch(
 
 <template>
   <div class="profile-container">
-    <div v-if="loading" class="profile-state">
-      <CommonSpinner label="正在加载个人资料" />
-      <span>正在加载个人空间...</span>
+    <div
+      v-if="loading"
+      class="profile-state"
+    >
+      <CommonSpinner :label="$tSource('正在加载个人资料')" />
+      <span>{{ $tSource("正在加载个人空间...") }}</span>
     </div>
 
     <CommonErrorState
       v-else-if="errorMessage"
-      title="个人资料读取失败"
+      :title="$tSource('个人资料读取失败')"
       :description="errorMessage"
       @retry="loadProfile"
     />
 
     <CommonEmptyState
       v-else-if="!userId"
-      title="未登录网易云"
-      description="登录后查看个人听歌记录、自建歌单和收藏内容。"
+      :title="$tSource('未登录网易云')"
+      :description="$tSource('登录后查看个人听歌记录、自建歌单和收藏内容。')"
     >
       <CommonButton
         variant="primary"
@@ -354,12 +358,14 @@ watch(
         :disabled="!account.snapshot.value?.canLogin"
         @click="runAccountAction('login')"
       >
-        <Users :size="14" />
-        登录账户
+        <Users :size="14" /> {{ $tSource("登录账户") }}
       </CommonButton>
     </CommonEmptyState>
 
-    <div v-else class="profile-content">
+    <div
+      v-else
+      class="profile-content"
+    >
       <!-- 极简自然个人 Header (左右对齐、无多余大框) -->
       <header class="profile-header">
         <div
@@ -371,32 +377,47 @@ watch(
 
         <div class="profile-header-main">
           <div class="profile-avatar-box">
-            <CommonAvatar :name="displayName" :src="avatarUrl" :size="84" />
+            <CommonAvatar
+              :name="displayName"
+              :src="avatarUrl"
+              :size="84"
+            />
           </div>
 
           <div class="profile-info">
             <div class="profile-name-row">
-              <h1 id="profile-title">{{ displayName }}</h1>
-              <span v-if="(user?.vipType ?? 0) > 0" class="profile-vip-tag">VIP</span>
-              <span v-if="user?.level" class="profile-level-tag">Lv.{{ user.level }}</span>
+              <h1 id="profile-title">
+                {{ displayName }}
+              </h1>
+              <span
+                v-if="(user?.vipType ?? 0) > 0"
+                class="profile-vip-tag"
+              >VIP</span>
+              <span
+                v-if="user?.level"
+                class="profile-level-tag"
+              >Lv.{{ user.level }}</span>
             </div>
 
-            <p v-if="user?.signature" class="profile-bio">
+            <p
+              v-if="user?.signature"
+              class="profile-bio"
+            >
               {{ user.signature }}
             </p>
 
             <div class="profile-meta-text">
-              <span>村龄 {{ villageAge }}</span>
+              <span>{{ $tSource("村龄") }} {{ $tSource(villageAge) }}</span>
               <span v-if="zodiacLabel !== '未公开'">·</span>
-              <span v-if="zodiacLabel !== '未公开'">{{ zodiacLabel }}</span>
+              <span v-if="zodiacLabel !== '未公开'">{{ $tSource(zodiacLabel) }}</span>
               <span v-if="user?.location">·</span>
               <span v-if="user?.location">{{ user.location }}</span>
               <span>·</span>
-              <span>{{ formatCount(user?.follows) }} 关注</span>
+              <span>{{ formatCount(user?.follows) }} {{ $tSource("关注") }}</span>
               <span>·</span>
-              <span>{{ formatCount(user?.followeds) }} 粉丝</span>
+              <span>{{ formatCount(user?.followeds) }} {{ $tSource("粉丝") }}</span>
               <span>·</span>
-              <span>累积听歌 {{ formatCount(user?.listenSongs) }} 首</span>
+              <span>{{ $tSource("累积听歌") }} {{ formatCount(user?.listenSongs) }} {{ $tSource("首") }}</span>
             </div>
           </div>
         </div>
@@ -408,27 +429,30 @@ watch(
             :loading="busyAction === 'switch'"
             @click="runAccountAction('switch')"
           >
-            切换账户
+            {{ $tSource("切换账户") }}
           </CommonButton>
           <CommonButton
             variant="ghost"
             size="compact"
             @click="logoutDialogVisible = true"
           >
-            退出
+            {{ $tSource("退出") }}
           </CommonButton>
         </div>
       </header>
 
       <!-- Tab 切换 (极简纯净下划线 Tab) -->
-      <nav class="profile-tab-nav" aria-label="个人内容分类">
+      <nav
+        class="profile-tab-nav"
+        :aria-label="$tSource('个人内容分类')"
+      >
         <button
           type="button"
           class="profile-tab-btn"
           :class="{ active: activeTab === 'history' }"
           @click="activeTab = 'history'"
         >
-          听歌排行
+          {{ $tSource("听歌排行") }}
         </button>
         <button
           type="button"
@@ -436,7 +460,7 @@ watch(
           :class="{ active: activeTab === 'created' }"
           @click="activeTab = 'created'"
         >
-          创建的歌单 <span class="profile-tab-num">{{ createdPlaylists.length }}</span>
+          {{ $tSource("创建的歌单") }} <span class="profile-tab-num">{{ createdPlaylists.length }}</span>
         </button>
         <button
           type="button"
@@ -444,45 +468,51 @@ watch(
           :class="{ active: activeTab === 'subscribed' }"
           @click="activeTab = 'subscribed'"
         >
-          收藏的歌单 <span class="profile-tab-num">{{ subscribedPlaylists.length }}</span>
+          {{ $tSource("收藏的歌单") }} <span class="profile-tab-num">{{ subscribedPlaylists.length }}</span>
         </button>
       </nav>
 
       <!-- 模块一：听歌排行 -->
-      <section v-if="activeTab === 'history'" class="profile-pane">
+      <section
+        v-if="activeTab === 'history'"
+        class="profile-pane"
+      >
         <div class="profile-pane-toolbar">
-          <span class="profile-pane-count">共 {{ visibleHistory.length }} 首歌曲</span>
+          <span class="profile-pane-count">{{ $tSource("共") }} {{ visibleHistory.length }} {{ $tSource("首歌曲") }}</span>
           <div class="profile-period-switch">
             <button
               type="button"
               :class="{ selected: historyPeriod === 'week' }"
               @click="historyPeriod = 'week'"
             >
-              最近一周
+              {{ $tSource("最近一周") }}
             </button>
             <button
               type="button"
               :class="{ selected: historyPeriod === 'all' }"
               @click="historyPeriod = 'all'"
             >
-              所有时间
+              {{ $tSource("所有时间") }}
             </button>
           </div>
         </div>
 
         <CommonEmptyState
           v-if="visibleHistory.length === 0"
-          title="暂无听歌排行"
-          description="该账户暂无当前周期的听歌记录。"
+          :title="$tSource('暂无听歌排行')"
+          :description="$tSource('该账户暂无当前周期的听歌记录。')"
         />
 
-        <div v-else class="profile-track-table">
+        <div
+          v-else
+          class="profile-track-table"
+        >
           <div class="profile-track-header">
             <span class="col-index">#</span>
-            <span class="col-title">标题</span>
-            <span class="col-album">专辑</span>
-            <span class="col-plays">听歌次数</span>
-            <span class="col-time">时长</span>
+            <span class="col-title">{{ $tSource("标题") }}</span>
+            <span class="col-album">{{ $tSource("专辑") }}</span>
+            <span class="col-plays">{{ $tSource("听歌次数") }}</span>
+            <span class="col-time">{{ $tSource("时长") }}</span>
           </div>
 
           <CommonContextMenu
@@ -502,8 +532,16 @@ watch(
             >
               <!-- 序号 / 播放中图标 -->
               <div class="col-index">
-                <span v-if="activeTrackId !== song.id" class="track-number">{{ index + 1 }}</span>
-                <Play v-else :size="12" fill="currentColor" class="playing-icon" />
+                <span
+                  v-if="activeTrackId !== song.id"
+                  class="track-number"
+                >{{ index + 1 }}</span>
+                <Play
+                  v-else
+                  :size="12"
+                  fill="currentColor"
+                  class="playing-icon"
+                />
               </div>
 
               <!-- 封面与标题歌手 -->
@@ -517,10 +555,13 @@ watch(
                 <div class="track-info">
                   <div class="track-name-row">
                     <span class="track-name">{{ song.name }}</span>
-                    <span v-if="song.access?.badges?.includes('vip')" class="badge-vip">VIP</span>
+                    <span
+                      v-if="song.access?.badges?.includes('vip')"
+                      class="badge-vip"
+                    >VIP</span>
                   </div>
                   <span class="track-artist">
-                    {{ song.artists.map((artist) => artist.name).join(' / ') || '未知歌手' }}
+                    {{ $tSource(song.artists.map((artist) => artist.name).join(' / ') || '未知歌手') }}
                   </span>
                 </div>
               </div>
@@ -532,7 +573,7 @@ watch(
 
               <!-- 听歌次数 -->
               <div class="col-plays">
-                <span class="track-plays-text">{{ song.listeningCount ?? 0 }} 次</span>
+                <span class="track-plays-text">{{ song.listeningCount ?? 0 }} {{ $tSource("次") }}</span>
               </div>
 
               <!-- 时长 & 快捷动作 -->
@@ -541,7 +582,7 @@ watch(
                   <CommonIconButton
                     size="compact"
                     variant="ghost"
-                    label="加入队列"
+                    :label="$tSource('加入队列')"
                     @click.stop="enqueueHistorySong(song)"
                   >
                     <ListPlus :size="13" />
@@ -549,7 +590,7 @@ watch(
                   <CommonIconButton
                     size="compact"
                     variant="ghost"
-                    label="收藏"
+                    :label="$tSource('收藏')"
                     @click.stop="toggleLikeSong(song)"
                   >
                     <Heart :size="13" />
@@ -557,7 +598,7 @@ watch(
                   <CommonIconButton
                     size="compact"
                     variant="ghost"
-                    label="添加到歌单"
+                    :label="$tSource('添加到歌单')"
                     @click.stop="openAddToPlaylist(song)"
                   >
                     <FolderPlus :size="13" />
@@ -571,14 +612,20 @@ watch(
       </section>
 
       <!-- 模块二 & 三：歌单列表 -->
-      <section v-else class="profile-pane">
+      <section
+        v-else
+        class="profile-pane"
+      >
         <CommonEmptyState
           v-if="(activeTab === 'created' ? createdPlaylists : subscribedPlaylists).length === 0"
-          :title="activeTab === 'created' ? '暂无创建的歌单' : '暂无收藏的歌单'"
-          description="可在歌曲菜单或歌单页面中添加。"
+          :title="$tSource(activeTab === 'created' ? '暂无创建的歌单' : '暂无收藏的歌单')"
+          :description="$tSource('可在歌曲菜单或歌单页面中添加。')"
         />
 
-        <div v-else class="profile-grid">
+        <div
+          v-else
+          class="profile-grid"
+        >
           <div
             v-for="playlist in activeTab === 'created' ? createdPlaylists : subscribedPlaylists"
             :key="playlist.id"
@@ -597,15 +644,26 @@ watch(
                 :hover-effect="true"
                 :show-play-button="false"
               />
-              <span v-if="isLikedPlaylist(playlist)" class="liked-heart-mark" title="我喜欢的音乐">
-                <Heart :size="12" fill="currentColor" />
+              <span
+                v-if="isLikedPlaylist(playlist)"
+                class="liked-heart-mark"
+                :title="$tSource('我喜欢的音乐')"
+              >
+                <Heart
+                  :size="12"
+                  fill="currentColor"
+                />
               </span>
             </div>
             <div class="profile-grid-details">
-              <h3 class="profile-grid-title" :title="playlist.name">{{ playlist.name }}</h3>
+              <h3
+                class="profile-grid-title"
+                :title="playlist.name"
+              >
+                {{ playlist.name }}
+              </h3>
               <p class="profile-grid-subtitle">
-                {{ playlist.trackCount ?? 0 }} 首
-                <template v-if="!playlist.owned && playlist.creator?.nickname">
+                {{ playlist.trackCount ?? 0 }} {{ $tSource("首") }} <template v-if="!playlist.owned && playlist.creator?.nickname">
                   · by {{ playlist.creator.nickname }}
                 </template>
               </p>
@@ -624,10 +682,10 @@ watch(
     <!-- 退出登录确认弹窗 -->
     <CommonAlertDialog
       :visible="logoutDialogVisible"
-      title="退出当前账户？"
-      description="退出后播放队列将切换到游客空间，本地保存的账户数据仍会保留。"
+      :title="$tSource('退出当前账户？')"
+      :description="$tSource('退出后播放队列将切换到游客空间，本地保存的账户数据仍会保留。')"
       type="warning"
-      confirm-text="退出登录"
+      :confirm-text="$tSource('退出登录')"
       @cancel="logoutDialogVisible = false"
       @confirm="confirmLogout"
     />

@@ -253,13 +253,15 @@ function confirmDangerAction(): void {
       <div class="ncx-design-lab-nav-top">
         <div class="ncx-design-lab-nav-title-group">
           <span class="ncx-design-lab-eyebrow">Design System UI Lab</span>
-          <h1 class="ncx-design-lab-title">通用组件交互测试页</h1>
+          <h1 class="ncx-design-lab-title">
+            {{ $tSource("通用组件交互测试页") }}
+          </h1>
         </div>
 
         <div class="ncx-design-lab-nav-actions">
           <CommonSearchInput
             v-model="searchFilter"
-            placeholder="搜索 35+ 通用组件..."
+            :placeholder="$tSource('搜索 35+ 通用组件...')"
             class="ncx-design-lab-search"
             @clear="searchFilter = ''"
           />
@@ -282,7 +284,7 @@ function confirmDangerAction(): void {
           :class="{ 'is-active': activeTab === tab.id }"
           @click="selectTab(tab.id)"
         >
-          {{ tab.label }}
+          {{ $tSource(tab.label) }}
         </button>
       </nav>
     </header>
@@ -294,20 +296,23 @@ function confirmDangerAction(): void {
     >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
-          <CommonBadge type="info" variant="solid">
-            大类 1
+          <CommonBadge
+            type="info"
+            variant="solid"
+          >
+            {{ $tSource("大类 1") }}
           </CommonBadge>
-          <h2>操作类组件 (Actions)</h2>
+          <h2>{{ $tSource("操作类组件 (Actions)") }}</h2>
         </div>
         <CommonTag color="blue">
-          WWDC25 对齐
+          {{ $tSource("WWDC25 对齐") }}
         </CommonTag>
       </header>
 
       <!-- 小类 1.1：基础按钮与链接 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 1.1：基础按钮与链接 (Buttons & Links)" />
+          <CommonSeparator :label="$tSource('小类 1.1：基础按钮与链接 (Buttons & Links)')" />
         </div>
 
         <div class="ncx-design-lab-grid--2col">
@@ -317,8 +322,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonButton</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                基础按钮
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("基础按钮") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -328,39 +336,37 @@ function confirmDangerAction(): void {
                     variant="primary"
                     @click="recordAction('Primary Button')"
                   >
-                    <Play :size="15" />
-                    立即播放
+                    <Play :size="15" /> {{ $tSource("立即播放") }}
                   </CommonButton>
                   <CommonButton
                     variant="secondary"
                     @click="recordAction('Secondary Button')"
                   >
-                    加入队列
+                    {{ $tSource("加入队列") }}
                   </CommonButton>
                   <CommonButton
                     variant="ghost"
                     @click="recordAction('Ghost Button')"
                   >
-                    稍后再说
+                    {{ $tSource("稍后再说") }}
                   </CommonButton>
                   <CommonButton
                     variant="danger"
                     @click="alertVisible = true"
                   >
-                    <Trash2 :size="15" />
-                    删除音轨
+                    <Trash2 :size="15" /> {{ $tSource("删除音轨") }}
                   </CommonButton>
                   <CommonButton
                     variant="primary"
                     loading
                   >
-                    同步中...
+                    {{ $tSource("同步中...") }}
                   </CommonButton>
                   <CommonButton
                     variant="secondary"
                     disabled
                   >
-                    已禁用操作
+                    {{ $tSource("已禁用操作") }}
                   </CommonButton>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
@@ -396,27 +402,30 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonIconButton</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                图标按钮
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("图标按钮") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
                 <CommonIconButton
-                  label="喜欢"
+                  :label="$tSource('喜欢')"
                   selected
                   @click="recordAction('IconButton 喜欢')"
                 >
                   <Heart :size="17" />
                 </CommonIconButton>
                 <CommonIconButton
-                  label="通知"
+                  :label="$tSource('通知')"
                   @click="recordAction('IconButton 通知')"
                 >
                   <Bell :size="17" />
                 </CommonIconButton>
                 <CommonIconButton
-                  label="已禁用图标"
+                  :label="$tSource('已禁用图标')"
                   disabled
                 >
                   <Bell :size="17" />
@@ -431,8 +440,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonButtonGroup</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                组合按钮组
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("组合按钮组") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -443,27 +455,27 @@ function confirmDangerAction(): void {
                     variant="secondary"
                     @click="recordAction('ButtonGroup 左侧')"
                   >
-                    左侧
+                    {{ $tSource("左侧") }}
                   </CommonButton>
                   <CommonButton
                     size="default"
                     variant="secondary"
                     @click="recordAction('ButtonGroup 中间')"
                   >
-                    中间
+                    {{ $tSource("中间") }}
                   </CommonButton>
                   <CommonButton
                     size="default"
                     variant="secondary"
                     @click="recordAction('ButtonGroup 右侧')"
                   >
-                    右侧
+                    {{ $tSource("右侧") }}
                   </CommonButton>
                 </CommonButtonGroup>
 
                 <CommonButtonGroup variant="connected">
                   <CommonIconButton
-                    label="新增"
+                    :label="$tSource('新增')"
                     size="compact"
                     variant="secondary"
                     @click="recordAction('ButtonGroup 新增')"
@@ -471,7 +483,7 @@ function confirmDangerAction(): void {
                     <Plus :size="14" />
                   </CommonIconButton>
                   <CommonIconButton
-                    label="刷新"
+                    :label="$tSource('刷新')"
                     size="compact"
                     variant="secondary"
                     @click="recordAction('ButtonGroup 刷新')"
@@ -479,7 +491,7 @@ function confirmDangerAction(): void {
                     <RefreshCcw :size="14" />
                   </CommonIconButton>
                   <CommonIconButton
-                    label="更多"
+                    :label="$tSource('更多')"
                     size="compact"
                     variant="secondary"
                     @click="recordAction('ButtonGroup 更多')"
@@ -497,8 +509,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonLinkButton</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                链接按钮
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("链接按钮") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -507,13 +522,13 @@ function confirmDangerAction(): void {
                   href="#/discover"
                   @click="recordAction('LinkButton 发现页')"
                 >
-                  查看发现页
+                  {{ $tSource("查看发现页") }}
                 </CommonLinkButton>
                 <CommonLinkButton
                   disabled
                   href="#/disabled"
                 >
-                  不可用链接
+                  {{ $tSource("不可用链接") }}
                 </CommonLinkButton>
               </div>
             </div>
@@ -524,7 +539,7 @@ function confirmDangerAction(): void {
       <!-- 小类 1.2：顶栏控件 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 1.2：顶栏控件 (Header Controls)" />
+          <CommonSeparator :label="$tSource('小类 1.2：顶栏控件 (Header Controls)')" />
         </div>
 
         <div class="ncx-design-lab-grid--2col">
@@ -534,35 +549,38 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonHeaderButton</code>
               </div>
-              <CommonTag color="blue" class="ncx-design-lab-component-tag">
-                Header 单按钮
+              <CommonTag
+                color="blue"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("Header 单按钮") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <div style="display: flex; align-items: center; gap: 8px;">
                 <CommonHeaderButton
-                  label="返回上一页"
+                  :label="$tSource('返回上一页')"
                   @click="recordAction('HeaderButton 返回')"
                 >
                   <ChevronLeft :size="18" />
                 </CommonHeaderButton>
 
                 <CommonHeaderButton
-                  label="搜索内容"
+                  :label="$tSource('搜索内容')"
                   @click="recordAction('HeaderButton 搜索')"
                 >
                   <Search :size="17" />
                 </CommonHeaderButton>
 
                 <CommonHeaderButton
-                  label="刷新当前页"
+                  :label="$tSource('刷新当前页')"
                   @click="recordAction('HeaderButton 刷新')"
                 >
                   <RotateCcw :size="17" />
                 </CommonHeaderButton>
 
                 <CommonHeaderButton
-                  label="已禁用按钮"
+                  :label="$tSource('已禁用按钮')"
                   disabled
                 >
                   <Search :size="17" />
@@ -577,27 +595,30 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonHeaderGroupButton</code>
               </div>
-              <CommonTag color="blue" class="ncx-design-lab-component-tag">
-                Header 成组按钮
+              <CommonTag
+                color="blue"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("Header 成组按钮") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <div class="ncx-design-lab-stack">
-                <CommonHeaderGroupButton label="窗口控制示例（插槽模式）">
+                <CommonHeaderGroupButton :label="$tSource('窗口控制示例（插槽模式）')">
                   <CommonHeaderGroupItem
-                    label="最小化"
+                    :label="$tSource('最小化')"
                     @click="recordAction('HeaderGroupItem 最小化')"
                   >
                     <Minus :size="16" />
                   </CommonHeaderGroupItem>
                   <CommonHeaderGroupItem
-                    label="最大化"
+                    :label="$tSource('最大化')"
                     @click="recordAction('HeaderGroupItem 最大化')"
                   >
                     <Maximize2 :size="16" />
                   </CommonHeaderGroupItem>
                   <CommonHeaderGroupItem
-                    label="关闭"
+                    :label="$tSource('关闭')"
                     variant="close"
                     @click="recordAction('HeaderGroupItem 关闭')"
                   >
@@ -606,11 +627,11 @@ function confirmDangerAction(): void {
                 </CommonHeaderGroupButton>
 
                 <CommonHeaderGroupButton
-                  label="成组按钮（Items 配置模式）"
+                  :label="$tSource('成组按钮（Items 配置模式）')"
                   :items="[
-                    { label: '添加项', icon: Plus, onClick: () => recordAction('HeaderGroup items 添加') },
-                    { label: '刷新列表', icon: RefreshCcw, onClick: () => recordAction('HeaderGroup items 刷新') },
-                    { label: '删除选定', icon: Trash2, variant: 'danger', onClick: () => recordAction('HeaderGroup items 删除') }
+                    { label: $tSource('添加项'), icon: Plus, onClick: () => recordAction('HeaderGroup items 添加') },
+                    { label: $tSource('刷新列表'), icon: RefreshCcw, onClick: () => recordAction('HeaderGroup items 刷新') },
+                    { label: $tSource('删除选定'), icon: Trash2, variant: 'danger', onClick: () => recordAction('HeaderGroup items 删除') }
                   ]"
                 />
               </div>
@@ -627,20 +648,23 @@ function confirmDangerAction(): void {
     >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
-          <CommonBadge type="info" variant="solid">
-            大类 2
+          <CommonBadge
+            type="info"
+            variant="solid"
+          >
+            {{ $tSource("大类 2") }}
           </CommonBadge>
-          <h2>输入类组件 (Inputs)</h2>
+          <h2>{{ $tSource("输入类组件 (Inputs)") }}</h2>
         </div>
         <CommonTag color="gray">
-          表单输入
+          {{ $tSource("表单输入") }}
         </CommonTag>
       </header>
 
       <!-- 小类 2.1：文本输入 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 2.1：文本输入 (Text Inputs)" />
+          <CommonSeparator :label="$tSource('小类 2.1：文本输入 (Text Inputs)')" />
         </div>
 
         <div class="ncx-design-lab-grid">
@@ -650,14 +674,17 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonInput</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                单行输入框
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("单行输入框") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonInput
                 v-model="inputValue"
-                placeholder="输入项目名称"
+                :placeholder="$tSource('输入项目名称')"
                 clearable
               />
             </div>
@@ -669,8 +696,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSearchInput</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                搜索输入框
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("搜索输入框") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -687,8 +717,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonTextarea</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                多行文本域
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("多行文本域") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -701,7 +734,7 @@ function confirmDangerAction(): void {
       <!-- 小类 2.2：下拉与组合选择 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 2.2：下拉与组合选择 (Select & Combobox)" />
+          <CommonSeparator :label="$tSource('小类 2.2：下拉与组合选择 (Select & Combobox)')" />
         </div>
 
         <div class="ncx-design-lab-grid--2col">
@@ -711,8 +744,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSelect</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                下拉选择框
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("下拉选择框") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -729,15 +765,18 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonCombobox</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                组合选择框
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("组合选择框") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonCombobox
                 v-model="comboboxValue"
                 :options="qualityOptions"
-                placeholder="输入或选择音质"
+                :placeholder="$tSource('输入或选择音质')"
               />
             </div>
           </CommonCard>
@@ -752,20 +791,23 @@ function confirmDangerAction(): void {
     >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
-          <CommonBadge type="info" variant="solid">
-            大类 3
+          <CommonBadge
+            type="info"
+            variant="solid"
+          >
+            {{ $tSource("大类 3") }}
           </CommonBadge>
-          <h2>选择类组件 (Selections)</h2>
+          <h2>{{ $tSource("选择类组件 (Selections)") }}</h2>
         </div>
         <CommonTag color="gray">
-          选项与状态
+          {{ $tSource("选项与状态") }}
         </CommonTag>
       </header>
 
       <!-- 小类 3.1：勾选与开关 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 3.1：勾选与开关 (Checkbox & Switch)" />
+          <CommonSeparator :label="$tSource('小类 3.1：勾选与开关 (Checkbox & Switch)')" />
         </div>
 
         <div class="ncx-design-lab-grid--2col">
@@ -775,8 +817,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonCheckbox</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                复选框
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("复选框") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -816,8 +861,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSwitch</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                开关组件
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("开关组件") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -851,7 +899,7 @@ function confirmDangerAction(): void {
       <!-- 小类 3.2：单选与分段 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 3.2：单选与分段 (Radio & Segmented)" />
+          <CommonSeparator :label="$tSource('小类 3.2：单选与分段 (Radio & Segmented)')" />
         </div>
 
         <div class="ncx-design-lab-grid--2col">
@@ -861,8 +909,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonRadioGroup</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                单选组
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("单选组") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -880,8 +931,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSegmentedControl</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                分段控制器
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("分段控制器") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -898,7 +952,7 @@ function confirmDangerAction(): void {
       <!-- 小类 3.3：数值调节 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 3.3：数值调节 (Slider)" />
+          <CommonSeparator :label="$tSource('小类 3.3：数值调节 (Slider)')" />
         </div>
 
         <div class="ncx-design-lab-grid--full">
@@ -908,14 +962,17 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSlider</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                滑块控制
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("滑块控制") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonSlider
                 v-model="sliderValue"
-                label="音量控制"
+                :label="$tSource('音量控制')"
               />
             </div>
           </CommonCard>
@@ -930,20 +987,23 @@ function confirmDangerAction(): void {
     >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
-          <CommonBadge type="info" variant="solid">
-            大类 4
+          <CommonBadge
+            type="info"
+            variant="solid"
+          >
+            {{ $tSource("大类 4") }}
           </CommonBadge>
-          <h2>展示类组件 (Display)</h2>
+          <h2>{{ $tSource("展示类组件 (Display)") }}</h2>
         </div>
         <CommonTag color="gray">
-          视觉展示
+          {{ $tSource("视觉展示") }}
         </CommonTag>
       </header>
 
       <!-- 小类 4.1：身份与徽标 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 4.1：身份与徽标 (Avatar & Badge)" />
+          <CommonSeparator :label="$tSource('小类 4.1：身份与徽标 (Avatar & Badge)')" />
         </div>
 
         <div class="ncx-design-lab-grid--2col">
@@ -953,8 +1013,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonAvatar</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                头像
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("头像") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -985,8 +1048,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonBadge</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                徽标角标
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("徽标角标") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -1043,7 +1109,7 @@ function confirmDangerAction(): void {
       <!-- 小类 4.2：标签与提示 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 4.2：标签与提示 (Tag & Tooltip)" />
+          <CommonSeparator :label="$tSource('小类 4.2：标签与提示 (Tag & Tooltip)')" />
         </div>
 
         <div class="ncx-design-lab-grid--2col">
@@ -1053,8 +1119,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonTag</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                标签分类
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("标签分类") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -1063,29 +1132,29 @@ function confirmDangerAction(): void {
                   selected
                   color="blue"
                 >
-                  精选单曲
+                  {{ $tSource("精选单曲") }}
                 </CommonTag>
                 <CommonTag color="green">
-                  Hi-Res 无损
+                  {{ $tSource("Hi-Res 无损") }}
                 </CommonTag>
                 <CommonTag
                   color="orange"
                   closable
                   @close="recordAction('关闭标签：流行榜')"
                 >
-                  流行榜单
+                  {{ $tSource("流行榜单") }}
                 </CommonTag>
                 <CommonTag
                   color="purple"
                   variant="solid"
                 >
-                  VIP 专享
+                  {{ $tSource("VIP 专享") }}
                 </CommonTag>
                 <CommonTag
                   color="red"
                   variant="outline"
                 >
-                  热门推荐
+                  {{ $tSource("热门推荐") }}
                 </CommonTag>
               </div>
             </div>
@@ -1097,14 +1166,17 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonTooltip</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                气泡提示
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("气泡提示") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
                 <CommonTooltip
-                  text="顶部气泡提示：快捷键 ⌘K"
+                  :text="$tSource('顶部气泡提示：快捷键 ⌘K')"
                   placement="top"
                 >
                   <CommonTag color="gray">
@@ -1112,7 +1184,7 @@ function confirmDangerAction(): void {
                   </CommonTag>
                 </CommonTooltip>
                 <CommonTooltip
-                  text="右侧气泡提示：M3 Max 优化"
+                  :text="$tSource('右侧气泡提示：M3 Max 优化')"
                   placement="right"
                 >
                   <CommonTag color="blue">
@@ -1120,7 +1192,7 @@ function confirmDangerAction(): void {
                   </CommonTag>
                 </CommonTooltip>
                 <CommonTooltip
-                  text="底部气泡提示：高清音频流"
+                  :text="$tSource('底部气泡提示：高清音频流')"
                   placement="bottom"
                 >
                   <CommonTag color="green">
@@ -1136,7 +1208,7 @@ function confirmDangerAction(): void {
       <!-- 小类 4.3：结构卡片与分割线 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 4.3：结构卡片与分割线 (Card & Separator)" />
+          <CommonSeparator :label="$tSource('小类 4.3：结构卡片与分割线 (Card & Separator)')" />
         </div>
 
         <div class="ncx-design-lab-grid--2col">
@@ -1146,8 +1218,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonCard</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                结构卡片
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("结构卡片") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -1156,19 +1231,19 @@ function confirmDangerAction(): void {
                   variant="default"
                   title="Default Card"
                 >
-                  默认标准卡片
+                  {{ $tSource("默认标准卡片") }}
                 </CommonCard>
                 <CommonCard
                   variant="glass"
                   title="Glass Card"
                 >
-                  Liquid Glass 玻璃材质卡片
+                  {{ $tSource("Liquid Glass 玻璃材质卡片") }}
                 </CommonCard>
                 <CommonCard
                   variant="elevated"
                   title="Elevated Card"
                 >
-                  Elevated 阴影抬升卡片
+                  {{ $tSource("Elevated 阴影抬升卡片") }}
                 </CommonCard>
               </div>
             </div>
@@ -1180,14 +1255,17 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSeparator</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                分割线
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("分割线") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <div class="ncx-design-lab-stack">
                 <CommonSeparator />
-                <CommonSeparator label="带 Label 的分割线" />
+                <CommonSeparator :label="$tSource('带 Label 的分割线')" />
                 <CommonSeparator
                   inset
                   spacing="compact"
@@ -1206,20 +1284,23 @@ function confirmDangerAction(): void {
     >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
-          <CommonBadge type="info" variant="solid">
-            大类 5
+          <CommonBadge
+            type="info"
+            variant="solid"
+          >
+            {{ $tSource("大类 5") }}
           </CommonBadge>
-          <h2>导航与菜单类组件 (Navigation & Menus)</h2>
+          <h2>{{ $tSource("导航与菜单类组件 (Navigation & Menus)") }}</h2>
         </div>
         <CommonTag color="gray">
-          菜单与页签
+          {{ $tSource("菜单与页签") }}
         </CommonTag>
       </header>
 
       <!-- 小类 5.1：标签导航 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 5.1：标签导航 (Tabs Navigation)" />
+          <CommonSeparator :label="$tSource('小类 5.1：标签导航 (Tabs Navigation)')" />
         </div>
 
         <div class="ncx-design-lab-grid--full">
@@ -1229,8 +1310,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonTabs</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                标签页
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("标签页") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -1246,7 +1330,7 @@ function confirmDangerAction(): void {
       <!-- 小类 5.2：弹出菜单 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 5.2：弹出菜单 (Popups & Menus)" />
+          <CommonSeparator :label="$tSource('小类 5.2：弹出菜单 (Popups & Menus)')" />
         </div>
 
         <div class="ncx-design-lab-grid">
@@ -1256,13 +1340,16 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonDropdownMenu</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                下拉菜单
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("下拉菜单") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonDropdownMenu
-                label="DropdownMenu 示例"
+                :label="$tSource('DropdownMenu 示例')"
                 :items="menuItems"
                 @select="recordAction(`菜单：${$event}`)"
               />
@@ -1275,8 +1362,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonContextMenu</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                右键菜单
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("右键菜单") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -1285,7 +1375,7 @@ function confirmDangerAction(): void {
                 @select="recordAction(`右键菜单：${$event}`)"
               >
                 <div class="ncx-design-lab-context-zone">
-                  右键点击本区域唤起 ContextMenu
+                  {{ $tSource("右键点击本区域唤起 ContextMenu") }}
                 </div>
               </CommonContextMenu>
             </div>
@@ -1297,13 +1387,16 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonPopover</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                气泡弹出框
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("气泡弹出框") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
-              <CommonPopover label="Popover 示例">
-                Popover 用于由明确锚点触发的少量说明或控制。
+              <CommonPopover :label="$tSource('Popover 示例')">
+                {{ $tSource("Popover 用于由明确锚点触发的少量说明或控制。") }}
               </CommonPopover>
             </div>
           </CommonCard>
@@ -1318,20 +1411,23 @@ function confirmDangerAction(): void {
     >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
-          <CommonBadge type="info" variant="solid">
-            大类 6
+          <CommonBadge
+            type="info"
+            variant="solid"
+          >
+            {{ $tSource("大类 6") }}
           </CommonBadge>
-          <h2>状态与反馈类组件 (Status & Feedback)</h2>
+          <h2>{{ $tSource("状态与反馈类组件 (Status & Feedback)") }}</h2>
         </div>
         <CommonTag color="gray">
-          反馈与加载
+          {{ $tSource("反馈与加载") }}
         </CommonTag>
       </header>
 
       <!-- 小类 6.1：加载与进度 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 6.1：加载与进度 (Loading & Progress)" />
+          <CommonSeparator :label="$tSource('小类 6.1：加载与进度 (Loading & Progress)')" />
         </div>
 
         <div class="ncx-design-lab-grid">
@@ -1341,8 +1437,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSpinner</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                加载菊花
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("加载菊花") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -1374,8 +1473,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonProgress</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                进度条
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("进度条") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -1383,12 +1485,12 @@ function confirmDangerAction(): void {
                 <CommonProgress
                   :value="65"
                   show-value
-                  label="确定进度"
+                  :label="$tSource('确定进度')"
                 />
                 <CommonProgress
                   indeterminate
                   size="compact"
-                  label="不定长加载进度"
+                  :label="$tSource('不定长加载进度')"
                 />
               </div>
             </div>
@@ -1400,8 +1502,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSkeleton</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                骨架屏
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("骨架屏") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -1425,7 +1530,7 @@ function confirmDangerAction(): void {
       <!-- 小类 6.2：状态反馈 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 6.2：状态反馈 (State Feedback)" />
+          <CommonSeparator :label="$tSource('小类 6.2：状态反馈 (State Feedback)')" />
         </div>
 
         <div class="ncx-design-lab-grid--2col">
@@ -1435,21 +1540,24 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonEmptyState</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                空状态
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("空状态") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonEmptyState
-                title="暂无音轨列表"
-                description="遵循 macOS ContentUnavailableView 居中布局。"
+                :title="$tSource('暂无音轨列表')"
+                :description="$tSource('遵循 macOS ContentUnavailableView 居中布局。')"
               >
                 <CommonButton
                   size="compact"
                   variant="secondary"
                   @click="recordAction('EmptyState 导入音乐')"
                 >
-                  导入本地音乐
+                  {{ $tSource("导入本地音乐") }}
                 </CommonButton>
               </CommonEmptyState>
             </div>
@@ -1461,14 +1569,17 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonErrorState</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                错误状态
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("错误状态") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonErrorState
-                title="网络连接失败"
-                description="无法连接到云端数据库，请检查网络后再试。"
+                :title="$tSource('网络连接失败')"
+                :description="$tSource('无法连接到云端数据库，请检查网络后再试。')"
                 @retry="recordAction('ErrorState 触发重试')"
               />
             </div>
@@ -1482,34 +1593,37 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonInlineMessage</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                内联消息栏
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("内联消息栏") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <div class="ncx-design-lab-stack">
                 <CommonInlineMessage
                   type="info"
-                  title="系统提示"
+                  :title="$tSource('系统提示')"
                   closable
                   @close="recordAction('关闭 InlineMessage')"
                 >
-                  符合 macOS HIG 规范的内联提示通告栏。
+                  {{ $tSource("符合 macOS HIG 规范的内联提示通告栏。") }}
                 </CommonInlineMessage>
                 <CommonInlineMessage
                   type="success"
-                  title="同步成功"
+                  :title="$tSource('同步成功')"
                 >
-                  播放列表已实时与 iCloud 云端同步。
+                  {{ $tSource("播放列表已实时与 iCloud 云端同步。") }}
                 </CommonInlineMessage>
                 <CommonInlineMessage type="warning">
-                  存储空间即将不足 1GB。
+                  {{ $tSource("存储空间即将不足 1GB。") }}
                 </CommonInlineMessage>
                 <CommonInlineMessage
                   type="danger"
-                  title="校验失败"
+                  :title="$tSource('校验失败')"
                 >
-                  音频文件 Header 损坏，无法解码。
+                  {{ $tSource("音频文件 Header 损坏，无法解码。") }}
                 </CommonInlineMessage>
               </div>
             </div>
@@ -1525,20 +1639,23 @@ function confirmDangerAction(): void {
     >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
-          <CommonBadge type="info" variant="solid">
-            大类 7
+          <CommonBadge
+            type="info"
+            variant="solid"
+          >
+            {{ $tSource("大类 7") }}
           </CommonBadge>
-          <h2>浮层类组件 (Overlays)</h2>
+          <h2>{{ $tSource("浮层类组件 (Overlays)") }}</h2>
         </div>
         <CommonTag color="gray">
-          弹窗与反馈
+          {{ $tSource("弹窗与反馈") }}
         </CommonTag>
       </header>
 
       <!-- 小类 7.1：轻提示与阻断对话框 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 7.1：轻提示与阻断对话框 (Toast & Dialogs)" />
+          <CommonSeparator :label="$tSource('小类 7.1：轻提示与阻断对话框 (Toast & Dialogs)')" />
         </div>
 
         <div class="ncx-design-lab-grid--2col">
@@ -1548,13 +1665,16 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonToast</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                轻提示
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("轻提示") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonButton @click="showToast">
-                打开 Toast
+                {{ $tSource("打开 Toast") }}
               </CommonButton>
             </div>
           </CommonCard>
@@ -1565,13 +1685,16 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonDialog</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                标准对话框
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("标准对话框") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonButton @click="dialogVisible = true">
-                打开 Dialog
+                {{ $tSource("打开 Dialog") }}
               </CommonButton>
             </div>
           </CommonCard>
@@ -1582,8 +1705,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonAlertDialog</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                危险确认对话框
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("危险确认对话框") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -1591,8 +1717,7 @@ function confirmDangerAction(): void {
                 variant="danger"
                 @click="alertVisible = true"
               >
-                <Trash2 :size="15" />
-                打开 AlertDialog
+                <Trash2 :size="15" /> {{ $tSource("打开 AlertDialog") }}
               </CommonButton>
             </div>
           </CommonCard>
@@ -1603,13 +1728,16 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonDrawer</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                抽屉面板
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("抽屉面板") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonButton @click="drawerVisible = true">
-                打开 Drawer
+                {{ $tSource("打开 Drawer") }}
               </CommonButton>
             </div>
           </CommonCard>
@@ -1624,20 +1752,23 @@ function confirmDangerAction(): void {
     >
       <header class="ncx-design-lab-category-header">
         <div class="ncx-design-lab-category-title">
-          <CommonBadge type="info" variant="solid">
-            大类 8
+          <CommonBadge
+            type="info"
+            variant="solid"
+          >
+            {{ $tSource("大类 8") }}
           </CommonBadge>
-          <h2>容器与高级布局类组件 (Containers & Layout)</h2>
+          <h2>{{ $tSource("容器与高级布局类组件 (Containers & Layout)") }}</h2>
         </div>
         <CommonTag color="gray">
-          高级容器与滚动
+          {{ $tSource("高级容器与滚动") }}
         </CommonTag>
       </header>
 
       <!-- 小类 8.1：折叠与列表容器 -->
       <div class="ncx-design-lab-subcategory">
         <div class="ncx-design-lab-subcategory-header">
-          <CommonSeparator label="小类 8.1：折叠与列表容器 (Accordion & Virtual List)" />
+          <CommonSeparator :label="$tSource('小类 8.1：折叠与列表容器 (Accordion & Virtual List)')" />
         </div>
 
         <div class="ncx-design-lab-grid--full">
@@ -1647,8 +1778,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonAccordion</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                手风琴
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("手风琴") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -1664,8 +1798,11 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonScrollArea & CommonVirtualList</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                虚拟列表与滚动
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("虚拟列表与滚动") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
@@ -1683,17 +1820,20 @@ function confirmDangerAction(): void {
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonResponsiveGrid</code>
               </div>
-              <CommonTag color="gray" class="ncx-design-lab-component-tag">
-                响应式网格
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("响应式网格") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonResponsiveGrid>
                 <div style="padding: 12px; border-radius: 6px; background: var(--ncx-color-surface-raised); text-align: center;">
-                  网格列 A
+                  {{ $tSource("网格列 A") }}
                 </div>
                 <div style="padding: 12px; border-radius: 6px; background: var(--ncx-color-surface-raised); text-align: center;">
-                  网格列 B
+                  {{ $tSource("网格列 B") }}
                 </div>
               </CommonResponsiveGrid>
             </div>
@@ -1707,49 +1847,49 @@ function confirmDangerAction(): void {
   <CommonToast
     :visible="toastVisible"
     type="success"
-    title="组件反馈已触发"
-    message="Toast 可关闭，且不承担审批任务。"
+    :title="$tSource('组件反馈已触发')"
+    :message="$tSource('Toast 可关闭，且不承担审批任务。')"
     @close="toastVisible = false"
   />
 
   <CommonDialog
     :visible="dialogVisible"
-    title="Dialog 示例"
+    :title="$tSource('Dialog 示例')"
     @close="dialogVisible = false"
   >
-    <p>Dialog 用于集中完成短任务或表单，不承载大量浏览内容。</p>
+    <p>{{ $tSource("Dialog 用于集中完成短任务或表单，不承载大量浏览内容。") }}</p>
     <template #actions>
       <CommonButton
         variant="secondary"
         @click="dialogVisible = false"
       >
-        取消
+        {{ $tSource("取消") }}
       </CommonButton>
       <CommonButton
         variant="primary"
         @click="dialogVisible = false; recordAction('Dialog 已保存')"
       >
-        保存
+        {{ $tSource("保存") }}
       </CommonButton>
     </template>
   </CommonDialog>
 
   <CommonAlertDialog
     :visible="alertVisible"
-    title="确认删除缓存？"
-    description="这是不可逆演示操作，用于验证危险确认样式。"
+    :title="$tSource('确认删除缓存？')"
+    :description="$tSource('这是不可逆演示操作，用于验证危险确认样式。')"
     @cancel="alertVisible = false"
     @confirm="confirmDangerAction"
   />
 
   <CommonDrawer
     :visible="drawerVisible"
-    title="Drawer 示例"
+    :title="$tSource('Drawer 示例')"
     @close="drawerVisible = false"
   >
-    <p>Drawer 保留当前页面上下文，适合队列、详情和辅助任务。</p>
+    <p>{{ $tSource("Drawer 保留当前页面上下文，适合队列、详情和辅助任务。") }}</p>
     <CommonInlineMessage type="warning">
-      窄窗口下宽度不超过内容区。
+      {{ $tSource("窄窗口下宽度不超过内容区。") }}
     </CommonInlineMessage>
   </CommonDrawer>
 </template>

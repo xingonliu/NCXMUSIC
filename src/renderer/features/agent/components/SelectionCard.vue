@@ -94,7 +94,7 @@ onUnmounted(() => clearInterval(timer))
 <template>
   <article
     class="agent-selection-card"
-    aria-label="用户选择"
+    :aria-label="$tSource('用户选择')"
   >
     <header>
       <ListChecks
@@ -149,7 +149,7 @@ onUnmounted(() => clearInterval(timer))
         size="compact"
         @click="emit('cancel', selection.selectionId)"
       >
-        <X :size="13" />取消
+        <X :size="13" />{{ $tSource("取消") }}
       </CommonButton>
       <CommonButton
         v-if="selection.mode === 'multiple'"
@@ -158,7 +158,7 @@ onUnmounted(() => clearInterval(timer))
         :disabled="selectedKeys.length === 0"
         @click="emit('submit', selection.selectionId, selectedKeys)"
       >
-        提交选择
+        {{ $tSource("提交选择") }}
       </CommonButton>
     </footer>
   </article>

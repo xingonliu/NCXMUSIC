@@ -430,7 +430,7 @@ watch(
   <section
     class="agent-page"
     :style="{ '--ncx-agent-dock-height': `${dockHeight}px` }"
-    aria-label="Ncxmusic Agent 小云"
+    :aria-label="$tSource('Ncxmusic Agent 小云')"
   >
     <div
       ref="conversation"
@@ -442,13 +442,13 @@ watch(
         class="agent-empty-state"
       >
         <span class="agent-welcome-icon"><Terminal :size="28" /></span>
-        <h2>请先配置模型以启用 Agent</h2>
-        <p>前往模型设置添加并激活语言模型配置。</p>
+        <h2>{{ $tSource("请先配置模型以启用 Agent") }}</h2>
+        <p>{{ $tSource("前往模型设置添加并激活语言模型配置。") }}</p>
         <CommonButton
           variant="primary"
           @click="openModelSettings"
         >
-          前往模型设置
+          {{ $tSource("前往模型设置") }}
         </CommonButton>
       </section>
 
@@ -456,7 +456,7 @@ watch(
         v-else-if="!hasConversation"
         class="agent-welcome-state"
       >
-        <h2>你好，今天想听点什么？</h2>
+        <h2>{{ $tSource("你好，今天想听点什么？") }}</h2>
       </section>
 
       <template v-else>
@@ -474,7 +474,7 @@ watch(
             </div>
             <div class="agent-user-footer">
               <CommonIconButton
-                label="复制内容"
+                :label="$tSource('复制内容')"
                 size="compact"
                 variant="ghost"
                 @click="copyMessageText(message.messageId, message.content)"
@@ -502,7 +502,7 @@ watch(
                   class="agent-system-action-btn"
                   @click="openModelSettings"
                 >
-                  前往模型设置
+                  {{ $tSource("前往模型设置") }}
                 </button>
               </div>
             </div>
@@ -518,7 +518,7 @@ watch(
               v-if="toolsForMessage(message).length > 0"
               class="agent-processing-line"
             >
-              <span>{{ processingSummary(message) }}</span>
+              <span>{{ $tSource(processingSummary(message)) }}</span>
               <ChevronRight :size="13" />
             </div>
 
@@ -526,7 +526,7 @@ watch(
             <section
               v-if="toolsForMessage(message).length"
               class="agent-tool-stack"
-              aria-label="工具执行记录"
+              :aria-label="$tSource('工具执行记录')"
             >
               <ToolExecutionCard
                 v-for="tool in toolsForMessage(message)"
@@ -541,21 +541,21 @@ watch(
             <section
               v-if="approvalsForMessage(message).length > 0 || selectionsForMessage(message).length > 0"
               class="agent-interaction-status-stack"
-              aria-label="交互状态"
+              :aria-label="$tSource('交互状态')"
             >
               <div
                 v-for="approval in approvalsForMessage(message)"
                 :key="approval.approvalId"
                 class="agent-interaction-status-message"
               >
-                {{ approvalStatusLabel(approval.status) }}
+                {{ $tSource(approvalStatusLabel(approval.status)) }}
               </div>
               <div
                 v-for="selection in selectionsForMessage(message)"
                 :key="selection.selectionId"
                 class="agent-interaction-status-message"
               >
-                {{ selectionStatusLabel(selection.status) }}
+                {{ $tSource(selectionStatusLabel(selection.status)) }}
               </div>
             </section>
 
@@ -576,7 +576,7 @@ watch(
               class="agent-assistant-footer"
             >
               <CommonIconButton
-                label="复制内容"
+                :label="$tSource('复制内容')"
                 size="compact"
                 variant="ghost"
                 @click="copyMessageText(message.messageId, message.content)"
@@ -584,7 +584,7 @@ watch(
                 <Copy :size="14" />
               </CommonIconButton>
               <CommonIconButton
-                label="有帮助"
+                :label="$tSource('有帮助')"
                 size="compact"
                 variant="ghost"
                 @click="handleLike"
@@ -592,14 +592,14 @@ watch(
                 <ThumbsUp :size="14" />
               </CommonIconButton>
               <CommonIconButton
-                label="没帮助"
+                :label="$tSource('没帮助')"
                 size="compact"
                 variant="ghost"
                 @click="handleDislike"
               >
                 <ThumbsDown :size="14" />
               </CommonIconButton>
-              <span>{{ formatTime(message.createdAt) }}</span>
+              <span>{{ $tSource(formatTime(message.createdAt)) }}</span>
             </div>
           </div>
         </template>

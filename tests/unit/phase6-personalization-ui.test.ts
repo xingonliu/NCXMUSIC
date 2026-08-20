@@ -56,7 +56,7 @@ describe('Phase 6 个性化 UI', () => {
   it('设置页管理画像，并在画像可用时装配发现页推荐 Section', () => {
     expect(settingsSource).toContain('音乐人格画像')
     expect(discoverPageSource).toContain('agent.snapshot.value.personalization.usable')
-    expect(discoverPageSource).toContain('title="小云为你推荐"')
+    expect(discoverPageSource).toContain("$tSource('小云为你推荐')")
   })
 
   it('画像分析失败提示提供查看详情按钮与原始响应弹窗', () => {

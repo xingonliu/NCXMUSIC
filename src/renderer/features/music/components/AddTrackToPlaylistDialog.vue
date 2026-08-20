@@ -11,6 +11,7 @@ import { showToast } from '../../../design-system/use-toast'
 import { useAccountSessionStore } from '../../account/account-session-store'
 import { mutateMusic } from '../music-actions'
 import Cover from './Cover.vue'
+import { translatePublicError } from '../../../i18n'
 
 // ========= 属性与事件 =========
 
@@ -73,7 +74,7 @@ async function loadOwnedPlaylists(): Promise<void> {
   if (requestId !== activeRequestId) return
   loading.value = false
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     emit('close')
     return
   }
@@ -102,7 +103,7 @@ async function addToPlaylist(playlist: StandardPlaylist): Promise<void> {
   })
   busyPlaylistId.value = null
   if (!response.ok) {
-    showToast(response.error.message, 'warning')
+    showToast(translatePublicError(response.error), 'warning')
     return
   }
   showToast(`已将《${song.name}》添加到“${playlist.name}”。`, 'success')
@@ -132,7 +133,7 @@ watch(
 <template>
   <CommonDialog
     :visible="Boolean(props.song)"
-    title="添加到歌单"
+    :title="$tSource('添加到歌单')"
     :subtitle="props.song?.name ?? ''"
     @close="emit('close')"
   >
@@ -140,12 +141,12 @@ watch(
       v-if="loading"
       class="playlist-picker-status"
     >
-      <CommonSpinner label="正在读取歌单" />
+      <CommonSpinner :label="$tSource('正在读取歌单')" />
     </div>
     <CommonEmptyState
       v-else-if="ownedPlaylists.length === 0"
-      title="暂无自建歌单"
-      description="请先创建一个歌单。"
+      :title="$tSource('暂无自建歌单')"
+      :description="$tSource('请先创建一个歌单。')"
     />
     <div
       v-else
