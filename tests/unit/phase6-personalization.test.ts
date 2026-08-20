@@ -5,6 +5,7 @@ import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import type { AgentMusicPort } from '../../src/domains/agent/agent-runtime'
+import { parseMusicProfileAnalysis } from '../../src/domains/agent/music-profile-analysis-parser'
 import { UtilityAccountStore } from '../../src/infrastructure/persistence/account-space'
 import type { MusicReadPayload, StandardPlaylist, StandardSong } from '../../src/shared/schemas/music'
 import {
@@ -14,8 +15,7 @@ import {
   PersonalizationService,
   calculateProfileChangeScore,
   evaluateProfileUpdatePrompt,
-  extractLocalMusicProfileFeatures,
-  parseMusicProfileAnalysisText
+  extractLocalMusicProfileFeatures
 } from '../../src/utility/personalization-service'
 
 // ========= 变量 =========
@@ -309,7 +309,7 @@ describe('Phase 6 画像持久化与删除边界', () => {
 \`\`\`
 希望你喜欢！`
 
-    const parsed = parseMusicProfileAnalysisText(thoughtOutput)
+    const parsed = parseMusicProfileAnalysis(thoughtOutput)
     expect(parsed.summary).toBe('偏爱歌手 A 的流行作品')
     expect(parsed.insights).toHaveLength(1)
     expect(parsed.insights[0]?.insightId).toBe('artist.a')
@@ -333,7 +333,7 @@ describe('Phase 6 画像持久化与删除边界', () => {
 }
 以上是完整画像。`
 
-    const parsed = parseMusicProfileAnalysisText(complexOutput)
+    const parsed = parseMusicProfileAnalysis(complexOutput)
     expect(parsed.summary).toBe('偏爱包含 "{"live"}" 现场版的歌曲')
     expect(parsed.insights[0]?.label).toBe('现场版偏好')
   })
@@ -341,6 +341,6 @@ describe('Phase 6 画像持久化与删除边界', () => {
   it('格式校验不通过时返回明确的错误提示', () => {
     /** 缺少必要字段的 JSON。 */
     const incompleteJson = '{ "summary": "仅有摘要" }'
-    expect(() => parseMusicProfileAnalysisText(incompleteJson)).toThrow('模型画像格式校验未通过')
+    expect(() => parseMusicProfileAnalysis(incompleteJson)).toThrow('模型画像格式校验未通过')
   })
 })
