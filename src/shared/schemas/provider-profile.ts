@@ -114,14 +114,6 @@ export const ProviderRuntimeControlSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('agent.provider.clear') })
 ])
 
-/** 内置最小 Provider 预设；不包含凭据和能力猜测。 */
-export const PROVIDER_PRESETS = [
-  { label: 'OpenAI Compatible', protocol: 'openai-compatible', baseUrl: 'https://api.openai.com/v1' },
-  { label: 'Anthropic', protocol: 'anthropic-messages', baseUrl: 'https://api.anthropic.com/v1' },
-  { label: 'Google Gemini', protocol: 'gemini-generate-content', baseUrl: 'https://generativelanguage.googleapis.com/v1beta' },
-  { label: 'DeepSeek', protocol: 'openai-compatible', baseUrl: 'https://api.deepseek.com' }
-] as const
-
 // ========= 类型 =========
 
 /** 首版 Provider 协议类型。 */

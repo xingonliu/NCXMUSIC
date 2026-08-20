@@ -3,10 +3,6 @@
 @import url('../tokens/foundation.css');
 @import url('../components/common-components.css');
 
-/* stylelint-disable at-rule-no-unknown */
-@source '../../../../node_modules/@wxperia/liquid-glass-vue/dist';
-/* stylelint-enable at-rule-no-unknown */
-
 * {
   box-sizing: border-box;
 }

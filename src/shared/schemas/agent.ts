@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-import { ShellOutputEventSchema } from './shell'
-
 import {
   StandardAlbumSchema,
   StandardArtistSchema,
@@ -99,9 +97,6 @@ export const AgentShellTerminalSnapshotSchema = z.strictObject({
   lastSequence: z.number().int().nonnegative(),
   updatedAt: z.number().int().nonnegative()
 })
-
-/** Utility 内部接收的 Shell 输出仍复用 Phase 0 契约。 */
-export const AgentShellOutputEventSchema = ShellOutputEventSchema
 
 /** 审批卡快照。 */
 export const ApprovalSnapshotSchema = z.strictObject({

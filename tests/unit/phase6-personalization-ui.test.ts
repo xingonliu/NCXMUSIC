@@ -25,9 +25,6 @@ const modelSettingsSource = readFileSync(
   'utf8'
 )
 
-/** 个人信息页源码。 */
-const profilePageSource = readFileSync('src/renderer/features/profile/ProfilePage.vue', 'utf8')
-
 /** 发现页源码。 */
 const discoverPageSource = readFileSync('src/renderer/features/music/DiscoverPage.vue', 'utf8')
 

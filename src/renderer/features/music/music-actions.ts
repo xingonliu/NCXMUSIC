@@ -22,9 +22,3 @@ export function playSongNext(song: StandardSong, source: QueueSource): void {
   const player = usePlayer()
   player.playNext([standardSongToTrackSummary(song)], source)
 }
-
-/** 把单首歌曲追加到当前队列末尾。 */
-export function enqueueSong(song: StandardSong, source: QueueSource): void {
-  const player = usePlayer()
-  player.enqueue([standardSongToTrackSummary(song)], source)
-}

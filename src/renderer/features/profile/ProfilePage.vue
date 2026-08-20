@@ -138,9 +138,6 @@ const villageAge = computed<string>(() => {
   return `${years} 年`
 })
 
-/** 用户性别展示文本。 */
-const genderLabel = computed<string>(() => ({ 1: '男', 2: '女' })[user.value?.gender ?? 0] ?? '未公开')
-
 /** 用户星座展示文本。 */
 const zodiacLabel = computed<string>(() => formatZodiac(user.value?.birthday))
 
@@ -284,7 +281,7 @@ function openPlaylist(playlist: StandardPlaylist): void {
 }
 
 /** 获取单首歌曲右键上下文动作。 */
-function getSongMenuItems(song: StandardSong): CommonMenuItem[] {
+function getSongMenuItems(): CommonMenuItem[] {
   return [
     { value: 'play', label: '立即播放' },
     { value: 'play-next', label: '下一首播放' },
@@ -491,7 +488,7 @@ watch(
           <CommonContextMenu
             v-for="(song, index) in visibleHistory"
             :key="`${song.id}-${index}`"
-            :items="getSongMenuItems(song)"
+            :items="getSongMenuItems()"
             @select="handleSongMenuSelect(song, $event)"
           >
             <div

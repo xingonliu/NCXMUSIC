@@ -100,14 +100,6 @@ const shortcutStatusText = computed<string>(() => {
   return shortcut.value.reason ?? shortcut.value.availability
 })
 
-/** 当前对话模型 ASR 文案。 */
-const conversationStatusText = computed<string>(() => {
-  if (!conversationAsr.value?.configured) return '尚未配置当前对话模型'
-  if (conversationAsr.value.capability === 'supported') return '当前模型已验证支持 ASR'
-  if (conversationAsr.value.capability === 'unsupported') return '当前对话模型不支持语音识别'
-  return '首次使用时验证能力'
-})
-
 /** 麦克风权限文案。 */
 const microphoneStatusText = computed<string>(() => {
   if (microphonePermission.value === 'granted') return '麦克风权限已授予'
