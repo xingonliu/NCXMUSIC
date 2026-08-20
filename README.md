@@ -41,7 +41,7 @@ pnpm dev
 src/
 ├─ main/             Electron Main 组合根与平台生命周期
 ├─ preload/          最小化 contextBridge
-├─ renderer/         Vue SPA、Pinia、Router 与 Design System
+├─ renderer/         Vue SPA、Router 与 Design System
 ├─ utility/          Agent、Music Service 等本地运行时组合根
 ├─ input-hook/       全局按住说话的独立 Host 边界
 ├─ local-asr/        sherpa-onnx 本地识别独立进程

@@ -1,4 +1,3 @@
-import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 
 import App from './App.vue'
@@ -15,4 +14,4 @@ const RootComponent = new URLSearchParams(window.location.search).has('smoke')
 
 // ========= 应用启动 =========
 
-createApp(RootComponent).use(createPinia()).use(router).mount('#app')
+createApp(RootComponent).use(router).mount('#app')

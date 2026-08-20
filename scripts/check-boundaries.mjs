@@ -37,7 +37,7 @@ function inspect(file) {
 
     if (normalizedFile.startsWith('src/domains/')) {
       if (
-        /^(electron|vue|pinia)$/.test(specifier) ||
+        /^(electron|vue)$/.test(specifier) ||
         /(?:^@|\.\.\/)(?:main|preload|renderer|utility|infrastructure)(?:\/|$)/.test(specifier)
       ) {
         report(file, specifier, '领域层只能依赖领域层与 shared')
@@ -46,7 +46,7 @@ function inspect(file) {
 
     if (normalizedFile.startsWith('src/shared/')) {
       if (
-        /^(electron|vue|pinia)$/.test(specifier) ||
+        /^(electron|vue)$/.test(specifier) ||
         /(?:^@|\.\.\/)(?:main|preload|renderer|utility|infrastructure)(?:\/|$)/.test(specifier)
       ) {
         report(file, specifier, 'shared 不能依赖进程入口或基础设施')

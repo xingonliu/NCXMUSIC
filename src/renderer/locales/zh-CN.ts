@@ -82,7 +82,7 @@ export const zhCN = {
     },
     layers: [
       { name: 'Electron', description: 'Main、Preload 与 Utility Process 独立入口。' },
-      { name: 'Renderer', description: 'Vue、Router 与 Pinia 单页应用组合根。' },
+      { name: 'Renderer', description: 'Vue、Router 与 Design System 单页应用组合根。' },
       { name: 'Contracts', description: '共享 Schema、DTO 与安全错误边界。' },
       { name: 'Quality', description: 'TypeScript、ESLint、Stylelint、Vitest 与 Playwright。' }
     ]
