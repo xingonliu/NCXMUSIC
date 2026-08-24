@@ -187,6 +187,17 @@ const virtualListItems: CommonVirtualListItem[] = [
   { id: '3', title: '单曲 C', description: '经典原声重现' }
 ]
 
+/** Squircle 尺寸阶梯及推荐用途。 */
+const squircleTokens = [
+  { name: 'xs', radius: '6px', usage: '微型状态与细节' },
+  { name: 'sm', radius: '10px', usage: '紧凑控件' },
+  { name: 'md', radius: '14px', usage: '默认控件与列表项' },
+  { name: 'lg', radius: '18px', usage: '卡片与面板' },
+  { name: 'xl', radius: '24px', usage: '大型容器' },
+  { name: '2xl', radius: '30px', usage: '展示层与主容器' },
+  { name: 'full', radius: 'full', usage: '胶囊与等宽形状' }
+] as const
+
 // ========= 函数 =========
 
 /** 判断大类在当前分类 Tab 及搜索过滤下是否显示。 */
@@ -1829,13 +1840,48 @@ function confirmDangerAction(): void {
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonResponsiveGrid>
-                <div style="padding: 12px; border-radius: 6px; background: var(--ncx-color-surface-raised); text-align: center;">
+                <div style="padding: 12px; border-radius: var(--ncx-squircle-radius-xs); background: var(--ncx-color-surface-raised); text-align: center;">
                   {{ $tSource("网格列 A") }}
                 </div>
-                <div style="padding: 12px; border-radius: 6px; background: var(--ncx-color-surface-raised); text-align: center;">
+                <div style="padding: 12px; border-radius: var(--ncx-squircle-radius-xs); background: var(--ncx-color-surface-raised); text-align: center;">
                   {{ $tSource("网格列 B") }}
                 </div>
               </CommonResponsiveGrid>
+            </div>
+          </CommonCard>
+        </div>
+      </div>
+
+      <!-- 小类 8.2：Squircle 形状规范 -->
+      <div class="ncx-design-lab-subcategory">
+        <div class="ncx-design-lab-subcategory-header">
+          <CommonSeparator :label="$tSource('小类 8.2：Squircle 形状与尺寸')" />
+        </div>
+
+        <div class="ncx-design-lab-grid--full">
+          <CommonCard class="ncx-design-lab-component-card">
+            <header class="ncx-design-lab-component-header">
+              <div class="ncx-design-lab-component-title">
+                <code class="ncx-design-lab-component-name">Squircle Tokens</code>
+              </div>
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("60% 平滑度") }}
+              </CommonTag>
+            </header>
+            <div class="ncx-design-lab-squircle-grid">
+              <div
+                v-for="token in squircleTokens"
+                :key="token.name"
+                class="ncx-design-lab-squircle-sample"
+                :style="{ borderRadius: `var(--ncx-squircle-radius-${token.name})` }"
+              >
+                <strong>{{ token.name }}</strong>
+                <span>{{ token.radius }}</span>
+                <small>{{ $tSource(token.usage) }}</small>
+              </div>
             </div>
           </CommonCard>
         </div>

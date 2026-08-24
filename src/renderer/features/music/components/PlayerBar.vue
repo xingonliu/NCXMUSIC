@@ -156,7 +156,7 @@ function openImmersivePlayer(event: MouseEvent): void {
       container-class="player-bar-glass"
       role="contentinfo"
       :aria-label="text.regionLabel"
-      :radius="28"
+      squircle-size="2xl"
       :border="0.07"
       :displace="0.05"
       :scale="-150"
@@ -409,7 +409,7 @@ function openImmersivePlayer(event: MouseEvent): void {
 .player-track-cover {
   width: 40px;
   height: 40px;
-  border-radius: var(--ncx-radius-md, 8px);
+  border-radius: var(--ncx-squircle-radius-md);
   flex-shrink: 0;
 }
 
@@ -422,7 +422,7 @@ function openImmersivePlayer(event: MouseEvent): void {
   justify-content: center;
   padding: 0;
   border: 0;
-  border-radius: var(--ncx-radius-md, 8px);
+  border-radius: var(--ncx-squircle-radius-md);
   background: transparent;
   cursor: pointer;
 }

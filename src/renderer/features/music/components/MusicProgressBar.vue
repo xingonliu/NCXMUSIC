@@ -369,13 +369,13 @@ onBeforeUnmount(() => {
 
 .music-progress-rail {
   width: 100%;
-  border-radius: 10px;
+  border-radius: var(--ncx-squircle-radius-sm);
   background-color: rgb(175 175 175 / 24.7%);
 }
 
 .music-progress-fill {
   max-width: 100%;
-  border-radius: 10px 0 0 10px;
+  border-radius: var(--ncx-squircle-radius-sm) 0 0 var(--ncx-squircle-radius-sm);
   background-color: rgb(255 255 255 / 94.5%);
   pointer-events: none;
   will-change: width;
@@ -399,7 +399,7 @@ onBeforeUnmount(() => {
 }
 
 .music-progress-bar:focus-visible {
-  border-radius: 10px;
+  border-radius: var(--ncx-squircle-radius-sm);
   outline: 2px solid #ffffff;
   outline-offset: 2px;
 }

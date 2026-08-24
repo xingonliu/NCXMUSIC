@@ -174,15 +174,15 @@ onMounted(() => {
 .rankings-heading .music-page-eyebrow { display: flex; align-items: center; gap: 6px; }
 .rankings-heading h1 { margin-top: 7px; font-size: clamp(36px, 5vw, 54px); line-height: 1.04; letter-spacing: -.03em; }
 .rankings-heading > p:last-child { margin-top: 10px; color: var(--ncx-color-text-secondary); }
-.rankings-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px; border-radius: var(--ncx-radius-xl); }
+.rankings-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px; border-radius: var(--ncx-squircle-radius-xl); }
 .rankings-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
-.rankings-tabs button { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border: 0; border-radius: 999px; color: var(--ncx-color-text-secondary); background: transparent; cursor: pointer; }
+.rankings-tabs button { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border: 0; border-radius: var(--ncx-squircle-radius-full); color: var(--ncx-color-text-secondary); background: transparent; cursor: pointer; }
 .rankings-tabs button:hover, .rankings-tabs button.active { color: var(--ncx-color-text-primary); background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent); }
 .rankings-tabs button:active { transform: scale(.96); }
 .rankings-controls :deep(.common-input-shell) { width: min(300px, 36vw); }
 .rankings-state { display: flex; min-height: 260px; align-items: center; justify-content: center; gap: 10px; color: var(--ncx-color-text-secondary); }
 .rankings-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.rankings-grid > button { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 15px; padding: 14px; border: 0; border-radius: var(--ncx-radius-xl); color: inherit; text-align: left; background: var(--ncx-color-surface); cursor: pointer; }
+.rankings-grid > button { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 15px; padding: 14px; border: 0; border-radius: var(--ncx-squircle-radius-xl); color: inherit; text-align: left; background: var(--ncx-color-surface); cursor: pointer; }
 .rankings-grid > button:hover { transform: translateY(-2px); box-shadow: var(--ncx-shadow-md); }
 .rankings-grid > button:active { transform: scale(.985); }
 .rankings-grid > button > span { display: grid; min-width: 0; }

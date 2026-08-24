@@ -276,7 +276,7 @@ watch(searchQuery, (newQuery) => {
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  border-radius: var(--ncx-radius-md, 10px);
+  border-radius: var(--ncx-squircle-radius-md);
   background: color-mix(in srgb, var(--ncx-color-text-primary, #fff) 4%, transparent);
   border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary, #fff) 8%, transparent);
 }
@@ -287,7 +287,7 @@ watch(searchQuery, (newQuery) => {
   justify-content: center;
   width: 36px;
   height: 36px;
-  border-radius: 8px;
+  border-radius: var(--ncx-squircle-radius-sm);
   color: var(--ncx-color-text-primary, #fff);
   background: color-mix(in srgb, var(--ncx-color-text-primary, #fff) 10%, transparent);
   flex-shrink: 0;
@@ -327,7 +327,7 @@ watch(searchQuery, (newQuery) => {
   flex-direction: column;
   gap: 12px;
   padding: 12px;
-  border-radius: var(--ncx-radius-md, 10px);
+  border-radius: var(--ncx-squircle-radius-md);
   background: color-mix(in srgb, var(--ncx-color-text-primary, #fff) 3%, transparent);
   border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary, #fff) 8%, transparent);
   animation: picker-fade-in 0.15s ease-out;
@@ -352,7 +352,7 @@ watch(searchQuery, (newQuery) => {
 
 .model-icon-tab-btn {
   padding: 4px 10px;
-  border-radius: 999px;
+  border-radius: var(--ncx-squircle-radius-full);
   border: none;
   background: transparent;
   color: var(--ncx-color-text-secondary, rgba(255, 255, 255, 0.6));
@@ -396,7 +396,7 @@ watch(searchQuery, (newQuery) => {
   justify-content: center;
   width: 38px;
   height: 38px;
-  border-radius: 8px;
+  border-radius: var(--ncx-squircle-radius-sm);
   border: 1px solid transparent;
   background: color-mix(in srgb, var(--ncx-color-text-primary, #fff) 5%, transparent);
   color: var(--ncx-color-text-primary, #fff);

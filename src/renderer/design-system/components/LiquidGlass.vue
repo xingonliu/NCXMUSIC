@@ -12,8 +12,8 @@ import { computed, onMounted, onUnmounted, reactive, ref, useId, type HTMLAttrib
 
 /** LiquidGlass 组件属性接口。 */
 export interface LiquidGlassProps {
-  /** 玻璃容器圆角半径（像素）。 */
-  radius?: number
+  /** 玻璃容器使用的标准 Squircle 尺寸。 */
+  squircleSize?: LiquidGlassSquircleSize
   /** 相对边框厚度，影响 displacement map 内层边距。 */
   border?: number
   /** HSL 亮度 (0-100)，用于中间磨砂填充。 */
@@ -46,11 +46,26 @@ export interface LiquidGlassProps {
   containerClass?: HTMLAttributes['class']
 }
 
-// ========= 变量 =========
+/** LiquidGlass 可用的标准 Squircle 尺寸。 */
+export type LiquidGlassSquircleSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
-/** 组件默认属性定义，保持 Inspira Liquid Glass 默认参数。 */
+// -- Constants
+
+/** 与 CSS Squircle radius token 保持一致的像素值。 */
+const SQUIRCLE_RADIUS_BY_SIZE: Record<LiquidGlassSquircleSize, number> = {
+  xs: 6,
+  sm: 10,
+  md: 14,
+  lg: 18,
+  xl: 24,
+  '2xl': 30
+}
+
+// -- State and Variables
+
+/** 组件默认属性定义，圆角尺寸使用 Ncxmusic 标准阶梯。 */
 const props = withDefaults(defineProps<LiquidGlassProps>(), {
-  radius: 16,
+  squircleSize: 'lg',
   border: 0.07,
   lightness: 50,
   displace: 0,
@@ -85,7 +100,10 @@ const dimensions = reactive({
 /** ResizeObserver 实例，挂载后开始观察容器尺寸。 */
 let observer: ResizeObserver | null = null
 
-// ========= 计算属性 =========
+// -- Derived Values
+
+/** 当前标准尺寸对应的 Squircle 圆角半径。 */
+const squircleRadius = computed(() => SQUIRCLE_RADIUS_BY_SIZE[props.squircleSize])
 
 /** 唯一滤镜 ID，避免多实例共享固定 id 导致串扰。 */
 const filterId = computed(() => `inspira-liquid-glass-${rawId.replace(/:/g, '')}`)
@@ -95,7 +113,7 @@ const baseStyle = computed(() => {
   return {
     '--frost': props.frost,
     '--liquid-glass-filter': `url(#${filterId.value})`,
-    borderRadius: `${props.radius}px`
+    borderRadius: `var(--ncx-squircle-radius-${props.squircleSize})`
   }
 })
 
@@ -119,14 +137,14 @@ const displacementImage = computed(() => {
         </linearGradient>
       </defs>
       <rect x="0" y="0" width="${safeWidth}" height="${safeHeight}" fill="black"></rect>
-      <rect x="0" y="0" width="${safeWidth}" height="${safeHeight}" rx="${props.radius}" fill="url(#red)" />
-      <rect x="0" y="0" width="${safeWidth}" height="${safeHeight}" rx="${props.radius}" fill="url(#blue)" style="mix-blend-mode: ${props.blend}" />
+      <rect x="0" y="0" width="${safeWidth}" height="${safeHeight}" rx="${squircleRadius.value}" fill="url(#red)" />
+      <rect x="0" y="0" width="${safeWidth}" height="${safeHeight}" rx="${squircleRadius.value}" fill="url(#blue)" style="mix-blend-mode: ${props.blend}" />
       <rect
         x="${border}"
         y="${yBorder}"
         width="${safeWidth - border * 2}"
         height="${safeHeight - border * 2}"
-        rx="${props.radius}"
+        rx="${squircleRadius.value}"
         fill="hsl(0 0% ${props.lightness}% / ${props.alpha})"
         style="filter:blur(${props.blur}px)"
       />
@@ -139,7 +157,7 @@ const displacementDataUri = computed(() => {
   return `data:image/svg+xml,${encodeURIComponent(displacementImage.value)}`
 })
 
-// ========= 函数 =========
+// -- Functions
 
 /** 建立 ResizeObserver 并同步玻璃容器尺寸。 */
 function mountResizeObserver(): void {
@@ -168,7 +186,7 @@ function unmountResizeObserver(): void {
   observer = null
 }
 
-// ========= 生命周期 =========
+// -- Lifecycle Hooks
 
 /** 组件挂载后开始读取真实尺寸。 */
 onMounted(() => {

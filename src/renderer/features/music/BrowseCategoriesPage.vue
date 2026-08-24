@@ -390,7 +390,7 @@ onMounted(() => {
 .category-explore-heading > p:last-child { max-width: 720px; margin-top: 10px; color: var(--ncx-color-text-secondary); line-height: 1.55; }
 .category-explore-controls { display: grid; gap: 16px; padding: 16px; }
 .category-option-list { display: flex; overflow-x: auto; gap: 7px; padding: 2px 0 5px; scrollbar-width: thin; }
-.category-option-list button { flex: 0 0 auto; padding: 8px 13px; border: 0; border-radius: var(--ncx-radius-full); color: var(--ncx-color-text-secondary); background: transparent; cursor: pointer; }
+.category-option-list button { flex: 0 0 auto; padding: 8px 13px; border: 0; border-radius: var(--ncx-squircle-radius-full); color: var(--ncx-color-text-secondary); background: transparent; cursor: pointer; }
 .category-option-list button:hover, .category-option-list button.active { color: var(--ncx-color-text-primary); background: color-mix(in srgb, var(--ncx-color-text-primary) 9%, transparent); }
 .category-option-list button:active { transform: scale(.96); }
 .category-explore-state { display: flex; min-height: 300px; align-items: center; justify-content: center; gap: 10px; color: var(--ncx-color-text-secondary); }

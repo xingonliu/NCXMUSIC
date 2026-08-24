@@ -1,7 +1,7 @@
 :root {
   color-scheme: light dark;
 
-  /* ========= 空间与圆角 Token ========= */
+  /* ========= 空间与 Squircle Token ========= */
   --ncx-space-1: 4px;
   --ncx-space-1-5: 6px;
   --ncx-space-2: 8px;
@@ -13,13 +13,14 @@
   --ncx-space-10: 40px;
   --ncx-space-12: 48px;
   --ncx-space-16: 64px;
-  --ncx-radius-xs: 6px;
-  --ncx-radius-sm: 10px;
-  --ncx-radius-md: 14px;
-  --ncx-radius-lg: 18px;
-  --ncx-radius-xl: 24px;
-  --ncx-radius-2xl: 30px;
-  --ncx-radius-full: 9999px;
+  --ncx-squircle-smoothing: 60%;
+  --ncx-squircle-radius-xs: 6px;
+  --ncx-squircle-radius-sm: 10px;
+  --ncx-squircle-radius-md: 14px;
+  --ncx-squircle-radius-lg: 18px;
+  --ncx-squircle-radius-xl: 24px;
+  --ncx-squircle-radius-2xl: 30px;
+  --ncx-squircle-radius-full: 9999px;
   --ncx-control-compact: 28px;
   --ncx-control-default: 34px;
   --ncx-control-prominent: 40px;
@@ -222,4 +223,3 @@
   --ncx-modal-bg: #222227;
   --ncx-toast-bg: rgb(28 28 32 / 40%);
 }
-

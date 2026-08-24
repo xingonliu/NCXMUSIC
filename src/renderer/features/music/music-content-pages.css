@@ -56,7 +56,7 @@
 }
 
 .music-surface {
-  border-radius: var(--ncx-radius-xl);
+  border-radius: var(--ncx-squircle-radius-xl);
   background: var(--music-page-surface);
   box-shadow:
     inset 0 0 0 1px var(--music-page-edge),
@@ -97,7 +97,7 @@
   width: 100%;
   height: 40px;
   padding: 0 14px;
-  border-radius: 999px;
+  border-radius: var(--ncx-squircle-radius-full);
   background: var(--music-page-surface-subtle);
   border: 1px solid var(--music-page-edge);
   box-shadow: var(--ncx-shadow-elevation-1);
@@ -160,7 +160,7 @@
   height: 20px;
   padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: var(--ncx-squircle-radius-full);
   color: var(--ncx-color-text-tertiary);
   background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
   cursor: pointer;
@@ -189,7 +189,7 @@
   margin: 0;
   padding: 6px;
   list-style: none;
-  border-radius: var(--ncx-radius-lg, 14px);
+  border-radius: var(--ncx-squircle-radius-lg);
   background: color-mix(in srgb, var(--ncx-color-surface-overlay) 88%, transparent);
   backdrop-filter: blur(28px) saturate(190%);
   box-shadow:
@@ -204,7 +204,7 @@
   gap: 10px;
   height: 34px;
   padding: 0 10px;
-  border-radius: var(--ncx-radius-md, 8px);
+  border-radius: var(--ncx-squircle-radius-md);
   color: var(--ncx-color-text-primary);
   font-size: 13.5px;
   font-weight: 500;
@@ -270,7 +270,7 @@
   gap: 4px;
   padding: 4px 8px;
   border: 0;
-  border-radius: var(--ncx-radius-sm, 6px);
+  border-radius: var(--ncx-squircle-radius-sm);
   color: var(--ncx-color-text-tertiary);
   background: transparent;
   font-size: 12px;
@@ -297,7 +297,7 @@
   height: 32px;
   padding: 0 14px;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--ncx-squircle-radius-full);
   color: var(--ncx-color-text-secondary);
   background: var(--music-page-surface-subtle);
   box-shadow: inset 0 0 0 1px var(--music-page-edge);
@@ -366,7 +366,7 @@
   min-width: 22px;
   height: 22px;
   padding: 0 6px;
-  border-radius: 6px;
+  border-radius: var(--ncx-squircle-radius-xs);
   font-size: 11px;
   font-weight: 700;
   color: #fff;
@@ -416,14 +416,14 @@
 .skeleton-cover {
   width: 100%;
   aspect-ratio: 1;
-  border-radius: var(--ncx-radius-lg, 10px);
+  border-radius: var(--ncx-squircle-radius-lg);
   background: var(--music-page-surface-subtle);
   animation: pulse-skeleton 1.5s ease-in-out infinite;
 }
 
 .skeleton-line {
   height: 14px;
-  border-radius: 4px;
+  border-radius: var(--ncx-squircle-radius-xs);
   background: var(--music-page-surface-subtle);
   animation: pulse-skeleton 1.5s ease-in-out infinite;
 }
@@ -460,7 +460,7 @@
   overflow-x: auto;
   gap: 6px;
   padding: 5px;
-  border-radius: 999px;
+  border-radius: var(--ncx-squircle-radius-full);
   background: var(--music-page-surface-subtle);
   box-shadow: inset 0 0 0 1px var(--music-page-edge);
 }
@@ -469,7 +469,7 @@
   flex: 0 0 auto;
   padding: 7px 16px;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--ncx-squircle-radius-full);
   color: var(--ncx-color-text-secondary);
   background: transparent;
   font-size: 13px;
@@ -590,7 +590,7 @@
   gap: var(--ncx-space-2);
   padding: 0;
   border: 0;
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-squircle-radius-lg);
   color: var(--ncx-color-text-primary);
   background: transparent;
   cursor: pointer;
@@ -640,7 +640,7 @@
   gap: var(--ncx-space-3);
   padding: var(--ncx-space-2);
   border: 0;
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-squircle-radius-lg);
   color: var(--ncx-color-text-primary);
   background: var(--music-page-surface-subtle);
   box-shadow: inset 0 0 0 1px var(--music-page-edge);
@@ -690,7 +690,7 @@
   display: flex;
   padding: var(--ncx-space-2);
   border: 0;
-  border-radius: var(--ncx-radius-md);
+  border-radius: var(--ncx-squircle-radius-md);
   align-items: center;
   gap: var(--ncx-space-3);
   color: var(--ncx-color-text-primary);
@@ -809,7 +809,7 @@
 }
 
 .collection-skeleton-cover {
-  border-radius: var(--ncx-radius-xl);
+  border-radius: var(--ncx-squircle-radius-xl);
 }
 
 .collection-detail-page .music-detail-hero-copy {
@@ -895,7 +895,7 @@
 }
 
 .collection-skeleton-actions .ncx-common-skeleton-rectangular {
-  border-radius: var(--ncx-radius-full);
+  border-radius: var(--ncx-squircle-radius-full);
 }
 
 .collection-skeleton-tracks {
@@ -918,7 +918,7 @@
   grid-template-columns: 32px 36px minmax(160px, 1.5fr) minmax(120px, 1fr) 48px;
   gap: var(--ncx-space-3);
   padding: var(--ncx-space-2);
-  border-radius: var(--ncx-radius-md);
+  border-radius: var(--ncx-squircle-radius-md);
 }
 
 .collection-skeleton-track-copy {

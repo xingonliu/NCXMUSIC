@@ -332,7 +332,7 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
   flex: 0 0 28px;
   align-items: center;
   justify-content: center;
-  border-radius: 7px;
+  border-radius: var(--ncx-squircle-radius-xs);
   color: var(--ncx-color-text-tertiary);
   background: color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
 }

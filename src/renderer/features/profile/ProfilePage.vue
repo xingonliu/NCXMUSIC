@@ -766,7 +766,7 @@ watch(
 .profile-vip-tag {
   display: inline-block;
   padding: 1px 5px;
-  border-radius: 4px;
+  border-radius: var(--ncx-squircle-radius-xs);
   color: #c98800;
   background: color-mix(in srgb, #ff9f0a 14%, transparent);
   font-size: 10px;
@@ -777,7 +777,7 @@ watch(
 .profile-level-tag {
   display: inline-block;
   padding: 1px 5px;
-  border-radius: 4px;
+  border-radius: var(--ncx-squircle-radius-xs);
   color: var(--ncx-color-text-secondary);
   background: var(--ncx-color-control-hover);
   font-size: 10.5px;
@@ -850,7 +850,7 @@ watch(
   bottom: -1px;
   left: 0;
   height: 2px;
-  border-radius: 1px;
+  border-radius: var(--ncx-squircle-radius-xs);
   background: var(--ncx-color-accent);
 }
 
@@ -885,14 +885,14 @@ watch(
   display: flex;
   gap: 2px;
   padding: 2px;
-  border-radius: var(--ncx-radius-sm);
+  border-radius: var(--ncx-squircle-radius-sm);
   background: var(--ncx-color-control-hover);
 }
 
 .profile-period-switch button {
   padding: 4px 10px;
   border: 0;
-  border-radius: var(--ncx-radius-xs);
+  border-radius: var(--ncx-squircle-radius-xs);
   color: var(--ncx-color-text-secondary);
   background: transparent;
   font-size: 12px;
@@ -933,7 +933,7 @@ watch(
   align-items: center;
   gap: 12px;
   padding: 6px 8px;
-  border-radius: var(--ncx-radius-md);
+  border-radius: var(--ncx-squircle-radius-md);
   color: var(--ncx-color-text-primary);
   background: transparent;
   cursor: pointer;
@@ -993,7 +993,7 @@ watch(
   display: inline-block;
   padding: 0 3px;
   border: 1px solid color-mix(in srgb, #ff9f0a 50%, transparent);
-  border-radius: 3px;
+  border-radius: var(--ncx-squircle-radius-xs);
   color: #ff9f0a;
   font-size: 9px;
   font-weight: 700;
@@ -1089,7 +1089,7 @@ watch(
   height: 22px;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: var(--ncx-squircle-radius-full);
   color: #fff;
   background: var(--ncx-color-accent);
 }

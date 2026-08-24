@@ -50,4 +50,20 @@ describe('DesignSystemLabPage 通用组件交互测试页规范测试', () => {
     expect(componentNames.some((el) => el.text().includes('CommonCheckbox'))).toBe(true)
     expect(componentNames.some((el) => el.text().includes('CommonToast'))).toBe(true)
   })
+
+  it('应当展示七级 Squircle 尺寸阶梯', () => {
+    const wrapper = mount(DesignSystemLabPage)
+    const samples = wrapper.findAll('.ncx-design-lab-squircle-sample')
+
+    expect(samples).toHaveLength(7)
+    expect(samples.map((sample) => sample.find('strong').text())).toEqual([
+      'xs',
+      'sm',
+      'md',
+      'lg',
+      'xl',
+      '2xl',
+      'full'
+    ])
+  })
 })

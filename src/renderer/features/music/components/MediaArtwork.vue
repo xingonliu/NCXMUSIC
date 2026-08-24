@@ -83,7 +83,7 @@ watch(artworkUrl, () => {
   justify-content: center;
   flex-shrink: 0;
   margin: 0;
-  border-radius: var(--ncx-radius-md);
+  border-radius: var(--ncx-squircle-radius-md);
   color: var(--ncx-color-text-tertiary);
   background: var(--ncx-color-surface-raised);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
@@ -98,7 +98,7 @@ watch(artworkUrl, () => {
 .media-artwork--thumbnail {
   width: 36px;
   height: 36px;
-  border-radius: var(--ncx-radius-sm);
+  border-radius: var(--ncx-squircle-radius-sm);
 }
 
 .media-artwork--compact {
@@ -109,14 +109,14 @@ watch(artworkUrl, () => {
 .media-artwork--card {
   width: 118px;
   height: 118px;
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-squircle-radius-lg);
 }
 
 .media-artwork--feature {
   width: 100%;
   height: auto;
   aspect-ratio: 1;
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-squircle-radius-lg);
 }
 
 .media-artwork--hero {
@@ -124,7 +124,7 @@ watch(artworkUrl, () => {
   height: min(34vw, 360px);
   min-width: 220px;
   min-height: 220px;
-  border-radius: var(--ncx-radius-xl);
+  border-radius: var(--ncx-squircle-radius-xl);
   box-shadow: var(--ncx-shadow-elevation-3);
 }
 

@@ -255,7 +255,7 @@ onMounted(async () => {
   height: 68px;
   align-items: center;
   justify-content: center;
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-squircle-radius-lg);
   color: white;
   background: var(--ncx-color-accent);
 }

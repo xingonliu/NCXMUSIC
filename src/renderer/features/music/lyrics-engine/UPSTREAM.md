@@ -15,6 +15,7 @@
 - 将上游内部路径别名改为 NcxMusic 本地相对路径。
 - 上游内部实现继续使用其 `noUncheckedIndexedAccess=false`、`exactOptionalPropertyTypes=false` 编译假设；NcxMusic 对外适配器和公共类型仍由项目严格配置检查，运行时行为由本地回归测试覆盖。
 - 为歌词行、音节、声部和间奏 DOM 增加 `data-amll-*` 调试属性，不改变布局或动画计算。
+- 歌词行与间奏元素的圆角尺寸接入 Ncxmusic Squircle token，形状由 Renderer 的全局 60% 平滑度统一控制。
 - 由 NcxMusic 的 `LyricsPanel.vue` 直接创建并驱动 DOM 引擎，不使用上游 Vue/React 组件。
 - 歌词获取和 LRC/YRC 解析继续使用 NcxMusic 现有实现，只在展示边界转换为引擎数据结构。
 - 动态背景仍由 NcxMusic 的 `FluidMeshBackground.vue` 提供，不包含 AMLL 背景渲染器。

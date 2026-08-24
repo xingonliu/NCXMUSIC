@@ -268,7 +268,7 @@ function handleContextAction(value: string | number): void {
   grid-template-columns: 32px auto minmax(160px, 1.5fr) minmax(120px, 1fr) auto;
   gap: var(--ncx-space-3);
   padding: var(--ncx-space-2) var(--ncx-space-3);
-  border-radius: var(--ncx-radius-md);
+  border-radius: var(--ncx-squircle-radius-md);
   cursor: pointer;
   transition:
     background-color var(--ncx-motion-fast),
@@ -358,7 +358,7 @@ function handleContextAction(value: string | number): void {
 .track-row-badge {
   flex-shrink: 0;
   padding: 2px 5px;
-  border-radius: var(--ncx-radius-xs);
+  border-radius: var(--ncx-squircle-radius-xs);
   font-size: 10px;
   font-weight: 700;
   line-height: 1;

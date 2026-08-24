@@ -336,26 +336,26 @@ onMounted(async () => {
 
 <style scoped>
 .personalization-settings { display: grid; gap: 18px; }
-.personalization-settings-hero, .personalization-settings-summary, .personalization-settings-insights, .personalization-settings-overrides, .personalization-settings-data, .personalization-settings-danger { padding: 20px; border: 1px solid var(--ncx-color-border); border-radius: var(--ncx-radius-xl); background: var(--ncx-color-surface); }
+.personalization-settings-hero, .personalization-settings-summary, .personalization-settings-insights, .personalization-settings-overrides, .personalization-settings-data, .personalization-settings-danger { padding: 20px; border: 1px solid var(--ncx-color-border); border-radius: var(--ncx-squircle-radius-xl); background: var(--ncx-color-surface); }
 .personalization-settings-hero { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; }
-.personalization-settings-icon { display: inline-flex; width: 42px; height: 42px; align-items: center; justify-content: center; border-radius: 14px; color: var(--ncx-color-accent); background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent); }
+.personalization-settings-icon { display: inline-flex; width: 42px; height: 42px; align-items: center; justify-content: center; border-radius: var(--ncx-squircle-radius-md); color: var(--ncx-color-accent); background: color-mix(in srgb, var(--ncx-color-accent) 12%, transparent); }
 .personalization-settings h2, .personalization-settings h3, .personalization-settings h4, .personalization-settings p { margin: 0; }
 .personalization-settings-hero > div > p, .personalization-settings-disclosure, .personalization-settings-summary > p, .personalization-settings-danger p { margin-top: 5px; color: var(--ncx-color-text-secondary); font-size: 12px; line-height: 1.55; }
 .personalization-settings-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .personalization-settings-progress, .personalization-settings-disclosure, .personalization-settings-error { grid-column: 1 / -1; }
 .personalization-settings-progress { display: grid; overflow: hidden; gap: 5px; }
-.personalization-settings-progress::before { height: 4px; border-radius: 999px; background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent); content: ''; }
-.personalization-settings-progress > span { width: var(--profile-progress, 0%); height: 4px; margin-top: -9px; border-radius: 999px; background: var(--ncx-color-accent); }
+.personalization-settings-progress::before { height: 4px; border-radius: var(--ncx-squircle-radius-full); background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent); content: ''; }
+.personalization-settings-progress > span { width: var(--profile-progress, 0%); height: 4px; margin-top: -9px; border-radius: var(--ncx-squircle-radius-full); background: var(--ncx-color-accent); }
 .personalization-settings-progress small { color: var(--ncx-color-text-secondary); }
 .personalization-settings-error { color: var(--ncx-color-danger); font-size: 12px; }
 .personalization-settings-summary dl { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0 0; }
-.personalization-settings-summary dl > div { padding: 12px; border-radius: 12px; background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent); }
+.personalization-settings-summary dl > div { padding: 12px; border-radius: var(--ncx-squircle-radius-md); background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent); }
 .personalization-settings-summary dt { color: var(--ncx-color-text-secondary); font-size: 11px; }
 .personalization-settings-summary dd { margin: 4px 0 0; font-size: 18px; font-weight: 700; }
 .personalization-settings-insights { display: grid; gap: 10px; }
 .personalization-settings-insights > header { display: flex; align-items: center; justify-content: space-between; }
 .personalization-settings-insights > header span { color: var(--ncx-color-text-secondary); font-size: 12px; }
-.personalization-settings-insights article { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 14px; padding: 14px; border-radius: 14px; background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent); }
+.personalization-settings-insights article { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 14px; padding: 14px; border-radius: var(--ncx-squircle-radius-md); background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent); }
 .personalization-settings-insights article > div > span, .personalization-settings-insights article small { color: var(--ncx-color-text-secondary); font-size: 11px; }
 .personalization-settings-insights article h4 { margin-top: 4px; }
 .personalization-settings-insights article p { margin-top: 4px; font-size: 13px; }
@@ -363,7 +363,7 @@ onMounted(async () => {
 .personalization-settings-insights label { display: grid; grid-column: 1; gap: 5px; color: var(--ncx-color-text-secondary); font-size: 11px; }
 .personalization-settings-supplement { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; margin-top: 12px; }
 .personalization-settings-overrides ul { display: grid; gap: 6px; padding: 0; margin: 12px 0 0; list-style: none; }
-.personalization-settings-overrides li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px; border-radius: 10px; background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent); font-size: 12px; }
+.personalization-settings-overrides li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px; border-radius: var(--ncx-squircle-radius-sm); background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent); font-size: 12px; }
 .personalization-settings-data { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .personalization-settings-data p { margin-top: 5px; color: var(--ncx-color-text-secondary); font-size: 12px; }
 .personalization-settings-danger { display: flex; align-items: center; justify-content: space-between; gap: 16px; }

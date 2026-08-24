@@ -66,7 +66,7 @@ const shadowStyles = computed<Record<string, string>>(() => {
     backgroundImage: `url("${displayArtworkUrl.value}")`
   }
   if (props.shape === 'circle') {
-    styles.borderRadius = '50%'
+    styles.borderRadius = 'var(--ncx-squircle-radius-full)'
   }
   return styles
 })
@@ -200,14 +200,14 @@ watch(artworkUrl, () => {
   justify-content: center;
   width: 100%;
   height: 100%;
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-squircle-radius-lg);
   background: var(--ncx-color-surface-raised);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
   transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .ncx-cover--circle .ncx-cover-media {
-  border-radius: 50%;
+  border-radius: var(--ncx-squircle-radius-full);
 }
 
 .ncx-cover-img {
@@ -234,7 +234,7 @@ watch(artworkUrl, () => {
   height: 36px;
 }
 .ncx-cover--thumbnail .ncx-cover-media {
-  border-radius: var(--ncx-radius-sm);
+  border-radius: var(--ncx-squircle-radius-sm);
 }
 
 .ncx-cover--compact {
@@ -260,10 +260,10 @@ watch(artworkUrl, () => {
   min-height: 220px;
 }
 .ncx-cover--hero .ncx-cover-media {
-  border-radius: var(--ncx-radius-xl);
+  border-radius: var(--ncx-squircle-radius-xl);
 }
 .ncx-cover--hero .ncx-cover-shadow {
-  border-radius: var(--ncx-radius-xl);
+  border-radius: var(--ncx-squircle-radius-xl);
 }
 
 /* ========= Hover 遮浮层与播放按钮 ========= */
@@ -287,7 +287,7 @@ watch(artworkUrl, () => {
   min-height: 32px;
   padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 50%;
+  border-radius: var(--ncx-squircle-radius-full);
   color: #fff;
   background: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(8px);
@@ -320,7 +320,7 @@ watch(artworkUrl, () => {
   width: 100%;
   height: 100%;
   aspect-ratio: 1;
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-squircle-radius-lg);
   background-position: center;
   background-size: cover;
   filter: blur(18px) opacity(0.68);
@@ -330,7 +330,7 @@ watch(artworkUrl, () => {
 }
 
 .ncx-cover--circle .ncx-cover-shadow {
-  border-radius: 50%;
+  border-radius: var(--ncx-squircle-radius-full);
 }
 
 /* ========= Hover 状态与常显 Hover 效果提升 ========= */

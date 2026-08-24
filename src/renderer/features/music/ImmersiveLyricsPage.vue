@@ -409,7 +409,7 @@ onBeforeUnmount(() => {
   display: flex;
   overflow: hidden;
   flex-direction: column;
-  border-radius: 16px;
+  border-radius: var(--ncx-squircle-radius-lg);
   color: white;
   background: rgb(17 23 25);
   isolation: isolate;
@@ -417,11 +417,11 @@ onBeforeUnmount(() => {
 }
 
 .immersive-lyrics-page--macos {
-  border-radius: 16px;
+  border-radius: var(--ncx-squircle-radius-lg);
 }
 
 .immersive-lyrics-page--windows {
-  border-radius: 8px;
+  border-radius: var(--ncx-squircle-radius-sm);
 }
 
 .immersive-lyrics-page--fullscreen {
@@ -475,7 +475,7 @@ onBeforeUnmount(() => {
   justify-content: center;
   padding: 0;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--ncx-squircle-radius-full);
   color: #ffffff;
   background: transparent;
   cursor: pointer;
@@ -540,7 +540,7 @@ onBeforeUnmount(() => {
   min-height: 0;
   aspect-ratio: 1;
   z-index: 2;
-  border-radius: 16px;
+  border-radius: var(--ncx-squircle-radius-lg);
   box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
 }
 

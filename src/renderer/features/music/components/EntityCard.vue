@@ -67,7 +67,7 @@ function activateCard(): void {
 }
 
 .music-entity-card:focus-visible {
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-squircle-radius-lg);
   outline: 2px solid var(--ncx-color-accent);
   outline-offset: 4px;
 }

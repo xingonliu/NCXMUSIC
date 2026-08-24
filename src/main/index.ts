@@ -596,7 +596,9 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
       --voice-overlay-bg: rgba(22, 22, 26, 0.88);
       --voice-overlay-text: #ffffff;
       --voice-overlay-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.46), 0 2px 6px rgba(0, 0, 0, 0.22);
-      --voice-overlay-radius: 9999px;
+      --voice-overlay-squircle-smoothing: 60%;
+      --voice-overlay-squircle-radius-xs: 6px;
+      --voice-overlay-squircle-radius-full: 9999px;
       --voice-overlay-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
       --voice-overlay-spring: cubic-bezier(0.175, 0.885, 0.32, 1.25);
       --voice-overlay-exit: cubic-bezier(0.4, 0, 0.2, 1);
@@ -616,7 +618,15 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
       }
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    *,
+    *::before,
+    *::after {
+      -electron-corner-smoothing: var(--voice-overlay-squircle-smoothing);
+    }
 
     html,
     body {
@@ -644,7 +654,7 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
       max-width: 100%;
       opacity: 0;
       visibility: hidden;
-      border-radius: var(--voice-overlay-radius);
+      border-radius: var(--voice-overlay-squircle-radius-full);
       pointer-events: none;
       transform: translateY(18px) scale(0.88);
       transition:
@@ -683,7 +693,7 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
       color: var(--voice-overlay-text);
       background: var(--voice-overlay-bg);
       border: 0;
-      border-radius: var(--voice-overlay-radius);
+      border-radius: var(--voice-overlay-squircle-radius-full);
       box-shadow: var(--voice-overlay-shadow);
       outline: 0;
       backdrop-filter: blur(28px) saturate(190%);
@@ -720,7 +730,7 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
         #ff9500 320deg,
         #ff2d55 360deg
       );
-      border-radius: 50%;
+      border-radius: var(--voice-overlay-squircle-radius-full);
       box-shadow: 0 0 10px rgba(94, 92, 230, 0.6), inset 0 0 3px rgba(255, 255, 255, 0.6);
       filter: blur(0.5px);
       transition: transform 0.3s var(--voice-overlay-spring), filter 0.3s ease;
@@ -752,7 +762,7 @@ const VOICE_OVERLAY_HTML = `<!doctype html>
       flex: 0 0 65px;
       width: 65px;
       height: 20px;
-      border-radius: 4px;
+      border-radius: var(--voice-overlay-squircle-radius-xs);
     }
 
     .voice-overlay-capsule[data-state="starting"] { min-width: 110px; }

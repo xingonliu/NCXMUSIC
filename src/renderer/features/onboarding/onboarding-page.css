@@ -48,7 +48,7 @@
 
 .onboarding-progress span {
   height: 3px;
-  border-radius: 999px;
+  border-radius: var(--ncx-squircle-radius-full);
   background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
   transition: background 220ms ease;
 }
@@ -96,7 +96,7 @@
   align-items: center;
   justify-content: center;
   border: 1px solid color-mix(in srgb, var(--ncx-color-accent) 18%, transparent);
-  border-radius: 23px;
+  border-radius: var(--ncx-squircle-radius-xl);
   color: var(--ncx-color-accent);
   background: color-mix(
     in srgb,
@@ -148,7 +148,7 @@
   padding: 18px;
   border: 1px solid
     color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
-  border-radius: 20px;
+  border-radius: var(--ncx-squircle-radius-lg);
   background: color-mix(in srgb, var(--ncx-color-surface) 78%, transparent);
   box-shadow: 0 18px 50px rgb(0 0 0 / 9%);
   backdrop-filter: blur(24px) saturate(150%);
@@ -167,7 +167,7 @@
   height: 54px;
   align-items: center;
   justify-content: center;
-  border-radius: 15px;
+  border-radius: var(--ncx-squircle-radius-md);
   color: white;
   background: linear-gradient(135deg, #fe5470, #9258e8);
 }
@@ -195,7 +195,7 @@
 
 .demo-wave i {
   width: 3px;
-  border-radius: 3px;
+  border-radius: var(--ncx-squircle-radius-xs);
   background: var(--ncx-color-accent);
   animation: onboarding-wave 1.2s ease-in-out infinite;
 }
@@ -228,7 +228,7 @@
 .demo-agent-message {
   width: fit-content;
   padding: 7px 10px;
-  border-radius: 12px;
+  border-radius: var(--ncx-squircle-radius-md);
   font-size: 11px;
 }
 
@@ -248,7 +248,7 @@
   grid-template-columns: 20px 1fr 7px;
   gap: 7px;
   padding: 7px 9px;
-  border-radius: 10px;
+  border-radius: var(--ncx-squircle-radius-sm);
   color: var(--ncx-color-text-secondary);
   background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent);
   font-size: 10px;
@@ -257,7 +257,7 @@
 .demo-tool-line i {
   width: 6px;
   height: 6px;
-  border-radius: 999px;
+  border-radius: var(--ncx-squircle-radius-full);
   background: #42a56b;
 }
 
@@ -292,7 +292,7 @@
   justify-items: center;
   gap: 5px;
   padding: 18px 10px;
-  border-radius: 16px;
+  border-radius: var(--ncx-squircle-radius-lg);
   color: var(--ncx-color-accent);
   background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent);
   text-align: center;

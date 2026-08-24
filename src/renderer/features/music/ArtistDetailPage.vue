@@ -517,7 +517,7 @@ watch(artistId, () => {
   position: absolute;
   inset: 12% 6% -3%;
   z-index: -1;
-  border-radius: 30px;
+  border-radius: var(--ncx-squircle-radius-2xl);
   background-position: center 26%;
   background-size: cover;
   filter: blur(52px) saturate(1.35) opacity(.42);
@@ -532,7 +532,7 @@ watch(artistId, () => {
   min-height: min(62vh, 560px);
   align-items: end;
   padding: 42px;
-  border-radius: 30px;
+  border-radius: var(--ncx-squircle-radius-2xl);
   color: #fff;
   background: #26262c;
 }
@@ -603,7 +603,7 @@ watch(artistId, () => {
   gap: 20px;
   padding: 4px 8px 4px 0;
   border: 0;
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-squircle-radius-lg);
   color: inherit;
   text-align: left;
   background: transparent;

@@ -462,7 +462,7 @@ watch([query, activeCategory], () => {
   overflow-x: auto;
   gap: 6px;
   padding: 5px;
-  border-radius: 999px;
+  border-radius: var(--ncx-squircle-radius-full);
   background: color-mix(in srgb, var(--ncx-color-surface) 82%, transparent);
 }
 
@@ -470,7 +470,7 @@ watch([query, activeCategory], () => {
   flex: 0 0 auto;
   padding: 9px 15px;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--ncx-squircle-radius-full);
   color: var(--ncx-color-text-secondary);
   background: transparent;
   cursor: pointer;

@@ -475,13 +475,13 @@ watch(
                   variant="rectangular"
                   width="72px"
                   height="30px"
-                  style="border-radius: var(--ncx-radius-md)"
+                  style="border-radius: var(--ncx-squircle-radius-md)"
                 />
                 <CommonSkeleton
                   variant="rectangular"
                   width="90px"
                   height="30px"
-                  style="border-radius: var(--ncx-radius-md)"
+                  style="border-radius: var(--ncx-squircle-radius-md)"
                 />
               </div>
             </div>
@@ -509,7 +509,7 @@ watch(
               variant="rectangular"
               width="82px"
               height="26px"
-              style="border-radius: 999px; position: absolute; top: 16px; left: 16px"
+              style="border-radius: var(--ncx-squircle-radius-full); position: absolute; top: 16px; left: 16px"
             />
             <div class="discover-radio-copy">
               <CommonSkeleton
@@ -638,7 +638,7 @@ watch(
               variant="rectangular"
               width="48px"
               height="48px"
-              style="border-radius: var(--ncx-radius-md); flex-shrink: 0"
+              style="border-radius: var(--ncx-squircle-radius-md); flex-shrink: 0"
             />
             <div class="discover-skeleton-song-copy">
               <CommonSkeleton
@@ -854,7 +854,7 @@ watch(
   position: relative;
   overflow: hidden;
   min-height: 260px;
-  border-radius: var(--ncx-radius-xl);
+  border-radius: var(--ncx-squircle-radius-xl);
   background: var(--ncx-color-surface);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent);
 }
@@ -965,7 +965,7 @@ watch(
   align-items: center;
   gap: 6px;
   padding: 7px 10px;
-  border-radius: 999px;
+  border-radius: var(--ncx-squircle-radius-full);
   color: #fff;
   background: rgba(20, 20, 22, .42);
   backdrop-filter: blur(16px) saturate(160%);
@@ -1014,7 +1014,7 @@ watch(
   justify-content: center;
   padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: var(--ncx-squircle-radius-full);
   color: var(--ncx-color-accent);
   background: rgba(255, 255, 255, .94);
   cursor: pointer;
@@ -1037,7 +1037,7 @@ watch(
   gap: 12px;
   padding: 8px;
   border: 0;
-  border-radius: 14px;
+  border-radius: var(--ncx-squircle-radius-md);
   color: inherit;
   text-align: left;
   background: transparent;
@@ -1142,7 +1142,7 @@ watch(
 .discover-skeleton-square-cover {
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-squircle-radius-lg);
 }
 
 .discover-skeleton-taste-card {
@@ -1157,7 +1157,7 @@ watch(
   height: 118px;
   z-index: calc(5 - var(--stack-index));
   transform: translateX(calc(var(--stack-index) * 48px)) rotate(calc((var(--stack-index) - 1) * 4deg));
-  border-radius: var(--ncx-radius-lg);
+  border-radius: var(--ncx-squircle-radius-lg);
 }
 
 .discover-skeleton-radio-card {
@@ -1171,7 +1171,7 @@ watch(
   align-items: center;
   gap: 12px;
   padding: 8px;
-  border-radius: 14px;
+  border-radius: var(--ncx-squircle-radius-md);
 }
 
 .discover-skeleton-song-copy {
@@ -1191,7 +1191,7 @@ watch(
   width: 100%;
   max-width: 118px;
   aspect-ratio: 1 / 1;
-  border-radius: 50%;
+  border-radius: var(--ncx-squircle-radius-full);
 }
 
 @media (width < 1360px) {

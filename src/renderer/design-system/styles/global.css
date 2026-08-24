@@ -7,6 +7,12 @@
   box-sizing: border-box;
 }
 
+*,
+*::before,
+*::after {
+  -electron-corner-smoothing: var(--ncx-squircle-smoothing);
+}
+
 html,
 body,
 #app {
@@ -65,7 +71,7 @@ button {
   margin-top: var(--ncx-space-3);
   padding: var(--ncx-space-2) var(--ncx-space-3);
   border: none;
-  border-radius: var(--ncx-radius-md);
+  border-radius: var(--ncx-squircle-radius-md);
   color: var(--ncx-color-text-secondary);
   background: var(--ncx-color-surface);
   font-size: 12px;
@@ -82,7 +88,7 @@ button {
   min-height: 180px;
   padding: var(--ncx-space-6);
   border: none;
-  border-radius: var(--ncx-radius-xl);
+  border-radius: var(--ncx-squircle-radius-xl);
   background: var(--ncx-color-surface);
   box-shadow: var(--ncx-shadow-elevation-1);
   transition:

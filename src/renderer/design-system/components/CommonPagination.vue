@@ -154,7 +154,7 @@ function requestPage(page: number): void {
   min-height: 30px;
   gap: 5px;
   padding: 0 11px;
-  border-radius: var(--ncx-radius-full);
+  border-radius: var(--ncx-squircle-radius-full);
   background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
   font-size: 12px;
@@ -169,7 +169,7 @@ function requestPage(page: number): void {
   width: 34px;
   height: 34px;
   padding: 0;
-  border-radius: 50%;
+  border-radius: var(--ncx-squircle-radius-full);
 }
 
 .common-pagination-action:hover,

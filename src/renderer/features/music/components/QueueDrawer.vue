@@ -297,7 +297,7 @@ function handleDrop(toIndex: number): void {
   gap: 10px;
   align-items: center;
   padding: 8px 10px;
-  border-radius: var(--ncx-radius-medium, 8px);
+  border-radius: var(--ncx-squircle-radius-md);
   cursor: pointer;
   user-select: none;
   transition: background-color var(--ncx-motion-fast, 150ms ease);

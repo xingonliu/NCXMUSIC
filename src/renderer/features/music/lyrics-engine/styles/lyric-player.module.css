@@ -28,7 +28,7 @@
 	width: 100%;
 	box-sizing: border-box;
 	padding: 0.4em var(--lyric-line-padding-x);
-	border-radius: 0.25em;
+	border-radius: var(--ncx-squircle-radius-xs);
 
 	gap: 0.3em;
 
@@ -266,7 +266,7 @@
 		width: clamp(0.5em, 1vh, 3em);
 		height: clamp(0.5em, 1vh, 3em);
 		margin-right: 4px;
-		border-radius: 50%;
+		border-radius: var(--ncx-squircle-radius-full);
 		background-color: var(--amll-lp-color, white);
 		aspect-ratio: 1 / 1;
 	}

@@ -225,11 +225,11 @@ onMounted(() => {
 .artist-explore-heading .music-page-eyebrow { display: flex; align-items: center; gap: 6px; }
 .artist-explore-heading h1 { margin-top: 7px; font-size: clamp(36px, 5vw, 54px); line-height: 1.04; letter-spacing: -.03em; }
 .artist-explore-heading > p:last-child { margin-top: 10px; color: var(--ncx-color-text-secondary); }
-.artist-filter-panel { display: grid; gap: 12px; padding: 18px; border-radius: var(--ncx-radius-xl); }
+.artist-filter-panel { display: grid; gap: 12px; padding: 18px; border-radius: var(--ncx-squircle-radius-xl); }
 .artist-filter-panel > header { display: flex; align-items: center; gap: 8px; }
 .artist-filter-panel h2 { margin: 0; font-size: 14px; }
 .artist-filter-row { display: flex; flex-wrap: wrap; gap: 6px; }
-.artist-filter-row button { min-width: 40px; padding: 8px 12px; border: 0; border-radius: 999px; color: var(--ncx-color-text-secondary); background: transparent; cursor: pointer; }
+.artist-filter-row button { min-width: 40px; padding: 8px 12px; border: 0; border-radius: var(--ncx-squircle-radius-full); color: var(--ncx-color-text-secondary); background: transparent; cursor: pointer; }
 .artist-filter-row button:hover, .artist-filter-row button.active { color: var(--ncx-color-text-primary); background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent); }
 .artist-filter-row button:active { transform: scale(.95); }
 .artist-initials { padding-top: 10px; border-top: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent); }
