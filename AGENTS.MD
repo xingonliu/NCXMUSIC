@@ -1,18 +1,21 @@
-先检查问题有没有错误前提、逻辑跳跃和信息缺失;不要迎合我，要独立判断;区分事实、推测和主观观点;涉及数字、人物和结论时尽量核实来源;不同意就直接指出，并给出依据、风险和替代解释;还要主动提醒我忽略的变量、成本和偏差
+- Before acting, check the request for false premises, logical gaps, and missing information. Think independently rather than agreeing by default; distinguish verified facts, reasonable inferences, and subjective opinions; verify material claims involving numbers, named individuals, or conclusions against reliable sources whenever practical. If you disagree, say so directly and explain the evidence, risks, and alternative interpretations. Proactively identify overlooked variables, costs, trade-offs, and potential biases.
 
-- 先检查 Git 状态并保护用户已有改动。不要覆盖、回滚、格式化或提交任务范围外的文件。
-- 每次开始任务前先执行 `git status` 并通过 `git fetch --prune origin` 检查当前分支的远程更新。若上游领先且工作树允许安全快进，立即执行 `git pull --ff-only`；若存在未提交改动、分支分叉或其他可能覆盖用户工作的情况，停止写入并先说明阻塞，禁止强制拉取、强制覆盖或丢弃用户改动。
-- 产生文件变更的任务在完成实现、文档同步、测试和 diff 检查后，必须只暂存本任务范围内的文件，创建提交并推送当前分支。已有 upstream 时直接推送；没有 upstream 时使用 `git push -u origin <branch>`。推送被拒绝时重新 fetch 并安全同步，禁止 force push。
-- Codex 提交信息统一使用 `codex-<任务简写>（YYYY-MM-DD HH:mm Asia/Shanghai）完成：<具体完成内容>` 格式，时间必须取实际提交时刻，完成内容必须具体说明本次交付，不使用“更新”“修改”等模糊摘要。
-- 纯读取、解释或诊断且没有文件变更的任务无需创建空提交，但任务开始时仍必须检查远程更新。
+- At the start of every task in a Git repository, run `git status` and `git fetch --prune origin` before making changes. Inspect the current branch and its upstream state, and protect all existing user work. Never overwrite, revert, reformat, stage, commit, or otherwise alter files outside the task scope.
 
-- 所有变量/函数均需要写清楚注释
-- 所有ts/js都需要整理分区编写，比如：
+- If the upstream branch is ahead and the working tree is clean enough for a safe fast-forward, immediately run `git pull --ff-only`. If there are uncommitted changes, branch divergence, conflicts, or any other condition that could overwrite or interfere with user work, stop before writing and report the blocker. Never force-pull, force-overwrite, discard user changes, or use another destructive synchronization method.
 
-```ts
-// ========= 变量 =========
-const a = 20;
-// ======== 函数 ======
+- For tasks that change files, complete the implementation, synchronize the relevant documentation, run appropriate tests, and inspect the final diff. Then stage only files within the task scope, create a commit, and push the current branch. Push normally when an upstream already exists; otherwise, use `git push -u origin <branch>`. If the push is rejected, fetch again and synchronize only through a safe, non-destructive method; never force-push.
 
-// ======== 生命周期 ========
-```
+- Every commit created by Codex must use Chinese and follow this exact format: `codex-<任务简写>（YYYY-MM-DD HH:mm Asia/Shanghai）完成：<具体完成内容>`. Both `<任务简写>` and `<具体完成内容>` must be written in Chinese, the timestamp must reflect the actual commit time in the `Asia/Shanghai` timezone, and the completion summary must describe the delivered result precisely rather than using vague words such as “更新” or “修改”.
+
+- Read-only, explanatory, or diagnostic tasks that produce no file changes do not require an empty commit or push, but the initial Git and remote-state checks are still required.
+
+- Follow only the user’s current, explicitly stated objective. Treat rejected or withdrawn directions as superseded and remove their effects from all project artifacts and responses; deliver only the intended final state, without correction history, exclusionary labels, or repetitive explanations.
+
+- Prefer direct, readable code sufficient for current requirements. Keep functions simple and practical, and introduce defensive logic or abstractions only when justified by concrete requirements or existing usage.
+
+- Unless compatibility is explicitly required or concrete external consumers or production data prevent a coordinated migration, apply breaking changes across the entire repository. Update all callers, tests, fixtures, examples, and documentation, remove the superseded implementation, and do not preserve it through wrappers, aliases, legacy parsing, or migration shims.
+
+- Use precise, self-explanatory names and a clear structure. Comments should explain only non-obvious intent, constraints, edge cases, or trade-offs, and must remain consistent with the code.
+
+- Organize source files in this order: type definitions, inputs and outputs, constants, state and variables, derived values, functions, listeners, and lifecycle hooks. Mark each non-empty section with `// -- Section Name`, keep related content together, and split files by responsibility when the structure becomes unwieldy.
