@@ -1302,16 +1302,18 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
       timeout: NETEASE_API_TIMEOUT_MS
     }))
     signal?.throwIfAborted()
-    /** 接口返回的完整喜欢歌曲 ID，经请求上限裁剪。 */
-    const ids = array(bodyRecord(likedResponse)['ids'])
+    /** 接口返回的完整喜欢歌曲 ID，用于独立于歌曲详情分页维护收藏状态。 */
+    const songIds = array(bodyRecord(likedResponse)['ids'])
       .map(idValue)
       .filter((item): item is string => Boolean(item))
-      .slice(0, limit)
+    /** 当前请求需要补齐详情的喜欢歌曲 ID。 */
+    const ids = songIds.slice(0, limit)
     if (ids.length === 0) {
       return MusicReadResultSchema.parse({
         kind: 'songCollection',
         collection: 'liked',
         ownerId: userId,
+        songIds,
         songs: [],
         updatedAt: observedAt
       })
@@ -1340,6 +1342,7 @@ export class NeteaseMusicApiAdapter implements MusicDataSource {
       kind: 'songCollection',
       collection: 'liked',
       ownerId: userId,
+      songIds,
       songs: normalizedSongs,
       updatedAt: observedAt
     })

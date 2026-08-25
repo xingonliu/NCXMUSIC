@@ -130,6 +130,7 @@ export const enUSMusicSourceMessages = {
   '尚未播放歌曲': 'No song playing',
   '收藏': 'Like',
   '收藏当前歌曲': 'Like current song',
+  '取消收藏当前歌曲': 'Unlike current song',
   '收起沉浸播放页': 'Close immersive player',
   '收起页面并选择一首歌曲开始播放。': 'Close this view and choose a song to start playback.',
   '首': ' songs',

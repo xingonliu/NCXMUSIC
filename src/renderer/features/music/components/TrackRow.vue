@@ -9,6 +9,7 @@ import {
   type CommonMenuItem
 } from '../../../design-system/components'
 import { formatMusicDuration } from '../music-entity'
+import { useLikedSongsStore } from '../liked-songs-store'
 import { copyText } from '../../foundation/clipboard'
 import MediaArtwork from './MediaArtwork.vue'
 
@@ -32,16 +33,13 @@ const props = withDefaults(defineProps<{
   firstInPlaylist?: boolean
   /** 当前歌曲是否位于歌单末项。 */
   lastInPlaylist?: boolean
-  /** 当前歌曲是否已收藏。 */
-  liked?: boolean
 }>(), {
   active: false,
   showArtwork: true,
   playlistManagement: false,
   managementBusy: false,
   firstInPlaylist: false,
-  lastInPlaylist: false,
-  liked: false
+  lastInPlaylist: false
 })
 
 /** 歌曲行事件。 */
@@ -59,6 +57,15 @@ const emit = defineEmits<{
 }>()
 
 // ========= 变量 =========
+
+/** 应用级歌曲收藏状态。 */
+const likedSongs = useLikedSongsStore()
+
+/** 当前歌曲是否已收藏。 */
+const isLiked = computed<boolean>(() => likedSongs.isLiked(props.song.id))
+
+/** 当前歌曲收藏按钮是否暂时不可操作。 */
+const likeBusy = computed<boolean>(() => likedSongs.loading.value || likedSongs.isPending(props.song.id))
 
 /** 歌手展示文本。 */
 const artistText = computed<string>(() => {
@@ -85,7 +92,7 @@ const contextMenuItems = computed<CommonMenuItem[]>(() => {
     { value: 'play-next', label: '下一首播放' },
     { value: 'enqueue', label: '添加到队列末尾' },
     { value: 'separator-a', type: 'separator' },
-    { value: 'like', label: props.liked ? '取消收藏' : '收藏' },
+    { value: 'like', label: isLiked.value ? '取消收藏' : '收藏', disabled: likeBusy.value },
     { value: 'add-to-playlist', label: '添加到歌单' },
     { value: 'details', label: '查看歌曲详情' },
     { value: 'give-agent', label: '交给 Agent' },
@@ -223,12 +230,14 @@ function handleContextAction(value: string | number): void {
           <CommonIconButton
             size="compact"
             variant="ghost"
-            :label="$tSource(props.liked ? '取消收藏' : '收藏')"
+            :selected="isLiked"
+            :disabled="likeBusy"
+            :label="$tSource(isLiked ? '取消收藏' : '收藏')"
             @click.stop="emit('like', props.song)"
           >
             <Heart
               :size="13"
-              :fill="props.liked ? 'currentColor' : 'none'"
+              :fill="isLiked ? 'currentColor' : 'none'"
             />
           </CommonIconButton>
           <CommonIconButton

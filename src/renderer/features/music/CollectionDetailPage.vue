@@ -25,7 +25,7 @@ import MusicCommentsSection from './components/MusicCommentsSection.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
 import { useAccountSessionStore } from '../account/account-session-store'
 import { copyText } from '../foundation/clipboard'
-import { mutateMusic, playSongNext } from './music-actions'
+import { mutateMusic, playSongNext, toggleSongLike } from './music-actions'
 import {
   collectionSongs,
   standardSongToTrackSummary,
@@ -279,14 +279,9 @@ async function toggleSubscription(): Promise<void> {
   showToast(subscribed ? `已收藏《${current.name}》。` : `已取消收藏《${current.name}》。`, 'success')
 }
 
-/** 收藏当前歌曲。 */
+/** 收藏或取消收藏当前歌曲。 */
 async function likeSong(song: StandardSong): Promise<void> {
-  const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
-  if (!response.ok) {
-    showToast(translatePublicError(response.error), 'warning')
-    return
-  }
-  showToast(`已收藏《${song.name}》。`, 'success')
+  await toggleSongLike(song)
 }
 
 /** 从当前自建歌单移除歌曲，并在成功后更新标准实体副本。 */

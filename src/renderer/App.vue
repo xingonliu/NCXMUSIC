@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import AppShell from './design-system/patterns/AppShell.vue'
@@ -15,6 +15,7 @@ import ImmersiveLyricsPage from './features/music/ImmersiveLyricsPage.vue'
 import AudioHost from './features/music/components/AudioHost.vue'
 import PlayerBar from './features/music/components/PlayerBar.vue'
 import { useImmersivePlayerPresentation } from './features/music/immersive-player-presentation'
+import { useLikedSongsStore } from './features/music/liked-songs-store'
 import { usePlayerKeyboardShortcuts } from './features/music/use-player-keyboard-shortcuts'
 import VoiceInputLayer from './features/voice/VoiceInputLayer.vue'
 
@@ -25,6 +26,9 @@ const route = useRoute()
 
 /** 应用级沉浸播放展示控制器。 */
 const immersivePlayer = useImmersivePlayerPresentation()
+
+/** 应用级歌曲收藏状态。 */
+const likedSongs = useLikedSongsStore()
 
 /** 沉浸播放展示层是否仍处于挂载状态。 */
 const isImmersivePlayerOpen = immersivePlayer.isOpen
@@ -156,6 +160,10 @@ watch(
   (open) => void immersivePlayer.syncFromRoute(open),
   { immediate: true }
 )
+
+onMounted(() => {
+  void likedSongs.initialize()
+})
 </script>
 
 <template>

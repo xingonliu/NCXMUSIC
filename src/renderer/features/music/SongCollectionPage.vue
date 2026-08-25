@@ -10,11 +10,10 @@ import {
   CommonErrorState,
   CommonSpinner
 } from '../../design-system/components'
-import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
 import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
-import { mutateMusic, playSongNext } from './music-actions'
+import { playSongNext, toggleSongLike } from './music-actions'
 import {
   standardSongToTrackSummary,
   standardSongsToTrackSummaries
@@ -130,14 +129,9 @@ function enqueueSong(song: StandardSong): void {
   player.enqueue([standardSongToTrackSummary(song)], { kind: 'discover' })
 }
 
-/** 收藏歌曲。 */
+/** 收藏或取消收藏歌曲。 */
 async function likeSong(song: StandardSong): Promise<void> {
-  const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
-  if (!response.ok) {
-    showToast(translatePublicError(response.error), 'warning')
-    return
-  }
-  showToast(`已收藏《${song.name}》。`, 'success')
+  await toggleSongLike(song)
 }
 
 /** 打开共享的自建歌单选择对话框。 */

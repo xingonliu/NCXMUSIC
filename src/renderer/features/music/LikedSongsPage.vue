@@ -10,11 +10,11 @@ import {
   CommonErrorState,
   CommonSpinner
 } from '../../design-system/components'
-import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
 import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
-import { mutateMusic, playSongNext } from './music-actions'
+import { useLikedSongsStore } from './liked-songs-store'
+import { playSongNext, toggleSongLike } from './music-actions'
 import {
   standardSongToTrackSummary,
   standardSongsToTrackSummaries
@@ -32,6 +32,9 @@ const router = useRouter()
 
 /** 应用播放器接口。 */
 const player = usePlayer()
+
+/** 应用级歌曲收藏状态。 */
+const likedSongs = useLikedSongsStore()
 
 /** 喜欢歌曲列表。 */
 const songs = ref<StandardSong[]>([])
@@ -77,6 +80,7 @@ async function loadLikedSongs(): Promise<void> {
     return
   }
   songs.value = result.songs
+  likedSongs.synchronize(result.songIds ?? result.songs.map((song) => song.id))
 }
 
 /** 打开官方登录流程。 */
@@ -107,13 +111,8 @@ function enqueueSong(song: StandardSong): void {
 
 /** 从我喜欢中取消收藏歌曲。 */
 async function unlikeSong(song: StandardSong): Promise<void> {
-  const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: false })
-  if (!response.ok) {
-    showToast(translatePublicError(response.error), 'warning')
-    return
-  }
-  songs.value = songs.value.filter((item) => item.id !== song.id)
-  showToast(`已从我喜欢移除《${song.name}》。`, 'info')
+  const liked = await toggleSongLike(song)
+  if (liked === false) songs.value = songs.value.filter((item) => item.id !== song.id)
 }
 
 /** 打开共享的自建歌单选择对话框。 */
@@ -208,7 +207,6 @@ onMounted(async () => {
       v-else
       :songs="songs"
       :active-track-id="activeTrackId"
-      liked
       @play="playSong"
       @enqueue="enqueueSong"
       @play-next="playSongNext($event, { kind: 'liked' })"

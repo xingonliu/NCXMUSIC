@@ -10,6 +10,7 @@ import ImmersiveLyricsPage from '../../src/renderer/features/music/ImmersiveLyri
 import immersiveLyricsPageSource from '../../src/renderer/features/music/ImmersiveLyricsPage.vue?raw'
 import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
 import immersivePlayerPresentationSource from '../../src/renderer/features/music/immersive-player-presentation.ts?raw'
+import { disposeLikedSongsStore, useLikedSongsStore } from '../../src/renderer/features/music/liked-songs-store'
 import { disposePlayer } from '../../src/renderer/features/music/use-player'
 import { useAppPreferences } from '../../src/renderer/features/settings/app-preferences'
 
@@ -121,6 +122,7 @@ afterEach(async () => {
     value: originalAnimate
   })
   disposePlayer()
+  disposeLikedSongsStore()
   await closeImmersivePlayerImmediately()
   document.body.innerHTML = ''
 })
@@ -417,6 +419,7 @@ describe('应用级沉浸播放展示', () => {
       },
       quality: 'auto'
     })
+    useLikedSongsStore().synchronize([mockTrack.trackId])
 
     const wrapper = mount(ImmersiveLyricsPage, {
       global: {
@@ -437,7 +440,8 @@ describe('应用级沉浸播放展示', () => {
     const likeBtn = actionButtons[0]
     const copyBtn = actionButtons[1]
     const modeBtn = actionButtons[2]
-    expect(likeBtn?.attributes('aria-label')).toBe('收藏当前歌曲')
+    expect(likeBtn?.attributes('aria-label')).toBe('取消收藏当前歌曲')
+    expect(likeBtn?.attributes('aria-pressed')).toBe('true')
     expect(copyBtn?.attributes('aria-label')).toBe('复制歌曲信息')
     expect(modeBtn?.attributes('aria-label')).toBe('列表循环')
 

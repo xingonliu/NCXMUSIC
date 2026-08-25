@@ -17,12 +17,11 @@ import {
   CommonSearchInput,
   CommonSpinner
 } from '../../design-system/components'
-import { showToast } from '../../design-system/use-toast'
 import { t , translatePublicError} from '../../i18n'
 import Cover from './components/Cover.vue'
 import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
-import { mutateMusic, playSongNext } from './music-actions'
+import { playSongNext, toggleSongLike } from './music-actions'
 import {
   standardSongToTrackSummary,
   standardSongsToTrackSummaries
@@ -168,14 +167,9 @@ function enqueueSong(song: StandardSong): void {
   player.enqueue([standardSongToTrackSummary(song)], { kind: 'search' })
 }
 
-/** 收藏搜索结果歌曲。 */
+/** 收藏或取消收藏搜索结果歌曲。 */
 async function likeSong(song: StandardSong): Promise<void> {
-  const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
-  if (!response.ok) {
-    showToast(translatePublicError(response.error), 'warning')
-    return
-  }
-  showToast(t('music.search.liked', { song: song.name }), 'success')
+  await toggleSongLike(song)
 }
 
 /** 打开专辑详情。 */

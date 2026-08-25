@@ -176,7 +176,10 @@ describe('浏览与个人页 API 适配', () => {
     /** 未截断的喜欢歌曲集合。 */
     const liked = await adapter.read({ operation: 'getLikedSongs', userId: '1001', limit: 100_000 }, '')
     expect(liked.kind).toBe('songCollection')
-    if (liked.kind === 'songCollection') expect(liked.songs).toHaveLength(501)
+    if (liked.kind === 'songCollection') {
+      expect(liked.songIds).toEqual(likedIds)
+      expect(liked.songs).toHaveLength(501)
+    }
     expect(api.song_detail).toHaveBeenCalledTimes(2)
 
     /** 带歌单上下文加入时间的标准详情。 */

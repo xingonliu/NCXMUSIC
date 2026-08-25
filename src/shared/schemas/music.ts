@@ -490,6 +490,8 @@ export const MusicSongCollectionResultSchema = z.strictObject({
   collection: z.enum(['new', 'daily', 'liked', 'personalFm', 'historyWeek', 'historyAll', 'artistWorks', 'hot']),
   ownerId: MusicUserIdSchema.optional(),
   artistId: ArtistIdSchema.optional(),
+  /** 完整歌曲 ID 集合；需要独立于详情分页维护状态的响应可提供。 */
+  songIds: z.array(TrackIdSchema).optional(),
   songs: z.array(StandardSongSchema).default([]),
   updatedAt: EntityUpdatedAtSchema
 })

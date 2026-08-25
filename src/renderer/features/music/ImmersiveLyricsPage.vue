@@ -11,7 +11,7 @@ import {
   Shuffle,
   X
 } from '@lucide/vue'
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import type { PlayMode } from '../../../domains/player/types'
 import type {
@@ -24,8 +24,7 @@ import {
   CommonHeaderGroupItem,
   CommonIconButton
 } from '../../design-system/components'
-import { showToast } from '../../design-system/use-toast'
-import { useI18n , translatePublicError} from '../../i18n'
+import { useI18n } from '../../i18n'
 import { copyText } from '../foundation/clipboard'
 import { DEFAULT_LYRIC_ACCENT_COLOR } from './artwork-accent-color'
 import FluidMeshBackground from './components/FluidMeshBackground.vue'
@@ -33,7 +32,8 @@ import LyricsPanel from './components/LyricsPanel.vue'
 import MediaArtwork from './components/MediaArtwork.vue'
 import PlaybackControls from './components/PlaybackControls.vue'
 import QueueDrawer from './components/QueueDrawer.vue'
-import { mutateMusic } from './music-actions'
+import { useLikedSongsStore } from './liked-songs-store'
+import { toggleSongLike } from './music-actions'
 import { adaptArtworkUrl } from './music-entity'
 import { usePlayer } from './use-player'
 
@@ -52,6 +52,9 @@ const pageRoot = ref<HTMLElement | null>(null)
 
 /** 播放器接口，所有控制仍发送到唯一播放域。 */
 const player = usePlayer()
+
+/** 应用级歌曲收藏状态。 */
+const likedSongs = useLikedSongsStore()
 
 /** 播放器只读快照。 */
 const snapshot = player.snapshot
@@ -76,8 +79,17 @@ const lyricAccentColor = ref<string>(DEFAULT_LYRIC_ACCENT_COLOR)
 /** 当前曲目歌手展示文本。 */
 const artistText = computed<string>(() => track.value?.artists.join(' / ') ?? '')
 
-/** 当前曲目是否已在本次沉浸会话中完成收藏。 */
-const isLiked = ref<boolean>(false)
+/** 当前曲目是否已收藏。 */
+const isLiked = computed<boolean>(() => {
+  const currentTrack = track.value
+  return currentTrack ? likedSongs.isLiked(currentTrack.trackId) : false
+})
+
+/** 当前曲目收藏按钮是否暂时不可操作。 */
+const likeBusy = computed<boolean>(() => {
+  const currentTrack = track.value
+  return likedSongs.loading.value || Boolean(currentTrack && likedSongs.isPending(currentTrack.trackId))
+})
 
 /** 沉浸页使用的国际化状态。 */
 const i18n = useI18n()
@@ -129,26 +141,12 @@ function updateLyricAccentColor(color: string): void {
   lyricAccentColor.value = color
 }
 
-/** 收藏当前歌曲，并通过全局 Toast 返回结果。 */
-async function likeCurrentTrack(): Promise<void> {
+/** 收藏或取消收藏当前歌曲。 */
+async function toggleCurrentTrackLike(): Promise<void> {
   /** 当前可收藏的曲目。 */
   const currentTrack = track.value
-  if (!currentTrack || isLiked.value) return
-
-  /** 收藏当前曲目的标准写入响应。 */
-  const response = await mutateMusic({
-    operation: 'likeTrack',
-    trackId: currentTrack.trackId,
-    liked: true
-  })
-
-  if (!response.ok) {
-    showToast(translatePublicError(response.error), 'warning')
-    return
-  }
-
-  isLiked.value = true
-  showToast(`已收藏《${currentTrack.name}》。`, 'success')
+  if (!currentTrack) return
+  await toggleSongLike({ id: currentTrack.trackId, name: currentTrack.name })
 }
 
 /** 把当前歌曲信息复制到系统剪贴板。 */
@@ -183,10 +181,6 @@ function handleWindowKeydown(event: KeyboardEvent): void {
 }
 
 // ========= 生命周期 =========
-
-watch(() => track.value?.trackId, () => {
-  isLiked.value = false
-})
 
 onMounted(async () => {
   window.addEventListener('keydown', handleWindowKeydown)
@@ -313,8 +307,9 @@ onBeforeUnmount(() => {
               size="default"
               variant="ghost"
               :selected="isLiked"
-              :label="$tSource(isLiked ? '已收藏当前歌曲' : '收藏当前歌曲')"
-              @click="likeCurrentTrack"
+              :disabled="likeBusy"
+              :label="$tSource(isLiked ? '取消收藏当前歌曲' : '收藏当前歌曲')"
+              @click="toggleCurrentTrackLike"
             >
               <Heart
                 :size="18"

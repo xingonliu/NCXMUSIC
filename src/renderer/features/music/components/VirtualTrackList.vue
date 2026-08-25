@@ -19,15 +19,12 @@ const props = withDefaults(defineProps<{
   playlistManagement?: boolean
   /** 是否暂时禁用歌单管理动作。 */
   managementBusy?: boolean
-  /** 是否将列表歌曲显示为已收藏。 */
-  liked?: boolean
 }>(), {
   activeTrackId: null,
   rowHeight: 60,
   showArtwork: true,
   playlistManagement: false,
-  managementBusy: false,
-  liked: false
+  managementBusy: false
 })
 
 /** 歌曲列表事件。 */
@@ -100,7 +97,6 @@ function handleKeydown(event: KeyboardEvent): void {
         :management-busy="props.managementBusy"
         :first-in-playlist="index === 0"
         :last-in-playlist="index === props.songs.length - 1"
-        :liked="props.liked"
         @focusin="keyboardIndex = index"
         @play="emit('play', $event)"
         @enqueue="emit('enqueue', $event)"

@@ -30,7 +30,8 @@ import { useAccountSessionStore } from '../account/account-session-store'
 import { copyText } from '../foundation/clipboard'
 import AddTrackToPlaylistDialog from '../music/components/AddTrackToPlaylistDialog.vue'
 import Cover from '../music/components/Cover.vue'
-import { mutateMusic, playSongNext } from '../music/music-actions'
+import { useLikedSongsStore } from '../music/liked-songs-store'
+import { playSongNext, toggleSongLike } from '../music/music-actions'
 import {
   formatMusicDuration,
   standardSongToTrackSummary,
@@ -60,6 +61,9 @@ const router = useRouter()
 
 /** 应用播放器接口。 */
 const player = usePlayer()
+
+/** 应用级歌曲收藏状态。 */
+const likedSongs = useLikedSongsStore()
 
 /** 标准用户实体。 */
 const user = ref<StandardUser | null>(null)
@@ -248,14 +252,9 @@ function enqueueHistorySong(song: StandardSong): void {
   showToast(`已将《${song.name}》加入播放队列。`, 'info')
 }
 
-/** 收藏当前歌曲。 */
+/** 收藏或取消收藏当前歌曲。 */
 async function toggleLikeSong(song: StandardSong): Promise<void> {
-  const response = await mutateMusic({ operation: 'likeTrack', trackId: song.id, liked: true })
-  if (!response.ok) {
-    showToast(translatePublicError(response.error), 'warning')
-    return
-  }
-  showToast(`已收藏《${song.name}》。`, 'success')
+  await toggleSongLike(song)
 }
 
 /** 打开共享的自建歌单选择对话框。 */
@@ -282,13 +281,17 @@ function openPlaylist(playlist: StandardPlaylist): void {
 }
 
 /** 获取单首歌曲右键上下文动作。 */
-function getSongMenuItems(): CommonMenuItem[] {
+function getSongMenuItems(song: StandardSong): CommonMenuItem[] {
   return [
     { value: 'play', label: '立即播放' },
     { value: 'play-next', label: '下一首播放' },
     { value: 'enqueue', label: '添加到队列末尾' },
     { value: 'separator-a', type: 'separator' },
-    { value: 'like', label: '收藏歌曲' },
+    {
+      value: 'like',
+      label: likedSongs.isLiked(song.id) ? '取消收藏' : '收藏歌曲',
+      disabled: likedSongs.loading.value || likedSongs.isPending(song.id)
+    },
     { value: 'add-to-playlist', label: '添加到歌单' },
     { value: 'details', label: '查看歌曲详情' },
     { value: 'give-agent', label: '交给小云' },
@@ -518,7 +521,7 @@ watch(
           <CommonContextMenu
             v-for="(song, index) in visibleHistory"
             :key="`${song.id}-${index}`"
-            :items="getSongMenuItems()"
+            :items="getSongMenuItems(song)"
             @select="handleSongMenuSelect(song, $event)"
           >
             <div
@@ -590,10 +593,15 @@ watch(
                   <CommonIconButton
                     size="compact"
                     variant="ghost"
-                    :label="$tSource('收藏')"
+                    :selected="likedSongs.isLiked(song.id)"
+                    :disabled="likedSongs.loading.value || likedSongs.isPending(song.id)"
+                    :label="$tSource(likedSongs.isLiked(song.id) ? '取消收藏' : '收藏')"
                     @click.stop="toggleLikeSong(song)"
                   >
-                    <Heart :size="13" />
+                    <Heart
+                      :size="13"
+                      :fill="likedSongs.isLiked(song.id) ? 'currentColor' : 'none'"
+                    />
                   </CommonIconButton>
                   <CommonIconButton
                     size="compact"

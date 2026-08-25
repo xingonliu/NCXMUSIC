@@ -13,7 +13,8 @@ import {
 import { showToast } from '../../design-system/use-toast'
 import Cover from './components/Cover.vue'
 import MusicCommentsSection from './components/MusicCommentsSection.vue'
-import { mutateMusic } from './music-actions'
+import { useLikedSongsStore } from './liked-songs-store'
+import { toggleSongLike } from './music-actions'
 import { formatMusicDuration, standardSongToTrackSummary } from './music-entity'
 import './music-content-pages.css'
 import { usePlayer } from './use-player'
@@ -26,6 +27,9 @@ const route = useRoute()
 
 /** 全局播放器接口。 */
 const player = usePlayer()
+
+/** 应用级歌曲收藏状态。 */
+const likedSongs = useLikedSongsStore()
 
 /** 当前歌曲实体。 */
 const song = ref<StandardSong | null>(null)
@@ -44,6 +48,14 @@ const songId = computed<string>(() => String(route.params['songId'] ?? ''))
 
 /** 歌手展示文本。 */
 const artistText = computed<string>(() => song.value?.artists.map((artist) => artist.name).join(' / ') || '未知歌手')
+
+/** 当前歌曲是否已收藏。 */
+const isLiked = computed<boolean>(() => song.value ? likedSongs.isLiked(song.value.id) : false)
+
+/** 当前歌曲收藏按钮是否暂时不可操作。 */
+const likeBusy = computed<boolean>(() => (
+  likedSongs.loading.value || (song.value ? likedSongs.isPending(song.value.id) : false)
+))
 
 // ========= 函数 =========
 
@@ -88,11 +100,10 @@ function enqueueSong(): void {
   showToast(`已将《${song.value.name}》加入队列。`, 'info')
 }
 
-/** 收藏当前歌曲。 */
+/** 收藏或取消收藏当前歌曲。 */
 async function likeSong(): Promise<void> {
   if (!song.value) return
-  const response = await mutateMusic({ operation: 'likeTrack', trackId: song.value.id, liked: true })
-  showToast(response.ok ? `已收藏《${song.value.name}》。` : translatePublicError(response.error), response.ok ? 'success' : 'warning')
+  await toggleSongLike(song.value)
 }
 
 // ========= 生命周期 =========
@@ -174,9 +185,13 @@ watch(songId, () => void loadSong(), { immediate: true })
               </CommonButton>
               <CommonButton
                 variant="secondary"
+                :disabled="likeBusy"
                 @click="likeSong"
               >
-                <Heart :size="15" />{{ $tSource("收藏") }}
+                <Heart
+                  :size="15"
+                  :fill="isLiked ? 'currentColor' : 'none'"
+                />{{ $tSource(isLiked ? "取消收藏" : "收藏") }}
               </CommonButton>
             </div>
           </div>
