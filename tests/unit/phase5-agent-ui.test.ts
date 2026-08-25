@@ -103,6 +103,17 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('max-height: min(350px, calc(100vh - 140px));')
   })
 
+  it('模型选择器只在当前模型已配置且能够匹配启用 Profile 时显示', () => {
+    /** AgentComposer 源代码。 */
+    const composer = source('src/renderer/features/agent/components/AgentComposer.vue')
+
+    expect(composer).toContain('if (!props.snapshot.configured) return undefined')
+    expect(composer).toContain('v-if="activeModelProfile"')
+    expect(composer).toContain(':model-value="activeModelProfile.profileId"')
+    expect(composer).not.toContain('NCX Agent 极高')
+    expect(composer).not.toContain(':placeholder="activeModelDisplayName"')
+  })
+
   it('进入小云页面后输入框立即显示且不播放入场动画', () => {
     /** Agent 页面 CSS 源代码。 */
     const css = source('src/renderer/features/agent/agent-page.css')

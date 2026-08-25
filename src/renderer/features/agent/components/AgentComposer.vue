@@ -62,10 +62,12 @@ const active = computed<boolean>(() => !['idle', 'completed', 'cancelled', 'fail
 /** 当前是否具备发送消息条件 */
 const canSend = computed<boolean>(() => content.value.trim().length > 0 && props.snapshot.configured)
 
-/** 当前活动模型的展示名称 */
-const activeModelDisplayName = computed<string>(() => {
-  const activeProfile = profiles.value.find((item) => item.profileId === activeProfileId.value)
-  return activeProfile?.displayName ?? 'NCX Agent 极高'
+/** 当前可展示且能够执行 Agent 请求的活动模型 Profile */
+const activeModelProfile = computed<PublicProviderProfile | undefined>(() => {
+  if (!props.snapshot.configured) return undefined
+  return profiles.value.find((profile) => (
+    profile.profileId === activeProfileId.value && profile.enabled
+  ))
 })
 
 /** 快速切换模型的 CommonSelect 选项列表 */
@@ -270,9 +272,9 @@ watch(content, () => {
 
           <!-- 快速切换默认模型 CommonSelect -->
           <CommonSelect
-            :model-value="activeProfileId ?? ''"
+            v-if="activeModelProfile"
+            :model-value="activeModelProfile.profileId"
             :options="modelSelectOptions"
-            :placeholder="activeModelDisplayName"
             size="compact"
             class="agent-model-select"
             @change="handleSelectModel"
