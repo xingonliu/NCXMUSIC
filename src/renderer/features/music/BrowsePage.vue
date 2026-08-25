@@ -323,7 +323,7 @@ onMounted(() => {
                 variant="rectangular"
                 width="48px"
                 height="48px"
-                style="border-radius: var(--ncx-squircle-radius-md); flex-shrink: 0"
+                style="border-radius: var(--ncx-squircle-radius-md); -electron-corner-smoothing: var(--ncx-squircle-smoothing); flex-shrink: 0"
               />
               <div class="browse-skeleton-song-copy">
                 <CommonSkeleton

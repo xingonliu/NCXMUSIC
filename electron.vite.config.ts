@@ -4,6 +4,8 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'electron-vite'
 
+import electronCornerSmoothingPostcss from './scripts/electron-corner-smoothing-postcss'
+
 export default defineConfig({
   main: {
     build: {
@@ -43,6 +45,11 @@ export default defineConfig({
   renderer: {
     root: resolve(__dirname, 'src/renderer'),
     plugins: [vue(), tailwindcss()],
+    css: {
+      postcss: {
+        plugins: [electronCornerSmoothingPostcss()]
+      }
+    },
     resolve: {
       alias: {
         '@domains': resolve(__dirname, 'src/domains'),

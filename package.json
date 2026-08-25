@@ -72,6 +72,7 @@
     "eslint": "10.8.0",
     "eslint-plugin-vue": "10.10.0",
     "happy-dom": "^20.11.1",
+    "postcss": "8.5.25",
     "stylelint": "17.14.1",
     "stylelint-config-standard": "40.0.0",
     "tailwindcss": "^4.3.3",

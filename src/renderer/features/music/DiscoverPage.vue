@@ -475,13 +475,13 @@ watch(
                   variant="rectangular"
                   width="72px"
                   height="30px"
-                  style="border-radius: var(--ncx-squircle-radius-md)"
+                  style="border-radius: var(--ncx-squircle-radius-md); -electron-corner-smoothing: var(--ncx-squircle-smoothing)"
                 />
                 <CommonSkeleton
                   variant="rectangular"
                   width="90px"
                   height="30px"
-                  style="border-radius: var(--ncx-squircle-radius-md)"
+                  style="border-radius: var(--ncx-squircle-radius-md); -electron-corner-smoothing: var(--ncx-squircle-smoothing)"
                 />
               </div>
             </div>
@@ -509,7 +509,7 @@ watch(
               variant="rectangular"
               width="82px"
               height="26px"
-              style="border-radius: var(--ncx-squircle-radius-full); position: absolute; top: 16px; left: 16px"
+              style="border-radius: var(--ncx-squircle-radius-full); -electron-corner-smoothing: var(--ncx-squircle-smoothing); position: absolute; top: 16px; left: 16px"
             />
             <div class="discover-radio-copy">
               <CommonSkeleton
@@ -638,7 +638,7 @@ watch(
               variant="rectangular"
               width="48px"
               height="48px"
-              style="border-radius: var(--ncx-squircle-radius-md); flex-shrink: 0"
+              style="border-radius: var(--ncx-squircle-radius-md); -electron-corner-smoothing: var(--ncx-squircle-smoothing); flex-shrink: 0"
             />
             <div class="discover-skeleton-song-copy">
               <CommonSkeleton

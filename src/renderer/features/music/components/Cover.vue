@@ -67,6 +67,7 @@ const shadowStyles = computed<Record<string, string>>(() => {
   }
   if (props.shape === 'circle') {
     styles.borderRadius = 'var(--ncx-squircle-radius-full)'
+    styles['-electron-corner-smoothing'] = 'var(--ncx-squircle-smoothing)'
   }
   return styles
 })

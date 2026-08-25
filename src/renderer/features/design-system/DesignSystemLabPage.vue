@@ -1840,10 +1840,10 @@ function confirmDangerAction(): void {
             </header>
             <div class="ncx-design-lab-component-demo">
               <CommonResponsiveGrid>
-                <div style="padding: 12px; border-radius: var(--ncx-squircle-radius-xs); background: var(--ncx-color-surface-raised); text-align: center;">
+                <div style="padding: 12px; border-radius: var(--ncx-squircle-radius-xs); -electron-corner-smoothing: var(--ncx-squircle-smoothing); background: var(--ncx-color-surface-raised); text-align: center;">
                   {{ $tSource("网格列 A") }}
                 </div>
-                <div style="padding: 12px; border-radius: var(--ncx-squircle-radius-xs); background: var(--ncx-color-surface-raised); text-align: center;">
+                <div style="padding: 12px; border-radius: var(--ncx-squircle-radius-xs); -electron-corner-smoothing: var(--ncx-squircle-smoothing); background: var(--ncx-color-surface-raised); text-align: center;">
                   {{ $tSource("网格列 B") }}
                 </div>
               </CommonResponsiveGrid>
@@ -1876,7 +1876,7 @@ function confirmDangerAction(): void {
                 v-for="token in squircleTokens"
                 :key="token.name"
                 class="ncx-design-lab-squircle-sample"
-                :style="{ borderRadius: `var(--ncx-squircle-radius-${token.name})` }"
+                :style="`border-radius: var(--ncx-squircle-radius-${token.name}); -electron-corner-smoothing: var(--ncx-squircle-smoothing)`"
               >
                 <strong>{{ token.name }}</strong>
                 <span>{{ token.radius }}</span>

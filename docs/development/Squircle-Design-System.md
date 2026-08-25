@@ -1,11 +1,12 @@
 # Squircle 形状规范
 
-Ncxmusic 的可见圆角统一采用 Squircle。设计基准来自 `D:\临时文件夹-xx\ios-squircle-demo.html`，全局平滑度固定为 60%，与参考 demo 的 iOS / Figma Corner Smoothing 取值一致。
+Ncxmusic 的可见圆角统一采用 Squircle。设计基准来自 `D:\临时文件夹-xx\ios-squircle-demo.html`，圆角元素的平滑度固定为 60%，与参考 demo 的 iOS / Figma Corner Smoothing 取值一致。
 
 ## 实现约束
 
-- Renderer 通过 Electron 原生 `-electron-corner-smoothing` 实现连续曲率；全局规则位于 `src/renderer/design-system/styles/global.css`。
-- 独立的语音胶囊窗口不加载 Renderer 样式，因此在 `src/main/index.ts` 的隔离页面样式中应用同一规则。
+- Renderer 通过 Electron 原生 `-electron-corner-smoothing` 实现连续曲率；`scripts/electron-corner-smoothing-postcss.ts` 在构建期只为非零 `border-radius` 规则注入该属性，不对全 DOM 使用通配符。
+- 模板内联样式不会经过 PostCSS；内联设置 `borderRadius` 时必须在同一元素上显式设置 `-electron-corner-smoothing`。
+- 独立的语音胶囊窗口不加载 Renderer 样式，因此在 `src/main/index.ts` 的隔离页面中只为四个圆角元素显式应用同一属性。
 - 不使用 SVG `clip-path` 裁切普通组件。裁切会同时截断外阴影、焦点轮廓和溢出内容，不适合作为全局组件方案。
 - `border-radius` 只负责尺寸，形状统一由 60% 平滑度决定。尺寸过大时 Electron 会根据元素边界自动回退，胶囊和等宽形状仍可使用 `full`。
 - 新代码不得写非零的圆角字面量、百分比或带 fallback 的旧 token；只允许以下 Squircle token、`0` 或 `inherit`。
@@ -28,6 +29,12 @@ Ncxmusic 的可见圆角统一采用 Squircle。设计基准来自 `D:\临时文
 .panel {
   border-radius: var(--ncx-squircle-radius-lg);
 }
+```
+
+普通样式表只需声明标准圆角 token，构建期会自动补齐 Electron 平滑属性。内联样式必须同时声明：
+
+```html
+<div style="border-radius: var(--ncx-squircle-radius-lg); -electron-corner-smoothing: var(--ncx-squircle-smoothing)"></div>
 ```
 
 需要只保留部分角时，仍使用同一尺寸 token：

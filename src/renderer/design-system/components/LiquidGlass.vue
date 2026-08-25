@@ -113,6 +113,7 @@ const baseStyle = computed(() => {
   return {
     '--frost': props.frost,
     '--liquid-glass-filter': `url(#${filterId.value})`,
+    '-electron-corner-smoothing': 'var(--ncx-squircle-smoothing)',
     borderRadius: `var(--ncx-squircle-radius-${props.squircleSize})`
   }
 })
