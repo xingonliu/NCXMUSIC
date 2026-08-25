@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
   AlertCircle,
-  ChevronRight,
   Copy,
   Terminal,
   ThumbsDown,
@@ -519,7 +518,6 @@ watch(
               class="agent-processing-line"
             >
               <span>{{ $tSource(processingSummary(message)) }}</span>
-              <ChevronRight :size="13" />
             </div>
 
             <!-- Tool Cards Stack -->

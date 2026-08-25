@@ -196,6 +196,14 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('grid-template-rows: 1fr;')
   })
 
+  it('已处理指令摘要行不显示右箭头图标', () => {
+    /** Agent 页面源代码。 */
+    const page = source('src/renderer/features/agent/AgentPage.vue')
+
+    expect(page).toContain('class="agent-processing-line"')
+    expect(page).not.toContain('<ChevronRight :size="13" />')
+  })
+
   it('深度思考内容收起时自适应文本高度并限制最大高度为 120px', () => {
     /** Agent 页面 CSS 源代码。 */
     const css = source('src/renderer/features/agent/agent-page.css')
