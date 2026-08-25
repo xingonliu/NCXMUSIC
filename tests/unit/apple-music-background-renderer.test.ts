@@ -21,17 +21,14 @@ describe('Apple Music 网页端同形背景参数', () => {
       .toEqual([0.09, -0.24, -0.18, 0.12])
     expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.maximumFps).toBe(15)
     expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.artworkTransitionMs).toBe(1_667)
-    expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.saturation).toBe(2.75)
-    expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.brightness).toBe(0.7)
-    expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.contrast).toBe(1.9)
-    expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.twistAngle).toBe(-3.25)
-    expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.twistRadius).toBe(900)
+    expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.saturation).toBe(1.45)
+    expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.brightness).toBe(0.88)
+    expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.contrast).toBe(1.35)
+    expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.warpStrength).toBe(1.2)
+    expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.colorBoost).toBe(1.4)
     expect(APPLE_MUSIC_WEB_BACKGROUND_CONFIG.kawaseFilters).toEqual([
-      { strength: 5, quality: 1 },
-      { strength: 10, quality: 1 },
-      { strength: 20, quality: 2 },
-      { strength: 40, quality: 2 },
-      { strength: 80, quality: 2 }
+      { strength: 8, quality: 1 },
+      { strength: 16, quality: 2 }
     ])
     expect(NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS.motionTransitionMs).toBe(1_200)
     expect(NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS.lowFrequencyScalePulse).toBe(0.1)

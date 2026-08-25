@@ -1,7 +1,6 @@
-import { Application, Container, Graphics, Sprite, Texture, type Ticker } from 'pixi.js'
+import { Application, Container, Filter, GlProgram, Graphics, Sprite, Texture, type Ticker } from 'pixi.js'
 import { AdjustmentFilter } from 'pixi-filters/adjustment'
 import { KawaseBlurFilter } from 'pixi-filters/kawase-blur'
-import { TwistFilter } from 'pixi-filters/twist'
 
 // ========= 类型 =========
 
@@ -59,17 +58,14 @@ interface ArtworkSlot {
 export const APPLE_MUSIC_WEB_BACKGROUND_CONFIG = {
   maximumFps: 15,
   artworkTransitionMs: 1_667,
-  saturation: 2.75,
-  brightness: 0.7,
-  contrast: 1.9,
-  twistAngle: -3.25,
-  twistRadius: 900,
+  saturation: 1.45,
+  brightness: 0.88,
+  contrast: 1.35,
+  warpStrength: 1.2,
+  colorBoost: 1.4,
   kawaseFilters: [
-    { strength: 5, quality: 1 },
-    { strength: 10, quality: 1 },
-    { strength: 20, quality: 2 },
-    { strength: 40, quality: 2 },
-    { strength: 80, quality: 2 }
+    { strength: 8, quality: 1 },
+    { strength: 16, quality: 2 }
   ],
   layerSizeRatios: [1.25, 0.8, 0.5, 0.25],
   layerPhaseSpeeds: [0.09, -0.24, -0.18, 0.12]
@@ -302,11 +298,213 @@ export function releaseAppleMusicArtworkTexture(texture: Texture): void {
   texture.destroy(false)
 }
 
+// ========= 着色器与滤镜 =========
+
+/** 流体网格与多维域扭曲顶点着色器（PixiJS 8 过滤器标准接口）。 */
+const FLUID_MESH_VERTEX_SHADER = `
+in vec2 aPosition;
+out vec2 vTextureCoord;
+
+uniform vec4 uInputSize;
+uniform vec4 uOutputFrame;
+uniform vec4 uOutputTexture;
+
+vec4 filterVertexPosition(void)
+{
+    vec2 position = aPosition * uOutputFrame.zw + uOutputFrame.xy;
+    position.x = position.x * (2.0 / uOutputTexture.x) - 1.0;
+    position.y = position.y * (2.0 * uOutputTexture.z / uOutputTexture.y) - uOutputTexture.z;
+    return vec4(position, 0.0, 1.0);
+}
+
+vec2 filterTextureCoord(void)
+{
+    return aPosition * (uOutputFrame.zw * uInputSize.zw);
+}
+
+void main(void)
+{
+    gl_Position = filterVertexPosition();
+    vTextureCoord = filterTextureCoord();
+}
+`
+
+/** 流体网格与多维域扭曲片元着色器，模拟 Apple Music 原生高反差流体对撞。 */
+const FLUID_MESH_FRAGMENT_SHADER = `
+precision highp float;
+in vec2 vTextureCoord;
+out vec4 finalColor;
+
+uniform sampler2D uTexture;
+uniform vec4 uInputSize;
+uniform vec2 uResolution;
+uniform float uTime;
+uniform float uAudioEnergy;
+uniform float uWarpStrength;
+uniform float uColorBoost;
+
+vec2 mapCoord(vec2 coord)
+{
+    coord *= uInputSize.xy;
+    coord += uInputSize.zw;
+    return coord;
+}
+
+vec2 unmapCoord(vec2 coord)
+{
+    coord -= uInputSize.zw;
+    coord /= uInputSize.xy;
+    return coord;
+}
+
+vec2 hash2(vec2 p)
+{
+    p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+    return -1.0 + 2.0 * fract(sin(p) * 43758.5453123);
+}
+
+float noise(vec2 p)
+{
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(
+        mix(dot(hash2(i + vec2(0.0, 0.0)), f - vec2(0.0, 0.0)),
+            dot(hash2(i + vec2(1.0, 0.0)), f - vec2(1.0, 0.0)), u.x),
+        mix(dot(hash2(i + vec2(0.0, 1.0)), f - vec2(0.0, 1.0)),
+            dot(hash2(i + vec2(1.0, 1.0)), f - vec2(1.0, 1.0)), u.x),
+        u.y
+    );
+}
+
+float fbm(vec2 p)
+{
+    float v = 0.0;
+    float a = 0.5;
+    vec2 shift = vec2(100.0);
+    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
+    for (int i = 0; i < 4; ++i)
+    {
+        v += a * noise(p);
+        p = rot * p * 2.0 + shift;
+        a *= 0.5;
+    }
+    return v;
+}
+
+vec2 domainWarp(vec2 p, float time, float energy)
+{
+    float t = time * 0.18;
+    vec2 q = vec2(
+        fbm(p + vec2(0.0, 0.0) + vec2(t * 0.45, t * 0.25)),
+        fbm(p + vec2(5.2, 1.3) - vec2(t * 0.35, t * 0.55))
+    );
+    vec2 r = vec2(
+        fbm(p + 3.2 * q + vec2(1.7, 9.2) + vec2(t * 0.65, -t * 0.45)),
+        fbm(p + 3.2 * q + vec2(8.3, 2.8) + vec2(-t * 0.55, t * 0.75))
+    );
+    float strength = uWarpStrength * (0.35 + 0.22 * energy);
+    return p + r * strength;
+}
+
+vec3 sharpenColorSlope(vec3 col)
+{
+    vec3 sCurve = smoothstep(vec3(0.03), vec3(0.97), col);
+    col = mix(col, sCurve, 0.5);
+    float luminance = dot(col, vec3(0.2126, 0.7152, 0.0722));
+    col = mix(vec3(luminance), col, uColorBoost);
+    return clamp(col, 0.0, 1.0);
+}
+
+void main(void)
+{
+    vec2 screenCoord = mapCoord(vTextureCoord);
+    vec2 res = max(vec2(1.0), uResolution);
+    vec2 uv = screenCoord / res;
+
+    float aspect = res.x / max(1.0, res.y);
+    vec2 centeredUv = uv - 0.5;
+    centeredUv.x *= aspect;
+
+    vec2 warped = domainWarp(centeredUv * 2.4, uTime, uAudioEnergy);
+    warped.x /= aspect;
+    warped += 0.5;
+
+    vec2 clampedUv = clamp(warped, vec2(0.001), vec2(0.999));
+    vec2 samplePixelCoord = clampedUv * res;
+    vec2 finalSampleCoord = unmapCoord(samplePixelCoord);
+
+    vec4 texColor = texture(uTexture, finalSampleCoord);
+    texColor.rgb = sharpenColorSlope(texColor.rgb);
+
+    finalColor = texColor;
+}
+`
+
+/** 流体网格着色器配置项。 */
+export interface FluidMeshFilterOptions {
+  /** 域扭曲湍流强度。 */
+  warpStrength?: number
+  /** 色彩饱和度与对比度增强倍率。 */
+  colorBoost?: number
+}
+
+/**
+ * 专为沉浸歌词设计的 Apple Music 同质感流体网格与域扭曲滤镜。
+ */
+export class FluidMeshFilter extends Filter {
+  constructor(options?: FluidMeshFilterOptions) {
+    const glProgram = GlProgram.from({
+      vertex: FLUID_MESH_VERTEX_SHADER,
+      fragment: FLUID_MESH_FRAGMENT_SHADER,
+      name: 'fluid-mesh-filter'
+    })
+
+    super({
+      glProgram,
+      resources: {
+        fluidMeshUniforms: {
+          uResolution: { value: new Float32Array([1, 1]), type: 'vec2<f32>' },
+          uTime: { value: 0, type: 'f32' },
+          uAudioEnergy: { value: 0, type: 'f32' },
+          uWarpStrength: { value: options?.warpStrength ?? 1.2, type: 'f32' },
+          uColorBoost: { value: options?.colorBoost ?? 1.4, type: 'f32' }
+        }
+      }
+    })
+  }
+
+  get time(): number {
+    return (this.resources as { fluidMeshUniforms: { uniforms: { uTime: number } } })
+      .fluidMeshUniforms.uniforms.uTime
+  }
+
+  set time(value: number) {
+    (this.resources as { fluidMeshUniforms: { uniforms: { uTime: number } } })
+      .fluidMeshUniforms.uniforms.uTime = value
+  }
+
+  get audioEnergy(): number {
+    return (this.resources as { fluidMeshUniforms: { uniforms: { uAudioEnergy: number } } })
+      .fluidMeshUniforms.uniforms.uAudioEnergy
+  }
+
+  set audioEnergy(value: number) {
+    (this.resources as { fluidMeshUniforms: { uniforms: { uAudioEnergy: number } } })
+      .fluidMeshUniforms.uniforms.uAudioEnergy = value
+  }
+
+  setResolution(width: number, height: number): void {
+    (this.resources as { fluidMeshUniforms: { uniforms: { uResolution: Float32Array } } })
+      .fluidMeshUniforms.uniforms.uResolution = new Float32Array([width, height])
+  }
+}
+
 // ========= 渲染器 =========
 
 /**
- * 以 PixiJS 8 复现 Apple Music 网页歌词动态背景，并叠加 NcxMusic 的音频响应、
- * 三槽快速切歌、暂停缓停、后台节流和减少动态效果策略。
+ * 以 PixiJS 8 复现 Apple Music 网页歌词动态背景，并叠加 NcxMusic 的流体网格着色器、
+ * 音频响应、三槽快速切歌、暂停缓停、后台节流和减少动态效果策略。
  */
 export class FluidMeshRenderer {
   /** Pixi 应用与 WebGL 渲染循环。 */
@@ -321,13 +519,13 @@ export class FluidMeshRenderer {
   /** 三个可在连续快速切歌时重定向的封面组。 */
   private readonly artworkSlots: readonly [ArtworkSlot, ArtworkSlot, ArtworkSlot]
 
-  /** Apple 网页端的中心扭曲滤镜。 */
-  private readonly twistFilter: TwistFilter
+  /** 模拟原生流体色块撕裂与交织的网格域扭曲滤镜。 */
+  private readonly fluidMeshFilter: FluidMeshFilter
 
-  /** Apple 网页端五个逻辑 Kawase 模糊滤镜。 */
+  /** 平滑像素阶梯的轻量 Kawase 模糊滤镜。 */
   private readonly kawaseFilters: readonly KawaseBlurFilter[]
 
-  /** Apple 网页端的最终饱和度、亮度与对比度调整。 */
+  /** 最终饱和度、亮度与对比度微调。 */
   private readonly adjustmentFilter: AdjustmentFilter
 
   /** 当前是否已经上传可绘制的封面。 */
@@ -415,10 +613,9 @@ export class FluidMeshRenderer {
   private constructor(app: Application) {
     this.app = app
     this.artworkSlots = [createArtworkSlot(), createArtworkSlot(), createArtworkSlot()]
-    this.twistFilter = new TwistFilter({
-      angle: APPLE_MUSIC_WEB_BACKGROUND_CONFIG.twistAngle,
-      radius: APPLE_MUSIC_WEB_BACKGROUND_CONFIG.twistRadius,
-      offset: { x: 0.5, y: 0.5 }
+    this.fluidMeshFilter = new FluidMeshFilter({
+      warpStrength: APPLE_MUSIC_WEB_BACKGROUND_CONFIG.warpStrength,
+      colorBoost: APPLE_MUSIC_WEB_BACKGROUND_CONFIG.colorBoost
     })
     this.kawaseFilters = APPLE_MUSIC_WEB_BACKGROUND_CONFIG.kawaseFilters.map((options) => (
       new KawaseBlurFilter({ ...options })
@@ -431,7 +628,7 @@ export class FluidMeshRenderer {
 
     this.scene.addChild(...this.artworkSlots.map((slot) => slot.container))
     this.scene.filters = [
-      this.twistFilter,
+      this.fluidMeshFilter,
       ...this.kawaseFilters,
       this.adjustmentFilter
     ]
@@ -455,9 +652,8 @@ export class FluidMeshRenderer {
     this.updateAudioEnergy(deltaMs)
     this.motionTimeSeconds += deltaMs * this.displayedMotionScale / 1_000
     this.layoutArtworkLayers()
-    this.twistFilter.angle = APPLE_MUSIC_WEB_BACKGROUND_CONFIG.twistAngle
-      * (1 + this.displayedAudioEnergy
-        * NCX_APPLE_MUSIC_BACKGROUND_ENHANCEMENTS.lowFrequencyTwistPulse)
+    this.fluidMeshFilter.time = this.motionTimeSeconds
+    this.fluidMeshFilter.audioEnergy = this.displayedAudioEnergy
 
     if (!this.shouldContinueAnimating()) this.app.stop()
   }
@@ -599,7 +795,7 @@ export class FluidMeshRenderer {
     this.app.renderer.resize(renderWidth, renderHeight, 1)
     this.baseLayer.clear().rect(0, 0, renderWidth, renderHeight).fill({ color: 0xffffff })
     this.scene.filterArea = this.app.screen
-    this.twistFilter.offset = { x: renderWidth / 2, y: renderHeight / 2 }
+    this.fluidMeshFilter.setResolution(renderWidth, renderHeight)
     this.layoutArtworkLayers()
     this.app.render()
   }
@@ -744,7 +940,7 @@ export class FluidMeshRenderer {
     this.app.ticker.remove(this.handleTick)
     this.artworkSlots.forEach((slot) => this.releaseArtworkSlotTexture(slot))
     this.scene.filters = []
-    this.twistFilter.destroy()
+    this.fluidMeshFilter.destroy()
     this.kawaseFilters.forEach((filter) => filter.destroy())
     this.adjustmentFilter.destroy()
     this.app.destroy({ removeView: false }, { children: true })

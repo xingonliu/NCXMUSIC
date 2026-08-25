@@ -454,11 +454,11 @@ onBeforeUnmount(() => {
 }
 
 .fluid-mesh-background-dim {
-  background: rgb(0 0 0 / 50%);
+  background: radial-gradient(circle at center, rgb(0 0 0 / 22%) 0%, rgb(0 0 0 / 42%) 100%);
 }
 
 .fluid-mesh-background-ambient {
-  background: rgb(255 255 255 / 5%);
+  background: rgb(255 255 255 / 3%);
 }
 
 @media (prefers-reduced-motion: reduce) {
