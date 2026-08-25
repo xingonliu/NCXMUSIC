@@ -427,6 +427,7 @@ void main(void)
     centeredUv.x *= aspect;
 
     vec2 warped = domainWarp(centeredUv * 2.4, uTime, uAudioEnergy);
+    warped /= 2.4;         // 还原 2.4× 缩放，回到 centeredUv 空间
     warped.x /= aspect;
     warped += 0.5;
 
