@@ -201,6 +201,7 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('text-overflow: ellipsis;')
     expect(css).toContain('.agent-tool-card:hover .agent-tool-card-actions')
     expect(css).toContain('border: 0;')
+    expect(css).toMatch(/\.agent-tool-card \{[^}]*cursor: pointer;/s)
     expect(css).toContain('.agent-tool-chevron.is-expanded')
     expect(css).toContain('transform: rotate(90deg);')
     expect(css).toContain('.agent-tool-details-wrapper.is-expanded')

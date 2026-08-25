@@ -944,6 +944,7 @@
   flex-direction: column;
   border: 0;
   border-radius: var(--ncx-squircle-radius-sm);
+  cursor: pointer;
   color: var(--ncx-color-text-secondary);
   background: transparent;
   transition: background 140ms ease;
