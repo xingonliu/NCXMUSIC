@@ -97,4 +97,11 @@ describe('settings navigation UI contract', () => {
       expect(source).not.toMatch(/<(?:input|textarea|select)\b/u)
     }
   })
+
+  it('让应用与设置侧栏的单行标签内容垂直居中', () => {
+    expect(appShellStyleSource).toMatch(/\.ncx-nav-item\s*\{[^}]*height:\s*34px;[^}]*align-items:\s*center;[^}]*padding:\s*0 12px;[^}]*line-height:\s*1;/u)
+    expect(appShellStyleSource).toMatch(/\.settings-sidebar-item\s*\{[^}]*height:\s*34px;[^}]*align-items:\s*center;[^}]*padding:\s*0 10px;/u)
+    expect(appShellStyleSource).toMatch(/\.settings-sidebar-item \.ncx-common-button-text\s*\{[^}]*align-items:\s*center;/u)
+    expect(appShellStyleSource).toMatch(/\.settings-search-result\s*\{[^}]*height:\s*auto;[^}]*padding:\s*7px 10px;/u)
+  })
 })
