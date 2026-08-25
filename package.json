@@ -112,6 +112,8 @@
       ]
     },
     "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
       "artifactName": "Ncxmusic Setup ${version}.${ext}",
       "installerIcon": "build/icon.ico",
       "installerHeaderIcon": "build/icon.ico",

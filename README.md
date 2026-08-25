@@ -38,7 +38,7 @@ pnpm dev
 | `pnpm build` | 生成 `out/` 生产构建 |
 | `pnpm package` | 为当前平台生成未发布安装包 |
 
-Windows 安装包、卸载器、快捷方式、任务栏重启入口与系统安装记录统一使用 `Ncxmusic` 名称和 `build/icon.ico` 图标；生成后应从 `release/Ncxmusic Setup <version>.exe` 安装验证，不要复用旧版本安装包。
+Windows 安装包使用引导式安装并允许更改安装目录；安装包、卸载器、快捷方式、任务栏重启入口与系统安装记录统一使用 `Ncxmusic` 名称和 `build/icon.ico` 图标。生成后应从 `release/Ncxmusic Setup <version>.exe` 安装验证，不要复用旧版本安装包。
 
 ## 源码结构
 
