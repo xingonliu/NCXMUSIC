@@ -518,22 +518,18 @@
 .agent-thought-content-wrapper {
   position: relative;
   padding: 10px 14px 12px;
+  box-sizing: border-box;
   transition: max-height 220ms ease;
 }
 
-/* 折叠/默认有限高度窗口：添加上下渐变遮罩 */
+/* 折叠状态由内容决定高度，内容较长时限制为 120px。 */
 .agent-thought-content-wrapper.is-collapsed {
-  height: 120px;
+  height: auto;
   max-height: 120px;
   overflow-y: auto;
   cursor: pointer;
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--ncx-color-text-primary) 18%, transparent) transparent;
-  mask-image: linear-gradient(to bottom,
-      transparent 0%,
-      black 16px,
-      black calc(100% - 20px),
-      transparent 100%);
 }
 
 .agent-thought-content-wrapper.is-collapsed::-webkit-scrollbar {
@@ -932,13 +928,13 @@
 }
 
 /* ==========================================================================
-   Tool Execution Cards (Codex File/Edit Card style)
+   Compact Tool Execution Rows
    ========================================================================== */
 .agent-tool-stack {
   display: grid;
   width: 100%;
   max-width: 780px;
-  gap: 8px;
+  gap: 2px;
   margin: 12px 0 16px;
 }
 
@@ -946,77 +942,102 @@
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 10px 14px;
-  border: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 10%, transparent);
-  border-radius: var(--ncx-squircle-radius-md);
-  background: color-mix(in srgb, var(--ncx-color-surface) 95%, transparent);
-  transition: border-color 140ms ease, background 140ms ease;
+  border: 0;
+  border-radius: var(--ncx-squircle-radius-sm);
+  color: var(--ncx-color-text-secondary);
+  background: transparent;
+  transition: background 140ms ease;
 }
 
-.agent-tool-card:hover {
-  border-color: color-mix(in srgb, var(--ncx-color-text-primary) 16%, transparent);
+.agent-tool-card:hover,
+.agent-tool-card:focus-within,
+.agent-tool-card.is-expanded {
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 3.5%, transparent);
 }
 
 .agent-tool-card-main {
   display: flex;
   width: 100%;
+  min-height: 32px;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.agent-tool-card-main:hover .agent-tool-toggle-btn {
-  color: var(--ncx-color-text-primary);
-  background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
+  padding: 3px 6px;
+  box-sizing: border-box;
 }
 
 .agent-tool-card-left {
   display: flex;
+  flex: 1 1 auto;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   min-width: 0;
 }
 
 .agent-tool-card-icon-box {
   display: inline-flex;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   align-items: center;
   justify-content: center;
   border-radius: var(--ncx-squircle-radius-sm);
-  color: var(--ncx-color-text-primary);
-  background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
+  color: var(--ncx-color-text-tertiary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 5%, transparent);
   flex-shrink: 0;
 }
 
 .agent-tool-card-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  flex: 1 1 auto;
   min-width: 0;
 }
 
 .agent-tool-card-title {
+  display: block;
+  min-width: 0;
   font-size: 13px;
-  font-weight: 600;
-  color: var(--ncx-color-text-primary);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ncx-color-text-secondary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.agent-tool-card-sub {
-  font-size: 11px;
-  color: var(--ncx-color-text-secondary);
-}
-
 .agent-tool-card-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   flex-shrink: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 140ms ease;
+}
+
+.agent-tool-card:hover .agent-tool-card-actions,
+.agent-tool-card:focus-within .agent-tool-card-actions,
+.agent-tool-card.is-expanded .agent-tool-card-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.agent-tool-card-duration {
+  color: var(--ncx-color-text-tertiary);
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.agent-tool-toggle-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: var(--ncx-color-text-tertiary);
+}
+
+.agent-tool-toggle-btn:hover,
+.agent-tool-toggle-btn:focus-visible {
+  color: var(--ncx-color-text-primary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent);
 }
 
 .agent-tool-chevron {
@@ -1026,7 +1047,7 @@
 }
 
 .agent-tool-chevron.is-expanded {
-  transform: rotate(180deg);
+  transform: rotate(90deg);
   color: var(--ncx-color-text-primary);
 }
 
@@ -1041,7 +1062,7 @@
 .agent-tool-details-wrapper.is-expanded {
   grid-template-rows: 1fr;
   opacity: 1;
-  margin-top: 10px;
+  margin: 4px 6px 6px;
 }
 
 .agent-tool-details-inner {
@@ -1052,7 +1073,10 @@
 .agent-tool-card-details {
   display: grid;
   gap: 6px;
+  padding: 10px 12px;
+  border-radius: var(--ncx-squircle-radius-sm);
   color: var(--ncx-color-text-secondary);
+  background: color-mix(in srgb, var(--ncx-color-text-primary) 4%, transparent);
   font-size: 10px;
 }
 

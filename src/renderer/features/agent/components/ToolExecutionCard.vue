@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronDown, FileText, ListMusic, Play, Search, Wrench } from '@lucide/vue'
+import { ChevronRight, FileText, ListMusic, Play, Search, Wrench } from '@lucide/vue'
 import { computed, onUnmounted, ref, watch, type Component } from 'vue'
 
 import type {
@@ -131,13 +131,6 @@ onUnmounted(() => {
   >
     <div
       class="agent-tool-card-main"
-      role="button"
-      tabindex="0"
-      :aria-expanded="expanded"
-      :aria-label="$tSource('展开或收起工具执行明细')"
-      @click="expanded = !expanded"
-      @keydown.enter.prevent="expanded = !expanded"
-      @keydown.space.prevent="expanded = !expanded"
     >
       <div class="agent-tool-card-left">
         <span class="agent-tool-card-icon-box">
@@ -148,20 +141,19 @@ onUnmounted(() => {
         </span>
         <div class="agent-tool-card-info">
           <span class="agent-tool-card-title">{{ $tSource(toolLabel) }} {{ card.title }}</span>
-          <span class="agent-tool-card-sub">{{ $tSource(card.status === 'succeeded' ? '完成' : card.status === 'running' ? '执行中…' : '失败') }} · {{ $tSource(formattedDuration) }}</span>
         </div>
       </div>
       <div class="agent-tool-card-actions">
+        <span class="agent-tool-card-duration">{{ $tSource(formattedDuration) }}</span>
         <button
           type="button"
           class="agent-action-btn agent-tool-toggle-btn"
           :aria-label="$tSource(expanded ? '收起明细' : '展开明细')"
           :aria-expanded="expanded"
-          tabindex="-1"
-          @click.stop="expanded = !expanded"
+          @click="expanded = !expanded"
         >
-          <ChevronDown
-            :size="16"
+          <ChevronRight
+            :size="15"
             class="agent-tool-chevron"
             :class="{ 'is-expanded': expanded }"
           />

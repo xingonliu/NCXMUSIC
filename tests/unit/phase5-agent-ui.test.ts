@@ -177,19 +177,35 @@ describe('phase 5 agent UI contract', () => {
     expect(css).toContain('transform: translateX(-50%);')
   })
 
-  it('ToolExecutionCard 展开与收起具有顺滑旋转动画与平滑容器高度过渡', () => {
+  it('ToolExecutionCard 使用单行省略布局并由 SVG 箭头展开详情', () => {
     /** ToolExecutionCard 源代码。 */
     const card = source('src/renderer/features/agent/components/ToolExecutionCard.vue')
     /** CSS 源代码。 */
     const css = source('src/renderer/features/agent/agent-page.css')
 
     expect(card).toContain('agent-tool-chevron')
+    expect(card).toContain('ChevronRight')
     expect(card).toContain(":class=\"{ 'is-expanded': expanded }\"")
     expect(card).toContain('agent-tool-details-wrapper')
+    expect(card).not.toContain('agent-tool-card-sub')
+    expect(css).toContain('text-overflow: ellipsis;')
+    expect(css).toContain('.agent-tool-card:hover .agent-tool-card-actions')
+    expect(css).toContain('border: 0;')
     expect(css).toContain('.agent-tool-chevron.is-expanded')
-    expect(css).toContain('transform: rotate(180deg);')
+    expect(css).toContain('transform: rotate(90deg);')
     expect(css).toContain('.agent-tool-details-wrapper.is-expanded')
     expect(css).toContain('grid-template-rows: 1fr;')
+  })
+
+  it('深度思考内容收起时自适应文本高度并限制最大高度为 120px', () => {
+    /** Agent 页面 CSS 源代码。 */
+    const css = source('src/renderer/features/agent/agent-page.css')
+
+    expect(css).toContain('.agent-thought-content-wrapper.is-collapsed {')
+    expect(css).toContain('height: auto;')
+    expect(css).toContain('max-height: 120px;')
+    expect(css).toContain('.agent-thought-block.is-expanded .agent-thought-content-wrapper')
+    expect(css).toContain('max-height: none;')
   })
 
   it('输入框配置 100% 实体不透明背景且小云页面底部包含平滑渐变遮罩', () => {
