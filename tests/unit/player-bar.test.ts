@@ -1,16 +1,17 @@
 // @vitest-environment happy-dom
 import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-
 import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinator'
+import appShellSource from '../../src/renderer/design-system/patterns/AppShell.vue?raw'
 import MusicProgressBar from '../../src/renderer/features/music/components/MusicProgressBar.vue'
 import PlayerBar from '../../src/renderer/features/music/components/PlayerBar.vue'
 import playerBarSource from '../../src/renderer/features/music/components/PlayerBar.vue?raw'
 import routerSource from '../../src/renderer/app/router.ts?raw'
+import { useAppPreferences } from '../../src/renderer/features/settings/app-preferences'
 import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
 import { disposePlayer, usePlayer, usePlayerRuntime } from '../../src/renderer/features/music/use-player'
 
-// ========= 变量 =========
+// -- Type Definitions
 
 /** 测试只需要读取命名 props 的组件 wrapper 最小形状。 */
 type PropsReadableWrapper = {
@@ -18,7 +19,23 @@ type PropsReadableWrapper = {
   props: (name: string) => unknown
 }
 
-// ========= 函数 =========
+// -- State and Variables
+
+const liquidGlassMock = vi.hoisted(() => ({
+  destroy: vi.fn(),
+  init: vi.fn()
+}))
+
+vi.mock('@ybouane/liquidglass', () => ({
+  LiquidGlass: {
+    init: liquidGlassMock.init
+  }
+}))
+
+/** 测试共享的应用外观偏好。 */
+const appPreferences = useAppPreferences()
+
+// -- Functions
 
 /** 无动画宿主的测试环境中完成沉浸播放展示层关闭。 */
 async function closeImmersivePlayerImmediately(): Promise<void> {
@@ -30,15 +47,23 @@ async function closeImmersivePlayerImmediately(): Promise<void> {
   await closing
 }
 
-// ========= 生命周期 =========
+// -- Tests
 
 describe('PlayerBar 控件区域 UI 规范测试', () => {
   beforeEach(async () => {
+    liquidGlassMock.destroy.mockReset()
+    liquidGlassMock.init.mockReset()
+    liquidGlassMock.init.mockResolvedValue({
+      destroy: liquidGlassMock.destroy
+    })
+    appPreferences.setTheme('system')
     disposePlayer()
     await closeImmersivePlayerImmediately()
   })
 
   afterEach(async () => {
+    vi.unstubAllGlobals()
+    appPreferences.setTheme('system')
     disposePlayer()
     await closeImmersivePlayerImmediately()
   })
@@ -62,16 +87,35 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     expect(nextBtn.attributes('aria-label')).toBe('下一首')
   })
 
-  it('使用 LiquidGlass 作为播放器控制栏材质层', () => {
+  it('使用官方 LiquidGlass 初始化播放器控制栏材质层', async () => {
     const wrapper = mount(PlayerBar)
+    const glass = wrapper.find('.player-bar-glass')
 
-    expect(wrapper.find('.player-bar-glass').exists()).toBe(true)
-    expect(wrapper.find('.effect .filter').exists()).toBe(true)
+    expect(glass.exists()).toBe(true)
+    expect(glass.attributes('data-glass-material')).toBe('regular')
+    await vi.waitFor(() => expect(liquidGlassMock.init).toHaveBeenCalledTimes(1))
+
+    const options = liquidGlassMock.init.mock.calls[0]?.[0] as {
+      root: HTMLElement
+      glassElements: HTMLElement[]
+    }
+    expect(options.root).toBe(glass.element.parentElement)
+    expect(options.glassElements).toEqual([glass.element])
+    expect(playerBarSource).toContain("from '@ybouane/liquidglass'")
+
+    wrapper.unmount()
+    expect(liquidGlassMock.destroy).toHaveBeenCalledTimes(1)
   })
 
-  it('紧凑窗口仍保留 Liquid Glass 位移滤镜', () => {
+  it('紧凑窗口仍保留官方 LiquidGlass 初始化', () => {
     expect(playerBarSource).toContain('@media (width < 1100px)')
-    expect(playerBarSource).not.toContain('backdrop-filter: none !important')
+    expect(playerBarSource).toContain('void initializePlayerBarGlass()')
+    expect(playerBarSource).not.toContain('LiquidGlass.vue')
+  })
+
+  it('将 AppShell 根节点标记为 LiquidGlass 的逐帧动态采样源', () => {
+    expect(appShellSource).toMatch(/class="ncx-app-shell"\s+data-dynamic/)
+    expect(playerBarSource).toContain('const glassRoot = glassElement?.parentElement')
   })
 
   it('小云页直接隐藏 PlayerBar 且组件不保留页面特判与收缩动画', () => {
@@ -86,9 +130,59 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     expect(playerBarSource).toMatch(/@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.player-busy[\s\S]*?animation: none;/)
   })
 
-  it('支持在设置中动态切换深色/浅色模式时更新 PlayerBar 内阴影变量', () => {
-    expect(playerBarSource).toContain('--ncx-player-bar-shadow')
-    expect(playerBarSource).toContain(":root[data-theme='dark'] .player-bar-glass")
+  it('浅色使用 Regular Glass，深色使用官方 Dark Glass 参数', async () => {
+    appPreferences.setTheme('dark')
+    const wrapper = mount(PlayerBar)
+    const glass = wrapper.find('.player-bar-glass')
+
+    expect(glass.attributes('data-glass-material')).toBe('dark')
+    expect(JSON.parse(glass.attributes('data-config') ?? '{}')).toMatchObject({
+      brightness: -0.3,
+      blurAmount: 0.25
+    })
+
+    appPreferences.setTheme('light')
+    await wrapper.vm.$nextTick()
+
+    expect(glass.attributes('data-glass-material')).toBe('regular')
+    expect(JSON.parse(glass.attributes('data-config') ?? '{}')).toEqual({
+      cornerRadius: 30,
+      zRadius: 30
+    })
+  })
+
+  it('跟随系统时响应系统深浅色变化', async () => {
+    const colorSchemeListeners = new Set<(event: MediaQueryListEvent) => void>()
+    let matches = true
+    const colorSchemeQuery = {
+      get matches() {
+        return matches
+      },
+      addEventListener: (_type: string, listener: EventListenerOrEventListenerObject) => {
+        colorSchemeListeners.add(listener as (event: MediaQueryListEvent) => void)
+      },
+      removeEventListener: (_type: string, listener: EventListenerOrEventListenerObject) => {
+        colorSchemeListeners.delete(listener as (event: MediaQueryListEvent) => void)
+      }
+    } as MediaQueryList
+    vi.stubGlobal('matchMedia', vi.fn(() => colorSchemeQuery))
+
+    const wrapper = mount(PlayerBar)
+    const glass = wrapper.find('.player-bar-glass')
+
+    await wrapper.vm.$nextTick()
+    expect(glass.attributes('data-glass-material')).toBe('dark')
+
+    matches = false
+    for (const listener of colorSchemeListeners) {
+      listener({ matches } as MediaQueryListEvent)
+    }
+    await wrapper.vm.$nextTick()
+
+    expect(glass.attributes('data-glass-material')).toBe('regular')
+
+    wrapper.unmount()
+    expect(colorSchemeListeners.size).toBe(0)
   })
 
   it('播放/暂停 icon 按钮具有 default 尺寸与 ghost 变体', () => {

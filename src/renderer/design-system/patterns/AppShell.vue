@@ -215,6 +215,7 @@ onBeforeUnmount(() => {
 <template>
   <div
     class="ncx-app-shell"
+    data-dynamic
     :class="[
       isMacOS ? 'ncx-app-shell--macos' : 'ncx-app-shell--windows',
       windowSnapshot.fullscreen ? 'ncx-app-shell--fullscreen' : '',

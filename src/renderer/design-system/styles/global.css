@@ -17,6 +17,10 @@ body,
   margin: 0;
 }
 
+#app {
+  position: relative;
+}
+
 body {
   overflow: hidden;
   color: var(--ncx-color-text-primary);

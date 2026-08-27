@@ -19,7 +19,8 @@ import {
   Volume2,
   VolumeX
 } from '@lucide/vue'
-import { computed, ref } from 'vue'
+import { LiquidGlass, type GlassConfig } from '@ybouane/liquidglass'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 import type { PlayMode } from '../../../../domains/player/types'
 import {
@@ -28,15 +29,33 @@ import {
   CommonSpinner,
   CommonToast
 } from '../../../design-system/components'
-import LiquidGlass from '../../../design-system/components/LiquidGlass.vue'
 import { useI18n } from '../../../i18n'
+import { useAppPreferences } from '../../settings/app-preferences'
 import { useImmersivePlayerPresentation } from '../immersive-player-presentation'
 import { usePlayer } from '../use-player'
 import MediaArtwork from './MediaArtwork.vue'
 import MusicProgressBar from './MusicProgressBar.vue'
 import QueueDrawer from './QueueDrawer.vue'
 
-// ========= 变量 =========
+// -- Constants
+
+/** 播放模式循环顺序。 */
+const MODE_CYCLE: PlayMode[] = ['loop', 'loop-one', 'shuffle']
+
+/** 官方 Regular Glass 默认材质，仅让着色器圆角匹配播放器形状。 */
+const REGULAR_GLASS_CONFIG = {
+  cornerRadius: 30,
+  zRadius: 30
+} satisfies Partial<GlassConfig>
+
+/** 官方 Dark Glass 配置，在 Regular Glass 上应用文档给出的暗化与模糊参数。 */
+const DARK_GLASS_CONFIG = {
+  ...REGULAR_GLASS_CONFIG,
+  brightness: -0.3,
+  blurAmount: 0.25
+} satisfies Partial<GlassConfig>
+
+// -- State and Variables
 
 /** 播放器组合式接口，只发送命令并读取快照。 */
 const player = usePlayer()
@@ -56,11 +75,34 @@ const notice = player.notice
 /** PlayerBar 使用的国际化状态。 */
 const i18n = useI18n()
 
-/** PlayerBar 本地化文案集合。 */
-const text = computed(() => i18n.messages.value.player)
+/** 应用级外观偏好，用于在 Regular Glass 与 Dark Glass 之间切换。 */
+const appPreferences = useAppPreferences()
 
 /** 播放队列抽屉开闭状态。 */
 const isQueueOpen = ref<boolean>(false)
+
+/** 官方 LiquidGlass 直接挂载的 PlayerBar 元素。 */
+const playerBarGlass = ref<HTMLElement | null>(null)
+
+/** 系统当前是否偏好深色外观。 */
+const systemPrefersDark = ref(false)
+
+/** 官方材质是否已接管 PlayerBar；初始化期间先移除 CSS 降级底色，避免其被捕获。 */
+const isGlassReady = ref(false)
+
+/** 当前 LiquidGlass 实例，卸载时必须释放 WebGL 与观察器资源。 */
+let liquidGlassInstance: LiquidGlass | null = null
+
+/** 系统主题媒体查询，负责跟随系统模式。 */
+let colorSchemeQuery: MediaQueryList | null = null
+
+/** 异步初始化版本号，避免卸载后迟到的实例继续运行。 */
+let glassInitializationVersion = 0
+
+// -- Derived Values
+
+/** PlayerBar 本地化文案集合。 */
+const text = computed(() => i18n.messages.value.player)
 
 /** 当前曲目摘要 */
 const track = computed(() => snapshot.value.playback.track)
@@ -93,10 +135,6 @@ const canSeek = computed<boolean>(() => {
 /** 状态文案 */
 const statusLabel = computed(() => text.value.status[snapshot.value.playback.status])
 
-
-/** 播放模式循环顺序 */
-const MODE_CYCLE: PlayMode[] = ['loop', 'loop-one', 'shuffle']
-
 /** 下一个播放模式 */
 const nextMode = computed<PlayMode>(() => {
   const current = snapshot.value.queue.mode
@@ -104,7 +142,60 @@ const nextMode = computed<PlayMode>(() => {
   return MODE_CYCLE[(index + 1) % MODE_CYCLE.length] ?? 'loop'
 })
 
-// ========= 函数 =========
+/** 当前实际外观是否为深色；system 模式跟随系统媒体查询。 */
+const usesDarkGlass = computed<boolean>(() => {
+  const theme = appPreferences.preferences.value.theme
+  return theme === 'dark' || (theme === 'system' && systemPrefersDark.value)
+})
+
+/** 传给官方库的逐元素 JSON 配置，属性变化会被其 MutationObserver 自动读取。 */
+const playerBarGlassConfig = computed<string>(() => {
+  return JSON.stringify(usesDarkGlass.value ? DARK_GLASS_CONFIG : REGULAR_GLASS_CONFIG)
+})
+
+// -- Functions
+
+/** 同步系统深色模式媒体查询结果。 */
+function syncSystemColorScheme(query: MediaQueryList | MediaQueryListEvent): void {
+  systemPrefersDark.value = query.matches
+}
+
+/**
+ * 初始化官方 WebGL LiquidGlass 材质。
+ *
+ * PlayerBar 元素以 Vue Fragment 形式直接渲染到应用根节点，满足库的直接子元素约束。
+ */
+async function initializePlayerBarGlass(): Promise<void> {
+  const glassElement = playerBarGlass.value
+  const glassRoot = glassElement?.parentElement
+  if (!glassElement || !glassRoot) return
+
+  const initializationVersion = ++glassInitializationVersion
+  glassElement.dataset.config = playerBarGlassConfig.value
+  glassElement.classList.add('player-bar-glass--ready')
+  isGlassReady.value = true
+
+  try {
+    const instance = await LiquidGlass.init({
+      root: glassRoot,
+      glassElements: [glassElement]
+    })
+
+    if (
+      initializationVersion !== glassInitializationVersion
+      || playerBarGlass.value !== glassElement
+    ) {
+      instance.destroy()
+      return
+    }
+
+    liquidGlassInstance = instance
+  } catch (error) {
+    glassElement.classList.remove('player-bar-glass--ready')
+    isGlassReady.value = false
+    console.warn('PlayerBar LiquidGlass 初始化失败，已保留可读的材质降级层。', error)
+  }
+}
 
 /**
  * 把毫秒格式化为 m:ss。
@@ -144,194 +235,212 @@ function openImmersivePlayer(event: MouseEvent): void {
   const trigger = event.currentTarget as HTMLElement | null
   void immersivePlayer.open(trigger)
 }
+
+// -- Lifecycle Hooks
+
+onMounted(() => {
+  if (typeof window.matchMedia === 'function') {
+    colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    syncSystemColorScheme(colorSchemeQuery)
+    colorSchemeQuery.addEventListener('change', syncSystemColorScheme)
+  }
+
+  void initializePlayerBarGlass()
+})
+
+onUnmounted(() => {
+  glassInitializationVersion += 1
+  colorSchemeQuery?.removeEventListener('change', syncSystemColorScheme)
+  colorSchemeQuery = null
+  liquidGlassInstance?.destroy()
+  liquidGlassInstance = null
+  isGlassReady.value = false
+})
 </script>
 
 <template>
   <div
-    class="player-bar-root"
+    ref="playerBarGlass"
+    :class="[
+      'player-bar-glass',
+      { 'player-bar-glass--ready': isGlassReady }
+    ]"
+    :inert="isImmersivePlayerOpen"
+    :aria-hidden="isImmersivePlayerOpen ? 'true' : undefined"
+    :data-config="playerBarGlassConfig"
+    :data-glass-material="usesDarkGlass ? 'dark' : 'regular'"
+    role="contentinfo"
+    :aria-label="text.regionLabel"
+  >
+    <div class="player-bar-content">
+      <!-- 曲目信息 -->
+      <div
+        class="player-track"
+      >
+        <button
+          class="player-track-cover-button"
+          type="button"
+          :disabled="!track"
+          :aria-label="$tSource(track ? `展开《${track.name}》沉浸播放页` : text.emptyTrack)"
+          @click="openImmersivePlayer"
+        >
+          <MediaArtwork
+            :src="coverUrl"
+            :alt="track?.name ?? text.emptyTrack"
+            size="thumbnail"
+            :adapt-source="false"
+            class="player-track-cover"
+          />
+        </button>
+        <div class="player-track-info">
+          <p class="player-track-name">
+            {{ track?.name ?? text.emptyTrack }}
+          </p>
+          <p class="player-track-meta">
+            <span v-if="track">{{ track.artists.join(' / ') }}</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- 传输控制区域 -->
+      <div
+        class="player-transport"
+        role="group"
+        :aria-label="text.regionLabel"
+      >
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          tooltip-placement="right"
+          :label="text.mode[snapshot.queue.mode]"
+          @click="player.setMode(nextMode)"
+        >
+          <Shuffle
+            v-if="snapshot.queue.mode === 'shuffle'"
+            :size="16"
+          />
+          <Repeat1
+            v-else-if="snapshot.queue.mode === 'loop-one'"
+            :size="16"
+          />
+          <Repeat
+            v-else
+            :size="16"
+          />
+        </CommonIconButton>
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          tooltip-placement="right"
+          :disabled="!hasQueue"
+          :label="text.previous"
+          @click="player.previous()"
+        >
+          <SkipBack :size="16" />
+        </CommonIconButton>
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          tooltip-placement="left"
+          :disabled="!track"
+          :label="showPause ? text.pause : text.play"
+          @click="player.toggle()"
+        >
+          <CommonSpinner
+            v-if="busy"
+            size="compact"
+            class="player-busy"
+          />
+          <Pause
+            v-else-if="showPause"
+            :size="18"
+            fill="currentColor"
+          />
+          <Play
+            v-else
+            :size="18"
+            fill="currentColor"
+          />
+        </CommonIconButton>
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          tooltip-placement="left"
+          :disabled="!hasQueue"
+          :label="text.next"
+          @click="player.next()"
+        >
+          <SkipForward :size="16" />
+        </CommonIconButton>
+      </div>
+
+      <!-- 进度 -->
+      <div class="player-progress">
+        <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
+        <div class="player-progress-control">
+          <MusicProgressBar
+            :key="track?.trackId ?? 'empty-player-progress'"
+            class="player-slider player-slider-progress"
+            :model-value="snapshot.playback.positionMs"
+            :min="0"
+            :max="Math.max(durationMs, 1)"
+            :step="1000"
+            :disabled="!canSeek"
+            :busy="busy"
+            :label="statusLabel"
+            @change="onSeek"
+          />
+        </div>
+        <span class="player-time">{{ formatTime(durationMs) }}</span>
+      </div>
+
+      <!-- 音量与状态控制 -->
+      <div class="player-output">
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          tooltip-placement="left"
+          :label="snapshot.playback.muted ? text.unmute : text.mute"
+          @click="player.setMuted(!snapshot.playback.muted)"
+        >
+          <VolumeX
+            v-if="snapshot.playback.muted"
+            :size="15"
+          />
+          <Volume2
+            v-else
+            :size="15"
+          />
+        </CommonIconButton>
+        <CommonSlider
+          class="player-slider player-slider-volume"
+          :model-value="Math.round(snapshot.playback.volume * 100)"
+          :min="0"
+          :max="100"
+          size="compact"
+          :show-value="false"
+          @update:model-value="onVolume"
+        />
+        <!-- 音乐队列按钮 -->
+        <CommonIconButton
+          size="default"
+          variant="ghost"
+          tooltip-placement="left"
+          :selected="isQueueOpen"
+          :label="text.queue"
+          @click="toggleQueueDrawer"
+        >
+          <ListMusic :size="15" />
+        </CommonIconButton>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="player-bar-overlays"
     :inert="isImmersivePlayerOpen"
     :aria-hidden="isImmersivePlayerOpen ? 'true' : undefined"
   >
-    <LiquidGlass
-      container-class="player-bar-glass"
-      role="contentinfo"
-      :aria-label="text.regionLabel"
-      squircle-size="2xl"
-      :border="0.07"
-      :displace="0.05"
-      :scale="-150"
-      :r-offset="0"
-      :g-offset="5"
-      :b-offset="8"
-      :blur="10"
-      :frost="0.52"
-      :lightness="72"
-      :alpha="0.9"
-    >
-      <div class="player-bar-content">
-        <!-- 曲目信息 -->
-        <div
-          class="player-track"
-        >
-          <button
-            class="player-track-cover-button"
-            type="button"
-            :disabled="!track"
-            :aria-label="$tSource(track ? `展开《${track.name}》沉浸播放页` : text.emptyTrack)"
-            @click="openImmersivePlayer"
-          >
-            <MediaArtwork
-              :src="coverUrl"
-              :alt="track?.name ?? text.emptyTrack"
-              size="thumbnail"
-              :adapt-source="false"
-              class="player-track-cover"
-            />
-          </button>
-          <div class="player-track-info">
-            <p class="player-track-name">
-              {{ track?.name ?? text.emptyTrack }}
-            </p>
-            <p class="player-track-meta">
-              <span v-if="track">{{ track.artists.join(' / ') }}</span>
-            </p>
-          </div>
-        </div>
-
-        <!-- 传输控制区域 -->
-        <div
-          class="player-transport"
-          role="group"
-          :aria-label="text.regionLabel"
-        >
-          <CommonIconButton
-            size="default"
-            variant="ghost"
-            tooltip-placement="right"
-            :label="text.mode[snapshot.queue.mode]"
-            @click="player.setMode(nextMode)"
-          >
-            <Shuffle
-              v-if="snapshot.queue.mode === 'shuffle'"
-              :size="16"
-            />
-            <Repeat1
-              v-else-if="snapshot.queue.mode === 'loop-one'"
-              :size="16"
-            />
-            <Repeat
-              v-else
-              :size="16"
-            />
-          </CommonIconButton>
-          <CommonIconButton
-            size="default"
-            variant="ghost"
-            tooltip-placement="right"
-            :disabled="!hasQueue"
-            :label="text.previous"
-            @click="player.previous()"
-          >
-            <SkipBack :size="16" />
-          </CommonIconButton>
-          <CommonIconButton
-            size="default"
-            variant="ghost"
-            tooltip-placement="left"
-            :disabled="!track"
-            :label="showPause ? text.pause : text.play"
-            @click="player.toggle()"
-          >
-            <CommonSpinner
-              v-if="busy"
-              size="compact"
-              class="player-busy"
-            />
-            <Pause
-              v-else-if="showPause"
-              :size="18"
-              fill="currentColor"
-            />
-            <Play
-              v-else
-              :size="18"
-              fill="currentColor"
-            />
-          </CommonIconButton>
-          <CommonIconButton
-            size="default"
-            variant="ghost"
-            tooltip-placement="left"
-            :disabled="!hasQueue"
-            :label="text.next"
-            @click="player.next()"
-          >
-            <SkipForward :size="16" />
-          </CommonIconButton>
-        </div>
-
-        <!-- 进度 -->
-        <div class="player-progress">
-          <span class="player-time">{{ formatTime(snapshot.playback.positionMs) }}</span>
-          <div class="player-progress-control">
-            <MusicProgressBar
-              :key="track?.trackId ?? 'empty-player-progress'"
-              class="player-slider player-slider-progress"
-              :model-value="snapshot.playback.positionMs"
-              :min="0"
-              :max="Math.max(durationMs, 1)"
-              :step="1000"
-              :disabled="!canSeek"
-              :busy="busy"
-              :label="statusLabel"
-              @change="onSeek"
-            />
-          </div>
-          <span class="player-time">{{ formatTime(durationMs) }}</span>
-        </div>
-
-        <!-- 音量与状态控制 -->
-        <div class="player-output">
-          <CommonIconButton
-            size="default"
-            variant="ghost"
-            tooltip-placement="left"
-            :label="snapshot.playback.muted ? text.unmute : text.mute"
-            @click="player.setMuted(!snapshot.playback.muted)"
-          >
-            <VolumeX
-              v-if="snapshot.playback.muted"
-              :size="15"
-            />
-            <Volume2
-              v-else
-              :size="15"
-            />
-          </CommonIconButton>
-          <CommonSlider
-            class="player-slider player-slider-volume"
-            :model-value="Math.round(snapshot.playback.volume * 100)"
-            :min="0"
-            :max="100"
-            size="compact"
-            :show-value="false"
-            @update:model-value="onVolume"
-          />
-          <!-- 音乐队列按钮 -->
-          <CommonIconButton
-            size="default"
-            variant="ghost"
-            tooltip-placement="left"
-            :selected="isQueueOpen"
-            :label="text.queue"
-            @click="toggleQueueDrawer"
-          >
-            <ListMusic :size="15" />
-          </CommonIconButton>
-        </div>
-      </div>
-    </LiquidGlass>
-
     <!-- 不可播放等音乐控制 bar 提示：使用 CommonToast 替代内联消息 -->
     <CommonToast
       :visible="!!notice"
@@ -354,16 +463,12 @@ function openImmersivePlayer(event: MouseEvent): void {
 .player-bar-glass {
   --ncx-player-bar-resting-right: max(28px, calc(50vw - 545px));
   --ncx-player-bar-width: min(860px, calc(100vw - 288px));
+  --ncx-player-bar-fallback-bg: color-mix(in srgb, var(--ncx-color-surface) 86%, transparent);
+  --ncx-player-bar-fallback-shadow: 0 6px 18px rgb(35 38 45 / 12%);
   --ncx-player-bar-track-bg: color-mix(in srgb, var(--ncx-color-text-primary) 11%, transparent);
   --ncx-player-bar-thumb-shadow:
     0 2px 8px rgb(20 20 24 / 18%),
     0 0 0 3px rgb(255 255 255 / 42%);
-  --ncx-player-bar-shadow:
-    0 0 2px 1px rgb(255 255 255 / 88%) inset,
-    0 0 10px 4px rgb(255 255 255 / 58%) inset,
-    0 6px 18px rgb(35 38 45 / 12%),
-    0 4px 16px rgb(255 255 255 / 42%) inset,
-    0 8px 24px rgb(255 255 255 / 24%) inset;
 
   position: fixed;
   z-index: var(--ncx-layer-player);
@@ -371,18 +476,22 @@ function openImmersivePlayer(event: MouseEvent): void {
   bottom: 18px;
   width: var(--ncx-player-bar-width);
   height: 56px;
+  border-radius: var(--ncx-squircle-radius-2xl);
   color: var(--ncx-color-text-primary);
+  background: var(--ncx-player-bar-fallback-bg);
+  box-shadow: var(--ncx-player-bar-fallback-shadow);
   isolation: isolate;
   -webkit-app-region: no-drag;
 }
 
-:deep(.player-bar-glass.effect),
-.player-bar-glass {
-  box-shadow: var(--ncx-player-bar-shadow) !important;
+.player-bar-glass--ready {
+  background: transparent;
+  box-shadow: none;
 }
 
 .player-bar-content {
   position: relative;
+  z-index: 1;
   display: grid;
   width: 100%;
   min-height: 54px;
@@ -576,28 +685,22 @@ function openImmersivePlayer(event: MouseEvent): void {
 
 
 :root[data-theme='dark'] .player-bar-glass {
+  --ncx-player-bar-fallback-bg: color-mix(in srgb, var(--ncx-color-surface) 82%, transparent);
+  --ncx-player-bar-fallback-shadow: 0 8px 32px rgb(0 0 0 / 45%);
   --ncx-player-bar-track-bg: color-mix(in srgb, white 15%, transparent);
   --ncx-player-bar-thumb-shadow:
     0 2px 8px rgb(0 0 0 / 32%),
     0 0 0 3px rgb(255 255 255 / 14%);
-  --ncx-player-bar-shadow:
-    0 0 2px 1px rgb(255 255 255 / 12%) inset,
-    0 0 10px 4px rgb(255 255 255 / 5%) inset,
-    0 8px 32px rgb(0 0 0 / 45%),
-    0 1px 1px rgb(255 255 255 / 15%) inset;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .player-bar-glass {
+    --ncx-player-bar-fallback-bg: color-mix(in srgb, var(--ncx-color-surface) 82%, transparent);
+    --ncx-player-bar-fallback-shadow: 0 8px 32px rgb(0 0 0 / 45%);
     --ncx-player-bar-track-bg: color-mix(in srgb, white 15%, transparent);
     --ncx-player-bar-thumb-shadow:
       0 2px 8px rgb(0 0 0 / 32%),
       0 0 0 3px rgb(255 255 255 / 14%);
-    --ncx-player-bar-shadow:
-      0 0 2px 1px rgb(255 255 255 / 12%) inset,
-      0 0 10px 4px rgb(255 255 255 / 5%) inset,
-      0 8px 32px rgb(0 0 0 / 45%),
-      0 1px 1px rgb(255 255 255 / 15%) inset;
   }
 }
 

@@ -10,6 +10,7 @@ Ncxmusic 是一个基于 Electron、Vue 3 和 TypeScript 的 Agent 原生桌面�
 - 设置页提供面向普通用户的歌词翻译、当前歌词位置、动效强度、字号、字重和已唱歌词显示选项。
 - 歌曲列表、详情页、个人页和沉浸播放页共享当前账户的完整收藏状态；已收藏歌曲统一显示实心状态，并可从任一入口直接取消收藏。
 - 界面支持简体中文与英语即时切换并持久保存偏好；页面、组件、Toast、空状态和跨进程错误均纳入同一国际化覆盖审计，歌名、歌词、评论等外部内容保持原文。
+- 底部音乐控制栏使用 [@ybouane/liquidglass](https://liquid-glass.ybouane.com/) 的 WebGL 材质，并持续动态采样后方 AppShell；浅色外观采用 Regular Glass，深色外观采用 Dark Glass，跟随系统时会响应系统配色变化。
 - 全部可见圆角统一使用 60% 连续曲率 Squircle，并收敛到七级尺寸阶梯；实现与使用约束见 [Squircle 形状规范](docs/development/Squircle-Design-System.md)。
 - 语音输入支持按需下载的本地 Zipformer/SenseVoice INT8、独立 OpenAI Transcriptions 兼容服务和当前对话模型三种来源；模型体积、内存预算、流式语义与多屏胶囊说明见 [语音识别架构](docs/development/Voice-Recognition.md)。
 

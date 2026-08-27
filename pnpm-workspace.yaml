@@ -2,6 +2,7 @@ packages:
   - .
 
 allowBuilds:
+  '@ybouane/liquidglass': false
   electron: true
   electron-winstaller: true
   esbuild: true
