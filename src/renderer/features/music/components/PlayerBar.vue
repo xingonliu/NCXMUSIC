@@ -157,16 +157,23 @@ function openImmersivePlayer(event: MouseEvent): void {
       role="contentinfo"
       :aria-label="text.regionLabel"
       squircle-size="2xl"
-      :border="0.07"
-      :displace="0.05"
-      :scale="-150"
+      :border="0.14"
+      :displace="0.25"
+      :scale="-96"
       :r-offset="0"
-      :g-offset="5"
-      :b-offset="8"
-      :blur="10"
-      :frost="0.52"
-      :lightness="72"
-      :alpha="0.9"
+      :g-offset="2"
+      :b-offset="4"
+      :blur="7"
+      :frost="0.16"
+      :dark-frost="0.28"
+      :backdrop-blur="18"
+      :dark-backdrop-blur="20"
+      :saturation="1.35"
+      :dark-saturation="1.2"
+      :brightness="1.04"
+      :dark-brightness="0.84"
+      :lightness="54"
+      :alpha="0.93"
     >
       <div class="player-bar-content">
         <!-- 曲目信息 -->
@@ -359,11 +366,10 @@ function openImmersivePlayer(event: MouseEvent): void {
     0 2px 8px rgb(20 20 24 / 18%),
     0 0 0 3px rgb(255 255 255 / 42%);
   --ncx-player-bar-shadow:
-    0 0 2px 1px rgb(255 255 255 / 88%) inset,
-    0 0 10px 4px rgb(255 255 255 / 58%) inset,
-    0 6px 18px rgb(35 38 45 / 12%),
-    0 4px 16px rgb(255 255 255 / 42%) inset,
-    0 8px 24px rgb(255 255 255 / 24%) inset;
+    0 1px 0 rgb(255 255 255 / 78%) inset,
+    0 -1px 0 rgb(55 61 72 / 10%) inset,
+    0 1px 6px rgb(35 38 45 / 8%),
+    0 10px 32px rgb(35 38 45 / 14%);
 
   position: fixed;
   z-index: var(--ncx-layer-player);
@@ -581,10 +587,10 @@ function openImmersivePlayer(event: MouseEvent): void {
     0 2px 8px rgb(0 0 0 / 32%),
     0 0 0 3px rgb(255 255 255 / 14%);
   --ncx-player-bar-shadow:
-    0 0 2px 1px rgb(255 255 255 / 12%) inset,
-    0 0 10px 4px rgb(255 255 255 / 5%) inset,
-    0 8px 32px rgb(0 0 0 / 45%),
-    0 1px 1px rgb(255 255 255 / 15%) inset;
+    0 1px 0 rgb(255 255 255 / 22%) inset,
+    0 -1px 0 rgb(0 0 0 / 36%) inset,
+    0 1px 6px rgb(0 0 0 / 30%),
+    0 12px 36px rgb(0 0 0 / 52%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -594,10 +600,10 @@ function openImmersivePlayer(event: MouseEvent): void {
       0 2px 8px rgb(0 0 0 / 32%),
       0 0 0 3px rgb(255 255 255 / 14%);
     --ncx-player-bar-shadow:
-      0 0 2px 1px rgb(255 255 255 / 12%) inset,
-      0 0 10px 4px rgb(255 255 255 / 5%) inset,
-      0 8px 32px rgb(0 0 0 / 45%),
-      0 1px 1px rgb(255 255 255 / 15%) inset;
+      0 1px 0 rgb(255 255 255 / 22%) inset,
+      0 -1px 0 rgb(0 0 0 / 36%) inset,
+      0 1px 6px rgb(0 0 0 / 30%),
+      0 12px 36px rgb(0 0 0 / 52%);
   }
 }
 

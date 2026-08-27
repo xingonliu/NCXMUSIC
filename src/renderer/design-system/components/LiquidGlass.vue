@@ -40,6 +40,20 @@ export interface LiquidGlassProps {
   scale?: number
   /** 玻璃底色磨砂强度。 */
   frost?: number
+  /** 深色模式下的玻璃底色磨砂强度。 */
+  darkFrost?: number
+  /** 浅色模式背景模糊半径。 */
+  backdropBlur?: number
+  /** 深色模式背景模糊半径。 */
+  darkBackdropBlur?: number
+  /** 浅色模式背景饱和度倍率。 */
+  saturation?: number
+  /** 深色模式背景饱和度倍率。 */
+  darkSaturation?: number
+  /** 浅色模式背景亮度倍率。 */
+  brightness?: number
+  /** 深色模式背景亮度倍率。 */
+  darkBrightness?: number
   /** 内容容器附加 class。 */
   class?: HTMLAttributes['class']
   /** 外层容器附加 class。 */
@@ -79,6 +93,13 @@ const props = withDefaults(defineProps<LiquidGlassProps>(), {
   bOffset: 20,
   scale: -180,
   frost: 0.05,
+  darkFrost: 0.16,
+  backdropBlur: 18,
+  darkBackdropBlur: 20,
+  saturation: 1.35,
+  darkSaturation: 1.2,
+  brightness: 1.04,
+  darkBrightness: 0.84,
   class: '',
   containerClass: ''
 })
@@ -111,8 +132,15 @@ const filterId = computed(() => `inspira-liquid-glass-${rawId.replace(/:/g, '')}
 /** 外层容器基础样式，注入 Inspira 组件需要的 CSS 变量。 */
 const baseStyle = computed(() => {
   return {
-    '--frost': props.frost,
     '--liquid-glass-filter': `url(#${filterId.value})`,
+    '--liquid-glass-frost-light': props.frost,
+    '--liquid-glass-frost-dark': props.darkFrost,
+    '--liquid-glass-blur-light': `${props.backdropBlur}px`,
+    '--liquid-glass-blur-dark': `${props.darkBackdropBlur}px`,
+    '--liquid-glass-saturation-light': props.saturation,
+    '--liquid-glass-saturation-dark': props.darkSaturation,
+    '--liquid-glass-brightness-light': props.brightness,
+    '--liquid-glass-brightness-dark': props.darkBrightness,
     '-electron-corner-smoothing': 'var(--ncx-squircle-smoothing)',
     borderRadius: `var(--ncx-squircle-radius-${props.squircleSize})`
   }
@@ -204,7 +232,7 @@ onUnmounted(() => {
   <div
     ref="liquidGlassRoot"
     :style="baseStyle"
-    :class="['effect', props.containerClass]"
+    :class="['ncx-liquid-glass', 'effect', props.containerClass]"
   >
     <div :class="['slot-container', props.class]">
       <slot />
@@ -294,34 +322,49 @@ onUnmounted(() => {
 
 <style scoped>
 .effect {
+  --liquid-glass-current-frost: var(--liquid-glass-frost-light);
+  --liquid-glass-current-blur: var(--liquid-glass-blur-light);
+  --liquid-glass-current-saturation: var(--liquid-glass-saturation-light);
+  --liquid-glass-current-brightness: var(--liquid-glass-brightness-light);
+  --liquid-glass-surface-rgb: 255 255 255;
+  --liquid-glass-edge-highlight: rgb(255 255 255 / 58%);
+  --liquid-glass-edge-border: rgb(255 255 255 / 42%);
+  --liquid-glass-sheen: rgb(255 255 255 / 16%);
+  --liquid-glass-lowlight: rgb(60 66 78 / 10%);
+
   position: fixed;
   display: block;
   opacity: 1;
   border-radius: inherit;
-  backdrop-filter: var(--liquid-glass-filter);
-  background: light-dark(hsl(0 0% 100% / var(--frost, 0)), hsl(0 0% 0% / var(--frost, 0)));
+  backdrop-filter:
+    blur(var(--liquid-glass-current-blur))
+    saturate(var(--liquid-glass-current-saturation))
+    brightness(var(--liquid-glass-current-brightness))
+    var(--liquid-glass-filter);
+  background: rgb(var(--liquid-glass-surface-rgb) / var(--liquid-glass-current-frost));
   box-shadow:
-    0 0 2px 1px
-      light-dark(
-        color-mix(in oklch, canvasText, #0000 85%),
-        color-mix(in oklch, canvasText, #0000 90%)
-      )
-      inset,
-    0 0 10px 4px
-      light-dark(
-        color-mix(in oklch, canvasText, #0000 90%),
-        color-mix(in oklch, canvasText, #0000 95%)
-      )
-      inset,
-    0 4px 16px rgb(17 17 26 / 5%),
-    0 8px 24px rgb(17 17 26 / 5%),
-    0 16px 56px rgb(17 17 26 / 5%),
-    0 4px 16px rgb(17 17 26 / 5%) inset,
-    0 8px 24px rgb(17 17 26 / 5%) inset,
-    0 16px 56px rgb(17 17 26 / 5%) inset;
+    0 1px 0 var(--liquid-glass-edge-highlight) inset,
+    0 -1px 0 var(--liquid-glass-lowlight) inset,
+    0 8px 30px rgb(35 38 45 / 12%);
+  isolation: isolate;
+}
+
+.effect::before {
+  position: absolute;
+  z-index: 0;
+  border: 1px solid var(--liquid-glass-edge-border);
+  border-radius: inherit;
+  background:
+    radial-gradient(120% 95% at 18% -28%, var(--liquid-glass-edge-highlight), transparent 58%),
+    linear-gradient(145deg, var(--liquid-glass-sheen) 0%, transparent 38% 76%, var(--liquid-glass-lowlight) 100%);
+  content: '';
+  inset: 0;
+  pointer-events: none;
 }
 
 .slot-container {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -334,5 +377,31 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   pointer-events: none;
+}
+
+:global(:root[data-theme='dark'] .ncx-liquid-glass) {
+  --liquid-glass-current-frost: var(--liquid-glass-frost-dark);
+  --liquid-glass-current-blur: var(--liquid-glass-blur-dark);
+  --liquid-glass-current-saturation: var(--liquid-glass-saturation-dark);
+  --liquid-glass-current-brightness: var(--liquid-glass-brightness-dark);
+  --liquid-glass-surface-rgb: 8 10 16;
+  --liquid-glass-edge-highlight: rgb(255 255 255 / 24%);
+  --liquid-glass-edge-border: rgb(255 255 255 / 16%);
+  --liquid-glass-sheen: rgb(255 255 255 / 8%);
+  --liquid-glass-lowlight: rgb(0 0 0 / 34%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme='light']) .ncx-liquid-glass) {
+    --liquid-glass-current-frost: var(--liquid-glass-frost-dark);
+    --liquid-glass-current-blur: var(--liquid-glass-blur-dark);
+    --liquid-glass-current-saturation: var(--liquid-glass-saturation-dark);
+    --liquid-glass-current-brightness: var(--liquid-glass-brightness-dark);
+    --liquid-glass-surface-rgb: 8 10 16;
+    --liquid-glass-edge-highlight: rgb(255 255 255 / 24%);
+    --liquid-glass-edge-border: rgb(255 255 255 / 16%);
+    --liquid-glass-sheen: rgb(255 255 255 / 8%);
+    --liquid-glass-lowlight: rgb(0 0 0 / 34%);
+  }
 }
 </style>

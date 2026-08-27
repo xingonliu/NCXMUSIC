@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinator'
+import liquidGlassSource from '../../src/renderer/design-system/components/LiquidGlass.vue?raw'
 import MusicProgressBar from '../../src/renderer/features/music/components/MusicProgressBar.vue'
 import PlayerBar from '../../src/renderer/features/music/components/PlayerBar.vue'
 import playerBarSource from '../../src/renderer/features/music/components/PlayerBar.vue?raw'
@@ -89,6 +90,17 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
   it('支持在设置中动态切换深色/浅色模式时更新 PlayerBar 内阴影变量', () => {
     expect(playerBarSource).toContain('--ncx-player-bar-shadow')
     expect(playerBarSource).toContain(":root[data-theme='dark'] .player-bar-glass")
+  })
+
+  it('使用接近 Apple Regular Liquid Glass 的清透参数并适配深色模式', () => {
+    expect(playerBarSource).toContain(':frost="0.16"')
+    expect(playerBarSource).toContain(':dark-frost="0.28"')
+    expect(playerBarSource).toContain(':scale="-96"')
+    expect(playerBarSource).toContain(':lightness="54"')
+    expect(playerBarSource).toContain(':alpha="0.93"')
+    expect(liquidGlassSource).toContain("--liquid-glass-surface-rgb: 8 10 16")
+    expect(liquidGlassSource).toContain(":global(:root[data-theme='dark'] .ncx-liquid-glass)")
+    expect(liquidGlassSource).toContain(":global(:root:not([data-theme='light']) .ncx-liquid-glass)")
   })
 
   it('播放/暂停 icon 按钮具有 default 尺寸与 ghost 变体', () => {
