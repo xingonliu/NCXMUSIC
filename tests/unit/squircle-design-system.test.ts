@@ -24,6 +24,7 @@ const foundationSource = readFileSync('src/renderer/design-system/tokens/foundat
 const globalStyleSource = readFileSync('src/renderer/design-system/styles/global.css', 'utf8')
 const voiceOverlaySource = readFileSync('src/main/index.ts', 'utf8')
 const designSystemLabSource = readFileSync('src/renderer/features/design-system/DesignSystemLabPage.vue', 'utf8')
+const liquidGlassSource = readFileSync('src/renderer/design-system/components/LiquidGlass.vue', 'utf8')
 const coverSource = readFileSync('src/renderer/features/music/components/Cover.vue', 'utf8')
 const rendererStyleSources = globSync([
   'src/renderer/**/*.css',
@@ -70,6 +71,7 @@ describe('Squircle 设计系统规范', () => {
     expect(voiceOverlaySource).toContain('--voice-overlay-squircle-smoothing: 60%;')
     expect(voiceOverlaySource.match(/-electron-corner-smoothing: var\(--voice-overlay-squircle-smoothing\);/g)).toHaveLength(4)
     expect(designSystemLabSource).toContain('-electron-corner-smoothing: var(--ncx-squircle-smoothing)')
+    expect(liquidGlassSource).toContain("'-electron-corner-smoothing': 'var(--ncx-squircle-smoothing)'")
     expect(coverSource).toContain("styles['-electron-corner-smoothing'] = 'var(--ncx-squircle-smoothing)'")
 
     const unsmoothedStaticInlineStyles = rendererStyleSources.flatMap(({ path, source }) => (
