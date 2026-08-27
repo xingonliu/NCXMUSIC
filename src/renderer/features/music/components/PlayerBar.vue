@@ -166,8 +166,8 @@ function openImmersivePlayer(event: MouseEvent): void {
       :blur="7"
       :frost="0.16"
       :dark-frost="0.28"
-      :backdrop-blur="18"
-      :dark-backdrop-blur="20"
+      :backdrop-blur="8"
+      :dark-backdrop-blur="10"
       :saturation="1.35"
       :dark-saturation="1.2"
       :brightness="1.04"
@@ -366,8 +366,6 @@ function openImmersivePlayer(event: MouseEvent): void {
     0 2px 8px rgb(20 20 24 / 18%),
     0 0 0 3px rgb(255 255 255 / 42%);
   --ncx-player-bar-shadow:
-    0 1px 0 rgb(255 255 255 / 78%) inset,
-    0 -1px 0 rgb(55 61 72 / 10%) inset,
     0 1px 6px rgb(35 38 45 / 8%),
     0 10px 32px rgb(35 38 45 / 14%);
 
@@ -587,8 +585,6 @@ function openImmersivePlayer(event: MouseEvent): void {
     0 2px 8px rgb(0 0 0 / 32%),
     0 0 0 3px rgb(255 255 255 / 14%);
   --ncx-player-bar-shadow:
-    0 1px 0 rgb(255 255 255 / 22%) inset,
-    0 -1px 0 rgb(0 0 0 / 36%) inset,
     0 1px 6px rgb(0 0 0 / 30%),
     0 12px 36px rgb(0 0 0 / 52%);
 }
@@ -600,8 +596,6 @@ function openImmersivePlayer(event: MouseEvent): void {
       0 2px 8px rgb(0 0 0 / 32%),
       0 0 0 3px rgb(255 255 255 / 14%);
     --ncx-player-bar-shadow:
-      0 1px 0 rgb(255 255 255 / 22%) inset,
-      0 -1px 0 rgb(0 0 0 / 36%) inset,
       0 1px 6px rgb(0 0 0 / 30%),
       0 12px 36px rgb(0 0 0 / 52%);
   }

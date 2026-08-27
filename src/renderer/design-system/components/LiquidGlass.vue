@@ -94,8 +94,8 @@ const props = withDefaults(defineProps<LiquidGlassProps>(), {
   scale: -180,
   frost: 0.05,
   darkFrost: 0.16,
-  backdropBlur: 18,
-  darkBackdropBlur: 20,
+  backdropBlur: 8,
+  darkBackdropBlur: 10,
   saturation: 1.35,
   darkSaturation: 1.2,
   brightness: 1.04,
@@ -328,7 +328,6 @@ onUnmounted(() => {
   --liquid-glass-current-brightness: var(--liquid-glass-brightness-light);
   --liquid-glass-surface-rgb: 255 255 255;
   --liquid-glass-edge-highlight: rgb(255 255 255 / 58%);
-  --liquid-glass-edge-border: rgb(255 255 255 / 42%);
   --liquid-glass-sheen: rgb(255 255 255 / 16%);
   --liquid-glass-lowlight: rgb(60 66 78 / 10%);
 
@@ -342,23 +341,38 @@ onUnmounted(() => {
     brightness(var(--liquid-glass-current-brightness))
     var(--liquid-glass-filter);
   background: rgb(var(--liquid-glass-surface-rgb) / var(--liquid-glass-current-frost));
-  box-shadow:
-    0 1px 0 var(--liquid-glass-edge-highlight) inset,
-    0 -1px 0 var(--liquid-glass-lowlight) inset,
-    0 8px 30px rgb(35 38 45 / 12%);
+  box-shadow: 0 8px 30px rgb(35 38 45 / 12%);
   isolation: isolate;
 }
 
 .effect::before {
   position: absolute;
   z-index: 0;
-  border: 1px solid var(--liquid-glass-edge-border);
+  padding: 1px;
   border-radius: inherit;
   background:
-    radial-gradient(120% 95% at 18% -28%, var(--liquid-glass-edge-highlight), transparent 58%),
-    linear-gradient(145deg, var(--liquid-glass-sheen) 0%, transparent 38% 76%, var(--liquid-glass-lowlight) 100%);
+    radial-gradient(85% 120% at 16% 0%, var(--liquid-glass-edge-highlight), transparent 72%),
+    radial-gradient(85% 120% at 84% 100%, var(--liquid-glass-lowlight), transparent 72%);
   content: '';
   inset: 0;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+}
+
+.effect::after {
+  position: absolute;
+  z-index: 0;
+  border-radius: inherit;
+  background: radial-gradient(105% 80% at 18% -24%, var(--liquid-glass-sheen), transparent 66%);
+  content: '';
+  inset: 1px;
   pointer-events: none;
 }
 
@@ -386,7 +400,6 @@ onUnmounted(() => {
   --liquid-glass-current-brightness: var(--liquid-glass-brightness-dark);
   --liquid-glass-surface-rgb: 8 10 16;
   --liquid-glass-edge-highlight: rgb(255 255 255 / 24%);
-  --liquid-glass-edge-border: rgb(255 255 255 / 16%);
   --liquid-glass-sheen: rgb(255 255 255 / 8%);
   --liquid-glass-lowlight: rgb(0 0 0 / 34%);
 }
@@ -399,7 +412,6 @@ onUnmounted(() => {
     --liquid-glass-current-brightness: var(--liquid-glass-brightness-dark);
     --liquid-glass-surface-rgb: 8 10 16;
     --liquid-glass-edge-highlight: rgb(255 255 255 / 24%);
-    --liquid-glass-edge-border: rgb(255 255 255 / 16%);
     --liquid-glass-sheen: rgb(255 255 255 / 8%);
     --liquid-glass-lowlight: rgb(0 0 0 / 34%);
   }
