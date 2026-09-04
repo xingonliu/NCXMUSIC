@@ -166,7 +166,7 @@
   width: 0;
   height: 0;
   transform-style: preserve-3d;
-  transition: transform var(--ncx-cinematic-camera-duration) cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--ncx-cinematic-camera-duration, 1400ms) cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
@@ -187,24 +187,13 @@
   transform-origin: center;
   transition:
     opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 1100ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, filter;
+    filter 1100ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform var(--ncx-cinematic-camera-duration, 1400ms) cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, filter, transform;
 }
 
 .cinematic-lyric-line--active {
   z-index: 2;
-  opacity: 1;
-  filter: blur(0);
-}
-
-.cinematic-lyric-line--future {
-  opacity: 0.12;
-  filter: blur(8px);
-}
-
-.cinematic-lyric-line--past {
-  opacity: 0.045;
-  filter: blur(20px);
 }
 
 .cinematic-primary-lyric {
@@ -242,29 +231,36 @@
 
 .cinematic-spline {
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1;
-  inset: -10%;
-  width: 120%;
-  height: 120%;
+  width: 0;
+  height: 0;
   overflow: visible;
-  fill: none;
   pointer-events: none;
-  transition: transform 1600ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
 }
 
-.cinematic-spline path {
-  stroke: rgb(17 17 17 / 72%);
-  stroke-linecap: round;
-  stroke-width: 0.72;
-  vector-effect: non-scaling-stroke;
+.cinematic-spline-segment {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  background: rgb(17 17 17 / 72%);
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition:
+    opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1100ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.cinematic-spline--secondary {
-  opacity: 0.42;
+.cinematic-spline--secondary .cinematic-spline-segment {
+  background: rgb(17 17 17 / 46%);
 }
 
 .cinematic-state {
   position: absolute;
+  z-index: 3;
   inset: 0;
   display: flex;
   align-items: center;
@@ -274,6 +270,7 @@
   padding: 48px;
   font-family: Inter, "SF Pro Display", "Segoe UI", sans-serif;
   text-align: center;
+  pointer-events: none;
 }
 
 .cinematic-state > span {
@@ -304,6 +301,7 @@
   color: #111;
   background: transparent;
   cursor: pointer;
+  pointer-events: auto;
 }
 
 .cinematic-live-lyric {
@@ -379,7 +377,7 @@
   letter-spacing: 0.08em;
 }
 
-.cinematic-lyrics-page--reduced-motion .cinematic-spline,
+.cinematic-lyrics-page--reduced-motion .cinematic-spline-segment,
 .cinematic-lyrics-page--reduced-motion .cinematic-lyric-line {
   transition-duration: 1ms;
 }
@@ -421,7 +419,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .cinematic-camera,
-  .cinematic-spline,
+  .cinematic-spline-segment,
   .cinematic-lyric-line {
     transition-duration: 1ms;
   }

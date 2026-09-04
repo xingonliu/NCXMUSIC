@@ -91,6 +91,10 @@ describe('settings navigation UI contract', () => {
     expect(cinematicLyricsStyleSource).toContain('perspective: 1100px')
     expect(cinematicLyricsStyleSource).toContain('cubic-bezier(0.22, 1, 0.36, 1)')
     expect(cinematicLyricsStyleSource).toContain('.cinematic-spline--secondary')
+    expect(cinematicLyricsStyleSource).toContain('.cinematic-spline-segment')
+    expect(cinematicLyricsStyleSource).not.toContain('filter: blur(20px)')
+    expect(cinematicLyricsStyleSource).not.toContain('.cinematic-lyric-line--past')
+    expect(cinematicLyricsStyleSource).not.toContain('.cinematic-lyric-line--future')
   })
 
   it('将歌词焦点、动效、字号、字重与已唱歌词配置归属到外观标签', () => {

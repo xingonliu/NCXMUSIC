@@ -23,6 +23,17 @@ import type {
 } from '../../../shared/schemas/music'
 import { translatePublicError } from '../../i18n'
 import { useAppPreferences } from '../settings/app-preferences'
+import {
+  buildCinematicSpline,
+  depthOfFieldForPoint,
+  EMPTY_MOUNTED_WINDOW,
+  nextMountedLineWindow,
+  restSplineAnchors,
+  spatialPointForIndex,
+  type CinematicSplineSegment,
+  type MountedLineWindow,
+  type SpatialPoint
+} from './cinematic-lyrics-space'
 import { usePlayer } from './use-player'
 
 // -- Type Definitions
@@ -33,16 +44,6 @@ interface CinematicCharacter {
   readonly text: string
   readonly startMs: number
   readonly durationMs: number
-}
-
-/** 无限歌词画布中的稳定三维坐标。 */
-interface SpatialPoint {
-  readonly x: number
-  readonly y: number
-  readonly z: number
-  readonly pan: number
-  readonly tilt: number
-  readonly roll: number
 }
 
 /** 影院歌词渲染行。 */
@@ -66,9 +67,6 @@ const emit = defineEmits<{
 }>()
 
 // -- Constants
-
-/** 同时保留在三维画布中的前后歌词行数。 */
-const VISIBLE_LINE_RADIUS = 3
 
 /** HUD 频谱采样数量。 */
 const WAVEFORM_SAMPLE_COUNT = 64
@@ -133,6 +131,9 @@ const windowSnapshot = ref<WindowSnapshot>(DEFAULT_WINDOW_SNAPSHOT)
 /** 系统是否要求减少动态效果。 */
 const systemReducedMotion = ref<boolean>(false)
 
+/** 带卸载滞后的三维画布挂载窗口。 */
+const mountedWindow = ref<MountedLineWindow>(EMPTY_MOUNTED_WINDOW)
+
 /** 当前歌词请求标识。 */
 let latestRequestId = ''
 
@@ -193,19 +194,31 @@ const activeLine = computed<CinematicLine | undefined>(() => (
   cinematicLines.value[activeLineIndex.value]
 ))
 
-/** 主镜头周围需要保持挂载的歌词行。 */
-const visibleLines = computed<readonly CinematicLine[]>(() => {
-  const activeIndex = activeLineIndex.value
-  if (activeIndex < 0) return []
-  return cinematicLines.value.slice(
-    Math.max(0, activeIndex - VISIBLE_LINE_RADIUS),
-    Math.min(cinematicLines.value.length, activeIndex + VISIBLE_LINE_RADIUS + 1)
-  )
+/** 当前虚拟相机焦平面所在的世界坐标。 */
+const cameraPoint = computed<SpatialPoint>(() => (
+  activeLine.value?.point ?? spatialPointForIndex(0)
+))
+
+/** 主镜头周围仍挂载、并在视线深处继续消散的歌词行。 */
+const visibleLines = computed<readonly CinematicLine[]>(() => (
+  cinematicLines.value.slice(mountedWindow.value.start, mountedWindow.value.end)
+))
+
+/** 供空间样条穿过的当前与前后歌词锚点。 */
+const splineAnchors = computed(() => {
+  if (cinematicLines.value.length === 0) return restSplineAnchors()
+  const start = Math.max(0, mountedWindow.value.start - 1)
+  const end = Math.min(cinematicLines.value.length, mountedWindow.value.end + 1)
+  return cinematicLines.value.slice(start, end).map((line) => ({
+    x: line.point.x,
+    y: line.point.y,
+    z: line.point.z
+  }))
 })
 
 /** 当前镜头位置与转角。 */
 const cameraStyle = computed<Record<string, string>>(() => {
-  const point = activeLine.value?.point ?? spatialPointForIndex(0)
+  const point = cameraPoint.value
   return {
     transform: `rotateX(${-point.tilt}deg) rotateY(${-point.pan}deg) rotateZ(${-point.roll}deg) translate3d(${-point.x}px, ${-point.y}px, ${-point.z}px)`,
     '--ncx-cinematic-camera-duration': reducedMotion.value
@@ -224,15 +237,27 @@ const pageStyle = computed<Record<string, string>>(() => ({
   ]
 }))
 
-/** 随镜头缓慢漂移的第一条空间样条。 */
-const primarySplineStyle = computed<Record<string, string>>(() => ({
-  transform: `translate3d(${Math.sin(activeLineIndex.value * 0.71) * 5}%, ${Math.cos(activeLineIndex.value * 0.47) * 4}%, 0) rotate(${activeLineIndex.value * 1.8}deg)`
-}))
+/** 穿过当前与前后歌词的主空间样条。 */
+const primarySplineSegments = computed<readonly CinematicSplineSegment[]>(() => (
+  buildCinematicSpline({
+    anchors: splineAnchors.value,
+    ribbon: 'primary',
+    camera: cameraPoint.value,
+    reducedMotion: reducedMotion.value,
+    motion: appPreferences.preferences.value.lyricMotion
+  })
+))
 
-/** 随镜头反向漂移的第二条空间样条。 */
-const secondarySplineStyle = computed<Record<string, string>>(() => ({
-  transform: `translate3d(${Math.cos(activeLineIndex.value * 0.53) * -4}%, ${Math.sin(activeLineIndex.value * 0.61) * 5}%, 0) rotate(${-activeLineIndex.value * 1.3}deg)`
-}))
+/** 反向穿插的第二条空间样条。 */
+const secondarySplineSegments = computed<readonly CinematicSplineSegment[]>(() => (
+  buildCinematicSpline({
+    anchors: splineAnchors.value,
+    ribbon: 'secondary',
+    camera: cameraPoint.value,
+    reducedMotion: reducedMotion.value,
+    motion: appPreferences.preferences.value.lyricMotion
+  })
+))
 
 /** HUD 频谱的连续 SVG 路径。 */
 const waveformPath = computed<string>(() => {
@@ -264,18 +289,6 @@ const lyricSequenceText = computed<string>(() => {
 /** 移除上游可能携带的声部前缀。 */
 function normalizeLyricText(text: string): string {
   return text.replace(/^(?:男|女|和声)\s*[:：]\s*/u, '').trim()
-}
-
-/** 返回指定歌词索引在无限画布上的稳定坐标。 */
-function spatialPointForIndex(index: number): SpatialPoint {
-  return {
-    x: Math.round(Math.sin(index * 1.618) * 210),
-    y: index * 270,
-    z: Math.round(Math.cos(index * 1.127) * 130),
-    pan: Math.sin(index * 0.73) * 7,
-    tilt: Math.cos(index * 0.57) * 4,
-    roll: Math.sin(index * 0.39) * 2.4
-  }
 }
 
 /** 把逐字时间轴展开为单字符时间轴。 */
@@ -330,10 +343,26 @@ function createCinematicLine(line: StandardLyricsLine, index: number): Cinematic
   }
 }
 
-/** 返回歌词行在三维画布中的固定布局样式。 */
+/** 返回歌词行在三维画布中的布局，并按焦平面 Z 距写入连续景深。 */
 function lineStyle(line: CinematicLine): Record<string, string> {
+  const depth = depthOfFieldForPoint(line.point, cameraPoint.value, {
+    reducedMotion: reducedMotion.value,
+    motion: appPreferences.preferences.value.lyricMotion
+  })
   return {
-    transform: `translate3d(${line.point.x}px, ${line.point.y}px, ${line.point.z}px) translate(-50%, -50%) rotateZ(${line.point.roll}deg)`
+    transform: `translate3d(${line.point.x}px, ${line.point.y}px, ${line.point.z}px) translate(-50%, -50%) rotateZ(${line.point.roll}deg) scale(${depth.scale.toFixed(4)})`,
+    opacity: depth.opacity.toFixed(3),
+    filter: `blur(${depth.blurPx.toFixed(2)}px)`
+  }
+}
+
+/** 返回一段世界空间样条的定向与散焦样式。 */
+function splineSegmentStyle(segment: CinematicSplineSegment): Record<string, string> {
+  return {
+    width: `${segment.length.toFixed(2)}px`,
+    transform: segment.transform,
+    opacity: segment.opacity.toFixed(3),
+    filter: `blur(${segment.blurPx.toFixed(2)}px)`
   }
 }
 
@@ -481,6 +510,7 @@ function synchronizeReducedMotion(): void {
 // -- Listeners
 
 watch(() => track.value?.trackId, (trackId) => {
+  mountedWindow.value = EMPTY_MOUNTED_WINDOW
   anchorVisualClock(snapshot.value.playback.positionMs)
   void loadLyrics(trackId)
 }, { immediate: true })
@@ -491,6 +521,14 @@ watch([
 ], ([positionMs]) => {
   anchorVisualClock(positionMs)
 })
+
+watch(
+  [activeLineIndex, () => cinematicLines.value.length],
+  ([activeIndex, total]) => {
+    mountedWindow.value = nextMountedLineWindow(mountedWindow.value, activeIndex, total)
+  },
+  { immediate: true }
+)
 
 // -- Lifecycle Hooks
 
@@ -599,27 +637,7 @@ onBeforeUnmount(() => {
     </header>
 
     <main class="cinematic-stage">
-      <svg
-        class="cinematic-spline cinematic-spline--primary"
-        :style="primarySplineStyle"
-        viewBox="0 0 1000 1000"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path d="M -80 725 C 130 590 205 155 495 265 C 755 363 760 845 1080 610" />
-      </svg>
-      <svg
-        class="cinematic-spline cinematic-spline--secondary"
-        :style="secondarySplineStyle"
-        viewBox="0 0 1000 1000"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path d="M 190 -80 C 285 180 725 205 670 510 C 625 755 350 800 455 1080" />
-      </svg>
-
       <div
-        v-if="track && visibleLines.length > 0"
         class="cinematic-world"
         aria-hidden="true"
       >
@@ -627,6 +645,23 @@ onBeforeUnmount(() => {
           class="cinematic-camera"
           :style="cameraStyle"
         >
+          <div class="cinematic-spline cinematic-spline--primary">
+            <span
+              v-for="segment in primarySplineSegments"
+              :key="segment.id"
+              class="cinematic-spline-segment"
+              :style="splineSegmentStyle(segment)"
+            />
+          </div>
+          <div class="cinematic-spline cinematic-spline--secondary">
+            <span
+              v-for="segment in secondarySplineSegments"
+              :key="segment.id"
+              class="cinematic-spline-segment"
+              :style="splineSegmentStyle(segment)"
+            />
+          </div>
+
           <button
             v-for="line in visibleLines"
             :key="line.id"
@@ -655,7 +690,7 @@ onBeforeUnmount(() => {
       </div>
 
       <div
-        v-else
+        v-if="!track || visibleLines.length === 0"
         class="cinematic-state"
       >
         <template v-if="!track">

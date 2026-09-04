@@ -144,6 +144,9 @@ describe('应用级沉浸播放展示', () => {
     expect(cinematicLyricsPageSource).toContain('player.getAudioSpectrum(WAVEFORM_SAMPLE_COUNT)')
     expect(cinematicLyricsPageSource).toContain('cinematic-spline--primary')
     expect(cinematicLyricsPageSource).toContain('cinematic-spline--secondary')
+    expect(cinematicLyricsPageSource).toContain('cinematic-spline-segment')
+    expect(cinematicLyricsPageSource).toContain('buildCinematicSpline')
+    expect(cinematicLyricsPageSource).toContain('depthOfFieldForPoint')
     expect(cinematicLyricsPageSource).toContain('<style scoped src="./cinematic-lyrics-page.css"></style>')
   })
 
@@ -214,6 +217,81 @@ describe('应用级沉浸播放展示', () => {
     expect(wrapper.find('.cinematic-lyric-line--active').text()).toContain('Мы летим домой')
     expect(wrapper.find('.cinematic-translation').text()).toBe('我们飞向家园')
     expect(wrapper.find('.cinematic-waveform path').attributes('d')).toContain('M 0.00 18.00')
+    expect(wrapper.find('.cinematic-camera .cinematic-spline--primary .cinematic-spline-segment').exists()).toBe(true)
+    expect(wrapper.find('.cinematic-camera .cinematic-spline--secondary .cinematic-spline-segment').exists()).toBe(true)
+
+    wrapper.unmount()
+  })
+
+  it('按焦平面 Z 距连续虚化歌词并在相机世界中挂载三维样条', async () => {
+    disposePlayer()
+    const mockTrack = {
+      trackId: 'cinematic-track-depth-1',
+      name: 'Depth Track',
+      artists: ['Lens'],
+      durationMs: 40000,
+      album: 'Z-Space'
+    }
+    vi.spyOn(PlaybackCoordinator.prototype, 'getSnapshot').mockReturnValue({
+      playback: {
+        status: 'paused',
+        intent: 'pause',
+        track: mockTrack,
+        generation: 0,
+        positionMs: 8_300,
+        durationMs: 40000,
+        bufferedMs: 20000,
+        volume: 1,
+        muted: false,
+        seeking: false,
+        error: null,
+        actualQuality: 'lossless',
+        downgraded: false
+      },
+      queue: {
+        items: [],
+        currentItemId: null,
+        mode: 'loop',
+        revision: 0
+      },
+      quality: 'auto'
+    })
+    getLyrics.mockResolvedValue({
+      ok: true,
+      data: {
+        kind: 'lyrics',
+        entity: {
+          kind: 'lyrics',
+          trackId: mockTrack.trackId,
+          lines: Array.from({ length: 20 }, (_, index) => ({
+            lineStartMs: index * 1_000,
+            lineDurationMs: 1_000,
+            text: `Line ${index}`,
+            words: []
+          })),
+          sources: [{ api: 'test.lyrics', observedAt }],
+          updatedAt: observedAt
+        }
+      }
+    })
+
+    const wrapper = mount(CinematicLyricsPage)
+    await vi.waitFor(() => expect(wrapper.find('.cinematic-lyric-line--active').text()).toContain('Line 8'))
+
+    const lyricLines = wrapper.findAll('.cinematic-lyric-line')
+    const activeLine = wrapper.find('.cinematic-lyric-line--active')
+    const distantLine = lyricLines.find((line) => line.text().includes('Line 2'))
+    const activeBlur = Number(/blur\(([0-9.]+)px\)/.exec(activeLine.attributes('style') ?? '')?.[1] ?? Number.NaN)
+    const distantBlur = Number(/blur\(([0-9.]+)px\)/.exec(distantLine?.attributes('style') ?? '')?.[1] ?? Number.NaN)
+    const distantScale = Number(/scale\(([0-9.]+)\)/.exec(distantLine?.attributes('style') ?? '')?.[1] ?? Number.NaN)
+
+    expect(lyricLines.length).toBeGreaterThan(7)
+    expect(activeBlur).toBeLessThan(0.2)
+    expect(distantLine).toBeDefined()
+    expect(distantBlur).toBeGreaterThan(activeBlur)
+    expect(distantScale).toBeLessThan(1)
+    expect(wrapper.findAll('.cinematic-camera .cinematic-spline-segment').length).toBeGreaterThan(16)
+    expect(wrapper.find('.cinematic-spline-segment').attributes('style')).toContain('matrix3d(')
 
     wrapper.unmount()
   })
