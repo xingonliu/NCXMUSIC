@@ -11,12 +11,14 @@ import {
   toastList,
   type ToastItem
 } from './design-system/use-toast'
+import CinematicLyricsPage from './features/music/CinematicLyricsPage.vue'
 import ImmersiveLyricsPage from './features/music/ImmersiveLyricsPage.vue'
 import AudioHost from './features/music/components/AudioHost.vue'
 import PlayerBar from './features/music/components/PlayerBar.vue'
 import { useImmersivePlayerPresentation } from './features/music/immersive-player-presentation'
 import { useLikedSongsStore } from './features/music/liked-songs-store'
 import { usePlayerKeyboardShortcuts } from './features/music/use-player-keyboard-shortcuts'
+import { useAppPreferences } from './features/settings/app-preferences'
 import VoiceInputLayer from './features/voice/VoiceInputLayer.vue'
 
 // ========= 变量 =========
@@ -30,6 +32,9 @@ const immersivePlayer = useImmersivePlayerPresentation()
 /** 应用级歌曲收藏状态。 */
 const likedSongs = useLikedSongsStore()
 
+/** 应用界面偏好，用于选择新版或经典沉浸歌词页。 */
+const appPreferences = useAppPreferences()
+
 /** 沉浸播放展示层是否仍处于挂载状态。 */
 const isImmersivePlayerOpen = immersivePlayer.isOpen
 
@@ -38,6 +43,13 @@ const isImmersivePlayerVisible = immersivePlayer.isVisible
 
 /** 当前页面是否展示通用 PlayerBar。 */
 const showPlayerBar = computed<boolean>(() => route.meta.playerBar === 'show')
+
+/** 当前偏好对应的沉浸歌词页组件。 */
+const activeImmersiveLyricsPage = computed(() => (
+  appPreferences.preferences.value.lyricPageStyle === 'legacy'
+    ? ImmersiveLyricsPage
+    : CinematicLyricsPage
+))
 
 // ========= Toast 堆叠与展开交互 =========
 
@@ -190,7 +202,8 @@ onMounted(() => {
       v-show="isImmersivePlayerVisible"
       class="ncx-immersive-page-transition"
     >
-      <ImmersiveLyricsPage
+      <component
+        :is="activeImmersiveLyricsPage"
         v-if="isImmersivePlayerOpen"
         @close="immersivePlayer.close()"
       />

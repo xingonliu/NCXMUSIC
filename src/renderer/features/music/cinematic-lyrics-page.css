@@ -1,0 +1,428 @@
+/* stylelint-disable no-descending-specificity -- Interactive states follow shared control foundations. */
+
+.cinematic-lyrics-page {
+  position: fixed;
+  z-index: var(--ncx-layer-presentation);
+  inset: 0;
+  display: grid;
+  overflow: hidden;
+  grid-template-rows: 76px minmax(0, 1fr) 90px;
+  border-radius: var(--ncx-squircle-radius-lg);
+  color: #111;
+  background:
+    radial-gradient(circle at 50% 45%, rgb(255 255 255 / 92%) 0%, rgb(255 255 255 / 18%) 52%, rgb(191 207 219 / 16%) 100%),
+    linear-gradient(142deg, #ebf2f7 0%, #f6f9fb 42%, #fff 100%);
+  isolation: isolate;
+  outline: none;
+}
+
+.cinematic-lyrics-page--windows {
+  border-radius: var(--ncx-squircle-radius-sm);
+}
+
+.cinematic-lyrics-page--fullscreen {
+  border-radius: 0;
+}
+
+.cinematic-vignette {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 48%, rgb(109 132 149 / 9%) 100%);
+  pointer-events: none;
+}
+
+.cinematic-header {
+  z-index: 4;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
+  padding: 18px 22px 0;
+  -webkit-app-region: drag;
+}
+
+.cinematic-track-meta {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+  font-family: Inter, "SF Pro Text", "Segoe UI", sans-serif;
+}
+
+.cinematic-track-meta > * {
+  overflow: hidden;
+  max-width: min(36vw, 420px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cinematic-track-meta strong {
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.cinematic-track-meta > span:last-child {
+  color: rgb(17 17 17 / 52%);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.cinematic-kicker {
+  margin-bottom: 5px;
+  color: rgb(17 17 17 / 42%);
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+}
+
+.cinematic-close-button,
+.cinematic-window-controls button,
+.cinematic-transport button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  color: #111;
+  background: transparent;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+
+.cinematic-close-button {
+  width: 36px;
+  height: 30px;
+  border-radius: var(--ncx-squircle-radius-full);
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.cinematic-close-button:hover,
+.cinematic-close-button:focus-visible,
+.cinematic-window-controls button:hover,
+.cinematic-window-controls button:focus-visible,
+.cinematic-transport button:hover,
+.cinematic-transport button:focus-visible {
+  background: rgb(17 17 17 / 7%);
+  outline: none;
+}
+
+.cinematic-close-button:active,
+.cinematic-window-controls button:active,
+.cinematic-transport button:active {
+  transform: scale(0.92);
+}
+
+.cinematic-header-output {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  -webkit-app-region: no-drag;
+}
+
+.cinematic-sequence {
+  color: rgb(17 17 17 / 48%);
+  font-family: SFMono-Regular, Consolas, monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+
+.cinematic-window-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.cinematic-window-controls button,
+.cinematic-transport button {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--ncx-squircle-radius-full);
+}
+
+.cinematic-stage {
+  position: relative;
+  width: min(100%, calc(100dvh - 166px));
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1;
+  place-self: center center;
+  overflow: hidden;
+  perspective: 1100px;
+  perspective-origin: 50% 48%;
+}
+
+.cinematic-world {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.cinematic-camera {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  transition: transform var(--ncx-cinematic-camera-duration) cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.cinematic-lyric-line {
+  position: absolute;
+  display: flex;
+  width: min(78vmin, 860px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 1.5vmin, 18px);
+  padding: 22px;
+  border: 0;
+  color: #111;
+  background: transparent;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform-origin: center;
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, filter;
+}
+
+.cinematic-lyric-line--active {
+  z-index: 2;
+  opacity: 1;
+  filter: blur(0);
+}
+
+.cinematic-lyric-line--future {
+  opacity: 0.12;
+  filter: blur(8px);
+}
+
+.cinematic-lyric-line--past {
+  opacity: 0.045;
+  filter: blur(20px);
+}
+
+.cinematic-primary-lyric {
+  display: block;
+  font-family: Inter, "SF Pro Display", "Segoe UI Variable Display", "Noto Sans", sans-serif;
+  font-size: var(--ncx-cinematic-lyric-size);
+  font-weight: var(--ncx-cinematic-lyric-weight);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  text-align: center;
+  text-wrap: balance;
+  white-space: pre-wrap;
+}
+
+.cinematic-character {
+  display: inline-block;
+  min-width: 0.12em;
+  transform-origin: 50% 100%;
+  will-change: opacity, filter, transform;
+}
+
+.cinematic-translation {
+  display: block;
+  max-width: 72%;
+  color: #333;
+  font-family: "Noto Sans SC", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+  font-size: clamp(13px, 2vmin, 21px);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.035em;
+  text-align: center;
+  text-wrap: balance;
+  will-change: opacity, filter, transform;
+}
+
+.cinematic-spline {
+  position: absolute;
+  z-index: 1;
+  inset: -10%;
+  width: 120%;
+  height: 120%;
+  overflow: visible;
+  fill: none;
+  pointer-events: none;
+  transition: transform 1600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cinematic-spline path {
+  stroke: rgb(17 17 17 / 72%);
+  stroke-linecap: round;
+  stroke-width: 0.72;
+  vector-effect: non-scaling-stroke;
+}
+
+.cinematic-spline--secondary {
+  opacity: 0.42;
+}
+
+.cinematic-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 48px;
+  font-family: Inter, "SF Pro Display", "Segoe UI", sans-serif;
+  text-align: center;
+}
+
+.cinematic-state > span {
+  color: rgb(17 17 17 / 42%);
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.2em;
+}
+
+.cinematic-state strong {
+  font-size: clamp(30px, 6vmin, 72px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+
+.cinematic-state p {
+  max-width: 420px;
+  margin: 0;
+  color: rgb(17 17 17 / 54%);
+  font-size: 13px;
+}
+
+.cinematic-state button {
+  margin-top: 8px;
+  padding: 7px 16px;
+  border: 1px solid rgb(17 17 17 / 24%);
+  border-radius: var(--ncx-squircle-radius-full);
+  color: #111;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cinematic-live-lyric {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin: -1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.cinematic-hud {
+  z-index: 4;
+  display: grid;
+  width: min(720px, calc(100% - 44px));
+  grid-template-columns: 100px minmax(180px, 1fr) 100px;
+  align-items: center;
+  justify-self: center;
+  gap: 18px;
+  padding-bottom: 18px;
+  -webkit-app-region: no-drag;
+}
+
+.cinematic-transport {
+  display: flex;
+  gap: 3px;
+}
+
+.cinematic-waveform {
+  position: relative;
+  width: 100%;
+  height: 42px;
+  padding: 3px 0;
+  border: 0;
+  color: #111;
+  background: transparent;
+  cursor: crosshair;
+}
+
+.cinematic-waveform:disabled {
+  cursor: default;
+}
+
+.cinematic-waveform svg {
+  display: block;
+  width: 100%;
+  height: 36px;
+  overflow: visible;
+}
+
+.cinematic-waveform line {
+  stroke: rgb(17 17 17 / 28%);
+  stroke-width: 0.6;
+  vector-effect: non-scaling-stroke;
+}
+
+.cinematic-waveform path {
+  fill: none;
+  stroke: #111;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+.cinematic-time {
+  display: flex;
+  justify-content: space-between;
+  color: rgb(17 17 17 / 52%);
+  font-family: SFMono-Regular, Consolas, monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.cinematic-lyrics-page--reduced-motion .cinematic-spline,
+.cinematic-lyrics-page--reduced-motion .cinematic-lyric-line {
+  transition-duration: 1ms;
+}
+
+@media (width < 720px) {
+  .cinematic-header {
+    padding-inline: 14px;
+  }
+
+  .cinematic-kicker,
+  .cinematic-sequence {
+    display: none;
+  }
+
+  .cinematic-hud {
+    width: calc(100% - 28px);
+    grid-template-columns: 88px minmax(120px, 1fr) 76px;
+    gap: 8px;
+  }
+
+  .cinematic-translation {
+    max-width: 88%;
+  }
+}
+
+@media (height < 620px) {
+  .cinematic-lyrics-page {
+    grid-template-rows: 60px minmax(0, 1fr) 72px;
+  }
+
+  .cinematic-header {
+    padding-top: 12px;
+  }
+
+  .cinematic-hud {
+    padding-bottom: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-camera,
+  .cinematic-spline,
+  .cinematic-lyric-line {
+    transition-duration: 1ms;
+  }
+}

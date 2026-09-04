@@ -18,6 +18,12 @@ const appShellStyleSource = readFileSync(
   'utf8'
 )
 
+/** 新版影院歌词页样式源码，用于锁定核心空间与动效约束。 */
+const cinematicLyricsStyleSource = readFileSync(
+  join(process.cwd(), 'src/renderer/features/music/cinematic-lyrics-page.css'),
+  'utf8'
+)
+
 /** 设置面板源码集合，用于防止重新引入未复用的原生表单控件。 */
 const settingsPanelSources = [
   'ExtensionsSettingsPanel.vue',
@@ -54,6 +60,7 @@ describe('settings navigation UI contract', () => {
     expect(SETTINGS_SEARCH_ITEMS.some((item) => item.targetId === 'setting-close-window')).toBe(true)
     expect(SETTINGS_SEARCH_ITEMS.some((item) => item.targetId === 'setting-mcp-servers')).toBe(true)
     expect(SETTINGS_SEARCH_ITEMS.some((item) => item.targetId === 'setting-skill-install')).toBe(true)
+    expect(SETTINGS_SEARCH_ITEMS.some((item) => item.targetId === 'setting-lyric-page-style')).toBe(true)
     expect(SETTINGS_SEARCH_ITEMS.some((item) => item.targetId === 'setting-lyric-font-weight')).toBe(true)
   })
 
@@ -67,6 +74,23 @@ describe('settings navigation UI contract', () => {
     expect(settingsPageSource).toContain("{ label: '中粗', value: 'semibold' }")
     expect(settingsPageSource).toContain("{ label: '粗体', value: 'bold' }")
     expect(settingsPageSource).toContain("{ label: '超粗体', value: 'heavy' }")
+  })
+
+  it('提供新版动效影院与经典沉浸歌词页选择器', () => {
+    /** 音乐设置页源码。 */
+    const settingsPageSource = settingsPanelSources[3] ?? ''
+
+    expect(settingsPageSource).toContain("{ label: '动效影院（新版）', value: 'cinematic' }")
+    expect(settingsPageSource).toContain("{ label: '经典沉浸', value: 'legacy' }")
+    expect(settingsPageSource).toContain('setting-id="setting-lyric-page-style"')
+    expect(settingsPageSource).toContain("persistAccountPreference('lyrics.pageStyle', lyricPageStyle)")
+  })
+
+  it('锁定新版歌词页的 1:1 三维舞台与连续缓动设计', () => {
+    expect(cinematicLyricsStyleSource).toContain('aspect-ratio: 1')
+    expect(cinematicLyricsStyleSource).toContain('perspective: 1100px')
+    expect(cinematicLyricsStyleSource).toContain('cubic-bezier(0.22, 1, 0.36, 1)')
+    expect(cinematicLyricsStyleSource).toContain('.cinematic-spline--secondary')
   })
 
   it('将歌词焦点、动效、字号、字重与已唱歌词配置归属到外观标签', () => {

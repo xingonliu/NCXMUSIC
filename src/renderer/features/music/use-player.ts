@@ -297,6 +297,8 @@ export function usePlayer(): {
   dismissNotice: () => void
   /** 获取低频音频波形能量 [0, 1] */
   getAudioEnergy: () => number
+  /** 获取影院歌词 HUD 使用的对数频谱。 */
+  getAudioSpectrum: (sampleCount?: number) => readonly number[]
 } {
   runtime ??= createRuntime()
   const active = runtime
@@ -305,6 +307,7 @@ export function usePlayer(): {
     snapshot: readonly(active.snapshot) as Readonly<Ref<PlayerSnapshot>>,
     notice: readonly(active.notice) as Readonly<Ref<string | null>>,
     getAudioEnergy: () => active.adapter.getAudioEnergy(),
+    getAudioSpectrum: (sampleCount) => active.adapter.getAudioSpectrum(sampleCount),
     playContext: (context) => executeAppliedCommand(active.coordinator, active.gateway, {
       type: 'player.play-context',
       tracks: context.tracks,

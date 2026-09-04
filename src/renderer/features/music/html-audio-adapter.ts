@@ -38,6 +38,12 @@ const BACKGROUND_LOW_FREQUENCY_HZ = 50
 /** Apple Music 风格背景关注的低频终点。 */
 const BACKGROUND_HIGH_FREQUENCY_HZ = 120
 
+/** 影院歌词 HUD 频谱关注的最低频率。 */
+const HUD_MINIMUM_FREQUENCY_HZ = 80
+
+/** 影院歌词 HUD 频谱关注的最高频率。 */
+const HUD_MAXIMUM_FREQUENCY_HZ = 8_000
+
 /**
  * 从 AnalyserNode 的频域字节数组中计算指定频段的 RMS 能量。
  * 第 k 个频点中心频率为 `k * sampleRate / fftSize`。
@@ -76,6 +82,56 @@ export function calculateFrequencyBandEnergy(
     squaredMagnitude += magnitude * magnitude
   }
   return Math.sqrt(squaredMagnitude / (lastBin - firstBin + 1))
+}
+
+/**
+ * 把线性 FFT 频点压缩为对数分布的 HUD 频谱，兼顾低频节拍与人声细节。
+ */
+export function calculateLogarithmicSpectrum(
+  frequencyData: Uint8Array,
+  sampleRate: number,
+  fftSize: number,
+  sampleCount: number
+): number[] {
+  /** 收敛后的输出采样数量。 */
+  const count = Math.max(1, Math.min(128, Math.round(sampleCount)))
+  /** 无效输入对应的静默波形。 */
+  const silentSpectrum = Array.from({ length: count }, () => 0)
+  if (
+    frequencyData.length === 0
+    || !Number.isFinite(sampleRate)
+    || !Number.isFinite(fftSize)
+    || sampleRate <= 0
+    || fftSize <= 0
+  ) return silentSpectrum
+
+  /** 每个 FFT 频点覆盖的赫兹宽度。 */
+  const hertzPerBin = sampleRate / fftSize
+  /** 对数频率区间的比例跨度。 */
+  const frequencyRatio = HUD_MAXIMUM_FREQUENCY_HZ / HUD_MINIMUM_FREQUENCY_HZ
+
+  return Array.from({ length: count }, (_value, index) => {
+    /** 当前频谱柱的对数起止频率。 */
+    const startFrequency = HUD_MINIMUM_FREQUENCY_HZ
+      * frequencyRatio ** (index / count)
+    const endFrequency = HUD_MINIMUM_FREQUENCY_HZ
+      * frequencyRatio ** ((index + 1) / count)
+    /** 当前频谱柱覆盖的 FFT 索引区间。 */
+    const startBin = Math.max(1, Math.floor(startFrequency / hertzPerBin))
+    const endBin = Math.min(
+      frequencyData.length - 1,
+      Math.max(startBin, Math.ceil(endFrequency / hertzPerBin))
+    )
+    if (startBin >= frequencyData.length) return 0
+
+    /** 使用均方根保留窄频峰值，同时避免单点噪声抖动。 */
+    let squaredMagnitude = 0
+    for (let bin = startBin; bin <= endBin; bin += 1) {
+      const magnitude = (frequencyData[bin] ?? 0) / 255
+      squaredMagnitude += magnitude * magnitude
+    }
+    return Math.sqrt(squaredMagnitude / (endBin - startBin + 1))
+  })
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -227,6 +283,25 @@ export class HtmlAudioAdapter implements MediaElementPort {
     }
 
     return this.smoothedAudioEnergy
+  }
+
+  /** 读取影院歌词 HUD 使用的对数频谱；暂停或不可分析时返回静默波形。 */
+  getAudioSpectrum(sampleCount = 64): readonly number[] {
+    /** 收敛后的 HUD 采样数量。 */
+    const count = Math.max(1, Math.min(128, Math.round(sampleCount)))
+    const analyser = this.ensureAudioAnalyzer()
+    const buffer = this.frequencyData
+    if (!analyser || !buffer || this.element.paused) {
+      return Array.from({ length: count }, () => 0)
+    }
+
+    analyser.getByteFrequencyData(buffer)
+    return calculateLogarithmicSpectrum(
+      buffer,
+      analyser.context.sampleRate,
+      analyser.fftSize,
+      count
+    )
   }
 
   // ── 生命周期区 ──

@@ -11,6 +11,8 @@ export const enUSMusicSourceMessages = {
   '榜单分类': 'Chart categories',
   '保存': 'Save',
   '播放': 'Play',
+  '暂停': 'Pause',
+  '上一首': 'Previous track',
   '播放队列': 'Play queue',
   '播放个人电台': 'Play personal radio',
   '播放控制': 'Playback controls',

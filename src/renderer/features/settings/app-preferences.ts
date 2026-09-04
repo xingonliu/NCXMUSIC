@@ -12,6 +12,9 @@ import {
 /** 当前歌词在沉浸视图中的垂直焦点预设。 */
 export type LyricAlignmentPreset = 'upper' | 'center' | 'lower'
 
+/** 沉浸歌词页使用的视觉版本。 */
+export type LyricPageStyle = 'cinematic' | 'legacy'
+
 /** 歌词空间动效强度预设。 */
 export type LyricMotionPreset = 'full' | 'soft' | 'minimal'
 
@@ -27,6 +30,8 @@ export interface AppPreferences {
   theme: AppTheme
   /** 应用界面语言。 */
   locale: AppLocale
+  /** 沉浸歌词页使用的视觉版本。 */
+  lyricPageStyle: LyricPageStyle
   /** 是否展示歌词翻译。 */
   showLyricTranslation: boolean
   /** 当前歌词在沉浸视图中的垂直焦点。 */
@@ -52,6 +57,7 @@ const PREFERENCES_STORAGE_KEY = 'ncx.app-preferences.v1'
 const DEFAULT_PREFERENCES: AppPreferences = {
   theme: 'system',
   locale: 'zh-CN',
+  lyricPageStyle: 'cinematic',
   showLyricTranslation: true,
   lyricAlignment: 'center',
   lyricMotion: 'full',
@@ -71,6 +77,13 @@ function lyricAlignmentValue(value: unknown): LyricAlignmentPreset {
   return value === 'upper' || value === 'lower' || value === 'center'
     ? value
     : DEFAULT_PREFERENCES.lyricAlignment
+}
+
+/** 校验并恢复沉浸歌词页视觉版本。 */
+function lyricPageStyleValue(value: unknown): LyricPageStyle {
+  return value === 'legacy' || value === 'cinematic'
+    ? value
+    : DEFAULT_PREFERENCES.lyricPageStyle
 }
 
 /** 校验并恢复歌词动效强度预设。 */
@@ -108,6 +121,7 @@ function readPreferences(): AppPreferences {
     return {
       theme: theme.success ? theme.data : DEFAULT_PREFERENCES.theme,
       locale: isSupportedLocale(parsed.locale) ? parsed.locale : DEFAULT_PREFERENCES.locale,
+      lyricPageStyle: lyricPageStyleValue(parsed.lyricPageStyle),
       showLyricTranslation: typeof parsed.showLyricTranslation === 'boolean'
         ? parsed.showLyricTranslation
         : DEFAULT_PREFERENCES.showLyricTranslation,
@@ -156,6 +170,16 @@ function setAppLocale(locale: AppLocale): void {
 /** 更新歌词翻译显示偏好。 */
 function setShowLyricTranslation(showLyricTranslation: boolean): void {
   savePreferences({ ...preferences.value, showLyricTranslation })
+}
+
+/** 更新沉浸歌词页视觉版本。 */
+function setLyricPageStyle(lyricPageStyle: LyricPageStyle): void {
+  savePreferences({ ...preferences.value, lyricPageStyle })
+}
+
+/** 使用账户 SQLite 权威值同步沉浸歌词页视觉版本。 */
+function hydrateLyricPageStyle(lyricPageStyle: LyricPageStyle): void {
+  savePreferences({ ...preferences.value, lyricPageStyle })
 }
 
 /** 使用账户 SQLite 权威值同步歌词翻译展示镜像。 */
@@ -240,6 +264,8 @@ export function useAppPreferences(): {
   setTheme: (theme: AppTheme) => void
   hydrateTheme: (theme: AppTheme) => void
   setLocale: (locale: AppLocale) => void
+  setLyricPageStyle: (value: LyricPageStyle) => void
+  hydrateLyricPageStyle: (value: LyricPageStyle) => void
   setShowLyricTranslation: (value: boolean) => void
   hydrateShowLyricTranslation: (value: boolean) => void
   setLyricAlignment: (value: LyricAlignmentPreset) => void
@@ -261,6 +287,8 @@ export function useAppPreferences(): {
     setTheme,
     hydrateTheme,
     setLocale: setAppLocale,
+    setLyricPageStyle,
+    hydrateLyricPageStyle,
     setShowLyricTranslation,
     hydrateShowLyricTranslation,
     setLyricAlignment,

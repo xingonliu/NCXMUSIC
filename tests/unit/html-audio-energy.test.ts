@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
-import { calculateFrequencyBandEnergy } from '../../src/renderer/features/music/html-audio-adapter'
+import {
+  calculateFrequencyBandEnergy,
+  calculateLogarithmicSpectrum
+} from '../../src/renderer/features/music/html-audio-adapter'
 
 // ========= 测试 =========
 
@@ -24,5 +27,19 @@ describe('播放器低频能量分析', () => {
     frequencyData[20] = 255
 
     expect(calculateFrequencyBandEnergy(frequencyData, 48_000, 2_048)).toBe(0)
+  })
+
+  it('将 80～8000 Hz 线性频点压缩为固定数量的对数 HUD 频谱', () => {
+    /** 48 kHz、2048 点 FFT 的完整频域数据。 */
+    const frequencyData = new Uint8Array(1_024)
+    frequencyData[4] = 255
+    frequencyData[43] = 255
+    frequencyData[341] = 255
+
+    const spectrum = calculateLogarithmicSpectrum(frequencyData, 48_000, 2_048, 24)
+
+    expect(spectrum).toHaveLength(24)
+    expect(spectrum.some((value) => value > 0)).toBe(true)
+    expect(spectrum.every((value) => value >= 0 && value <= 1)).toBe(true)
   })
 })

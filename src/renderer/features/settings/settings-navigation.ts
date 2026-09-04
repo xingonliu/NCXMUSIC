@@ -90,6 +90,7 @@ export const SETTINGS_SEARCH_ITEMS: readonly SettingsSearchItem[] = [
   { tab: 'music', title: '播放音质', description: '选择自动、无损或其他播放音质。', targetId: 'setting-playback-quality', keywords: ['音频', '无损', 'hires', 'quality'] },
   { tab: 'music', title: '歌词翻译', description: '控制普通歌词和沉浸歌词中的翻译行。', targetId: 'setting-lyric-translation', keywords: ['翻译', '歌词', 'translation'] },
   { tab: 'appearance', title: '主题', description: '选择跟随系统、浅色或深色外观。', targetId: 'setting-theme', keywords: ['颜色', '浅色', '深色', 'dark', 'light'] },
+  { tab: 'appearance', title: '歌词页样式', description: '在动效影院与经典沉浸歌词之间切换。', targetId: 'setting-lyric-page-style', keywords: ['歌词', '新版', '经典', '影院', 'cinematic', 'legacy'] },
   { tab: 'appearance', title: '当前歌词位置', description: '选择沉浸歌词焦点靠上、居中或靠下。', targetId: 'setting-lyric-alignment', keywords: ['歌词', '对齐', '位置', '焦点'] },
   { tab: 'appearance', title: '歌词动效', description: '选择完整、轻柔或简洁歌词动效。', targetId: 'setting-lyric-motion', keywords: ['歌词', '动画', '弹簧', '模糊', '缩放'] },
   { tab: 'appearance', title: '歌词字号', description: '选择紧凑、标准、大号或超大号沉浸歌词。', targetId: 'setting-lyric-font-size', keywords: ['歌词', '字体', '字号', '大小', '超大号'] },

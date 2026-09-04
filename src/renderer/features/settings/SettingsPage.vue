@@ -23,6 +23,7 @@ import {
   type LyricFontSizePreset,
   type LyricFontWeightPreset,
   type LyricMotionPreset,
+  type LyricPageStyle,
   useAppPreferences
 } from './app-preferences'
 import ExtensionsSettingsPanel from './ExtensionsSettingsPanel.vue'
@@ -109,6 +110,12 @@ const closeBehaviorOptions: CommonOption[] = [
   { label: '退出应用', value: 'quit' }
 ]
 
+/** 沉浸歌词页视觉版本选项。 */
+const lyricPageStyleOptions: CommonOption[] = [
+  { label: '动效影院（新版）', value: 'cinematic' },
+  { label: '经典沉浸', value: 'legacy' }
+]
+
 /** 当前歌词垂直焦点的用户级预设。 */
 const lyricAlignmentOptions: CommonOption[] = [
   { label: '靠上', value: 'upper' },
@@ -173,6 +180,14 @@ function setApplicationLocale(value: string | number): void {
 function setLyricTranslation(value: boolean): void {
   appPreferences.setShowLyricTranslation(value)
   persistAccountPreference('lyrics.showTranslation', value)
+}
+
+/** 设置沉浸歌词页使用的视觉版本。 */
+function setLyricPageStyle(value: string | number): void {
+  /** 通用选择器返回的歌词页视觉版本。 */
+  const lyricPageStyle = String(value) as LyricPageStyle
+  appPreferences.setLyricPageStyle(lyricPageStyle)
+  persistAccountPreference('lyrics.pageStyle', lyricPageStyle)
 }
 
 /** 设置当前歌词的垂直焦点预设。 */
@@ -250,6 +265,11 @@ async function loadAccountPreferences(): Promise<void> {
   const showTranslation = preferences['lyrics.showTranslation']
   if (typeof showTranslation === 'boolean') {
     appPreferences.hydrateShowLyricTranslation(showTranslation)
+  }
+  /** 已校验的沉浸歌词页视觉版本。 */
+  const lyricPageStyle = preferences['lyrics.pageStyle']
+  if (lyricPageStyle === 'cinematic' || lyricPageStyle === 'legacy') {
+    appPreferences.hydrateLyricPageStyle(lyricPageStyle)
   }
   /** 已校验的歌词焦点预设。 */
   const lyricAlignment = preferences['lyrics.alignment']
@@ -562,6 +582,18 @@ onBeforeUnmount(() => {
       <SettingsSection
         :title="$tSource('歌词页')"
       >
+        <SettingsRow
+          setting-id="setting-lyric-page-style"
+          :title="$tSource('歌词页样式')"
+          :description="$tSource('在动效影院的空间歌词与经典双栏沉浸歌词之间切换。')"
+        >
+          <CommonSelect
+            class="settings-control"
+            :model-value="appPreferences.preferences.value.lyricPageStyle"
+            :options="lyricPageStyleOptions"
+            @update:model-value="setLyricPageStyle"
+          />
+        </SettingsRow>
         <SettingsRow
           setting-id="setting-lyric-alignment"
           :title="$tSource('当前歌词位置')"

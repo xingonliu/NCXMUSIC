@@ -6,6 +6,8 @@ import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinat
 import appSource from '../../src/renderer/App.vue?raw'
 import LyricsPanel from '../../src/renderer/features/music/components/LyricsPanel.vue'
 import PlaybackControls from '../../src/renderer/features/music/components/PlaybackControls.vue'
+import CinematicLyricsPage from '../../src/renderer/features/music/CinematicLyricsPage.vue'
+import cinematicLyricsPageSource from '../../src/renderer/features/music/CinematicLyricsPage.vue?raw'
 import ImmersiveLyricsPage from '../../src/renderer/features/music/ImmersiveLyricsPage.vue'
 import immersiveLyricsPageSource from '../../src/renderer/features/music/ImmersiveLyricsPage.vue?raw'
 import { useImmersivePlayerPresentation } from '../../src/renderer/features/music/immersive-player-presentation'
@@ -130,6 +132,92 @@ afterEach(async () => {
 // ========= 测试 =========
 
 describe('应用级沉浸播放展示', () => {
+  it('按偏好在新版动效影院与经典沉浸歌词页之间切换', () => {
+    expect(appSource).toContain("appPreferences.preferences.value.lyricPageStyle === 'legacy'")
+    expect(appSource).toContain('? ImmersiveLyricsPage')
+    expect(appSource).toContain(': CinematicLyricsPage')
+    expect(appSource).toContain(':is="activeImmersiveLyricsPage"')
+  })
+
+  it('新版使用 1:1 三维舞台、逐字符反向模糊与真实频谱 HUD', () => {
+    expect(cinematicLyricsPageSource).toContain("appPreferences.preferences.value.lyricMotion === 'soft' ? 6 : 20")
+    expect(cinematicLyricsPageSource).toContain('player.getAudioSpectrum(WAVEFORM_SAMPLE_COUNT)')
+    expect(cinematicLyricsPageSource).toContain('cinematic-spline--primary')
+    expect(cinematicLyricsPageSource).toContain('cinematic-spline--secondary')
+    expect(cinematicLyricsPageSource).toContain('<style scoped src="./cinematic-lyrics-page.css"></style>')
+  })
+
+  it('新版将同步主歌词与翻译渲染到连续空间画布', async () => {
+    disposePlayer()
+    const mockTrack = {
+      trackId: 'cinematic-track-1',
+      name: 'Космос',
+      artists: ['Исполнитель'],
+      durationMs: 180000,
+      album: 'Орбита'
+    }
+    vi.spyOn(PlaybackCoordinator.prototype, 'getSnapshot').mockReturnValue({
+      playback: {
+        status: 'paused',
+        intent: 'pause',
+        track: mockTrack,
+        generation: 0,
+        positionMs: 6_300,
+        durationMs: 180000,
+        bufferedMs: 20000,
+        volume: 1,
+        muted: false,
+        seeking: false,
+        error: null,
+        actualQuality: 'lossless',
+        downgraded: false
+      },
+      queue: {
+        items: [],
+        currentItemId: null,
+        mode: 'loop',
+        revision: 0
+      },
+      quality: 'auto'
+    })
+    getLyrics.mockResolvedValue({
+      ok: true,
+      data: {
+        kind: 'lyrics',
+        entity: {
+          kind: 'lyrics',
+          trackId: mockTrack.trackId,
+          lines: [
+            {
+              lineStartMs: 0,
+              lineDurationMs: 2_000,
+              text: 'Сквозь тишину',
+              words: []
+            },
+            {
+              lineStartMs: 6_000,
+              lineDurationMs: 2_400,
+              text: 'Мы летим домой',
+              words: [],
+              translation: '我们飞向家园'
+            }
+          ],
+          sources: [{ api: 'test.lyrics', observedAt }],
+          updatedAt: observedAt
+        }
+      }
+    })
+
+    const wrapper = mount(CinematicLyricsPage)
+    await vi.waitFor(() => expect(wrapper.findAll('.cinematic-lyric-line')).toHaveLength(2))
+
+    expect(wrapper.find('.cinematic-lyric-line--active').text()).toContain('Мы летим домой')
+    expect(wrapper.find('.cinematic-translation').text()).toBe('我们飞向家园')
+    expect(wrapper.find('.cinematic-waveform path').attributes('d')).toContain('M 0.00 18.00')
+
+    wrapper.unmount()
+  })
+
   it('主内容、封面列与歌词面板随窗口可用宽高伸展', () => {
     expect(immersiveLyricsPageSource).toContain(
       'width: calc(100% - clamp(32px, 3.5vw, 72px))'
