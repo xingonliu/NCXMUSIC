@@ -216,6 +216,78 @@
   pointer-events: none !important;
 }
 
+/* ========= 液态玻璃按钮分级体系 (Liquid Glass Buttons) ========= */
+.ncx-common-button-glass,
+.ncx-common-icon-button-glass {
+  position: relative;
+  touch-action: none;
+  will-change: transform;
+  transform: translate(var(--ncx-liquid-tx, 0), var(--ncx-liquid-ty, 0))
+    scale(var(--ncx-liquid-sx, 1), var(--ncx-liquid-sy, 1));
+  box-shadow: var(--ncx-liquid-glass-inner-shadow), 0 4px 16px rgb(0 0 0 / 8%);
+  transition:
+    transform 0.04s linear,
+    background-color var(--ncx-motion-fast),
+    box-shadow var(--ncx-motion-fast);
+}
+
+/* L1: 完整透明液态玻璃按钮 */
+.ncx-common-button-glass--full {
+  background: rgb(255 255 255 / 24%);
+  backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgb(255 255 255 / 35%);
+  color: var(--ncx-color-text-primary);
+}
+
+.ncx-common-button-glass--full:hover:not(:disabled) {
+  background: rgb(255 255 255 / 34%);
+  border-color: rgb(255 255 255 / 45%);
+}
+
+/* L2: 完整带颜色液态玻璃按钮 */
+.ncx-common-button-glass--tinted {
+  background: var(--ncx-liquid-glass-tint-primary);
+  backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgb(255 255 255 / 35%);
+  color: #fff;
+  box-shadow: var(--ncx-liquid-glass-inner-shadow), 0 6px 20px rgb(0 136 255 / 35%);
+}
+
+.ncx-common-button-glass--tinted:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+/* L3: 轻量级高斯模糊形变按钮 */
+.ncx-common-button-glass--lightweight {
+  background: var(--ncx-btn-bg-secondary);
+  backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 22%);
+}
+
+.ncx-common-button-glass--lightweight:hover:not(:disabled) {
+  background: var(--ncx-btn-bg-hover);
+}
+
+/* 图标按钮双层隔离，保证内部矢量符号不形变模糊 */
+.ncx-common-icon-button-glass > svg,
+.ncx-common-icon-button-glass > span {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+:root[data-theme='dark'] .ncx-common-button-glass--full {
+  background: rgb(255 255 255 / 10%);
+  border-color: rgb(255 255 255 / 16%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .ncx-common-button-glass--full {
+    background: rgb(255 255 255 / 10%);
+    border-color: rgb(255 255 255 / 16%);
+  }
+}
+
 /* ========= CommonHeaderButton & CommonHeaderGroupButton (无边框、白净毛玻璃、浮层柔和阴影) ========= */
 .ncx-common-header-button,
 .ncx-glass-button {
@@ -223,6 +295,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  touch-action: none;
+  will-change: transform;
+  transform: translate(var(--ncx-liquid-tx, 0), var(--ncx-liquid-ty, 0))
+    scale(var(--ncx-liquid-sx, 1), var(--ncx-liquid-sy, 1));
   width: 38px;
   height: 38px;
   border: none;
@@ -3198,6 +3274,29 @@ body > .ncx-common-toast {
   border-radius: var(--ncx-squircle-radius-2xl);
   background: var(--ncx-modal-bg);
   box-shadow: var(--ncx-shadow-elevation-3);
+}
+
+/* S1 级 Dialog 深度液态玻璃面板 */
+.ncx-common-modal--liquid {
+  border-radius: var(--ncx-squircle-radius-2xl);
+  backdrop-filter: blur(32px) saturate(190%);
+  background: rgb(var(--ncx-color-surface-rgb, 255 255 255) / 84%);
+  border: 1px solid rgb(255 255 255 / 38%);
+  box-shadow:
+    0 24px 60px rgb(0 0 0 / 35%),
+    var(--ncx-liquid-glass-inner-shadow);
+}
+
+:root[data-theme='dark'] .ncx-common-modal--liquid {
+  background: rgb(24 26 34 / 85%);
+  border: 1px solid rgb(255 255 255 / 14%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .ncx-common-modal--liquid {
+    background: rgb(24 26 34 / 85%);
+    border: 1px solid rgb(255 255 255 / 14%);
+  }
 }
 
 .ncx-common-modal-header {
