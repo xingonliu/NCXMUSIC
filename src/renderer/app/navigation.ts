@@ -11,7 +11,7 @@ export interface AppNavigationItem {
   /** 导航目标路由名称。 */
   readonly routeName: RouteRecordName
   /** 导航条目图标语义。 */
-  readonly icon: 'discover' | 'browse' | 'search' | 'agent' | 'profile' | 'settings'
+  readonly icon: 'discover' | 'browse' | 'search' | 'agent' | 'profile' | 'settings' | 'designSystem'
 }
 
 /** 侧边栏主导航分组。 */
@@ -50,6 +50,12 @@ export const appPrimaryNavigationSections: readonly AppNavigationSection[] = [
         get label() { return t('navigation.agent') },
         routeName: 'agent',
         icon: 'agent'
+      },
+      {
+        /** 当前语言下的通用组件测试页入口文案。 */
+        get label() { return t('navigation.designSystem') },
+        routeName: 'design-system-lab',
+        icon: 'designSystem'
       }
     ]
   }

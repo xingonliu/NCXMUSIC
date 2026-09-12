@@ -2,6 +2,7 @@
 import {
   ChevronLeft,
   Compass,
+  Component as ComponentIcon,
   LayoutGrid,
   Maximize2,
   Minimize2,
@@ -119,6 +120,7 @@ function resolveNavIcon(item: AppNavigationItem) {
   const iconMap = {
     agent: Sparkles,
     browse: LayoutGrid,
+    designSystem: ComponentIcon,
     discover: Compass,
     profile: UserRound,
     search: Search,

@@ -74,6 +74,16 @@ describe('renderer i18n', () => {
     expect(discoverItem?.label).toBe('发现音乐')
     setLocale('en-US')
     expect(discoverItem?.label).toBe('Discover')
+
+    /** 通用组件测试页导航条目。 */
+    const designSystemItem = appPrimaryNavigationSections[0]?.items.find(
+      (item) => item.routeName === 'design-system-lab'
+    )
+    expect(designSystemItem).toBeDefined()
+    setLocale('zh-CN')
+    expect(designSystemItem?.label).toBe('通用组件')
+    setLocale('en-US')
+    expect(designSystemItem?.label).toBe('UI Components')
   })
 
   it('persists the selected locale with the existing app preferences', () => {
