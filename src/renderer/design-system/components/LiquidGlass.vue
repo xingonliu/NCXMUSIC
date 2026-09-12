@@ -6,7 +6,8 @@
 // 使用 ResizeObserver 生成实时 displacement map，并通过 backdrop-filter 应用。
 // ==========================================
 
-import { computed, onMounted, onUnmounted, reactive, ref, useId, type HTMLAttributes } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, reactive, ref, useId, type HTMLAttributes } from 'vue'
+import { createLiquidGlassWebgl, type LiquidGlassWebglInstance } from '../liquid-glass-webgl'
 
 // ========= 类型定义 =========
 
@@ -106,6 +107,8 @@ const props = withDefaults(defineProps<LiquidGlassProps>(), {
 
 /** 组件根元素引用，用于 ResizeObserver 获取真实尺寸。 */
 const liquidGlassRoot = ref<HTMLElement | null>(null)
+const glassCanvas = ref<HTMLCanvasElement | null>(null)
+let webgl: LiquidGlassWebglInstance | undefined
 
 /** 组件实例 ID，用于生成唯一 SVG filter id。 */
 const rawId = useId()
@@ -188,6 +191,17 @@ const displacementDataUri = computed(() => {
 
 // -- Functions
 
+function renderWebglGlass(): void {
+  const root = liquidGlassRoot.value
+  const canvas = glassCanvas.value
+  if (!root || !canvas || !webgl) return
+  const rect = root.getBoundingClientRect()
+  webgl.resize(rect.width, rect.height)
+  webgl.begin()
+  webgl.glass({ x: 0, y: 0, w: rect.width, h: rect.height, radius: squircleRadius.value, refractionHeight: 18, refractionAmount: 8, depthEffect: 1, chromaticAberration: 0.8, blur: props.backdropBlur, surface: [1, 1, 1, props.frost], highlight: 'default', shadow: true })
+  webgl.end()
+}
+
 /** 建立 ResizeObserver 并同步玻璃容器尺寸。 */
 function mountResizeObserver(): void {
   if (!liquidGlassRoot.value) return
@@ -218,13 +232,17 @@ function unmountResizeObserver(): void {
 // -- Lifecycle Hooks
 
 /** 组件挂载后开始读取真实尺寸。 */
-onMounted(() => {
+onMounted(async () => {
   mountResizeObserver()
+  await nextTick()
+  if (glassCanvas.value) webgl = createLiquidGlassWebgl(glassCanvas.value)
+  renderWebglGlass()
 })
 
 /** 组件卸载时释放 ResizeObserver。 */
 onUnmounted(() => {
   unmountResizeObserver()
+  webgl = undefined
 })
 </script>
 
@@ -234,6 +252,7 @@ onUnmounted(() => {
     :style="baseStyle"
     :class="['ncx-liquid-glass', 'effect', props.containerClass]"
   >
+    <canvas ref="glassCanvas" class="webgl-glass" aria-hidden="true" />
     <div :class="['slot-container', props.class]">
       <slot />
     </div>
@@ -321,6 +340,8 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+.webgl-glass { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
 .effect {
   --liquid-glass-current-frost: var(--liquid-glass-frost-light);
   --liquid-glass-current-blur: var(--liquid-glass-blur-light);
