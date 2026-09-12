@@ -2,12 +2,8 @@
 import { Comment, Fragment, computed, defineComponent, h, nextTick, onMounted, onUnmounted, ref, Teleport, Transition, watch, type Component, type PropType, type Ref, type VNode } from 'vue'
 
 import { translatePublicError, translateSourceText } from '../../i18n'
-import { useSpringDeform } from '../use-spring-deform'
 
 // ========= 类型 =========
-
-/** 通用液态玻璃分级材质变体。 */
-export type CommonGlassVariant = boolean | 'full' | 'tinted' | 'lightweight'
 
 /** 通用组件尺寸。 */
 type CommonComponentSize = 'compact' | 'default' | 'prominent'
@@ -246,11 +242,6 @@ export const CommonButton = defineComponent({
     size: sizeProp,
     loading: Boolean,
     disabled: Boolean,
-    /** 是否启用液态玻璃分级材质与按压物理形变。 */
-    glass: {
-      type: [Boolean, String] as PropType<CommonGlassVariant>,
-      default: false
-    },
     type: {
       type: String as PropType<'button' | 'submit' | 'reset'>,
       default: 'button'
@@ -258,16 +249,8 @@ export const CommonButton = defineComponent({
   },
   emits: ['click'],
   setup(props, { emit, slots }) {
-    /** 按钮 DOM 引用。 */
-    const buttonRef = ref<HTMLButtonElement | null>(null)
-
     /** 当前按钮是否不可操作。 */
     const isDisabled = computed(() => props.disabled || props.loading)
-
-    /** 接入按压弹簧触控形变。 */
-    useSpringDeform(buttonRef, {
-      disabled: () => !props.glass || isDisabled.value
-    })
 
     /** 处理按钮点击。 */
     function handleClick(event: MouseEvent): void {
@@ -275,24 +258,15 @@ export const CommonButton = defineComponent({
       emit('click', event)
     }
 
-    /** 计算液态玻璃类名。 */
-    const glassClass = computed(() => {
-      if (!props.glass) return false
-      const subVariant = typeof props.glass === 'string' ? props.glass : 'lightweight'
-      return `ncx-common-button-glass ncx-common-button-glass--${subVariant}`
-    })
-
     return () =>
       h(
         'button',
         {
-          ref: buttonRef,
           class: joinClasses(
             'ncx-common-button',
             `ncx-common-button-${props.variant}`,
             `ncx-common-button-${props.size}`,
-            props.loading && 'ncx-common-button-loading',
-            glassClass.value
+            props.loading && 'ncx-common-button-loading'
           ),
           type: props.type,
           disabled: isDisabled.value,
@@ -320,11 +294,6 @@ export const CommonIconButton = defineComponent({
     },
     selected: Boolean,
     disabled: Boolean,
-    /** 是否启用液态玻璃分级材质与按压物理形变。 */
-    glass: {
-      type: [Boolean, String] as PropType<CommonGlassVariant>,
-      default: false
-    },
     /** 可选气泡弹出位置；未传入时按按钮所在视口位置自动选择。 */
     tooltipPlacement: {
       type: String as PropType<CommonTooltipPlacement>,
@@ -344,13 +313,8 @@ export const CommonIconButton = defineComponent({
       props.tooltipDelay
     )
 
-    /** 图标按钮 DOM 引用，用于读取视口位置与触控形变。 */
+    /** 图标按钮 DOM 引用，用于读取视口位置。 */
     const buttonRef = ref<HTMLButtonElement | null>(null)
-
-    /** 接入按压弹簧触控形变。 */
-    useSpringDeform(buttonRef, {
-      disabled: () => !props.glass || props.disabled
-    })
 
     /** 当前实际使用的气泡位置。 */
     const resolvedTooltipPlacement = ref<CommonTooltipPlacement>('top')
@@ -419,13 +383,6 @@ export const CommonIconButton = defineComponent({
       emit('click', event)
     }
 
-    /** 计算液态玻璃类名。 */
-    const glassClass = computed(() => {
-      if (!props.glass) return false
-      const subVariant = typeof props.glass === 'string' ? props.glass : 'lightweight'
-      return `ncx-common-icon-button-glass ncx-common-icon-button-glass--${subVariant}`
-    })
-
     return () =>
       h(
         'button',
@@ -435,8 +392,7 @@ export const CommonIconButton = defineComponent({
             'ncx-common-icon-button',
             `ncx-common-icon-button-${props.variant}`,
             `ncx-common-icon-button-${props.size}`,
-            props.selected && 'ncx-common-icon-button-selected',
-            glassClass.value
+            props.selected && 'ncx-common-icon-button-selected'
           ),
           type: 'button',
           disabled: props.disabled,
@@ -533,14 +489,6 @@ export const CommonHeaderButton = defineComponent({
   },
   emits: ['click'],
   setup(props, { emit, slots }) {
-    /** 按钮 DOM 引用。 */
-    const buttonRef = ref<HTMLButtonElement | null>(null)
-
-    /** 接入按压弹簧触控形变（轻量级 L3）。 */
-    useSpringDeform(buttonRef, {
-      disabled: () => props.disabled
-    })
-
     /** 气泡显隐交互状态。 */
     const { visible, handleMouseEnter, handleMouseLeave, handleFocusIn, handleFocusOut } = useTooltipInteraction(
       () => props.disabled
@@ -556,7 +504,6 @@ export const CommonHeaderButton = defineComponent({
       h(
         'button',
         {
-          ref: buttonRef,
           class: joinClasses('ncx-common-header-button', 'ncx-glass-button'),
           type: props.type,
           disabled: props.disabled,
@@ -606,14 +553,6 @@ export const CommonHeaderGroupItem = defineComponent({
   },
   emits: ['click'],
   setup(props, { emit, slots }) {
-    /** 按钮 DOM 引用。 */
-    const buttonRef = ref<HTMLButtonElement | null>(null)
-
-    /** 接入按压弹簧触控形变（轻量级 L3）。 */
-    useSpringDeform(buttonRef, {
-      disabled: () => props.disabled
-    })
-
     /** 气泡显隐交互状态。 */
     const { visible, handleMouseEnter, handleMouseLeave, handleFocusIn, handleFocusOut } = useTooltipInteraction(
       () => props.disabled
@@ -629,7 +568,6 @@ export const CommonHeaderGroupItem = defineComponent({
       h(
         'button',
         {
-          ref: buttonRef,
           class: joinClasses(
             'ncx-common-header-group-item',
             'ncx-window-control',
@@ -3249,9 +3187,7 @@ export const CommonDialog = defineComponent({
     subtitle: { type: String, default: '' },
     width: { type: String, default: '520px' },
     closeOnOverlayClick: { type: Boolean, default: true },
-    closeOnEsc: { type: Boolean, default: true },
-    /** 是否启用 S1 级深度液态玻璃材质。 */
-    glass: { type: Boolean, default: true }
+    closeOnEsc: { type: Boolean, default: true }
   },
   emits: ['close'],
   setup(props, { emit, slots }) {
@@ -3284,7 +3220,7 @@ export const CommonDialog = defineComponent({
           ? h('div', { class: 'ncx-common-overlay', role: 'presentation', onClick: handleOverlayClick }, [
               h('section', {
                 ref: panel,
-                class: joinClasses('ncx-common-modal', props.glass && 'ncx-common-modal--liquid'),
+                class: 'ncx-common-modal',
                 tabindex: -1,
                 role: 'dialog',
                 'aria-modal': 'true',
@@ -3327,9 +3263,7 @@ export const CommonAlertDialog = defineComponent({
     description: { type: String, default: '' },
     type: { type: String as PropType<'danger' | 'warning' | 'info'>, default: 'danger' },
     confirmText: { type: String, default: '确认' },
-    cancelText: { type: String, default: '取消' },
-    /** 是否启用 S1 级深度液态玻璃材质。 */
-    glass: { type: Boolean, default: true }
+    cancelText: { type: String, default: '取消' }
   },
   emits: ['cancel', 'confirm'],
   setup(props, { emit }) {
@@ -3358,17 +3292,11 @@ export const CommonAlertDialog = defineComponent({
               h('line', { x1: '12', y1: '9', x2: '12', y2: '13' }),
               h('line', { x1: '12', y1: '17', x2: '12.01', y2: '17' })
             ]
-          : props.type === 'warning'
-            ? [
-                h('circle', { cx: '12', cy: '12', r: '10' }),
-                h('line', { x1: '12', y1: '8', x2: '12', y2: '12' }),
-                h('line', { x1: '12', y1: '16', x2: '12.01', y2: '16' })
-              ]
-            : [
-                h('circle', { cx: '12', cy: '12', r: '10' }),
-                h('line', { x1: '12', y1: '16', x2: '12', y2: '12' }),
-                h('line', { x1: '12', y1: '8', x2: '12.01', y2: '8' })
-              ]
+          : [
+              h('circle', { cx: '12', cy: '12', r: '10' }),
+              h('line', { x1: '12', y1: '16', x2: '12', y2: '12' }),
+              h('line', { x1: '12', y1: '8', x2: '12.01', y2: '8' })
+            ]
       return h('div', { class: joinClasses('ncx-common-alert-icon-badge', `ncx-common-alert-icon-${props.type}`) }, [
         h('svg', { viewBox: '0 0 24 24', width: '24', height: '24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2.2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, pathElements)
       ])
@@ -3380,12 +3308,7 @@ export const CommonAlertDialog = defineComponent({
           ? h('div', { class: 'ncx-common-overlay ncx-common-overlay-alert', role: 'presentation' }, [
               h('section', {
                 ref: panel,
-                class: joinClasses(
-                  'ncx-common-modal',
-                  'ncx-common-modal-alert',
-                  `ncx-common-modal-alert-${props.type}`,
-                  props.glass && 'ncx-common-modal--liquid'
-                ),
+                class: joinClasses('ncx-common-modal', 'ncx-common-modal-alert', `ncx-common-modal-alert-${props.type}`),
                 tabindex: -1,
                 role: 'alertdialog',
                 'aria-modal': 'true',

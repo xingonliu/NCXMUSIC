@@ -280,13 +280,5 @@ export const enUSDesignSystemSourceMessages = {
   '状态': 'Status',
   'AlertDialog 已确认': 'AlertDialog confirmed',
   'Toast #{0} ({1}) 已触发': 'Toast #{0} ({1}) triggered',
-  'Toast、Dialog、Drawer、Popover 各有边界，避免重复反馈。': 'Toast, Dialog, Drawer, and Popover have distinct boundaries; avoid duplicate feedback.',
-  'LiquidGlass 按钮分级与触控形变工坊': 'LiquidGlass button hierarchy and touch deformation workshop',
-  '液态分级体系': 'Liquid glass hierarchy',
-  '底衬背景：高反差艺术纹理（按住按钮向四周拖动体验 tanh 向心挤压与弹簧回弹）': 'Underlying background: high-contrast artistic texture (press and drag to experience tanh centripetal squeeze and spring rebound)',
-  'L1 完整透明液态玻璃': 'L1 Full transparent liquid glass',
-  'L2 完整带颜色液态玻璃': 'L2 Full tinted liquid glass',
-  'L3 轻量级高斯模糊形变': 'L3 Lightweight gaussian blur deformation',
-  '液态透明图标按钮': 'Liquid transparent icon button',
-  '轻量级图标按钮': 'Lightweight icon button'
+  'Toast、Dialog、Drawer、Popover 各有边界，避免重复反馈。': 'Toast, Dialog, Drawer, and Popover have distinct boundaries; avoid duplicate feedback.'
 } as const satisfies Readonly<Record<string, string>>

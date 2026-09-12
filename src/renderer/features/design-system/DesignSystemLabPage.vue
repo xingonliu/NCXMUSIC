@@ -11,7 +11,6 @@ import {
   RefreshCcw,
   RotateCcw,
   Search,
-  Sparkles,
   Trash2,
   X
 } from '@lucide/vue'
@@ -442,88 +441,6 @@ function confirmDangerAction(): void {
                 >
                   <Bell :size="17" />
                 </CommonIconButton>
-              </div>
-            </div>
-          </CommonCard>
-
-          <!-- 具体组件：LiquidGlass 按钮分级展台 -->
-          <CommonCard
-            class="ncx-design-lab-component-card"
-            style="grid-column: 1 / -1;"
-          >
-            <header class="ncx-design-lab-component-header">
-              <div class="ncx-design-lab-component-title">
-                <code class="ncx-design-lab-component-name">{{ $tSource("LiquidGlass 按钮分级与触控形变工坊") }}</code>
-              </div>
-              <CommonTag
-                color="blue"
-                class="ncx-design-lab-component-tag"
-              >
-                {{ $tSource("液态分级体系") }}
-              </CommonTag>
-            </header>
-            <div class="ncx-design-lab-component-demo">
-              <div
-                style="
-                  position: relative;
-                  padding: 24px;
-                  border-radius: var(--ncx-squircle-radius-xl);
-                  -electron-corner-smoothing: var(--ncx-squircle-smoothing);
-                  background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 40%, #86a8e7 75%, #91eae4 100%);
-                  overflow: hidden;
-                  display: flex;
-                  flex-direction: column;
-                  gap: 16px;
-                "
-              >
-                <div style="font-size: 13px; font-weight: 600; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.35);">
-                  {{ $tSource("底衬背景：高反差艺术纹理（按住按钮向四周拖动体验 tanh 向心挤压与弹簧回弹）") }}
-                </div>
-                <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-                  <!-- L1: 完整透明液态玻璃按钮 -->
-                  <CommonButton
-                    glass="full"
-                    size="prominent"
-                    @click="recordAction('Liquid Full Button')"
-                  >
-                    <Sparkles :size="16" /> {{ $tSource("L1 完整透明液态玻璃") }}
-                  </CommonButton>
-
-                  <!-- L2: 完整带颜色液态玻璃按钮 -->
-                  <CommonButton
-                    glass="tinted"
-                    size="prominent"
-                    @click="recordAction('Liquid Tinted Button')"
-                  >
-                    <Play :size="16" /> {{ $tSource("L2 完整带颜色液态玻璃") }}
-                  </CommonButton>
-
-                  <!-- L3: 轻量级高斯模糊形变按钮 -->
-                  <CommonButton
-                    :glass="true"
-                    size="prominent"
-                    @click="recordAction('Liquid Lightweight Button')"
-                  >
-                    {{ $tSource("L3 轻量级高斯模糊形变") }}
-                  </CommonButton>
-
-                  <!-- 图标液态按钮 -->
-                  <CommonIconButton
-                    glass="full"
-                    :label="$tSource('液态透明图标按钮')"
-                    @click="recordAction('Liquid Full Icon')"
-                  >
-                    <Heart :size="18" />
-                  </CommonIconButton>
-
-                  <CommonIconButton
-                    :glass="true"
-                    :label="$tSource('轻量级图标按钮')"
-                    @click="recordAction('Liquid Lightweight Icon')"
-                  >
-                    <Bell :size="18" />
-                  </CommonIconButton>
-                </div>
               </div>
             </div>
           </CommonCard>
