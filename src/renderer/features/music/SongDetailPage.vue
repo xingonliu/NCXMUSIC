@@ -175,6 +175,7 @@ watch(songId, () => void loadSong(), { immediate: true })
             </p>
             <div class="music-detail-actions">
               <CommonButton
+                material="tinted"
                 variant="primary"
                 @click="playSong"
               >
@@ -184,12 +185,14 @@ watch(songId, () => void loadSong(), { immediate: true })
                 />{{ $tSource("播放") }}
               </CommonButton>
               <CommonButton
+                material="clear"
                 variant="secondary"
                 @click="enqueueSong"
               >
                 <ListPlus :size="15" />{{ $tSource("加入队列") }}
               </CommonButton>
               <CommonButton
+                material="clear"
                 variant="secondary"
                 :disabled="likeBusy"
                 @click="likeSong"

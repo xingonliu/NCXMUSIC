@@ -597,6 +597,7 @@ onMounted(() => {
             </p>
             <div class="music-detail-actions">
               <CommonButton
+                material="tinted"
                 variant="primary"
                 size="prominent"
                 :disabled="songs.length === 0"
@@ -608,6 +609,7 @@ onMounted(() => {
                 /> {{ $tSource("播放全部") }}
               </CommonButton>
               <CommonButton
+                material="clear"
                 variant="secondary"
                 size="prominent"
                 :disabled="songs.length === 0"
@@ -616,6 +618,7 @@ onMounted(() => {
                 <Shuffle :size="16" /> {{ $tSource("随机播放") }}
               </CommonButton>
               <CommonButton
+                material="clear"
                 class="collection-comments-button"
                 variant="secondary"
                 size="prominent"
@@ -625,6 +628,7 @@ onMounted(() => {
               </CommonButton>
               <CommonButton
                 v-if="collection.kind === 'album' || !isOwnedPlaylist"
+                material="clear"
                 variant="secondary"
                 @click="toggleSubscription"
               >
@@ -640,6 +644,7 @@ onMounted(() => {
                 {{ $tSource(collection.subscribed ? '已在资料库' : '添加至资料库') }}
               </CommonButton>
               <CommonButton
+                material="clear"
                 variant="secondary"
                 :loading="downloadBusy"
                 :disabled="songs.length === 0"
@@ -654,6 +659,7 @@ onMounted(() => {
               >
                 <template #trigger="{ toggle }">
                   <CommonButton
+                    material="clear"
                     variant="ghost"
                     :aria-label="$tSource('更多操作')"
                     @click="toggle"

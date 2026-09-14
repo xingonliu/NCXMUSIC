@@ -39,14 +39,18 @@
   padding: 14px 10px;
   border: none;
   border-radius: var(--ncx-squircle-radius-lg);
-  background: var(--ncx-color-surface);
-  backdrop-filter: blur(28px) saturate(140%);
+  background: transparent;
   box-shadow: var(--ncx-shadow-elevation-1);
   -webkit-app-region: drag;
 }
 
 .ncx-traffic-safe-area {
   height: 30px;
+}
+
+.ncx-sidebar > :not(.ncx-glass-surface) {
+  position: relative;
+  z-index: 1;
 }
 
 .ncx-app-shell--settings {
