@@ -18,7 +18,6 @@ import {
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
-import GlassSurface from '../materials/GlassSurface'
 
 import type {
   DesktopPlatform,
@@ -365,7 +364,6 @@ onBeforeUnmount(() => {
       class="ncx-sidebar"
       :aria-label="$tSource('主导航')"
     >
-      <GlassSurface :material="isSettingsPage ? 'blur' : 'dialog'" />
       <div
         v-if="isMacOS"
         class="ncx-traffic-safe-area"

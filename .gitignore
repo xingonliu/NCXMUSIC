@@ -8,7 +8,6 @@ release/
 coverage/
 playwright-report/
 test-results/
-output/playwright/materials/
 
 # 本地环境与日志
 *.local

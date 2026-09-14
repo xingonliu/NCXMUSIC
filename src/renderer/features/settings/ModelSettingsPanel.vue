@@ -498,7 +498,6 @@ onMounted(() => {
   >
     <template #actions>
       <CommonButton
-        material="tinted"
         size="compact"
         variant="primary"
         @click="openAddDialog"
@@ -561,7 +560,6 @@ onMounted(() => {
           @click="setDefault(profile.profileId)"
         > {{ $tSource("设为默认") }} </CommonButton>
         <CommonButton
-          material="tinted"
           size="compact"
           variant="danger"
           :disabled="busyProfileId !== undefined"
@@ -713,7 +711,6 @@ onMounted(() => {
         {{ $tSource("取消") }}
       </CommonButton>
       <CommonButton
-        material="tinted"
         variant="primary"
         :loading="saveBusy"
         @click="saveProfile"
@@ -790,7 +787,6 @@ onMounted(() => {
         {{ $tSource("取消") }}
       </CommonButton>
       <CommonButton
-        material="tinted"
         variant="primary"
         :loading="editSaveBusy"
         @click="saveEditProfile"
