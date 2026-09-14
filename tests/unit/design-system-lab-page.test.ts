@@ -49,6 +49,25 @@ describe('DesignSystemLabPage 通用组件交互测试页规范测试', () => {
     expect(componentNames.some((el) => el.text().includes('CommonInput'))).toBe(true)
     expect(componentNames.some((el) => el.text().includes('CommonCheckbox'))).toBe(true)
     expect(componentNames.some((el) => el.text().includes('CommonToast'))).toBe(true)
+    expect(componentNames.some((el) => el.text() === 'CommonHeaderGroupItem')).toBe(true)
+    expect(componentNames.some((el) => el.text() === 'CommonPagination')).toBe(true)
+    expect(componentNames.some((el) => el.text() === 'LiquidGlass')).toBe(true)
+    expect(componentNames.some((el) => el.text() === 'CommonScrollArea')).toBe(true)
+    expect(componentNames.some((el) => el.text() === 'CommonVirtualList')).toBe(true)
+    expect(wrapper.find('.ncx-design-lab-tab-item').exists()).toBe(false)
+    expect(wrapper.find('.ncx-common-tabs').exists()).toBe(true)
+  })
+
+  it('搜索关键字时只保留匹配的组件卡片', async () => {
+    const wrapper = mount(DesignSystemLabPage)
+    const search = wrapper.find('.ncx-design-lab-search input')
+    await search.setValue('Pagination')
+
+    const visibleNames = wrapper.findAll('.ncx-design-lab-component-card').filter((card) => {
+      return (card.element as HTMLElement).style.display !== 'none'
+    }).map((card) => card.find('.ncx-design-lab-component-name').text())
+
+    expect(visibleNames).toEqual(['CommonPagination'])
   })
 
   it('应当展示七级 Squircle 尺寸阶梯', () => {

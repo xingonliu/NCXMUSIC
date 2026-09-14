@@ -1393,13 +1393,13 @@
   box-shadow: none;
 }
 
-.agent-composer-box.has-dock textarea,
+.agent-composer-box.has-dock .ncx-common-textarea,
 .agent-composer-box.has-dock .agent-composer-bottom-bar {
   opacity: 0;
   pointer-events: none;
 }
 
-.agent-composer-box textarea {
+.agent-composer-box .ncx-common-textarea {
   width: 100%;
   max-height: min(350px, calc(100vh - 140px));
   min-height: 24px;
@@ -1408,6 +1408,7 @@
   resize: none;
   border: 0;
   outline: 0;
+  box-shadow: none;
   color: var(--ncx-color-text-primary);
   background: transparent;
   font: inherit;
@@ -1416,20 +1417,20 @@
   overflow-y: auto;
 }
 
-.agent-composer-box textarea::-webkit-scrollbar {
+.agent-composer-box .ncx-common-textarea::-webkit-scrollbar {
   width: 6px;
 }
 
-.agent-composer-box textarea::-webkit-scrollbar-track {
+.agent-composer-box .ncx-common-textarea::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.agent-composer-box textarea::-webkit-scrollbar-thumb {
+.agent-composer-box .ncx-common-textarea::-webkit-scrollbar-thumb {
   border-radius: var(--ncx-squircle-radius-xs);
   background: color-mix(in srgb, var(--ncx-color-text-primary) 18%, transparent);
 }
 
-.agent-composer-box textarea::-webkit-scrollbar-thumb:hover {
+.agent-composer-box .ncx-common-textarea::-webkit-scrollbar-thumb:hover {
   background: color-mix(in srgb, var(--ncx-color-text-primary) 32%, transparent);
 }
 

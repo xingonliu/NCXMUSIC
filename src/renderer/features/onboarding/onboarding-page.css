@@ -31,13 +31,8 @@
   font-size: 13px;
 }
 
-.onboarding-header > button {
-  border: 0;
+.onboarding-header .ncx-common-button {
   color: var(--ncx-color-text-secondary);
-  background: transparent;
-  font: inherit;
-  font-size: 11px;
-  cursor: pointer;
 }
 
 .onboarding-progress {

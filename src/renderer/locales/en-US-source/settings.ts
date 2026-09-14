@@ -2,6 +2,9 @@
 
 /** 设置、模型、扩展、语音与个性化界面的英语兼容文案。 */
 export const enUSSettingsSourceMessages = {
+  '画像分析失败': 'Profile analysis failed',
+  '市场读取失败': 'Failed to load marketplace',
+  '目录读取失败': 'Failed to load catalog',
   '· 对话': ' · conversations',
   '· 共': ' · total',
   '· 默认禁用': ' · disabled by default',

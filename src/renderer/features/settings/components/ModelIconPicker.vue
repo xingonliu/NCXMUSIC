@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ChevronDown, ChevronUp, Search, X } from '@lucide/vue'
 import { computed, ref, watch } from 'vue'
-import { CommonButton, CommonInput } from '../../../design-system/components'
+import { CommonButton, CommonInput, CommonTabs, type CommonOption } from '../../../design-system/components'
 import {
   MODEL_ICON_PRESETS,
   getModelInitials,
@@ -53,6 +53,13 @@ let searchTimer: ReturnType<typeof setTimeout> | undefined
 
 /** 预设分类过滤方式。 */
 const activeCategory = ref<'all' | 'brand' | 'generic'>('all')
+
+/** 图标预设分类标签。 */
+const categoryTabOptions: CommonOption[] = [
+  { label: '全部预设', value: 'all' },
+  { label: '品牌厂商', value: 'brand' },
+  { label: '通用概念', value: 'generic' }
+]
 
 /** 过滤后的预设图标列表。 */
 const filteredPresets = computed<readonly ModelIconPreset[]>(() => {
@@ -215,32 +222,14 @@ watch(searchQuery, (newQuery) => {
         v-else
         class="model-icon-presets-section"
       >
-        <div class="model-icon-category-tabs">
-          <button
-            type="button"
-            class="model-icon-tab-btn"
-            :class="{ 'is-active': activeCategory === 'all' }"
-            @click="activeCategory = 'all'"
-          >
-            {{ $tSource("全部预设") }}
-          </button>
-          <button
-            type="button"
-            class="model-icon-tab-btn"
-            :class="{ 'is-active': activeCategory === 'brand' }"
-            @click="activeCategory = 'brand'"
-          >
-            {{ $tSource("品牌厂商") }}
-          </button>
-          <button
-            type="button"
-            class="model-icon-tab-btn"
-            :class="{ 'is-active': activeCategory === 'generic' }"
-            @click="activeCategory = 'generic'"
-          >
-            {{ $tSource("通用概念") }}
-          </button>
-        </div>
+        <CommonTabs
+          class="model-icon-category-tabs"
+          :model-value="activeCategory"
+          :options="categoryTabOptions"
+          variant="pills"
+          size="compact"
+          @update:model-value="activeCategory = $event as 'all' | 'brand' | 'generic'"
+        />
 
         <div class="model-icon-grid">
           <button

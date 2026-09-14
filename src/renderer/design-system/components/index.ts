@@ -918,15 +918,31 @@ export const CommonTextarea = defineComponent({
     resize: {
       type: String as PropType<'none' | 'vertical' | 'horizontal' | 'both'>,
       default: 'vertical'
-    }
+    },
+    /** 是否随内容自动增高。 */
+    autosize: { type: Boolean, default: false },
+    /** 自动增高时的最大高度（像素）。 */
+    maxHeight: { type: Number, default: 350 }
   },
-  emits: ['update:modelValue', 'change', 'input', 'focus', 'blur'],
-  setup(props, { emit }) {
+  emits: ['update:modelValue', 'change', 'input', 'focus', 'blur', 'keydown'],
+  setup(props, { emit, expose }) {
+    /** 多行输入框 DOM 引用。 */
+    const textareaRef = ref<HTMLTextAreaElement | null>(null)
+
+    /** 按内容把输入框高度限制在最大高度内。 */
+    function adjustHeight(): void {
+      if (!props.autosize || !textareaRef.value) return
+      textareaRef.value.style.height = 'auto'
+      const nextHeight = Math.min(textareaRef.value.scrollHeight, props.maxHeight)
+      textareaRef.value.style.height = `${nextHeight}px`
+    }
+
     function handleInput(event: Event): void {
       const val = readInputValue(event)
       emit('update:modelValue', val)
       emit('input', val)
       emit('change', val)
+      nextTick(adjustHeight)
     }
 
     function handleFocus(event: FocusEvent): void {
@@ -937,18 +953,36 @@ export const CommonTextarea = defineComponent({
       emit('blur', event)
     }
 
+    function handleKeyDown(event: KeyboardEvent): void {
+      emit('keydown', event)
+    }
+
+    watch(() => props.modelValue, () => {
+      nextTick(adjustHeight)
+    })
+
+    onMounted(() => {
+      nextTick(adjustHeight)
+    })
+
+    expose({
+      focus: () => textareaRef.value?.focus()
+    })
+
     return () => {
       const sizeClass = `ncx-common-textarea--${props.size || 'default'}`
 
       return h('textarea', {
+        ref: textareaRef,
         class: joinClasses(
           'ncx-common-field',
           'ncx-common-textarea',
           sizeClass,
           props.invalid && 'ncx-common-field-invalid',
-          props.disabled && 'ncx-common-field-disabled'
+          props.disabled && 'ncx-common-field-disabled',
+          props.autosize && 'ncx-common-textarea-autosize'
         ),
-        style: { resize: props.resize },
+        style: { resize: props.autosize ? 'none' : props.resize },
         value: props.modelValue,
         placeholder: localizeUiText(props.placeholder),
         rows: props.rows,
@@ -957,7 +991,8 @@ export const CommonTextarea = defineComponent({
         'aria-invalid': props.invalid ? 'true' : undefined,
         onInput: handleInput,
         onFocus: handleFocus,
-        onBlur: handleBlur
+        onBlur: handleBlur,
+        onKeydown: handleKeyDown
       })
     }
   }
@@ -973,8 +1008,8 @@ export const CommonSearchInput = defineComponent({
     size: { type: String as PropType<CommonComponentSize>, default: 'default' },
     autoFocus: { type: Boolean, default: false }
   },
-  emits: ['update:modelValue', 'change', 'clear', 'search', 'focus', 'blur', 'input'],
-  setup(props, { emit }) {
+  emits: ['update:modelValue', 'change', 'clear', 'search', 'focus', 'blur', 'input', 'keydown'],
+  setup(props, { emit, expose }) {
     const inputRef = ref<HTMLInputElement | null>(null)
 
     function handleInput(event: Event): void {
@@ -996,6 +1031,8 @@ export const CommonSearchInput = defineComponent({
     }
 
     function handleKeyDown(event: KeyboardEvent): void {
+      emit('keydown', event)
+      if (event.defaultPrevented) return
       if (event.key === 'Escape') {
         if (props.modelValue) {
           event.preventDefault()
@@ -1014,6 +1051,10 @@ export const CommonSearchInput = defineComponent({
     function handleBlur(event: FocusEvent): void {
       emit('blur', event)
     }
+
+    expose({
+      focus: () => inputRef.value?.focus()
+    })
 
     return () => {
       const sizeClass = `ncx-common-search--${props.size || 'default'}`
@@ -3522,3 +3563,5 @@ export const CommonResponsiveGrid = defineComponent({
     return () => h('div', { class: 'ncx-common-responsive-grid' }, slots.default?.())
   }
 })
+
+

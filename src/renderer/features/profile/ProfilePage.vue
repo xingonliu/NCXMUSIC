@@ -22,8 +22,11 @@ import {
   CommonEmptyState,
   CommonErrorState,
   CommonIconButton,
+  CommonSegmentedControl,
   CommonSpinner,
-  type CommonMenuItem
+  CommonTabs,
+  type CommonMenuItem,
+  type CommonOption
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { useAccountSessionStore } from '../account/account-session-store'
@@ -135,6 +138,19 @@ const createdPlaylists = computed<StandardPlaylist[]>(() => playlists.value
 
 /** 用户收藏的其他歌单。 */
 const subscribedPlaylists = computed<StandardPlaylist[]>(() => playlists.value.filter((playlist) => !playlist.owned))
+
+/** 个人页内容分类标签。 */
+const profileTabOptions = computed<CommonOption[]>(() => [
+  { label: '听歌排行', value: 'history' },
+  { label: '创建的歌单', value: 'created', badge: createdPlaylists.value.length },
+  { label: '收藏的歌单', value: 'subscribed', badge: subscribedPlaylists.value.length }
+])
+
+/** 听歌排行周期分段选项。 */
+const historyPeriodOptions: CommonOption[] = [
+  { label: '最近一周', value: 'week' },
+  { label: '所有时间', value: 'all' }
+]
 
 /** 用户村龄展示文本。 */
 const villageAge = computed<string>(() => {
@@ -444,36 +460,13 @@ watch(
         </div>
       </header>
 
-      <!-- Tab 切换 (极简纯净下划线 Tab) -->
-      <nav
+      <CommonTabs
         class="profile-tab-nav"
-        :aria-label="$tSource('个人内容分类')"
-      >
-        <button
-          type="button"
-          class="profile-tab-btn"
-          :class="{ active: activeTab === 'history' }"
-          @click="activeTab = 'history'"
-        >
-          {{ $tSource("听歌排行") }}
-        </button>
-        <button
-          type="button"
-          class="profile-tab-btn"
-          :class="{ active: activeTab === 'created' }"
-          @click="activeTab = 'created'"
-        >
-          {{ $tSource("创建的歌单") }} <span class="profile-tab-num">{{ createdPlaylists.length }}</span>
-        </button>
-        <button
-          type="button"
-          class="profile-tab-btn"
-          :class="{ active: activeTab === 'subscribed' }"
-          @click="activeTab = 'subscribed'"
-        >
-          {{ $tSource("收藏的歌单") }} <span class="profile-tab-num">{{ subscribedPlaylists.length }}</span>
-        </button>
-      </nav>
+        :model-value="activeTab"
+        :options="profileTabOptions"
+        variant="underlined"
+        @update:model-value="activeTab = $event as ProfileTab"
+      />
 
       <!-- 模块一：听歌排行 -->
       <section
@@ -482,22 +475,13 @@ watch(
       >
         <div class="profile-pane-toolbar">
           <span class="profile-pane-count">{{ $tSource("共") }} {{ visibleHistory.length }} {{ $tSource("首歌曲") }}</span>
-          <div class="profile-period-switch">
-            <button
-              type="button"
-              :class="{ selected: historyPeriod === 'week' }"
-              @click="historyPeriod = 'week'"
-            >
-              {{ $tSource("最近一周") }}
-            </button>
-            <button
-              type="button"
-              :class="{ selected: historyPeriod === 'all' }"
-              @click="historyPeriod = 'all'"
-            >
-              {{ $tSource("所有时间") }}
-            </button>
-          </div>
+          <CommonSegmentedControl
+            class="profile-period-switch"
+            :model-value="historyPeriod"
+            :options="historyPeriodOptions"
+            size="compact"
+            @update:model-value="historyPeriod = $event as HistoryPeriod"
+          />
         </div>
 
         <CommonEmptyState
@@ -822,50 +806,7 @@ watch(
 /* ========= Tab 导航 ========= */
 
 .profile-tab-nav {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  border-bottom: 1px solid var(--ncx-color-border-subtle);
-}
-
-.profile-tab-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 0;
-  border: 0;
-  color: var(--ncx-color-text-secondary);
-  background: transparent;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color 0.12s ease;
-}
-
-.profile-tab-btn:hover {
-  color: var(--ncx-color-text-primary);
-}
-
-.profile-tab-btn.active {
-  color: var(--ncx-color-text-primary);
-}
-
-.profile-tab-btn.active::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: -1px;
-  left: 0;
-  height: 2px;
-  border-radius: var(--ncx-squircle-radius-xs);
-  background: var(--ncx-color-accent);
-}
-
-.profile-tab-num {
-  color: var(--ncx-color-text-tertiary);
-  font-size: 11.5px;
-  font-weight: 500;
+  min-width: 0;
 }
 
 /* ========= 内容面板与工具栏 ========= */
@@ -890,29 +831,7 @@ watch(
 }
 
 .profile-period-switch {
-  display: flex;
-  gap: 2px;
-  padding: 2px;
-  border-radius: var(--ncx-squircle-radius-sm);
-  background: var(--ncx-color-control-hover);
-}
-
-.profile-period-switch button {
-  padding: 4px 10px;
-  border: 0;
-  border-radius: var(--ncx-squircle-radius-xs);
-  color: var(--ncx-color-text-secondary);
-  background: transparent;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.12s ease, color 0.12s ease;
-}
-
-.profile-period-switch button.selected {
-  color: var(--ncx-color-text-primary);
-  background: var(--ncx-color-surface-overlay);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 6%);
+  min-width: 0;
 }
 
 /* ========= 听歌排行表格 ========= */

@@ -6,7 +6,9 @@ import {
   CommonAlertDialog,
   CommonButton,
   CommonEmptyState,
-  CommonInput
+  CommonInlineMessage,
+  CommonInput,
+  CommonProgress
 } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import { translatePublicError } from '../../i18n'
@@ -179,19 +181,20 @@ onMounted(async () => {
           {{ $tSource(profile.usable ? '手动更新' : '开始分析') }}
         </CommonButton>
       </div>
-      <div
+      <CommonProgress
         v-if="working"
         class="personalization-settings-progress"
-      >
-        <span :style="{ width: `${profile.progress}%` }" />
-        <small>{{ $tSource(profile.stageLabel) }} · {{ profile.progress }}%</small>
-      </div>
-      <p
+        :value="profile.progress"
+        show-value
+        :label="$tSource(profile.stageLabel)"
+      />
+      <CommonInlineMessage
         v-if="profile.errorMessage"
-        class="personalization-settings-error"
+        type="danger"
+        :title="$tSource('画像分析失败')"
       >
         {{ translatePublicError({ message: profile.errorMessage }) }}
-      </p>
+      </CommonInlineMessage>
       <p class="personalization-settings-disclosure">
         {{ $tSource("完整喜欢与歌单只在本机扫描。云端 Provider 默认只收到聚合特征、有限代表样本和完成当前请求所需的画像/记忆片段，可能产生 Token 费用；不会上传账户数据库、Cookie 或完整歌单文件。") }}
       </p>

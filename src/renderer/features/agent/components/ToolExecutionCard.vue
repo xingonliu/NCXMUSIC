@@ -2,6 +2,8 @@
 import { ChevronRight, FileText, ListMusic, Play, Search, Wrench } from '@lucide/vue'
 import { computed, onUnmounted, ref, watch, type Component } from 'vue'
 
+import { CommonIconButton } from '../../../design-system/components'
+
 import type {
   AgentShellTerminalSnapshot,
   ToolExecutionCardSnapshot
@@ -145,11 +147,11 @@ onUnmounted(() => {
       </div>
       <div class="agent-tool-card-actions">
         <span class="agent-tool-card-duration">{{ $tSource(formattedDuration) }}</span>
-        <button
-          type="button"
-          class="agent-action-btn agent-tool-toggle-btn"
-          :aria-label="$tSource(expanded ? '收起明细' : '展开明细')"
+        <CommonIconButton
+          class="agent-tool-toggle-btn"
+          :label="$tSource(expanded ? '收起明细' : '展开明细')"
           :aria-expanded="expanded"
+          size="compact"
           @click="expanded = !expanded"
         >
           <ChevronRight
@@ -157,7 +159,7 @@ onUnmounted(() => {
             class="agent-tool-chevron"
             :class="{ 'is-expanded': expanded }"
           />
-        </button>
+        </CommonIconButton>
       </div>
     </div>
     <div

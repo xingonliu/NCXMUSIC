@@ -3,7 +3,7 @@ import { AlertCircle, Check, Copy, Sparkles, X } from '@lucide/vue'
 import { computed, ref, watch, type DeepReadonly } from 'vue'
 
 import type { AgentSnapshot } from '../../../../shared/schemas/agent'
-import { CommonButton, CommonDialog, CommonIconButton } from '../../../design-system/components'
+import { CommonButton, CommonDialog, CommonIconButton, CommonProgress } from '../../../design-system/components'
 import { translatePublicError } from '../../../i18n'
 import { copyText } from '../../foundation/clipboard'
 
@@ -160,16 +160,12 @@ function handleRetryFromModal(): void {
     <div class="profile-analysis-banner-copy">
       <strong>{{ $tSource(title) }}</strong>
       <p>{{ failed ? translatePublicError({ message: description }) : $tSource(description) }}</p>
-      <div
+      <CommonProgress
         v-if="working"
         class="profile-analysis-progress"
-        role="progressbar"
-        :aria-valuenow="profile.progress"
-        aria-valuemin="0"
-        aria-valuemax="100"
-      >
-        <span :style="{ width: `${profile.progress}%` }" />
-      </div>
+        :value="profile.progress"
+        :label="$tSource(description)"
+      />
     </div>
     <div
       v-if="!working"

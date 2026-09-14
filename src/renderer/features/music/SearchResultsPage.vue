@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Disc3, ListMusic, Play, Search, UserRound } from '@lucide/vue'
+import { Play, Search, UserRound } from '@lucide/vue'
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -15,8 +15,11 @@ import {
   CommonEmptyState,
   CommonErrorState,
   CommonSearchInput,
-  CommonSpinner
+  CommonSpinner,
+  CommonTabs,
+  type CommonOption
 } from '../../design-system/components'
+import EntityCard from './components/EntityCard.vue'
 import { t , translatePublicError} from '../../i18n'
 import Cover from './components/Cover.vue'
 import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
@@ -61,8 +64,8 @@ const activeCategory = ref<SearchCategory>('all')
 /** 结果页顶部搜索框草稿。 */
 const draftQuery = ref<string>('')
 
-/** 搜索分类标签配置。 */
-const searchTabs: ReadonlyArray<{ value: SearchCategory; label: string }> = [
+/** 搜索结果分类标签页选项。 */
+const searchTabOptions: CommonOption[] = [
   { value: 'all', label: '全部' },
   { value: 'songs', label: '歌曲' },
   { value: 'artists', label: '歌手' },
@@ -238,20 +241,13 @@ watch([query, activeCategory], () => {
       </CommonButton>
     </form>
 
-    <nav
+    <CommonTabs
       class="search-category-tabs"
-      :aria-label="$tSource('搜索结果分类')"
-    >
-      <button
-        v-for="tab in searchTabs"
-        :key="tab.value"
-        type="button"
-        :class="{ active: activeCategory === tab.value }"
-        @click="activeCategory = tab.value"
-      >
-        {{ $tSource(tab.label) }}
-      </button>
-    </nav>
+      :model-value="activeCategory"
+      :options="searchTabOptions"
+      variant="pills"
+      @update:model-value="activeCategory = $event as SearchCategory"
+    />
 
     <div class="search-results-header">
       <div class="music-page-heading">
@@ -349,37 +345,23 @@ watch([query, activeCategory], () => {
             <span>{{ albums.length + playlists.length }} {{ $tSource("个") }}</span>
           </header>
           <div class="collection-grid">
-            <button
+            <EntityCard
               v-for="album in activeCategory === 'playlists' ? [] : albums"
               :key="`album-${album.id}`"
-              class="collection-card"
-              type="button"
-              @click="openAlbum(album)"
-            >
-              <Cover
-                :src="album.artworkUrl"
-                :alt="album.name"
-                size="card"
-              />
-              <strong>{{ album.name }}</strong>
-              <span><Disc3 :size="13" /> {{ $tSource("专辑") }}</span>
-            </button>
+              :title="album.name"
+              :subtitle="$tSource('专辑')"
+              :artwork-url="album.artworkUrl"
+              @activate="openAlbum(album)"
+            />
 
-            <button
+            <EntityCard
               v-for="playlist in activeCategory === 'albums' ? [] : playlists"
               :key="`playlist-${playlist.id}`"
-              class="collection-card"
-              type="button"
-              @click="openPlaylist(playlist)"
-            >
-              <Cover
-                :src="playlist.artworkUrl"
-                :alt="playlist.name"
-                size="card"
-              />
-              <strong>{{ playlist.name }}</strong>
-              <span><ListMusic :size="13" /> {{ $tSource("歌单") }}</span>
-            </button>
+              :title="playlist.name"
+              :subtitle="$tSource('歌单')"
+              :artwork-url="playlist.artworkUrl"
+              @activate="openPlaylist(playlist)"
+            />
           </div>
         </section>
 
@@ -451,48 +433,9 @@ watch([query, activeCategory], () => {
   gap: 10px;
 }
 
-.search-category-tabs {
-  display: flex;
-  overflow-x: auto;
-  gap: 6px;
-  padding: 5px;
-  border-radius: var(--ncx-squircle-radius-full);
-  background: color-mix(in srgb, var(--ncx-color-surface) 82%, transparent);
-}
-
-.search-category-tabs button {
-  flex: 0 0 auto;
-  padding: 9px 15px;
-  border: 0;
-  border-radius: var(--ncx-squircle-radius-full);
-  color: var(--ncx-color-text-secondary);
-  background: transparent;
-  cursor: pointer;
-}
-
-.search-category-tabs button:hover,
-.search-category-tabs button.active {
-  color: var(--ncx-color-text-primary);
-  background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent);
-}
-
-.search-category-tabs button:active {
-  transform: scale(.96);
-}
-
 @media (width < 640px) {
   .search-results-input {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .search-category-tabs button {
-    transition: none !important;
-  }
-
-  .search-category-tabs button:active {
-    transform: none;
   }
 }
 </style>

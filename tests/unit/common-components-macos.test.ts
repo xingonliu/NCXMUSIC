@@ -471,6 +471,23 @@ describe('CommonTextarea macOS Design System', () => {
 
     expect(wrapper.emitted('update:modelValue')).toEqual([['new line text']])
   })
+
+  it('autosize 时转发 keydown 并在清空后把高度交回组件', async () => {
+    const wrapper = mount(CommonTextarea, {
+      props: {
+        modelValue: 'line\nline\nline',
+        autosize: true,
+        maxHeight: 350,
+        resize: 'none'
+      }
+    })
+
+    const textarea = wrapper.find('textarea')
+    await textarea.trigger('keydown', { key: 'Enter' })
+
+    expect(wrapper.classes()).toContain('ncx-common-textarea-autosize')
+    expect(wrapper.emitted('keydown')).toHaveLength(1)
+  })
 })
 
 describe('CommonSearchInput macOS Design System', () => {

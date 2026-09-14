@@ -2,7 +2,6 @@
 import {
   AlertCircle,
   Copy,
-  Terminal,
   ThumbsDown,
   ThumbsUp
 } from '@lucide/vue'
@@ -19,7 +18,7 @@ import {
 } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import { CommonButton, CommonIconButton } from '../../design-system/components'
+import { CommonButton, CommonEmptyState, CommonIconButton } from '../../design-system/components'
 import { showToast } from '../../design-system/use-toast'
 import type {
   AgentSnapshot,
@@ -436,20 +435,19 @@ watch(
       class="agent-conversation"
       aria-live="polite"
     >
-      <section
+      <CommonEmptyState
         v-if="!agent.snapshot.value.configured"
         class="agent-empty-state"
+        :title="$tSource('请先配置模型以启用 Agent')"
+        :description="$tSource('前往模型设置添加并激活语言模型配置。')"
       >
-        <span class="agent-welcome-icon"><Terminal :size="28" /></span>
-        <h2>{{ $tSource("请先配置模型以启用 Agent") }}</h2>
-        <p>{{ $tSource("前往模型设置添加并激活语言模型配置。") }}</p>
         <CommonButton
           variant="primary"
           @click="openModelSettings"
         >
           {{ $tSource("前往模型设置") }}
         </CommonButton>
-      </section>
+      </CommonEmptyState>
 
       <section
         v-else-if="!hasConversation"
@@ -495,14 +493,14 @@ watch(
               />
               <div class="agent-system-content">
                 <p>{{ message.content }}</p>
-                <button
+                <CommonButton
                   v-if="!agent.snapshot.value.configured || message.content.includes('模型')"
-                  type="button"
-                  class="agent-system-action-btn"
+                  size="compact"
+                  variant="secondary"
                   @click="openModelSettings"
                 >
                   {{ $tSource("前往模型设置") }}
-                </button>
+                </CommonButton>
               </div>
             </div>
           </div>

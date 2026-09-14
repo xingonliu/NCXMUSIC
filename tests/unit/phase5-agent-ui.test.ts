@@ -97,9 +97,9 @@ describe('phase 5 agent UI contract', () => {
     /** Agent 页面 CSS 源代码。 */
     const css = source('src/renderer/features/agent/agent-page.css')
 
-    expect(composer).toContain('adjustTextareaHeight()')
-    expect(composer).toContain('Math.min(el.scrollHeight, 350)')
-    expect(composer).toContain('textareaRef')
+    expect(composer).toContain('CommonTextarea')
+    expect(composer).toContain('autosize')
+    expect(composer).toContain(':max-height="350"')
     expect(css).toContain('max-height: min(350px, calc(100vh - 140px));')
   })
 

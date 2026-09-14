@@ -89,45 +89,22 @@
   white-space: nowrap;
 }
 
-/* 分类 Tab 切换按钮组 */
 .ncx-design-lab-category-tabs {
-  display: flex;
-  align-items: center;
-  gap: var(--ncx-space-2);
   padding-top: var(--ncx-space-2);
   border-top: 1px dashed var(--ncx-color-border-subtle);
-  overflow-x: auto;
-  scrollbar-width: none;
 }
 
-.ncx-design-lab-category-tabs::-webkit-scrollbar {
-  display: none;
-}
-
-.ncx-design-lab-tab-item {
-  padding: 6px 14px;
-  border: 1px solid transparent;
-  border-radius: var(--ncx-squircle-radius-full);
-  color: var(--ncx-color-text-secondary);
-  background: transparent;
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.ncx-design-lab-tab-item:hover {
+.ncx-design-lab-glass-demo {
+  display: grid;
+  gap: 6px;
+  min-height: 88px;
+  padding: 16px 18px;
   color: var(--ncx-color-text-primary);
-  background: var(--ncx-color-surface-hover, rgb(0 0 0 / 4%));
 }
 
-.ncx-design-lab-tab-item.is-active {
-  border-color: var(--ncx-color-accent);
-  color: #fff;
-  background: var(--ncx-color-accent);
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+.ncx-design-lab-glass-demo p,
+.ncx-design-lab-glass-demo strong {
+  margin: 0;
 }
 
 /* 大类 1 ~ 8 外框容器 */

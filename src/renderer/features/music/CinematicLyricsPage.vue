@@ -21,6 +21,14 @@ import type {
   StandardLyrics,
   StandardLyricsLine
 } from '../../../shared/schemas/music'
+import {
+  CommonEmptyState,
+  CommonErrorState,
+  CommonHeaderGroupButton,
+  CommonHeaderGroupItem,
+  CommonIconButton,
+  CommonSpinner
+} from '../../design-system/components'
 import { translatePublicError } from '../../i18n'
 import { useAppPreferences } from '../settings/app-preferences'
 import {
@@ -583,37 +591,35 @@ onBeforeUnmount(() => {
         <span v-if="track">{{ track.artists.join(' / ') }}</span>
       </div>
 
-      <button
-        type="button"
+      <CommonIconButton
         class="cinematic-close-button"
-        :aria-label="$tSource('收起沉浸播放页')"
+        :label="$tSource('收起沉浸播放页')"
         @click="closeCinematicLyrics"
       >
         <ChevronDown
           :size="18"
           :stroke-width="1.5"
         />
-      </button>
+      </CommonIconButton>
 
       <div class="cinematic-header-output">
         <span
           class="cinematic-sequence"
           aria-hidden="true"
         >{{ lyricSequenceText }}</span>
-        <div
+        <CommonHeaderGroupButton
           v-if="isWindows"
           class="cinematic-window-controls"
+          :label="$tSource('窗口控制')"
         >
-          <button
-            type="button"
-            :aria-label="$tSource('最小化')"
+          <CommonHeaderGroupItem
+            :label="$tSource('最小化')"
             @click="runWindowCommand({ type: 'window.minimize' })"
           >
             <Minus :size="14" />
-          </button>
-          <button
-            type="button"
-            :aria-label="$tSource(windowSnapshot.maximized ? '还原窗口' : '最大化窗口')"
+          </CommonHeaderGroupItem>
+          <CommonHeaderGroupItem
+            :label="$tSource(windowSnapshot.maximized ? '还原窗口' : '最大化窗口')"
             @click="runWindowCommand({ type: 'window.toggleMaximize' })"
           >
             <Minimize2
@@ -624,15 +630,15 @@ onBeforeUnmount(() => {
               v-else
               :size="13"
             />
-          </button>
-          <button
-            type="button"
-            :aria-label="$tSource('关闭窗口')"
+          </CommonHeaderGroupItem>
+          <CommonHeaderGroupItem
+            :label="$tSource('关闭窗口')"
+            variant="close"
             @click="runWindowCommand({ type: 'window.requestClose' })"
           >
             <X :size="14" />
-          </button>
-        </div>
+          </CommonHeaderGroupItem>
+        </CommonHeaderGroupButton>
       </div>
     </header>
 
@@ -693,31 +699,29 @@ onBeforeUnmount(() => {
         v-if="!track || visibleLines.length === 0"
         class="cinematic-state"
       >
-        <template v-if="!track">
-          <span>NO SIGNAL</span>
-          <strong>{{ $tSource('还没有播放内容') }}</strong>
-          <p>{{ $tSource('收起页面并选择一首歌曲开始播放。') }}</p>
-        </template>
-        <template v-else-if="loading">
-          <span>LOADING / LYRICS</span>
+        <CommonEmptyState
+          v-if="!track"
+          :title="$tSource('还没有播放内容')"
+          :description="$tSource('收起页面并选择一首歌曲开始播放。')"
+        />
+        <div
+          v-else-if="loading"
+          class="cinematic-state-loading"
+        >
+          <CommonSpinner :label="$tSource('正在加载歌词')" />
           <strong>{{ $tSource('正在加载歌词') }}</strong>
-        </template>
-        <template v-else-if="errorMessage">
-          <span>LYRICS / ERROR</span>
-          <strong>{{ $tSource('歌词读取失败') }}</strong>
-          <p>{{ errorMessage }}</p>
-          <button
-            type="button"
-            @click="retryLyrics"
-          >
-            {{ $tSource('重试') }}
-          </button>
-        </template>
-        <template v-else>
-          <span>LYRICS / EMPTY</span>
-          <strong>{{ $tSource('暂无歌词') }}</strong>
-          <p>{{ $tSource('当前歌曲没有可展示的时间轴歌词。') }}</p>
-        </template>
+        </div>
+        <CommonErrorState
+          v-else-if="errorMessage"
+          :title="$tSource('歌词读取失败')"
+          :description="errorMessage"
+          @retry="retryLyrics"
+        />
+        <CommonEmptyState
+          v-else
+          :title="$tSource('暂无歌词')"
+          :description="$tSource('当前歌曲没有可展示的时间轴歌词。')"
+        />
       </div>
 
       <p
@@ -733,19 +737,17 @@ onBeforeUnmount(() => {
 
     <footer class="cinematic-hud">
       <div class="cinematic-transport">
-        <button
-          type="button"
-          :aria-label="$tSource('上一首')"
+        <CommonIconButton
+          :label="$tSource('上一首')"
           @click="player.previous()"
         >
           <SkipBack
             :size="15"
             :stroke-width="1.6"
           />
-        </button>
-        <button
-          type="button"
-          :aria-label="$tSource(isPlaying ? '暂停' : '播放')"
+        </CommonIconButton>
+        <CommonIconButton
+          :label="$tSource(isPlaying ? '暂停' : '播放')"
           @click="player.toggle()"
         >
           <Pause
@@ -758,17 +760,16 @@ onBeforeUnmount(() => {
             :size="15"
             :stroke-width="1.6"
           />
-        </button>
-        <button
-          type="button"
-          :aria-label="$tSource('下一首')"
+        </CommonIconButton>
+        <CommonIconButton
+          :label="$tSource('下一首')"
           @click="player.next()"
         >
           <SkipForward
             :size="15"
             :stroke-width="1.6"
           />
-        </button>
+        </CommonIconButton>
       </div>
 
       <button

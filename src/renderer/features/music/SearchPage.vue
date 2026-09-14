@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Clock3, Disc3, Flame, ListMusic, Play, Search, Trash2, UserRound, X } from '@lucide/vue'
+import { Clock3, Flame, Play, Search, Trash2, UserRound } from '@lucide/vue'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -14,8 +14,14 @@ import {
   CommonButton,
   CommonEmptyState,
   CommonErrorState,
-  CommonSpinner
+  CommonSearchInput,
+  CommonSkeleton,
+  CommonSpinner,
+  CommonTabs,
+  CommonTag,
+  type CommonOption
 } from '../../design-system/components'
+import EntityCard from './components/EntityCard.vue'
 import { t , translatePublicError} from '../../i18n'
 import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
 import Cover from './components/Cover.vue'
@@ -43,6 +49,12 @@ const searchTabs: ReadonlyArray<{ value: SearchCategory; label: string }> = [
   { value: 'lyrics', label: '歌词' }
 ]
 
+/** 搜索结果分类标签页选项。 */
+const searchTabOptions: CommonOption[] = searchTabs.map((tab) => ({
+  label: tab.label,
+  value: tab.value
+}))
+
 /** 本地存储最近搜索记录的 Storage Key。 */
 const SEARCH_HISTORY_KEY = 'ncx.search-history.v1'
 
@@ -55,8 +67,8 @@ const router = useRouter()
 /** 全局播放器驱动。 */
 const player = usePlayer()
 
-/** 搜索输入框 DOM 引用。 */
-const inputRef = ref<HTMLInputElement | null>(null)
+/** 搜索输入组件引用。 */
+const searchInputRef = ref<{ focus: () => void } | null>(null)
 
 /** 搜索框当前实时输入的文本。 */
 const query = ref<string>('')
@@ -337,7 +349,7 @@ function clearSearch(): void {
   apiSuggestions.value = []
   highlightedSuggestionIndex.value = -1
   if (suggestionTimer) clearTimeout(suggestionTimer)
-  inputRef.value?.focus()
+  searchInputRef.value?.focus()
 }
 
 /** 搜索输入框聚焦处理。 */
@@ -358,13 +370,7 @@ function handleInputBlur(): void {
 
 /** 处理搜索框键盘导航与快捷键。 */
 function handleKeyDown(event: KeyboardEvent): void {
-  if (!showDropdown.value) {
-    if (event.key === 'Enter') {
-      event.preventDefault()
-      handleSubmit()
-    }
-    return
-  }
+  if (!showDropdown.value) return
 
   if (event.key === 'ArrowDown') {
     event.preventDefault()
@@ -521,34 +527,19 @@ onBeforeUnmount(() => {
           class="music-search-input-wrapper"
           @submit.prevent="handleSubmit"
         >
-          <span
-            class="music-search-icon"
-            aria-hidden="true"
-          >
-            <Search :size="16" />
-          </span>
-          <input
-            ref="inputRef"
+          <CommonSearchInput
+            ref="searchInputRef"
             v-model="query"
-            type="search"
             class="music-search-input-minimal"
+            size="prominent"
             :placeholder="$tSource('搜索歌曲、歌手、专辑或歌单')"
-            autocomplete="off"
             :aria-label="$tSource('搜索音乐')"
             @focus="handleInputFocus"
             @blur="handleInputBlur"
             @keydown="handleKeyDown"
-          >
-          <button
-            v-if="query"
-            type="button"
-            class="music-search-clear-btn"
-            :aria-label="$tSource('清空搜索内容')"
-            @mousedown.prevent
-            @click="clearSearch"
-          >
-            <X :size="14" />
-          </button>
+            @search="handleSubmit"
+            @clear="clearSearch"
+          />
         </form>
 
         <!-- 实时建议下拉菜单（纯文字列表，无多余标题） -->
@@ -593,25 +584,26 @@ onBeforeUnmount(() => {
       >
         <header class="music-search-section-header">
           <h2>{{ $tSource("最近搜索") }}</h2>
-          <button
-            type="button"
+          <CommonButton
+            size="compact"
+            variant="ghost"
             class="music-search-clear-history-btn"
             @click="clearSearchHistory"
           >
             <Trash2 :size="13" /> {{ $tSource("清除") }}
-          </button>
+          </CommonButton>
         </header>
         <div class="music-search-history-chips">
-          <button
+          <CommonTag
             v-for="item in searchHistory"
             :key="item"
-            type="button"
             class="music-search-chip"
+            color="gray"
             @click="selectSuggestion(item)"
           >
             <Clock3 :size="13" />
             <span>{{ item }}</span>
-          </button>
+          </CommonTag>
         </div>
       </section>
 
@@ -641,9 +633,21 @@ onBeforeUnmount(() => {
             :key="`skeleton-${i}`"
             class="hot-song-card-skeleton"
           >
-            <div class="skeleton-cover" />
-            <div class="skeleton-line title" />
-            <div class="skeleton-line artist" />
+            <CommonSkeleton
+              variant="rectangular"
+              width="100%"
+              height="118px"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="80%"
+              height="12px"
+            />
+            <CommonSkeleton
+              variant="rectangular"
+              width="55%"
+              height="11px"
+            />
           </div>
         </div>
 
@@ -697,20 +701,13 @@ onBeforeUnmount(() => {
       class="music-search-results-container"
     >
       <!-- 搜索分类 Tab -->
-      <nav
+      <CommonTabs
         class="search-category-tabs"
-        :aria-label="$tSource('搜索结果分类')"
-      >
-        <button
-          v-for="tab in searchTabs"
-          :key="tab.value"
-          type="button"
-          :class="{ active: activeCategory === tab.value }"
-          @click="activeCategory = tab.value"
-        >
-          {{ $tSource(tab.label) }}
-        </button>
-      </nav>
+        :model-value="activeCategory"
+        :options="searchTabOptions"
+        variant="pills"
+        @update:model-value="activeCategory = $event as SearchCategory"
+      />
 
       <!-- 搜索结果统计与播放全部 -->
       <div class="search-results-header">
@@ -825,37 +822,23 @@ onBeforeUnmount(() => {
                 }} {{ $tSource("个") }} </span>
             </header>
             <div class="collection-grid">
-              <button
+              <EntityCard
                 v-for="album in activeCategory === 'playlists' ? [] : resultAlbums"
                 :key="`album-${album.id}`"
-                class="collection-card"
-                type="button"
-                @click="openAlbum(album)"
-              >
-                <Cover
-                  :src="album.artworkUrl"
-                  :alt="album.name"
-                  size="card"
-                />
-                <strong>{{ album.name }}</strong>
-                <span><Disc3 :size="13" /> {{ $tSource("专辑") }}</span>
-              </button>
+                :title="album.name"
+                :subtitle="$tSource('专辑')"
+                :artwork-url="album.artworkUrl"
+                @activate="openAlbum(album)"
+              />
 
-              <button
+              <EntityCard
                 v-for="playlist in activeCategory === 'albums' ? [] : resultPlaylists"
                 :key="`playlist-${playlist.id}`"
-                class="collection-card"
-                type="button"
-                @click="openPlaylist(playlist)"
-              >
-                <Cover
-                  :src="playlist.artworkUrl"
-                  :alt="playlist.name"
-                  size="card"
-                />
-                <strong>{{ playlist.name }}</strong>
-                <span><ListMusic :size="13" /> {{ $tSource("歌单") }}</span>
-              </button>
+                :title="playlist.name"
+                :subtitle="$tSource('歌单')"
+                :artwork-url="playlist.artworkUrl"
+                @activate="openPlaylist(playlist)"
+              />
             </div>
           </section>
 

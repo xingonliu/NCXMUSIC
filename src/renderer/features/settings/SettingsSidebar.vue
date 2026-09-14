@@ -17,7 +17,7 @@ import { computed, ref, type Component } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { navigateBack } from '../../app/navigation-history'
-import { CommonButton, CommonSearchInput } from '../../design-system/components'
+import { CommonButton, CommonEmptyState, CommonSearchInput } from '../../design-system/components'
 import { translateSourceText } from '../../i18n'
 import {
   getSettingsNavigationItem,
@@ -199,12 +199,11 @@ function resolveSettingsIcon(tab: SettingsTab): Component {
           <small>{{ result.tabLabel }}</small>
         </span>
       </CommonButton>
-      <p
+      <CommonEmptyState
         v-if="searchResults.length === 0"
         class="settings-search-empty"
-      >
-        {{ $tSource("没有匹配的设置") }}
-      </p>
+        :title="$tSource('没有匹配的设置')"
+      />
     </section>
   </div>
 </template>

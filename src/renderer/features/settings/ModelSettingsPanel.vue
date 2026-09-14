@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CheckCircle2, KeyRound, Pencil, Plus, RefreshCw, Trash2 } from '@lucide/vue'
+import { CheckCircle2, Pencil, Plus, RefreshCw, Trash2 } from '@lucide/vue'
 import { computed, onMounted, reactive, ref } from 'vue'
 
 import type {
@@ -12,6 +12,8 @@ import {
   CommonButton,
   CommonDialog,
   CommonDropdownMenu,
+  CommonEmptyState,
+  CommonErrorState,
   CommonInput,
   CommonSegmentedControl,
   CommonSelect,
@@ -567,14 +569,11 @@ onMounted(() => {
       </span>
     </div>
 
-    <div
+    <CommonEmptyState
       v-if="profiles.length === 0"
-      class="model-profile-empty"
-    >
-      <KeyRound :size="22" />
-      <strong>{{ $tSource("还没有模型") }}</strong>
-      <span>{{ $tSource("新增预设或自定义模型后，小云即可开始工作。") }}</span>
-    </div>
+      :title="$tSource('还没有模型')"
+      :description="$tSource('新增预设或自定义模型后，小云即可开始工作。')"
+    />
   </SettingsSection>
 
   <!-- 新增模型弹窗 -->
@@ -621,20 +620,12 @@ onMounted(() => {
             @select="selectVendor"
           />
         </label>
-        <div
+        <CommonErrorState
           v-if="catalogError"
-          class="model-catalog-error"
-        >
-          <span>{{ translatePublicError({ message: catalogError }) }}</span>
-          <CommonButton
-            size="compact"
-            variant="secondary"
-            :loading="catalogLoading"
-            @click="loadCatalog"
-          >
-            {{ $tSource("重试") }}
-          </CommonButton>
-        </div>
+          :title="$tSource('目录读取失败')"
+          :description="translatePublicError({ message: catalogError })"
+          @retry="loadCatalog"
+        />
         <label>
           <span>Base URL</span>
           <CommonInput

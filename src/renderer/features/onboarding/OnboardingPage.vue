@@ -109,12 +109,13 @@ function complete(): void {
       <div class="onboarding-brand">
         <Music2 :size="18" /><strong>Ncxmusic</strong>
       </div>
-      <button
-        type="button"
+      <CommonButton
+        variant="ghost"
+        size="compact"
         @click="complete"
       >
         {{ $tSource("跳过") }}
-      </button>
+      </CommonButton>
     </header>
 
     <nav

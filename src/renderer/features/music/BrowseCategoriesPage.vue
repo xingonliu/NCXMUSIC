@@ -12,6 +12,7 @@ import {
   CommonErrorState,
   CommonSpinner,
   CommonTabs,
+  CommonTag,
   type CommonOption
 } from '../../design-system/components'
 import CommonPagination from '../../design-system/components/CommonPagination.vue'
@@ -320,16 +321,15 @@ onMounted(() => {
         class="category-option-list"
         :aria-label="$tSource('具体分类')"
       >
-        <button
+        <CommonTag
           v-for="option in activeFacetGroup?.options ?? []"
           :key="option.value"
-          type="button"
-          :class="{ active: option.value === activeCategory }"
-          :aria-pressed="option.value === activeCategory"
+          :selected="option.value === activeCategory"
+          color="blue"
           @click="selectCategory(option.value)"
         >
           {{ option.label }}
-        </button>
+        </CommonTag>
       </div>
     </section>
 
@@ -390,9 +390,6 @@ onMounted(() => {
 .category-explore-heading > p:last-child { max-width: 720px; margin-top: 10px; color: var(--ncx-color-text-secondary); line-height: 1.55; }
 .category-explore-controls { display: grid; gap: 16px; padding: 16px; }
 .category-option-list { display: flex; overflow-x: auto; gap: 7px; padding: 2px 0 5px; scrollbar-width: thin; }
-.category-option-list button { flex: 0 0 auto; padding: 8px 13px; border: 0; border-radius: var(--ncx-squircle-radius-full); color: var(--ncx-color-text-secondary); background: transparent; cursor: pointer; }
-.category-option-list button:hover, .category-option-list button.active { color: var(--ncx-color-text-primary); background: color-mix(in srgb, var(--ncx-color-text-primary) 9%, transparent); }
-.category-option-list button:active { transform: scale(.96); }
 .category-explore-state { display: flex; min-height: 300px; align-items: center; justify-content: center; gap: 10px; color: var(--ncx-color-text-secondary); }
 .category-results-heading { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-top: 8px; }
 .category-results-heading p, .category-results-heading h2, .category-results-heading span { margin: 0; }

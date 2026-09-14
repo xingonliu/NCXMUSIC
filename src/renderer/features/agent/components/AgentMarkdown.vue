@@ -2,6 +2,7 @@
 import { ChevronDown, Sparkles } from '@lucide/vue'
 import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 
+import { CommonButton } from '../../../design-system/components'
 import { showToast } from '../../../design-system/use-toast'
 import {
   extractThinkingAndContent,
@@ -218,10 +219,10 @@ onUnmounted(() => {
             {{ $tSource((streaming && parsedData.isThinking) ? '正在深度思考...' : '已深度思考') }}
           </span>
         </div>
-        <button
-          type="button"
+        <CommonButton
+          size="compact"
+          variant="ghost"
           class="agent-thought-toggle-btn"
-          :aria-label="$tSource(isExpanded ? '收起思考内容' : '展开思考内容')"
           tabindex="-1"
         >
           <span class="agent-thought-toggle-text">{{ $tSource(isExpanded ? '收起' : '展开') }}</span>
@@ -229,7 +230,7 @@ onUnmounted(() => {
             :size="13"
             class="agent-thought-chevron"
           />
-        </button>
+        </CommonButton>
       </div>
 
       <!-- 思考内容容器（默认固定有限高度窗口并自动滚底，展开时自适应完整高度） -->

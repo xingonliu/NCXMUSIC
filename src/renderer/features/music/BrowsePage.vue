@@ -661,12 +661,13 @@ onMounted(() => {
             class="browse-category-row-state"
           >
             <span>{{ translatePublicError({ message: row.section.error }) }}</span>
-            <button
-              type="button"
+            <CommonButton
+              size="compact"
+              variant="secondary"
               @click="loadCategoryPreview(row)"
             >
               {{ $tSource("重试") }}
-            </button>
+            </CommonButton>
           </div>
           <div
             v-else-if="row.section.state === 'empty'"

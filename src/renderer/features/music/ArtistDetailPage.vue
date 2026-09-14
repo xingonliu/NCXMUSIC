@@ -18,7 +18,6 @@ import {
 import { showToast } from '../../design-system/use-toast'
 import EntityCard from './components/EntityCard.vue'
 import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
-import Cover from './components/Cover.vue'
 import MusicSection from './components/MusicSection.vue'
 import VirtualTrackList from './components/VirtualTrackList.vue'
 import { mutateMusic, playSongNext, toggleSongLike } from './music-actions'
@@ -385,28 +384,14 @@ watch(artistId, () => {
           min-height="0"
           @retry="loadArtistAlbums"
         >
-          <button
+          <EntityCard
             v-if="latestRelease"
             class="artist-latest-card"
-            type="button"
-            @click="openAlbum(latestRelease)"
-          >
-            <Cover
-              :src="latestRelease.artworkUrl"
-              :alt="latestRelease.name"
-              size="card"
-              :show-play-button="false"
-            />
-            <span>
-              <small>Latest Release</small>
-              <strong>{{ latestRelease.name }}</strong>
-              <span>{{ latestRelease.publishTime ? new Date(latestRelease.publishTime).getFullYear() : $tSource('最新发行') }} · {{ latestRelease.size ?? 0 }} {{ $tSource("首") }}</span>
-            </span>
-            <Play
-              :size="18"
-              fill="currentColor"
-            />
-          </button>
+            :title="latestRelease.name"
+            :subtitle="`${latestRelease.publishTime ? new Date(latestRelease.publishTime).getFullYear() : $tSource('最新发行')} · ${latestRelease.size ?? 0} ${$tSource('首')}`"
+            :artwork-url="latestRelease.artworkUrl"
+            @activate="openAlbum(latestRelease)"
+          />
         </MusicSection>
 
         <MusicSection

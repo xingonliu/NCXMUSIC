@@ -4,7 +4,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type { MusicBrowseFacetGroup, StandardArtist } from '../../../shared/schemas/music'
-import { CommonEmptyState, CommonErrorState, CommonSpinner } from '../../design-system/components'
+import { CommonEmptyState, CommonErrorState, CommonSpinner, CommonTag } from '../../design-system/components'
 import Cover from './components/Cover.vue'
 import './music-content-pages.css'
 import { translatePublicError } from '../../i18n'
@@ -136,45 +136,43 @@ onMounted(() => {
         role="tablist"
         :aria-label="$tSource('地区')"
       >
-        <button
+        <CommonTag
           v-for="area in areaFacet?.options ?? []"
           :key="area.value"
-          type="button"
-          role="tab"
-          :aria-selected="activeArea === area.value"
-          :class="{ active: activeArea === area.value }"
+          :selected="activeArea === area.value"
+          color="blue"
           @click="activeArea = area.value"
         >
           {{ area.label }}
-        </button>
+        </CommonTag>
       </div>
       <div
         class="artist-filter-row"
         :aria-label="$tSource('歌手类型')"
       >
-        <button
+        <CommonTag
           v-for="artistType in typeFacet?.options ?? []"
           :key="artistType.value"
-          type="button"
-          :class="{ active: activeType === artistType.value }"
+          :selected="activeType === artistType.value"
+          color="blue"
           @click="activeType = artistType.value"
         >
           {{ artistType.label }}
-        </button>
+        </CommonTag>
       </div>
       <div
         class="artist-filter-row artist-initials"
         :aria-label="$tSource('首字母')"
       >
-        <button
+        <CommonTag
           v-for="initial in initialFacet?.options ?? []"
           :key="initial.value"
-          type="button"
-          :class="{ active: activeInitial === initial.value }"
+          :selected="activeInitial === initial.value"
+          size="compact"
           @click="activeInitial = initial.value"
         >
           {{ initial.label }}
-        </button>
+        </CommonTag>
       </div>
     </section>
 
@@ -229,11 +227,7 @@ onMounted(() => {
 .artist-filter-panel > header { display: flex; align-items: center; gap: 8px; }
 .artist-filter-panel h2 { margin: 0; font-size: 14px; }
 .artist-filter-row { display: flex; flex-wrap: wrap; gap: 6px; }
-.artist-filter-row button { min-width: 40px; padding: 8px 12px; border: 0; border-radius: var(--ncx-squircle-radius-full); color: var(--ncx-color-text-secondary); background: transparent; cursor: pointer; }
-.artist-filter-row button:hover, .artist-filter-row button.active { color: var(--ncx-color-text-primary); background: color-mix(in srgb, var(--ncx-color-text-primary) 8%, transparent); }
-.artist-filter-row button:active { transform: scale(.95); }
 .artist-initials { padding-top: 10px; border-top: 1px solid color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent); }
-.artist-initials button { min-width: 30px; padding: 6px; }
 .artist-explore-state { display: flex; min-height: 260px; align-items: center; justify-content: center; gap: 10px; color: var(--ncx-color-text-secondary); }
 .artist-explore-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 26px 20px; }
 .artist-explore-grid > button { display: grid; min-width: 0; justify-items: center; gap: 6px; padding: 0; border: 0; color: inherit; text-align: center; background: transparent; cursor: pointer; }

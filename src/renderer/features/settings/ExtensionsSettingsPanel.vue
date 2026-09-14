@@ -27,9 +27,12 @@ import {
   CommonAlertDialog,
   CommonButton,
   CommonDialog,
+  CommonEmptyState,
+  CommonErrorState,
   CommonInput,
   CommonSearchInput,
   CommonSelect,
+  CommonSpinner,
   CommonSwitch,
   CommonTabs,
   CommonTextarea,
@@ -1133,14 +1136,11 @@ onMounted(() => { void refresh() })
         />
 
         <template v-if="activeSkillTab === 'installed'">
-          <div
+          <CommonEmptyState
             v-if="snapshot.skills.length === 0"
-            class="mcp-empty-state"
-          >
-            <Boxes :size="28" />
-            <p>{{ $tSource("尚未安装 Skill") }}</p>
-            <span>{{ $tSource("点击右上角“新增 Skill”打开弹窗导入，或切换到“市场”标签浏览并安装社区技能。") }}</span>
-          </div>
+            :title="$tSource('尚未安装 Skill')"
+            :description="$tSource('点击右上角“新增 Skill”打开弹窗导入，或切换到“市场”标签浏览并安装社区技能。')"
+          />
 
           <div
             v-else
@@ -1207,8 +1207,7 @@ onMounted(() => { void refresh() })
             v-if="snapshot.skills.length > 0"
             :current-page="installedSkillPage"
             :total-pages="installedSkillTotalPages"
-            :total-count="snapshot.skills.length"
-            @page-change="goToInstalledSkillPage"
+            @change="goToInstalledSkillPage"
           />
         </template>
 
@@ -1218,7 +1217,7 @@ onMounted(() => { void refresh() })
               v-model="skillMarketSearchDraft"
               :placeholder="$tSource('在 SkillHub 搜索技能名称或描述…')"
               :disabled="skillMarketLoading"
-              @submit="submitSkillMarketSearch"
+              @search="submitSkillMarketSearch"
               @clear="clearSkillMarketSearch"
             />
             <CommonButton
@@ -1246,39 +1245,26 @@ onMounted(() => { void refresh() })
               : `推荐 Skill · 共 ${skillMarketTotalCount} 项`) }}
           </p>
 
-          <div
+          <CommonErrorState
             v-if="skillMarketError"
-            class="mcp-market-error"
-          >
-            <span>{{ translatePublicError({ message: skillMarketError }) }}</span>
-            <CommonButton
-              size="compact"
-              variant="secondary"
-              @click="loadSkillMarket"
-            >
-              {{ $tSource("重试") }}
-            </CommonButton>
-          </div>
+            :title="$tSource('市场读取失败')"
+            :description="translatePublicError({ message: skillMarketError })"
+            @retry="loadSkillMarket"
+          />
 
           <div
             v-else-if="skillMarketLoading && skillMarketItems.length === 0"
             class="mcp-empty-state"
           >
-            <RefreshCw
-              :size="24"
-              class="is-spinning"
-            />
+            <CommonSpinner :label="$tSource('正在拉取 SkillHub 市场…')" />
             <p>{{ $tSource("正在拉取 SkillHub 市场…") }}</p>
           </div>
 
-          <div
+          <CommonEmptyState
             v-else-if="skillMarketItems.length === 0"
-            class="mcp-empty-state"
-          >
-            <Globe2 :size="28" />
-            <p>{{ $tSource("未找到匹配的 Skill") }}</p>
-            <span>{{ $tSource("换个关键词试试，或直接在“新增 Skill”弹窗中通过 Git / 本地方式导入。") }}</span>
-          </div>
+            :title="$tSource('未找到匹配的 Skill')"
+            :description="$tSource('换个关键词试试，或直接在“新增 Skill”弹窗中通过 Git / 本地方式导入。')"
+          />
 
           <div
             v-else
@@ -1342,8 +1328,7 @@ onMounted(() => { void refresh() })
             v-if="skillMarketItems.length > 0"
             :current-page="skillMarketPage"
             :total-pages="skillMarketTotalPages"
-            :total-count="skillMarketTotalCount"
-            @page-change="goToSkillMarketPage"
+            @change="goToSkillMarketPage"
           />
         </template>
       </div>
@@ -1395,14 +1380,11 @@ onMounted(() => { void refresh() })
           v-if="activeMcpTab === 'installed'"
           class="mcp-tab-panel"
         >
-          <div
+          <CommonEmptyState
             v-if="snapshot.mcpServers.length === 0"
-            class="mcp-empty-state"
-          >
-            <Server :size="24" />
-            <strong>{{ $tSource("尚未配置 MCP Server") }}</strong>
-            <span>{{ $tSource("点击“新增 MCP”打开弹窗，或从市场选择一个条目作为起点。") }}</span>
-          </div>
+            :title="$tSource('尚未配置 MCP Server')"
+            :description="$tSource('点击“新增 MCP”打开弹窗，或从市场选择一个条目作为起点。')"
+          />
           <div
             v-else
             class="extension-card-list mcp-installed-list"
@@ -1552,27 +1534,19 @@ onMounted(() => { void refresh() })
             v-if="marketLoading"
             class="extensions-empty"
           >
-            {{ $tSource("正在读取 MCP Hub 中国精选服务…") }}
+            <CommonSpinner :label="$tSource('正在读取 MCP Hub 中国精选服务…')" />
+            <p>{{ $tSource("正在读取 MCP Hub 中国精选服务…") }}</p>
           </div>
-          <div
+          <CommonErrorState
             v-else-if="marketError"
-            class="mcp-market-error"
-          >
-            <span>{{ translatePublicError({ message: marketError }) }}</span>
-            <CommonButton
-              size="compact"
-              variant="secondary"
-              @click="loadMcpMarket"
-            >
-              {{ $tSource("重试") }}
-            </CommonButton>
-          </div>
-          <div
+            :title="$tSource('市场读取失败')"
+            :description="translatePublicError({ message: marketError })"
+            @retry="loadMcpMarket"
+          />
+          <CommonEmptyState
             v-else-if="marketServers.length === 0"
-            class="extensions-empty"
-          >
-            {{ $tSource("没有找到匹配的 MCP Server。") }}
-          </div>
+            :title="$tSource('没有找到匹配的 MCP Server。')"
+          />
           <div
             v-else
             class="mcp-market-list"

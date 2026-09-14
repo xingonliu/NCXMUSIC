@@ -14,7 +14,7 @@ import {
   Trash2,
   X
 } from '@lucide/vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import {
   CommonAccordion,
@@ -63,29 +63,54 @@ import {
   type CommonOption,
   type CommonVirtualListItem
 } from '../../design-system/components'
+import CommonPagination from '../../design-system/components/CommonPagination.vue'
+import LiquidGlass from '../../design-system/components/LiquidGlass.vue'
 import { useToast } from '../../design-system/use-toast'
 
 import './design-system-lab.css'
 
 // ========= 变量 =========
 
-/** 当前选中的分类 Tab（'all' 或 1 ~ 8）。 */
-const activeTab = ref<number | 'all'>('all')
+/** 当前选中的分类 Tab（'all' 或 1 ~ 8 的字符串）。 */
+const activeTab = ref('all')
 
 /** 组件搜索关键字。 */
 const searchFilter = ref('')
 
+/** 测试页分页器当前页。 */
+const paginationPage = ref(2)
+
+/** 各大类包含的组件名，用于分类显隐与搜索过滤。 */
+const LAB_COMPONENTS_BY_CATEGORY: Record<number, string[]> = {
+  1: [
+    'CommonButton',
+    'CommonIconButton',
+    'CommonButtonGroup',
+    'CommonLinkButton',
+    'CommonHeaderButton',
+    'CommonHeaderGroupButton',
+    'CommonHeaderGroupItem'
+  ],
+  2: ['CommonInput', 'CommonSearchInput', 'CommonTextarea', 'CommonSelect', 'CommonCombobox'],
+  3: ['CommonCheckbox', 'CommonSwitch', 'CommonRadioGroup', 'CommonSegmentedControl', 'CommonSlider'],
+  4: ['CommonAvatar', 'CommonBadge', 'CommonTag', 'CommonTooltip', 'CommonCard', 'CommonSeparator'],
+  5: ['CommonTabs', 'CommonDropdownMenu', 'CommonContextMenu', 'CommonPopover', 'CommonPagination'],
+  6: ['CommonSpinner', 'CommonProgress', 'CommonSkeleton', 'CommonEmptyState', 'CommonErrorState', 'CommonInlineMessage'],
+  7: ['CommonToast', 'CommonDialog', 'CommonAlertDialog', 'CommonDrawer'],
+  8: ['CommonAccordion', 'CommonScrollArea', 'CommonVirtualList', 'CommonResponsiveGrid', 'LiquidGlass', 'Squircle Tokens']
+}
+
 /** 分类 Tab 选项列表。 */
 const categoryTabs = [
-  { id: 'all' as const, label: '全部 (8)' },
-  { id: 1 as const, label: '1. 操作类' },
-  { id: 2 as const, label: '2. 输入类' },
-  { id: 3 as const, label: '3. 选择类' },
-  { id: 4 as const, label: '4. 展示类' },
-  { id: 5 as const, label: '5. 导航与菜单' },
-  { id: 6 as const, label: '6. 状态与反馈' },
-  { id: 7 as const, label: '7. 浮层类' },
-  { id: 8 as const, label: '8. 容器与布局' }
+  { id: 'all', label: '全部' },
+  { id: '1', label: '1. 操作类' },
+  { id: '2', label: '2. 输入类' },
+  { id: '3', label: '3. 选择类' },
+  { id: '4', label: '4. 展示类' },
+  { id: '5', label: '5. 导航与菜单' },
+  { id: '6', label: '6. 状态与反馈' },
+  { id: '7', label: '7. 浮层类' },
+  { id: '8', label: '8. 容器与布局' }
 ]
 
 /** UI Lab 单行输入示例值。 */
@@ -200,16 +225,42 @@ const squircleTokens = [
 
 // ========= 函数 =========
 
-/** 判断大类在当前分类 Tab 及搜索过滤下是否显示。 */
-function isCategoryVisible(categoryId: number): boolean {
-  if (activeTab.value !== 'all' && activeTab.value !== categoryId) {
-    return false
-  }
-  return true
+/** 判断组件名是否匹配当前搜索关键字。 */
+function matchesSearch(name: string): boolean {
+  const query = searchFilter.value.trim().toLowerCase()
+  if (!query) return true
+  return name.toLowerCase().includes(query)
 }
 
+/** 判断大类在当前分类 Tab 及搜索过滤下是否显示。 */
+function isCategoryVisible(categoryId: number): boolean {
+  if (activeTab.value !== 'all' && activeTab.value !== String(categoryId)) {
+    return false
+  }
+  return (LAB_COMPONENTS_BY_CATEGORY[categoryId] ?? []).some((name) => matchesSearch(name))
+}
+
+/** 判断具体组件卡片在当前分类与搜索下是否显示。 */
+function isComponentVisible(name: string, categoryId: number): boolean {
+  if (activeTab.value !== 'all' && activeTab.value !== String(categoryId)) {
+    return false
+  }
+  return matchesSearch(name)
+}
+
+/** 分类 Tab 选项。搜索无匹配的大类时禁用对应项。 */
+const categoryTabOptions = computed<CommonOption[]>(() => {
+  return categoryTabs.map((tab) => {
+    if (tab.id === 'all') {
+      return { label: '全部 (8)', value: tab.id }
+    }
+    const visibleCount = (LAB_COMPONENTS_BY_CATEGORY[Number(tab.id)] ?? []).filter((name) => matchesSearch(name)).length
+    return { label: tab.label, value: tab.id, disabled: visibleCount === 0 }
+  })
+})
+
 /** 切换分类 Tab。 */
-function selectTab(tabId: number | 'all'): void {
+function selectTab(tabId: string): void {
   activeTab.value = tabId
   recordAction(`切换分类: ${tabId === 'all' ? '全部' : `大类 ${tabId}`}`)
 }
@@ -272,7 +323,7 @@ function confirmDangerAction(): void {
         <div class="ncx-design-lab-nav-actions">
           <CommonSearchInput
             v-model="searchFilter"
-            :placeholder="$tSource('搜索 35+ 通用组件...')"
+            :placeholder="$tSource('搜索通用组件...')"
             class="ncx-design-lab-search"
             @clear="searchFilter = ''"
           />
@@ -285,19 +336,14 @@ function confirmDangerAction(): void {
         </div>
       </div>
 
-      <!-- 分类 Tab 切换栏 -->
-      <nav class="ncx-design-lab-category-tabs">
-        <button
-          v-for="tab in categoryTabs"
-          :key="tab.id"
-          type="button"
-          class="ncx-design-lab-tab-item"
-          :class="{ 'is-active': activeTab === tab.id }"
-          @click="selectTab(tab.id)"
-        >
-          {{ $tSource(tab.label) }}
-        </button>
-      </nav>
+      <CommonTabs
+        class="ncx-design-lab-category-tabs"
+        :model-value="activeTab"
+        :options="categoryTabOptions"
+        variant="pills"
+        size="compact"
+        @update:model-value="selectTab"
+      />
     </header>
 
     <!-- 大类 1：操作类 (Actions) -->
@@ -328,7 +374,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonButton -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonButton', 1)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonButton</code>
@@ -408,7 +457,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonIconButton -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonIconButton', 1)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonIconButton</code>
@@ -446,7 +498,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonButtonGroup -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonButtonGroup', 1)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonButtonGroup</code>
@@ -515,7 +570,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonLinkButton -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonLinkButton', 1)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonLinkButton</code>
@@ -555,7 +613,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonHeaderButton -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonHeaderButton', 1)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonHeaderButton</code>
@@ -601,7 +662,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonHeaderGroupButton -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonHeaderGroupButton', 1)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonHeaderGroupButton</code>
@@ -648,6 +712,46 @@ function confirmDangerAction(): void {
               </div>
             </div>
           </CommonCard>
+
+          <CommonCard
+            v-show="isComponentVisible('CommonHeaderGroupItem', 1)"
+            class="ncx-design-lab-component-card"
+          >
+            <header class="ncx-design-lab-component-header">
+              <div class="ncx-design-lab-component-title">
+                <code class="ncx-design-lab-component-name">CommonHeaderGroupItem</code>
+              </div>
+              <CommonTag
+                color="blue"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("Header 成组按钮项") }}
+              </CommonTag>
+            </header>
+            <div class="ncx-design-lab-component-demo">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <CommonHeaderGroupItem
+                  :label="$tSource('最小化')"
+                  @click="recordAction('HeaderGroupItem 独立最小化')"
+                >
+                  <Minus :size="16" />
+                </CommonHeaderGroupItem>
+                <CommonHeaderGroupItem
+                  :label="$tSource('刷新列表')"
+                  @click="recordAction('HeaderGroupItem 独立刷新')"
+                >
+                  <RefreshCcw :size="16" />
+                </CommonHeaderGroupItem>
+                <CommonHeaderGroupItem
+                  :label="$tSource('关闭')"
+                  variant="close"
+                  @click="recordAction('HeaderGroupItem 独立关闭')"
+                >
+                  <X :size="16" />
+                </CommonHeaderGroupItem>
+              </div>
+            </div>
+          </CommonCard>
         </div>
       </div>
     </section>
@@ -680,7 +784,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid">
           <!-- 具体组件：CommonInput -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonInput', 2)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonInput</code>
@@ -702,7 +809,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonSearchInput -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonSearchInput', 2)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSearchInput</code>
@@ -723,7 +833,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonTextarea -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonTextarea', 2)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonTextarea</code>
@@ -750,7 +863,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonSelect -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonSelect', 2)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSelect</code>
@@ -771,7 +887,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonCombobox -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonCombobox', 2)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonCombobox</code>
@@ -823,7 +942,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonCheckbox -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonCheckbox', 3)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonCheckbox</code>
@@ -867,7 +989,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonSwitch -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonSwitch', 3)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSwitch</code>
@@ -915,7 +1040,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonRadioGroup -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonRadioGroup', 3)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonRadioGroup</code>
@@ -937,7 +1065,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonSegmentedControl -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonSegmentedControl', 3)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSegmentedControl</code>
@@ -968,7 +1099,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--full">
           <!-- 具体组件：CommonSlider -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonSlider', 3)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSlider</code>
@@ -1019,7 +1153,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonAvatar -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonAvatar', 4)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonAvatar</code>
@@ -1054,7 +1191,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonBadge -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonBadge', 4)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonBadge</code>
@@ -1125,7 +1265,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonTag -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonTag', 4)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonTag</code>
@@ -1172,7 +1315,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonTooltip -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonTooltip', 4)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonTooltip</code>
@@ -1224,7 +1370,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonCard -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonCard', 4)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonCard</code>
@@ -1261,7 +1410,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonSeparator -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonSeparator', 4)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSeparator</code>
@@ -1316,7 +1468,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--full">
           <!-- 具体组件：CommonTabs -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonTabs', 5)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonTabs</code>
@@ -1346,7 +1501,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid">
           <!-- 具体组件：CommonDropdownMenu -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonDropdownMenu', 5)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonDropdownMenu</code>
@@ -1368,7 +1526,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonContextMenu -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonContextMenu', 5)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonContextMenu</code>
@@ -1393,7 +1554,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonPopover -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonPopover', 5)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonPopover</code>
@@ -1409,6 +1573,31 @@ function confirmDangerAction(): void {
               <CommonPopover :label="$tSource('Popover 示例')">
                 {{ $tSource("Popover 用于由明确锚点触发的少量说明或控制。") }}
               </CommonPopover>
+            </div>
+          </CommonCard>
+
+          <CommonCard
+            v-show="isComponentVisible('CommonPagination', 5)"
+            class="ncx-design-lab-component-card"
+          >
+            <header class="ncx-design-lab-component-header">
+              <div class="ncx-design-lab-component-title">
+                <code class="ncx-design-lab-component-name">CommonPagination</code>
+              </div>
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("分页器") }}
+              </CommonTag>
+            </header>
+            <div class="ncx-design-lab-component-demo">
+              <CommonPagination
+                v-model:current-page="paginationPage"
+                :total-pages="8"
+                :aria-label="$tSource('分页')"
+                @change="recordAction($tSource(`分页：第 ${$event} 页`))"
+              />
             </div>
           </CommonCard>
         </div>
@@ -1443,7 +1632,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid">
           <!-- 具体组件：CommonSpinner -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonSpinner', 6)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSpinner</code>
@@ -1479,7 +1671,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonProgress -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonProgress', 6)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonProgress</code>
@@ -1508,7 +1703,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonSkeleton -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonSkeleton', 6)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonSkeleton</code>
@@ -1546,7 +1744,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonEmptyState -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonEmptyState', 6)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonEmptyState</code>
@@ -1575,7 +1776,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonErrorState -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonErrorState', 6)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonErrorState</code>
@@ -1599,7 +1803,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--full">
           <!-- 具体组件：CommonInlineMessage -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonInlineMessage', 6)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonInlineMessage</code>
@@ -1671,7 +1878,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--2col">
           <!-- 具体组件：CommonToast -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonToast', 7)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonToast</code>
@@ -1691,7 +1901,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonDialog -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonDialog', 7)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonDialog</code>
@@ -1711,7 +1924,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonAlertDialog -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonAlertDialog', 7)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonAlertDialog</code>
@@ -1734,7 +1950,10 @@ function confirmDangerAction(): void {
           </CommonCard>
 
           <!-- 具体组件：CommonDrawer -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonDrawer', 7)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonDrawer</code>
@@ -1784,7 +2003,10 @@ function confirmDangerAction(): void {
 
         <div class="ncx-design-lab-grid--full">
           <!-- 具体组件：CommonAccordion -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonAccordion', 8)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonAccordion</code>
@@ -1803,30 +2025,85 @@ function confirmDangerAction(): void {
         </div>
 
         <div class="ncx-design-lab-grid--2col">
-          <!-- 具体组件：CommonScrollArea & CommonVirtualList -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonScrollArea', 8)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
-                <code class="ncx-design-lab-component-name">CommonScrollArea & CommonVirtualList</code>
+                <code class="ncx-design-lab-component-name">CommonScrollArea</code>
               </div>
               <CommonTag
                 color="gray"
                 class="ncx-design-lab-component-tag"
               >
-                {{ $tSource("虚拟列表与滚动") }}
+                {{ $tSource("滚动区域") }}
               </CommonTag>
             </header>
             <div class="ncx-design-lab-component-demo">
               <div class="ncx-design-lab-scroll-demo">
                 <CommonScrollArea>
-                  <CommonVirtualList :items="virtualListItems" />
+                  <p>{{ $tSource("滚动容器用于裁剪溢出内容，并保持内部列表可浏览。") }}</p>
+                  <p>{{ $tSource("虚拟列表与滚动") }}</p>
+                  <p>{{ $tSource("高级容器与滚动") }}</p>
                 </CommonScrollArea>
               </div>
             </div>
           </CommonCard>
 
+          <CommonCard
+            v-show="isComponentVisible('CommonVirtualList', 8)"
+            class="ncx-design-lab-component-card"
+          >
+            <header class="ncx-design-lab-component-header">
+              <div class="ncx-design-lab-component-title">
+                <code class="ncx-design-lab-component-name">CommonVirtualList</code>
+              </div>
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("虚拟列表") }}
+              </CommonTag>
+            </header>
+            <div class="ncx-design-lab-component-demo">
+              <div class="ncx-design-lab-scroll-demo">
+                <CommonVirtualList :items="virtualListItems" />
+              </div>
+            </div>
+          </CommonCard>
+
+          <CommonCard
+            v-show="isComponentVisible('LiquidGlass', 8)"
+            class="ncx-design-lab-component-card"
+          >
+            <header class="ncx-design-lab-component-header">
+              <div class="ncx-design-lab-component-title">
+                <code class="ncx-design-lab-component-name">LiquidGlass</code>
+              </div>
+              <CommonTag
+                color="gray"
+                class="ncx-design-lab-component-tag"
+              >
+                {{ $tSource("液态玻璃材质") }}
+              </CommonTag>
+            </header>
+            <div class="ncx-design-lab-component-demo">
+              <LiquidGlass
+                squircle-size="lg"
+                class="ncx-design-lab-glass-demo"
+              >
+                <strong>{{ $tSource("Liquid Glass 玻璃材质卡片") }}</strong>
+                <p>{{ $tSource("液态玻璃用于播放栏等需要透出背景的容器。") }}</p>
+              </LiquidGlass>
+            </div>
+          </CommonCard>
+
           <!-- 具体组件：CommonResponsiveGrid -->
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('CommonResponsiveGrid', 8)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">CommonResponsiveGrid</code>
@@ -1853,13 +2130,19 @@ function confirmDangerAction(): void {
       </div>
 
       <!-- 小类 8.2：Squircle 形状规范 -->
-      <div class="ncx-design-lab-subcategory">
+      <div
+        v-show="!searchFilter.trim() || matchesSearch('Squircle Tokens')"
+        class="ncx-design-lab-subcategory"
+      >
         <div class="ncx-design-lab-subcategory-header">
           <CommonSeparator :label="$tSource('小类 8.2：Squircle 形状与尺寸')" />
         </div>
 
         <div class="ncx-design-lab-grid--full">
-          <CommonCard class="ncx-design-lab-component-card">
+          <CommonCard
+            v-show="isComponentVisible('Squircle Tokens', 8)"
+            class="ncx-design-lab-component-card"
+          >
             <header class="ncx-design-lab-component-header">
               <div class="ncx-design-lab-component-title">
                 <code class="ncx-design-lab-component-name">Squircle Tokens</code>

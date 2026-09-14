@@ -9,7 +9,7 @@ import type {
   StandardPlaylist,
   StandardSong
 } from '../../../shared/schemas/music'
-import { CommonButton, CommonSkeleton } from '../../design-system/components'
+import { CommonButton, CommonIconButton, CommonSkeleton } from '../../design-system/components'
 import { useAccountSessionStore } from '../account/account-session-store'
 import { useAgentStore } from '../agent/agent-store'
 import EntityCard from './components/EntityCard.vue'
@@ -600,18 +600,18 @@ watch(
             <h3>{{ $tSource(personalFmSong?.name || '电台正在准备') }}</h3>
             <p>{{ $tSource(personalFmSong?.artists.map((artist) => artist.name).join(' / ') || '登录后获得不间断的个性播放') }}</p>
           </div>
-          <button
+          <CommonIconButton
             class="discover-radio-play"
-            type="button"
             :disabled="!personalFmSong"
-            :aria-label="$tSource('播放个人电台')"
+            :label="$tSource('播放个人电台')"
+            variant="primary"
             @click="personalFmSong && playSong(personalFmSong)"
           >
             <Play
               :size="19"
               fill="currentColor"
             />
-          </button>
+          </CommonIconButton>
         </article>
       </div>
     </MusicSection>
