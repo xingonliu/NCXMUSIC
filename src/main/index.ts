@@ -1183,6 +1183,12 @@ function registerControlPlane(): void {
 
     return applyWindowCommand(command)
   })
+
+  ipcMain.handle(WINDOW_CONTROL_CHANNELS.capture, async (event) => {
+    if (!isTrustedSender(event)) return new Uint8Array()
+    const image = await event.sender.capturePage()
+    return image.toPNG()
+  })
 }
 
 /** 请求 Renderer 刷新播放快照并等待完成或有限超时。 */

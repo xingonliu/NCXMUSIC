@@ -1113,6 +1113,7 @@ onMounted(() => { void refresh() })
           <CommonButton
             size="compact"
             variant="primary"
+            material="blur"
             @click="openCreateSkillDialog"
           >
             <Plus :size="14" />{{ $tSource("新增 Skill") }}
@@ -1195,6 +1196,7 @@ onMounted(() => { void refresh() })
                   v-if="skill.state !== 'trashed'"
                   size="compact"
                   variant="danger"
+                  material="blur"
                   @click="mutateSkill(skill, 'uninstall')"
                 >
                   {{ $tSource("卸载") }}
@@ -1308,6 +1310,7 @@ onMounted(() => { void refresh() })
                   v-else
                   size="compact"
                   variant="primary"
+                  material="blur"
                   :loading="installingSkillSlug === item.slug"
                   @click="installMarketSkill(item)"
                 >
@@ -1344,6 +1347,7 @@ onMounted(() => { void refresh() })
           <CommonButton
             size="compact"
             variant="primary"
+            material="blur"
             @click="openCreateMcpDialog()"
           >
             <Plus :size="14" />{{ $tSource("新增 MCP") }}
@@ -1443,6 +1447,7 @@ onMounted(() => { void refresh() })
                 <CommonButton
                   size="compact"
                   variant="danger"
+                  material="blur"
                   @click="mutateMcp(server, 'delete')"
                 >
                   <Trash2 :size="13" />{{ $tSource("删除") }}
@@ -1511,6 +1516,7 @@ onMounted(() => { void refresh() })
             />
             <CommonButton
               variant="primary"
+              material="blur"
               :loading="marketLoading"
               @click="submitMarketSearch"
             >
@@ -1690,6 +1696,8 @@ onMounted(() => { void refresh() })
       <template #actions>
         <CommonButton
           variant="secondary"
+          material="clear"
+          frost
           :disabled="busy"
           @click="closeMcpDialog"
         >
@@ -1698,6 +1706,8 @@ onMounted(() => { void refresh() })
         <CommonButton
           v-if="selectedServer"
           variant="secondary"
+          material="clear"
+          frost
           :loading="busy"
           @click="mutateMcp(selectedServer, 'test')"
         >
@@ -1705,6 +1715,7 @@ onMounted(() => { void refresh() })
         </CommonButton>
         <CommonButton
           variant="primary"
+          material="tinted"
           :loading="busy"
           @click="saveMcp"
         >
@@ -1786,6 +1797,8 @@ onMounted(() => { void refresh() })
       <template #actions>
         <CommonButton
           variant="secondary"
+          material="clear"
+          frost
           :disabled="busy"
           @click="closeSkillDialog"
         >

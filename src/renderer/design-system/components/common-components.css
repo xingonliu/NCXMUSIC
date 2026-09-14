@@ -3178,8 +3178,8 @@ body > .ncx-common-toast {
   display: grid;
   place-items: center;
   padding: var(--ncx-space-6);
-  background: rgb(0 0 0 / 42%);
-  backdrop-filter: blur(12px);
+  background: rgb(41 41 58 / 23%);
+  backdrop-filter: none;
 }
 
 .ncx-common-overlay-alert {
@@ -3192,7 +3192,7 @@ body > .ncx-common-toast {
   gap: var(--ncx-space-4);
   width: min(520px, 92vw);
   max-height: 88vh;
-  overflow: hidden;
+  overflow: visible;
   padding: var(--ncx-space-6);
   border: 1px solid var(--ncx-color-border-subtle);
   border-radius: var(--ncx-squircle-radius-2xl);
@@ -3394,7 +3394,7 @@ body > .ncx-common-toast {
   border-radius: var(--ncx-squircle-radius-2xl) 0 0 var(--ncx-squircle-radius-2xl);
   background: var(--ncx-drawer-bg);
   box-shadow: var(--ncx-shadow-elevation-3);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .ncx-common-drawer-left {

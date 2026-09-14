@@ -444,6 +444,10 @@ const windowControlBridge: WindowControlBridge = {
   onSnapshot: (listener) => {
     windowSnapshotListeners.add(listener)
     return () => windowSnapshotListeners.delete(listener)
+  },
+  captureBackdrop: async () => {
+    const png = await ipcRenderer.invoke(WINDOW_CONTROL_CHANNELS.capture)
+    return png instanceof Uint8Array ? png : new Uint8Array(png as ArrayBuffer)
   }
 }
 

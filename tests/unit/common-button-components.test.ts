@@ -69,6 +69,19 @@ describe('macOS HIG & WWDC25 按钮族组件规范测试', () => {
       expect(wrapper.emitted('click')).toBeUndefined()
     })
 
+    it('显式材质才接入液态玻璃宿主，默认保持原按钮样式', () => {
+      const plain = mount(CommonButton, { slots: { default: '普通' } })
+      expect(plain.classes()).not.toContain('ncx-glass-host')
+
+      const glass = mount(CommonButton, {
+        props: { material: 'tinted', variant: 'primary' },
+        slots: { default: '播放' }
+      })
+      expect(glass.classes()).toContain('ncx-glass-host')
+      expect(glass.attributes('data-material')).toBe('tinted')
+      expect(glass.attributes('data-tone')).toBe('accent')
+    })
+
     it('加载态 (loading) 显示 Spinner、设置 aria-busy，且拦截点击事件', async () => {
       const wrapper = mount(CommonButton, {
         props: { loading: true },

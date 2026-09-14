@@ -272,12 +272,15 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
       <template #actions>
         <CommonButton
           variant="secondary"
+          material="clear"
+          frost
           @click="createDialogVisible = false"
         >
           {{ $tSource("取消") }}
         </CommonButton>
         <CommonButton
           variant="primary"
+          material="tinted"
           :disabled="!createName.trim()"
           @click="createPlaylist"
         >
@@ -298,12 +301,15 @@ watch(() => account.snapshot.value?.accountGeneration, () => {
       <template #actions>
         <CommonButton
           variant="secondary"
+          material="clear"
+          frost
           @click="renameTarget = null"
         >
           {{ $tSource("取消") }}
         </CommonButton>
         <CommonButton
           variant="primary"
+          material="tinted"
           :disabled="!renameName.trim()"
           @click="renamePlaylist"
         >

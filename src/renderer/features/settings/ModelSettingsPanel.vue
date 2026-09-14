@@ -500,6 +500,7 @@ onMounted(() => {
       <CommonButton
         size="compact"
         variant="primary"
+        material="blur"
         @click="openAddDialog"
       >
         <Plus :size="14" />{{ $tSource("新增模型") }}
@@ -562,6 +563,7 @@ onMounted(() => {
         <CommonButton
           size="compact"
           variant="danger"
+          material="blur"
           :disabled="busyProfileId !== undefined"
           @click="requestDelete(profile)"
         >
@@ -705,6 +707,8 @@ onMounted(() => {
     <template #actions>
       <CommonButton
         variant="secondary"
+        material="clear"
+        frost
         :disabled="saveBusy"
         @click="closeAddDialog"
       >
@@ -712,6 +716,7 @@ onMounted(() => {
       </CommonButton>
       <CommonButton
         variant="primary"
+        material="tinted"
         :loading="saveBusy"
         @click="saveProfile"
       >
@@ -781,6 +786,8 @@ onMounted(() => {
     <template #actions>
       <CommonButton
         variant="secondary"
+        material="clear"
+        frost
         :disabled="editSaveBusy"
         @click="closeEditDialog"
       >
@@ -788,6 +795,7 @@ onMounted(() => {
       </CommonButton>
       <CommonButton
         variant="primary"
+        material="tinted"
         :loading="editSaveBusy"
         @click="saveEditProfile"
       >

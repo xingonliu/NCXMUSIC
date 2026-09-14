@@ -65,6 +65,7 @@ import {
 } from '../../design-system/components'
 import CommonPagination from '../../design-system/components/CommonPagination.vue'
 import LiquidGlass from '../../design-system/components/LiquidGlass.vue'
+import GlassMaterialLab from './GlassMaterialLab.vue'
 import { useToast } from '../../design-system/use-toast'
 
 import './design-system-lab.css'
@@ -2091,11 +2092,13 @@ function confirmDangerAction(): void {
             <div class="ncx-design-lab-component-demo">
               <LiquidGlass
                 squircle-size="lg"
+                material="blur"
                 class="ncx-design-lab-glass-demo"
               >
-                <strong>{{ $tSource("Liquid Glass 玻璃材质卡片") }}</strong>
-                <p>{{ $tSource("液态玻璃用于播放栏等需要透出背景的容器。") }}</p>
+                <strong>{{ $tSource("不完整面板") }}</strong>
+                <p>{{ $tSource("播放栏与设置侧栏只使用高斯模糊，不建立折射。") }}</p>
               </LiquidGlass>
+              <GlassMaterialLab />
             </div>
           </CommonCard>
 
@@ -2190,12 +2193,15 @@ function confirmDangerAction(): void {
     <template #actions>
       <CommonButton
         variant="secondary"
+        material="clear"
+        frost
         @click="dialogVisible = false"
       >
         {{ $tSource("取消") }}
       </CommonButton>
       <CommonButton
         variant="primary"
+        material="tinted"
         @click="dialogVisible = false; recordAction('Dialog 已保存')"
       >
         {{ $tSource("保存") }}

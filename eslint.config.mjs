@@ -59,6 +59,12 @@ export default tseslint.config(
     }
   },
   {
+    files: ['src/renderer/design-system/materials/liquid-glass-renderer.js'],
+    rules: {
+      'no-undef': 'off'
+    }
+  },
+  {
     files: ['src/renderer/**/*.{ts,vue}'],
     rules: {
       'no-restricted-imports': [
