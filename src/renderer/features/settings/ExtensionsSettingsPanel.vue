@@ -1113,6 +1113,7 @@ onMounted(() => { void refresh() })
           <CommonButton
             size="compact"
             variant="primary"
+            material="tinted"
             @click="openCreateSkillDialog"
           >
             <Plus :size="14" />{{ $tSource("新增 Skill") }}
@@ -1344,6 +1345,7 @@ onMounted(() => { void refresh() })
           <CommonButton
             size="compact"
             variant="primary"
+            material="tinted"
             @click="openCreateMcpDialog()"
           >
             <Plus :size="14" />{{ $tSource("新增 MCP") }}
@@ -1705,6 +1707,7 @@ onMounted(() => { void refresh() })
         </CommonButton>
         <CommonButton
           variant="primary"
+          material="tinted"
           :loading="busy"
           @click="saveMcp"
         >

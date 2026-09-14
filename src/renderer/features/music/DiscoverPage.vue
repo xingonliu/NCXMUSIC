@@ -619,6 +619,7 @@ onMounted(async () => {
           </div>
           <CommonIconButton
             class="discover-radio-play"
+            material="tinted"
             :disabled="!personalFmSong"
             :label="$tSource('播放个人电台')"
             variant="primary"

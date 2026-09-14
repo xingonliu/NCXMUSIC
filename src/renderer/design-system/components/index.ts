@@ -1,6 +1,10 @@
 /* eslint vue/multi-word-component-names: off, vue/one-component-per-file: off */
 import { Comment, Fragment, computed, defineComponent, h, nextTick, onMounted, onUnmounted, ref, Teleport, Transition, watch, type Component, type PropType, type Ref, type VNode } from 'vue'
 
+import GlassSurface from '../materials/GlassSurface.vue'
+import type { GlassMaterial } from '../materials/glass-renderer'
+import { useModalBackdrop } from '../materials/modal-backdrop'
+
 import { translatePublicError, translateSourceText } from '../../i18n'
 
 // ========= 类型 =========
@@ -175,7 +179,7 @@ let activeModalCount = 0
 
 /** 设置或清除应用背景不可交互状态。 */
 function setApplicationBackgroundInert(inert: boolean): void {
-  document.querySelectorAll<HTMLElement>('.ncx-app-shell, .ncx-player-bar').forEach((element) => {
+  document.querySelectorAll<HTMLElement>('.ncx-app-shell, .player-bar-root').forEach((element) => {
     element.inert = inert
     if (inert) element.setAttribute('aria-hidden', 'true')
     else element.removeAttribute('aria-hidden')
@@ -186,6 +190,7 @@ function setApplicationBackgroundInert(inert: boolean): void {
 function useModalFocus(visible: () => boolean, panel: Ref<HTMLElement | null>): void {
   /** 打开表面前的活动元素。 */
   let previousFocus: HTMLElement | null = null
+  let entered = false
 
   /** 将焦点保持在当前模态面板内。 */
   function trapFocus(event: KeyboardEvent): void {
@@ -210,6 +215,8 @@ function useModalFocus(visible: () => boolean, panel: Ref<HTMLElement | null>): 
 
   watch(visible, async (isVisible) => {
     if (isVisible) {
+      if (entered) return
+      entered = true
       previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null
       activeModalCount += 1
       setApplicationBackgroundInert(true)
@@ -218,6 +225,8 @@ function useModalFocus(visible: () => boolean, panel: Ref<HTMLElement | null>): 
       ;(first ?? panel.value)?.focus()
       return
     }
+    if (!entered) return
+    entered = false
     if (activeModalCount > 0) activeModalCount -= 1
     if (activeModalCount === 0) setApplicationBackgroundInert(false)
     previousFocus?.focus()
@@ -227,7 +236,7 @@ function useModalFocus(visible: () => boolean, panel: Ref<HTMLElement | null>): 
   onMounted(() => window.addEventListener('keydown', trapFocus, true))
   onUnmounted(() => {
     window.removeEventListener('keydown', trapFocus, true)
-    if (visible() && activeModalCount > 0) activeModalCount -= 1
+    if (entered && activeModalCount > 0) activeModalCount -= 1
     if (activeModalCount === 0) setApplicationBackgroundInert(false)
   })
 }
@@ -238,6 +247,7 @@ function useModalFocus(visible: () => boolean, panel: Ref<HTMLElement | null>): 
 export const CommonButton = defineComponent({
   name: '通用组件Button',
   props: {
+    material: { type: String as PropType<GlassMaterial>, default: 'frost' },
     variant: buttonVariantProp,
     size: sizeProp,
     loading: Boolean,
@@ -275,6 +285,7 @@ export const CommonButton = defineComponent({
           onClick: handleClick
         },
         [
+          h(GlassSurface, { material: props.variant === 'ghost' && props.material === 'frost' ? 'none' : props.material, variant: props.variant, disabled: isDisabled.value }),
           props.loading ? h(CommonSpinner, { size: props.size === 'compact' ? 'compact' : 'default' }) : null,
           h('span', { class: 'ncx-common-button-text' }, slots.default?.())
         ]
@@ -286,6 +297,8 @@ export const CommonButton = defineComponent({
 export const CommonIconButton = defineComponent({
   name: '通用组件IconButton',
   props: {
+    liquidPress: { type: Boolean, default: true },
+    material: { type: String as PropType<GlassMaterial>, default: 'frost' },
     label: { type: String, required: true },
     size: sizeProp,
     variant: {
@@ -406,6 +419,8 @@ export const CommonIconButton = defineComponent({
           onClick: handleClick
         },
         [
+          props.material === 'none' && !props.liquidPress ? null
+            : h(GlassSurface, { material: props.material, variant: props.variant, disabled: props.disabled, interactive: props.liquidPress }),
           slots.default?.(),
           visible.value && !props.disabled
             ? h(
@@ -516,6 +531,7 @@ export const CommonHeaderButton = defineComponent({
           onClick: handleClick
         },
         [
+          h(GlassSurface, { material: 'frost', disabled: props.disabled }),
           slots.default?.(),
           visible.value && !props.disabled
             ? h(
@@ -584,6 +600,7 @@ export const CommonHeaderGroupItem = defineComponent({
           onClick: handleClick
         },
         [
+          h(GlassSurface, { material: 'none', disabled: props.disabled }),
           slots.default?.(),
           visible.value && !props.disabled
             ? h(
@@ -674,7 +691,7 @@ export const CommonHeaderGroupButton = defineComponent({
           role: 'group',
           'aria-label': localizeUiText(props.label)
         },
-        children
+        [h(GlassSurface, { material: 'frost', interactive: false }), ...children]
       )
     }
   }
@@ -3234,7 +3251,8 @@ export const CommonDialog = defineComponent({
   setup(props, { emit, slots }) {
     /** 当前 Dialog 面板节点。 */
     const panel = ref<HTMLElement | null>(null)
-    useModalFocus(() => props.visible, panel)
+    const presented = useModalBackdrop(() => props.visible)
+    useModalFocus(() => presented.value, panel)
     const handleKeydown = (e: KeyboardEvent) => {
       if (props.visible && props.closeOnEsc && e.key === 'Escape') {
         emit('close')
@@ -3257,7 +3275,7 @@ export const CommonDialog = defineComponent({
 
     return () => h(Teleport, { to: 'body' }, [
       h(Transition, { name: 'ncx-modal-pop' }, () =>
-        props.visible
+        presented.value
           ? h('div', { class: 'ncx-common-overlay', role: 'presentation', onClick: handleOverlayClick }, [
               h('section', {
                 ref: panel,
@@ -3268,6 +3286,7 @@ export const CommonDialog = defineComponent({
                 'aria-label': localizeUiText(props.title),
                 style: { width: props.width }
               }, [
+                h(GlassSurface, { material: 'dialog', interactive: false }),
                 h('header', { class: 'ncx-common-modal-header' }, [
                   h('div', { class: 'ncx-common-modal-title-group' }, [
                     h('h2', { class: 'ncx-common-modal-title' }, localizeUiText(props.title)),
@@ -3279,6 +3298,7 @@ export const CommonDialog = defineComponent({
                     'aria-label': '关闭对话框',
                     onClick: () => emit('close')
                   }, [
+                    h(GlassSurface, { material: 'frost' }),
                     h('svg', { viewBox: '0 0 24 24', width: '12', height: '12', fill: 'none', stroke: 'currentColor', 'stroke-width': '2.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
                       h('line', { x1: '18', y1: '6', x2: '6', y2: '18' }),
                       h('line', { x1: '6', y1: '6', x2: '18', y2: '18' })
@@ -3310,7 +3330,8 @@ export const CommonAlertDialog = defineComponent({
   setup(props, { emit }) {
     /** 当前 AlertDialog 面板节点。 */
     const panel = ref<HTMLElement | null>(null)
-    useModalFocus(() => props.visible, panel)
+    const presented = useModalBackdrop(() => props.visible)
+    useModalFocus(() => presented.value, panel)
     const handleKeydown = (e: KeyboardEvent) => {
       if (props.visible && e.key === 'Escape') {
         emit('cancel')
@@ -3345,7 +3366,7 @@ export const CommonAlertDialog = defineComponent({
 
     return () => h(Teleport, { to: 'body' }, [
       h(Transition, { name: 'ncx-alert-pop' }, () =>
-        props.visible
+        presented.value
           ? h('div', { class: 'ncx-common-overlay ncx-common-overlay-alert', role: 'presentation' }, [
               h('section', {
                 ref: panel,
@@ -3355,6 +3376,7 @@ export const CommonAlertDialog = defineComponent({
                 'aria-modal': 'true',
                 'aria-label': localizeUiText(props.title)
               }, [
+                h(GlassSurface, { material: 'dialog', interactive: false }),
                 h('div', { class: 'ncx-common-alert-header' }, [
                   renderAlertIcon(),
                   h('h2', { class: 'ncx-common-alert-title' }, localizeUiText(props.title))
@@ -3387,7 +3409,8 @@ export const CommonDrawer = defineComponent({
   setup(props, { emit, slots }) {
     /** 当前 Drawer 面板节点。 */
     const panel = ref<HTMLElement | null>(null)
-    useModalFocus(() => props.visible, panel)
+    const presented = useModalBackdrop(() => props.visible)
+    useModalFocus(() => presented.value, panel)
     // ========= 函数 =========
 
     /** 处理键盘 ESC 按键关闭抽屉。 */
@@ -3416,7 +3439,7 @@ export const CommonDrawer = defineComponent({
 
     return () => h(Teleport, { to: 'body' }, [
       h(Transition, { name: 'ncx-drawer-slide' }, () =>
-        props.visible
+        presented.value
           ? h('div', {
               class: joinClasses('ncx-common-overlay', 'ncx-common-overlay-drawer', `ncx-common-overlay-drawer-${props.placement}`),
               role: 'presentation',
@@ -3431,6 +3454,7 @@ export const CommonDrawer = defineComponent({
                 style: { width: props.width },
                 'aria-label': localizeUiText(props.title)
               }, [
+                h(GlassSurface, { material: 'dialog', interactive: false }),
                 h('header', { class: 'ncx-common-drawer-header' }, [
                   h('h2', { class: 'ncx-common-drawer-title' }, localizeUiText(props.title)),
                   h('div', { class: 'ncx-common-drawer-header-actions' }, [
@@ -3441,6 +3465,7 @@ export const CommonDrawer = defineComponent({
                       'aria-label': '关闭抽屉',
                       onClick: () => emit('close')
                     }, [
+                      h(GlassSurface, { material: 'frost' }),
                       h('svg', { viewBox: '0 0 24 24', width: '12', height: '12', fill: 'none', stroke: 'currentColor', 'stroke-width': '2.5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
                         h('line', { x1: '18', y1: '6', x2: '6', y2: '18' }),
                         h('line', { x1: '6', y1: '6', x2: '18', y2: '18' })

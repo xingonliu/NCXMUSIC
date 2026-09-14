@@ -13,6 +13,7 @@ export type DesktopPlatform = 'darwin' | 'win32' | 'linux' | string
 
 /** 窗口 IPC 通道名，集中冻结避免跨进程字符串散落。 */
 export const WINDOW_CONTROL_CHANNELS = {
+  captureBackdrop: 'ncx:window-capture-backdrop',
   command: 'ncx:window-command',
   snapshot: 'ncx:window-snapshot',
   status: 'ncx:window-status'
@@ -39,6 +40,7 @@ export interface WindowSnapshot {
 
 /** Preload 暴露给 Renderer 的窗口控制桥接。 */
 export interface WindowControlBridge {
+  readonly captureBackdrop: () => Promise<string | null>
   readonly snapshot: () => Promise<WindowSnapshot>
   readonly send: (command: WindowCommand) => Promise<WindowSnapshot>
   readonly onSnapshot: (listener: (snapshot: WindowSnapshot) => void) => () => void

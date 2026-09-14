@@ -67,3 +67,7 @@ tests/
 ```
 
 产品、设计和架构约束以 `docs/` 下的非 API 基线文档为准；`docs/api/` 与 `scripts/api-audit/` 保持独立。第三方及衍生源码继续遵循各目录内记录的许可证与署名要求。
+
+## 材质组件
+
+按钮与浮层材质分级、demo 来源、位置分配和验证方式见 [液态玻璃材质规范](docs/liquid-glass-materials.md)。通用组件交互测试页的 `GlassButtons` 提供三档按钮与图标按钮示例。

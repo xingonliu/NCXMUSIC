@@ -1155,6 +1155,13 @@ function registerControlPlane(): void {
     return publishAccountSnapshot()
   })
 
+  ipcMain.handle(WINDOW_CONTROL_CHANNELS.captureBackdrop, async (event) => {
+    if (!isTrustedSender(event) || !mainWindow) return null
+    // Only the app's own visible page; no desktop capture, disk writes or network transfer.
+    const image = await mainWindow.webContents.capturePage()
+    return image.isEmpty() ? null : image.toDataURL()
+  })
+
   ipcMain.handle(WINDOW_CONTROL_CHANNELS.snapshot, (event) => {
     if (!isTrustedSender(event) || !mainWindow) {
       return {

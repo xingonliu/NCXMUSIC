@@ -2,6 +2,17 @@
 
 /** 设计系统交互测试页的英语兼容文案。 */
 export const enUSDesignSystemSourceMessages = {
+  '按住并拖动按钮查看形变，松手查看回弹；也可用 Tab、空格和 Enter 测试。': 'Hold and drag to deform, then release to spring back. Also test with Tab, Space and Enter.',
+  '触发次数': 'Activations',
+  '打开 G3 面板及分级按钮': 'Open the G3 panel and graded buttons',
+  '分级液态玻璃按钮': 'Graded liquid glass buttons',
+  '高斯模糊与按压形变': 'Gaussian blur and press deformation',
+  '面板使用 Dialog 材质，底部按钮使用面板作为背景。': 'The panel uses the Dialog material; footer buttons sample the panel surface.',
+  '完整彩色液态玻璃': 'Full tinted liquid glass',
+  '完整透明液态玻璃': 'Full clear liquid glass',
+  '已禁用': 'Disabled',
+  'G3 液态玻璃面板': 'G3 liquid glass panel',
+
   '保存': 'Save',
   '标签分类': 'Tag categories',
   '标签页': 'Tabs',

@@ -165,6 +165,7 @@ onMounted(async () => {
         </CommonButton>
         <CommonButton
           variant="primary"
+          material="tinted"
           size="compact"
           :loading="working"
           :disabled="!profile.eligible || profile.paused"

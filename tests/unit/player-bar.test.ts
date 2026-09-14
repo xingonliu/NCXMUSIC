@@ -49,6 +49,7 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     const transport = wrapper.find('.player-transport')
 
     expect(transport.exists()).toBe(true)
+    expect(wrapper.find('.ncx-glass-layer').exists()).toBe(false)
 
     // 查找所有 icon 按钮组件
     const iconButtons = transport.findAllComponents({ name: '通用组件IconButton' })

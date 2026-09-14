@@ -40,7 +40,7 @@
   border: none;
   border-radius: var(--ncx-squircle-radius-lg);
   background: var(--ncx-color-surface);
-  backdrop-filter: blur(28px) saturate(140%);
+  backdrop-filter: blur(28px);
   box-shadow: var(--ncx-shadow-elevation-1);
   -webkit-app-region: drag;
 }

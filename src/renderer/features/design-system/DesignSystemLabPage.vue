@@ -65,6 +65,7 @@ import {
 } from '../../design-system/components'
 import CommonPagination from '../../design-system/components/CommonPagination.vue'
 import LiquidGlass from '../../design-system/components/LiquidGlass.vue'
+import GlassMaterialExamples from './GlassMaterialExamples.vue'
 import { useToast } from '../../design-system/use-toast'
 
 import './design-system-lab.css'
@@ -83,7 +84,7 @@ const paginationPage = ref(2)
 /** 各大类包含的组件名，用于分类显隐与搜索过滤。 */
 const LAB_COMPONENTS_BY_CATEGORY: Record<number, string[]> = {
   1: [
-    'CommonButton',
+    'CommonButton', 'GlassButtons',
     'CommonIconButton',
     'CommonButtonGroup',
     'CommonLinkButton',
@@ -454,6 +455,19 @@ function confirmDangerAction(): void {
                 </div>
               </div>
             </div>
+          </CommonCard>
+
+          <CommonCard
+            v-show="isComponentVisible('GlassButtons', 1)"
+            class="ncx-design-lab-component-card ncx-design-lab-glass-buttons"
+          >
+            <header class="ncx-design-lab-component-header">
+              <code class="ncx-design-lab-component-name">GlassButtons</code>
+              <CommonTag color="gray">
+                {{ $tSource('分级液态玻璃按钮') }}
+              </CommonTag>
+            </header>
+            <GlassMaterialExamples />
           </CommonCard>
 
           <!-- 具体组件：CommonIconButton -->

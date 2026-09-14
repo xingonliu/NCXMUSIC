@@ -212,6 +212,8 @@ function openImmersivePlayer(event: MouseEvent): void {
           :aria-label="text.regionLabel"
         >
           <CommonIconButton
+            material="none"
+            :liquid-press="false"
             size="default"
             variant="ghost"
             tooltip-placement="right"
@@ -232,6 +234,8 @@ function openImmersivePlayer(event: MouseEvent): void {
             />
           </CommonIconButton>
           <CommonIconButton
+            material="none"
+            :liquid-press="false"
             size="default"
             variant="ghost"
             tooltip-placement="right"
@@ -242,6 +246,8 @@ function openImmersivePlayer(event: MouseEvent): void {
             <SkipBack :size="16" />
           </CommonIconButton>
           <CommonIconButton
+            material="none"
+            :liquid-press="false"
             size="default"
             variant="ghost"
             tooltip-placement="left"
@@ -266,6 +272,8 @@ function openImmersivePlayer(event: MouseEvent): void {
             />
           </CommonIconButton>
           <CommonIconButton
+            material="none"
+            :liquid-press="false"
             size="default"
             variant="ghost"
             tooltip-placement="left"
@@ -300,6 +308,8 @@ function openImmersivePlayer(event: MouseEvent): void {
         <!-- 音量与状态控制 -->
         <div class="player-output">
           <CommonIconButton
+            material="none"
+            :liquid-press="false"
             size="default"
             variant="ghost"
             tooltip-placement="left"
@@ -326,6 +336,8 @@ function openImmersivePlayer(event: MouseEvent): void {
           />
           <!-- 音乐队列按钮 -->
           <CommonIconButton
+            material="none"
+            :liquid-press="false"
             size="default"
             variant="ghost"
             tooltip-placement="left"

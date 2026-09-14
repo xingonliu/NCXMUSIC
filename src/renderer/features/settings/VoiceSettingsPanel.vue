@@ -522,6 +522,8 @@ onUnmounted(() => {
       <div class="voice-save-row">
         <CommonButton
           :loading="savingCloud"
+          material="tinted"
+          variant="primary"
           @click="saveCloud"
         >
           {{ $tSource("保存大模型配置") }}

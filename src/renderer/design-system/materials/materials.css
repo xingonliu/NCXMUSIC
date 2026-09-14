@@ -1,0 +1,146 @@
+/* stylelint-disable no-descending-specificity */
+
+/* Material optics belong to the demo renderer. G1 uses only Gaussian backdrop blur. */
+[data-glass-material] {
+  position: relative;
+  isolation: isolate;
+}
+
+.ncx-glass-layer {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.ncx-glass-layer canvas {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.ncx-glass-layer.is-ready canvas {
+  display: block;
+}
+
+[data-glass-material]:not([data-glass-material='none']) {
+  backdrop-filter: none;
+}
+
+[data-glass-material]:not([data-glass-material='none']) > .ncx-glass-layer:not(.is-ready) {
+  background: color-mix(in srgb, var(--ncx-color-surface) 65%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+button[data-glass-material='clear'],
+button[data-glass-material='tinted'] {
+  border-radius: var(--ncx-squircle-radius-full);
+}
+
+button[data-glass-material]:not([data-glass-material='none']),
+.ncx-glass-panel,
+.ncx-common-modal[data-glass-material],
+.ncx-common-drawer[data-glass-material],
+.ncx-common-header-group-button[data-glass-material] {
+  background: transparent;
+}
+
+.ncx-common-button-primary[data-glass-material] > .ncx-glass-layer:not(.is-ready),
+.ncx-common-icon-button-primary[data-glass-material] > .ncx-glass-layer:not(.is-ready),
+button[data-glass-material='tinted'] > .ncx-glass-layer:not(.is-ready) {
+  background: color-mix(in srgb, var(--ncx-color-accent) 86%, transparent);
+}
+
+.ncx-common-button-danger[data-glass-material] > .ncx-glass-layer {
+  background: color-mix(in srgb, var(--ncx-color-danger, #c93643) 14%, var(--ncx-color-surface));
+}
+
+button.ncx-glass-interactive {
+  transform: var(--ncx-glass-press-transform, none);
+  transition-property: color, background-color, box-shadow;
+}
+
+button.ncx-glass-interactive:active:not(:disabled) {
+  transform: var(--ncx-glass-press-transform, none);
+}
+
+.ncx-common-header-group-item.ncx-glass-interactive {
+  /* Keep window controls inside their independent hit areas. */
+  overflow: clip;
+}
+
+.agent-composer .ncx-common-icon-button > .ncx-glass-layer {
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.agent-composer .agent-composer-send-btn[data-glass-material] {
+  background: var(--ncx-color-text-primary);
+}
+
+.agent-composer .agent-composer-send-btn.is-stop[data-glass-material] {
+  background: var(--ncx-color-danger, #ef4444);
+}
+
+.ncx-common-overlay {
+  background: rgb(41 41 58 / 23%);
+  backdrop-filter: none;
+}
+
+.ncx-common-modal[data-glass-material] > .ncx-glass-layer:not(.is-ready),
+.ncx-common-drawer[data-glass-material] > .ncx-glass-layer:not(.is-ready) {
+  background: color-mix(in srgb, var(--ncx-color-surface) 82%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.ncx-sidebar,
+.ncx-common-tooltip-panel,
+.ncx-common-toast,
+.ncx-common-popover-panel,
+.ncx-common-menu-panel,
+.ncx-common-select-panel-teleport,
+.ncx-common-combobox-panel-teleport {
+  backdrop-filter: blur(16px);
+}
+
+.ncx-glass-panel {
+  border-radius: var(--ncx-squircle-radius-2xl);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button.ncx-glass-interactive,
+  button.ncx-glass-interactive:active:not(:disabled) {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  [data-glass-material] > .ncx-glass-layer {
+    background: var(--ncx-color-surface);
+    backdrop-filter: none;
+  }
+
+  [data-glass-material] > .ncx-glass-layer canvas {
+    display: none;
+  }
+}
+
+
+.ncx-common-field,
+.ncx-common-switch,
+.ncx-common-slider,
+.ncx-common-segmented-item,
+.ncx-common-tabs-tab {
+  backdrop-filter: none;
+}
+
+.discover-radio-play[data-glass-material='tinted'] {
+  color: var(--ncx-color-on-accent);
+}
+
+button[data-glass-material='clear'][data-glass-rendered='clear'] {
+  color: var(--ncx-glass-ink, inherit);
+}

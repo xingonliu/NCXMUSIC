@@ -23,6 +23,8 @@ async function initialConnectionChecks(): Promise<BeforeReloadState> {
       !Reflect.has(globalThis, 'require') && !Reflect.has(globalThis, 'process')
   }
   checks.ready = await window.ncx.runtime.waitUntilReady(10_000)
+  const backdrop = await window.ncx.windowControls.captureBackdrop()
+  checks.glassBackdropCapture = typeof backdrop === 'string' && backdrop.startsWith('data:image/png;base64,')
 
   const ping = await window.ncx.runtime.ping()
   checks.ping = ping.ok && ping.data.respondedAt >= ping.data.receivedAt

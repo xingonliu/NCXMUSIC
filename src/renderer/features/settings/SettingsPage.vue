@@ -559,18 +559,21 @@ onBeforeUnmount(() => {
           >
             <CommonButton
               :variant="appPreferences.preferences.value.theme === 'system' ? 'primary' : 'secondary'"
+              :material="appPreferences.preferences.value.theme === 'system' ? 'tinted' : 'frost'"
               @click="setTheme('system')"
             >
               <Palette :size="14" />{{ $tSource("系统") }}
             </CommonButton>
             <CommonButton
               :variant="appPreferences.preferences.value.theme === 'light' ? 'primary' : 'secondary'"
+              :material="appPreferences.preferences.value.theme === 'light' ? 'tinted' : 'frost'"
               @click="setTheme('light')"
             >
               <Sun :size="14" />{{ $tSource("浅色") }}
             </CommonButton>
             <CommonButton
               :variant="appPreferences.preferences.value.theme === 'dark' ? 'primary' : 'secondary'"
+              :material="appPreferences.preferences.value.theme === 'dark' ? 'tinted' : 'frost'"
               @click="setTheme('dark')"
             >
               <Moon :size="14" />{{ $tSource("深色") }}

@@ -29,6 +29,10 @@
     "tests/unit/liked-songs-store.test.ts",
     "tests/unit/phase4-music-ui.test.ts",
     "tests/unit/secondary-music-page-ui.test.ts",
-    "tests/unit/agent-markdown.test.ts"
+    "tests/unit/agent-markdown.test.ts",
+    "tests/unit/common-button-components.test.ts",
+    "tests/unit/common-components-macos.test.ts",
+    "tests/unit/common-display-components.test.ts",
+    "tests/unit/glass-materials.test.ts"
   ]
 }

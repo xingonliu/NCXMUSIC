@@ -500,6 +500,7 @@ onMounted(() => {
       <CommonButton
         size="compact"
         variant="primary"
+        material="tinted"
         @click="openAddDialog"
       >
         <Plus :size="14" />{{ $tSource("新增模型") }}
@@ -712,6 +713,7 @@ onMounted(() => {
       </CommonButton>
       <CommonButton
         variant="primary"
+        material="tinted"
         :loading="saveBusy"
         @click="saveProfile"
       >
@@ -788,6 +790,7 @@ onMounted(() => {
       </CommonButton>
       <CommonButton
         variant="primary"
+        material="tinted"
         :loading="editSaveBusy"
         @click="saveEditProfile"
       >

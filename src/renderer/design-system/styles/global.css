@@ -2,6 +2,7 @@
 @import url('tailwindcss/utilities.css');
 @import url('../tokens/foundation.css');
 @import url('../components/common-components.css');
+@import url('../materials/materials.css');
 
 * {
   box-sizing: border-box;

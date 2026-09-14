@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import GlassSurface from '../../../design-system/materials/GlassSurface.vue'
 import { Music2, Play } from '@lucide/vue'
 import { computed, ref, watch } from 'vue'
 
@@ -159,6 +160,7 @@ watch(artworkUrl, () => {
           :aria-label="$tSource('播放')"
           @click="handlePlayClick"
         >
+          <GlassSurface material="clear" />
           <Play
             class="ncx-cover-play-icon"
             fill="currentColor"

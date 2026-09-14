@@ -356,6 +356,7 @@ watch(artistId, () => {
             </p>
             <div class="music-detail-actions">
               <CommonButton
+                material="tinted"
                 variant="primary"
                 size="prominent"
                 :disabled="hotSongs.length === 0"
@@ -367,6 +368,7 @@ watch(artistId, () => {
                 /> {{ $tSource("播放热门歌曲") }}
               </CommonButton>
               <CommonButton
+                material="clear"
                 variant="secondary"
                 size="prominent"
                 @click="toggleArtistFollow"

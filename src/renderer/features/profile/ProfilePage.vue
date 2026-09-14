@@ -444,6 +444,7 @@ watch(
         <div class="profile-header-actions">
           <CommonButton
             variant="secondary"
+            material="clear"
             size="compact"
             :loading="busyAction === 'switch'"
             @click="runAccountAction('switch')"

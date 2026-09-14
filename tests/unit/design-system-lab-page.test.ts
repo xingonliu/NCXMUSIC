@@ -52,6 +52,7 @@ describe('DesignSystemLabPage 通用组件交互测试页规范测试', () => {
     expect(componentNames.some((el) => el.text() === 'CommonHeaderGroupItem')).toBe(true)
     expect(componentNames.some((el) => el.text() === 'CommonPagination')).toBe(true)
     expect(componentNames.some((el) => el.text() === 'LiquidGlass')).toBe(true)
+    expect(componentNames.some((el) => el.text() === 'GlassButtons')).toBe(true)
     expect(componentNames.some((el) => el.text() === 'CommonScrollArea')).toBe(true)
     expect(componentNames.some((el) => el.text() === 'CommonVirtualList')).toBe(true)
     expect(wrapper.find('.ncx-design-lab-tab-item').exists()).toBe(false)

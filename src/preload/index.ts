@@ -438,6 +438,7 @@ const shellSettingsBridge: ShellSettingsBridge = {
 }
 
 const windowControlBridge: WindowControlBridge = {
+  captureBackdrop: () => ipcRenderer.invoke(WINDOW_CONTROL_CHANNELS.captureBackdrop) as Promise<string | null>,
   snapshot: async () => ipcRenderer.invoke(WINDOW_CONTROL_CHANNELS.snapshot) as Promise<WindowSnapshot>,
   send: async (command: WindowCommand) =>
     ipcRenderer.invoke(WINDOW_CONTROL_CHANNELS.command, command) as Promise<WindowSnapshot>,

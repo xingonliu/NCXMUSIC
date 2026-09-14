@@ -6,6 +6,7 @@ export default tseslint.config(
   {
     ignores: [
       '.artifacts/**',
+      'src/renderer/design-system/materials/demo/*.js',
       '.reasonix/**',
       'coverage/**',
       'docs/api/**',

@@ -182,6 +182,7 @@ function complete(): void {
         <div><strong>{{ $tSource("官方网页登录") }}</strong><span>{{ $tSource("Cookie 只由 Main 持有，不向页面或模型暴露。") }}</span></div>
         <CommonButton
           variant="primary"
+          material="tinted"
           @click="login"
         >
           {{ $tSource("登录网易云") }}
@@ -214,6 +215,7 @@ function complete(): void {
       <span v-if="isAccountStep || isModelStep">{{ $tSource("可以跳过，稍后在设置中完成") }}</span>
       <CommonButton
         variant="primary"
+        material="tinted"
         @click="next"
       >
         {{ $tSource(isLastStep ? '进入 Ncxmusic' : '下一步') }}<ChevronRight
