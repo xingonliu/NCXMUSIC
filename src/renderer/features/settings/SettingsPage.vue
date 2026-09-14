@@ -669,7 +669,6 @@ onBeforeUnmount(() => {
         </template>
         <CommonButton
           variant="danger"
-          material="blur"
           :loading="dataBusy"
           @click="deleteLocalDataDialogVisible = true"
         >
@@ -683,7 +682,6 @@ onBeforeUnmount(() => {
       >
         <CommonButton
           variant="danger"
-          material="blur"
           :loading="dataBusy"
           @click="clearCacheDialogVisible = true"
         >

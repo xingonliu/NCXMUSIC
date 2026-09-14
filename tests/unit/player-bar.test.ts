@@ -4,7 +4,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { PlaybackCoordinator } from '../../src/domains/player/playback-coordinator'
 import liquidGlassSource from '../../src/renderer/design-system/components/LiquidGlass.vue?raw'
-import presetSource from '../../src/renderer/design-system/materials/liquid-glass-presets.ts?raw'
 import MusicProgressBar from '../../src/renderer/features/music/components/MusicProgressBar.vue'
 import PlayerBar from '../../src/renderer/features/music/components/PlayerBar.vue'
 import playerBarSource from '../../src/renderer/features/music/components/PlayerBar.vue?raw'
@@ -68,10 +67,10 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     const wrapper = mount(PlayerBar)
 
     expect(wrapper.find('.player-bar-glass').exists()).toBe(true)
-    expect(wrapper.find('.ncx-glass-host').exists()).toBe(true)
+    expect(wrapper.find('.effect .filter').exists()).toBe(true)
   })
 
-  it('紧凑窗口仍保留播放栏玻璃容器', () => {
+  it('紧凑窗口仍保留 Liquid Glass 位移滤镜', () => {
     expect(playerBarSource).toContain('@media (width < 1100px)')
     expect(playerBarSource).not.toContain('backdrop-filter: none !important')
   })
@@ -93,12 +92,20 @@ describe('PlayerBar 控件区域 UI 规范测试', () => {
     expect(playerBarSource).toContain(":root[data-theme='dark'] .player-bar-glass")
   })
 
-  it('播放栏使用不完整液态玻璃面板而不是独立折射参数', () => {
-    expect(playerBarSource).toContain('material="blur"')
-    expect(playerBarSource).not.toContain(':frost="0.16"')
-    expect(liquidGlassSource).toContain("material: 'blur'")
-    expect(presetSource).toContain('INCOMPLETE_PANEL_BLUR_PX = 16')
-    expect(presetSource).toContain('COMPLETE_BUTTON_OPTICS')
+  it('使用接近 Apple Regular Liquid Glass 的清透参数并适配深色模式', () => {
+    expect(playerBarSource).toContain(':frost="0.16"')
+    expect(playerBarSource).toContain(':dark-frost="0.28"')
+    expect(playerBarSource).toContain(':scale="-96"')
+    expect(playerBarSource).toContain(':lightness="54"')
+    expect(playerBarSource).toContain(':alpha="0.93"')
+    expect(playerBarSource).toContain(':backdrop-blur="8"')
+    expect(playerBarSource).toContain(':dark-backdrop-blur="10"')
+    expect(liquidGlassSource).toContain("--liquid-glass-surface-rgb: 8 10 16")
+    expect(liquidGlassSource).toContain(":global(:root[data-theme='dark'] .ncx-liquid-glass)")
+    expect(liquidGlassSource).toContain(":global(:root:not([data-theme='light']) .ncx-liquid-glass)")
+    expect(liquidGlassSource).not.toContain('border: 1px solid')
+    expect(liquidGlassSource).toContain('-webkit-mask-composite: xor')
+    expect(liquidGlassSource).toContain('at 16% 0%, var(--liquid-glass-edge-highlight)')
   })
 
   it('播放/暂停 icon 按钮具有 default 尺寸与 ghost 变体', () => {

@@ -2,7 +2,6 @@
 import { Music2, Play } from '@lucide/vue'
 import { computed, ref, watch } from 'vue'
 
-import GlassSurface from '../../../design-system/materials/GlassSurface'
 import { adaptArtworkUrl, type MediaArtworkSize } from '../music-entity'
 
 /** 为单词文件名提供符合 Vue 规范的多词组件名。 */
@@ -156,17 +155,12 @@ watch(artworkUrl, () => {
       >
         <button
           type="button"
-          class="ncx-cover-play-btn ncx-glass-host"
-          data-material="clear"
+          class="ncx-cover-play-btn"
           :aria-label="$tSource('播放')"
           @click="handlePlayClick"
         >
-          <GlassSurface
-            material="clear"
-            press
-          />
           <Play
-            class="ncx-cover-play-icon ncx-glass-content"
+            class="ncx-cover-play-icon"
             fill="currentColor"
           />
         </button>
@@ -285,7 +279,6 @@ watch(artworkUrl, () => {
 }
 
 .ncx-cover-play-btn {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -294,11 +287,22 @@ watch(artworkUrl, () => {
   min-width: 32px;
   min-height: 32px;
   padding: 0;
-  border: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--ncx-squircle-radius-full);
   color: #fff;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.ncx-cover-play-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.ncx-cover-play-btn:active {
+  transform: scale(0.94);
 }
 
 .ncx-cover-play-icon {

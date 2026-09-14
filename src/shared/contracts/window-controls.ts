@@ -15,8 +15,7 @@ export type DesktopPlatform = 'darwin' | 'win32' | 'linux' | string
 export const WINDOW_CONTROL_CHANNELS = {
   command: 'ncx:window-command',
   snapshot: 'ncx:window-snapshot',
-  status: 'ncx:window-status',
-  capture: 'ncx:window-capture'
+  status: 'ncx:window-status'
 } as const
 
 /** Renderer 与 Main 之间传递的窗口命令载荷。 */
@@ -43,6 +42,4 @@ export interface WindowControlBridge {
   readonly snapshot: () => Promise<WindowSnapshot>
   readonly send: (command: WindowCommand) => Promise<WindowSnapshot>
   readonly onSnapshot: (listener: (snapshot: WindowSnapshot) => void) => () => void
-  /** Capture the current page bitmap so liquid glass can sample the real backdrop. */
-  readonly captureBackdrop: () => Promise<Uint8Array>
 }

@@ -2,8 +2,6 @@
 import { Comment, Fragment, computed, defineComponent, h, nextTick, onMounted, onUnmounted, ref, Teleport, Transition, watch, type Component, type PropType, type Ref, type VNode } from 'vue'
 
 import { translatePublicError, translateSourceText } from '../../i18n'
-import GlassSurface from '../materials/GlassSurface'
-import type { GlassMaterial, GlassTone } from '../materials/liquid-glass-presets'
 
 // ========= 类型 =========
 
@@ -93,12 +91,6 @@ const buttonVariantProp = {
   default: 'secondary'
 }
 
-/** 液态玻璃材质 Prop 定义；缺省表示沿用原实色/幽灵样式。 */
-const glassMaterialProp = {
-  type: String as PropType<GlassMaterial>,
-  default: undefined
-}
-
 /** 通用消息类型 Prop 定义。 */
 const messageTypeProp = {
   type: String as PropType<CommonMessageType>,
@@ -120,13 +112,6 @@ function readInputValue(event: Event): string {
 /** 翻译由业务层传入通用组件的固定界面文案。 */
 function localizeUiText(value: string | undefined): string | undefined {
   return value === undefined ? undefined : translateSourceText(value)
-}
-
-/** 由按钮变体推导玻璃色相：主操作为 accent，危险为 danger。 */
-function glassToneForVariant(variant: string): GlassTone {
-  if (variant === 'primary') return 'accent'
-  if (variant === 'danger') return 'danger'
-  return 'neutral'
 }
 
 /** 阻止禁用态点击事件继续执行。 */
@@ -257,9 +242,6 @@ export const CommonButton = defineComponent({
     size: sizeProp,
     loading: Boolean,
     disabled: Boolean,
-    material: glassMaterialProp,
-    frost: Boolean,
-    press: { type: Boolean, default: undefined },
     type: {
       type: String as PropType<'button' | 'submit' | 'reset'>,
       default: 'button'
@@ -269,8 +251,6 @@ export const CommonButton = defineComponent({
   setup(props, { emit, slots }) {
     /** 当前按钮是否不可操作。 */
     const isDisabled = computed(() => props.disabled || props.loading)
-    const glassTone = computed(() => glassToneForVariant(props.variant))
-    const pressEnabled = computed(() => (props.press ?? Boolean(props.material)) && !isDisabled.value)
 
     /** 处理按钮点击。 */
     function handleClick(event: MouseEvent): void {
@@ -286,23 +266,17 @@ export const CommonButton = defineComponent({
             'ncx-common-button',
             `ncx-common-button-${props.variant}`,
             `ncx-common-button-${props.size}`,
-            props.loading && 'ncx-common-button-loading',
-            props.material && 'ncx-glass-host'
+            props.loading && 'ncx-common-button-loading'
           ),
           type: props.type,
           disabled: isDisabled.value,
           'aria-disabled': isDisabled.value ? 'true' : undefined,
           'aria-busy': props.loading ? 'true' : undefined,
-          'data-material': props.material,
-          'data-tone': props.material ? glassTone.value : undefined,
           onClick: handleClick
         },
         [
-          props.material
-            ? h(GlassSurface, { material: props.material, tone: glassTone.value, frost: props.frost, press: pressEnabled.value })
-            : null,
           props.loading ? h(CommonSpinner, { size: props.size === 'compact' ? 'compact' : 'default' }) : null,
-          h('span', { class: joinClasses('ncx-common-button-text', props.material && 'ncx-glass-content') }, slots.default?.())
+          h('span', { class: 'ncx-common-button-text' }, slots.default?.())
         ]
       )
   }
@@ -320,9 +294,6 @@ export const CommonIconButton = defineComponent({
     },
     selected: Boolean,
     disabled: Boolean,
-    material: glassMaterialProp,
-    frost: Boolean,
-    press: { type: Boolean, default: undefined },
     /** 可选气泡弹出位置；未传入时按按钮所在视口位置自动选择。 */
     tooltipPlacement: {
       type: String as PropType<CommonTooltipPlacement>,
@@ -406,10 +377,6 @@ export const CommonIconButton = defineComponent({
       window.removeEventListener('scroll', handleViewportChange, true)
     })
 
-    const glassTone = computed(() => glassToneForVariant(props.variant))
-    const pressEnabled = computed(() => (props.press ?? Boolean(props.material)) && !props.disabled)
-    const usesGlass = computed(() => Boolean(props.material) || pressEnabled.value)
-
     /** 处理图标按钮点击。 */
     function handleClick(event: MouseEvent): void {
       if (guardDisabledClick(event, props.disabled)) return
@@ -425,16 +392,13 @@ export const CommonIconButton = defineComponent({
             'ncx-common-icon-button',
             `ncx-common-icon-button-${props.variant}`,
             `ncx-common-icon-button-${props.size}`,
-            props.selected && 'ncx-common-icon-button-selected',
-            usesGlass.value && 'ncx-glass-host'
+            props.selected && 'ncx-common-icon-button-selected'
           ),
           type: 'button',
           disabled: props.disabled,
           'aria-disabled': props.disabled ? 'true' : undefined,
           'aria-label': localizeUiText(props.label),
           'aria-pressed': props.selected ? 'true' : undefined,
-          'data-material': props.material,
-          'data-tone': props.material ? glassTone.value : undefined,
           onMouseenter: handleMouseEnter,
           onMouseleave: handleMouseLeave,
           onFocusin: handleFocusIn,
@@ -442,10 +406,7 @@ export const CommonIconButton = defineComponent({
           onClick: handleClick
         },
         [
-          props.material
-            ? h(GlassSurface, { material: props.material, tone: glassTone.value, frost: props.frost, press: pressEnabled.value })
-            : null,
-          usesGlass.value ? h('span', { class: 'ncx-glass-content' }, slots.default?.()) : slots.default?.(),
+          slots.default?.(),
           visible.value && !props.disabled
             ? h(
                 Teleport,
@@ -543,12 +504,11 @@ export const CommonHeaderButton = defineComponent({
       h(
         'button',
         {
-          class: joinClasses('ncx-common-header-button', 'ncx-glass-button', 'ncx-glass-host'),
+          class: joinClasses('ncx-common-header-button', 'ncx-glass-button'),
           type: props.type,
           disabled: props.disabled,
           'aria-disabled': props.disabled ? 'true' : undefined,
           'aria-label': localizeUiText(props.label),
-          'data-material': 'blur',
           onMouseenter: handleMouseEnter,
           onMouseleave: handleMouseLeave,
           onFocusin: handleFocusIn,
@@ -556,8 +516,7 @@ export const CommonHeaderButton = defineComponent({
           onClick: handleClick
         },
         [
-          h(GlassSurface, { material: 'blur', press: !props.disabled }),
-          h('span', { class: 'ncx-glass-content' }, slots.default?.()),
+          slots.default?.(),
           visible.value && !props.disabled
             ? h(
                 'span',
@@ -711,12 +670,11 @@ export const CommonHeaderGroupButton = defineComponent({
       return h(
         'div',
         {
-          class: joinClasses('ncx-common-header-group-button', 'ncx-window-controls', 'ncx-glass-host'),
+          class: joinClasses('ncx-common-header-group-button', 'ncx-window-controls'),
           role: 'group',
-          'aria-label': localizeUiText(props.label),
-          'data-material': 'blur'
+          'aria-label': localizeUiText(props.label)
         },
-        [h(GlassSurface, { material: 'blur', press: false }), ...children]
+        children
       )
     }
   }
@@ -3303,16 +3261,14 @@ export const CommonDialog = defineComponent({
           ? h('div', { class: 'ncx-common-overlay', role: 'presentation', onClick: handleOverlayClick }, [
               h('section', {
                 ref: panel,
-                class: 'ncx-common-modal ncx-glass-host',
+                class: 'ncx-common-modal',
                 tabindex: -1,
                 role: 'dialog',
                 'aria-modal': 'true',
                 'aria-label': localizeUiText(props.title),
-                'data-material': 'panel',
                 style: { width: props.width }
               }, [
-                h(GlassSurface, { material: 'panel', press: false }),
-                h('header', { class: 'ncx-common-modal-header ncx-glass-content' }, [
+                h('header', { class: 'ncx-common-modal-header' }, [
                   h('div', { class: 'ncx-common-modal-title-group' }, [
                     h('h2', { class: 'ncx-common-modal-title' }, localizeUiText(props.title)),
                     props.subtitle ? h('p', { class: 'ncx-common-modal-subtitle' }, props.subtitle) : null
@@ -3329,8 +3285,8 @@ export const CommonDialog = defineComponent({
                     ])
                   ])
                 ]),
-                h('div', { class: 'ncx-common-modal-body ncx-glass-content' }, slots.default?.()),
-                slots.actions ? h('footer', { class: 'ncx-common-modal-footer ncx-glass-content' }, slots.actions()) : null
+                h('div', { class: 'ncx-common-modal-body' }, slots.default?.()),
+                slots.actions ? h('footer', { class: 'ncx-common-modal-footer' }, slots.actions()) : null
               ])
             ])
           : null
@@ -3393,22 +3349,20 @@ export const CommonAlertDialog = defineComponent({
           ? h('div', { class: 'ncx-common-overlay ncx-common-overlay-alert', role: 'presentation' }, [
               h('section', {
                 ref: panel,
-                class: joinClasses('ncx-common-modal', 'ncx-common-modal-alert', `ncx-common-modal-alert-${props.type}`, 'ncx-glass-host'),
+                class: joinClasses('ncx-common-modal', 'ncx-common-modal-alert', `ncx-common-modal-alert-${props.type}`),
                 tabindex: -1,
                 role: 'alertdialog',
                 'aria-modal': 'true',
-                'aria-label': localizeUiText(props.title),
-                'data-material': 'panel'
+                'aria-label': localizeUiText(props.title)
               }, [
-                h(GlassSurface, { material: 'panel', press: false }),
-                h('div', { class: 'ncx-common-alert-header ncx-glass-content' }, [
+                h('div', { class: 'ncx-common-alert-header' }, [
                   renderAlertIcon(),
                   h('h2', { class: 'ncx-common-alert-title' }, localizeUiText(props.title))
                 ]),
-                props.description ? h('p', { class: 'ncx-common-alert-description ncx-glass-content' }, localizeUiText(props.description)) : null,
-                h('footer', { class: 'ncx-common-alert-footer ncx-glass-content' }, [
-                  h(CommonButton, { variant: 'secondary', material: 'clear', frost: true, onClick: () => emit('cancel') }, () => props.cancelText),
-                  h(CommonButton, { variant: props.type === 'danger' ? 'danger' : 'primary', material: 'tinted', onClick: () => emit('confirm') }, () => props.confirmText)
+                props.description ? h('p', { class: 'ncx-common-alert-description' }, localizeUiText(props.description)) : null,
+                h('footer', { class: 'ncx-common-alert-footer' }, [
+                  h(CommonButton, { variant: 'secondary', onClick: () => emit('cancel') }, () => props.cancelText),
+                  h(CommonButton, { variant: props.type === 'danger' ? 'danger' : 'primary', onClick: () => emit('confirm') }, () => props.confirmText)
                 ])
               ])
             ])
@@ -3470,16 +3424,14 @@ export const CommonDrawer = defineComponent({
             }, [
               h('aside', {
                 ref: panel,
-                class: joinClasses('ncx-common-drawer', `ncx-common-drawer-${props.placement}`, 'ncx-glass-host'),
+                class: joinClasses('ncx-common-drawer', `ncx-common-drawer-${props.placement}`),
                 tabindex: -1,
                 role: 'dialog',
                 'aria-modal': 'true',
                 style: { width: props.width },
-                'aria-label': localizeUiText(props.title),
-                'data-material': 'panel'
+                'aria-label': localizeUiText(props.title)
               }, [
-                h(GlassSurface, { material: 'panel', press: false }),
-                h('header', { class: 'ncx-common-drawer-header ncx-glass-content' }, [
+                h('header', { class: 'ncx-common-drawer-header' }, [
                   h('h2', { class: 'ncx-common-drawer-title' }, localizeUiText(props.title)),
                   h('div', { class: 'ncx-common-drawer-header-actions' }, [
                     slots.headerActions?.(),
@@ -3496,7 +3448,7 @@ export const CommonDrawer = defineComponent({
                     ])
                   ])
                 ]),
-                h('div', { class: 'ncx-common-drawer-body ncx-glass-content' }, slots.default?.())
+                h('div', { class: 'ncx-common-drawer-body' }, slots.default?.())
               ])
             ])
           : null

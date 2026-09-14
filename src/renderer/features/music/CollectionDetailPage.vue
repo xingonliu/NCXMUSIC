@@ -599,7 +599,6 @@ onMounted(() => {
               <CommonButton
                 variant="primary"
                 size="prominent"
-                material="tinted"
                 :disabled="songs.length === 0"
                 @click="playAll"
               >
@@ -611,7 +610,6 @@ onMounted(() => {
               <CommonButton
                 variant="secondary"
                 size="prominent"
-                material="clear"
                 :disabled="songs.length === 0"
                 @click="shuffleAll"
               >
@@ -621,7 +619,6 @@ onMounted(() => {
                 class="collection-comments-button"
                 variant="secondary"
                 size="prominent"
-                material="clear"
                 @click="openCommentsDrawer"
               >
                 <MessageCircle :size="16" /> {{ $tSource("评论") }}
@@ -629,7 +626,6 @@ onMounted(() => {
               <CommonButton
                 v-if="collection.kind === 'album' || !isOwnedPlaylist"
                 variant="secondary"
-                material="clear"
                 @click="toggleSubscription"
               >
                 <Heart
@@ -645,7 +641,6 @@ onMounted(() => {
               </CommonButton>
               <CommonButton
                 variant="secondary"
-                material="clear"
                 :loading="downloadBusy"
                 :disabled="songs.length === 0"
                 @click="downloadCollection"

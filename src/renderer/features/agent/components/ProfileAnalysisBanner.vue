@@ -243,15 +243,12 @@ function handleRetryFromModal(): void {
       <template #actions>
         <CommonButton
           variant="secondary"
-          material="clear"
-          frost
           @click="handleCloseDetail"
         >
           {{ $tSource("关闭") }}
         </CommonButton>
         <CommonButton
           variant="primary"
-          material="tinted"
           :disabled="!profile.eligible"
           @click="handleRetryFromModal"
         >

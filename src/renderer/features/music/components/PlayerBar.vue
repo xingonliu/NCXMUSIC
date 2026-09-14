@@ -153,11 +153,27 @@ function openImmersivePlayer(event: MouseEvent): void {
     :aria-hidden="isImmersivePlayerOpen ? 'true' : undefined"
   >
     <LiquidGlass
-      class="player-bar-glass"
+      container-class="player-bar-glass"
       role="contentinfo"
       :aria-label="text.regionLabel"
-      material="blur"
       squircle-size="2xl"
+      :border="0.14"
+      :displace="0.25"
+      :scale="-96"
+      :r-offset="0"
+      :g-offset="2"
+      :b-offset="4"
+      :blur="7"
+      :frost="0.16"
+      :dark-frost="0.28"
+      :backdrop-blur="8"
+      :dark-backdrop-blur="10"
+      :saturation="1.35"
+      :dark-saturation="1.2"
+      :brightness="1.04"
+      :dark-brightness="0.84"
+      :lightness="54"
+      :alpha="0.93"
     >
       <div class="player-bar-content">
         <!-- 曲目信息 -->
@@ -198,7 +214,6 @@ function openImmersivePlayer(event: MouseEvent): void {
           <CommonIconButton
             size="default"
             variant="ghost"
-            material="blur"
             tooltip-placement="right"
             :label="text.mode[snapshot.queue.mode]"
             @click="player.setMode(nextMode)"
@@ -219,7 +234,6 @@ function openImmersivePlayer(event: MouseEvent): void {
           <CommonIconButton
             size="default"
             variant="ghost"
-            material="blur"
             tooltip-placement="right"
             :disabled="!hasQueue"
             :label="text.previous"
@@ -230,7 +244,6 @@ function openImmersivePlayer(event: MouseEvent): void {
           <CommonIconButton
             size="default"
             variant="ghost"
-            material="blur"
             tooltip-placement="left"
             :disabled="!track"
             :label="showPause ? text.pause : text.play"
@@ -255,7 +268,6 @@ function openImmersivePlayer(event: MouseEvent): void {
           <CommonIconButton
             size="default"
             variant="ghost"
-            material="blur"
             tooltip-placement="left"
             :disabled="!hasQueue"
             :label="text.next"
@@ -290,7 +302,6 @@ function openImmersivePlayer(event: MouseEvent): void {
           <CommonIconButton
             size="default"
             variant="ghost"
-            material="blur"
             tooltip-placement="left"
             :label="snapshot.playback.muted ? text.unmute : text.mute"
             @click="player.setMuted(!snapshot.playback.muted)"
@@ -317,7 +328,6 @@ function openImmersivePlayer(event: MouseEvent): void {
           <CommonIconButton
             size="default"
             variant="ghost"
-            material="blur"
             tooltip-placement="left"
             :selected="isQueueOpen"
             :label="text.queue"
@@ -370,6 +380,7 @@ function openImmersivePlayer(event: MouseEvent): void {
   -webkit-app-region: no-drag;
 }
 
+:deep(.player-bar-glass.effect),
 .player-bar-glass {
   box-shadow: var(--ncx-player-bar-shadow) !important;
 }

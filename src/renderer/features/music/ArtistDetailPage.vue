@@ -358,7 +358,6 @@ watch(artistId, () => {
               <CommonButton
                 variant="primary"
                 size="prominent"
-                material="tinted"
                 :disabled="hotSongs.length === 0"
                 @click="playAll"
               >
@@ -370,7 +369,6 @@ watch(artistId, () => {
               <CommonButton
                 variant="secondary"
                 size="prominent"
-                material="clear"
                 @click="toggleArtistFollow"
               >
                 <Heart

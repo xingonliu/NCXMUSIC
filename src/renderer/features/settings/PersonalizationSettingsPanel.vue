@@ -165,7 +165,6 @@ onMounted(async () => {
         </CommonButton>
         <CommonButton
           variant="primary"
-          material="blur"
           size="compact"
           :loading="working"
           :disabled="!profile.eligible || profile.paused"
@@ -320,7 +319,6 @@ onMounted(async () => {
         <div><h3>{{ $tSource("删除画像") }}</h3><p>{{ $tSource("只删除当前账户画像、代表样本缓存和用户修正，不删除聊天、长期记忆或网易云数据。") }}</p></div>
         <CommonButton
           variant="danger"
-          material="blur"
           @click="deleteDialogVisible = true"
         >
           <Trash2 :size="14" />{{ $tSource("删除画像") }}

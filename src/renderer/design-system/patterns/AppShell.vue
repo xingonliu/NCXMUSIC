@@ -40,7 +40,6 @@ import {
   CommonHeaderGroupButton,
   CommonHeaderGroupItem
 } from '../components'
-import GlassSurface from '../materials/GlassSurface'
 
 import PlaylistNavigation from '../../features/music/components/PlaylistNavigation.vue'
 
@@ -362,14 +361,9 @@ onBeforeUnmount(() => {
 
     <aside
       v-if="!isStandalonePage"
-      class="ncx-sidebar ncx-glass-host"
-      :data-material="isSettingsPage ? 'blur' : 'panel'"
+      class="ncx-sidebar"
       :aria-label="$tSource('主导航')"
     >
-      <GlassSurface
-        :material="isSettingsPage ? 'blur' : 'panel'"
-        :press="false"
-      />
       <div
         v-if="isMacOS"
         class="ncx-traffic-safe-area"
