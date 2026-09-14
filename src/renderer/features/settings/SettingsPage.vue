@@ -668,6 +668,7 @@ onBeforeUnmount(() => {
           {{ $tSource("当前空间") }} {{ accountReference }} {{ $tSource("· 数据库") }} {{ formatBytes(dataStats?.databaseBytes ?? 0) }} {{ $tSource("· 对话") }} {{ dataStats?.chatMessages ?? 0 }} {{ $tSource("条 · 记忆块") }} {{ dataStats?.conversationBlocks ?? 0 }} {{ $tSource("个 · 画像 v") }}{{ dataStats?.profileVersion ?? 0 }} · Journal {{ dataStats?.journalEvents ?? 0 }} {{ $tSource("条") }}
         </template>
         <CommonButton
+          material="tinted"
           variant="danger"
           :loading="dataBusy"
           @click="deleteLocalDataDialogVisible = true"
@@ -681,6 +682,7 @@ onBeforeUnmount(() => {
         :description="$tSource(`当前 ${formatBytes(dataStats?.cacheBytes ?? 0)}；清理后不删除账户数据库、Cookie 或播放快照。`)"
       >
         <CommonButton
+          material="tinted"
           variant="danger"
           :loading="dataBusy"
           @click="clearCacheDialogVisible = true"

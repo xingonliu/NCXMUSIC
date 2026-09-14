@@ -1,0 +1,57 @@
+/* Specificity keeps material ownership out of each component's legacy states. */
+.ncx-glass-host.ncx-glass-control,
+.ncx-glass-host.ncx-glass-control:hover,
+.ncx-glass-host.ncx-glass-control:active:not(:disabled) {
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  transform: none;
+}
+
+.ncx-glass-control > :not(.ncx-glass-surface, .ncx-common-tooltip-panel),
+.ncx-glass-panel > :not(.ncx-glass-surface) {
+  position: relative;
+  z-index: 1;
+}
+
+.ncx-glass-control-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ncx-glass-control-content,
+.ncx-glass-control > .ncx-common-button-text {
+  transform: translate(var(--ncx-press-x, 0), var(--ncx-press-y, 0)) scale(var(--ncx-press-sx, 1), var(--ncx-press-sy, 1));
+}
+
+.ncx-glass-control[data-glass-tone='accent'],
+.ncx-glass-control[data-glass-tone='danger'],
+.ncx-glass-control[data-glass-tone='danger']:hover {
+  color: var(--ncx-color-on-accent);
+}
+
+.ncx-common-modal.ncx-glass-panel,
+.ncx-common-drawer.ncx-glass-panel {
+  background: transparent;
+  border-color: transparent;
+}
+
+.ncx-common-overlay:has(> .ncx-glass-panel) {
+  /* A second full-window blur erases the scene before the lens can sample it. */
+  backdrop-filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ncx-glass-control-content,
+  .ncx-glass-control > .ncx-common-button-text {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .ncx-glass-control[data-glass-tone] {
+    color: ButtonText;
+    outline: 1px solid ButtonText;
+  }
+}

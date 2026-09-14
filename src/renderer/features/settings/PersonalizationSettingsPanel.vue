@@ -164,6 +164,7 @@ onMounted(async () => {
           <RotateCcw :size="14" /> {{ $tSource("重新生成") }}
         </CommonButton>
         <CommonButton
+          material="tinted"
           variant="primary"
           size="compact"
           :loading="working"
@@ -318,6 +319,7 @@ onMounted(async () => {
       >
         <div><h3>{{ $tSource("删除画像") }}</h3><p>{{ $tSource("只删除当前账户画像、代表样本缓存和用户修正，不删除聊天、长期记忆或网易云数据。") }}</p></div>
         <CommonButton
+          material="tinted"
           variant="danger"
           @click="deleteDialogVisible = true"
         >

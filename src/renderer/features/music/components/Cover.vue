@@ -2,6 +2,8 @@
 import { Music2, Play } from '@lucide/vue'
 import { computed, ref, watch } from 'vue'
 
+import { CommonIconButton } from '../../../design-system/components'
+
 import { adaptArtworkUrl, type MediaArtworkSize } from '../music-entity'
 
 /** 为单词文件名提供符合 Vue 规范的多词组件名。 */
@@ -153,17 +155,17 @@ watch(artworkUrl, () => {
         v-if="props.showPlayButton && (isHovered || props.alwaysShowShadow)"
         class="ncx-cover-shade"
       >
-        <button
-          type="button"
+        <CommonIconButton
+          material="clear"
           class="ncx-cover-play-btn"
-          :aria-label="$tSource('播放')"
+          :label="$tSource('播放')"
           @click="handlePlayClick"
         >
           <Play
             class="ncx-cover-play-icon"
             fill="currentColor"
           />
-        </button>
+        </CommonIconButton>
       </div>
     </div>
 
@@ -287,22 +289,15 @@ watch(artworkUrl, () => {
   min-width: 32px;
   min-height: 32px;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 0;
   border-radius: var(--ncx-squircle-radius-full);
   color: #fff;
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(8px);
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.ncx-cover-play-btn:hover {
-  background: rgba(255, 255, 255, 0.28);
-}
-
-.ncx-cover-play-btn:active {
-  transform: scale(0.94);
+.ncx-cover-play-btn :deep(.ncx-glass-control-content) {
+  width: 100%;
+  height: 100%;
 }
 
 .ncx-cover-play-icon {

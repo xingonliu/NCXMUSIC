@@ -1111,6 +1111,7 @@ onMounted(() => { void refresh() })
       <template #actions>
         <div class="settings-inline-actions">
           <CommonButton
+            material="tinted"
             size="compact"
             variant="primary"
             @click="openCreateSkillDialog"
@@ -1193,6 +1194,7 @@ onMounted(() => { void refresh() })
                 </CommonButton>
                 <CommonButton
                   v-if="skill.state !== 'trashed'"
+                  material="tinted"
                   size="compact"
                   variant="danger"
                   @click="mutateSkill(skill, 'uninstall')"
@@ -1306,6 +1308,7 @@ onMounted(() => { void refresh() })
                 </CommonButton>
                 <CommonButton
                   v-else
+                  material="tinted"
                   size="compact"
                   variant="primary"
                   :loading="installingSkillSlug === item.slug"
@@ -1342,6 +1345,7 @@ onMounted(() => { void refresh() })
       <template #actions>
         <div class="settings-inline-actions">
           <CommonButton
+            material="tinted"
             size="compact"
             variant="primary"
             @click="openCreateMcpDialog()"
@@ -1441,6 +1445,7 @@ onMounted(() => { void refresh() })
                   {{ $tSource("回滚") }}
                 </CommonButton>
                 <CommonButton
+                  material="tinted"
                   size="compact"
                   variant="danger"
                   @click="mutateMcp(server, 'delete')"
@@ -1510,6 +1515,7 @@ onMounted(() => { void refresh() })
               @clear="clearMarketSearch"
             />
             <CommonButton
+              material="tinted"
               variant="primary"
               :loading="marketLoading"
               @click="submitMarketSearch"
@@ -1704,6 +1710,7 @@ onMounted(() => { void refresh() })
           {{ $tSource("测试并读取工具") }}
         </CommonButton>
         <CommonButton
+          material="tinted"
           variant="primary"
           :loading="busy"
           @click="saveMcp"

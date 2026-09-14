@@ -67,6 +67,7 @@ import CommonPagination from '../../design-system/components/CommonPagination.vu
 import LiquidGlass from '../../design-system/components/LiquidGlass.vue'
 import { useToast } from '../../design-system/use-toast'
 
+import GlassMaterialLab from './GlassMaterialLab.vue'
 import './design-system-lab.css'
 
 // ========= 变量 =========
@@ -2090,12 +2091,14 @@ function confirmDangerAction(): void {
             </header>
             <div class="ncx-design-lab-component-demo">
               <LiquidGlass
+                material="clear"
                 squircle-size="lg"
                 class="ncx-design-lab-glass-demo"
               >
                 <strong>{{ $tSource("Liquid Glass 玻璃材质卡片") }}</strong>
                 <p>{{ $tSource("液态玻璃用于播放栏等需要透出背景的容器。") }}</p>
               </LiquidGlass>
+              <GlassMaterialLab />
             </div>
           </CommonCard>
 
