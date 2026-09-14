@@ -12,6 +12,7 @@ Ncxmusic 是一个基于 Electron、Vue 3 和 TypeScript 的 Agent 原生桌面�
 - 界面支持简体中文与英语即时切换并持久保存偏好；页面、组件、Toast、空状态和跨进程错误均纳入同一国际化覆盖审计，歌名、歌词、评论等外部内容保持原文。
 - 底部音乐控制栏使用内置的 Inspira UI Liquid Glass 适配组件，以低模糊、高背景透射、边缘折射和方向性镜面高光模拟 Apple Regular Liquid Glass，并为浅色、深色及跟随系统外观提供独立的明度与磨砂参数。
 - 全部可见圆角统一使用 60% 连续曲率 Squircle，并收敛到七级尺寸阶梯；实现与使用约束见 [Squircle 形状规范](docs/development/Squircle-Design-System.md)。
+- 页面使用全宽滚动画布与覆盖式侧边栏；Header 沿用既有材质并随滚动渐显，音乐详情使用单图主视觉和左下角信息，推荐内容支持横向浏览，见 [页面布局与滚动](docs/development/Page-Layout.md)。
 - 语音输入支持按需下载的本地 Zipformer/SenseVoice INT8、独立 OpenAI Transcriptions 兼容服务和当前对话模型三种来源；模型体积、内存预算、流式语义与多屏胶囊说明见 [语音识别架构](docs/development/Voice-Recognition.md)。
 
 ## 环境

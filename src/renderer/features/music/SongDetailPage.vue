@@ -1,26 +1,38 @@
 <script setup lang="ts">
 import { Heart, ListPlus, Play } from '@lucide/vue'
+
 import { computed, ref, watch } from 'vue'
+
 import { useRoute } from 'vue-router'
 
 import type { MusicReadResult, StandardSong } from '../../../shared/schemas/music'
+
 import {
   CommonButton,
   CommonEmptyState,
   CommonErrorState,
   CommonSpinner
 } from '../../design-system/components'
+
 import { showToast } from '../../design-system/use-toast'
-import Cover from './components/Cover.vue'
+
+import MusicDetailHero from './components/MusicDetailHero.vue'
+
 import MusicCommentsSection from './components/MusicCommentsSection.vue'
+
 import { useLikedSongsStore } from './liked-songs-store'
+
 import { toggleSongLike } from './music-actions'
+
 import { formatMusicDuration, standardSongToTrackSummary } from './music-entity'
+
 import './music-content-pages.css'
+
 import { usePlayer } from './use-player'
+
 import { translatePublicError } from '../../i18n'
 
-// ========= 变量 =========
+// -- State
 
 /** 当前歌曲详情路由。 */
 const route = useRoute()
@@ -43,6 +55,8 @@ const errorMessage = ref<string>('')
 /** 用于丢弃迟到响应的最近请求 ID。 */
 let latestRequestId = ''
 
+// -- Derived Values
+
 /** 当前路由歌曲 ID。 */
 const songId = computed<string>(() => String(route.params['songId'] ?? ''))
 
@@ -57,7 +71,7 @@ const likeBusy = computed<boolean>(() => (
   likedSongs.loading.value || (song.value ? likedSongs.isPending(song.value.id) : false)
 ))
 
-// ========= 函数 =========
+// -- Functions
 
 /** 从 Utility 读取单曲详情，并丢弃路由切换后的迟到响应。 */
 async function loadSong(): Promise<void> {
@@ -106,7 +120,7 @@ async function likeSong(): Promise<void> {
   await toggleSongLike(song.value)
 }
 
-// ========= 生命周期 =========
+// -- Listeners
 
 watch(songId, () => void loadSong(), { immediate: true })
 </script>
@@ -145,15 +159,7 @@ watch(songId, () => void loadSong(), { immediate: true })
         key="content"
         class="song-detail-content"
       >
-        <header class="music-detail-hero music-surface">
-          <Cover
-            :src="song.album?.artworkUrl"
-            :alt="song.name"
-            size="hero"
-            :hover-effect="false"
-            :always-show-shadow="true"
-            :show-play-button="false"
-          />
+        <MusicDetailHero :artwork-url="song.album?.artworkUrl">
           <div class="music-detail-hero-copy">
             <p class="music-page-eyebrow">
               {{ $tSource("歌曲") }}
@@ -195,7 +201,7 @@ watch(songId, () => void loadSong(), { immediate: true })
               </CommonButton>
             </div>
           </div>
-        </header>
+        </MusicDetailHero>
 
         <MusicCommentsSection
           resource-type="song"

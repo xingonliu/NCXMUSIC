@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Heart, Play, Radio } from '@lucide/vue'
+
 import { computed, ref, watch } from 'vue'
+
 import { useRoute, useRouter } from 'vue-router'
 
 import type {
@@ -9,27 +11,40 @@ import type {
   StandardArtist,
   StandardSong
 } from '../../../shared/schemas/music'
+
 import {
   CommonButton,
   CommonEmptyState,
   CommonErrorState,
   CommonSpinner
 } from '../../design-system/components'
+
 import { showToast } from '../../design-system/use-toast'
+
 import EntityCard from './components/EntityCard.vue'
+
+import MusicDetailHero from './components/MusicDetailHero.vue'
+
 import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
+
 import MusicSection from './components/MusicSection.vue'
+
 import VirtualTrackList from './components/VirtualTrackList.vue'
+
 import { mutateMusic, playSongNext, toggleSongLike } from './music-actions'
+
 import {
   standardSongToTrackSummary,
   standardSongsToTrackSummaries
 } from './music-entity'
+
 import './music-content-pages.css'
+
 import { usePlayer } from './use-player'
+
 import { translatePublicError } from '../../i18n'
 
-// ========= 类型 =========
+// -- Types
 
 /** 页面独立列表 Section 状态。 */
 interface ListSection<T> {
@@ -41,7 +56,7 @@ interface ListSection<T> {
   error: string
 }
 
-// ========= 变量 =========
+// -- State
 
 /** 当前路由对象。 */
 const route = useRoute()
@@ -73,6 +88,8 @@ const worksSection = ref<ListSection<StandardSong>>({ state: 'loading', items: [
 /** 当前等待选择目标歌单的歌曲。 */
 const playlistTarget = ref<StandardSong | null>(null)
 
+// -- Derived Values
+
 /** 当前歌手 ID。 */
 const artistId = computed<string>(() => String(route.params['artistId'] ?? ''))
 
@@ -97,7 +114,7 @@ const collaborativeSongs = computed<StandardSong[]>(() => worksSection.value.ite
 const featuredSongs = computed<StandardSong[]>(() =>
   (collaborativeSongs.value.length > 0 ? collaborativeSongs.value : worksSection.value.items).slice(0, 8))
 
-// ========= 函数 =========
+// -- Functions
 
 /** 读取歌手主实体和热门歌曲。 */
 async function loadArtist(): Promise<void> {
@@ -268,7 +285,7 @@ async function loadPage(): Promise<void> {
   await Promise.all([loadArtist(), loadArtistAlbums(), loadSimilarArtists(), loadArtistWorks()])
 }
 
-// ========= 生命周期 =========
+// -- Listeners
 
 watch(artistId, () => {
   void loadPage()
@@ -321,59 +338,48 @@ watch(artistId, () => {
         key="content"
         class="artist-page-content"
       >
-        <div class="artist-visual-hero-shell">
-          <div
-            class="artist-visual-glow"
-            :style="{ backgroundImage: `url(${artist.coverUrl || artist.artworkUrl || ''})` }"
-            aria-hidden="true"
-          />
-          <header class="artist-visual-hero">
-            <div
-              class="artist-visual-background"
-              :style="{ backgroundImage: `url(${artist.coverUrl || artist.artworkUrl || ''})` }"
-              aria-hidden="true"
-            />
-            <div class="artist-visual-scrim" />
-            <div class="artist-visual-copy">
-              <p class="music-page-eyebrow">
-                <Radio :size="13" /> {{ $tSource("歌手") }}
-              </p>
-              <h1 id="artist-title">
-                {{ artist.name }}
-              </h1>
-              <p class="music-detail-description">
-                {{ $tSource(artist.alias.join(' / ') || artist.description || '网易云音乐歌手') }}
-              </p>
-              <p class="music-detail-meta">
-                {{ artist.songCount ?? hotSongs.length }} {{ $tSource("首歌曲 ·") }} {{ artist.albumCount ?? albumsSection.items.length }} {{ $tSource("张专辑") }}
-              </p>
-              <div class="music-detail-actions">
-                <CommonButton
-                  variant="primary"
-                  size="prominent"
-                  :disabled="hotSongs.length === 0"
-                  @click="playAll"
-                >
-                  <Play
-                    :size="15"
-                    fill="currentColor"
-                  /> {{ $tSource("播放热门歌曲") }}
-                </CommonButton>
-                <CommonButton
-                  variant="secondary"
-                  size="prominent"
-                  @click="toggleArtistFollow"
-                >
-                  <Heart
-                    :size="15"
-                    :fill="artist.followed ? 'currentColor' : 'none'"
-                  />
-                  {{ $tSource(artist.followed ? '已关注' : '关注') }}
-                </CommonButton>
-              </div>
+        <MusicDetailHero
+          :artwork-url="artist.coverUrl || artist.artworkUrl"
+        >
+          <div class="music-detail-hero-copy">
+            <p class="music-page-eyebrow">
+              <Radio :size="13" /> {{ $tSource("歌手") }}
+            </p>
+            <h1 id="artist-title">
+              {{ artist.name }}
+            </h1>
+            <p class="music-detail-description">
+              {{ $tSource(artist.alias.join(' / ') || artist.description || '网易云音乐歌手') }}
+            </p>
+            <p class="music-detail-meta">
+              {{ artist.songCount ?? hotSongs.length }} {{ $tSource("首歌曲 ·") }} {{ artist.albumCount ?? albumsSection.items.length }} {{ $tSource("张专辑") }}
+            </p>
+            <div class="music-detail-actions">
+              <CommonButton
+                variant="primary"
+                size="prominent"
+                :disabled="hotSongs.length === 0"
+                @click="playAll"
+              >
+                <Play
+                  :size="15"
+                  fill="currentColor"
+                /> {{ $tSource("播放热门歌曲") }}
+              </CommonButton>
+              <CommonButton
+                variant="secondary"
+                size="prominent"
+                @click="toggleArtistFollow"
+              >
+                <Heart
+                  :size="15"
+                  :fill="artist.followed ? 'currentColor' : 'none'"
+                />
+                {{ $tSource(artist.followed ? '已关注' : '关注') }}
+              </CommonButton>
             </div>
-          </header>
-        </div>
+          </div>
+        </MusicDetailHero>
 
         <MusicSection
           section-id="artist-latest-release"
@@ -416,6 +422,7 @@ watch(artistId, () => {
 
         <MusicSection
           section-id="artist-albums"
+          layout="rail"
           :title="$tSource('专辑与 EP')"
           :state="albumsSection.state"
           :error-text="albumsSection.error"
@@ -423,16 +430,14 @@ watch(artistId, () => {
           min-height="0"
           @retry="loadArtistAlbums"
         >
-          <div class="artist-card-grid">
-            <EntityCard
-              v-for="album in sortedAlbums"
-              :key="album.id"
-              :title="album.name"
-              :subtitle="$tSource(album.publishTime ? new Date(album.publishTime).getFullYear().toString() : '专辑')"
-              :artwork-url="album.artworkUrl"
-              @activate="openAlbum(album)"
-            />
-          </div>
+          <EntityCard
+            v-for="album in sortedAlbums"
+            :key="album.id"
+            :title="album.name"
+            :subtitle="$tSource(album.publishTime ? new Date(album.publishTime).getFullYear().toString() : '专辑')"
+            :artwork-url="album.artworkUrl"
+            @activate="openAlbum(album)"
+          />
         </MusicSection>
 
         <MusicSection
@@ -459,6 +464,7 @@ watch(artistId, () => {
 
         <MusicSection
           section-id="similar-artists"
+          layout="rail"
           :title="$tSource('相似歌手')"
           :state="similarSection.state"
           :error-text="similarSection.error"
@@ -466,16 +472,14 @@ watch(artistId, () => {
           min-height="0"
           @retry="loadSimilarArtists"
         >
-          <div class="artist-card-grid">
-            <EntityCard
-              v-for="item in similarSection.items"
-              :key="item.id"
-              :title="item.name"
-              :subtitle="$tSource(item.alias.join(' / ') || '歌手')"
-              :artwork-url="item.artworkUrl"
-              @activate="openArtist(item)"
-            />
-          </div>
+          <EntityCard
+            v-for="item in similarSection.items"
+            :key="item.id"
+            :title="item.name"
+            :subtitle="$tSource(item.alias.join(' / ') || '歌手')"
+            :artwork-url="item.artworkUrl"
+            @activate="openArtist(item)"
+          />
         </MusicSection>
 
         <AddTrackToPlaylistDialog
@@ -488,93 +492,6 @@ watch(artistId, () => {
 </template>
 
 <style scoped>
-.artist-visual-hero-shell {
-  position: relative;
-  isolation: isolate;
-}
-
-.artist-visual-glow {
-  position: absolute;
-  inset: 12% 6% -3%;
-  z-index: -1;
-  border-radius: var(--ncx-squircle-radius-2xl);
-  background-position: center 26%;
-  background-size: cover;
-  filter: blur(52px) saturate(1.35) opacity(.42);
-  transform: scale(.96) translateY(18px);
-  pointer-events: none;
-}
-
-.artist-visual-hero {
-  position: relative;
-  display: flex;
-  overflow: hidden;
-  min-height: min(62vh, 560px);
-  align-items: end;
-  padding: 42px;
-  border-radius: var(--ncx-squircle-radius-2xl);
-  color: #fff;
-  background: #26262c;
-}
-
-.artist-visual-background,
-.artist-visual-scrim {
-  position: absolute;
-  inset: 0;
-}
-
-.artist-visual-background {
-  background-position: center 26%;
-  background-size: cover;
-  transform: scale(1.02);
-}
-
-.artist-visual-scrim {
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, .02) 24%, rgba(0, 0, 0, .82) 100%),
-    linear-gradient(90deg, rgba(0, 0, 0, .46), transparent 62%);
-}
-
-.artist-visual-copy {
-  position: relative;
-  z-index: 2;
-  width: min(680px, 90%);
-}
-
-.artist-visual-copy h1,
-.artist-visual-copy p {
-  margin: 0;
-}
-
-.artist-visual-copy .music-page-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: rgba(255, 255, 255, .76);
-}
-
-.artist-visual-copy h1 {
-  margin-top: 7px;
-  font-size: clamp(48px, 8vw, 92px);
-  line-height: .98;
-  letter-spacing: -.045em;
-}
-
-.artist-visual-copy .music-detail-description {
-  max-width: 60ch;
-  margin-top: 15px;
-  color: rgba(255, 255, 255, .78);
-}
-
-.artist-visual-copy .music-detail-meta {
-  margin-top: 10px;
-  color: rgba(255, 255, 255, .64);
-}
-
-.artist-visual-copy .music-detail-actions {
-  margin-top: 22px;
-}
-
 .artist-latest-card {
   display: grid;
   width: min(620px, 100%);
@@ -629,22 +546,7 @@ watch(artistId, () => {
   font-size: 12px;
 }
 
-@media (width < 720px) {
-  .artist-visual-hero {
-    min-height: 440px;
-    padding: 28px;
-  }
-
-  .artist-visual-copy h1 {
-    font-size: 46px;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .artist-visual-background,
-  .artist-visual-glow {
-    transform: none;
-  }
 
   .artist-latest-card {
     transition: none !important;

@@ -2,6 +2,8 @@
 
 /** 音乐发现、搜索、详情、播放与评论界面的英语兼容文案。 */
 export const enUSMusicSourceMessages = {
+  '向左滚动': 'Scroll left',
+  '向右滚动': 'Scroll right',
   '· 可管理': ' · manageable',
   '“{0}”删除后无法恢复。': '“{0}” cannot be recovered after deletion.',
   '{0} 首作品': '{0} releases',

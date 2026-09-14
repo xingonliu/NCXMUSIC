@@ -690,7 +690,7 @@ watch(
 .profile-container {
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 32px 0 64px;
+  padding-bottom: 64px;
 }
 
 .profile-state {
