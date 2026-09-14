@@ -68,13 +68,12 @@
 .music-search-page {
   width: min(1120px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 0 0 64px;
 }
 
 /* 顶部黏性吸顶搜索栏 */
 .music-search-sticky-bar {
   position: sticky;
-  top: 0;
+  top: var(--ncx-header-height);
   z-index: 20;
   padding: 8px 0 12px;
   background: transparent;
@@ -346,7 +345,6 @@
 .artist-page {
   width: min(1120px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 52px 0 0;
 }
 
 .search-results-header,
@@ -567,14 +565,6 @@
   padding: var(--ncx-space-6);
 }
 
-.music-detail-hero {
-  display: grid;
-  align-items: end;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--ncx-space-8);
-  padding: var(--ncx-space-6);
-}
-
 .music-detail-hero-copy {
   display: grid;
   gap: var(--ncx-space-3);
@@ -617,13 +607,11 @@
 .collection-detail-page {
   display: grid;
   gap: var(--ncx-space-8);
-  width: min(1320px, calc(100% - 24px));
-  padding-top: 40px;
+  width: 100%;
 }
 
 .artist-page {
-  width: min(1320px, calc(100% - 24px));
-  padding-top: 40px;
+  width: 100%;
 }
 
 .collection-detail-content,
@@ -633,41 +621,6 @@
 }
 
 /* ========= 专辑 / 歌单详情：内容优先的无边框布局 ========= */
-
-.collection-detail-page .music-detail-hero,
-.collection-skeleton-hero {
-  display: grid;
-  align-items: center;
-  grid-template-columns: minmax(260px, 400px) minmax(0, 1fr);
-  gap: clamp(32px, 5vw, 72px);
-  padding: var(--ncx-space-3) var(--ncx-space-2) var(--ncx-space-6);
-}
-
-.collection-detail-page .music-detail-hero > .ncx-cover,
-.collection-skeleton-cover {
-  width: min(34vw, 400px);
-  min-width: 260px;
-  height: auto;
-  min-height: 0;
-  aspect-ratio: 1;
-}
-
-.collection-skeleton-cover {
-  border-radius: var(--ncx-squircle-radius-xl);
-}
-
-.collection-detail-page .music-detail-hero-copy {
-  gap: var(--ncx-space-3);
-}
-
-.collection-detail-page .music-detail-hero h1 {
-  max-width: 860px;
-  margin-top: 0;
-  font-size: clamp(40px, 5.2vw, 64px);
-  font-weight: 780;
-  line-height: 0.98;
-  letter-spacing: -0.052em;
-}
 
 .music-detail-creator {
   margin: 2px 0 0;
@@ -771,10 +724,10 @@
   min-width: 0;
 }
 
-/* ========= 歌手详情：保留主视觉卡片的无边框内容布局 ========= */
+/* ========= 歌手详情内容布局 ========= */
 
 .artist-page .music-section-shell {
-  padding: 0 var(--ncx-space-2);
+  padding: 0;
   border-radius: 0;
   background: transparent;
   box-shadow: none;
@@ -799,18 +752,11 @@
   padding-left: 0;
 }
 
-.artist-card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
-  gap: var(--ncx-space-5);
-}
-
 .song-detail-page {
   display: grid;
-  width: min(980px, calc(100% - 48px));
+  width: 100%;
   min-height: calc(100vh - 180px);
-  margin: 0 auto;
-  padding: 52px 0 0;
+  margin: 0;
   align-items: start;
 }
 
@@ -820,17 +766,10 @@
   gap: var(--ncx-space-8);
 }
 
-.song-detail-page .music-detail-hero {
-  width: 100%;
-  grid-template-columns: minmax(220px, 340px) minmax(280px, 1fr);
-}
-
-.song-detail-page .music-detail-hero > .ncx-cover {
-  width: 100%;
-  min-width: 0;
-  height: auto;
-  min-height: 0;
-  aspect-ratio: 1;
+.artist-page-state,
+.collection-detail-state,
+.song-detail-state {
+  padding-top: var(--ncx-content-top);
 }
 
 .song-detail-artist {
@@ -938,29 +877,18 @@
 @media (width < 1100px) {
   .music-search-page,
   .search-results-page,
-  .song-collection-page,
-  .collection-detail-page,
-  .artist-page,
-  .song-detail-page {
+  .song-collection-page {
     width: calc(100% - 32px);
-    padding-top: 44px;
   }
 
   .music-search-page {
     width: min(680px, calc(100% - 48px));
-    padding-top: 88px;
   }
 
-  .music-detail-hero,
   .music-list-hero,
   .music-result-section,
-  .music-track-surface,
-  .artist-page .music-section-shell {
+  .music-track-surface {
     padding: var(--ncx-space-4);
-  }
-
-  .music-detail-hero {
-    gap: var(--ncx-space-6);
   }
 
   .music-detail-hero h1 {
@@ -968,34 +896,13 @@
   }
 
   .collection-detail-page {
-    width: calc(100% - 20px);
-    padding-top: 36px;
+    width: 100%;
   }
 
   .artist-page {
-    width: calc(100% - 20px);
-    padding-top: 36px;
+    width: 100%;
   }
 
-  .collection-detail-page .music-detail-hero,
-  .collection-skeleton-hero {
-    gap: var(--ncx-space-6);
-    padding: 0 var(--ncx-space-2) var(--ncx-space-5);
-  }
-
-  .collection-detail-page .music-detail-hero > .ncx-cover,
-  .collection-skeleton-cover {
-    width: min(34vw, 320px);
-  }
-
-  .collection-detail-page .music-detail-hero h1 {
-    font-size: clamp(34px, 5vw, 48px);
-  }
-
-  .artist-card-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: var(--ncx-space-4);
-  }
 }
 
 /* ========= 辅助功能降级 ========= */

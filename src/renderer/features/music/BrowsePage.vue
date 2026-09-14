@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ChevronRight, Play } from '@lucide/vue'
+
 import { computed, onMounted, ref } from 'vue'
+
 import { useRouter } from 'vue-router'
 
 import type {
@@ -10,15 +12,22 @@ import type {
   StandardPlaylist,
   StandardSong
 } from '../../../shared/schemas/music'
+
 import { CommonButton, CommonSkeleton } from '../../design-system/components'
+
 import { translatePublicError } from '../../i18n'
+
 import Cover from './components/Cover.vue'
+
 import EntityCard from './components/EntityCard.vue'
+
 import MusicSection from './components/MusicSection.vue'
+
 import { standardSongToTrackSummary } from './music-entity'
+
 import { usePlayer } from './use-player'
 
-// ========= 类型 =========
+// -- Types
 
 /** 浏览页独立内容区的统一状态。 */
 interface BrowseSectionState<T> {
@@ -40,7 +49,21 @@ interface BrowseCategoryPreviewRow {
   section: BrowseSectionState<StandardPlaylist[]>
 }
 
-// ========= 变量 =========
+// -- Constants
+
+/** 首页每个分类分组展示的歌单数量。 */
+const CATEGORY_PREVIEW_LIMIT = 5
+
+/** 首页需要按接口顺序完整展示的五个歌单分类分组。 */
+const PLAYLIST_FACET_KEYS: ReadonlySet<MusicBrowseFacetGroup['key']> = new Set([
+  'playlist-language',
+  'playlist-style',
+  'playlist-scene',
+  'playlist-mood',
+  'playlist-theme'
+])
+
+// -- State
 
 /** 页面路由实例。 */
 const router = useRouter()
@@ -70,17 +93,7 @@ const categoryPreviewSection = ref<BrowseSectionState<BrowseCategoryPreviewRow[]
   error: ''
 })
 
-/** 首页每个分类分组展示的歌单数量。 */
-const CATEGORY_PREVIEW_LIMIT = 5
-
-/** 首页需要按接口顺序完整展示的五个歌单分类分组。 */
-const PLAYLIST_FACET_KEYS: ReadonlySet<MusicBrowseFacetGroup['key']> = new Set([
-  'playlist-language',
-  'playlist-style',
-  'playlist-scene',
-  'playlist-mood',
-  'playlist-theme'
-])
+// -- Derived Values
 
 /** 最新单曲预览。 */
 const newSongPreview = computed<StandardSong[]>(() => newSongsSection.value.data.slice(0, 6))
@@ -94,7 +107,7 @@ const chartPreview = computed<StandardPlaylist[]>(() => chartsSection.value.data
 /** 歌手预览。 */
 const artistPreview = computed<StandardArtist[]>(() => artistsSection.value.data.slice(0, 8))
 
-// ========= 函数 =========
+// -- Functions
 
 /** 将成功响应写入指定内容区。 */
 function settleSection<T>(section: BrowseSectionState<T[]>, data: T[]): void {
@@ -272,7 +285,7 @@ async function loadPage(): Promise<void> {
   ])
 }
 
-// ========= 生命周期 =========
+// -- Lifecycle
 
 onMounted(() => {
   void loadPage()
@@ -293,140 +306,116 @@ onMounted(() => {
     </header>
 
     <MusicSection
-      section-id="latest-releases"
-      :title="$tSource('最新发行')"
-      :state="newSongsSection.state === 'error' && newAlbumsSection.state === 'error' ? 'error' : 'ready'"
-      :error-text="newSongsSection.error || newAlbumsSection.error"
-      @retry="loadPage"
+      section-id="latest-songs"
+      :title="$tSource('最新单曲')"
+      :state="newSongsSection.state"
+      :error-text="newSongsSection.error"
+      @retry="loadNewSongs"
     >
-      <div class="browse-release-layout">
-        <section
-          class="browse-subsection"
-          aria-labelledby="latest-songs-title"
-        >
-          <header>
-            <h3 id="latest-songs-title">
-              {{ $tSource("最新单曲") }}
-            </h3><span>{{ newSongPreview.length }} {{ $tSource("首") }}</span>
-          </header>
+      <template #skeleton>
+        <div class="browse-song-list">
           <div
-            v-if="newSongsSection.state === 'loading'"
-            class="browse-song-list"
-            aria-hidden="true"
+            v-for="index in 6"
+            :key="index"
+            class="browse-skeleton-song-item"
           >
-            <div
-              v-for="index in 6"
-              :key="index"
-              class="browse-skeleton-song-item"
-            >
+            <CommonSkeleton
+              variant="rectangular"
+              width="48px"
+              height="48px"
+              style="border-radius: var(--ncx-squircle-radius-md); -electron-corner-smoothing: var(--ncx-squircle-smoothing); flex-shrink: 0"
+            />
+            <div class="browse-skeleton-song-copy">
               <CommonSkeleton
                 variant="rectangular"
-                width="48px"
-                height="48px"
-                style="border-radius: var(--ncx-squircle-radius-md); -electron-corner-smoothing: var(--ncx-squircle-smoothing); flex-shrink: 0"
+                width="65%"
+                height="14px"
               />
-              <div class="browse-skeleton-song-copy">
-                <CommonSkeleton
-                  variant="rectangular"
-                  width="65%"
-                  height="14px"
-                />
-                <CommonSkeleton
-                  variant="rectangular"
-                  width="40%"
-                  height="11px"
-                  style="margin-top: 3px"
-                />
-              </div>
               <CommonSkeleton
-                variant="avatar"
-                width="16px"
-                height="16px"
-                style="opacity: 0.3; flex-shrink: 0"
+                variant="rectangular"
+                width="40%"
+                height="11px"
+                style="margin-top: 3px"
               />
             </div>
-          </div>
-          <div
-            v-else
-            class="browse-song-list"
-          >
-            <button
-              v-for="song in newSongPreview"
-              :key="song.id"
-              type="button"
-              @click="playSong(song)"
-            >
-              <Cover
-                :src="song.album?.artworkUrl"
-                :alt="song.name"
-                size="compact"
-                :show-play-button="false"
-              />
-              <span><strong>{{ song.name }}</strong><small>{{ song.artists.map((artist) => artist.name).join(' / ') }}</small></span>
-              <Play
-                :size="15"
-                fill="currentColor"
-              />
-            </button>
-          </div>
-        </section>
-
-        <section
-          class="browse-subsection"
-          aria-labelledby="latest-albums-title"
-        >
-          <header>
-            <h3 id="latest-albums-title">
-              {{ $tSource("最新专辑") }}
-            </h3><span>{{ newAlbumPreview.length }} {{ $tSource("张") }}</span>
-          </header>
-          <div
-            v-if="newAlbumsSection.state === 'loading'"
-            class="browse-album-grid"
-            aria-hidden="true"
-          >
-            <div
-              v-for="index in 6"
-              :key="index"
-              class="browse-skeleton-card"
-            >
-              <CommonSkeleton
-                variant="card"
-                class="browse-skeleton-square-cover"
-              />
-              <div class="browse-skeleton-card-copy">
-                <CommonSkeleton
-                  variant="rectangular"
-                  width="80%"
-                  height="14px"
-                />
-                <CommonSkeleton
-                  variant="rectangular"
-                  width="50%"
-                  height="12px"
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            v-else
-            class="browse-album-grid"
-          >
-            <EntityCard
-              v-for="album in newAlbumPreview"
-              :key="album.id"
-              :title="album.name"
-              :subtitle="album.artist?.name"
-              :artwork-url="album.artworkUrl"
-              @activate="openAlbum(album)"
+            <CommonSkeleton
+              variant="avatar"
+              width="16px"
+              height="16px"
+              style="opacity: 0.3; flex-shrink: 0"
             />
           </div>
-        </section>
+        </div>
+      </template>
+      <div class="browse-song-list">
+        <button
+          v-for="song in newSongPreview"
+          :key="song.id"
+          type="button"
+          @click="playSong(song)"
+        >
+          <Cover
+            :src="song.album?.artworkUrl"
+            :alt="song.name"
+            size="compact"
+            :show-play-button="false"
+          />
+          <span><strong>{{ song.name }}</strong><small>{{ song.artists.map((artist) => artist.name).join(' / ') }}</small></span>
+          <Play
+            :size="15"
+            fill="currentColor"
+          />
+        </button>
       </div>
     </MusicSection>
 
     <MusicSection
+      section-id="latest-albums"
+      :title="$tSource('最新专辑')"
+      layout="rail"
+      :state="newAlbumsSection.state"
+      :error-text="newAlbumsSection.error"
+      @retry="loadNewAlbums"
+    >
+      <template #skeleton>
+        <div class="browse-album-grid">
+          <div
+            v-for="index in 6"
+            :key="index"
+            class="browse-skeleton-card"
+          >
+            <CommonSkeleton
+              variant="card"
+              class="browse-skeleton-square-cover"
+            />
+            <div class="browse-skeleton-card-copy">
+              <CommonSkeleton
+                variant="rectangular"
+                width="80%"
+                height="14px"
+              />
+              <CommonSkeleton
+                variant="rectangular"
+                width="50%"
+                height="12px"
+              />
+            </div>
+          </div>
+        </div>
+      </template>
+      <EntityCard
+        v-for="album in newAlbumPreview"
+        :key="album.id"
+        :title="album.name"
+        :subtitle="album.artist?.name"
+        :artwork-url="album.artworkUrl"
+        @activate="openAlbum(album)"
+      />
+    </MusicSection>
+
+    <MusicSection
       section-id="browse-featured"
+      layout="rail"
       :title="$tSource('新歌推荐歌单')"
       :state="featuredSection.state"
       :error-text="featuredSection.error"
@@ -461,17 +450,16 @@ onMounted(() => {
           </div>
         </div>
       </template>
-      <div class="browse-card-strip">
-        <EntityCard
-          v-for="playlist in featuredSection.data.slice(0, 6)"
-          :key="playlist.id"
-          :title="playlist.name"
-          :subtitle="playlist.creator?.nickname"
-          :artwork-url="playlist.artworkUrl"
-          featured
-          @activate="openPlaylist(playlist)"
-        />
-      </div>
+
+      <EntityCard
+        v-for="playlist in featuredSection.data"
+        :key="playlist.id"
+        :title="playlist.name"
+        :subtitle="playlist.creator?.nickname"
+        :artwork-url="playlist.artworkUrl"
+        featured
+        @activate="openPlaylist(playlist)"
+      />
     </MusicSection>
 
     <MusicSection
@@ -618,83 +606,34 @@ onMounted(() => {
         </CommonButton>
       </template>
       <div class="browse-category-preview-list">
-        <section
+        <MusicSection
           v-for="row in categoryPreviewSection.data"
           :key="row.group.key"
           class="browse-category-preview-row"
+          :section-id="row.group.key"
+          :title="row.group.label + ' · ' + row.category"
+          layout="rail"
+          :state="row.section.state"
+          :error-text="row.section.error"
+          :empty-text="$tSource('当前分类暂无歌单')"
+          @retry="loadCategoryPreview(row)"
         >
-          <header>
-            <p>{{ row.group.label }}</p>
-            <h3>{{ row.category }}</h3>
-            <span>{{ row.section.data.length }} {{ $tSource("个歌单") }}</span>
-          </header>
-          <div
-            v-if="row.section.state === 'loading'"
-            class="browse-category-row-state browse-category-skeleton-strip"
-          >
-            <span class="sr-only">{{ $tSource("正在加载") }}</span>
-            <div
-              v-for="cardIndex in CATEGORY_PREVIEW_LIMIT"
-              :key="cardIndex"
-              class="browse-skeleton-card"
-            >
-              <CommonSkeleton
-                variant="card"
-                class="browse-skeleton-square-cover"
-              />
-              <div class="browse-skeleton-card-copy">
-                <CommonSkeleton
-                  variant="rectangular"
-                  width="80%"
-                  height="14px"
-                />
-                <CommonSkeleton
-                  variant="rectangular"
-                  width="50%"
-                  height="12px"
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            v-else-if="row.section.state === 'error'"
-            class="browse-category-row-state"
-          >
-            <span>{{ translatePublicError({ message: row.section.error }) }}</span>
-            <CommonButton
-              size="compact"
-              variant="secondary"
-              @click="loadCategoryPreview(row)"
-            >
-              {{ $tSource("重试") }}
-            </CommonButton>
-          </div>
-          <div
-            v-else-if="row.section.state === 'empty'"
-            class="browse-category-row-state"
-          >
-            {{ $tSource("当前分类暂无歌单") }}
-          </div>
-          <div
-            v-else
-            class="browse-category-preview-strip"
-          >
-            <EntityCard
-              v-for="playlist in row.section.data"
-              :key="playlist.id"
-              :title="playlist.name"
-              :subtitle="playlist.creator?.nickname"
-              :artwork-url="playlist.artworkUrl"
-              featured
-              @activate="openPlaylist(playlist)"
-            />
-          </div>
-        </section>
+          <EntityCard
+            v-for="playlist in row.section.data"
+            :key="playlist.id"
+            :title="playlist.name"
+            :subtitle="playlist.creator?.nickname"
+            :artwork-url="playlist.artworkUrl"
+            featured
+            @activate="openPlaylist(playlist)"
+          />
+        </MusicSection>
       </div>
     </MusicSection>
 
     <MusicSection
       section-id="artist-explore"
+      layout="rail"
       :title="$tSource('歌手探索')"
       :state="artistsSection.state"
       :error-text="artistsSection.error"
@@ -737,40 +676,34 @@ onMounted(() => {
           {{ $tSource("查看全部") }} <ChevronRight :size="14" />
         </CommonButton>
       </template>
-      <div class="browse-artist-strip">
-        <button
-          v-for="artist in artistPreview"
-          :key="artist.id"
-          type="button"
-          @click="openArtist(artist)"
-        >
-          <Cover
-            :src="artist.artworkUrl"
-            :alt="artist.name"
-            size="card"
-            shape="circle"
-            :show-play-button="false"
-          />
-          <strong>{{ artist.name }}</strong>
-          <span>{{ $tSource(artist.alias.join(' / ') || '歌手') }}</span>
-        </button>
-      </div>
+
+      <button
+        v-for="artist in artistPreview"
+        :key="artist.id"
+        class="browse-artist-card"
+        type="button"
+        @click="openArtist(artist)"
+      >
+        <Cover
+          :src="artist.artworkUrl"
+          :alt="artist.name"
+          size="card"
+          shape="circle"
+          :show-play-button="false"
+        />
+        <strong>{{ artist.name }}</strong>
+        <span>{{ $tSource(artist.alias.join(' / ') || '歌手') }}</span>
+      </button>
     </MusicSection>
   </section>
 </template>
 
 <style scoped>
-.browse-page { display: grid; width: min(1240px, calc(100% - 40px)); gap: 72px; margin: 0 auto; padding: 52px 0 0; }
+.browse-page { display: grid; width: 100%; gap: 72px; margin: 0; }
 .browse-heading p, .browse-heading h1, .browse-heading span { margin: 0; }
 .browse-heading p { color: var(--ncx-color-accent); font-size: 12px; font-weight: 750; letter-spacing: .04em; }
 .browse-heading h1 { margin-top: 6px; font-size: clamp(36px, 5vw, 58px); line-height: 1.02; letter-spacing: -.035em; }
 .browse-heading span { display: block; margin-top: 12px; color: var(--ncx-color-text-secondary); font-size: 15px; }
-.browse-release-layout { display: grid; grid-template-columns: minmax(300px, .9fr) minmax(520px, 1.4fr); gap: 24px; }
-.browse-subsection { min-width: 0; padding: 20px; border-radius: var(--ncx-squircle-radius-xl); background: color-mix(in srgb, var(--ncx-color-surface) 88%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ncx-color-text-primary) 7%, transparent); }
-.browse-subsection > header, .browse-subsection > header h3 { display: flex; align-items: center; margin: 0; }
-.browse-subsection > header { justify-content: space-between; margin-bottom: 14px; }
-.browse-subsection > header h3 { font-size: 15px; }
-.browse-subsection > header span { color: var(--ncx-color-text-tertiary); font-size: 12px; }
 .browse-song-list { display: grid; gap: 4px; }
 .browse-song-list > button { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 7px; border: 0; border-radius: var(--ncx-squircle-radius-md); color: inherit; text-align: left; background: transparent; cursor: pointer; }
 .browse-song-list > button:hover { background: color-mix(in srgb, var(--ncx-color-text-primary) 6%, transparent); }
@@ -779,8 +712,8 @@ onMounted(() => {
 .browse-song-list strong, .browse-song-list small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .browse-song-list strong { font-size: 13px; }
 .browse-song-list small { margin-top: 3px; color: var(--ncx-color-text-secondary); font-size: 11px; }
-.browse-album-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.browse-card-strip { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px; }
+.browse-album-grid { display: grid; gap: 18px; grid-auto-flow: column; grid-auto-columns: 180px; overflow: hidden; }
+.browse-card-strip { display: grid; gap: 20px; grid-auto-flow: column; grid-auto-columns: 180px; overflow: hidden; }
 .browse-chart-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .browse-chart-grid > button { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; padding: 12px; border: 0; border-radius: var(--ncx-squircle-radius-lg); color: inherit; text-align: left; background: var(--ncx-color-surface); cursor: pointer; }
 .browse-chart-grid > button:hover { transform: translateY(-2px); box-shadow: var(--ncx-shadow-md); }
@@ -789,21 +722,18 @@ onMounted(() => {
 .browse-chart-grid strong, .browse-chart-grid small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .browse-chart-grid small { margin-top: 4px; color: var(--ncx-color-text-secondary); }
 .browse-category-preview-list { display: grid; gap: 18px; }
-.browse-category-preview-row { display: grid; min-width: 0; grid-template-columns: 132px minmax(0, 1fr); gap: 20px; padding: 18px; border-radius: var(--ncx-squircle-radius-xl); background: var(--ncx-color-surface); }
+.browse-category-preview-row { display: grid; min-width: 0; gap: 20px; }
 .browse-category-preview-row > header { display: grid; align-content: start; gap: 5px; }
 .browse-category-preview-row > header p, .browse-category-preview-row > header h3, .browse-category-preview-row > header span { margin: 0; }
 .browse-category-preview-row > header p { color: var(--ncx-color-accent); font-size: 12px; font-weight: 720; }
 .browse-category-preview-row > header h3 { overflow: hidden; font-size: 17px; text-overflow: ellipsis; white-space: nowrap; }
 .browse-category-preview-row > header span { color: var(--ncx-color-text-tertiary); font-size: 11px; }
-.browse-category-preview-strip { display: grid; min-width: 0; grid-template-columns: repeat(5, minmax(126px, 1fr)); gap: 18px; }
-.browse-category-row-state { display: flex; min-height: 150px; align-items: center; justify-content: center; gap: 10px; color: var(--ncx-color-text-secondary); font-size: 13px; }
-.browse-category-row-state button { padding: 6px 10px; border: 0; border-radius: var(--ncx-squircle-radius-full); color: var(--ncx-color-accent); background: color-mix(in srgb, var(--ncx-color-accent) 10%, transparent); cursor: pointer; }
-.browse-artist-strip { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 18px; }
-.browse-artist-strip > button { display: grid; min-width: 0; justify-items: center; gap: 7px; padding: 0; border: 0; color: inherit; text-align: center; background: transparent; cursor: pointer; }
-.browse-artist-strip :deep(.ncx-cover) { width: 100%; max-width: 118px; height: auto; aspect-ratio: 1 / 1; }
-.browse-artist-strip strong, .browse-artist-strip span { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.browse-artist-strip strong { margin-top: 8px; font-size: 13px; }
-.browse-artist-strip span { color: var(--ncx-color-text-secondary); font-size: 11px; }
+.browse-artist-strip { display: grid; gap: 18px; grid-auto-flow: column; grid-auto-columns: 180px; overflow: hidden; }
+.browse-artist-card { display: grid; min-width: 0; justify-items: center; gap: 7px; padding: 0; border: 0; color: inherit; text-align: center; background: transparent; cursor: pointer; }
+.browse-artist-card :deep(.ncx-cover) { width: 100%; max-width: 118px; height: auto; aspect-ratio: 1 / 1; }
+.browse-artist-card strong, .browse-artist-card span { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.browse-artist-card strong { margin-top: 8px; font-size: 13px; }
+.browse-artist-card span { color: var(--ncx-color-text-secondary); font-size: 11px; }
 
 /* ========= 骨架屏局部布局 ========= */
 
@@ -880,8 +810,10 @@ onMounted(() => {
 .browse-category-skeleton-strip {
   display: grid;
   min-width: 0;
-  grid-template-columns: repeat(5, minmax(126px, 1fr));
   gap: 18px;
+  grid-auto-flow: column;
+  grid-auto-columns: 180px;
+  overflow: hidden;
 }
 
 .sr-only {
@@ -895,10 +827,7 @@ onMounted(() => {
   white-space: nowrap;
   border-width: 0;
 }
-
-@media (width < 1360px) { .browse-artist-strip { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
-@media (width < 1100px) { .browse-release-layout { grid-template-columns: 1fr; } .browse-card-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } .browse-chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .browse-artist-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (width < 1100px) { .browse-category-preview-strip { overflow-x: auto; grid-template-columns: repeat(5, minmax(138px, 1fr)); padding-bottom: 8px; } }
-@media (width < 760px) { .browse-page { width: min(100% - 24px, 1240px); gap: 52px; } .browse-album-grid, .browse-chart-grid { grid-template-columns: 1fr 1fr; } .browse-card-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } .browse-category-preview-row { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; padding: 14px; } .browse-artist-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (width < 1100px) { .browse-chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (width < 760px) { .browse-page { width: 100%; gap: 52px; } .browse-chart-grid { grid-template-columns: 1fr 1fr; } .browse-category-preview-row { gap: 14px; } }
 @media (prefers-reduced-motion: reduce) { .browse-page button { transition: none !important; } .browse-page button:hover, .browse-page button:active { transform: none; } }
 </style>

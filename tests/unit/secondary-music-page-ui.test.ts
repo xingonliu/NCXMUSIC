@@ -128,14 +128,14 @@ describe('二级音乐内容页视觉结构', () => {
     const wrapper = mount(BrowsePage, { global: { plugins: [router] } })
     await flushPromises()
 
-    expect(wrapper.findAll('.browse-category-row-state')).toHaveLength(5)
+    expect(wrapper.findAll('.browse-category-preview-row .music-section-loading')).toHaveLength(5)
     expect(wrapper.text()).toContain('正在加载')
 
     resolveCategoryRequests()
     await flushPromises()
 
-    expect(wrapper.findAll('.browse-category-row-state')).toHaveLength(0)
-    expect(wrapper.findAll('.browse-category-preview-strip')).toHaveLength(5)
+    expect(wrapper.findAll('.browse-category-preview-row .music-section-loading')).toHaveLength(0)
+    expect(wrapper.findAll('.browse-category-preview-row .media-rail')).toHaveLength(5)
     expect(wrapper.text()).toContain('分类精选歌单')
     wrapper.unmount()
   })

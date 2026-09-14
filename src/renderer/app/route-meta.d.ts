@@ -9,7 +9,8 @@ declare module 'vue-router' {
     playerBar: 'show' | 'hide'
     /** 页面展示形态；immersive 页面由应用根层独占展示。 */
     presentation?: 'standard' | 'immersive'
-    headerVariant?: 'default' | 'transparent'
+    headerMaterial?: 'scroll' | 'transparent' | 'solid'
+    pageLayout?: 'standard' | 'hero'
     /** 首次引导等页面隐藏普通侧边栏。 */
     shell?: 'default' | 'standalone'
     fallbackRoute?: string

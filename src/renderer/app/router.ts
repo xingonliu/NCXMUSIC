@@ -42,7 +42,8 @@ const routes: RouteRecordRaw[] = [
       pageLevel: 1,
       title: 'routes.onboarding',
       playerBar: 'hide',
-      shell: 'standalone'
+      shell: 'standalone',
+      headerMaterial: 'transparent'
     }
   },
   {
@@ -191,6 +192,7 @@ const routes: RouteRecordRaw[] = [
     name: 'song-detail',
     component: SongDetailPage,
     meta: {
+      pageLayout: 'hero',
       pageLevel: 2,
       title: 'routes.songDetail',
       playerBar: 'show',
@@ -202,6 +204,7 @@ const routes: RouteRecordRaw[] = [
     name: 'playlist-detail',
     component: CollectionDetailPage,
     meta: {
+      pageLayout: 'hero',
       pageLevel: 2,
       title: 'routes.playlistDetail',
       playerBar: 'show',
@@ -213,6 +216,7 @@ const routes: RouteRecordRaw[] = [
     name: 'album-detail',
     component: CollectionDetailPage,
     meta: {
+      pageLayout: 'hero',
       pageLevel: 2,
       title: 'routes.albumDetail',
       playerBar: 'show',
@@ -224,6 +228,7 @@ const routes: RouteRecordRaw[] = [
     name: 'artist-detail',
     component: ArtistDetailPage,
     meta: {
+      pageLayout: 'hero',
       pageLevel: 2,
       title: 'routes.artistDetail',
       playerBar: 'show',

@@ -14,7 +14,9 @@ import {
   UserRound,
   X
 } from '@lucide/vue'
+
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 
 import type {
@@ -22,29 +24,47 @@ import type {
   WindowCommand,
   WindowSnapshot
 } from '../../../shared/contracts/window-controls'
+
 import {
   appAccountNavigationItem,
   appPrimaryNavigationSections,
   appSettingsNavigationItem,
   type AppNavigationItem
 } from '../../app/navigation'
+
 import { navigateBack } from '../../app/navigation-history'
+
 import {
   CommonAvatar,
   CommonHeaderButton,
   CommonHeaderGroupButton,
   CommonHeaderGroupItem
 } from '../components'
+
 import PlaylistNavigation from '../../features/music/components/PlaylistNavigation.vue'
+
 import { useAccountSessionStore } from '../../features/account/account-session-store'
+
 import SettingsSidebar from '../../features/settings/SettingsSidebar.vue'
 
-// ========= 变量 =========
+// -- Constants
+
+const HEADER_FADE_DISTANCE = 48
+
+// -- State
+
+const scrollTop = ref(0)
 
 /** 内容区滚动容器 DOM 引用。 */
 const contentAreaRef = ref<HTMLElement | null>(null)
 
-/** 各路由对应的滚动条位置记录（毫秒级精准还原）。 */
+const pageFrameRef = ref<HTMLElement | null>(null)
+
+let scrollRestoreTarget: number | null = null
+
+let pageResizeObserver: ResizeObserver | undefined
+
+/** 各路由对应的纵向滚动位置。 */
 const scrollPositions = new Map<string, number>()
 
 /** 路由切换前滚动守卫清理函数。 */
@@ -67,6 +87,14 @@ const windowSnapshot = ref<WindowSnapshot>({
   focused: true
 })
 
+/** 窗口状态监听清理函数。 */
+let unsubscribeWindowSnapshot = (): void => {}
+
+/** 当前路由页面刷新代次，只重挂 RouterView 叶子组件。 */
+const routeRefreshKey = ref<number>(0)
+
+// -- Derived Values
+
 /** 运行平台是否为 macOS。 */
 const isMacOS = computed(() => windowSnapshot.value.platform === 'darwin')
 
@@ -76,8 +104,12 @@ const isWindows = computed(() => windowSnapshot.value.platform === 'win32')
 /** 当前页面是否为需要返回按钮的二级页面。 */
 const isSecondaryPage = computed(() => route.meta.pageLevel === 2)
 
-/** Header 视觉变体。 */
-const headerVariant = computed(() => route.meta.headerVariant ?? 'default')
+/** 材质与操作层分离，历史滚动恢复也使用同一份状态。 */
+const headerOpacity = computed(() => {
+  if (route.meta.headerMaterial === 'transparent') return 0
+  if (route.meta.headerMaterial === 'solid') return 1
+  return Math.min(1, Math.max(0, scrollTop.value / HEADER_FADE_DISTANCE))
+})
 
 /** 当前路由是否隐藏普通侧边栏。 */
 const isStandalonePage = computed(() => route.meta.shell === 'standalone')
@@ -87,12 +119,6 @@ const isSettingsPage = computed<boolean>(() => route.name === 'settings')
 
 /** 当前路由是否处于搜索相关页面（隐藏顶栏冗余的搜索按钮）。 */
 const isSearchPage = computed<boolean>(() => route.name === 'search' || route.name === 'search-results')
-
-/** 窗口状态监听清理函数。 */
-let unsubscribeWindowSnapshot = (): void => {}
-
-/** 当前路由页面刷新代次，只重挂 RouterView 叶子组件。 */
-const routeRefreshKey = ref<number>(0)
 
 /** 侧栏账户展示名。 */
 const accountDisplayName = computed<string>(() => account.snapshot.value?.activeAccount.displayName ?? '游客')
@@ -113,7 +139,31 @@ const isSecondaryNavActive = computed<boolean>(() => {
   return typeof route.name === 'string' && secondaryRoutes.includes(route.name)
 })
 
-// ========= 函数 =========
+// -- Functions
+
+function pageScrollContainer(): HTMLElement | null {
+  if (route.name === 'agent') return pageFrameRef.value?.querySelector('.agent-conversation') ?? null
+  return contentAreaRef.value
+}
+
+function updateScrollTop(event?: Event): void {
+  const element = pageScrollContainer()
+  if (event && event.target !== element) return
+  scrollTop.value = element?.scrollTop ?? 0
+}
+
+/** 详情内容异步到达之前，浏览器可能把恢复位置截断到加载态的高度。 */
+function restoreScrollPosition(): void {
+  const element = pageScrollContainer()
+  if (!element || scrollRestoreTarget === null) return
+  element.scrollTo({ top: scrollRestoreTarget, behavior: 'instant' })
+  if (Math.abs(element.scrollTop - scrollRestoreTarget) < 1) scrollRestoreTarget = null
+  updateScrollTop()
+}
+
+function cancelScrollRestore(): void {
+  scrollRestoreTarget = null
+}
 
 /** 根据导航配置返回对应图标组件。 */
 function resolveNavIcon(item: AppNavigationItem) {
@@ -169,13 +219,14 @@ function openSearch(): void {
 function refreshCurrentPage(): void {
   const currentKey = resolveScrollKey(route)
   scrollPositions.delete(currentKey)
-  if (contentAreaRef.value) {
-    contentAreaRef.value.scrollTop = 0
-  }
+  scrollRestoreTarget = null
+  const element = pageScrollContainer()
+  if (element) element.scrollTop = 0
+  updateScrollTop()
   routeRefreshKey.value += 1
 }
 
-// ========= 监听器 =========
+// -- Listeners
 
 /** 监听路由和刷新代次变化，精准还原历史滚动位置或将新页面置顶。 */
 watch(
@@ -184,33 +235,38 @@ watch(
     await nextTick()
     if (!contentAreaRef.value) return
     const key = resolveScrollKey(route)
-    const savedTop = scrollPositions.get(key) ?? 0
-    contentAreaRef.value.scrollTo({ top: savedTop, behavior: 'instant' })
+    scrollRestoreTarget = scrollPositions.get(key) ?? 0
+    restoreScrollPosition()
   },
   { flush: 'post' }
 )
 
-// ========= 生命周期 =========
+// -- Lifecycle
 
 onMounted(async () => {
+  pageResizeObserver = new ResizeObserver(restoreScrollPosition)
+  if (pageFrameRef.value) pageResizeObserver.observe(pageFrameRef.value)
+  removeScrollGuard = router.beforeEach((to, from) => {
+    const element = pageScrollContainer()
+    if (element) {
+      const fromKey = resolveScrollKey(from)
+      scrollPositions.set(fromKey, element.scrollTop)
+    }
+    cancelScrollRestore()
+    return true
+  })
   await account.initialize()
   unsubscribeWindowSnapshot = window.ncx.windowControls.onSnapshot((snapshot) => {
     windowSnapshot.value = snapshot
   })
   windowSnapshot.value = await window.ncx.windowControls.snapshot()
 
-  removeScrollGuard = router.beforeEach((to, from) => {
-    if (contentAreaRef.value) {
-      const fromKey = resolveScrollKey(from)
-      scrollPositions.set(fromKey, contentAreaRef.value.scrollTop)
-    }
-    return true
-  })
 })
 
 onBeforeUnmount(() => {
   unsubscribeWindowSnapshot()
   removeScrollGuard()
+  pageResizeObserver?.disconnect()
 })
 </script>
 
@@ -222,14 +278,23 @@ onBeforeUnmount(() => {
       windowSnapshot.fullscreen ? 'ncx-app-shell--fullscreen' : '',
       windowSnapshot.maximized ? 'ncx-app-shell--maximized' : '',
       isStandalonePage ? 'ncx-app-shell--standalone' : '',
-      isSettingsPage ? 'ncx-app-shell--settings' : ''
+      isSettingsPage ? 'ncx-app-shell--settings' : '',
+      route.meta.pageLayout === 'hero' ? 'ncx-app-shell--hero' : '',
+      route.name === 'agent' ? 'ncx-app-shell--agent' : ''
     ]"
   >
     <header
       class="ncx-page-header"
-      :class="`ncx-page-header--${headerVariant}`"
+      :style="{ '--ncx-header-opacity': headerOpacity }"
     >
-      <div class="ncx-header-mask" />
+      <div
+        class="ncx-header-mask"
+        aria-hidden="true"
+      />
+      <div
+        class="ncx-header-drag-region"
+        aria-hidden="true"
+      />
       <div class="ncx-page-leading-actions">
         <CommonHeaderButton
           v-if="isSecondaryPage"
@@ -384,21 +449,31 @@ onBeforeUnmount(() => {
       <main
         ref="contentAreaRef"
         class="ncx-content-area"
+        @scroll.capture.passive="updateScrollTop"
+        @wheel.passive="cancelScrollRestore"
+        @touchstart.passive="cancelScrollRestore"
+        @pointerdown="cancelScrollRestore"
+        @keydown="cancelScrollRestore"
       >
-        <RouterView v-slot="{ Component, route: activeRoute }">
-          <KeepAlive>
+        <div
+          ref="pageFrameRef"
+          class="ncx-page-frame"
+        >
+          <RouterView v-slot="{ Component, route: activeRoute }">
+            <KeepAlive>
+              <component
+                :is="Component"
+                v-if="activeRoute.meta.keepAlive"
+                :key="`${String(activeRoute.name)}:${routeRefreshKey}`"
+              />
+            </KeepAlive>
             <component
               :is="Component"
-              v-if="activeRoute.meta.keepAlive"
-              :key="`${String(activeRoute.name)}:${routeRefreshKey}`"
+              v-if="!activeRoute.meta.keepAlive"
+              :key="`${activeRoute.fullPath}:${routeRefreshKey}`"
             />
-          </KeepAlive>
-          <component
-            :is="Component"
-            v-if="!activeRoute.meta.keepAlive"
-            :key="`${activeRoute.fullPath}:${routeRefreshKey}`"
-          />
-        </RouterView>
+          </RouterView>
+        </div>
       </main>
     </section>
   </div>

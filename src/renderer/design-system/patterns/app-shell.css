@@ -2,6 +2,9 @@
   --ncx-sidebar-width: 230px;
   --ncx-header-height: 72px;
   --ncx-shell-gap: 12px;
+  --ncx-content-left: calc(var(--ncx-sidebar-width) + var(--ncx-shell-gap) * 2 + 32px);
+  --ncx-content-right: calc(var(--ncx-shell-gap) + 40px);
+  --ncx-content-top: 112px;
   --ncx-glass-bg: var(--ncx-color-surface);
   --ncx-glass-border: transparent;
   --ncx-control-hover: rgb(0 0 0 / 6%);
@@ -12,8 +15,6 @@
   display: flex;
   width: 100%;
   height: 100%;
-  gap: var(--ncx-shell-gap);
-  padding: var(--ncx-shell-gap);
   overflow: hidden;
   border-radius: var(--ncx-squircle-radius-xl);
   color: var(--ncx-color-text-primary);
@@ -28,16 +29,18 @@
 }
 
 .ncx-sidebar {
-  position: relative;
+  position: absolute;
+  inset: var(--ncx-shell-gap) auto var(--ncx-shell-gap) var(--ncx-shell-gap);
+  width: var(--ncx-sidebar-width);
   z-index: 30;
   display: flex;
-  flex: 0 0 var(--ncx-sidebar-width);
   flex-direction: column;
   min-width: 0;
   padding: 14px 10px;
   border: none;
   border-radius: var(--ncx-squircle-radius-lg);
   background: var(--ncx-color-surface);
+  backdrop-filter: blur(28px) saturate(140%);
   box-shadow: var(--ncx-shadow-elevation-1);
   -webkit-app-region: drag;
 }
@@ -48,6 +51,7 @@
 
 .ncx-app-shell--settings {
   --ncx-sidebar-width: 260px;
+  --ncx-content-left: calc(var(--ncx-sidebar-width) + var(--ncx-shell-gap) * 2 + 48px);
 }
 
 .settings-sidebar {
@@ -361,7 +365,7 @@
   min-width: 0;
   flex: 1;
   flex-direction: column;
-  overflow: hidden;
+  min-height: 0;
 }
 
 .ncx-page-header {
@@ -377,7 +381,6 @@
   gap: var(--ncx-space-4);
   padding: 2px 16px 24px calc(var(--ncx-sidebar-width) + var(--ncx-shell-gap) + var(--ncx-shell-gap) + 4px);
   pointer-events: none;
-  -webkit-app-region: drag;
 }
 
 .ncx-app-shell--standalone .ncx-page-header {
@@ -392,13 +395,22 @@
   position: absolute;
   z-index: 0;
   inset: 0;
-  pointer-events: auto;
+  pointer-events: none;
+  opacity: var(--ncx-header-opacity, 0);
   background: linear-gradient(180deg,
       color-mix(in srgb, var(--ncx-color-canvas) 100%, transparent) 0%,
       color-mix(in srgb, var(--ncx-color-canvas) 80%, transparent) 30%,
       color-mix(in srgb, var(--ncx-color-canvas) 45%, transparent) 60%,
       transparent 100%);
   backdrop-filter: blur(1px);
+}
+
+.ncx-header-drag-region {
+  position: absolute;
+  inset: 0 0 auto;
+  height: var(--ncx-header-height);
+  pointer-events: auto;
+  -webkit-app-region: drag;
 }
 
 .ncx-page-leading-actions,
@@ -495,20 +507,31 @@
 .ncx-content-area {
   min-height: 0;
   flex: 1;
-  padding: calc(var(--ncx-header-height) + 8px) 48px 94px 24px;
-  overflow: auto;
+  width: 100%;
+  overflow: hidden auto;
   user-select: text;
 }
 
-.ncx-app-shell--settings .ncx-content-area {
-  padding-right: 48px;
-  padding-bottom: 48px;
-  padding-left: 48px;
+.ncx-page-frame {
+  min-height: 100%;
+  padding: var(--ncx-content-top) var(--ncx-content-right) 94px var(--ncx-content-left);
 }
 
-.ncx-app-shell--standalone .ncx-content-area {
+.ncx-app-shell--hero .ncx-page-frame {
+  padding-top: 0;
+}
+
+.ncx-app-shell--settings .ncx-page-frame {
+  padding-bottom: 48px;
+}
+
+.ncx-app-shell--standalone {
+  --ncx-content-left: 0px;
+  --ncx-content-right: 0px;
+}
+
+.ncx-app-shell--standalone .ncx-page-frame {
   padding: 0;
-  mask-image: none;
 }
 
 .ncx-content-area::-webkit-scrollbar {
@@ -561,13 +584,14 @@
   background: var(--ncx-color-canvas);
 }
 
-:root[data-theme='dark'] .ncx-header-mask {
-  background: linear-gradient(180deg, rgb(18 18 21 / 72%) 0%, rgb(18 18 21 / 35%) 60%, transparent 100%);
-}
 
 :root[data-theme='dark'] .ncx-glass-button,
 :root[data-theme='dark'] .ncx-window-controls {
   border-color: transparent;
+}
+
+:root[data-theme='dark'] .ncx-header-mask {
+  background: linear-gradient(180deg, rgb(18 18 21 / 72%) 0%, rgb(18 18 21 / 35%) 60%, transparent 100%);
 }
 
 :root[data-theme='dark'] .ncx-window-divider {
@@ -575,6 +599,10 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .ncx-header-mask {
+    background: linear-gradient(180deg, rgb(18 18 21 / 72%) 0%, rgb(18 18 21 / 35%) 60%, transparent 100%);
+  }
+
   :root:not([data-theme='light']) .ncx-app-shell {
     --ncx-glass-bg: var(--ncx-color-surface);
     --ncx-glass-border: transparent;
@@ -584,9 +612,6 @@
     background: var(--ncx-color-canvas);
   }
 
-  :root:not([data-theme='light']) .ncx-header-mask {
-    background: linear-gradient(180deg, rgb(18 18 21 / 72%) 0%, rgb(18 18 21 / 35%) 60%, transparent 100%);
-  }
 
   :root:not([data-theme='light']) .ncx-glass-button,
   :root:not([data-theme='light']) .ncx-window-controls {

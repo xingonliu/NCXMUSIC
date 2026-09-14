@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { CalendarCheck, ChevronRight, Play, Radio, Sparkles } from '@lucide/vue'
+
 import { computed, onMounted, ref, watch } from 'vue'
+
 import { useRouter } from 'vue-router'
 
 import type {
@@ -9,21 +11,31 @@ import type {
   StandardPlaylist,
   StandardSong
 } from '../../../shared/schemas/music'
+
 import { CommonButton, CommonIconButton, CommonSkeleton } from '../../design-system/components'
+
 import { useAccountSessionStore } from '../account/account-session-store'
+
 import { useAgentStore } from '../agent/agent-store'
+
 import EntityCard from './components/EntityCard.vue'
+
 import Cover from './components/Cover.vue'
+
 import MusicSection from './components/MusicSection.vue'
+
 import { useDailySignin } from './daily-signin'
+
 import {
   standardSongToTrackSummary,
   standardSongsToTrackSummaries
 } from './music-entity'
+
 import { usePlayer } from './use-player'
+
 import { translatePublicError } from '../../i18n'
 
-// ========= 类型 =========
+// -- Types
 
 /** 独立页面 Section 的运行状态。 */
 interface SectionState<T> {
@@ -35,7 +47,7 @@ interface SectionState<T> {
   error: string
 }
 
-// ========= 变量 =========
+// -- State
 
 /** Router 实例，用于打开歌单详情。 */
 const router = useRouter()
@@ -87,6 +99,8 @@ const artistsSection = ref<SectionState<StandardArtist[]>>({
   error: ''
 })
 
+// -- Derived Values
+
 /** 当前账户是否为登录账户。 */
 const isAuthenticated = computed<boolean>(() => account.snapshot.value?.state === 'authenticated')
 
@@ -118,7 +132,7 @@ const profileRecommendationSongs = computed<StandardSong[]>(() => rankSongsForPr
   ]
 ).slice(0, 8))
 
-// ========= 函数 =========
+// -- Functions
 
 /** 把 Section 响应结果写入统一状态。 */
 function settleSection<T>(section: SectionState<T>, data: T, empty: boolean): void {
@@ -275,13 +289,7 @@ function rankSongsForProfile(songs: readonly StandardSong[], rawTerms: readonly 
     .map((item) => item.song)
 }
 
-// ========= 生命周期 =========
-
-onMounted(async () => {
-  await Promise.all([account.initialize(), agent.initialize()])
-  await Promise.all([loadFeaturedPlaylists(), loadNewSongs(), loadRecommendedArtists()])
-  if (isAuthenticated.value) await Promise.all([loadDailySongs(), loadPersonalFm()])
-})
+// -- Listeners
 
 watch(
   () => [account.snapshot.value?.state, account.snapshot.value?.accountGeneration] as const,
@@ -293,6 +301,14 @@ watch(
     }
   }
 )
+
+// -- Lifecycle
+
+onMounted(async () => {
+  await Promise.all([account.initialize(), agent.initialize()])
+  await Promise.all([loadFeaturedPlaylists(), loadNewSongs(), loadRecommendedArtists()])
+  if (isAuthenticated.value) await Promise.all([loadDailySongs(), loadPersonalFm()])
+})
 </script>
 
 <template>
@@ -325,6 +341,7 @@ watch(
     <MusicSection
       v-if="agent.snapshot.value.personalization.usable && isAuthenticated"
       section-id="xiaoyun-profile-recommendations"
+      layout="rail"
       :title="$tSource('小云为你推荐')"
       :state="dailySection.state"
       :error-text="dailySection.error"
@@ -371,27 +388,28 @@ watch(
           /> {{ $tSource("播放全部") }}
         </CommonButton>
       </template>
-      <div class="discover-profile-recommendations">
-        <button
-          v-for="song in profileRecommendationSongs"
-          :key="song.id"
-          type="button"
-          @click="playSong(song)"
-        >
-          <Cover
-            :src="song.album?.artworkUrl"
-            :alt="song.name"
-            size="card"
-            :show-play-button="false"
-          />
-          <strong>{{ song.name }}</strong>
-          <span>{{ song.artists.map((artist) => artist.name).join(' / ') }}</span>
-        </button>
-      </div>
+
+      <button
+        v-for="song in profileRecommendationSongs"
+        :key="song.id"
+        class="discover-profile-card"
+        type="button"
+        @click="playSong(song)"
+      >
+        <Cover
+          :src="song.album?.artworkUrl"
+          :alt="song.name"
+          size="card"
+          :show-play-button="false"
+        />
+        <strong>{{ song.name }}</strong>
+        <span>{{ song.artists.map((artist) => artist.name).join(' / ') }}</span>
+      </button>
     </MusicSection>
 
     <MusicSection
       section-id="featured-playlists"
+      layout="rail"
       :title="$tSource('精选歌单')"
       :state="featuredSection.state"
       :error-text="featuredSection.error"
@@ -427,17 +445,16 @@ watch(
           </div>
         </div>
       </template>
-      <div class="discover-card-grid">
-        <EntityCard
-          v-for="playlist in featuredSection.data"
-          :key="playlist.id"
-          :title="playlist.name"
-          :subtitle="playlist.creator?.nickname"
-          :artwork-url="playlist.artworkUrl"
-          featured
-          @activate="openPlaylist(playlist)"
-        />
-      </div>
+
+      <EntityCard
+        v-for="playlist in featuredSection.data"
+        :key="playlist.id"
+        :title="playlist.name"
+        :subtitle="playlist.creator?.nickname"
+        :artwork-url="playlist.artworkUrl"
+        featured
+        @activate="openPlaylist(playlist)"
+      />
     </MusicSection>
 
     <MusicSection
@@ -707,6 +724,7 @@ watch(
 
     <MusicSection
       section-id="recommended-artists"
+      layout="rail"
       :title="$tSource('歌手推荐')"
       :state="artistsSection.state"
       :error-text="artistsSection.error"
@@ -741,24 +759,24 @@ watch(
           </div>
         </div>
       </template>
-      <div class="discover-artist-grid">
-        <button
-          v-for="artist in artistsSection.data.slice(0, 8)"
-          :key="artist.id"
-          type="button"
-          @click="openArtist(artist)"
-        >
-          <Cover
-            :src="artist.artworkUrl"
-            :alt="artist.name"
-            size="card"
-            shape="circle"
-            :show-play-button="false"
-          />
-          <strong>{{ artist.name }}</strong>
-          <span>{{ $tSource(artist.alias.join(' / ') || '歌手') }}</span>
-        </button>
-      </div>
+
+      <button
+        v-for="artist in artistsSection.data"
+        :key="artist.id"
+        class="discover-artist-card"
+        type="button"
+        @click="openArtist(artist)"
+      >
+        <Cover
+          :src="artist.artworkUrl"
+          :alt="artist.name"
+          size="card"
+          shape="circle"
+          :show-play-button="false"
+        />
+        <strong>{{ artist.name }}</strong>
+        <span>{{ $tSource(artist.alias.join(' / ') || '歌手') }}</span>
+      </button>
     </MusicSection>
   </section>
 </template>
@@ -766,10 +784,9 @@ watch(
 <style scoped>
 .discover-page {
   display: grid;
-  width: min(1180px, calc(100% - 32px));
+  width: 100%;
   gap: var(--ncx-space-12);
-  margin: 0 auto;
-  padding: 48px 0 0;
+  margin: 0;
 }
 
 .discover-heading {
@@ -798,17 +815,21 @@ watch(
 
 .discover-card-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--ncx-space-5);
+  grid-auto-flow: column;
+  grid-auto-columns: 180px;
+  overflow: hidden;
 }
 
 .discover-profile-recommendations {
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
   gap: 16px;
+  grid-auto-flow: column;
+  grid-auto-columns: 180px;
+  overflow: hidden;
 }
 
-.discover-profile-recommendations > button {
+.discover-profile-card {
   display: grid;
   min-width: 0;
   gap: 5px;
@@ -820,25 +841,25 @@ watch(
   cursor: pointer;
 }
 
-.discover-profile-recommendations :deep(.ncx-cover) {
+.discover-profile-card :deep(.ncx-cover) {
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
 }
 
-.discover-profile-recommendations strong,
-.discover-profile-recommendations span {
+.discover-profile-card strong,
+.discover-profile-card span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.discover-profile-recommendations strong {
+.discover-profile-card strong {
   margin-top: 5px;
   font-size: 12px;
 }
 
-.discover-profile-recommendations span {
+.discover-profile-card span {
   color: var(--ncx-color-text-secondary);
   font-size: 10px;
 }
@@ -1076,11 +1097,13 @@ watch(
 
 .discover-artist-grid {
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
   gap: 18px;
+  grid-auto-flow: column;
+  grid-auto-columns: 180px;
+  overflow: hidden;
 }
 
-.discover-artist-grid > button {
+.discover-artist-card {
   display: grid;
   min-width: 0;
   justify-items: center;
@@ -1093,27 +1116,27 @@ watch(
   cursor: pointer;
 }
 
-.discover-artist-grid :deep(.ncx-cover) {
+.discover-artist-card :deep(.ncx-cover) {
   width: 100%;
   max-width: 118px;
   height: auto;
   aspect-ratio: 1 / 1;
 }
 
-.discover-artist-grid strong,
-.discover-artist-grid span {
+.discover-artist-card strong,
+.discover-artist-card span {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.discover-artist-grid strong {
+.discover-artist-card strong {
   margin-top: 8px;
   font-size: 13px;
 }
 
-.discover-artist-grid span {
+.discover-artist-card span {
   color: var(--ncx-color-text-secondary);
   font-size: 11px;
 }
@@ -1194,24 +1217,6 @@ watch(
   border-radius: var(--ncx-squircle-radius-full);
 }
 
-@media (width < 1360px) {
-  .discover-artist-grid,
-  .discover-profile-recommendations {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-}
-
-@media (width < 1120px) {
-  .discover-card-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .discover-artist-grid,
-  .discover-profile-recommendations {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
 @media (width < 920px) {
   .discover-personal-grid,
   .discover-taste-card {
@@ -1221,29 +1226,11 @@ watch(
   .discover-cover-stack {
     display: none;
   }
-
-  .discover-card-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .discover-artist-grid,
-  .discover-profile-recommendations {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
 }
 
 @media (width < 680px) {
   .discover-new-song-grid {
     grid-template-columns: 1fr;
-  }
-
-  .discover-card-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .discover-artist-grid,
-  .discover-profile-recommendations {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

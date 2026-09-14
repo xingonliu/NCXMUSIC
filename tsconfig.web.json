@@ -10,6 +10,7 @@
     "src/renderer/**/*.vue",
     "src/shared/**/*.ts",
     "src/domains/player/**/*.ts",
+    "tests/unit/page-scroll-layout.test.ts",
     "tests/unit/player-bar.test.ts",
     "tests/unit/player-keyboard-shortcuts.test.ts",
     "tests/unit/immersive-player.test.ts",

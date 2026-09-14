@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Download, Ellipsis, Heart, MessageCircle, Play, Plus, Shuffle } from '@lucide/vue'
+
 import { computed, onMounted, ref, watch } from 'vue'
+
 import { useRoute, useRouter } from 'vue-router'
 
 import type {
@@ -9,6 +11,7 @@ import type {
   StandardPlaylist,
   StandardSong
 } from '../../../shared/schemas/music'
+
 import {
   CommonButton,
   CommonDrawer,
@@ -18,25 +21,37 @@ import {
   CommonSkeleton,
   type CommonMenuItem
 } from '../../design-system/components'
+
 import { showToast } from '../../design-system/use-toast'
-import Cover from './components/Cover.vue'
+
+import MusicDetailHero from './components/MusicDetailHero.vue'
+
 import AddTrackToPlaylistDialog from './components/AddTrackToPlaylistDialog.vue'
+
 import MusicCommentsSection from './components/MusicCommentsSection.vue'
+
 import VirtualTrackList from './components/VirtualTrackList.vue'
+
 import { useAccountSessionStore } from '../account/account-session-store'
+
 import { copyText } from '../foundation/clipboard'
+
 import { mutateMusic, playSongNext, toggleSongLike } from './music-actions'
+
 import {
   collectionSongs,
   standardSongToTrackSummary,
   standardSongsToTrackSummaries,
   type PlayableCollection
 } from './music-entity'
+
 import './music-content-pages.css'
+
 import { usePlayer } from './use-player'
+
 import { translatePublicError } from '../../i18n'
 
-// ========= 类型 =========
+// -- Types
 
 /** 当前详情页实体类型。 */
 type CollectionKind = 'album' | 'playlist'
@@ -49,7 +64,12 @@ interface CollectionDateMeta {
   readonly value: string
 }
 
-// ========= 变量 =========
+// -- Constants
+
+/** 骨架屏中模拟的歌曲行数。 */
+const SKELETON_TRACK_COUNT = 7
+
+// -- State
 
 /** 当前路由对象。 */
 const route = useRoute()
@@ -90,8 +110,13 @@ const playlistTarget = ref<StandardSong | null>(null)
 /** 评论抽屉是否可见。 */
 const commentsDrawerVisible = ref<boolean>(false)
 
-/** 骨架屏中模拟的歌曲行数。 */
-const SKELETON_TRACK_COUNT = 7
+/** 当前集合更多菜单。 */
+const moreMenuItems: CommonMenuItem[] = [
+  { value: 'copy-link', label: '复制网易云链接' },
+  { value: 'give-agent', label: '交给小云' }
+]
+
+// -- Derived Values
 
 /** 当前集合类型。 */
 const collectionKind = computed<CollectionKind>(() => {
@@ -151,13 +176,7 @@ const collectionDateMeta = computed<CollectionDateMeta | null>(() => {
   }
 })
 
-/** 当前集合更多菜单。 */
-const moreMenuItems: CommonMenuItem[] = [
-  { value: 'copy-link', label: '复制网易云链接' },
-  { value: 'give-agent', label: '交给小云' }
-]
-
-// ========= 函数 =========
+// -- Functions
 
 /** 拉取集合详情。 */
 async function loadCollection(): Promise<void> {
@@ -401,12 +420,14 @@ function handleMoreAction(rawAction: string | number): void {
   }
 }
 
-// ========= 生命周期 =========
+// -- Listeners
 
 watch([collectionKind, collectionId], () => {
   closeCommentsDrawer()
   void loadCollection()
 }, { immediate: true })
+
+// -- Lifecycle
 
 onMounted(() => {
   void account.initialize()
@@ -429,11 +450,7 @@ onMounted(() => {
         class="collection-detail-skeleton"
         :aria-label="$tSource('正在加载专辑或歌单')"
       >
-        <header class="collection-skeleton-hero">
-          <CommonSkeleton
-            class="collection-skeleton-cover"
-            variant="rectangular"
-          />
+        <MusicDetailHero>
           <div class="collection-skeleton-copy">
             <CommonSkeleton
               variant="rectangular"
@@ -472,7 +489,7 @@ onMounted(() => {
               />
             </div>
           </div>
-        </header>
+        </MusicDetailHero>
         <section
           class="collection-skeleton-tracks"
           aria-hidden="true"
@@ -558,15 +575,7 @@ onMounted(() => {
         key="content"
         class="collection-detail-content"
       >
-        <header class="music-detail-hero">
-          <Cover
-            :src="collection.artworkUrl"
-            :alt="collection.name"
-            size="hero"
-            :hover-effect="false"
-            :always-show-shadow="true"
-            :show-play-button="false"
-          />
+        <MusicDetailHero :artwork-url="collection.artworkUrl">
           <div class="music-detail-hero-copy">
             <p class="music-page-eyebrow">
               {{ $tSource(collection.kind === 'album' ? '专辑' : '歌单') }}
@@ -655,7 +664,7 @@ onMounted(() => {
               </CommonDropdownMenu>
             </div>
           </div>
-        </header>
+        </MusicDetailHero>
 
         <section
           class="music-track-surface"

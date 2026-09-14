@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RotateCcw } from '@lucide/vue'
+
 import { watch } from 'vue'
 
 import {
@@ -8,9 +9,12 @@ import {
   CommonIconButton,
   CommonSpinner
 } from '../../../design-system/components'
+
 import { showToast } from '../../../design-system/use-toast'
 
-// ========= 属性与事件 =========
+import HorizontalMediaRail from './HorizontalMediaRail.vue'
+
+// -- Inputs and Outputs
 
 /** 音乐页面独立 Section 属性。 */
 const props = withDefaults(defineProps<{
@@ -26,10 +30,12 @@ const props = withDefaults(defineProps<{
   errorText?: string
   /** Section 最小高度。 */
   minHeight?: string
+  layout?: 'list' | 'rail'
 }>(), {
   emptyText: '暂无内容。',
   errorText: '内容读取失败。',
-  minHeight: '0'
+  minHeight: '0',
+  layout: 'list'
 })
 
 /** Section 重试事件。 */
@@ -37,7 +43,7 @@ const emit = defineEmits<{
   (event: 'retry'): void
 }>()
 
-// ========= 函数 =========
+// -- Functions
 
 /** 请求重新读取当前 Section。 */
 function retrySection(): void {
@@ -64,7 +70,7 @@ function notifySectionState(): void {
   }
 }
 
-// ========= 生命周期 =========
+// -- Listeners
 
 watch(
   () => [props.state, props.errorText, props.emptyText],
@@ -79,7 +85,25 @@ watch(
     :aria-labelledby="`${props.sectionId}-title`"
     :style="{ minHeight: props.minHeight }"
   >
-    <header class="music-section-header">
+    <HorizontalMediaRail
+      v-if="props.layout === 'rail' && props.state === 'ready'"
+      :label="props.title"
+      :labelledby="`${props.sectionId}-title`"
+    >
+      <template #heading>
+        <h2 :id="`${props.sectionId}-title`">
+          {{ $tSource(props.title) }}
+        </h2>
+      </template>
+      <template #actions>
+        <slot name="actions" />
+      </template>
+      <slot />
+    </HorizontalMediaRail>
+    <header
+      v-else
+      class="music-section-header"
+    >
       <h2 :id="`${props.sectionId}-title`">
         {{ $tSource(props.title) }}
       </h2>
@@ -120,7 +144,7 @@ watch(
       :description="props.emptyText"
     />
     <div
-      v-else
+      v-else-if="props.layout !== 'rail'"
       class="music-section-content"
     >
       <slot />
@@ -131,6 +155,7 @@ watch(
 <style scoped>
 .music-section-shell {
   display: grid;
+  min-width: 0;
   align-content: start;
   gap: var(--ncx-space-4);
 }
@@ -142,7 +167,7 @@ watch(
   gap: var(--ncx-space-4);
 }
 
-.music-section-header h2 {
+.music-section-shell h2 {
   margin: 0;
   font-size: 20px;
   line-height: 1.2;
